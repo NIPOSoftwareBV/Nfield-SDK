@@ -27,3 +27,4 @@ _ReSharper*/
 *.ncrunch*
 .*crunch*.local.xml
 
+/packages/
