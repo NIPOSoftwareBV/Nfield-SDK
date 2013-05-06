@@ -31,7 +31,7 @@ In this example we're using
 <p>Then you can perform any operations that you want to perform on the service, for example add an interviewer.</p>
 <pre>    Interviewer interviewer = new Interviewer
             {
-                ClientInterviewerId = "sales",
+                ClientInterviewerId = "pomn45dr",
                 FirstName = "Sales",
                 LastName = "Team",
                 EmailAddress = "sales@niposoftware.com",

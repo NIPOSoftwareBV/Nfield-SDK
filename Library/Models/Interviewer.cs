@@ -30,7 +30,9 @@ namespace Nfield.Models
         public string InterviewerId { get; internal set; }
 
         /// <summary>
-        /// Public id of the interviewer, is unique within a domain
+        /// Public id of the interviewer, unique within a domain.
+        /// This field should either be initialized with a unique eight characters value or 
+        /// be empty so the server will assign the value.
         /// </summary>
         public string ClientInterviewerId { get; set; }
 
