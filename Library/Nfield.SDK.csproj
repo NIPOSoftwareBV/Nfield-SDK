@@ -85,13 +85,16 @@
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
+    <Compile Include="Models\Survey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveysService.cs" />
     <Compile Include="Services\INfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldInterviewersService.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Services\INfieldInterviewersService.cs" />
+    <Compile Include="Services\INfieldSurveysService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

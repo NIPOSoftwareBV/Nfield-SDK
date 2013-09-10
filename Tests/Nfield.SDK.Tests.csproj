@@ -87,6 +87,7 @@
     <Compile Include="Services\NfieldInterviewersServiceTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\NfieldSurveysServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Nfield.SDK.csproj">
