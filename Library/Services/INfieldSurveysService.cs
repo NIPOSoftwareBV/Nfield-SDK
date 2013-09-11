@@ -50,9 +50,10 @@ namespace Nfield.Services
         /// <summary>
         /// Updates a sampling point
         /// </summary>
+        /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
-        Task<SamplingPoint> SamplingPointUpdateAsync(SamplingPoint samplingPoint);
+        Task<SamplingPoint> SamplingPointUpdateAsync(string surveyId, SamplingPoint samplingPoint);
 
         /// <summary>
         /// Adds a sampling point
@@ -65,9 +66,10 @@ namespace Nfield.Services
         /// <summary>
         /// Deletes a sampling point.
         /// </summary>
+        /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
-        Task SamplingPointDeleteAsync(SamplingPoint samplingPoint);
+        Task SamplingPointDeleteAsync(string surveyId, SamplingPoint samplingPoint);
 
 
     }

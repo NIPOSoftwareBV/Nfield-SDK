@@ -61,17 +61,17 @@ namespace Nfield.SDK.Samples
         /// <summary>
         /// Delete an existing <see cref="SamplingPoint"/> with a synchronous operation.
         /// </summary>
-        public void DeleteSamplingPoint(SamplingPoint samplingPoint)
+        public void DeleteSamplingPoint(string surveyId, SamplingPoint samplingPoint)
         {
-            _surveysService.SamplingPointDelete(samplingPoint);
+            _surveysService.SamplingPointDelete(surveyId, samplingPoint);
         }
 
         /// <summary>
         /// Updates an existing <see cref="SamplingPoint"/> with a synchronous operation.
         /// </summary>
-        public void UpdateSamplingPoint(SamplingPoint samplingPoint)
+        public void UpdateSamplingPoint(string surveyId, SamplingPoint samplingPoint)
         {
-            _surveysService.SamplingPointUpdate(samplingPoint);
+            _surveysService.SamplingPointUpdate(surveyId, samplingPoint);
         }
 
     }

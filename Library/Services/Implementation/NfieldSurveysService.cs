@@ -81,7 +81,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveysService.SamplingPointUpdateAsync"/>
         /// </summary>
-        public Task<SamplingPoint> SamplingPointUpdateAsync(SamplingPoint samplingPoint)
+        public Task<SamplingPoint> SamplingPointUpdateAsync(string surveyId, SamplingPoint samplingPoint)
         {
             var updatedSamplingPoint = new UpdateSamplingPoint
             {
@@ -90,7 +90,7 @@ namespace Nfield.Services.Implementation
                 FieldworkOfficeId = samplingPoint.FieldworkOfficeId
             };
 
-            string uri = string.Format(@"{0}/{1}", SamplingPointsApi.AbsoluteUri, samplingPoint.SamplingPointId);
+            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
 
             return Client.PatchAsJsonAsync(uri, updatedSamplingPoint)
                          .ContinueWith(
@@ -115,9 +115,9 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveysService.SamplingPointDeleteAsync"/>
         /// </summary>
-        public Task SamplingPointDeleteAsync(SamplingPoint samplingPoint)
+        public Task SamplingPointDeleteAsync(string surveyId, SamplingPoint samplingPoint)
         {
-            string uri = string.Format(@"{0}/{1}", SamplingPointsApi.AbsoluteUri, samplingPoint.SamplingPointId);
+            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
             return Client.DeleteAsync(uri)
                         .FlattenExceptions();
         }

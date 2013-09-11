@@ -60,9 +60,9 @@ namespace Nfield.Extensions
         /// <summary>
         /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointDeleteAsync"/>
         /// </summary>
-        public static void SamplingPointDelete(this INfieldSurveysService surveysService, SamplingPoint samplingPoint)
+        public static void SamplingPointDelete(this INfieldSurveysService surveysService, string surveyId, SamplingPoint samplingPoint)
         {
-            surveysService.SamplingPointDeleteAsync(samplingPoint).Wait();
+            surveysService.SamplingPointDeleteAsync(surveyId, samplingPoint).Wait();
         }
 
         /// <summary>
@@ -76,9 +76,9 @@ namespace Nfield.Extensions
         /// <summary>
         /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointUpdateAsync"/>
         /// </summary>
-        public static void SamplingPointUpdate(this INfieldSurveysService surveysService, SamplingPoint samplingPoint)
+        public static void SamplingPointUpdate(this INfieldSurveysService surveysService, string surveyId, SamplingPoint samplingPoint)
         {
-            surveysService.SamplingPointUpdateAsync(samplingPoint).Wait();
+            surveysService.SamplingPointUpdateAsync(surveyId, samplingPoint).Wait();
         }
 
     }
