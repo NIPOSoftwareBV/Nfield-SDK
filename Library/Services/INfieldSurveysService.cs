@@ -31,5 +31,44 @@ namespace Nfield.Services
         /// Gets survey queryable object.
         /// </summary>
         Task<IQueryable<Survey>> QueryAsync();
+
+        /// <summary>
+        /// Gets sampling point queryable object.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId);
+
+        /// <summary>
+        /// Gets a specific sampling point.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <param name="samplingPointId"></param>
+        /// <returns></returns>
+        Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId);
+
+        /// <summary>
+        /// Updates a sampling point
+        /// </summary>
+        /// <param name="samplingPoint"></param>
+        /// <returns></returns>
+        Task<SamplingPoint> SamplingPointUpdateAsync(SamplingPoint samplingPoint);
+
+        /// <summary>
+        /// Adds a sampling point
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <param name="samplingPoint"></param>
+        /// <returns></returns>
+        Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint);
+
+        /// <summary>
+        /// Deletes a sampling point.
+        /// </summary>
+        /// <param name="samplingPoint"></param>
+        /// <returns></returns>
+        Task SamplingPointDeleteAsync(SamplingPoint samplingPoint);
+
+
     }
 }

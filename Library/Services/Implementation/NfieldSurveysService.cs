@@ -45,7 +45,82 @@ namespace Nfield.Services.Implementation
                              JsonConvert.DeserializeObject<List<Survey>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
         }
-        
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointsQueryAsync"/>
+        /// </summary>
+        public Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId)
+        {
+            string uri = string.Format(@"{0}/{1}", SamplingPointsApi.AbsoluteUri, surveyId);
+            
+            return Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<List<SamplingPoint>>(stringTask.Result).AsQueryable())
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointQueryAsync"/>
+        /// </summary>
+        public Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId)
+        {
+            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPointId);
+            
+            return Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SamplingPoint>(stringTask.Result))
+                         .FlattenExceptions();            
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointUpdateAsync"/>
+        /// </summary>
+        public Task<SamplingPoint> SamplingPointUpdateAsync(SamplingPoint samplingPoint)
+        {
+            var updatedSamplingPoint = new UpdateSamplingPoint
+            {
+                Name = samplingPoint.Name,
+                Description = samplingPoint.Description,
+                FieldworkOfficeId = samplingPoint.FieldworkOfficeId
+            };
+
+            string uri = string.Format(@"{0}/{1}", SamplingPointsApi.AbsoluteUri, samplingPoint.SamplingPointId);
+
+            return Client.PatchAsJsonAsync(uri, updatedSamplingPoint)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask => JsonConvert.DeserializeObjectAsync<SamplingPoint>(stringTask.Result).Result)
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointAddAsync"/>
+        /// </summary>
+        public Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint)
+        {
+            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
+            return Client.PostAsJsonAsync(uri, samplingPoint)
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SamplingPoint>(task.Result).Result)
+                         .FlattenExceptions();            
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointDeleteAsync"/>
+        /// </summary>
+        public Task SamplingPointDeleteAsync(SamplingPoint samplingPoint)
+        {
+            string uri = string.Format(@"{0}/{1}", SamplingPointsApi.AbsoluteUri, samplingPoint.SamplingPointId);
+            return Client.DeleteAsync(uri)
+                        .FlattenExceptions();
+        }
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -64,9 +139,31 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
+        private static string SamplingPointsControllerName
+        {
+            get { return "samplingpoints";  }
+        }
+
         private Uri SurveysApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/surveys"); }
         }
+
+        private Uri SamplingPointsApi
+        {
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/" + SamplingPointsControllerName); }
+        }
     }
+
+    /// <summary>
+    /// Update model for a sampling point
+    /// Instruction is not allowed to be updated (because this is a link to a pdf in blob storage)
+    /// </summary>
+    internal class UpdateSamplingPoint
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string FieldworkOfficeId { get; set; }
+    }
+
 }

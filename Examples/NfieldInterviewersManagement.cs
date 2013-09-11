@@ -55,8 +55,6 @@ namespace Nfield.SDK.Samples
                     Password = "password12"
                 };
 
-            interviewer = null;
-
             return _interviewersService.Add(interviewer);
         }
 

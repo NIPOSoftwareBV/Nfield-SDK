@@ -88,7 +88,7 @@ namespace Nfield.Models
         /// Last time the device of the interviewer was synchronized with the server
         /// </summary>
         [JsonProperty]
-        public DateTime? LastSyncTime { get; internal set; }
+        public DateTime? LastSyncDate { get; internal set; }
 
         /// <summary>
         /// Last time the password of the interviewer was changed

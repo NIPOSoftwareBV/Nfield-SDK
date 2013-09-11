@@ -34,29 +34,8 @@ namespace Nfield.Models
         public string SurveyName { get; set; }
 
         /// <summary>
-        /// The name of the client to which the survey belongs 
-        /// </summary>
-        public string ClientName { get; set; }
-
-        /// <summary>
         /// The description of the survey
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// Maximum number of successful interviews that can be done for the survey
-        /// </summary>
-        public int? Target { get; set; }
-
-        /// <summary>
-        /// original ODIN script
-        /// </summary>
-        public string Script { get; set; }
-
-        /// <summary>
-        /// Hierarchical Quota structure of the Survey for CAPI.
-        /// This data is always represented with JSON
-        /// </summary>
-        public string CapiQuota { get; set; }
     }
 }
