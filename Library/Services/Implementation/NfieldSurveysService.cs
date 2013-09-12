@@ -83,6 +83,11 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPoint> SamplingPointUpdateAsync(string surveyId, SamplingPoint samplingPoint)
         {
+            if (samplingPoint == null)
+            {
+                throw new ArgumentNullException("samplingPoint");
+            }
+
             var updatedSamplingPoint = new UpdateSamplingPoint
             {
                 Name = samplingPoint.Name,
@@ -105,7 +110,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint)
         {
-            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
+            string uri = string.Format(@"{0}/{1}/{2}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName);
             return Client.PostAsJsonAsync(uri, samplingPoint)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SamplingPoint>(task.Result).Result)
@@ -117,6 +122,10 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task SamplingPointDeleteAsync(string surveyId, SamplingPoint samplingPoint)
         {
+            if (samplingPoint == null)
+            {
+                throw new ArgumentNullException("samplingPoint");
+            }
             string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
             return Client.DeleteAsync(uri)
                         .FlattenExceptions();
