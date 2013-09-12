@@ -51,7 +51,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId)
         {
-            string uri = string.Format(@"{0}/{1}", SamplingPointsApi.AbsoluteUri, surveyId);
+            string uri = string.Format(@"{0}/{1}/{2}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName);
             
             return Client.GetAsync(uri)
                          .ContinueWith(
