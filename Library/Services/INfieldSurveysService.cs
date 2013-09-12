@@ -71,6 +71,31 @@ namespace Nfield.Services
         /// <returns></returns>
         Task SamplingPointDeleteAsync(string surveyId, SamplingPoint samplingPoint);
 
+        /// <summary>
+        /// Gets sampling point's quota targets queryable object
+        /// </summary>
+        /// <param name="surveyId">id of the survey</param>
+        /// <param name="samplingPointId">id of the sampling point</param>
+        /// <returns></returns>
+        Task<IQueryable<SamplingPointQuotaTarget>> SamplingPointQuotaTargetsQueryAsync(string surveyId, string samplingPointId);
 
+        /// <summary>
+        /// Gets a specific sampling point's quota target
+        /// </summary>
+        /// <param name="surveyId">id of the survey</param>
+        /// <param name="samplingPointId">id of the sampling point</param>
+        /// <param name="levelId">id of the qouta level</param>
+        /// <returns></returns>
+        Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetQueryAsync(string surveyId, string samplingPointId, string levelId);
+
+        /// <summary>
+        /// Updates sampling point's quota target
+        /// </summary>
+        /// <param name="surveyId">id of the survey</param>
+        /// <param name="samplingPointId">id of the sampling point</param>
+        /// <param name="samplingPointQuotaTarget"></param>
+        /// <returns></returns>
+        Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetUpdateAsync(string surveyId, string samplingPointId,
+            SamplingPointQuotaTarget samplingPointQuotaTarget);
     }
 }

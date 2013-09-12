@@ -121,6 +121,68 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsync(uri)
                         .FlattenExceptions();
         }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointQuotaTargetsQueryAsync"/>
+        /// </summary>
+        public Task<IQueryable<SamplingPointQuotaTarget>> SamplingPointQuotaTargetsQueryAsync(string surveyId, string samplingPointId)
+        {
+            string uri = string.Format(@"{0}/{1}/{2}/{3}/{4}", SurveysApi.AbsoluteUri, surveyId,
+                SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName);
+
+            return Client.GetAsync(uri)
+             .ContinueWith(
+                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+             .ContinueWith(
+                 stringTask =>
+                 JsonConvert.DeserializeObject<List<SamplingPointQuotaTarget>>(stringTask.Result).AsQueryable())
+             .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointQuotaTargetQueryAsync"/>
+        /// </summary>
+        public Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetQueryAsync(string surveyId, string samplingPointId, string levelId)
+        {
+            string uri = string.Format(@"{0}/{1}/{2}/{3}/{4}/{5}", SurveysApi.AbsoluteUri, surveyId,
+                SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName, levelId);
+
+            return Client.GetAsync(uri)
+             .ContinueWith(
+                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+             .ContinueWith(
+                 stringTask =>
+                 JsonConvert.DeserializeObject<SamplingPointQuotaTarget>(stringTask.Result))
+             .FlattenExceptions();  
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointQuotaTargetUpdateAsync"/>
+        /// </summary>
+        public Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetUpdateAsync(string surveyId, string samplingPointId, SamplingPointQuotaTarget samplingPointQuotaTarget)
+        {
+            if (samplingPointQuotaTarget == null)
+            {
+                throw new ArgumentNullException("samplingPointQuotaTarget");
+            }
+
+            var updatedSamplingPointQuotaTarget = new UpdateSamplingPointQuotaTarget
+            {
+                Target = samplingPointQuotaTarget.Target
+            };
+
+            string uri = string.Format(@"{0}/{1}/{2}/{3}/{4}/{5}", SurveysApi.AbsoluteUri, surveyId,
+                SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName,
+                samplingPointQuotaTarget.LevelId);
+
+            return Client.PatchAsJsonAsync(uri, updatedSamplingPointQuotaTarget)
+             .ContinueWith(
+                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+             .ContinueWith(
+                 stringTask => JsonConvert.DeserializeObjectAsync<SamplingPointQuotaTarget>(stringTask.Result).Result)
+             .FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -144,6 +206,11 @@ namespace Nfield.Services.Implementation
             get { return "samplingpoints";  }
         }
 
+        private static string SamplingPointsQuotaControllerName
+        {
+            get { return "quotatargets"; }
+        }
+
         private Uri SurveysApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/surveys"); }
@@ -153,6 +220,8 @@ namespace Nfield.Services.Implementation
         {
             get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/" + SamplingPointsControllerName); }
         }
+
+
     }
 
     /// <summary>
@@ -164,6 +233,14 @@ namespace Nfield.Services.Implementation
         public string Name { get; set; }
         public string Description { get; set; }
         public string FieldworkOfficeId { get; set; }
+    }
+
+    /// <summary>
+    /// Update model for a sampling point's qouta target
+    /// </summary>
+    internal class UpdateSamplingPointQuotaTarget
+    {
+        public int? Target { get; set; }
     }
 
 }

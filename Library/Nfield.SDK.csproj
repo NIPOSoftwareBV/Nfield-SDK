@@ -87,6 +87,7 @@
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
     <Compile Include="Models\SamplingPoint.cs" />
+    <Compile Include="Models\SamplingPointQuotaTarget.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
