@@ -47,6 +47,23 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
+        /// See <see cref="INfieldSurveysService.QuotaQueryAsync"/>
+        /// </summary>
+        /// <returns></returns>
+        public Task<QuotaLevel> QuotaQueryAsync(string surveyId)
+        {
+            string uri = string.Format(@"{0}/{1}/{2}", SurveysApi.AbsoluteUri, surveyId, QuotaControllerName);
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<QuotaLevel>(stringTask.Result))
+                         .FlattenExceptions();    
+        }
+
+        /// <summary>
         /// See <see cref="INfieldSurveysService.SamplingPointsQueryAsync"/>
         /// </summary>
         public Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId)
@@ -215,6 +232,10 @@ namespace Nfield.Services.Implementation
             get { return "samplingpoints";  }
         }
 
+        private static string QuotaControllerName
+        {
+            get { return "quota"; }
+        }
         private static string SamplingPointsQuotaControllerName
         {
             get { return "quotatargets"; }

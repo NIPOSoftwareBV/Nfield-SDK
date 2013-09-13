@@ -86,6 +86,8 @@
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
+    <Compile Include="Models\QuotaAttribute.cs" />
+    <Compile Include="Models\QuotaLevel.cs" />
     <Compile Include="Models\SamplingPoint.cs" />
     <Compile Include="Models\SamplingPointQuotaTarget.cs" />
     <Compile Include="Models\Survey.cs" />

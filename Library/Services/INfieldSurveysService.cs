@@ -33,6 +33,11 @@ namespace Nfield.Services
         Task<IQueryable<Survey>> QueryAsync();
 
         /// <summary>
+        /// Gets quota definition for survey.
+        /// </summary>
+        Task<QuotaLevel> QuotaQueryAsync(string surveyId);
+
+        /// <summary>
         /// Gets sampling point queryable object.
         /// </summary>
         /// <param name="surveyId"></param>
