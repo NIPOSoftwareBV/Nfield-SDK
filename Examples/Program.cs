@@ -74,6 +74,12 @@ namespace Nfield.SDK.Samples
                 
                 interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
                 interviewersManager.RemoveInterviewer(interviewer2); 
+
+                // Example of performing operations on sampling points.
+                INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
+                NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(surveysService);
+
+                samplingPointsManager.QueryForSamplingPoints("some surveyId");
             }
         }
 
