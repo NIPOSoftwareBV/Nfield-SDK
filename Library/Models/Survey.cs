@@ -34,6 +34,16 @@ namespace Nfield.Models
         public string SurveyName { get; set; }
 
         /// <summary>
+        /// Name of the survey client
+        /// </summary>
+        public string ClientName { get; set; }
+
+        /// <summary>
+        /// Script that contains questionnaire
+        /// </summary>
+        public string Script { get; set; }
+
+        /// <summary>
         /// The description of the survey
         /// </summary>
         public string Description { get; set; }
