@@ -13,39 +13,16 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Newtonsoft.Json;
-
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds the basic properties of a survey
+    /// Holds the extended properties of a survey
     /// </summary>
-    public class Survey
+    public class ExtendedSurvey :Survey
     {
         /// <summary>
-        /// Survey ID
+        /// Script that contains questionnaire
         /// </summary>
-        [JsonProperty]
-        public string SurveyId { get; internal set; }
-
-        /// <summary>
-        /// Name of the survey
-        /// </summary>
-        public string SurveyName { get; set; }
-
-        /// <summary>
-        /// Type of the survey.
-        /// </summary>
-        public SurveyType SurveyType { get; set; }
-
-        /// <summary>
-        /// Name of the survey client
-        /// </summary>
-        public string ClientName { get; set; }
-
-        /// <summary>
-        /// The description of the survey
-        /// </summary>
-        public string Description { get; set; }
+        public string Script { get; set; }
     }
 }

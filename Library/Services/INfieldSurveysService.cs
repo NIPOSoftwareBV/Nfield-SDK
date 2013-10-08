@@ -14,9 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Nfield.Models;
 
@@ -27,15 +25,45 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldSurveysService
     {
+        #region CRUD on Survey
+
         /// <summary>
         /// Gets survey queryable object.
         /// </summary>
         Task<IQueryable<Survey>> QueryAsync();
 
         /// <summary>
+        /// Gets an extended survey object.
+        /// </summary>
+        Task<ExtendedSurvey> GetExtendedAsync(string surveyId);
+
+        /// <summary>
+        /// Adds a new survey.
+        /// </summary>
+        Task<ExtendedSurvey> AddAsync(ExtendedSurvey survey);
+
+        /// <summary>
+        /// Removes the survey.
+        /// </summary>
+        Task RemoveAsync(Survey survey);
+
+        /// <summary>
+        /// Updates the survey.
+        /// </summary>
+        Task<ExtendedSurvey> UpdateAsync(ExtendedSurvey survey);
+
+        #endregion
+
+        #region Quota for a survey
+
+        /// <summary>
         /// Gets quota definition for survey.
         /// </summary>
         Task<QuotaLevel> QuotaQueryAsync(string surveyId);
+
+        #endregion
+
+        #region Sampling Points for a survey
 
         /// <summary>
         /// Gets sampling point queryable object.
@@ -102,5 +130,8 @@ namespace Nfield.Services
         /// <returns></returns>
         Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetUpdateAsync(string surveyId, string samplingPointId,
             SamplingPointQuotaTarget samplingPointQuotaTarget);
+
+        #endregion
+
     }
 }

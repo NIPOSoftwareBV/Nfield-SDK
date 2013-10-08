@@ -84,6 +84,7 @@
     <Compile Include="Infrastructure\NfieldConnection.cs" />
     <Compile Include="Infrastructure\NfieldConnectionFactory.cs" />
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
+    <Compile Include="Models\ExtendedSurvey.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
     <Compile Include="Models\QuotaAttribute.cs" />

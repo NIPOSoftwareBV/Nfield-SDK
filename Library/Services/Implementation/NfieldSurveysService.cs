@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -44,6 +43,38 @@ namespace Nfield.Services.Implementation
                              stringTask =>
                              JsonConvert.DeserializeObject<List<Survey>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.GetExtendedAsync"/>
+        /// </summary>
+        public Task<ExtendedSurvey> GetExtendedAsync(string surveyId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.AddAsync"/>
+        /// </summary>
+        public Task<ExtendedSurvey> AddAsync(ExtendedSurvey survey)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.RemoveAsync"/>
+        /// </summary>
+        public Task RemoveAsync(Survey survey)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.UpdateAsync"/>
+        /// </summary>
+        public Task<ExtendedSurvey> UpdateAsync(ExtendedSurvey survey)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

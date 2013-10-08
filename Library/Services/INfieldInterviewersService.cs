@@ -27,7 +27,7 @@ namespace Nfield.Services
     {
         /// <summary>
         /// Adds a new interviewer.
-        /// </summary>>
+        /// </summary>
         /// <param name="interviewer">The interviewer to add.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
