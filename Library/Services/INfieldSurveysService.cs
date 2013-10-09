@@ -33,14 +33,9 @@ namespace Nfield.Services
         Task<IQueryable<Survey>> QueryAsync();
 
         /// <summary>
-        /// Gets an extended survey object.
-        /// </summary>
-        Task<ExtendedSurvey> GetExtendedAsync(string surveyId);
-
-        /// <summary>
         /// Adds a new survey.
         /// </summary>
-        Task<ExtendedSurvey> AddAsync(ExtendedSurvey survey);
+        Task<Survey> AddAsync(Survey survey);
 
         /// <summary>
         /// Removes the survey.
@@ -50,7 +45,7 @@ namespace Nfield.Services
         /// <summary>
         /// Updates the survey.
         /// </summary>
-        Task<ExtendedSurvey> UpdateAsync(ExtendedSurvey survey);
+        Task<Survey> UpdateAsync(Survey survey);
 
         #endregion
 

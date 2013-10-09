@@ -46,17 +46,9 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldSurveysService.GetExtendedAsync"/>
-        /// </summary>
-        public Task<ExtendedSurvey> GetExtendedAsync(string surveyId)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// See <see cref="INfieldSurveysService.AddAsync"/>
         /// </summary>
-        public Task<ExtendedSurvey> AddAsync(ExtendedSurvey survey)
+        public Task<Survey> AddAsync(Survey survey)
         {
             throw new NotImplementedException();
         }
@@ -72,7 +64,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveysService.UpdateAsync"/>
         /// </summary>
-        public Task<ExtendedSurvey> UpdateAsync(ExtendedSurvey survey)
+        public Task<Survey> UpdateAsync(Survey survey)
         {
             throw new NotImplementedException();
         }
