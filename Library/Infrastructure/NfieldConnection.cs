@@ -76,7 +76,7 @@ namespace Nfield.Infrastructure
             var content = new FormUrlEncodedContent(data);
 
             return
-                Client.PostAsync(NfieldServerUri + @"/SignIn", content)
+                Client.PostAsync(NfieldServerUri + "SignIn", content)
                       .ContinueWith(responseMessageTask => responseMessageTask.Result.StatusCode == HttpStatusCode.OK)
                       .FlattenExceptions();
         }

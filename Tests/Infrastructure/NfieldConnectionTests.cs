@@ -74,7 +74,7 @@ namespace Nfield.Infrastructure
                 .Setup(httpClient => httpClient.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.BadRequest));
             mockedHttpClient
-                .Setup(httpClient => httpClient.PostAsync(ServerUri + @"/SignIn", It.Is<HttpContent>(c => CheckContent(c, content))))
+                .Setup(httpClient => httpClient.PostAsync(ServerUri + "SignIn", It.Is<HttpContent>(c => CheckContent(c, content))))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldConnection();

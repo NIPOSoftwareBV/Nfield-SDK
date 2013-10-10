@@ -58,7 +58,14 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveAsync(Survey survey)
         {
-            throw new NotImplementedException();
+            if (survey == null)
+            {
+                throw new ArgumentNullException("survey");
+            }
+
+            return
+                Client.DeleteAsync(SurveysApi.AbsoluteUri + "/" + survey.SurveyId)
+                      .FlattenExceptions();
         }
 
         /// <summary>
@@ -266,14 +273,8 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveysApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/surveys"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveys"); }
         }
-
-        private Uri SamplingPointsApi
-        {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/" + SamplingPointsControllerName); }
-        }
-
 
     }
 

@@ -61,7 +61,7 @@ namespace Nfield.Services.Implementation
 
         private Uri OfficesApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/offices"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "offices/"); }
         }
 
     }

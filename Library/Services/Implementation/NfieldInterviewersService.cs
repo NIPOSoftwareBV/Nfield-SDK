@@ -54,7 +54,7 @@ namespace Nfield.Services.Implementation
             }
 
             return
-                Client.DeleteAsync(InterviewersApi + @"/" + interviewer.InterviewerId)
+                Client.DeleteAsync(InterviewersApi + interviewer.InterviewerId)
                       .FlattenExceptions();
         }
 
@@ -76,7 +76,7 @@ namespace Nfield.Services.Implementation
                     TelephoneNumber = interviewer.TelephoneNumber
                 };
 
-            return Client.PatchAsJsonAsync(InterviewersApi + @"/" + interviewer.InterviewerId, updatedInterviewer)
+            return Client.PatchAsJsonAsync(InterviewersApi + interviewer.InterviewerId, updatedInterviewer)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -108,7 +108,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("interviewer");
             }
 
-            return Client.PutAsJsonAsync(InterviewersApi + @"/" + interviewer.InterviewerId, (object)new { Password = password })
+            return Client.PutAsJsonAsync(InterviewersApi + interviewer.InterviewerId, (object)new { Password = password })
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -136,7 +136,7 @@ namespace Nfield.Services.Implementation
 
         private Uri InterviewersApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + @"/interviewers"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "interviewers/"); }
         }
     }
 

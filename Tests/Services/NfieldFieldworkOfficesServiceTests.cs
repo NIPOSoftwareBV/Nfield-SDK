@@ -22,7 +22,6 @@ using Moq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
-using Nfield.Exceptions;
 using Newtonsoft.Json;
 using System.Linq;
 
@@ -31,10 +30,8 @@ namespace Nfield.Services
     /// <summary>
     /// Tests for <see cref="NfieldFieldworkOfficesService"/>
     /// </summary>
-    public class NfieldFieldworkOfficesServiceTests
+    public class NfieldFieldworkOfficesServiceTests : NfieldServiceTestsBase
     {
-        private const string ServiceAddress = @"http://localhost/nfieldapi";
-
         #region QueryAsync
 
         [Fact]
@@ -48,7 +45,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = new Mock<INfieldHttpClient>();
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + @"/offices"))
+                .Setup(client => client.GetAsync(ServiceAddress + "offices/"))
                 .Returns(
                     Task.Factory.StartNew(
                         () =>

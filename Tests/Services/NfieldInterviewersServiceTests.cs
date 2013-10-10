@@ -15,15 +15,12 @@
 
 using System;
 using Nfield.Infrastructure;
-using Nfield.Infrastructure.NipoSoftware.Nfield.Manager.Api.Helpers;
 using Nfield.Services.Implementation;
 using Xunit;
 using Nfield.Models;
 using Moq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net;
-using Nfield.Exceptions;
 using Newtonsoft.Json;
 using System.Linq;
 
@@ -32,10 +29,8 @@ namespace Nfield.Services
     /// <summary>
     /// Tests for <see cref="NfieldInterviewersService"/>
     /// </summary>
-    public class NfieldInterviewersServiceTests
+    public class NfieldInterviewersServiceTests : NfieldServiceTestsBase
     {
-        private const string ServiceAddress = @"http://localhost/nfieldapi";
-
         #region AddAsync
 
         [Fact]
@@ -53,7 +48,7 @@ namespace Nfield.Services
                 .Returns(new Uri(ServiceAddress));
             var content = new StringContent(JsonConvert.SerializeObject(interviewer));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync<Interviewer>(ServiceAddress + @"/interviewers", interviewer))
+                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "interviewers/", interviewer))
                 .Returns(CreateTask(httpStatusCode, content));
 
             var target = new NfieldInterviewersService();
@@ -89,7 +84,7 @@ namespace Nfield.Services
                 .SetupGet(connection => connection.NfieldServerUri)
                 .Returns(new Uri(ServiceAddress));
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + @"/interviewers/" + InterviewerId))
+                .Setup(client => client.DeleteAsync(ServiceAddress + "interviewers/" + InterviewerId))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldInterviewersService();
@@ -112,7 +107,6 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_InterviewerExists_ReturnsInterviewer()
         {
-            const HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest;
             const string InterviewerId = "Interviewer X";
             var interviewer = new Interviewer
             { 
@@ -128,8 +122,8 @@ namespace Nfield.Services
                 .SetupGet(connection => connection.NfieldServerUri)
                 .Returns(new Uri(ServiceAddress));
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync<UpdateInterviewer>(ServiceAddress + @"/interviewers/" + InterviewerId, It.IsAny<UpdateInterviewer>()))
-                .Returns(CreateTask(httpStatusCode, new StringContent(JsonConvert.SerializeObject(interviewer))));
+                .Setup(client => client.PatchAsJsonAsync(ServiceAddress + "interviewers/" + InterviewerId, It.IsAny<UpdateInterviewer>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewer))));
 
             var target = new NfieldInterviewersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -160,7 +154,7 @@ namespace Nfield.Services
                 .SetupGet(connection => connection.NfieldServerUri)
                 .Returns(new Uri(ServiceAddress));
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + @"/interviewers"))
+                .Setup(client => client.GetAsync(ServiceAddress + "interviewers/"))
                 .Returns(CreateTask(httpStatusCode, new StringContent(JsonConvert.SerializeObject(expectedInterviewers))));
 
             var target = new NfieldInterviewersService();
@@ -186,7 +180,6 @@ namespace Nfield.Services
         [Fact]
         public void TestChangePasswordAsync_ServerChangesPassword_ReturnsInterviewer()
         {
-            const HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest;
             const string Password = "Password";
             const string InterviewerId = "Interviewer X";
             var interviewer = new Interviewer {InterviewerId = InterviewerId };
@@ -200,8 +193,8 @@ namespace Nfield.Services
                 .Returns(new Uri(ServiceAddress));
             var content = new StringContent(JsonConvert.SerializeObject(interviewer));
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(ServiceAddress + @"/interviewers/" + InterviewerId, It.IsAny<object>()))
-                .Returns(CreateTask(httpStatusCode, content));
+                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "interviewers/" + InterviewerId, It.IsAny<object>()))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldInterviewersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -212,55 +205,5 @@ namespace Nfield.Services
         }
 
         #endregion
-
-        private Task<HttpResponseMessage> CreateTask(HttpStatusCode httpStatusCode, HttpContent content = null)
-        {
-            return Task.Factory.StartNew(() => new HttpResponseMessage(httpStatusCode) { Content = content });
-        }
-
-        private void UnwrapAggregateException(Task task)
-        {
-            try
-            {
-                task.Wait();
-            }
-            catch (AggregateException ex)
-            {
-                throw ex.InnerException;
-            }
-        }
-                
-        private Mock<INfieldHttpClient> CreateHttpClientMock(HttpStatusCode httpStatusCode)
-        {
-            var mockedHttpClient = new Mock<INfieldHttpClient>();
-
-            //setup the mocked HttpClient to return httpStatusCode for all methods that send a request to the server
-
-            mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync<Interviewer>(It.IsAny<string>(), It.IsAny<Interviewer>()))
-                .Returns(CreateTask(httpStatusCode));
-
-            mockedHttpClient
-                .Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .Returns(CreateTask(httpStatusCode));
-
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.Factory.StartNew<HttpResponseMessage>(() => new HttpResponseMessage(httpStatusCode) { Content = new StringContent("") }));
-
-            mockedHttpClient
-                .Setup(client => client.SendAsync(It.IsAny<HttpRequestMessage>()))
-                .Returns(CreateTask(httpStatusCode));
-
-            mockedHttpClient
-                .Setup(client => client.GetAsync(It.IsAny<string>()))
-                .Returns(CreateTask(httpStatusCode));
-
-            mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync<UpdateInterviewer>(It.IsAny<string>(), It.IsAny<UpdateInterviewer>()))
-                .Returns(Task.Factory.StartNew<HttpResponseMessage>(() => new HttpResponseMessage(httpStatusCode) { Content = new StringContent("") }));
-
-            return mockedHttpClient;
-        }
     }
 }
