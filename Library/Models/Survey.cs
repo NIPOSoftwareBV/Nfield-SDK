@@ -23,6 +23,15 @@ namespace Nfield.Models
     public class Survey
     {
         /// <summary>
+        /// Survey Constructor
+        /// </summary>
+        /// <param name="surveyType">Type of the survey</param>
+        public Survey(SurveyType surveyType)
+        {
+            SurveyType = surveyType;
+        }
+
+        /// <summary>
         /// Survey ID
         /// </summary>
         [JsonProperty]
@@ -36,7 +45,7 @@ namespace Nfield.Models
         /// <summary>
         /// Type of the survey.
         /// </summary>
-        public SurveyType SurveyType { get; set; }
+        public SurveyType SurveyType { get; internal set; }
 
         /// <summary>
         /// Name of the survey client
