@@ -50,7 +50,15 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<Survey> AddAsync(Survey survey)
         {
-            throw new NotImplementedException();
+            if (survey == null)
+            {
+                throw new ArgumentNullException("survey");
+            }
+
+            return Client.PostAsJsonAsync(SurveysApi.AbsoluteUri, survey)
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Survey>(task.Result).Result)
+                         .FlattenExceptions();
         }
 
         /// <summary>

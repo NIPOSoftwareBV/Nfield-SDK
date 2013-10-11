@@ -67,6 +67,40 @@ namespace Nfield.Services
 
         #region AddAsync
 
+        [Fact]
+        public void TestAddAsync_SurveyIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null)));
+        }
+
+        [Fact]
+        public void TestAddAsync_ServerAccepts_ReturnsSurvey()
+        {
+            const HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest;
+            var survey = new Survey { SurveyName = "New Survey", SurveyType = SurveyType.Basic };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(httpStatusCode);
+            mockedNfieldConnection
+                .SetupGet(connection => connection.Client)
+                .Returns(mockedHttpClient.Object);
+            mockedNfieldConnection
+                .SetupGet(connection => connection.NfieldServerUri)
+                .Returns(new Uri(ServiceAddress));
+            var content = new StringContent(JsonConvert.SerializeObject(survey));
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "surveys/", survey))
+                .Returns(CreateTask(httpStatusCode, content));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.AddAsync(survey).Result;
+
+            Assert.Equal(survey.SurveyName, actual.SurveyName);
+            Assert.Equal(survey.SurveyType, actual.SurveyType);
+        }
+
         #endregion
 
         #region RemoveAsync
