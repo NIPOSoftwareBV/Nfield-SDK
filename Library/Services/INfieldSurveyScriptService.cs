@@ -14,37 +14,19 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
+using Nfield.Models;
 
-namespace Nfield.Models
+namespace Nfield.Services
 {
     /// <summary>
-    /// Holds all properties of a sampling point
+    /// Represents a set of methods to read and update the script for a survey.
     /// </summary>
-    public class SamplingPoint
+    public interface INfieldSurveyScriptService
     {
         /// <summary>
-        /// Gets or sets the sampling point unique identifier.
+        /// Gets the script for survey.
         /// </summary>
-        public string SamplingPointId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the sampling point.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the description.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets the instruction link, this is a link to a pdf blob storage.
-        /// </summary>
-        public string Instruction { get; set; }
-
-        /// <summary>
-        /// Gets or sets the associcated fieldwork office id.
-        /// </summary>
-        public string FieldworkOfficeId { get; set; }
+        Task<SurveyScript> GetAsync(string surveyId);
     }
 }

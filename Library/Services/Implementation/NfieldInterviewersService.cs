@@ -29,7 +29,6 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldInterviewersService : INfieldInterviewersService, INfieldConnectionClientObject
     {
-
         #region Implementation of INfieldInterviewersService
 
         /// <summary>

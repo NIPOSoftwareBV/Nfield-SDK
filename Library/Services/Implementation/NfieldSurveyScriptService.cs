@@ -14,8 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -25,24 +23,24 @@ using Nfield.Models;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldFieldworkOfficesService"/>
+    /// Implementation of <see cref="INfieldSurveyScriptService"/>
     /// </summary>
-    internal class NfieldFieldworkOfficesService : INfieldFieldworkOfficesService, INfieldConnectionClientObject
+    internal class NfieldSurveyScriptService : INfieldSurveyScriptService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldFieldworkOfficesService
+        #region Implementation of INfieldSurveyScriptService
 
         /// <summary>
-        /// See <see cref="INfieldFieldworkOfficesService.QueryAsync"/>
+        /// See <see cref="INfieldSurveyScriptService.GetAsync"/>
         /// </summary>
-        public Task<IQueryable<FieldworkOffice>> QueryAsync()
+        public Task<SurveyScript> GetAsync(string surveyId)
         {
-            return ConnectionClient.Client.GetAsync(OfficesApi.AbsoluteUri)
-             .ContinueWith(
-                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-             .ContinueWith(
-                 stringTask =>
-                 JsonConvert.DeserializeObject<List<FieldworkOffice>>(stringTask.Result).AsQueryable())
-             .FlattenExceptions();
+            return Client.GetAsync(SurveyScriptApi.AbsoluteUri + surveyId)
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(
+                    stringTask =>
+                        JsonConvert.DeserializeObject<SurveyScript>(stringTask.Result))
+                .FlattenExceptions();
         }
 
         #endregion
@@ -58,10 +56,14 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
-        private Uri OfficesApi
+        private INfieldHttpClient Client
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "offices/"); }
+            get { return ConnectionClient.Client; }
         }
 
+        private Uri SurveyScriptApi
+        {
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "SurveyScript/"); }
+        }
     }
 }
