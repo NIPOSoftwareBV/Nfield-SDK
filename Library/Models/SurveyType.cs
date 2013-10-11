@@ -28,5 +28,10 @@ namespace Nfield.Models
         /// Survey that sampling points assigned
         /// </summary>
         Advanced,
+
+        /// <summary>
+        /// Survey that has sampling points with targets
+        /// </summary>
+        EuroBarometer,
     }
 }
