@@ -73,7 +73,25 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<Survey> UpdateAsync(Survey survey)
         {
-            throw new NotImplementedException();
+            if (survey == null)
+            {
+                throw new ArgumentNullException("survey");
+            }
+
+            var updatedSurvey = new UpdateSurvey
+            {
+                ClientName = survey.ClientName,
+                Description = survey.Description,
+                SurveyName = survey.SurveyName,
+                SurveyType = survey.SurveyType
+            };
+
+            return Client.PatchAsJsonAsync(SurveysApi + survey.SurveyId, updatedSurvey)
+             .ContinueWith(
+                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+             .ContinueWith(
+                 stringTask => JsonConvert.DeserializeObjectAsync<Survey>(stringTask.Result).Result)
+             .FlattenExceptions();
         }
 
         /// <summary>
@@ -295,6 +313,32 @@ namespace Nfield.Services.Implementation
     internal class UpdateSamplingPointQuotaTarget
     {
         public int? Target { get; set; }
+    }
+
+    /// <summary>
+    /// Update model for a survey
+    /// </summary>
+    internal class UpdateSurvey
+    {
+        /// <summary>
+        /// Name of the survey
+        /// </summary>
+        public string SurveyName { get; set; }
+
+        /// <summary>
+        /// Type of the survey.
+        /// </summary>
+        public SurveyType SurveyType { get; set; }
+
+        /// <summary>
+        /// Name of the survey client
+        /// </summary>
+        public string ClientName { get; set; }
+
+        /// <summary>
+        /// The description of the survey
+        /// </summary>
+        public string Description { get; set; }
     }
 
 }

@@ -147,6 +147,42 @@ namespace Nfield.Services
 
         #region UpdateAsync
 
+        [Fact]
+        public void TestUpdateAsync_SurveyArgumentIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null)));
+        }
+
+        [Fact]
+        public void TestUpdateAsync_InterviewerExists_ReturnsInterviewer()
+        {
+            const string surveyId = "aSurveyId";
+            var survey = new Survey
+            {
+                SurveyId = surveyId,
+                Description = "updated description"
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(HttpStatusCode.BadRequest);
+            mockedNfieldConnection
+                .SetupGet(connection => connection.Client)
+                .Returns(mockedHttpClient.Object);
+            mockedNfieldConnection
+                .SetupGet(connection => connection.NfieldServerUri)
+                .Returns(new Uri(ServiceAddress));
+            mockedHttpClient
+                .Setup(client => client.PatchAsJsonAsync(ServiceAddress + "surveys/" + surveyId, It.IsAny<UpdateSurvey>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(surveyId))));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.UpdateAsync(survey).Result;
+
+            Assert.Equal(survey.Description, actual.Description);
+        }
+
         #endregion
 
         #region SamplingPointQueryAsync
