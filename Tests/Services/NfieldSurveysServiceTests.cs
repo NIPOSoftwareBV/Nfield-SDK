@@ -65,48 +65,6 @@ namespace Nfield.Services
 
         #endregion
 
-        #region QuotaQueryAsync
-
-        [Fact]
-        public void TestQuotaQueryAsync_ServerReturnsQuery_ReturnsListWithQuotaLevel()
-        {
-            const string levelId = "LevelId";
-            const string name = "Name";
-
-            const HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
-            var expectedQuotaLevel = new QuotaLevel
-            { 
-                Id = levelId,
-                Name = name
-            };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(httpStatusCode);
-            mockedNfieldConnection
-                .SetupGet(connection => connection.Client)
-                .Returns(mockedHttpClient.Object);
-            mockedNfieldConnection
-                .SetupGet(connection => connection.NfieldServerUri)
-                .Returns(new Uri(ServiceAddress));
-            mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys/1/quota"))
-                .Returns(CreateTask(httpStatusCode, new StringContent(JsonConvert.SerializeObject(expectedQuotaLevel))));
-
-            var target = new NfieldSurveysService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actualQuotaLevel = target.QuotaQueryAsync("1").Result;
-
-            Assert.Equal(expectedQuotaLevel.Id, actualQuotaLevel.Id);
-            Assert.Equal(expectedQuotaLevel.Name, actualQuotaLevel.Name);
-
-        }
-
-        #endregion 
-
-        #region GetExtendedAsync
-
-        #endregion
-
         #region AddAsync
 
         #endregion
@@ -181,6 +139,44 @@ namespace Nfield.Services
             var actual = target.UpdateAsync(survey).Result;
 
             Assert.Equal(survey.Description, actual.Description);
+        }
+
+        #endregion
+
+        #region QuotaQueryAsync
+
+        [Fact]
+        public void TestQuotaQueryAsync_ServerReturnsQuery_ReturnsListWithQuotaLevel()
+        {
+            const string levelId = "LevelId";
+            const string name = "Name";
+
+            const HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
+            var expectedQuotaLevel = new QuotaLevel
+            { 
+                Id = levelId,
+                Name = name
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(httpStatusCode);
+            mockedNfieldConnection
+                .SetupGet(connection => connection.Client)
+                .Returns(mockedHttpClient.Object);
+            mockedNfieldConnection
+                .SetupGet(connection => connection.NfieldServerUri)
+                .Returns(new Uri(ServiceAddress));
+            mockedHttpClient
+                .Setup(client => client.GetAsync(ServiceAddress + "surveys/1/quota"))
+                .Returns(CreateTask(httpStatusCode, new StringContent(JsonConvert.SerializeObject(expectedQuotaLevel))));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualQuotaLevel = target.QuotaQueryAsync("1").Result;
+
+            Assert.Equal(expectedQuotaLevel.Id, actualQuotaLevel.Id);
+            Assert.Equal(expectedQuotaLevel.Name, actualQuotaLevel.Name);
+
         }
 
         #endregion
