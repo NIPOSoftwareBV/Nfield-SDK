@@ -34,7 +34,7 @@ namespace Nfield.Services
         #region GetAsync
 
         [Fact]
-        public void TestGetAsync_BlahBlahBlah()
+        public void TestGetAsync_WhenScriptExits_ReturnsCorrectScript()
         {
             const string surveyId = "SurveyId";
             const string script = "this is the script";
