@@ -45,35 +45,38 @@ namespace Nfield.Services
             }
         }
 
-        internal Mock<INfieldHttpClient> CreateHttpClientMock(HttpStatusCode httpStatusCode)
+        internal Mock<INfieldHttpClient> CreateHttpClientMock(Mock<INfieldConnectionClient> mockedNfieldConnection)
         {
             var mockedHttpClient = new Mock<INfieldHttpClient>();
+
+            mockedNfieldConnection.SetupGet(connection => connection.Client).Returns(mockedHttpClient.Object);
+            mockedNfieldConnection.SetupGet(connection => connection.NfieldServerUri).Returns(new Uri(ServiceAddress));
 
             //setup the mocked HttpClient to return httpStatusCode for all methods that send a request to the server
 
             mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<Interviewer>()))
-                .Returns(CreateTask(httpStatusCode));
+                .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
                 .Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .Returns(CreateTask(httpStatusCode));
+                .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.Factory.StartNew(() => new HttpResponseMessage(httpStatusCode) { Content = new StringContent("") }));
+                .Returns(Task.Factory.StartNew(() => new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
 
             mockedHttpClient
                 .Setup(client => client.SendAsync(It.IsAny<HttpRequestMessage>()))
-                .Returns(CreateTask(httpStatusCode));
+                .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
                 .Setup(client => client.GetAsync(It.IsAny<string>()))
-                .Returns(CreateTask(httpStatusCode));
+                .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(It.IsAny<string>(), It.IsAny<UpdateInterviewer>()))
-                .Returns(Task.Factory.StartNew(() => new HttpResponseMessage(httpStatusCode) { Content = new StringContent("") }));
+                .Returns(Task.Factory.StartNew(() => new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
 
             return mockedHttpClient;
         }
