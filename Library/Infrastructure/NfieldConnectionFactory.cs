@@ -29,7 +29,8 @@ namespace Nfield.Infrastructure
         public static INfieldConnection Create(Uri nfieldServerUri)
         {
             var connection = DependencyResolver.Current.Resolve<NfieldConnection>();
-            connection.NfieldServerUri = nfieldServerUri;
+            var url = nfieldServerUri.ToString().TrimEnd('/') + "/";
+            connection.NfieldServerUri = new Uri(url);
 
             return connection;
         }
