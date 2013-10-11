@@ -14,8 +14,10 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.Services;
 using Ninject;
 
@@ -35,13 +37,13 @@ namespace Nfield.SDK.Samples
             {
                 InitializeNfield(kernel);
 
-                const string serverUrl = "http://localhost:82/v1";
+                const string serverUrl = "http://localhost:81/v1";
 
                 // First step is to get an INfieldConnection which provides services used for data access and manipulation. 
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
                 // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
-                connection.SignInAsync("testdomain", "user1", "password123").Wait();
+                connection.SignInAsync("lautest", "da", "Pa$$w0rd123").Wait();
 
                 // Request the Interviewers service to manage interviewers.
                 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
@@ -80,6 +82,31 @@ namespace Nfield.SDK.Samples
                 NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(surveysService);
 
                 samplingPointsManager.QueryForSamplingPoints("some surveyId");
+
+                
+                //
+                // Survey Management
+                //
+
+                // Create
+                var createdSurvey = surveysService.AddAsync(new Survey
+                {
+                    ClientName = "clientName",
+                    Description = "description",
+                    SurveyName = "abc",
+                    SurveyType = SurveyType.Advanced
+                }).Result;
+
+                // Update
+                createdSurvey.ClientName = "Nfield";
+                surveysService.UpdateAsync(createdSurvey);
+
+                // Query
+                var query = surveysService.QueryAsync().Result.Where(s => s.SurveyName == "Nfield");
+                var survey = query.FirstOrDefault();
+                
+                // Delete
+                surveysService.RemoveAsync(survey).Wait();
             }
         }
 
