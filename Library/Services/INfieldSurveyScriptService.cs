@@ -28,10 +28,5 @@ namespace Nfield.Services
         /// Gets the script for survey.
         /// </summary>
         Task<SurveyScript> GetAsync(string surveyId);
-
-        /// <summary>
-        /// Update the script for survey.
-        /// </summary>
-        Task<SurveyScript> UpdateAsync(string surveyId, SurveyScript surveyScript);
     }
 }

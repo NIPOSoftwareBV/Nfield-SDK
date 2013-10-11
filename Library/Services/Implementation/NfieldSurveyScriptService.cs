@@ -43,29 +43,6 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        /// <summary>
-        /// See <see cref="INfieldSurveyScriptService.UpdateAsync"/>
-        /// </summary>
-        public Task<SurveyScript> UpdateAsync(string surveyId, SurveyScript surveyScript)
-        {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-
-            if (surveyScript == null)
-            {
-                throw new ArgumentNullException("surveyScript");
-            }
-
-            return Client.PostAsJsonAsync(SurveyScriptApi + surveyId, surveyScript)
-                         .ContinueWith(
-                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObjectAsync<SurveyScript>(stringTask.Result).Result)
-                         .FlattenExceptions();
-        }
-
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
