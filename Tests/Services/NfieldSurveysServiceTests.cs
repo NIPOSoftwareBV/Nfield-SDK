@@ -50,7 +50,7 @@ namespace Nfield.Services
                 .SetupGet(connection => connection.NfieldServerUri)
                 .Returns(new Uri(ServiceAddress));
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys"))
+                .Setup(client => client.GetAsync(ServiceAddress + "surveys/"))
                 .Returns(CreateTask(httpStatusCode, new StringContent(JsonConvert.SerializeObject(expectedSurveys))));
 
             var target = new NfieldSurveysService();

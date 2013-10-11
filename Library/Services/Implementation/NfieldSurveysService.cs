@@ -64,7 +64,7 @@ namespace Nfield.Services.Implementation
             }
 
             return
-                Client.DeleteAsync(SurveysApi.AbsoluteUri + "/" + survey.SurveyId)
+                Client.DeleteAsync(SurveysApi.AbsoluteUri + survey.SurveyId)
                       .FlattenExceptions();
         }
 
@@ -82,7 +82,7 @@ namespace Nfield.Services.Implementation
         /// <returns></returns>
         public Task<QuotaLevel> QuotaQueryAsync(string surveyId)
         {
-            string uri = string.Format(@"{0}/{1}/{2}", SurveysApi.AbsoluteUri, surveyId, QuotaControllerName);
+            string uri = string.Format(@"{0}{1}/{2}", SurveysApi.AbsoluteUri, surveyId, QuotaControllerName);
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -98,7 +98,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId)
         {
-            string uri = string.Format(@"{0}/{1}/{2}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName);
+            string uri = string.Format(@"{0}{1}/{2}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName);
             
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -114,7 +114,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId)
         {
-            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPointId);
+            string uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPointId);
             
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -142,7 +142,7 @@ namespace Nfield.Services.Implementation
                 FieldworkOfficeId = samplingPoint.FieldworkOfficeId
             };
 
-            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
+            string uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
 
             return Client.PatchAsJsonAsync(uri, updatedSamplingPoint)
                          .ContinueWith(
@@ -157,7 +157,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint)
         {
-            string uri = string.Format(@"{0}/{1}/{2}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName);
+            string uri = string.Format(@"{0}{1}/{2}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName);
             return Client.PostAsJsonAsync(uri, samplingPoint)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SamplingPoint>(task.Result).Result)
@@ -173,7 +173,7 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("samplingPoint");
             }
-            string uri = string.Format(@"{0}/{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
+            string uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
             return Client.DeleteAsync(uri)
                         .FlattenExceptions();
         }
@@ -183,7 +183,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<SamplingPointQuotaTarget>> SamplingPointQuotaTargetsQueryAsync(string surveyId, string samplingPointId)
         {
-            string uri = string.Format(@"{0}/{1}/{2}/{3}/{4}", SurveysApi.AbsoluteUri, surveyId,
+            string uri = string.Format(@"{0}{1}/{2}/{3}/{4}", SurveysApi.AbsoluteUri, surveyId,
                 SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName);
 
             return Client.GetAsync(uri)
@@ -200,7 +200,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetQueryAsync(string surveyId, string samplingPointId, string levelId)
         {
-            string uri = string.Format(@"{0}/{1}/{2}/{3}/{4}/{5}", SurveysApi.AbsoluteUri, surveyId,
+            string uri = string.Format(@"{0}{1}/{2}/{3}/{4}/{5}", SurveysApi.AbsoluteUri, surveyId,
                 SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName, levelId);
 
             return Client.GetAsync(uri)
@@ -227,7 +227,7 @@ namespace Nfield.Services.Implementation
                 Target = samplingPointQuotaTarget.Target
             };
 
-            string uri = string.Format(@"{0}/{1}/{2}/{3}/{4}/{5}", SurveysApi.AbsoluteUri, surveyId,
+            string uri = string.Format(@"{0}{1}/{2}/{3}/{4}/{5}", SurveysApi.AbsoluteUri, surveyId,
                 SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName,
                 samplingPointQuotaTarget.LevelId);
 
@@ -273,7 +273,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveysApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveys"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveys/"); }
         }
 
     }
