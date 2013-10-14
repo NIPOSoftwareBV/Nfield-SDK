@@ -96,16 +96,22 @@ namespace Nfield.SDK.Samples
                     SurveyName = "abc"
                 }).Result;
 
-                // Update - Note SurveyId and SurveyType are not allowed to be changed
+                // Update
+                // Note SurveyId and SurveyType are not allowed to be changed
                 createdSurvey.ClientName = "Nfield";
-                surveysService.UpdateAsync(createdSurvey);
+                surveysService.UpdateAsync(createdSurvey).Wait(); // We do nothing with the result here
 
                 // Query
-                var query = surveysService.QueryAsync().Result.Where(s => s.SurveyName == "Nfield");
+                var query = surveysService.QueryAsync().Result.Where(s => s.ClientName == "Nfield");
                 var survey = query.FirstOrDefault();
 
                 // Delete
                 surveysService.RemoveAsync(survey).Wait();
+
+                // Get ODIN script for survey
+                // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
+                var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
+                var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
             }
         }
 

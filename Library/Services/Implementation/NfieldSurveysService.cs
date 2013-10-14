@@ -333,11 +333,6 @@ namespace Nfield.Services.Implementation
         public string SurveyName { get; set; }
 
         /// <summary>
-        /// Type of the survey.
-        /// </summary>
-        public SurveyType SurveyType { get; set; }
-
-        /// <summary>
         /// Name of the survey client
         /// </summary>
         public string ClientName { get; set; }
