@@ -14,9 +14,12 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Nfield.Models
 {
+    [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
     public enum SurveyType
     {
         /// <summary>
