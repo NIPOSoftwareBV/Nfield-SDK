@@ -43,7 +43,7 @@ namespace Nfield.SDK.Samples
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
                 // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
-                connection.SignInAsync("lautest", "da", "Pa$$w0rd123").Wait();
+                connection.SignInAsync("neil", "da", "Password12").Wait();
 
                 // Request the Interviewers service to manage interviewers.
                 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
@@ -88,14 +88,24 @@ namespace Nfield.SDK.Samples
                 // Survey Management
                 //
 
+                INfieldSurveyScriptService surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
+
+                /*foreach (var survey2 in surveysService.QueryAsync().Result)
+                {*/
+                var bjorn = surveyScriptService.GetAsync("9996cdcb-3256-46aa-8c1b-e67c1881a18f").Result;
+                //}
+                
+
                 // Create
-                var createdSurvey = surveysService.AddAsync(new Survey
+                var createSurveyTask = surveysService.AddAsync(new Survey
                 {
                     ClientName = "clientName",
                     Description = "description",
                     SurveyName = "abc",
                     SurveyType = SurveyType.Advanced
-                }).Result;
+                });
+
+                var createdSurvey = createSurveyTask.Result;
 
                 // Update
                 createdSurvey.ClientName = "Nfield";
