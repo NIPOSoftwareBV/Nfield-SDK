@@ -44,6 +44,9 @@ namespace Nfield.Services
 
         /// <summary>
         /// Updates the survey.
+        /// 
+        /// The only properties that can be changed are
+        /// SurveyName, ClientName and Description
         /// </summary>
         Task<Survey> UpdateAsync(Survey survey);
 

@@ -91,7 +91,6 @@ namespace Nfield.Services.Implementation
                 ClientName = survey.ClientName,
                 Description = survey.Description,
                 SurveyName = survey.SurveyName,
-                SurveyType = survey.SurveyType
             };
 
             return Client.PatchAsJsonAsync(SurveysApi + survey.SurveyId, updatedSurvey)

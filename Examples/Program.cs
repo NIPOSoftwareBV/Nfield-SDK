@@ -96,7 +96,7 @@ namespace Nfield.SDK.Samples
                     SurveyName = "abc"
                 }).Result;
 
-                // Update
+                // Update - Note SurveyId and SurveyType are not allowed to be changed
                 createdSurvey.ClientName = "Nfield";
                 surveysService.UpdateAsync(createdSurvey);
 
