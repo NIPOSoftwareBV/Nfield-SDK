@@ -43,8 +43,8 @@ namespace Nfield.SDK.Samples
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
                 // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
-                connection.SignInAsync("lautest", "da", "Pa$$w0rd123").Wait();
 
+                connection.SignInAsync("testdomain", "user1", "password123").Wait();
                 // Request the Interviewers service to manage interviewers.
                 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
 
