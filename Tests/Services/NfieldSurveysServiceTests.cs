@@ -37,8 +37,8 @@ namespace Nfield.Services
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveys()
         {
             var expectedSurveys = new Survey[]
-            { new Survey { SurveyId = "TestSurvey" },
-              new Survey { SurveyId = "AnotherTestSurvey" }
+            { new Survey(SurveyType.Basic) { SurveyId = "TestSurvey" },
+              new Survey(SurveyType.Advanced) { SurveyId = "AnotherTestSurvey" }
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -70,7 +70,7 @@ namespace Nfield.Services
         [Fact]
         public void TestAddAsync_ServerAccepts_ReturnsSurvey()
         {
-            var survey = new Survey { SurveyName = "New Survey", SurveyType = SurveyType.Basic };
+            var survey = new Survey(SurveyType.Basic) { SurveyName = "New Survey" };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(survey));
@@ -102,7 +102,7 @@ namespace Nfield.Services
         public void TestRemoveAsync_ServerRemovedSurvey_DoesNotThrow()
         {
             const string SurveyId = "Survey X";
-            var survey = new Survey { SurveyId = SurveyId };
+            var survey = new Survey(SurveyType.Basic) { SurveyId = SurveyId };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
@@ -130,7 +130,7 @@ namespace Nfield.Services
         public void TestUpdateAsync_InterviewerExists_ReturnsInterviewer()
         {
             const string surveyId = "aSurveyId";
-            var survey = new Survey
+            var survey = new Survey(SurveyType.Basic)
             {
                 SurveyId = surveyId,
                 Description = "updated description"
@@ -215,7 +215,7 @@ namespace Nfield.Services
         public void TestSamplingPointAddAsync_ServerAcceptsSamplingPoint_ReturnsSamplingPoint()
         {
             var office = new FieldworkOffice { OfficeId = "OfficeId" };
-            var survey = new Survey { SurveyId = "SurveyId" };
+            var survey = new Survey(SurveyType.Basic) { SurveyId = "SurveyId" };
             var samplingPoint = new SamplingPoint
             {
                 SamplingPointId = "SamplingPointId",

@@ -43,7 +43,7 @@ namespace Nfield.SDK.Samples
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
                 // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
-                connection.SignInAsync("neil", "da", "Password12").Wait();
+                connection.SignInAsync("lautest", "da", "Pa$$w0rd123").Wait();
 
                 // Request the Interviewers service to manage interviewers.
                 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
@@ -73,9 +73,9 @@ namespace Nfield.SDK.Samples
 
                 interviewersManager.QueryForInterviewers();
                 interviewersManager.QueryForInterviewersAsync();
-                
+
                 interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
-                interviewersManager.RemoveInterviewer(interviewer2); 
+                interviewersManager.RemoveInterviewer(interviewer2);
 
                 // Example of performing operations on sampling points.
                 INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
@@ -83,29 +83,18 @@ namespace Nfield.SDK.Samples
 
                 samplingPointsManager.QueryForSamplingPoints("some surveyId");
 
-                
+
                 //
                 // Survey Management
                 //
 
-                INfieldSurveyScriptService surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
-
-                /*foreach (var survey2 in surveysService.QueryAsync().Result)
-                {*/
-                var bjorn = surveyScriptService.GetAsync("9996cdcb-3256-46aa-8c1b-e67c1881a18f").Result;
-                //}
-                
-
                 // Create
-                var createSurveyTask = surveysService.AddAsync(new Survey
+                var createdSurvey = surveysService.AddAsync(new Survey(SurveyType.Advanced)
                 {
                     ClientName = "clientName",
                     Description = "description",
-                    SurveyName = "abc",
-                    SurveyType = SurveyType.Advanced
-                });
-
-                var createdSurvey = createSurveyTask.Result;
+                    SurveyName = "abc"
+                }).Result;
 
                 // Update
                 createdSurvey.ClientName = "Nfield";
@@ -114,7 +103,7 @@ namespace Nfield.SDK.Samples
                 // Query
                 var query = surveysService.QueryAsync().Result.Where(s => s.SurveyName == "Nfield");
                 var survey = query.FirstOrDefault();
-                
+
                 // Delete
                 surveysService.RemoveAsync(survey).Wait();
             }
