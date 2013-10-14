@@ -73,9 +73,9 @@ namespace Nfield.SDK.Samples
 
                 interviewersManager.QueryForInterviewers();
                 interviewersManager.QueryForInterviewersAsync();
-                
+
                 interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
-                interviewersManager.RemoveInterviewer(interviewer2); 
+                interviewersManager.RemoveInterviewer(interviewer2);
 
                 // Example of performing operations on sampling points.
                 INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
@@ -83,18 +83,17 @@ namespace Nfield.SDK.Samples
 
                 samplingPointsManager.QueryForSamplingPoints("some surveyId");
 
-                
+
                 //
                 // Survey Management
                 //
 
                 // Create
-                var createdSurvey = surveysService.AddAsync(new Survey
+                var createdSurvey = surveysService.AddAsync(new Survey(SurveyType.Advanced)
                 {
                     ClientName = "clientName",
                     Description = "description",
-                    SurveyName = "abc",
-                    SurveyType = SurveyType.Advanced
+                    SurveyName = "abc"
                 }).Result;
 
                 // Update
@@ -104,7 +103,7 @@ namespace Nfield.SDK.Samples
                 // Query
                 var query = surveysService.QueryAsync().Result.Where(s => s.SurveyName == "Nfield");
                 var survey = query.FirstOrDefault();
-                
+
                 // Delete
                 surveysService.RemoveAsync(survey).Wait();
             }
