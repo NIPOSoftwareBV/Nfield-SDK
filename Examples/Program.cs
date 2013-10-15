@@ -54,18 +54,24 @@ namespace Nfield.SDK.Samples
                 // This sample shows various ways of performing synchronous and asynchronous operations on Interviewers.
                 var t1 = interviewersManager.AddInterviewerAsync();
                 var interviewer2 = interviewersManager.AddInterviewer();
+
+                // Update the interviewer name asynchronously
                 interviewer2.FirstName = "Harry";
                 var t2 = interviewersManager.UpdateInterviewerAsync(interviewer2);
 
+                // Wait for all pending tasks to finish
                 Task.WaitAll(t1, t2);
 
+                // Extract the results from the asynchronous tasks
                 interviewer2 = t2.Result;
                 var interviewer1 = t1.Result;
+
+                // Update interviewer name synchronous
                 interviewer1.EmailAddress = interviewer1.EmailAddress + "changed";
                 interviewer1.FirstName = "Bob";
-
                 interviewer1 = interviewersManager.UpdateInterviewer(interviewer1);
 
+                // Change password for interviewer, asynchronously and synchronously
                 var t3 = interviewersManager.ChangePasswordAsync(interviewer2, "ab12345");
                 interviewersManager.ChangePassword(interviewer1, "12345ab");
 
@@ -76,19 +82,19 @@ namespace Nfield.SDK.Samples
 
                 interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
                 interviewersManager.RemoveInterviewer(interviewer2);
-
-                // Example of performing operations on sampling points.
+                
+                // Request the Survey service to manage surveys.
                 INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
                 NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(surveysService);
 
+                // Example of performing operations on sampling points.
                 samplingPointsManager.QueryForSamplingPoints("some surveyId");
-
-
+                
                 //
                 // Survey Management
                 //
 
-                // Create
+                // Create survey
                 var createdSurvey = surveysService.AddAsync(new Survey(SurveyType.Advanced)
                 {
                     ClientName = "clientName",
@@ -96,15 +102,15 @@ namespace Nfield.SDK.Samples
                     SurveyName = "abc"
                 }).Result;
 
-                // Update
+                // Update survey
                 createdSurvey.ClientName = "Nfield";
                 surveysService.UpdateAsync(createdSurvey);
 
-                // Query
+                // Query survey
                 var query = surveysService.QueryAsync().Result.Where(s => s.SurveyName == "Nfield");
                 var survey = query.FirstOrDefault();
 
-                // Delete
+                // Delete survey
                 surveysService.RemoveAsync(survey).Wait();
             }
         }
