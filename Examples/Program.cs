@@ -43,8 +43,8 @@ namespace Nfield.SDK.Samples
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
                 // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
-                connection.SignInAsync("lautest", "da", "Pa$$w0rd123").Wait();
 
+                connection.SignInAsync("testdomain", "user1", "password123").Wait();
                 // Request the Interviewers service to manage interviewers.
                 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
 
@@ -103,15 +103,21 @@ namespace Nfield.SDK.Samples
                 }).Result;
 
                 // Update survey
+                // Note SurveyId and SurveyType are not allowed to be changed
                 createdSurvey.ClientName = "Nfield";
-                surveysService.UpdateAsync(createdSurvey);
+                surveysService.UpdateAsync(createdSurvey).Wait(); // We do nothing with the result here
 
                 // Query survey
-                var query = surveysService.QueryAsync().Result.Where(s => s.SurveyName == "Nfield");
+                var query = surveysService.QueryAsync().Result.Where(s => s.ClientName == "Nfield");
                 var survey = query.FirstOrDefault();
 
                 // Delete survey
                 surveysService.RemoveAsync(survey).Wait();
+
+                // Get ODIN script for survey
+                // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
+                var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
+                var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
             }
         }
 
