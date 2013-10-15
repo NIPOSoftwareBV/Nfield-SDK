@@ -83,7 +83,7 @@ namespace Nfield.SDK.Samples
                 interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
                 interviewersManager.RemoveInterviewer(interviewer2);
                 
-                // Request the Survey service to manage surveys.
+                // Request the Survey service and the sampling point managment
                 INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
                 NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(surveysService);
 
