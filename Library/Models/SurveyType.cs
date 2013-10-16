@@ -19,6 +19,9 @@ using Newtonsoft.Json.Converters;
 
 namespace Nfield.Models
 {
+    /// <summary>
+    /// Survey Types.
+    /// </summary>
     [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
     public enum SurveyType
     {
