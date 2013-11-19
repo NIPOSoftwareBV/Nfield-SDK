@@ -14,30 +14,35 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// Survey types
+    /// BackgroundTaskStatus.
+    /// Represents to current stage in the life cycle of BackgroundTask.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
-    public enum SurveyType
+    public enum BackgroundTaskStatus
     {
         /// <summary>
-        /// Basic survey type, this survey type has no features
+        /// The task has been initialized
         /// </summary>
-        Basic,
-
+        Created = 0,
         /// <summary>
-        /// Survey that sampling points assigned
+        /// The task is runing but has not completed yet
         /// </summary>
-        Advanced,
-
+        Running = 1,
         /// <summary>
-        /// Survey that has sampling points with targets
+        /// The task has been canceled
         /// </summary>
-        EuroBarometer,
+        Canceled = 2,
+        /// <summary>
+        /// The task completed due to an exception
+        /// </summary>
+        Faulted = 3,
+        /// <summary>
+        /// The task completed execution successfully
+        /// </summary>
+        SuccessfullyCompleted = 4
+
     }
 }

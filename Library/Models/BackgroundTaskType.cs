@@ -14,30 +14,25 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// Survey types
+    /// All possible actions that an user can do that activates a background task.
+    /// For the user those actions are visible on the 'Jobs' page.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
-    public enum SurveyType
+    public enum BackgroundTaskType
     {
         /// <summary>
-        /// Basic survey type, this survey type has no features
+        /// This is not an actual task.
         /// </summary>
-        Basic,
+        None = 0,
 
         /// <summary>
-        /// Survey that sampling points assigned
+        /// The task to prepare a download of survey data
         /// </summary>
-        Advanced,
+        DownloadSurveyData = 1,
 
-        /// <summary>
-        /// Survey that has sampling points with targets
-        /// </summary>
-        EuroBarometer,
+
     }
 }

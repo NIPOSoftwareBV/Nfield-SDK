@@ -14,30 +14,24 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Linq;
+using Nfield.Models;
+using Nfield.Services;
+using Nfield.Services.Implementation;
 
-namespace Nfield.Models
+namespace Nfield.Extensions
 {
     /// <summary>
-    /// Survey types
+    /// Extensions to make the asynchronous methods of <see cref="NfieldBackgroundTasksService"/> synchronous
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
-    public enum SurveyType
+    public static class NfieldBackgroundTasksServiceExtensions
     {
         /// <summary>
-        /// Basic survey type, this survey type has no features
+        /// A synchronous version of <see cref="INfieldBackgroundTasksService.QueryAsync"/>
         /// </summary>
-        Basic,
-
-        /// <summary>
-        /// Survey that sampling points assigned
-        /// </summary>
-        Advanced,
-
-        /// <summary>
-        /// Survey that has sampling points with targets
-        /// </summary>
-        EuroBarometer,
+        public static IQueryable<BackgroundTask> Query(this INfieldBackgroundTasksService backgroundTasksService)
+        {
+            return backgroundTasksService.QueryAsync().Result;
+        }
     }
 }

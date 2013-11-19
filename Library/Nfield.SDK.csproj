@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\NfieldHttpResponseException.cs" />
     <Compile Include="Exceptions\NfieldErrorException.cs" />
+    <Compile Include="Extensions\NfieldBackgroundTasksServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldConnectionExtensions.cs" />
     <Compile Include="Extensions\NfieldInterviewersServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldSurveysServiceExtensions.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="Infrastructure\NfieldConnection.cs" />
     <Compile Include="Infrastructure\NfieldConnectionFactory.cs" />
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
+    <Compile Include="Models\BackgroundTask.cs" />
+    <Compile Include="Models\BackgroundTaskStatus.cs" />
+    <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
     <Compile Include="Models\QuotaAttribute.cs" />
@@ -95,7 +99,9 @@
     <Compile Include="Models\SurveyType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
+    <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
+    <Compile Include="Services\INfieldBackgroundTasksService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />
