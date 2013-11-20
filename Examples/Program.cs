@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Infrastructure;
@@ -38,7 +39,7 @@ namespace Nfield.SDK.Samples
                 InitializeNfield(kernel);
 
                 const string serverUrl = "http://localhost:81/v1";
-                                                                                     
+                                                             
                 // First step is to get an INfieldConnection which provides services used for data access and manipulation. 
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
@@ -120,7 +121,7 @@ namespace Nfield.SDK.Samples
                 var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
                 var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
                 
-                // Example of a download data request
+                // Example of a download data request: filtering testdata collected today
                 var surveyDataService = connection.GetService<INfieldSurveyDataService>();
 
                 var myRequest = new SurveyDownloadDataRequest
@@ -134,9 +135,11 @@ namespace Nfield.SDK.Samples
                     DownloadParaData = false,
                     DownloadTestInterviewData = true,
                     DownloadFileName = "MyFileName",
+                    StartDate = DateTime.Today.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time start of today
+                    EndDate = DateTime.Today.AddDays(1).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time end of today
                     SurveyId = "SomeSurveyId"
                 };
-
+                
                 var task = surveyDataService.PostAsync(myRequest).Result;
 
                 // request the background tasks service 
