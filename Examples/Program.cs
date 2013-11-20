@@ -38,14 +38,14 @@ namespace Nfield.SDK.Samples
                 InitializeNfield(kernel);
 
                 const string serverUrl = "http://localhost:81/v1";
-
+                                                                                     
                 // First step is to get an INfieldConnection which provides services used for data access and manipulation. 
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
                 // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
 
                 connection.SignInAsync("testdomain", "user1", "password123").Wait();
-
+                
                 // Request the Interviewers service to manage interviewers.
                 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
 
@@ -119,12 +119,31 @@ namespace Nfield.SDK.Samples
                 // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
                 var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
                 var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
+                
+                // Example of a download data request
+                var surveyDataService = connection.GetService<INfieldSurveyDataService>();
+
+                var myRequest = new SurveyDownloadDataRequest
+                {
+                    DownloadSuccessfulLiveInterviewData = false,
+                    DownloadNotSuccessfulLiveInterviewData = false,
+                    DownloadOpenAnswerData = true,
+                    DownloadClosedAnswerData = true,
+                    DownloadSuspendedLiveInterviewData = false,
+                    DownloadCapturedMedia = false,
+                    DownloadParaData = false,
+                    DownloadTestInterviewData = true,
+                    DownloadFileName = "MyFileName",
+                    SurveyId = "SomeSurveyId"
+                };
+
+                var task = surveyDataService.PostAsync(myRequest).Result;
 
                 // request the background tasks service 
                 var backgroundTasksService = connection.GetService<INfieldBackgroundTasksService>();
 
                 // Example of performing operations on background tasks.
-                var backgroundTaskQuery = backgroundTasksService.QueryAsync().Result.Where(s => s.Id == "BackgroundTaskId");
+                var backgroundTaskQuery = backgroundTasksService.QueryAsync().Result.Where(s => s.Id == task.Id);
                 var mybackgroundTask = backgroundTaskQuery.FirstOrDefault();
 
                 if (mybackgroundTask != null)
