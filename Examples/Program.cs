@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Infrastructure;
@@ -38,13 +39,14 @@ namespace Nfield.SDK.Samples
                 InitializeNfield(kernel);
 
                 const string serverUrl = "http://localhost:81/v1";
-
+                                                             
                 // First step is to get an INfieldConnection which provides services used for data access and manipulation. 
                 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
                 // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
 
                 connection.SignInAsync("testdomain", "user1", "password123").Wait();
+                
                 // Request the Interviewers service to manage interviewers.
                 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
 
@@ -118,6 +120,39 @@ namespace Nfield.SDK.Samples
                 // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
                 var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
                 var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
+                
+                // Example of a download data request: filtering testdata collected today
+                var surveyDataService = connection.GetService<INfieldSurveyDataService>();
+
+                var myRequest = new SurveyDownloadDataRequest
+                {
+                    DownloadSuccessfulLiveInterviewData = false,
+                    DownloadNotSuccessfulLiveInterviewData = false,
+                    DownloadOpenAnswerData = true,
+                    DownloadClosedAnswerData = true,
+                    DownloadSuspendedLiveInterviewData = false,
+                    DownloadCapturedMedia = false,
+                    DownloadParaData = false,
+                    DownloadTestInterviewData = true,
+                    DownloadFileName = "MyFileName",
+                    StartDate = DateTime.Today.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time start of today
+                    EndDate = DateTime.Today.AddDays(1).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time end of today
+                    SurveyId = "SomeSurveyId"
+                };
+                
+                var task = surveyDataService.PostAsync(myRequest).Result;
+
+                // request the background tasks service 
+                var backgroundTasksService = connection.GetService<INfieldBackgroundTasksService>();
+
+                // Example of performing operations on background tasks.
+                var backgroundTaskQuery = backgroundTasksService.QueryAsync().Result.Where(s => s.Id == task.Id);
+                var mybackgroundTask = backgroundTaskQuery.FirstOrDefault();
+
+                if (mybackgroundTask != null)
+                {
+                    var status = mybackgroundTask.Status;
+                }
             }
         }
 

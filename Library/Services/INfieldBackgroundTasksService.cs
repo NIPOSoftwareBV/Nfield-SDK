@@ -14,30 +14,26 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Nfield.Models;
 
-namespace Nfield.Models
+namespace Nfield.Services
 {
     /// <summary>
-    /// Survey types
+    /// Represents a set of methods to read the background task.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
-    public enum SurveyType
+    public interface INfieldBackgroundTasksService
     {
         /// <summary>
-        /// Basic survey type, this survey type has no features
+        /// Gets fieldwork office queryable object.
+        /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
-        Basic,
-
-        /// <summary>
-        /// Survey that sampling points assigned
-        /// </summary>
-        Advanced,
-
-        /// <summary>
-        /// Survey that has sampling points with targets
-        /// </summary>
-        EuroBarometer,
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
+        Task<IQueryable<BackgroundTask>> QueryAsync();
     }
 }
