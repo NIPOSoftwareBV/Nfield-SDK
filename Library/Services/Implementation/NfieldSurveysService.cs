@@ -15,7 +15,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -99,6 +101,35 @@ namespace Nfield.Services.Implementation
              .ContinueWith(
                  stringTask => JsonConvert.DeserializeObjectAsync<Survey>(stringTask.Result).Result)
              .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.UploadInterviewerFileInstructionsAsync(string,string)"/>
+        /// </summary>
+        public Task UploadInterviewerFileInstructionsAsync(string filePath, string surveyId)
+        {
+            var fileName = Path.GetFileName(filePath);
+
+            if(!File.Exists(filePath))
+                throw new FileNotFoundException(fileName);
+
+            var uri = string.Format(@"{0}/{1}/{2}/?fileName='{3}'", SurveysApi.AbsoluteUri,
+                SurveyInterviewerInstructionsControllerName, surveyId, fileName);
+            
+            var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
+
+            return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.UploadInterviewerFileInstructionsAsync(byte[], string ,string)"/>
+        /// </summary>
+        public Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId)
+        {
+            var uri = string.Format(@"{0}/{1}/{2}/?fileName='{3}'", SurveysApi.AbsoluteUri,
+                SurveyInterviewerInstructionsControllerName, surveyId, fileName);
+
+            return Client.PostAsync(uri, new ByteArrayContent(fileContent)).FlattenExceptions();
         }
 
         /// <summary>
@@ -299,6 +330,11 @@ namespace Nfield.Services.Implementation
         private Uri SurveysApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveys/"); }
+        }
+
+        private static string SurveyInterviewerInstructionsControllerName
+        {
+            get { return "SurveyInterviewerInstructions"; }
         }
 
     }

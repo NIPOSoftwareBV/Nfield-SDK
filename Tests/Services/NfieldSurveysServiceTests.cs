@@ -14,9 +14,11 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
@@ -36,7 +38,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveys()
         {
-            var expectedSurveys = new Survey[]
+            var expectedSurveys = new[]
             { new Survey(SurveyType.Basic) { SurveyId = "TestSurvey" },
               new Survey(SurveyType.Advanced) { SurveyId = "AnotherTestSurvey" }
             };
@@ -101,12 +103,12 @@ namespace Nfield.Services
         [Fact]
         public void TestRemoveAsync_ServerRemovedSurvey_DoesNotThrow()
         {
-            const string SurveyId = "Survey X";
-            var survey = new Survey(SurveyType.Basic) { SurveyId = SurveyId };
+            const string surveyId = "Survey X";
+            var survey = new Survey(SurveyType.Basic) { SurveyId = surveyId };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "surveys/" + SurveyId))
+                .Setup(client => client.DeleteAsync(ServiceAddress + "surveys/" + surveyId))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveysService();
@@ -147,6 +149,67 @@ namespace Nfield.Services
             var actual = target.UpdateAsync(survey).Result;
 
             Assert.Equal(survey.Description, actual.Description);
+        }
+
+        #endregion
+
+        #region UploadInterviewerFileInstructionsAsync
+
+        [Fact]
+        public void TestUploadInterviewerInstructionsAsync_FileDoesNotExist_ThrowsFileNotFoundException()
+        {
+            var target = new NfieldSurveysService();
+            Assert.Throws<FileNotFoundException>(
+                () =>
+                    UnwrapAggregateException(target.UploadInterviewerFileInstructionsAsync("NotExistingFile.pdf",
+                        "surveyId")));
+        }
+
+        [Fact]
+        public void TestUploadInterviewerInstructionsAsync_FileExists_FileUpload()
+        {
+            const string surveyId = "SurveyId";
+
+            const string fileName = "asp.net-web-api-poster.pdf";
+            var file = Path.Combine(Directory.GetCurrentDirectory(), "Resources", fileName);
+           
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient.Setup( client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+                            .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.UploadInterviewerFileInstructionsAsync(file, surveyId);
+
+            mockedHttpClient.Verify(
+                hc => hc.PostAsync(It.Is<string>(uri => uri.Contains(fileName) && uri.Contains(surveyId)),
+                        It.IsAny<HttpContent>()), Times.Once());
+        }
+
+        [Fact]
+        public void TestUploadInterviewerInstructionsAsync_ValidByteArray_FileUpload()
+        {
+            const string surveyId = "SurveyId";
+
+            const string fileName = "instructions.pdf";
+
+            var fileContent = Encoding.Unicode.GetBytes("Interviewer Instructions");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.UploadInterviewerFileInstructionsAsync(fileContent, fileName, surveyId);
+
+            mockedHttpClient.Verify(
+                hc => hc.PostAsync(It.Is<string>(uri => uri.Contains(fileName) && uri.Contains(surveyId)),
+                    It.IsAny<HttpContent>()), Times.Once());
         }
 
         #endregion

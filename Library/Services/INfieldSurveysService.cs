@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Models;
@@ -49,6 +50,30 @@ namespace Nfield.Services
         /// SurveyName, ClientName and Description
         /// </summary>
         Task<Survey> UpdateAsync(Survey survey);
+
+        #endregion
+
+        #region Interviewer Instructions file
+
+        /// <summary>
+        /// Uploads the file that contains the instructions for the various interviewers.
+        /// The repeated upload of the file for the survey just replace the previous file. 
+        /// </summary>
+        /// <param name="filePath">The path to the file</param>
+        /// <param name="surveyId">The id of the survey the instructions are about</param>
+        /// <returns>A Task that can be used to find out the result of the action</returns>
+        /// <exception cref="FileNotFoundException">In case that the file does not exists</exception>
+        Task UploadInterviewerFileInstructionsAsync(string filePath, string surveyId);
+
+        /// <summary>
+        /// Uploads the file that contains the instructions for the various interviewers.
+        /// The repeated upload of the file for the survey just replace the previous file. 
+        /// </summary>
+        /// <param name="fileContent">The content of the file</param>
+        /// <param name="fileName">The file name</param>
+        /// <param name="surveyId">The id of the survey the instructions are about</param>
+        /// <returns>A Task that can be used to find out the result of the action</returns>
+        Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId);
 
         #endregion
 
