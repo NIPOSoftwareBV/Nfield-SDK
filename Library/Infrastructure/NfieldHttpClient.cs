@@ -77,6 +77,11 @@ namespace Nfield.Infrastructure
             return SendRequestAndHandleAuthenticationToken(_httpClient.SendAsync(request));
         }
 
+        public Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content)
+        {
+            return SendRequestAndHandleAuthenticationToken(_httpClient.PutAsync(requestUri, content));
+        }
+
         #endregion
 
         #region IDisposable Members

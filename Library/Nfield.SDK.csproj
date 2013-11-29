@@ -101,9 +101,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
