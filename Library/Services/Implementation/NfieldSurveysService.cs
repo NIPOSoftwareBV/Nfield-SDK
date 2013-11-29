@@ -113,8 +113,7 @@ namespace Nfield.Services.Implementation
             if(!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
-            var uri = string.Format(@"{0}/{1}/{2}/?fileName='{3}'", SurveysApi.AbsoluteUri,
-                SurveyInterviewerInstructionsControllerName, surveyId, fileName);
+            var uri = GetInterviewerInstructionUri(surveyId, fileName);
             
             var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
 
@@ -126,8 +125,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId)
         {
-            var uri = string.Format(@"{0}/{1}/{2}/?fileName='{3}'", SurveysApi.AbsoluteUri,
-                SurveyInterviewerInstructionsControllerName, surveyId, fileName);
+            var uri = GetInterviewerInstructionUri(surveyId, fileName);
 
             return Client.PostAsync(uri, new ByteArrayContent(fileContent)).FlattenExceptions();
         }
@@ -335,6 +333,16 @@ namespace Nfield.Services.Implementation
         private static string SurveyInterviewerInstructionsControllerName
         {
             get { return "SurveyInterviewerInstructions"; }
+        }
+
+        /// <summary>
+        /// Returns the URI to upload the interviewer instructions 
+        /// based on the provided <paramref name="surveyId"/> and <paramref name="fileName"/>
+        /// </summary>
+        private string GetInterviewerInstructionUri(string surveyId, string fileName)
+        {
+            return string.Format(@"{0}/{1}/{2}/?fileName='{3}'", SurveysApi.AbsoluteUri,
+                SurveyInterviewerInstructionsControllerName, surveyId, fileName);
         }
 
     }
