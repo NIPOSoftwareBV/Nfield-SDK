@@ -23,7 +23,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
-using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {

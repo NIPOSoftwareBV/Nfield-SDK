@@ -71,6 +71,7 @@
     <Compile Include="Extensions\NfieldBackgroundTasksServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldConnectionExtensions.cs" />
     <Compile Include="Extensions\NfieldInterviewersServiceExtensions.cs" />
+    <Compile Include="Extensions\NfieldMediaFilesServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldSurveysServiceExtensions.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="Infrastructure\DependencyResolverExtensions.cs" />
