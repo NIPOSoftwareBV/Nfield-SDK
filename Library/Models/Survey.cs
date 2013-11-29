@@ -56,5 +56,10 @@ namespace Nfield.Models
         /// The description of the survey
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// The default interviewer instruction of a survey
+        /// </summary>
+        public string InterviewerInstruction { get; set; }
     }
 }

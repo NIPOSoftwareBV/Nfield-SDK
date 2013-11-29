@@ -93,6 +93,7 @@ namespace Nfield.Services.Implementation
                 ClientName = survey.ClientName,
                 Description = survey.Description,
                 SurveyName = survey.SurveyName,
+                InterviewerInstruction = survey.InterviewerInstruction
             };
 
             return Client.PatchAsJsonAsync(SurveysApi + survey.SurveyId, updatedSurvey)
@@ -385,6 +386,11 @@ namespace Nfield.Services.Implementation
         /// The description of the survey
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// The default interviewer instruction of a survey
+        /// </summary>
+        public string InterviewerInstruction { get; set; }
     }
 
 }
