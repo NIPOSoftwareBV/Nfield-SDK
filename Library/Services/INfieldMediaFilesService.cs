@@ -26,16 +26,34 @@ namespace Nfield.Services
         /// <summary>
         /// Gets all media file names for a survey
         /// </summary>
+        /// <param name="surveyId">The survey for which to return media files</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task<IQueryable<string>> QueryAsync(string surveyId);
 
         /// <summary>
         /// Removes the survey media file.
         /// </summary>
+        /// <param name="surveyId">The survey to remove this file from</param>
+        /// <param name="fileName">The file to remove</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task RemoveAsync(string surveyId, string fileName);
 
         /// <summary>
         /// Adds or updates the survey media file.
         /// </summary>
+        /// <param name="surveyId">The survey for which to add or update the file</param>
+        /// <param name="fileName">The name of the file</param>
+        /// <param name="content">The content of the file</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task AddOrUpdateAsync(string surveyId, string fileName, byte[] content);
     }
 }

@@ -26,12 +26,7 @@ namespace Nfield.Models
         /// The unique id of the languahe
         /// </summary>
         [JsonProperty]
-        public string Id { get; internal set; }
-
-        /// <summary>
-        /// The id of the survey the language belongs to
-        /// </summary>
-        public string SurveyId { get; set; }
+        public int Id { get; internal set; }
 
         /// <summary>
         /// The name of the language

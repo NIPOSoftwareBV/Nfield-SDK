@@ -29,24 +29,47 @@ namespace Nfield.Services
         /// <summary>
         /// Gets language queryable object.
         /// </summary>
+        /// <param name="surveyId">The survey for which languages are returned</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task<IQueryable<Language>> QueryAsync(string surveyId);
 
         /// <summary>
         /// Adds a new language.
         /// </summary>
-        Task<Language> AddAsync(Language language);
+        /// <param name="surveyId">the survey to add this language to</param>
+        /// <param name="language">the language to add</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task<Language> AddAsync(string surveyId, Language language);
 
         /// <summary>
         /// Removes the language.
         /// </summary>
-        Task RemoveAsync(Language language);
+        /// <param name="surveyId">The survey to remove this language from</param>
+        /// <param name="language">The languuage to remove</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task RemoveAsync(string surveyId, Language language);
 
         /// <summary>
         /// Updates the language.
         /// 
         /// The only property that can be changed is Name
         /// </summary>
-        Task<Language> UpdateAsync(Language language);
+        /// <param name="surveyId">The survey on which to update this language</param>
+        /// <param name="language">The data to update</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task UpdateAsync(string surveyId, Language language);
 
         #endregion
     }

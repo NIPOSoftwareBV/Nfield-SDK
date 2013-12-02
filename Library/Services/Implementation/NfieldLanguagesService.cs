@@ -37,7 +37,9 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<Language>> QueryAsync(string surveyId)
         {
-            return Client.GetAsync(LanguagesApi(surveyId, null).AbsoluteUri)
+            CheckSurveyId(surveyId);
+
+            return Client.GetAsync(LanguagesApi(surveyId, 0).AbsoluteUri)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -49,14 +51,16 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldLanguagesService.AddAsync"/>
         /// </summary>
-        public Task<Language> AddAsync(Language language)
+        public Task<Language> AddAsync(string surveyId, Language language)
         {
+            CheckSurveyId(surveyId);
+
             if (language == null)
             {
                 throw new ArgumentNullException("language");
             }
 
-            return Client.PostAsJsonAsync(LanguagesApi(language.SurveyId, null).AbsoluteUri, language)
+            return Client.PostAsJsonAsync(LanguagesApi(surveyId, 0).AbsoluteUri, language)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Language>(task.Result).Result)
                          .FlattenExceptions();
@@ -65,39 +69,34 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldLanguagesService.RemoveAsync"/>
         /// </summary>
-        public Task RemoveAsync(Language language)
+        public Task RemoveAsync(string surveyId, Language language)
         {
+            CheckSurveyId(surveyId);
+
             if (language == null)
             {
                 throw new ArgumentNullException("language");
             }
 
             return
-                Client.DeleteAsync(LanguagesApi(language.SurveyId, language.Id).AbsoluteUri)
+                Client.DeleteAsync(LanguagesApi(surveyId, language.Id).AbsoluteUri)
                       .FlattenExceptions();
         }
 
         /// <summary>
         /// See <see cref="INfieldLanguagesService.UpdateAsync"/>
         /// </summary>
-        public Task<Language> UpdateAsync(Language language)
+        public Task UpdateAsync(string surveyId, Language language)
         {
+            CheckSurveyId(surveyId);
+
             if (language == null)
             {
                 throw new ArgumentNullException("language");
             }
 
-            var updatedLanguage = new UpdateLanguage
-            {
-                Name = language.Name
-            };
-
-            return Client.PatchAsJsonAsync(LanguagesApi(language.SurveyId, language.Id).AbsoluteUri,
-                updatedLanguage).ContinueWith(
-                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-             .ContinueWith(
-                 stringTask => JsonConvert.DeserializeObjectAsync<Language>(stringTask.Result).Result)
-             .FlattenExceptions();
+            return Client.PutAsJsonAsync(LanguagesApi(surveyId, 0).AbsoluteUri,
+                language).FlattenExceptions();
         }
 
         #endregion
@@ -114,30 +113,27 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
+        private static void CheckSurveyId(string surveyId)
+        {
+            if (surveyId == null)
+                throw new ArgumentNullException("language");
+            if (surveyId.Trim().Length == 0)
+                throw new ArgumentException("surveyId cannot be empty");
+        }
+
         private INfieldHttpClient Client
         {
             get { return ConnectionClient.Client; }
         }
 
-        private Uri LanguagesApi(string surveyId, string id)
+        private Uri LanguagesApi(string surveyId, int id)
         {
             StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.AppendFormat("Surveys/{0}/Languages", surveyId);
-            if (!string.IsNullOrEmpty(id))
+            if (id > 0)
                 uriText.AppendFormat("/{0}", id);
             return new Uri(uriText.ToString());
         }
 
-    }
-
-    /// <summary>
-    /// Update model for a language
-    /// </summary>
-    internal class UpdateLanguage
-    {
-        /// <summary>
-        /// Name of the language
-        /// </summary>
-        public string Name { get; set; }
     }
 }

@@ -106,7 +106,7 @@ namespace Nfield.Services.Implementation
             StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.AppendFormat("Surveys/{0}/MediaFiles", surveyId);
             if (!string.IsNullOrEmpty(fileName))
-                uriText.AppendFormat("/{0}", fileName);
+                uriText.AppendFormat("/{0}", Uri.EscapeUriString(fileName));
             return new Uri(uriText.ToString());
         }
     }
