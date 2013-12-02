@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -117,6 +118,7 @@ namespace Nfield.Services.Implementation
             var uri = GetInterviewerInstructionUri(surveyId, fileName);
             
             var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
+            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
             return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
         }
@@ -127,8 +129,11 @@ namespace Nfield.Services.Implementation
         public Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId)
         {
             var uri = GetInterviewerInstructionUri(surveyId, fileName);
+            
+            var byteArrayContent = new ByteArrayContent(fileContent);
+            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-            return Client.PostAsync(uri, new ByteArrayContent(fileContent)).FlattenExceptions();
+            return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
         }
 
         /// <summary>
@@ -342,7 +347,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private string GetInterviewerInstructionUri(string surveyId, string fileName)
         {
-            return string.Format(@"{0}{1}/{2}/?fileName='{3}'", ConnectionClient.NfieldServerUri.AbsoluteUri,
+            return string.Format(@"{0}{1}/{2}/?fileName={3}", ConnectionClient.NfieldServerUri.AbsoluteUri,
                 SurveyInterviewerInstructionsControllerName, surveyId, fileName);
         }
 
