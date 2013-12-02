@@ -16,6 +16,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -108,6 +109,11 @@ namespace Nfield.SDK.Samples
                 // Note SurveyId and SurveyType are not allowed to be changed
                 createdSurvey.ClientName = "Nfield";
                 surveysService.UpdateAsync(createdSurvey).Wait(); // We do nothing with the result here
+
+                // Upload interviewer instructions file
+                var fileContent = Encoding.Unicode.GetBytes("Interviewer Instructions");
+                surveysService.UploadInterviewerFileInstructionsAsync(fileContent, "instructions.pdf",
+                    createdSurvey.SurveyId).Wait();
 
                 // Query survey
                 var query = surveysService.QueryAsync().Result.Where(s => s.ClientName == "Nfield");

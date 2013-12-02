@@ -342,7 +342,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private string GetInterviewerInstructionUri(string surveyId, string fileName)
         {
-            return string.Format(@"{0}/{1}/{2}/?fileName='{3}'", SurveysApi.AbsoluteUri,
+            return string.Format(@"{0}{1}/{2}/?fileName='{3}'", ConnectionClient.NfieldServerUri.AbsoluteUri,
                 SurveyInterviewerInstructionsControllerName, surveyId, fileName);
         }
 
