@@ -23,7 +23,7 @@ In this example we're using
                                     (bind, resolve) => kernel.Bind(bind).ToConstant(resolve));
 </pre>
 <p>Create a connection.</p>
-<pre>    INfieldConnection connection = NfieldConnectionFactory.Create(new Uri("https://manager.nfieldmr.com/"));</pre>
+<pre>    INfieldConnection connection = NfieldConnectionFactory.Create(new Uri("https://api.nfieldmr.com/"));</pre>
 <p>Sign in using your Nfield credentials.</p>
 <pre>    connection.SignInAsync("testdomain", "user1", "password123").Wait();</pre>
 <p>Get a service.</p>
