@@ -90,6 +90,7 @@
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
+    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\QuotaAttribute.cs" />
     <Compile Include="Models\QuotaLevel.cs" />
     <Compile Include="Models\SamplingPoint.cs" />
@@ -101,10 +102,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldLanguagesService.cs" />
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
