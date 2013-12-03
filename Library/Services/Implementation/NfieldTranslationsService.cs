@@ -25,82 +25,66 @@ using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
-    /// <summary>
-    /// Implementation of <see cref="INfieldLanguagesService"/>
-    /// </summary>
-    internal class NfieldLanguagesService : INfieldLanguagesService, INfieldConnectionClientObject
+    internal class NfieldTranslationsService : INfieldTranslationsService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldLanguagesService
+        #region INfieldTranslationsService Members
 
-        /// <summary>
-        /// See <see cref="INfieldSurveysService.QueryAsync"/>
-        /// </summary>
-        public Task<IQueryable<Language>> QueryAsync(string surveyId)
+        public Task<IQueryable<Translation>> QueryAsync(string surveyId, int languageId)
         {
             CheckSurveyId(surveyId);
 
-            return Client.GetAsync(LanguagesApi(surveyId, 0).AbsoluteUri)
+            return Client.GetAsync(TranslationsApi(surveyId, languageId, null).AbsoluteUri)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<List<Language>>(stringTask.Result).AsQueryable())
+                             JsonConvert.DeserializeObject<List<Translation>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
         }
 
-        /// <summary>
-        /// See <see cref="INfieldLanguagesService.AddAsync"/>
-        /// </summary>
-        public Task<Language> AddAsync(string surveyId, Language language)
+        public Task<Translation> AddAsync(string surveyId, int languageId, Translation translation)
         {
             CheckSurveyId(surveyId);
 
-            if (language == null)
+            if (translation == null)
             {
-                throw new ArgumentNullException("language");
+                throw new ArgumentNullException("translation");
             }
 
-            return Client.PostAsJsonAsync(LanguagesApi(surveyId, 0).AbsoluteUri, language)
+            return Client.PostAsJsonAsync(TranslationsApi(surveyId, languageId, null).AbsoluteUri, translation)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Language>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Translation>(task.Result).Result)
                          .FlattenExceptions();
         }
 
-        /// <summary>
-        /// See <see cref="INfieldLanguagesService.RemoveAsync"/>
-        /// </summary>
-        public Task RemoveAsync(string surveyId, Language language)
+        public Task RemoveAsync(string surveyId, int languageId, Translation translation)
         {
             CheckSurveyId(surveyId);
 
-            if (language == null)
+            if (translation == null)
             {
-                throw new ArgumentNullException("language");
+                throw new ArgumentNullException("translation");
             }
 
             return
-                Client.DeleteAsync(LanguagesApi(surveyId, language.Id).AbsoluteUri)
+                Client.DeleteAsync(TranslationsApi(surveyId, languageId, translation.Name).AbsoluteUri)
                       .FlattenExceptions();
         }
 
-        /// <summary>
-        /// See <see cref="INfieldLanguagesService.UpdateAsync"/>
-        /// </summary>
-        public Task UpdateAsync(string surveyId, Language language)
+        public Task UpdateAsync(string surveyId, int languageId, Translation translation)
         {
             CheckSurveyId(surveyId);
 
-            if (language == null)
+            if (translation == null)
             {
-                throw new ArgumentNullException("language");
+                throw new ArgumentNullException("translation");
             }
 
-            return Client.PutAsJsonAsync(LanguagesApi(surveyId, 0).AbsoluteUri,
-                language).FlattenExceptions();
+            return Client.PutAsJsonAsync(TranslationsApi(surveyId, languageId, null).AbsoluteUri,
+                translation).FlattenExceptions();
         }
 
         #endregion
-
 
         #region Implementation of INfieldConnectionClientObject
 
@@ -126,12 +110,13 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri LanguagesApi(string surveyId, int id)
+        private Uri TranslationsApi(string surveyId, int languageId, string translationName)
         {
             StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/Languages", surveyId);
-            if (id > 0)
-                uriText.AppendFormat("/{0}", id);
+            uriText.AppendFormat("Surveys/{0}/Languages/{1}/Translations",
+                    surveyId, languageId);
+            if (!string.IsNullOrEmpty(translationName))
+                uriText.AppendFormat("/{0}", translationName);
             return new Uri(uriText.ToString());
         }
 
