@@ -26,5 +26,10 @@ namespace Nfield.Models
         /// The ODIN script
         /// </summary>
         public string Script { get; set; }
+
+        /// <summary>
+        /// The file name
+        /// </summary>
+        public string FileName { get; set; }
     }
 }

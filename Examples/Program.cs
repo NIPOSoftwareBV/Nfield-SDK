@@ -126,7 +126,24 @@ namespace Nfield.SDK.Samples
                 // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
                 var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
                 var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
-                
+
+                // Upload ODIN script for survey
+                // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
+                var myScript = new SurveyScript
+                {
+                    FileName = "myFileq.odin",
+                    Script = @"*QUESTION 1 *CODES 61L1
+                               Do you watch TV?
+                                1:Yes
+                                2:No
+                                *END"
+                };
+                var updatedScript = surveyScriptService.PostAsync("surveyWithOdinScriptId", myScript).Result;
+                // Upload survey script with file path 
+                var scriptFilePath = @"C:\SimpleQ.odin";
+                var myUpdatedScript =
+                    surveyScriptService.PostAsync("surveyWithOdinScriptId", scriptFilePath).Result;
+
                 // Example of a download data request: filtering testdata collected today
                 var surveyDataService = connection.GetService<INfieldSurveyDataService>();
 

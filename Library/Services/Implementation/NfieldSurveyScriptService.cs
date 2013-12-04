@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -63,7 +64,44 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyScriptApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "SurveyScript/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveyscript/"); }
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveyScriptService.PostAsync(string,Nfield.Models.SurveyScript)"/>
+        /// </summary>
+        public Task<SurveyScript> PostAsync(string surveyId, SurveyScript surveyScript)
+        {
+            if (surveyScript == null)
+            {
+                throw new ArgumentNullException("surveyScript");
+            }
+            return Client.PostAsJsonAsync(SurveyScriptApi.AbsoluteUri + surveyId, surveyScript)
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(
+                    stringTask =>
+                        JsonConvert.DeserializeObject<SurveyScript>(stringTask.Result))
+                .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveyScriptService.PostAsync(string,string)"/>
+        /// </summary>
+        public Task<SurveyScript> PostAsync(string surveyId, string filePath)
+        {
+            var fileName = Path.GetFileName(filePath);
+
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException(fileName);
+            
+            var surveyScript = new SurveyScript
+            {
+                FileName = fileName,
+                Script = File.ReadAllText(filePath)
+            };
+
+            return PostAsync(surveyId, surveyScript);
         }
     }
 }

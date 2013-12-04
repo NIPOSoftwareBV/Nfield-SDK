@@ -14,9 +14,11 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
@@ -38,12 +40,14 @@ namespace Nfield.Services
         {
             const string surveyId = "SurveyId";
             const string script = "this is the script";
-            var expected = new SurveyScript{Script = script};
+            const string fileName = "fileq.odin";
+
+            var expected = new SurveyScript{Script = script,FileName = fileName};
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "SurveyScript/" + surveyId))
+                .Setup(client => client.GetAsync(ServiceAddress + "surveyscript/" + surveyId))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var target = new NfieldSurveyScriptService();
@@ -52,8 +56,56 @@ namespace Nfield.Services
             var actual = target.GetAsync(surveyId).Result;
 
             Assert.Equal(script, actual.Script);
+            Assert.Equal(fileName, actual.FileName);
         }
 
+        #endregion
+
+        #region PostAsync
+
+        [Fact]
+        public void TestPostAsync_FileDoesNotExist_ThrowsFileNotFoundException()
+        {
+            var target = new NfieldSurveyScriptService();
+            Assert.Throws<FileNotFoundException>(
+                () =>
+                    UnwrapAggregateException(target.PostAsync("surveyId", "NotExistingFile")));
+        }
+
+        [Fact]
+        public void TestPostAsync_SurveyScriptModelIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveyScriptService();
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                    UnwrapAggregateException(target.PostAsync("surveyId", surveyScript:null)));
+        }
+
+        [Fact]
+        public void TestPostAsync_ServerAccepts_ReturnsSurveyScript()
+        {
+            const string surveyId = "SurveyId";
+            const string script = "this is the script";
+            const string fileName = "fileq.odin";
+
+            var surveyScript = new SurveyScript { Script = script, FileName = fileName };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
+
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "surveyscript/" + surveyId, surveyScript))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var target = new NfieldSurveyScriptService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.PostAsync(surveyId,surveyScript).Result;
+
+            Assert.Equal(surveyScript.FileName, actual.FileName);
+            Assert.Equal(surveyScript.Script, actual.Script);
+        }
 
         #endregion
     }

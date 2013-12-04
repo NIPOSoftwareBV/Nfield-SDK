@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Nfield.Models;
 
@@ -28,5 +29,23 @@ namespace Nfield.Services
         /// Gets the script for survey.
         /// </summary>
         Task<SurveyScript> GetAsync(string surveyId);
+
+        /// <summary>
+        /// Upload script for survey.
+        /// The repeated upload for the survey just replace the previous script. 
+        /// </summary>
+        /// <returns>A Task that can be used to find out the result of the action</returns>
+        /// <exception cref="ArgumentNullException">In case that <paramref name="surveyScript"/> is null</exception>
+        Task<SurveyScript> PostAsync(string surveyId, SurveyScript surveyScript);
+
+        /// <summary>
+        /// Uploads the file that contains the instructions for the various interviewers.
+        /// The repeated upload for the survey just replace the previous script.
+        /// </summary>
+        /// <param name="surveyId">The id of the survey the instructions are about</param>
+        /// <param name="filePath">The path to the file</param>
+        /// <returns>A Task that can be used to find out the result of the action</returns>
+        /// <exception cref="FileNotFoundException">In case that the file does not exists</exception>
+        Task<SurveyScript> PostAsync(string surveyId, string filePath);
     }
 }
