@@ -33,6 +33,21 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldSurveyScriptServiceTests : NfieldServiceTestsBase
     {
+        private readonly NfieldSurveyScriptService _target;
+        private readonly Mock<IFileSystem> _mockedFileSystem;
+        readonly Mock<INfieldHttpClient> _mockedHttpClient;
+
+        public NfieldSurveyScriptServiceTests()
+        {
+            _mockedFileSystem = new Mock<IFileSystem>();
+            
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            _target = new NfieldSurveyScriptService(_mockedFileSystem.Object);
+            _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+        }
         #region GetAsync
 
         [Fact]
@@ -44,16 +59,11 @@ namespace Nfield.Services
 
             var expected = new SurveyScript{Script = script,FileName = fileName};
 
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
+           _mockedHttpClient
                 .Setup(client => client.GetAsync(ServiceAddress + "surveyscript/" + surveyId))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
-            var target = new NfieldSurveyScriptService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actual = target.GetAsync(surveyId).Result;
+            var actual = _target.GetAsync(surveyId).Result;
 
             Assert.Equal(script, actual.Script);
             Assert.Equal(fileName, actual.FileName);
@@ -66,19 +76,20 @@ namespace Nfield.Services
         [Fact]
         public void TestPostAsync_FileDoesNotExist_ThrowsFileNotFoundException()
         {
-            var target = new NfieldSurveyScriptService();
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(It.IsAny<string>())).Returns(string.Empty);
+            _mockedFileSystem.Setup(fs => fs.File.Exists(It.IsAny<string>())).Returns(false);
+
             Assert.Throws<FileNotFoundException>(
                 () =>
-                    UnwrapAggregateException(target.PostAsync("surveyId", "NotExistingFile")));
+                    UnwrapAggregateException(_target.PostAsync("surveyId", "NotExistingFile")));
         }
 
         [Fact]
         public void TestPostAsync_SurveyScriptModelIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldSurveyScriptService();
             Assert.Throws<ArgumentNullException>(
                 () =>
-                    UnwrapAggregateException(target.PostAsync("surveyId", surveyScript:null)));
+                    UnwrapAggregateException(_target.PostAsync("surveyId", surveyScript:null)));
         }
 
         [Fact]
@@ -90,21 +101,42 @@ namespace Nfield.Services
 
             var surveyScript = new SurveyScript { Script = script, FileName = fileName };
 
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
 
-            mockedHttpClient
+            _mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(ServiceAddress + "surveyscript/" + surveyId, surveyScript))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
-            var target = new NfieldSurveyScriptService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actual = target.PostAsync(surveyId,surveyScript).Result;
+            var actual = _target.PostAsync(surveyId,surveyScript).Result;
 
             Assert.Equal(surveyScript.FileName, actual.FileName);
             Assert.Equal(surveyScript.Script, actual.Script);
+        }
+
+        [Fact]
+        public void TestPostAsync_FileDoesExists_FileUploaded()
+        {
+            const string surveyId = "SurveyId";
+            const string script = "this is the script";
+            const string fileName = "fileq.odin";
+
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(It.IsAny<string>())).Returns(fileName);
+            _mockedFileSystem.Setup(fs => fs.File.Exists(It.IsAny<string>())).Returns(true);
+            _mockedFileSystem.Setup(fs => fs.File.ReadAllText(It.IsAny<string>())).Returns(script);
+
+            var surveyScript = new SurveyScript { Script = script, FileName = fileName };
+
+            var stringContent = new StringContent(JsonConvert.SerializeObject(surveyScript));
+            
+
+            _mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyScript>()))
+                .Returns(CreateTask(HttpStatusCode.OK, stringContent));
+            
+            _target.PostAsync(surveyId, fileName);
+
+            _mockedHttpClient.Verify(hc => hc.PostAsJsonAsync(It.Is<string>(uri => uri.Contains(surveyId)),
+                        It.Is<SurveyScript>(scripts => scripts.FileName == fileName && scripts.Script == script)), Times.Once());
         }
 
         #endregion

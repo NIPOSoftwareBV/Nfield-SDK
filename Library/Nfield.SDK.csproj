@@ -77,6 +77,10 @@
     <Compile Include="Extensions\NfieldTranslationsServiceExtensions.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="Infrastructure\DependencyResolverExtensions.cs" />
+    <Compile Include="Infrastructure\FileBase.cs" />
+    <Compile Include="Infrastructure\FileSystem.cs" />
+    <Compile Include="Infrastructure\FileWrapper.cs" />
+    <Compile Include="Infrastructure\IFileSystem.cs" />
     <Compile Include="Infrastructure\NfieldErrorCode.cs" />
     <Compile Include="Infrastructure\NfieldHttpClient.cs" />
     <Compile Include="Infrastructure\IDependencyResolver.cs" />
@@ -87,6 +91,8 @@
     <Compile Include="Infrastructure\NfieldConnection.cs" />
     <Compile Include="Infrastructure\NfieldConnectionFactory.cs" />
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
+    <Compile Include="Infrastructure\PathBase.cs" />
+    <Compile Include="Infrastructure\PathWrapper.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />

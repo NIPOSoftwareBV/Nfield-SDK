@@ -28,6 +28,13 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldSurveyScriptService : INfieldSurveyScriptService, INfieldConnectionClientObject
     {
+        readonly IFileSystem _fileSystem;
+
+        public NfieldSurveyScriptService(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem;
+        }
+
         #region Implementation of INfieldSurveyScriptService
 
         /// <summary>
@@ -90,15 +97,16 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SurveyScript> PostAsync(string surveyId, string filePath)
         {
-            var fileName = Path.GetFileName(filePath);
 
-            if (!File.Exists(filePath))
+            var fileName = _fileSystem.Path.GetFileName(filePath);
+
+            if (!_fileSystem.File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
             
             var surveyScript = new SurveyScript
             {
                 FileName = fileName,
-                Script = File.ReadAllText(filePath)
+                Script = _fileSystem.File.ReadAllText(filePath)
             };
 
             return PostAsync(surveyId, surveyScript);
