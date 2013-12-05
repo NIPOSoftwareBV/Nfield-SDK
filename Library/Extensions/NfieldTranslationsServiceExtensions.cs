@@ -56,5 +56,13 @@ namespace Nfield.Extensions
         {
             return languagesService.QueryAsync(surveyId, languageId).Result;
         }
+
+        /// <summary>
+        /// A synchronous version of <see cref="INfieldTranslationsService.DefaultTextsAsync"/>
+        /// </summary>
+        public static IQueryable<Translation> DefaultTexts(this INfieldTranslationsService languagesService)
+        {
+            return languagesService.DefaultTextsAsync.Result;
+        }
     }
 }

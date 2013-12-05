@@ -29,6 +29,9 @@ namespace Nfield.Services.Implementation
     {
         #region INfieldTranslationsService Members
 
+        /// <summary>
+        /// See <see cref="INfieldTranslationsService.QueryAsync"/>
+        /// </summary>
         public Task<IQueryable<Translation>> QueryAsync(string surveyId, int languageId)
         {
             CheckSurveyId(surveyId);
@@ -42,6 +45,9 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldTranslationsService.AddAsync"/>
+        /// </summary>
         public Task<Translation> AddAsync(string surveyId, int languageId, Translation translation)
         {
             CheckSurveyId(surveyId);
@@ -57,6 +63,9 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldTranslationsService.RemoveAsync"/>
+        /// </summary>
         public Task RemoveAsync(string surveyId, int languageId, Translation translation)
         {
             CheckSurveyId(surveyId);
@@ -71,6 +80,9 @@ namespace Nfield.Services.Implementation
                       .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldTranslationsService.UpdateAsync"/>
+        /// </summary>
         public Task UpdateAsync(string surveyId, int languageId, Translation translation)
         {
             CheckSurveyId(surveyId);
@@ -82,6 +94,24 @@ namespace Nfield.Services.Implementation
 
             return Client.PutAsJsonAsync(TranslationsApi(surveyId, languageId, null).AbsoluteUri,
                 translation).FlattenExceptions();
+        }
+
+
+        /// <summary>
+        /// See <see cref="INfieldTranslationsService.DefaultTextsAsync"/>
+        /// </summary>
+        public Task<IQueryable<Translation>> DefaultTextsAsync
+        {
+            get
+            {
+                return Client.GetAsync(ConnectionClient.NfieldServerUri.AbsoluteUri + "DefaultTexts")
+                             .ContinueWith(
+                                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                             .ContinueWith(
+                                 stringTask =>
+                                 JsonConvert.DeserializeObject<List<Translation>>(stringTask.Result).AsQueryable())
+                             .FlattenExceptions();
+            }
         }
 
         #endregion

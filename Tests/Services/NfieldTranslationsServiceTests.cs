@@ -198,5 +198,32 @@ namespace Nfield.Services
         }
 
         #endregion
+
+        #region DefaultTextsAsync
+
+        [Fact]
+        public void TestDefaultTextsAsync_ServerReturnsQuery_ReturnsListWithTranslations()
+        {
+            var expectedTranslations = new Translation[]
+            { new Translation{ Name = "X", Text = "Translation X" },
+              new Translation{ Name = "Y", Text = "Translation Y" }
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(ServiceAddress + "DefaultTexts"))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedTranslations))));
+
+            var target = new NfieldTranslationsService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualTranslations = target.DefaultTextsAsync.Result;
+
+            Assert.Equal(expectedTranslations[0].Name, actualTranslations.ToArray()[0].Name);
+            Assert.Equal(expectedTranslations[1].Name, actualTranslations.ToArray()[1].Name);
+            Assert.Equal(2, actualTranslations.Count());
+        }
+
+        #endregion
     }
 }

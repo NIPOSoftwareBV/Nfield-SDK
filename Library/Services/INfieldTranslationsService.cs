@@ -75,6 +75,11 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task UpdateAsync(string surveyId, int languageId, Translation translation);
 
+        /// <summary>
+        /// Gets the default for all texts
+        /// </summary>
+        Task<IQueryable<Translation>> DefaultTextsAsync { get; }
+
         #endregion
     }
 }

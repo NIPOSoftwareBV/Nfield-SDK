@@ -22,7 +22,14 @@ namespace Nfield.Infrastructure
     /// </summary>
     public interface IFileSystem
     {
+        /// <summary>
+        /// Gets the interface to access the file
+        /// </summary>
         FileBase File { get; }
+
+        /// <summary>
+        /// Gets the interface to get a file name from a path
+        /// </summary>
         PathBase Path { get; }
     }
 }

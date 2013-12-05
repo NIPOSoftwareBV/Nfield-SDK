@@ -23,9 +23,17 @@ namespace Nfield.Infrastructure
     public class FileSystem : IFileSystem
     {
         private FileBase _file;
+
+        /// <summary>
+        /// See <see cref="IFileSystem.File"/>
+        /// </summary>
         public FileBase File { get { return _file ?? (_file = new FileWrapper()); } }
 
         private PathBase _path;
+
+        /// <summary>
+        /// See <see cref="IFileSystem.Path"/>
+        /// </summary>
         public PathBase Path { get { return _path ?? (_path = new PathWrapper()); } }
     }
 }
