@@ -14,15 +14,15 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using Moq;
+using Newtonsoft.Json;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
-using Nfield.Models;
-using Moq;
-using System.Net.Http;
-using System.Net;
-using Newtonsoft.Json;
-using System.Linq;
 
 namespace Nfield.Services
 {
@@ -148,7 +148,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(
-                    ServiceAddress + "Surveys/" + SurveyId + "/Languages", It.IsAny<Language>()))
+                    ServiceAddress + "Surveys/" + SurveyId + "/Languages", language))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldLanguagesService();

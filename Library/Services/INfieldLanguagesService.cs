@@ -20,7 +20,7 @@ using Nfield.Models;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Represents a set of methods to read and update survey data.
+    /// Represents a set of methods to read and update survey languages.
     /// </summary>
     public interface INfieldLanguagesService
     {
@@ -64,7 +64,7 @@ namespace Nfield.Services
         /// The only property that can be changed is Name
         /// </summary>
         /// <param name="surveyId">The survey on which to update this language</param>
-        /// <param name="language">The data to update</param>
+        /// <param name="language">The language to update</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>

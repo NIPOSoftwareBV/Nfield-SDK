@@ -92,6 +92,7 @@
     <Compile Include="Services\NfieldInterviewersServiceTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\NfieldSurveySettingsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveysServiceTests.cs" />
     <Compile Include="Services\NfieldTranslationsServiceTests.cs" />
   </ItemGroup>

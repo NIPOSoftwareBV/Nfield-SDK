@@ -73,6 +73,7 @@
     <Compile Include="Extensions\NfieldInterviewersServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldLanguagesServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldMediaFilesServiceExtensions.cs" />
+    <Compile Include="Extensions\NfieldSurveySettingsServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldSurveysServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldTranslationsServiceExtensions.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\SurveyDownloadDataRequest.cs" />
     <Compile Include="Models\SurveyScript.cs" />
+    <Compile Include="Models\SurveySetting.cs" />
     <Compile Include="Models\SurveyType.cs" />
     <Compile Include="Models\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveySettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
     <Compile Include="Services\INfieldLanguagesService.cs" />
@@ -127,6 +130,7 @@
     <Compile Include="Services\Implementation\NfieldInterviewersService.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Services\INfieldInterviewersService.cs" />
+    <Compile Include="Services\INfieldSurveySettingsService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
   </ItemGroup>
