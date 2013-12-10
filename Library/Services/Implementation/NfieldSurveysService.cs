@@ -199,7 +199,8 @@ namespace Nfield.Services.Implementation
             {
                 Name = samplingPoint.Name,
                 Description = samplingPoint.Description,
-                FieldworkOfficeId = samplingPoint.FieldworkOfficeId
+                FieldworkOfficeId = samplingPoint.FieldworkOfficeId,
+                GroupId = samplingPoint.GroupId
             };
 
             string uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
@@ -362,6 +363,7 @@ namespace Nfield.Services.Implementation
         public string Name { get; set; }
         public string Description { get; set; }
         public string FieldworkOfficeId { get; set; }
+        public string GroupId { get; set; }
     }
 
     /// <summary>
