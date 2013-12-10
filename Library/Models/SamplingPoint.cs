@@ -46,5 +46,10 @@ namespace Nfield.Models
         /// Gets or sets the associcated fieldwork office id.
         /// </summary>
         public string FieldworkOfficeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sampling point group id
+        /// </summary>
+        public string GroupId { get; set; }
     }
 }

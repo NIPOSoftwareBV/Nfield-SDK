@@ -277,12 +277,14 @@ namespace Nfield.Services
         [Fact]
         public void TestSamplingPointAddAsync_ServerAcceptsSamplingPoint_ReturnsSamplingPoint()
         {
+            const string samplingPointGroupId = "MyGroupId";
             var office = new FieldworkOffice { OfficeId = "OfficeId" };
             var survey = new Survey(SurveyType.Basic) { SurveyId = "SurveyId" };
             var samplingPoint = new SamplingPoint
             {
                 SamplingPointId = "SamplingPointId",
-                FieldworkOfficeId = office.OfficeId
+                FieldworkOfficeId = office.OfficeId,
+                GroupId = samplingPointGroupId
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -303,6 +305,7 @@ namespace Nfield.Services
 
             Assert.Equal(samplingPoint.SamplingPointId, actual.SamplingPointId);
             Assert.Equal(samplingPoint.FieldworkOfficeId, actual.FieldworkOfficeId);
+            Assert.Equal(samplingPoint.GroupId, actual.GroupId);
         }
 
         #endregion
@@ -333,11 +336,13 @@ namespace Nfield.Services
         {
             const string surveyId = "SurveyId";
             const string samplingPointId = "SamplingPointId";
+            const string samplingPointGroupId = "MyGroupId";
 
             var samplingPoint = new SamplingPoint
             {
                 SamplingPointId = samplingPointId,
-                Name = "Updated"
+                Name = "Updated",
+                GroupId = samplingPointGroupId
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -356,6 +361,7 @@ namespace Nfield.Services
             var actual = target.SamplingPointUpdateAsync(surveyId, samplingPoint).Result;
 
             Assert.Equal(samplingPoint.Name, actual.Name);
+            Assert.Equal(samplingPoint.GroupId, actual.GroupId);
         }
 
         #endregion
