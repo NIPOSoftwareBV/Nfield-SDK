@@ -106,6 +106,7 @@
     <Compile Include="Models\SamplingPointQuotaTarget.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\SurveyDownloadDataRequest.cs" />
+    <Compile Include="Models\SurveyResponseCode.cs" />
     <Compile Include="Models\SurveyScript.cs" />
     <Compile Include="Models\SurveySetting.cs" />
     <Compile Include="Models\SurveyType.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
+    <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />

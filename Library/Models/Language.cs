@@ -23,7 +23,7 @@ namespace Nfield.Models
     public class Language
     {
         /// <summary>
-        /// The unique id of the languahe
+        /// The unique id of the language
         /// </summary>
         [JsonProperty]
         public int Id { get; internal set; }
