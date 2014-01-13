@@ -58,7 +58,7 @@ namespace Nfield.Services.Implementation
         public Task<SurveyResponseCode> QueryAsync(string surveyId, int code)
         {
             return
-                Client.GetAsync(SurveyResponseCodesApi.AbsoluteUri + surveyId + string.Format("?responseCode={0}", code))
+                Client.GetAsync(SurveyResponseCodeUrl(surveyId, code))
                     .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                     .ContinueWith(
                         stringTask => JsonConvert.DeserializeObject<SurveyResponseCode>(stringTask.Result))
@@ -75,7 +75,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("resposneCode");
             }
 
-            return Client.PostAsJsonAsync(SurveyResponseCodesApi + surveyId, resposneCode)
+            return Client.PostAsJsonAsync(SurveyResponseCodesApi.AbsoluteUri + surveyId, resposneCode)
                 .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SurveyResponseCode>(task.Result).Result)
                 .FlattenExceptions();
@@ -84,11 +84,31 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldSurveyResponseCodesService.UpdateAsync"/>
         /// </summary>
-        public Task<SurveyResponseCode> UpdateAsync(string surveyId, SurveyResponseCode resposneCode)
+        public Task<SurveyResponseCode> UpdateAsync(string surveyId, int code, SurveyResponseCode resposneCode)
         {
-            throw new NotImplementedException();
+            if(resposneCode == null)
+            {
+                throw new ArgumentNullException("resposneCode");
+            }
+
+            var updatedresponseCode = new UpdateSurveyResponseCode
+            {
+                ResponseCodeDescription = resposneCode.ResponseCodeDescription,
+                IsDefinite = resposneCode.IsDefinite,
+                IsSelectable = resposneCode.IsSelectable,
+                AllowAppointment = resposneCode.AllowAppointment
+            };
+
+            return
+                Client.PatchAsJsonAsync(SurveyResponseCodeUrl(surveyId, code), updatedresponseCode)
+                    .ContinueWith(
+                        responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                    .ContinueWith(
+                        stringTask => JsonConvert.DeserializeObjectAsync<SurveyResponseCode>(stringTask.Result).Result)
+                    .FlattenExceptions();
         }
-        
+
+
         /// <summary>
         /// <see cref="INfieldSurveyResponseCodesService.RemoveAsync"/>
         /// </summary>
@@ -98,7 +118,7 @@ namespace Nfield.Services.Implementation
                 Client.DeleteAsync(SurveyResponseCodesApi + surveyId + string.Format("?responseCode={0}", code))
                       .FlattenExceptions();
         }
-
+        
         #region Implementation of INfieldConnectionClientObject
 
         /// <summary>
@@ -116,5 +136,39 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
+        /// <summary>
+        /// Constructs and returns the url for survey response code 
+        /// based on supplied <paramref name="surveyId"/>  and <paramref name="code"/>
+        /// </summary>
+        private string SurveyResponseCodeUrl(string surveyId, int code)
+        {
+            return SurveyResponseCodesApi.AbsoluteUri + surveyId + string.Format("?responseCode={0}", code);
+        }
+    }
+
+    /// <summary>
+    /// Update model for a survey response code
+    /// </summary>
+    internal class UpdateSurveyResponseCode
+    {
+        /// <summary>
+        /// User defined description of the response code given
+        /// </summary>
+        public string ResponseCodeDescription { get; set; }
+
+        /// <summary>
+        /// Determines if the Response code is a definitive or not (IsFinal - true or false)
+        /// </summary>
+        public bool? IsDefinite { get; set; }
+
+        /// <summary>
+        /// Determines if response code is selectable by the interviewer
+        /// </summary>
+        public bool? IsSelectable { get; set; }
+
+        /// <summary>
+        /// Determines if the Response code is meant for an appointment or not (IsIntermediate - true or false)
+        /// </summary>
+        public bool? AllowAppointment { get; set; }
     }
 }
