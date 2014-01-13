@@ -135,6 +135,7 @@
     <Compile Include="Services\INfieldSurveySettingsService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyResponseCodesService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

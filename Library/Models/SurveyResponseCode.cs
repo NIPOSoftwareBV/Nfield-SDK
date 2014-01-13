@@ -23,11 +23,6 @@ namespace Nfield.Models
     public class SurveyResponseCode
     {
         /// <summary>
-        /// Survey id the response code belongs to
-        /// </summary>
-        public string SurveyId { get; set; }
-
-        /// <summary>
         /// User defined response code for the survey
         /// </summary>
         public int ResponseCode { get; set; }

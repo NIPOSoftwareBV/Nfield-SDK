@@ -54,22 +54,24 @@ namespace Nfield.Services
         /// <summary>
         /// Adds the supplied <paramref name="resposneCode"/> to the system
         /// </summary>
+        /// <param name="surveyId">The id of the survey to add the response code to</param>
         /// <param name="resposneCode">The <see cref="SurveyResponseCode"/> to add</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SurveyResponseCode> AddAsync(SurveyResponseCode resposneCode);
+        Task<SurveyResponseCode> AddAsync(string surveyId, SurveyResponseCode resposneCode);
 
         /// <summary>
         /// Updates the supplied supplied <paramref name="resposneCode"/>
         /// </summary>
+        /// <param name="surveyId">The id of the survey the response code belongs to</param>
         /// <param name="resposneCode">The <see cref="SurveyResponseCode"/> to update</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SurveyResponseCode> UpdateAsync(SurveyResponseCode resposneCode);
+        Task<SurveyResponseCode> UpdateAsync(string surveyId, SurveyResponseCode resposneCode);
 
         /// <summary>
         /// Removes the survey response code with the supplied <paramref name="code"/> 
