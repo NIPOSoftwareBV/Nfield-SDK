@@ -24,6 +24,7 @@ namespace Nfield.Models
     {
         /// <summary>
         /// User defined response code for the survey
+        /// The code is part of the identity of the Entity so once it's assigned it can not changed
         /// </summary>
         public int ResponseCode { get; set; }
 

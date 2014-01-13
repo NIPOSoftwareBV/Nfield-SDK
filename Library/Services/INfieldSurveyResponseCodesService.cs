@@ -52,27 +52,26 @@ namespace Nfield.Services
         Task<SurveyResponseCode> QueryAsync(string surveyId, int code);
 
         /// <summary>
-        /// Adds the supplied <paramref name="resposneCode"/> to the system
+        /// Adds the supplied <paramref name="responseCode"/> to the system
         /// </summary>
         /// <param name="surveyId">The id of the survey to add the response code to</param>
-        /// <param name="resposneCode">The <see cref="SurveyResponseCode"/> to add</param>
+        /// <param name="responseCode">The <see cref="SurveyResponseCode"/> to add</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SurveyResponseCode> AddAsync(string surveyId, SurveyResponseCode resposneCode);
+        Task<SurveyResponseCode> AddAsync(string surveyId, SurveyResponseCode responseCode);
 
         /// <summary>
-        /// Updates the supplied supplied <paramref name="resposneCode"/>
+        /// Updates the supplied supplied <paramref name="responseCode"/>
         /// </summary>
         /// <param name="surveyId">The id of the survey the response code belongs to</param>
-        /// <param name="code">The code of the response code</param>
-        /// <param name="resposneCode">The <see cref="SurveyResponseCode"/> to update</param>
+        /// <param name="responseCode">The <see cref="SurveyResponseCode"/> to update</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SurveyResponseCode> UpdateAsync(string surveyId, int code, SurveyResponseCode resposneCode);
+        Task<SurveyResponseCode> UpdateAsync(string surveyId, SurveyResponseCode responseCode);
 
         /// <summary>
         /// Removes the survey response code with the supplied <paramref name="code"/> 

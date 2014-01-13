@@ -45,6 +45,11 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<SurveyResponseCode>> QueryAsync(string surveyId)
         {
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+
             return Client.GetAsync(SurveyResponseCodesApi.AbsoluteUri + surveyId)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
@@ -57,6 +62,11 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SurveyResponseCode> QueryAsync(string surveyId, int code)
         {
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+
             return
                 Client.GetAsync(SurveyResponseCodeUrl(surveyId, code))
                     .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -68,14 +78,19 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldSurveyResponseCodesService.AddAsync"/>
         /// </summary>
-        public Task<SurveyResponseCode> AddAsync(string surveyId, SurveyResponseCode resposneCode)
+        public Task<SurveyResponseCode> AddAsync(string surveyId, SurveyResponseCode responseCode)
         {
-            if (resposneCode == null)
+            if (string.IsNullOrEmpty(surveyId))
             {
-                throw new ArgumentNullException("resposneCode");
+                throw new ArgumentNullException("surveyId");
             }
 
-            return Client.PostAsJsonAsync(SurveyResponseCodesApi.AbsoluteUri + surveyId, resposneCode)
+            if (responseCode == null)
+            {
+                throw new ArgumentNullException("responseCode");
+            }
+
+            return Client.PostAsJsonAsync(SurveyResponseCodesApi.AbsoluteUri + surveyId, responseCode)
                 .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SurveyResponseCode>(task.Result).Result)
                 .FlattenExceptions();
@@ -84,25 +99,31 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldSurveyResponseCodesService.UpdateAsync"/>
         /// </summary>
-        public Task<SurveyResponseCode> UpdateAsync(string surveyId, int code, SurveyResponseCode resposneCode)
+        public Task<SurveyResponseCode> UpdateAsync(string surveyId, SurveyResponseCode responseCode)
         {
-            if(resposneCode == null)
+            if (string.IsNullOrEmpty(surveyId))
             {
-                throw new ArgumentNullException("resposneCode");
+                throw new ArgumentNullException("surveyId");
+            }
+
+            if(responseCode == null)
+            {
+                throw new ArgumentNullException("responseCode");
             }
 
             var updatedresponseCode = new UpdateSurveyResponseCode
             {
-                ResponseCodeDescription = resposneCode.ResponseCodeDescription,
-                IsDefinite = resposneCode.IsDefinite,
-                IsSelectable = resposneCode.IsSelectable,
-                AllowAppointment = resposneCode.AllowAppointment
+                ResponseCodeDescription = responseCode.ResponseCodeDescription,
+                IsDefinite = responseCode.IsDefinite,
+                IsSelectable = responseCode.IsSelectable,
+                AllowAppointment = responseCode.AllowAppointment
             };
-
+            
             return
-                Client.PatchAsJsonAsync(SurveyResponseCodeUrl(surveyId, code), updatedresponseCode)
+                Client.PatchAsJsonAsync(SurveyResponseCodeUrl(surveyId, responseCode.ResponseCode), updatedresponseCode)
                     .ContinueWith(
-                        responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                        responseMessageTask => 
+                            responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                     .ContinueWith(
                         stringTask => JsonConvert.DeserializeObjectAsync<SurveyResponseCode>(stringTask.Result).Result)
                     .FlattenExceptions();
@@ -114,8 +135,13 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveAsync(string surveyId, int code)
         {
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+
             return
-                Client.DeleteAsync(SurveyResponseCodesApi + surveyId + string.Format("?responseCode={0}", code))
+                Client.DeleteAsync(SurveyResponseCodeUrl(surveyId, code))
                       .FlattenExceptions();
         }
         

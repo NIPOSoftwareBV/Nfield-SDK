@@ -86,6 +86,7 @@
     <Compile Include="Services\NfieldBackgroundTasksServiceTests.cs" />
     <Compile Include="Services\NfieldLanguagesServiceTests.cs" />
     <Compile Include="Services\NfieldMediaFilesServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyResponseCodesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyScriptServiceTests.cs" />
     <Compile Include="Services\NfieldServiceTestsBase.cs" />
     <Compile Include="Services\NfieldFieldworkOfficesServiceTests.cs" />
