@@ -113,7 +113,7 @@ namespace Nfield.Services.Implementation
 
             var updatedresponseCode = new UpdateSurveyResponseCode
             {
-                ResponseCodeDescription = responseCode.ResponseCodeDescription,
+                ResponseCodeDescription = responseCode.Description,
                 IsDefinite = responseCode.IsDefinite,
                 IsSelectable = responseCode.IsSelectable,
                 AllowAppointment = responseCode.AllowAppointment

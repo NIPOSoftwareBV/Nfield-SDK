@@ -53,7 +53,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify(
-                hc => hc.GetAsync(It.Is<string>(url => url.EndsWith("SurveyResponseCode/" + surveyId))), Times.Once());
+                hc => hc.GetAsync(It.Is<string>(url => url.EndsWith("SurveyResponseCodes/" + surveyId))), Times.Once());
         }
 
         #endregion
@@ -95,7 +95,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.GetAsync(It.Is<string>(url =>
-                    url.EndsWith(string.Format("SurveyResponseCode/{0}?responseCode={1}", surveyId, code)))),
+                    url.EndsWith(string.Format("SurveyResponseCodes/{0}?responseCode={1}", surveyId, code)))),
                 Times.Once());
         }
 
@@ -137,7 +137,7 @@ namespace Nfield.Services
             var responseCodeToAdd = new SurveyResponseCode
             {
                 ResponseCode = 15,
-                ResponseCodeDescription = "Description",
+                Description = "Description",
                 IsDefinite = true,
                 AllowAppointment = false
             };
@@ -152,7 +152,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify( hc =>
-                    hc.PostAsJsonAsync(It.Is<string>(url => url.EndsWith("SurveyResponseCode/" + surveyId)), responseCodeToAdd), 
+                    hc.PostAsJsonAsync(It.Is<string>(url => url.EndsWith("SurveyResponseCodes/" + surveyId)), responseCodeToAdd), 
                     Times.Once());
         }
 
@@ -167,7 +167,7 @@ namespace Nfield.Services
             var responseCodeToAdd = new SurveyResponseCode
             {
                 ResponseCode = 15,
-                ResponseCodeDescription = "Description",
+                Description = "Description",
                 IsDefinite = true,
                 AllowAppointment = false
             };
@@ -182,7 +182,7 @@ namespace Nfield.Services
 
             // Assert
             Assert.Equal(responseCodeToAdd.ResponseCode, result.ResponseCode);
-            Assert.Equal(responseCodeToAdd.ResponseCodeDescription, result.ResponseCodeDescription);
+            Assert.Equal(responseCodeToAdd.Description, result.Description);
             Assert.Equal(responseCodeToAdd.IsDefinite, result.IsDefinite);
             Assert.Equal(responseCodeToAdd.AllowAppointment, result.AllowAppointment);
             Assert.Equal(responseCodeToAdd.IsSelectable, result.IsSelectable);
@@ -228,7 +228,7 @@ namespace Nfield.Services
             var responseCodeToUpdate = new SurveyResponseCode
             {
                 ResponseCode = code,
-                ResponseCodeDescription = "Description",
+                Description = "Description",
                 IsDefinite = true,
                 AllowAppointment = false
             };
@@ -245,7 +245,7 @@ namespace Nfield.Services
             mockedHttpClient.Verify(hc =>
                 hc.PatchAsJsonAsync(
                     It.Is<string>(
-                        url => url.EndsWith(string.Format("SurveyResponseCode/{0}?responseCode={1}", surveyId, code))),
+                        url => url.EndsWith(string.Format("SurveyResponseCodes/{0}?responseCode={1}", surveyId, code))),
                     It.IsAny<UpdateSurveyResponseCode>()),
                 Times.Once());
         }
@@ -262,7 +262,7 @@ namespace Nfield.Services
             var responseCodeToUpdate = new SurveyResponseCode
             {
                 ResponseCode = code,
-                ResponseCodeDescription = "Description",
+                Description = "Description",
                 IsDefinite = true,
                 AllowAppointment = false
             };
@@ -277,7 +277,7 @@ namespace Nfield.Services
 
             // Assert
             Assert.Equal(responseCodeToUpdate.ResponseCode, result.ResponseCode);
-            Assert.Equal(responseCodeToUpdate.ResponseCodeDescription, result.ResponseCodeDescription);
+            Assert.Equal(responseCodeToUpdate.Description, result.Description);
             Assert.Equal(responseCodeToUpdate.IsDefinite, result.IsDefinite);
             Assert.Equal(responseCodeToUpdate.AllowAppointment, result.AllowAppointment);
             Assert.Equal(responseCodeToUpdate.IsSelectable, result.IsSelectable);
@@ -321,7 +321,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.DeleteAsync(It.Is<string>(
-                        url => url.EndsWith(string.Format("SurveyResponseCode/{0}?responseCode={1}", surveyId, code)))),
+                        url => url.EndsWith(string.Format("SurveyResponseCodes/{0}?responseCode={1}", surveyId, code)))),
                 Times.Once());
         }
 

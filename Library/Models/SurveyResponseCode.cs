@@ -31,7 +31,7 @@ namespace Nfield.Models
         /// <summary>
         /// User defined description of the response code given
         /// </summary>
-        public string ResponseCodeDescription { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Determines if the Response code is a definitive or not (IsFinal - true or false)
