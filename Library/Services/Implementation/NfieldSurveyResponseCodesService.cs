@@ -37,7 +37,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyResponseCodesApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "SurveyResponseCode/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "SurveyResponseCodes/"); }
         }
 
         /// <summary>
