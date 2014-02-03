@@ -47,6 +47,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldTranslationsService), typeof(NfieldTranslationsService));
             registerTransient(typeof(INfieldSurveySettingsService), typeof(NfieldSurveySettingsService));
             registerTransient(typeof(INfieldSurveyResponseCodesService), typeof(NfieldSurveyResponseCodesService));
+            registerTransient(typeof(INfieldAddressesService), typeof(NfieldAddressesService));
             registerTransient(typeof(INfieldHttpClient), typeof(NfieldHttpClient));
             registerTransient(typeof(IFileSystem), typeof(FileSystem));
         }

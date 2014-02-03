@@ -94,6 +94,7 @@
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
     <Compile Include="Infrastructure\PathBase.cs" />
     <Compile Include="Infrastructure\PathWrapper.cs" />
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Models\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
+    <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
     <Compile Include="Services\Implementation\NfieldLanguagesService.cs" />
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
+    <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
     <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
