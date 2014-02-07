@@ -34,6 +34,17 @@ namespace Nfield.Services
         Task<IQueryable<string>> QueryAsync(string surveyId);
 
         /// <summary>
+        /// Gets the needed media file for a survey
+        /// </summary>
+        /// <param name="surveyId">The survey for which to return media files</param>
+        /// <param name="fileName">The name of the needed file</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task<byte[]> GetAsync(string surveyId, string fileName);
+
+        /// <summary>
         /// Removes the survey media file.
         /// </summary>
         /// <param name="surveyId">The survey to remove this file from</param>

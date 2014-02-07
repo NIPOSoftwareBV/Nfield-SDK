@@ -46,6 +46,19 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        public Task<byte[]> GetAsync(string surveyId, string filename)
+        {
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+
+            return Client.GetAsync(MediaFilesApi(surveyId, filename).AbsoluteUri)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsByteArrayAsync())
+                .ContinueWith(b => b.Result.Result)
+                .FlattenExceptions();
+        }
+
         public Task RemoveAsync(string surveyId, string fileName)
         {
             if (string.IsNullOrEmpty(surveyId))
@@ -106,7 +119,9 @@ namespace Nfield.Services.Implementation
             StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.AppendFormat("Surveys/{0}/MediaFiles", surveyId);
             if (!string.IsNullOrEmpty(fileName))
+            {
                 uriText.AppendFormat("/{0}", Uri.EscapeUriString(fileName));
+            }
             return new Uri(uriText.ToString());
         }
     }
