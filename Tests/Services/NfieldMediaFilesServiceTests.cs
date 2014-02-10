@@ -18,11 +18,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Text;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
-using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -52,6 +51,56 @@ namespace Nfield.Services
 
             Assert.Equal(1, actual.Count);
             Assert.Equal(fileName, actual[0]);
+        }
+
+        #endregion
+
+        #region GetAsync
+
+        [Fact]
+        public void TestGetAsync_Always_ReturnsExpectedResult()
+        {
+            const string surveyId = "SurveyId";
+            const string fileName = "MyFileName";
+            var expected = Encoding.UTF8.GetBytes("content");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/" + fileName))
+                .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
+
+            var target = new NfieldMediaFilesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var task = target.GetAsync(surveyId, fileName);
+            task.Wait();
+            var actual = task.Result;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void TestGetAsync_WhenFileNameContainsAmpersand_ReturnsExpectedResult()
+        {
+            const string surveyId = "SurveyId";
+            const string fileName = "MyFileName&";
+            var expected = Encoding.UTF8.GetBytes("content");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/MyFileName%26"))
+                .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
+
+            var target = new NfieldMediaFilesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var task = target.GetAsync(surveyId, fileName);
+            task.Wait();
+            var actual = task.Result;
+
+            Assert.Equal(expected, actual);
         }
 
         #endregion

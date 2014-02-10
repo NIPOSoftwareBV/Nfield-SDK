@@ -20,6 +20,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
@@ -46,14 +47,14 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task<byte[]> GetAsync(string surveyId, string filename)
+        public Task<byte[]> GetAsync(string surveyId, string fileName)
         {
             if (string.IsNullOrEmpty(surveyId))
             {
                 throw new ArgumentNullException("surveyId");
             }
 
-            return Client.GetAsync(MediaFilesApi(surveyId, filename).AbsoluteUri)
+            return Client.GetAsync(MediaFilesApi(surveyId, fileName).AbsoluteUri)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsByteArrayAsync())
                 .ContinueWith(b => b.Result.Result)
                 .FlattenExceptions();
@@ -116,11 +117,11 @@ namespace Nfield.Services.Implementation
 
         private Uri MediaFilesApi(string surveyId, string fileName)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.AppendFormat("Surveys/{0}/MediaFiles", surveyId);
             if (!string.IsNullOrEmpty(fileName))
             {
-                uriText.AppendFormat("/{0}", Uri.EscapeUriString(fileName));
+                uriText.AppendFormat("/{0}", HttpUtility.UrlEncode(fileName));
             }
             return new Uri(uriText.ToString());
         }
