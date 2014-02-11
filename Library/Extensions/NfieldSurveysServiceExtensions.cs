@@ -81,5 +81,20 @@ namespace Nfield.Extensions
             surveysService.SamplingPointUpdateAsync(surveyId, samplingPoint).Wait();
         }
 
+        /// <summary>
+        /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string)"/>
+        /// </summary>
+        public static void SamplingPointImageAdd(this INfieldSurveysService surveysService, string surveyId, string samplingPointId, string filePath)
+        {
+            surveysService.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Wait();
+        }
+
+        /// <summary>
+        /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string, byte[])"/>
+        /// </summary>
+        public static void SamplingPointImageAdd(this INfieldSurveysService surveysService, string surveyId, string samplingPointId, string fileName, byte[] content)
+        {
+            surveysService.SamplingPointImageAddAsync(surveyId, samplingPointId, fileName, content).Wait();
+        }
     }
 }

@@ -300,6 +300,39 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string)"/>
+        /// </summary>
+        public Task SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath)
+        {
+            var fileName = Path.GetFileName(filePath);
+
+            if(!File.Exists(filePath))
+                throw new FileNotFoundException(fileName);
+
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, fileName);
+            
+            var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
+            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+            return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string, byte[])"/>
+        /// </summary>
+        public Task SamplingPointImageAddAsync(string surveyId, string samplingPointId, string fileName, byte[] content)
+        {
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, fileName);
+            
+            var byteArrayContent = new ByteArrayContent(content);
+            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+            return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
+        }
+
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -342,6 +375,11 @@ namespace Nfield.Services.Implementation
             get { return "SurveyInterviewerInstructions"; }
         }
 
+        private static string SamplingPointImageControllerName
+        {
+            get { return "SamplingPointImage"; }
+        }
+
         /// <summary>
         /// Returns the URI to upload the interviewer instructions 
         /// based on the provided <paramref name="surveyId"/> and <paramref name="fileName"/>
@@ -352,6 +390,21 @@ namespace Nfield.Services.Implementation
                 SurveyInterviewerInstructionsControllerName, surveyId, fileName);
         }
 
+        /// <summary>
+        /// Returns the URI to upload the image associated with a sampling point
+        /// <paramref name="surveyId"/>
+        /// <paramref name="samplingPointId"/>
+        /// <paramref name="fileName"/>
+        /// </summary>
+        private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
+        {
+            return string.Format(@"{0}{1}/{2}/?samplingPointId={3}?fileName={4}", 
+                                        ConnectionClient.NfieldServerUri.AbsoluteUri,
+                                        SamplingPointImageControllerName, 
+                                        surveyId, 
+                                        samplingPointId, 
+                                        fileName);
+        }
     }
 
     /// <summary>

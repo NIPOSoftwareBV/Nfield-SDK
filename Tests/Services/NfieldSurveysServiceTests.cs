@@ -491,5 +491,38 @@ namespace Nfield.Services
         }
 
         #endregion
+
+        #region SamplingPointImageAddAsync
+
+        [Fact]
+        public void TestSamplingPointImageAddAsync_ServerAcceptsSamplingPointImage_ReturnsSuccess()
+        {
+            const string surveyId = "SurveyId";
+            const string samplingPointId = "SamplingPointId";
+            const string fileName = "1.jpg";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", fileName);
+
+            var uri = string.Format(@"{0}{1}/{2}/?samplingPointId={3}?fileName={4}",
+                                        ServiceAddress,
+                                        "SamplingPointImageController",
+                                        surveyId,
+                                        samplingPointId,
+                                        filePath);
+
+            var content = new ByteArrayContent(File.ReadAllBytes(filePath));
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PostAsync(uri, content))
+                                    .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            Assert.DoesNotThrow(() => target.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Wait());
+        }
+
+        #endregion
     }
 }
