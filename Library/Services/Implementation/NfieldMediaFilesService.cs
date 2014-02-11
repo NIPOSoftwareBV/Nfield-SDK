@@ -118,10 +118,10 @@ namespace Nfield.Services.Implementation
         private Uri MediaFilesApi(string surveyId, string fileName)
         {
             var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/MediaFiles", surveyId);
+            uriText.AppendFormat("Surveys/{0}/MediaFiles/", surveyId);
             if (!string.IsNullOrEmpty(fileName))
             {
-                uriText.AppendFormat("/{0}", HttpUtility.UrlEncode(fileName));
+                uriText.AppendFormat("?fileName={0}", HttpUtility.UrlEncode(fileName));
             }
             return new Uri(uriText.ToString());
         }
