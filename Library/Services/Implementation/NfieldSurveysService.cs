@@ -403,14 +403,14 @@ namespace Nfield.Services.Implementation
         /// <paramref name="samplingPointId"/>
         /// <paramref name="fileName"/>
         /// </summary>
-        private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string filename)
+        private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
         {
             return string.Format(CultureInfo.InvariantCulture, @"{0}{1}/{2}/SamplingPointImage/{3}?filename={4}", 
                                         ConnectionClient.NfieldServerUri.AbsoluteUri,
                                         SamplingPointImageControllerName, 
                                         surveyId, 
                                         samplingPointId,
-                                        filename);
+                                        fileName);
         }
     }
 
