@@ -495,32 +495,33 @@ namespace Nfield.Services
         #region SamplingPointImageAddAsync
 
         [Fact]
-        public void TestSamplingPointImageAddAsync_ServerAcceptsSamplingPointImage_ReturnsSuccess()
+        public void TestSamplingPointImageAddAsync_ServerAcceptsSamplingPointImage_ReturnsFilename()
         {
             const string surveyId = "SurveyId";
             const string samplingPointId = "SamplingPointId";
             const string fileName = "1.jpg";
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", fileName);
 
-            var uri = string.Format(@"{0}{1}/{2}/?samplingPointId={3}?fileName={4}",
+            var uri = string.Format(@"{0}/Surveys/{1}/SamplingPointImage/{2}?filename={3}",
                                         ServiceAddress,
-                                        "SamplingPointImageController",
                                         surveyId,
                                         samplingPointId,
-                                        filePath);
+                                        fileName);
 
             var content = new ByteArrayContent(File.ReadAllBytes(filePath));
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.PostAsync(uri, content))
-                                    .Returns(CreateTask(HttpStatusCode.OK));
+            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<ByteArrayContent>()))
+                                    .Returns(CreateTask(HttpStatusCode.OK, new StringContent("filename")));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            
+            var result = target.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Result;
 
-            Assert.DoesNotThrow(() => target.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Wait());
+            Assert.Equal("filename", result);
         }
 
         #endregion

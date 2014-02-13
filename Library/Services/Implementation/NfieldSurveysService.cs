@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -300,38 +301,44 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
-
         /// <summary>
         /// <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string)"/>
         /// </summary>
-        public Task SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath)
+        /// <returns>image file name</returns>
+        public Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath)
         {
-            var fileName = Path.GetFileName(filePath);
-
             if(!File.Exists(filePath))
-                throw new FileNotFoundException(fileName);
-
-            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, fileName);
-            
+                throw new FileNotFoundException(filePath);
+           
             var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
-            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-
-            return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
+            return SamplingPointImageAddAsync(surveyId, samplingPointId, Path.GetFileName(filePath), byteArrayContent);
         }
 
         /// <summary>
         /// <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string, byte[])"/>
         /// </summary>
-        public Task SamplingPointImageAddAsync(string surveyId, string samplingPointId, string fileName, byte[] content)
+        /// <returns>image file name</returns>
+        public Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filename, byte[] content)
         {
-            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, fileName);
-            
             var byteArrayContent = new ByteArrayContent(content);
-            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-
-            return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
+            return SamplingPointImageAddAsync(surveyId, samplingPointId, filename, byteArrayContent);
         }
 
+        private Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filename, ByteArrayContent byteArrayContent)
+        {
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, filename);
+
+            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            byteArrayContent.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = filename
+                };
+
+            return Client.PostAsync(uri, byteArrayContent)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .FlattenExceptions();
+        }
 
         #endregion
 
@@ -377,7 +384,7 @@ namespace Nfield.Services.Implementation
 
         private static string SamplingPointImageControllerName
         {
-            get { return "SamplingPointImage"; }
+            get { return "Surveys"; }
         }
 
         /// <summary>
@@ -396,14 +403,14 @@ namespace Nfield.Services.Implementation
         /// <paramref name="samplingPointId"/>
         /// <paramref name="fileName"/>
         /// </summary>
-        private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
+        private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string filename)
         {
-            return string.Format(@"{0}{1}/{2}/?samplingPointId={3}?fileName={4}", 
+            return string.Format(CultureInfo.InvariantCulture, @"{0}{1}/{2}/SamplingPointImage/{3}?filename={4}", 
                                         ConnectionClient.NfieldServerUri.AbsoluteUri,
                                         SamplingPointImageControllerName, 
                                         surveyId, 
-                                        samplingPointId, 
-                                        fileName);
+                                        samplingPointId,
+                                        filename);
         }
     }
 

@@ -92,9 +92,9 @@ namespace Nfield.Extensions
         /// <summary>
         /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string, byte[])"/>
         /// </summary>
-        public static void SamplingPointImageAdd(this INfieldSurveysService surveysService, string surveyId, string samplingPointId, string fileName, byte[] content)
+        public static void SamplingPointImageAdd(this INfieldSurveysService surveysService, string surveyId, string samplingPointId, string filename, byte[] content)
         {
-            surveysService.SamplingPointImageAddAsync(surveyId, samplingPointId, fileName, content).Wait();
+            surveysService.SamplingPointImageAddAsync(surveyId, samplingPointId, filename, content).Wait();
         }
     }
 }

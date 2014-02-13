@@ -164,7 +164,7 @@ namespace Nfield.Services
         /// <param name="samplingPointId">The id of the sampling point</param>
         /// <param name="filePath">The full path of the image file</param>
         /// <returns>An message indicating the status of the action</returns>
-        Task SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath);
+        Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath);
 
         /// <summary>
         /// Method used to upload an image file associated 
@@ -174,10 +174,10 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The id of the survey that the sampling point belongs to</param>
         /// <param name="samplingPointId">The id of the sampling point</param>
-        /// <param name="fileName">The name of the image file</param>
+        /// <param name="filename">name of the image file</param>
         /// <param name="content">The content of the image file</param>
         /// <returns>An message indicating the status of the action</returns>
-        Task SamplingPointImageAddAsync(string surveyId, string samplingPointId, string fileName, byte[] content);
+        Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filename, byte[] content);
 
         #endregion
 
