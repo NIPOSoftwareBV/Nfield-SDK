@@ -514,14 +514,14 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<ByteArrayContent>()))
-                                    .Returns(CreateTask(HttpStatusCode.OK, new StringContent("filename")));
+                                    .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(fileName))));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
             
             var result = target.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Result;
 
-            Assert.Equal("filename", result);
+            Assert.Equal(fileName, result);
         }
 
         #endregion

@@ -337,6 +337,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PostAsync(uri, byteArrayContent)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => stringTask.Result.Substring(1, stringTask.Result.Length - 2))
                 .FlattenExceptions();
         }
 
