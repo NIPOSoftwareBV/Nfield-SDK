@@ -101,6 +101,7 @@
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
+    <Compile Include="Models\InterviewerInstruction.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\QuotaAttribute.cs" />
     <Compile Include="Models\QuotaLevel.cs" />

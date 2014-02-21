@@ -75,6 +75,20 @@ namespace Nfield.Services
         /// <returns>A Task that can be used to find out the result of the action</returns>
         Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId);
 
+        /// <summary>
+        /// Downloads the file that contains the instructions for the various interviewers.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<InterviewerInstruction> DownloadInterviewerFileInstructionsAsync(string surveyId);
+
+        /// <summary>
+        /// Delete the file that contains the instructions for the various interviewers.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task DeleteInterviewerFileInstructionsAsync(string surveyId);
+
         #endregion
 
         #region Quota for a survey

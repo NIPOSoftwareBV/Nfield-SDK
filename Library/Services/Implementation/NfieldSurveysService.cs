@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -135,6 +136,32 @@ namespace Nfield.Services.Implementation
             byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
             return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.DownloadInterviewerFileInstructionsAsync(byte[], string ,string)"/>
+        /// </summary>
+        public Task<InterviewerInstruction> DownloadInterviewerFileInstructionsAsync(string surveyId)
+        {
+            var uri = GetInterviewerInstructionUri(surveyId, null);
+
+            return Client.GetAsync(uri)
+                .ContinueWith(
+                    responseMessageTask => new InterviewerInstruction
+                        {
+                            Content = responseMessageTask.Result.Content.ReadAsByteArrayAsync().Result,
+                            FileName = responseMessageTask.Result.Content.Headers.ContentDisposition.FileName
+                        })
+                .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.DeleteInterviewerFileInstructionsAsync(byte[], string ,string)"/>
+        /// </summary>
+        public Task DeleteInterviewerFileInstructionsAsync(string surveyId)
+        {
+            var uri = GetInterviewerInstructionUri(surveyId, null);
+            return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
         /// <summary>
@@ -394,8 +421,12 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private string GetInterviewerInstructionUri(string surveyId, string fileName)
         {
-            return string.Format(@"{0}{1}/{2}/?fileName={3}", ConnectionClient.NfieldServerUri.AbsoluteUri,
-                SurveyInterviewerInstructionsControllerName, surveyId, fileName);
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(@"{0}/{1}",
+                SurveyInterviewerInstructionsControllerName, surveyId);
+            if (!string.IsNullOrEmpty(fileName))
+                result.AppendFormat(@"/?fileName={0}", fileName);
+            return result.ToString();
         }
 
         /// <summary>
