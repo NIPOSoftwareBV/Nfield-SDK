@@ -51,5 +51,15 @@ namespace Nfield.Models
         /// Gets or sets the sampling point group id
         /// </summary>
         public string GroupId { get; set; }
+
+        /// <summary>
+        /// Stratum the sampling point belongs to
+        /// </summary>
+        public string Stratum { get; set; }
+
+        /// <summary>
+        /// is it a spare sampling point?
+        /// </summary>
+        public bool IsSpare { get; set; }
     }
 }

@@ -126,7 +126,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// <see cref="INfieldSurveysService.UploadInterviewerFileInstructionsAsync(byte[], string ,string)"/>
+        /// <see cref="INfieldSurveysService.UploadInterviewerFileInstructionsAsync(string, string)"/>
         /// </summary>
         public Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId)
         {
@@ -139,7 +139,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// <see cref="INfieldSurveysService.DownloadInterviewerFileInstructionsAsync(byte[], string ,string)"/>
+        /// <see cref="INfieldSurveysService.DownloadInterviewerFileInstructionsAsync(string)"/>
         /// </summary>
         public Task<InterviewerInstruction> DownloadInterviewerFileInstructionsAsync(string surveyId)
         {
@@ -156,7 +156,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// <see cref="INfieldSurveysService.DeleteInterviewerFileInstructionsAsync(byte[], string ,string)"/>
+        /// <see cref="INfieldSurveysService.DeleteInterviewerFileInstructionsAsync(string)"/>
         /// </summary>
         public Task DeleteInterviewerFileInstructionsAsync(string surveyId)
         {
@@ -228,7 +228,8 @@ namespace Nfield.Services.Implementation
                 Name = samplingPoint.Name,
                 Description = samplingPoint.Description,
                 FieldworkOfficeId = samplingPoint.FieldworkOfficeId,
-                GroupId = samplingPoint.GroupId
+                GroupId = samplingPoint.GroupId,
+                Stratum = samplingPoint.Stratum
             };
 
             string uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
@@ -456,6 +457,7 @@ namespace Nfield.Services.Implementation
         public string Description { get; set; }
         public string FieldworkOfficeId { get; set; }
         public string GroupId { get; set; }
+        public string Stratum { get; set; }
     }
 
     /// <summary>
