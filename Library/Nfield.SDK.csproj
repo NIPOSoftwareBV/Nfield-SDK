@@ -106,6 +106,7 @@
     <Compile Include="Models\QuotaAttribute.cs" />
     <Compile Include="Models\QuotaLevel.cs" />
     <Compile Include="Models\SamplingPoint.cs" />
+    <Compile Include="Models\SamplingPointImage.cs" />
     <Compile Include="Models\SamplingPointQuotaTarget.cs" />
     <Compile Include="Models\Survey.cs" />
     <Compile Include="Models\SurveyDownloadDataRequest.cs" />

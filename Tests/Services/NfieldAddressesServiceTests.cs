@@ -145,6 +145,25 @@ namespace Nfield.Services
             Assert.Equal(2, actualAddresses.Count());
         }
 
+        [Fact]
+        public void TestDeleteAsync_ServerAcceptsDelete_ReturnsNoError()
+        {
+            const string surveyId = "SurveyId";
+            const string samplingPointId = "SamplingPointId";
+            const string addressId = "AddressId";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<string>()))
+                                    .Returns(CreateTask(HttpStatusCode.NoContent));
+
+            var target = new NfieldAddressesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.DeleteAsync(surveyId, samplingPointId, addressId).Wait();
+        }
+
         #endregion
     }
 }

@@ -61,6 +61,19 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        public Task DeleteAsync(string surveyId, string samplingPointId, string addressId)
+        {
+            CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
+            if (addressId == null)
+                throw new ArgumentNullException("addressId");
+            if (addressId.Trim().Length == 0)
+                throw new ArgumentException("addressId cannot be empty");
+
+            var uri = AdressesApi(surveyId, samplingPointId, addressId).AbsoluteUri;
+
+            return Client.DeleteAsync(uri).FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject

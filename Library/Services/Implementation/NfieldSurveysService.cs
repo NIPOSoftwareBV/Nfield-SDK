@@ -369,6 +369,27 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
+        public Task<SamplingPointImage> SamplingPointImageGetAsync(string surveyId, string samplingPointId)
+        {
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, null);
+
+            return Client.GetAsync(uri)
+                .ContinueWith(
+                    responseMessageTask => new SamplingPointImage
+                    {
+                        Content = responseMessageTask.Result.Content.ReadAsByteArrayAsync().Result,
+                        FileName = responseMessageTask.Result.Content.Headers.ContentDisposition.FileName
+                    })
+                .FlattenExceptions();
+        }
+
+        public Task SamplingPointImageDeleteAsync(string surveyId, string samplingPointId)
+        {
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, null);
+
+            return Client.DeleteAsync(uri).FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -438,12 +459,15 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
         {
-            return string.Format(CultureInfo.InvariantCulture, @"{0}{1}/{2}/SamplingPointImage/{3}?filename={4}", 
-                                        ConnectionClient.NfieldServerUri.AbsoluteUri,
-                                        SamplingPointImageControllerName, 
-                                        surveyId, 
-                                        samplingPointId,
-                                        fileName);
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(CultureInfo.InvariantCulture, @"{0}/{1}/SamplingPointImage/{2}",
+                                        SamplingPointImageControllerName,
+                                        surveyId,
+                                        Uri.EscapeUriString(samplingPointId));
+            if (!string.IsNullOrEmpty(fileName))
+                result.AppendFormat(CultureInfo.InvariantCulture, @"?filename={0}",
+                                        Uri.EscapeUriString(fileName));
+            return result.ToString();
         }
     }
 

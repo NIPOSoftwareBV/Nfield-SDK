@@ -193,6 +193,22 @@ namespace Nfield.Services
         /// <returns>An message indicating the status of the action</returns>
         Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filename, byte[] content);
 
+        /// <summary>
+        /// Downloads the image file associated with a sampling point
+        /// </summary>
+        /// <param name="surveyId">The id of the survey that the sampling point belongs to</param>
+        /// <param name="samplingPointId">The id of the sampling point</param>
+        /// <returns></returns>
+        Task<SamplingPointImage> SamplingPointImageGetAsync(string surveyId, string samplingPointId);
+
+        /// <summary>
+        /// Delete the image file associated with a sampling point
+        /// </summary>
+        /// <param name="surveyId">The id of the survey that the sampling point belongs to</param>
+        /// <param name="samplingPointId">The id of the sampling point</param>
+        /// <returns></returns>
+        Task SamplingPointImageDeleteAsync(string surveyId, string samplingPointId);
+
         #endregion
 
     }
