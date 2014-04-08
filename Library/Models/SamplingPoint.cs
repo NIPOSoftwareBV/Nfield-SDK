@@ -58,8 +58,9 @@ namespace Nfield.Models
         public string Stratum { get; set; }
 
         /// <summary>
-        /// is it a spare sampling point?
+        /// Indicates the Kind of the sampling point. The only accepted values are "Regular" and "Spare"
         /// </summary>
-        public bool IsSpare { get; set; }
+        public SamplingPointKind Kind { get; set; }
+
     }
 }
