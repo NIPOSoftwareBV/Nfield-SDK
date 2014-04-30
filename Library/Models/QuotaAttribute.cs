@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Nfield.Models
 {
@@ -24,9 +25,22 @@ namespace Nfield.Models
     public class QuotaAttribute
     {
         /// <summary>
+        /// Ctor that initialize the Levels collection
+        /// </summary>
+        public QuotaAttribute()
+        {
+            Levels = new Collection<QuotaLevel>();
+        }
+
+        /// <summary>
         /// Name of the QuotaAttribute
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The user-defined variable name to represent the value of an attribute in the questionnaire script
+        /// </summary>
+        public string OdinVariable { get; set; }
 
         /// <summary>
         /// Indication of whether this Attribute is mandatory or not

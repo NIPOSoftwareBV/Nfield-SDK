@@ -98,6 +98,13 @@ namespace Nfield.Services
         /// </summary>
         Task<QuotaLevel> QuotaQueryAsync(string surveyId);
 
+        /// <summary>
+        /// Assigns the supplied <paramref name="quota"/> to the survey with the provided <paramref name="surveyId"/>.
+        /// When this method is called on a survey that has a quota frame already 
+        /// then the frame is completely replaced by the new one.
+        /// </summary>
+        Task CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota);
+
         #endregion
 
         #region Sampling Points for a survey

@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Nfield.Models
 {
@@ -23,6 +24,30 @@ namespace Nfield.Models
     /// </summary>
     public class QuotaLevel
     {
+        private const string RootLevelId = "RootLevelId";
+        private const string RootLevelName = "Target";
+
+        /// <summary>
+        /// Ctor that initialize the Attributes collection
+        /// </summary>
+        public QuotaLevel()
+        {
+            Attributes = new Collection<QuotaAttribute>();
+        }
+
+        /// <summary>
+        /// Constructor that has a default parameter that indicates if it is the root level.
+        /// When a root level is created we should pass <c>true</c> as an argument in all other cases leave it empty
+        /// </summary>
+        public QuotaLevel(bool isRootLevel) : this()
+        {
+            if(isRootLevel)
+            {
+                Id = RootLevelId;
+                Name = RootLevelName;
+            }
+        }
+
         /// <summary>
         /// Unique Id of the QuotaLevel
         /// </summary>
@@ -34,8 +59,19 @@ namespace Nfield.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Target for this level
+        /// </summary>
+        public int? Target { get; set; }
+
+        /// <summary>
+        /// Gross target for this level
+        /// </summary>
+        public int? GrossTarget { get; set; }
+
+        /// <summary>
         /// Child Attributes of the QuotaLevel
         /// </summary>
         public ICollection<QuotaAttribute> Attributes { get; set; }
+
     }
 }
