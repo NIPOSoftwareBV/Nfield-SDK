@@ -46,11 +46,12 @@ namespace Nfield.Models
         /// Indication of whether this Attribute is mandatory or not
         /// When mandatory, a Level within this Attribute must be selected by the Interviewer
         /// </summary>
-        public bool IsMandatory { get; set; }
+        public bool IsSelectionOptional { get; set; }
 
         /// <summary>
         /// Child Levels of the QuotaAttribute
         /// </summary>
         public ICollection<QuotaLevel> Levels { get; set; }
+
     }
 }
