@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -238,10 +239,64 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualQuotaLevel = target.QuotaQueryAsync("1").Result;
-
+            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<string>()), Times.Once());
             Assert.Equal(expectedQuotaLevel.Id, actualQuotaLevel.Id);
             Assert.Equal(expectedQuotaLevel.Name, actualQuotaLevel.Name);
 
+        }
+
+        #endregion
+
+        #region CreateOrUpdateQuotaAsync
+
+        [Fact]
+        public void TestCreateOrUpdateQuotaAsync_Normal_CallsCorrectRoute()
+        {
+            const string surveyId = "surveyId";
+            
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<QuotaLevel>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent("")));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.CreateOrUpdateQuotaAsync(surveyId, new QuotaLevel()).Wait();
+
+            mockedHttpClient.Verify(
+                hc => hc.PutAsJsonAsync(ServiceAddress + "surveys/" + surveyId + "/quota", It.IsAny<QuotaLevel>()),
+                Times.Once());
+        }
+
+        [Fact]
+        public void TestCreateOrUpdateQuotaAsync_Normal_CorrectQuotaFrame()
+        {
+            const string surveyId = "surveyId";
+            var quota = new QuotaLevel(true)
+            {
+                Target = 10,
+                GrossTarget = 15,
+                Attributes =
+                    new Collection<QuotaAttribute>
+                    {
+                        new QuotaAttribute {Name = "Attribute", IsSelectionOptional = true, OdinVariable = "var"}
+                    }
+            };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<QuotaLevel>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent("")));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.CreateOrUpdateQuotaAsync(surveyId, quota).Wait();
+
+            mockedHttpClient.Verify(hc => hc.PutAsJsonAsync(It.IsAny<string>(), quota), Times.Once());
         }
 
         #endregion

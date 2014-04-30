@@ -184,11 +184,16 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldSurveysService.CreateOrUpdateQuotaAsync"/>
         /// </summary>
-        public Task CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota)
+        public Task<QuotaLevel> CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota)
         {
             string uri = string.Format(@"{0}{1}/{2}", SurveysApi.AbsoluteUri, surveyId, QuotaControllerName);
 
-            return Client.PostAsJsonAsync(uri, quota).FlattenExceptions();
+            return Client.PutAsJsonAsync(uri, quota)
+                         .ContinueWith(
+                            responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                            stringTask => JsonConvert.DeserializeObject<QuotaLevel>(stringTask.Result))
+                         .FlattenExceptions();
         }
 
         /// <summary>

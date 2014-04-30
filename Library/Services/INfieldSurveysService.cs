@@ -103,7 +103,7 @@ namespace Nfield.Services
         /// When this method is called on a survey that has a quota frame already 
         /// then the frame is completely replaced by the new one.
         /// </summary>
-        Task CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota);
+        Task<QuotaLevel> CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota);
 
         #endregion
 
