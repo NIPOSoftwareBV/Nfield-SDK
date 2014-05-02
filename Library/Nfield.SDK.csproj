@@ -97,6 +97,8 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
+    <Compile Include="Models\StopFieldworkModel.cs" />
+    <Compile Include="Models\SurveyStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
     <Compile Include="Models\Interviewer.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
@@ -128,6 +131,7 @@
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
     <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
+    <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />

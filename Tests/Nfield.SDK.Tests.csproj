@@ -88,6 +88,7 @@
     <Compile Include="Services\NfieldLanguagesServiceTests.cs" />
     <Compile Include="Services\NfieldMediaFilesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyResponseCodesServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyFieldworkServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyScriptServiceTests.cs" />
     <Compile Include="Services\NfieldServiceTestsBase.cs" />
     <Compile Include="Services\NfieldFieldworkOfficesServiceTests.cs" />
@@ -109,6 +110,9 @@
     <Content Include="Resources\asp.net-web-api-poster.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
