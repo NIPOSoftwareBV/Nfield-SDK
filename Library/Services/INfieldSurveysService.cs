@@ -75,6 +75,20 @@ namespace Nfield.Services
         /// <returns>A Task that can be used to find out the result of the action</returns>
         Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId);
 
+        /// <summary>
+        /// Downloads the file that contains the instructions for the various interviewers.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<InterviewerInstruction> DownloadInterviewerFileInstructionsAsync(string surveyId);
+
+        /// <summary>
+        /// Delete the file that contains the instructions for the various interviewers.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task DeleteInterviewerFileInstructionsAsync(string surveyId);
+
         #endregion
 
         #region Quota for a survey
@@ -153,6 +167,47 @@ namespace Nfield.Services
         /// <returns></returns>
         Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetUpdateAsync(string surveyId, string samplingPointId,
             SamplingPointQuotaTarget samplingPointQuotaTarget);
+
+        /// <summary>
+        /// Method used to upload an image file associated 
+        /// with a sampling point (e.g. a map).
+        /// The upload of a new image file for an existing
+        /// sampling point will replace the image.
+        /// </summary>
+        /// <param name="surveyId">The id of the survey that the sampling point belongs to</param>
+        /// <param name="samplingPointId">The id of the sampling point</param>
+        /// <param name="filePath">The full path of the image file</param>
+        /// <returns>An message indicating the status of the action</returns>
+        Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath);
+
+        /// <summary>
+        /// Method used to upload an image file associated 
+        /// with a sampling point (e.g. a map).
+        /// The upload of a new image file for an existing
+        /// sampling point will replace the image.
+        /// </summary>
+        /// <param name="surveyId">The id of the survey that the sampling point belongs to</param>
+        /// <param name="samplingPointId">The id of the sampling point</param>
+        /// <param name="filename">name of the image file</param>
+        /// <param name="content">The content of the image file</param>
+        /// <returns>An message indicating the status of the action</returns>
+        Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filename, byte[] content);
+
+        /// <summary>
+        /// Downloads the image file associated with a sampling point
+        /// </summary>
+        /// <param name="surveyId">The id of the survey that the sampling point belongs to</param>
+        /// <param name="samplingPointId">The id of the sampling point</param>
+        /// <returns></returns>
+        Task<SamplingPointImage> SamplingPointImageGetAsync(string surveyId, string samplingPointId);
+
+        /// <summary>
+        /// Delete the image file associated with a sampling point
+        /// </summary>
+        /// <param name="surveyId">The id of the survey that the sampling point belongs to</param>
+        /// <param name="samplingPointId">The id of the sampling point</param>
+        /// <returns></returns>
+        Task SamplingPointImageDeleteAsync(string surveyId, string samplingPointId);
 
         #endregion
 

@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using Moq;
 using Newtonsoft.Json;
@@ -488,6 +489,81 @@ namespace Nfield.Services
             var actual = target.SamplingPointQuotaTargetUpdateAsync(surveyId,samplingPointId,samplingPointQuotaTarget).Result;
 
             Assert.Equal(samplingPointQuotaTarget.Target, actual.Target);
+        }
+
+        #endregion
+
+        #region SamplingPointImageAddAsync
+
+        [Fact]
+        public void TestSamplingPointImageAddAsync_ServerAcceptsSamplingPointImage_ReturnsFilename()
+        {
+            const string surveyId = "SurveyId";
+            const string samplingPointId = "SamplingPointId";
+            const string fileName = "1.jpg";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", fileName);
+
+            var content = new ByteArrayContent(File.ReadAllBytes(filePath));
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<ByteArrayContent>()))
+                                    .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(fileName))));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            
+            var result = target.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Result;
+
+            Assert.Equal(fileName, result);
+        }
+
+        [Fact]
+        public void TestSamplingPointImageGetAsync_ServerAcceptsGet_ReturnsFilename()
+        {
+            const string surveyId = "SurveyId";
+            const string samplingPointId = "SamplingPointId";
+            const string fileName = "1.jpg";
+
+
+            var getContent = new ByteArrayContent(new byte[] { 1 });
+            getContent.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = fileName
+                };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<string>()))
+                                    .Returns(CreateTask(HttpStatusCode.OK, getContent));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var result = target.SamplingPointImageGetAsync(surveyId, samplingPointId).Result;
+
+            Assert.Equal(fileName, result.FileName);
+        }
+
+        [Fact]
+        public void TestSamplingPointImageDeleteAsync_ServerAcceptsDelete_ReturnsNoError()
+        {
+            const string surveyId = "SurveyId";
+            const string samplingPointId = "SamplingPointId";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<string>()))
+                                    .Returns(CreateTask(HttpStatusCode.NoContent));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.SamplingPointImageDeleteAsync(surveyId, samplingPointId).Wait();
         }
 
         #endregion

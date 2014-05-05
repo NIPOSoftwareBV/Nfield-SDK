@@ -51,5 +51,16 @@ namespace Nfield.Models
         /// Gets or sets the sampling point group id
         /// </summary>
         public string GroupId { get; set; }
+
+        /// <summary>
+        /// Stratum the sampling point belongs to
+        /// </summary>
+        public string Stratum { get; set; }
+
+        /// <summary>
+        /// Indicates the Kind of the sampling point. The only accepted values are "Regular" and "Spare"
+        /// </summary>
+        public SamplingPointKind Kind { get; set; }
+
     }
 }

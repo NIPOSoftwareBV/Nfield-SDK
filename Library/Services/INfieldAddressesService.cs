@@ -46,5 +46,17 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task<Address> AddAsync(string surveyId, string samplingPointId, Address address);
+
+        /// <summary>
+        /// Deletes an address.
+        /// </summary>
+        /// <param name="surveyId">The survey for which to add the address</param>
+        /// <param name="samplingPointId">The sampling point for which to add the address</param>
+        /// <param name="addressId">The id of the address to delete.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task DeleteAsync(string surveyId, string samplingPointId, string addressId);
     }
 }

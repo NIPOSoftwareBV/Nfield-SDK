@@ -65,6 +65,13 @@ namespace Nfield.Services
         Task<IQueryable<Interviewer>> QueryAsync();
 
         /// <summary>
+        /// Gets the interviewer by clientId
+        /// </summary>
+        /// <param name="clientInterviewerId"></param>
+        /// <returns></returns>
+        Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId);
+
+        /// <summary>
         /// Change the password of an interviewer
         /// </summary>
         /// <param name="interviewer">interviewer whose password to change</param>

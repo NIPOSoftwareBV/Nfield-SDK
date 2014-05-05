@@ -98,6 +98,22 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
+        /// See <see cref="INfieldInterviewersService.InterviewerByClientIdAsync"/>
+        /// </summary>
+        public Task <Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
+        {
+            string uri = string.Format(@"{0}GetByClientId/{1}", InterviewersApi.AbsoluteUri, clientInterviewerId);
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<Interviewer>(stringTask.Result))
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
         /// See <see cref="INfieldInterviewersService.ChangePasswordAsync"/>
         /// </summary>
         public Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password)

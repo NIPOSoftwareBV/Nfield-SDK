@@ -40,7 +40,14 @@ namespace Nfield.Extensions
             if (response.Content != null)
             {
                 var contentString = response.Content.ReadAsStringAsync().Result;
-                httpErrorDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(contentString);
+                try
+                {
+                    httpErrorDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(contentString);
+                }
+                catch (Exception)
+                {
+                    // it's not json
+                }
             }
 
             object temp;

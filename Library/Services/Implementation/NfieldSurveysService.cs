@@ -15,10 +15,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -124,7 +126,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// <see cref="INfieldSurveysService.UploadInterviewerFileInstructionsAsync(byte[], string ,string)"/>
+        /// <see cref="INfieldSurveysService.UploadInterviewerFileInstructionsAsync(string, string)"/>
         /// </summary>
         public Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId)
         {
@@ -134,6 +136,32 @@ namespace Nfield.Services.Implementation
             byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
             return Client.PostAsync(uri, byteArrayContent).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.DownloadInterviewerFileInstructionsAsync(string)"/>
+        /// </summary>
+        public Task<InterviewerInstruction> DownloadInterviewerFileInstructionsAsync(string surveyId)
+        {
+            var uri = GetInterviewerInstructionUri(surveyId, null);
+
+            return Client.GetAsync(uri)
+                .ContinueWith(
+                    responseMessageTask => new InterviewerInstruction
+                        {
+                            Content = responseMessageTask.Result.Content.ReadAsByteArrayAsync().Result,
+                            FileName = responseMessageTask.Result.Content.Headers.ContentDisposition.FileName
+                        })
+                .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.DeleteInterviewerFileInstructionsAsync(string)"/>
+        /// </summary>
+        public Task DeleteInterviewerFileInstructionsAsync(string surveyId)
+        {
+            var uri = GetInterviewerInstructionUri(surveyId, null);
+            return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
         /// <summary>
@@ -200,7 +228,8 @@ namespace Nfield.Services.Implementation
                 Name = samplingPoint.Name,
                 Description = samplingPoint.Description,
                 FieldworkOfficeId = samplingPoint.FieldworkOfficeId,
-                GroupId = samplingPoint.GroupId
+                GroupId = samplingPoint.GroupId,
+                Stratum = samplingPoint.Stratum
             };
 
             string uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId);
@@ -300,6 +329,67 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
+        /// <summary>
+        /// <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string)"/>
+        /// </summary>
+        /// <returns>image file name</returns>
+        public Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath)
+        {
+            if(!File.Exists(filePath))
+                throw new FileNotFoundException(filePath);
+           
+            var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
+            return SamplingPointImageAddAsync(surveyId, samplingPointId, Path.GetFileName(filePath), byteArrayContent);
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string, byte[])"/>
+        /// </summary>
+        /// <returns>image file name</returns>
+        public Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filename, byte[] content)
+        {
+            var byteArrayContent = new ByteArrayContent(content);
+            return SamplingPointImageAddAsync(surveyId, samplingPointId, filename, byteArrayContent);
+        }
+
+        private Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filename, ByteArrayContent byteArrayContent)
+        {
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, filename);
+
+            byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            byteArrayContent.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = filename
+                };
+
+            return Client.PostAsync(uri, byteArrayContent)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => stringTask.Result.Substring(1, stringTask.Result.Length - 2))
+                .FlattenExceptions();
+        }
+
+        public Task<SamplingPointImage> SamplingPointImageGetAsync(string surveyId, string samplingPointId)
+        {
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, null);
+
+            return Client.GetAsync(uri)
+                .ContinueWith(
+                    responseMessageTask => new SamplingPointImage
+                    {
+                        Content = responseMessageTask.Result.Content.ReadAsByteArrayAsync().Result,
+                        FileName = responseMessageTask.Result.Content.Headers.ContentDisposition.FileName
+                    })
+                .FlattenExceptions();
+        }
+
+        public Task SamplingPointImageDeleteAsync(string surveyId, string samplingPointId)
+        {
+            var uri = GetSamplingPointImageUri(surveyId, samplingPointId, null);
+
+            return Client.DeleteAsync(uri).FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -342,16 +432,43 @@ namespace Nfield.Services.Implementation
             get { return "SurveyInterviewerInstructions"; }
         }
 
+        private static string SamplingPointImageControllerName
+        {
+            get { return "Surveys"; }
+        }
+
         /// <summary>
         /// Returns the URI to upload the interviewer instructions 
         /// based on the provided <paramref name="surveyId"/> and <paramref name="fileName"/>
         /// </summary>
         private string GetInterviewerInstructionUri(string surveyId, string fileName)
         {
-            return string.Format(@"{0}{1}/{2}/?fileName={3}", ConnectionClient.NfieldServerUri.AbsoluteUri,
-                SurveyInterviewerInstructionsControllerName, surveyId, fileName);
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(@"{0}/{1}",
+                SurveyInterviewerInstructionsControllerName, surveyId);
+            if (!string.IsNullOrEmpty(fileName))
+                result.AppendFormat(@"/?fileName={0}", fileName);
+            return result.ToString();
         }
 
+        /// <summary>
+        /// Returns the URI to upload the image associated with a sampling point
+        /// <paramref name="surveyId"/>
+        /// <paramref name="samplingPointId"/>
+        /// <paramref name="fileName"/>
+        /// </summary>
+        private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
+        {
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(CultureInfo.InvariantCulture, @"{0}/{1}/SamplingPointImage/{2}",
+                                        SamplingPointImageControllerName,
+                                        surveyId,
+                                        Uri.EscapeUriString(samplingPointId));
+            if (!string.IsNullOrEmpty(fileName))
+                result.AppendFormat(CultureInfo.InvariantCulture, @"?filename={0}",
+                                        Uri.EscapeUriString(fileName));
+            return result.ToString();
+        }
     }
 
     /// <summary>
@@ -364,6 +481,7 @@ namespace Nfield.Services.Implementation
         public string Description { get; set; }
         public string FieldworkOfficeId { get; set; }
         public string GroupId { get; set; }
+        public string Stratum { get; set; }
     }
 
     /// <summary>
