@@ -27,8 +27,8 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldSurveyFieldworkService : INfieldSurveyFieldworkService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldLanguagesService
-        
+        #region Implementation of INfieldSurveyFieldworkService
+
         /// <summary>
         /// See <see cref="INfieldSurveyFieldworkService.GetStatusAsync"/>
         /// </summary>

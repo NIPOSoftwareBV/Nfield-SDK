@@ -28,3 +28,5 @@ _ReSharper*/
 .*crunch*.local.xml
 
 /packages/
+
+TestResults/
