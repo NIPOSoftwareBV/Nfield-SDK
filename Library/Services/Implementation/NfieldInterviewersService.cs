@@ -131,6 +131,42 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// <see cref="INfieldInterviewersService.QueryOfficesOfInterviewerAsync"/>
+        /// </summary>
+        public Task<IQueryable<FieldworkOffice>> QueryOfficesOfInterviewerAsync(string interviewerId)
+        {
+            var uri = string.Format(@"{0}{1}/FieldworkOffices", InterviewersApi.AbsoluteUri, interviewerId);
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<List<FieldworkOffice>>(stringTask.Result).AsQueryable())
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
+        /// </summary>
+        public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds)
+        {
+            var uri = string.Format(@"{0}{1}/FieldworkOffices", InterviewersApi.AbsoluteUri, interviewerId);
+
+            return Client.PostAsJsonAsync(uri, fieldworkOfficeIds).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldInterviewersService.RemoveInterviewerFromFieldworkOfficesAsync"/>
+        /// </summary>
+        public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds)
+        {
+            var uri = string.Format(@"{0}{1}/FieldworkOffices", InterviewersApi.AbsoluteUri, interviewerId);
+
+            return Client.DeleteAsJsonAsync(uri, fieldworkOfficeIds).FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject

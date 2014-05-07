@@ -29,5 +29,6 @@ namespace Nfield.Infrastructure
         Task<HttpResponseMessage> DeleteAsync(string requestUri);
         Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content);
         Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content);
+        Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content);
     }
 }

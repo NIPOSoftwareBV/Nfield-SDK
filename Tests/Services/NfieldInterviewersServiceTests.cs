@@ -14,6 +14,10 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using Nfield.Infrastructure;
 using Nfield.Services.Implementation;
 using Xunit;
@@ -172,5 +176,112 @@ namespace Nfield.Services
         }
 
         #endregion
+
+        #region QueryOfficesOfInterviewerAsync
+
+        [Fact]
+        public void TestQueryOfficesOfInterviewerAsync_ServerReturnsQuery_ReturnsListWithFieldworkOffices()
+        {
+            const string interviewerId = "interviewerId";
+
+            var expectedFieldworkOffices = new[]
+            {
+                new FieldworkOffice {OfficeId = "Amsterdam", IsHeadquarters = false},
+                new FieldworkOffice {OfficeId = "Barcelona", IsHeadquarters = false},
+                new FieldworkOffice {OfficeId = "Headquarters", IsHeadquarters = true}
+            };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(
+                    string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/FieldworkOffices", ServiceAddress,
+                        interviewerId))
+                )
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(JsonConvert.SerializeObject(expectedFieldworkOffices))));
+
+            var target = new NfieldInterviewersService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualFieldworkOffices = target.QueryOfficesOfInterviewerAsync(interviewerId).Result;
+            Assert.Equal(expectedFieldworkOffices[0].OfficeId, actualFieldworkOffices.ToArray()[0].OfficeId);
+            Assert.Equal(expectedFieldworkOffices[1].OfficeId, actualFieldworkOffices.ToArray()[1].OfficeId);
+            Assert.Equal(expectedFieldworkOffices[2].OfficeId, actualFieldworkOffices.ToArray()[2].OfficeId);
+            Assert.Equal(3, actualFieldworkOffices.Count());
+        }
+
+        #endregion
+
+        #region AddInterviewerToFieldworkOfficesAsync
+
+        [Fact]
+        public void TestAddInterviewerToFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgs()
+        {
+            const string interviewerId = "interviewerId";
+            var fieldworkOffices = new[] {"Amsterdam", "Barcelona"};
+
+            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/FieldworkOffices",
+                ServiceAddress,
+                interviewerId);
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+            
+
+            var target = new NfieldInterviewersService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.AddInterviewerToFieldworkOfficesAsync(interviewerId, fieldworkOffices);            
+
+            mockedHttpClient.Verify(
+                h =>
+                    h.PostAsJsonAsync(expectedUrl, It.Is<IEnumerable<string>>(f => fieldworkOffices.Equals(f))),
+                Times.Once());
+        }
+
+        #endregion
+
+
+        #region RemoveInterviewerFromFieldworkOfficesAsync
+
+        [Fact]
+        public void TestRemoveInterviewerFromFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgs()
+        {
+            const string interviewerId = "interviewerId";
+            var fieldworkOffices = new[] { "Amsterdam", "Barcelona" };
+
+            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/FieldworkOffices",
+                ServiceAddress,
+                interviewerId);
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient
+                .Setup(client => client.DeleteAsJsonAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+
+            var target = new NfieldInterviewersService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.RemoveInterviewerFromFieldworkOfficesAsync(interviewerId, fieldworkOffices).Wait();
+
+            
+
+            mockedHttpClient.Verify(
+                h =>
+                    h.DeleteAsJsonAsync(expectedUrl, It.Is<IEnumerable<string>>(fo => fo.Equals(fieldworkOffices))),
+                Times.Once());
+        }
+
+        #endregion
+
+
     }
 }

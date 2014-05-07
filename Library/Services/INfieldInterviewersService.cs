@@ -13,6 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections;
+using System.Collections.Generic;
 using Nfield.Models;
 using System;
 using System.Linq;
@@ -81,5 +83,28 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
         Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password);
+
+        /// <summary>
+        /// Returns a queryable list of fieldwork offices that the interviewer belongs to
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <returns></returns>
+        Task<IQueryable<FieldworkOffice>> QueryOfficesOfInterviewerAsync(string interviewerId);
+
+        /// <summary>
+        /// Assigns an interviewer to a list of fieldwork offices
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <param name="fieldworkOfficeIds"></param>
+        /// <returns></returns>
+        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds);
+
+        /// <summary>
+        /// Unassigns an interviewer from a list of fieldwork offices
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <param name="fieldworkOfficeIds"></param>
+        /// <returns></returns>
+        Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds);
     }
 }

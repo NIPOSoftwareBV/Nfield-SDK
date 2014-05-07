@@ -19,6 +19,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Xml.Schema;
 using Newtonsoft.Json;
 using System.Text;
 using Nfield.Extensions;
@@ -62,7 +63,7 @@ namespace Nfield.Infrastructure
 
         public Task<HttpResponseMessage> PutAsJsonAsync<TContent>(string requestUri, TContent content)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.PutAsJsonAsync<TContent>(requestUri, content));
+            return SendRequestAndHandleAuthenticationToken(_httpClient.PutAsJsonAsync(requestUri, content));
         }
 
         public Task<HttpResponseMessage> DeleteAsync(string requestUri)
@@ -70,10 +71,23 @@ namespace Nfield.Infrastructure
             return SendRequestAndHandleAuthenticationToken(_httpClient.DeleteAsync(requestUri));
         }
 
+        public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content)
+        {
+            var request = new HttpRequestMessage(new HttpMethod("DELETE"), requestUri)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
+            };
+
+            return SendRequestAndHandleAuthenticationToken(_httpClient.SendAsync(request));
+        }
+
         public Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content)
         {
-            var request = new HttpRequestMessage(new HttpMethod("PATCH"), requestUri);
-            request.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(new HttpMethod("PATCH"), requestUri)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
+            };
+
             return SendRequestAndHandleAuthenticationToken(_httpClient.SendAsync(request));
         }
 
