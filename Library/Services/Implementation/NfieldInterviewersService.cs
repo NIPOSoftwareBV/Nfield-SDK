@@ -136,7 +136,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<FieldworkOffice>> QueryOfficesOfInterviewerAsync(string interviewerId)
         {
-            var uri = string.Format(@"{0}{1}/FieldworkOffices", InterviewersApi.AbsoluteUri, interviewerId);
+            var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -152,7 +152,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds)
         {
-            var uri = string.Format(@"{0}{1}/FieldworkOffices", InterviewersApi.AbsoluteUri, interviewerId);
+            var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
 
             return Client.PostAsJsonAsync(uri, fieldworkOfficeIds).FlattenExceptions();
         }
@@ -162,7 +162,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds)
         {
-            var uri = string.Format(@"{0}{1}/FieldworkOffices", InterviewersApi.AbsoluteUri, interviewerId);
+            var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
 
             return Client.DeleteAsJsonAsync(uri, fieldworkOfficeIds).FlattenExceptions();
         }

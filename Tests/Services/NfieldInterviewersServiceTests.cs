@@ -195,7 +195,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.GetAsync(
-                    string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/FieldworkOffices", ServiceAddress,
+                    string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices", ServiceAddress,
                         interviewerId))
                 )
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -221,7 +221,7 @@ namespace Nfield.Services
             const string interviewerId = "interviewerId";
             var fieldworkOffices = new[] {"Amsterdam", "Barcelona"};
 
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/FieldworkOffices",
+            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices",
                 ServiceAddress,
                 interviewerId);
 
@@ -255,7 +255,7 @@ namespace Nfield.Services
             const string interviewerId = "interviewerId";
             var fieldworkOffices = new[] { "Amsterdam", "Barcelona" };
 
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/FieldworkOffices",
+            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices",
                 ServiceAddress,
                 interviewerId);
 
