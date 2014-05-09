@@ -126,7 +126,7 @@ namespace Nfield.SDK.Samples
                 // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
                 var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
                 var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
-
+ 
                 // Upload ODIN script for survey
                 // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
                 var myScript = new SurveyScript
@@ -144,6 +144,24 @@ namespace Nfield.SDK.Samples
                 var myUpdatedScript =
                     surveyScriptService.PostAsync("surveyWithOdinScriptId", scriptFilePath).Result;
 
+                // Create survey
+                var newSurvey = surveysService.AddAsync(new Survey(SurveyType.Basic)
+                {
+                    ClientName = "clientName",
+                    Description = "description",
+                    SurveyName = "abc"
+                }).Result;
+
+                surveyScriptService.PostAsync(newSurvey.SurveyId, myScript).Wait();
+                
+                var surveyFieldworkService = connection.GetService<INfieldSurveyFieldworkService>();
+                //Get survey fieldwork status 
+                var surveyFieldworkStatus = surveyFieldworkService.GetStatusAsync(newSurvey.SurveyId).Result; //Should be under construction
+
+                // Start the fieldwork for the survey
+                surveyFieldworkService.StartFieldworkAsync(newSurvey.SurveyId).Wait();
+                surveyFieldworkStatus = surveyFieldworkService.GetStatusAsync(newSurvey.SurveyId).Result; //Should be started
+                
                 // Example of a download data request: filtering testdata collected today
                 var surveyDataService = connection.GetService<INfieldSurveyDataService>();
 
