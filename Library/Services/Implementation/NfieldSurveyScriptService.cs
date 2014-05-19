@@ -14,7 +14,9 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -42,7 +44,8 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SurveyScript> GetAsync(string surveyId)
         {
-            return Client.GetAsync(SurveyScriptApi.AbsoluteUri + surveyId)
+            var uri = SurveyScriptUrl(surveyId);
+            return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
@@ -69,10 +72,6 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri SurveyScriptApi
-        {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveyscript/"); }
-        }
 
         /// <summary>
         /// See <see cref="INfieldSurveyScriptService.PostAsync(string,Nfield.Models.SurveyScript)"/>
@@ -83,7 +82,8 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("surveyScript");
             }
-            return Client.PostAsJsonAsync(SurveyScriptApi.AbsoluteUri + surveyId, surveyScript)
+            var uri = SurveyScriptUrl(surveyId);
+            return Client.PostAsJsonAsync(uri, surveyScript)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
@@ -110,6 +110,14 @@ namespace Nfield.Services.Implementation
             };
 
             return PostAsync(surveyId, surveyScript);
+        }
+
+        private string SurveyScriptUrl(string surveyId)
+        {
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Script/", surveyId);
+
+            return result.ToString();
         }
     }
 }

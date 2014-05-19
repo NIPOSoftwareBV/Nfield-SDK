@@ -142,7 +142,7 @@ namespace Nfield.Services.Implementation
 
         private Uri TranslationsApi(string surveyId, int languageId, string translationName)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.AppendFormat("Surveys/{0}/Languages/{1}/Translations",
                     surveyId, languageId);
             if (!string.IsNullOrEmpty(translationName))

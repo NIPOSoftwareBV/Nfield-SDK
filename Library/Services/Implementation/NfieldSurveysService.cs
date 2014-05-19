@@ -444,7 +444,7 @@ namespace Nfield.Services.Implementation
 
         private static string SurveyInterviewerInstructionsControllerName
         {
-            get { return "SurveyInterviewerInstructions"; }
+            get { return "InterviewerInstructions"; }
         }
 
         private static string SamplingPointImageControllerName
@@ -459,10 +459,10 @@ namespace Nfield.Services.Implementation
         private string GetInterviewerInstructionUri(string surveyId, string fileName)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(@"{0}/{1}",
-                SurveyInterviewerInstructionsControllerName, surveyId);
+            result.AppendFormat(@"Surveys/{0}/{1}/"
+                , surveyId, SurveyInterviewerInstructionsControllerName);
             if (!string.IsNullOrEmpty(fileName))
-                result.AppendFormat(@"/?fileName={0}", fileName);
+                result.AppendFormat(@"/{0}", fileName);
             return result.ToString();
         }
 
@@ -480,9 +480,7 @@ namespace Nfield.Services.Implementation
                                         surveyId,
                                         Uri.EscapeUriString(samplingPointId),
                                         !string.IsNullOrEmpty(fileName) ? Uri.EscapeUriString(fileName) : "");
-            //if (!string.IsNullOrEmpty(fileName))
-            //    result.AppendFormat(CultureInfo.InvariantCulture, @"?filename={0}",
-            //                            Uri.EscapeUriString(fileName));
+
             return result.ToString();
         }
     }
