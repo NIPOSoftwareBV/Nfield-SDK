@@ -475,13 +475,14 @@ namespace Nfield.Services.Implementation
         private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"{0}/{1}/SamplingPointImage/{2}",
+            result.AppendFormat(CultureInfo.InvariantCulture, @"{0}/{1}/SamplingPoint/{2}/Image/{3}",
                                         SamplingPointImageControllerName,
                                         surveyId,
-                                        Uri.EscapeUriString(samplingPointId));
-            if (!string.IsNullOrEmpty(fileName))
-                result.AppendFormat(CultureInfo.InvariantCulture, @"?filename={0}",
-                                        Uri.EscapeUriString(fileName));
+                                        Uri.EscapeUriString(samplingPointId),
+                                        !string.IsNullOrEmpty(fileName) ? Uri.EscapeUriString(fileName) : "");
+            //if (!string.IsNullOrEmpty(fileName))
+            //    result.AppendFormat(CultureInfo.InvariantCulture, @"?filename={0}",
+            //                            Uri.EscapeUriString(fileName));
             return result.ToString();
         }
     }
