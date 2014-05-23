@@ -53,7 +53,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify(
-                hc => hc.GetAsync(It.Is<string>(url => url.EndsWith("SurveyResponseCodes/" + surveyId))), Times.Once());
+                hc => hc.GetAsync(It.Is<string>(url => url.EndsWith("Surveys/" + surveyId + "/ResponseCodes/"))), Times.Once());
         }
 
         #endregion
@@ -95,7 +95,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.GetAsync(It.Is<string>(url =>
-                    url.EndsWith(string.Format("SurveyResponseCodes/{0}?responseCode={1}", surveyId, code)))),
+                    url.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
                 Times.Once());
         }
 
@@ -152,7 +152,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify( hc =>
-                    hc.PostAsJsonAsync(It.Is<string>(url => url.EndsWith("SurveyResponseCodes/" + surveyId)), responseCodeToAdd), 
+                    hc.PostAsJsonAsync(It.Is<string>(url => url.EndsWith("Surveys/" + surveyId + "/ResponseCodes/")), responseCodeToAdd), 
                     Times.Once());
         }
 
@@ -245,7 +245,7 @@ namespace Nfield.Services
             mockedHttpClient.Verify(hc =>
                 hc.PatchAsJsonAsync(
                     It.Is<string>(
-                        url => url.EndsWith(string.Format("SurveyResponseCodes/{0}?responseCode={1}", surveyId, code))),
+                        url => url.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code))),
                     It.IsAny<UpdateSurveyResponseCode>()),
                 Times.Once());
         }
@@ -321,7 +321,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.DeleteAsync(It.Is<string>(
-                        url => url.EndsWith(string.Format("SurveyResponseCodes/{0}?responseCode={1}", surveyId, code)))),
+                        url => url.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
                 Times.Once());
         }
 

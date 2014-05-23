@@ -134,7 +134,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldInterviewersService.QueryOfficesOfInterviewerAsync"/>
         /// </summary>
-        public Task<IQueryable<FieldworkOffice>> QueryOfficesOfInterviewerAsync(string interviewerId)
+        public Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId)
         {
             var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
 
@@ -143,28 +143,28 @@ namespace Nfield.Services.Implementation
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<List<FieldworkOffice>>(stringTask.Result).AsQueryable())
+                             JsonConvert.DeserializeObject<IEnumerable<string>>(stringTask.Result))
                          .FlattenExceptions();
         }
 
         /// <summary>
         /// <see cref="INfieldInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
         /// </summary>
-        public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds)
+        public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
             var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
 
-            return Client.PostAsJsonAsync(uri, fieldworkOfficeIds).FlattenExceptions();
+            return Client.PostAsJsonAsync(uri, fieldworkOfficeId).FlattenExceptions();
         }
 
         /// <summary>
         /// <see cref="INfieldInterviewersService.RemoveInterviewerFromFieldworkOfficesAsync"/>
         /// </summary>
-        public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds)
+        public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
             var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
 
-            return Client.DeleteAsJsonAsync(uri, fieldworkOfficeIds).FlattenExceptions();
+            return Client.DeleteAsJsonAsync(uri, fieldworkOfficeId).FlattenExceptions();
         }
 
         #endregion

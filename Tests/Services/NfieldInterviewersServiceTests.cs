@@ -186,9 +186,9 @@ namespace Nfield.Services
 
             var expectedFieldworkOffices = new[]
             {
-                new FieldworkOffice {OfficeId = "Amsterdam", IsHeadquarters = false},
-                new FieldworkOffice {OfficeId = "Barcelona", IsHeadquarters = false},
-                new FieldworkOffice {OfficeId = "Headquarters", IsHeadquarters = true}
+                "Amsterdam",
+                "Barcelona",
+                "Headquarters"
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -205,10 +205,11 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualFieldworkOffices = target.QueryOfficesOfInterviewerAsync(interviewerId).Result;
-            Assert.Equal(expectedFieldworkOffices[0].OfficeId, actualFieldworkOffices.ToArray()[0].OfficeId);
-            Assert.Equal(expectedFieldworkOffices[1].OfficeId, actualFieldworkOffices.ToArray()[1].OfficeId);
-            Assert.Equal(expectedFieldworkOffices[2].OfficeId, actualFieldworkOffices.ToArray()[2].OfficeId);
-            Assert.Equal(3, actualFieldworkOffices.Count());
+            var fieldworkOffices = actualFieldworkOffices as string[] ?? actualFieldworkOffices.ToArray();
+            Assert.Equal(expectedFieldworkOffices[0], fieldworkOffices[0]);
+            Assert.Equal(expectedFieldworkOffices[1], fieldworkOffices[1]);
+            Assert.Equal(expectedFieldworkOffices[2], fieldworkOffices[2]);
+            Assert.Equal(3, fieldworkOffices.Count());
         }
 
         #endregion
@@ -219,7 +220,7 @@ namespace Nfield.Services
         public void TestAddInterviewerToFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgs()
         {
             const string interviewerId = "interviewerId";
-            var fieldworkOffices = new[] {"Amsterdam", "Barcelona"};
+            const string fieldworkOfficeId = "Barcelona";
 
             var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices",
                 ServiceAddress,
@@ -229,18 +230,18 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
             
 
             var target = new NfieldInterviewersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            target.AddInterviewerToFieldworkOfficesAsync(interviewerId, fieldworkOffices);            
+            target.AddInterviewerToFieldworkOfficesAsync(interviewerId, fieldworkOfficeId);            
 
             mockedHttpClient.Verify(
                 h =>
-                    h.PostAsJsonAsync(expectedUrl, It.Is<IEnumerable<string>>(f => fieldworkOffices.Equals(f))),
+                    h.PostAsJsonAsync(expectedUrl, It.Is<string>(f => fieldworkOfficeId.Equals(f))),
                 Times.Once());
         }
 
@@ -253,7 +254,7 @@ namespace Nfield.Services
         public void TestRemoveInterviewerFromFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgs()
         {
             const string interviewerId = "interviewerId";
-            var fieldworkOffices = new[] { "Amsterdam", "Barcelona" };
+            const string fieldworkOfficeId = "Barcelona";
 
             var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices",
                 ServiceAddress,
@@ -263,20 +264,20 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.DeleteAsJsonAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
+                .Setup(client => client.DeleteAsJsonAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
 
             var target = new NfieldInterviewersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            target.RemoveInterviewerFromFieldworkOfficesAsync(interviewerId, fieldworkOffices).Wait();
+            target.RemoveInterviewerFromFieldworkOfficesAsync(interviewerId, fieldworkOfficeId).Wait();
 
             
 
             mockedHttpClient.Verify(
                 h =>
-                    h.DeleteAsJsonAsync(expectedUrl, It.Is<IEnumerable<string>>(fo => fo.Equals(fieldworkOffices))),
+                    h.DeleteAsJsonAsync(expectedUrl, It.Is<string>(fo => fo.Equals(fieldworkOfficeId))),
                 Times.Once());
         }
 
