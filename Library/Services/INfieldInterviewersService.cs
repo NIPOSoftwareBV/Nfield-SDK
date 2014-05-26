@@ -95,9 +95,9 @@ namespace Nfield.Services
         /// Assigns an interviewer to a fieldwork office
         /// </summary>
         /// <param name="interviewerId"></param>
-        /// <param name="fieldworkOfficeId"></param>
+        /// <param name="officeId"></param>
         /// <returns></returns>
-        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId);
+        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
 
         /// <summary>
         /// Unassigns an interviewer from a fieldwork office

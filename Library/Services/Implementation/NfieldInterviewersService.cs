@@ -151,11 +151,11 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
         /// </summary>
-        public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
+        public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
         {
             var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
 
-            return Client.PostAsJsonAsync(uri, fieldworkOfficeId).FlattenExceptions();
+            return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel{OfficeId = officeId}).FlattenExceptions();
         }
 
         /// <summary>
@@ -163,9 +163,9 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
-            var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
+            var uri = string.Format(@"{0}{1}/Offices/{2}", InterviewersApi.AbsoluteUri, interviewerId,fieldworkOfficeId);
 
-            return Client.DeleteAsJsonAsync(uri, fieldworkOfficeId).FlattenExceptions();
+            return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
         #endregion
