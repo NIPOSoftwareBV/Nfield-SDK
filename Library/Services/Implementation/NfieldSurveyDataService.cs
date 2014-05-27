@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -20,7 +22,13 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest)
         {
-            return Client.PostAsJsonAsync(SurveyDataApi.AbsoluteUri, surveyDownloadDataRequest)
+            if (surveyDownloadDataRequest == null)
+            {
+                throw new ArgumentNullException("surveyDownloadDataRequest");
+            }
+            var uri = SurveyDataUrl(surveyDownloadDataRequest.SurveyId);
+
+            return Client.PostAsJsonAsync(uri, surveyDownloadDataRequest)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObjectAsync<BackgroundTask>(task.Result).Result)
                          .FlattenExceptions();
@@ -42,9 +50,12 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri SurveyDataApi
+        private string SurveyDataUrl(string surveyId)
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "SurveyData/"); }
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Data/", surveyId);
+
+            return result.ToString();
         }
 
     }

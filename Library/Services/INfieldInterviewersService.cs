@@ -85,26 +85,26 @@ namespace Nfield.Services
         Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password);
 
         /// <summary>
-        /// Returns a queryable list of fieldwork offices that the interviewer belongs to
+        /// Returns a list of fieldwork offices ids that the interviewer belongs to
         /// </summary>
         /// <param name="interviewerId"></param>
         /// <returns></returns>
-        Task<IQueryable<FieldworkOffice>> QueryOfficesOfInterviewerAsync(string interviewerId);
+        Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId);
 
         /// <summary>
-        /// Assigns an interviewer to a list of fieldwork offices
+        /// Assigns an interviewer to a fieldwork office
         /// </summary>
         /// <param name="interviewerId"></param>
-        /// <param name="fieldworkOfficeIds"></param>
+        /// <param name="officeId"></param>
         /// <returns></returns>
-        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds);
+        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
 
         /// <summary>
-        /// Unassigns an interviewer from a list of fieldwork offices
+        /// Unassigns an interviewer from a fieldwork office
         /// </summary>
         /// <param name="interviewerId"></param>
-        /// <param name="fieldworkOfficeIds"></param>
+        /// <param name="fieldworkOfficeId"></param>
         /// <returns></returns>
-        Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, IEnumerable<string> fieldworkOfficeIds);
+        Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId);
     }
 }

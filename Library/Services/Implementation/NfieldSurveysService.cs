@@ -444,7 +444,7 @@ namespace Nfield.Services.Implementation
 
         private static string SurveyInterviewerInstructionsControllerName
         {
-            get { return "SurveyInterviewerInstructions"; }
+            get { return "InterviewerInstructions"; }
         }
 
         private static string SamplingPointImageControllerName
@@ -459,10 +459,10 @@ namespace Nfield.Services.Implementation
         private string GetInterviewerInstructionUri(string surveyId, string fileName)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(@"{0}/{1}",
-                SurveyInterviewerInstructionsControllerName, surveyId);
+            result.AppendFormat(@"Surveys/{0}/{1}/"
+                , surveyId, SurveyInterviewerInstructionsControllerName);
             if (!string.IsNullOrEmpty(fileName))
-                result.AppendFormat(@"/?fileName={0}", fileName);
+                result.AppendFormat(@"/{0}", fileName);
             return result.ToString();
         }
 
@@ -475,13 +475,12 @@ namespace Nfield.Services.Implementation
         private string GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"{0}/{1}/SamplingPointImage/{2}",
+            result.AppendFormat(CultureInfo.InvariantCulture, @"{0}/{1}/SamplingPoint/{2}/Image/{3}",
                                         SamplingPointImageControllerName,
                                         surveyId,
-                                        Uri.EscapeUriString(samplingPointId));
-            if (!string.IsNullOrEmpty(fileName))
-                result.AppendFormat(CultureInfo.InvariantCulture, @"?filename={0}",
-                                        Uri.EscapeUriString(fileName));
+                                        Uri.EscapeUriString(samplingPointId),
+                                        !string.IsNullOrEmpty(fileName) ? Uri.EscapeUriString(fileName) : "");
+
             return result.ToString();
         }
     }

@@ -98,6 +98,7 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
+    <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\StopFieldworkModel.cs" />
     <Compile Include="Models\SurveyStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />

@@ -15,7 +15,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -35,10 +37,7 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri SurveyResponseCodesApi
-        {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "SurveyResponseCodes/"); }
-        }
+
 
         /// <summary>
         /// <see cref="INfieldSurveyResponseCodesService.QueryAsync(string)"/>
@@ -49,8 +48,9 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("surveyId");
             }
+            var uri = SurveyResponseCodeUrl(surveyId, null);
 
-            return Client.GetAsync(SurveyResponseCodesApi.AbsoluteUri + surveyId)
+            return Client.GetAsync(uri)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
                     stringTask => JsonConvert.DeserializeObject<List<SurveyResponseCode>>(stringTask.Result).AsQueryable())
@@ -89,8 +89,9 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("responseCode");
             }
+            var uri = SurveyResponseCodeUrl(surveyId, null);
 
-            return Client.PostAsJsonAsync(SurveyResponseCodesApi.AbsoluteUri + surveyId, responseCode)
+            return Client.PostAsJsonAsync(uri, responseCode)
                 .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SurveyResponseCode>(task.Result).Result)
                 .FlattenExceptions();
@@ -166,9 +167,13 @@ namespace Nfield.Services.Implementation
         /// Constructs and returns the url for survey response code 
         /// based on supplied <paramref name="surveyId"/>  and <paramref name="code"/>
         /// </summary>
-        private string SurveyResponseCodeUrl(string surveyId, int code)
+        private string SurveyResponseCodeUrl(string surveyId, int? code)
         {
-            return SurveyResponseCodesApi.AbsoluteUri + surveyId + string.Format("?responseCode={0}", code);
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/ResponseCodes/{1}", surveyId,
+                code.HasValue ? code.Value.ToString(CultureInfo.InvariantCulture) : "");
+
+            return result.ToString();
         }
     }
 
