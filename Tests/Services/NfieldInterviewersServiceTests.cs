@@ -230,7 +230,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<InterviewerFieldworkOfficeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
             
 
@@ -241,7 +241,7 @@ namespace Nfield.Services
 
             mockedHttpClient.Verify(
                 h =>
-                    h.PostAsJsonAsync(expectedUrl, It.Is<string>(f => fieldworkOfficeId.Equals(f))),
+                    h.PostAsJsonAsync(expectedUrl, It.Is<InterviewerFieldworkOfficeModel>(f => f.OfficeId == fieldworkOfficeId)),
                 Times.Once());
         }
 
@@ -256,15 +256,16 @@ namespace Nfield.Services
             const string interviewerId = "interviewerId";
             const string fieldworkOfficeId = "Barcelona";
 
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices",
+            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices/{2}",
                 ServiceAddress,
-                interviewerId);
+                interviewerId,
+                fieldworkOfficeId);
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.DeleteAsJsonAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(client => client.DeleteAsync(It.IsAny<string>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
 
@@ -277,7 +278,7 @@ namespace Nfield.Services
 
             mockedHttpClient.Verify(
                 h =>
-                    h.DeleteAsJsonAsync(expectedUrl, It.Is<string>(fo => fo.Equals(fieldworkOfficeId))),
+                    h.DeleteAsync(expectedUrl),
                 Times.Once());
         }
 
