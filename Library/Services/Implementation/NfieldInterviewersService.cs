@@ -163,7 +163,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
-            var uri = string.Format(@"{0}{1}/Offices/{2}", InterviewersApi.AbsoluteUri, interviewerId,fieldworkOfficeId);
+            var uri = string.Format(@"{0}{1}/Offices/{2}", InterviewersApi.AbsoluteUri, interviewerId, fieldworkOfficeId);
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
