@@ -15,8 +15,6 @@
 
 using System;
 using Nfield.Infrastructure;
-using Nfield.Services.Implementation;
-using Nfield.Models;
 using Moq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,7 +24,7 @@ namespace Nfield.Services
 {
     public abstract class NfieldServiceTestsBase
     {
-        protected const string ServiceAddress = @"http://localhost/nfieldapi/";
+        protected const string ServiceAddress = "http://localhost/nfieldapi/";
 
         protected Task<HttpResponseMessage> CreateTask(HttpStatusCode httpStatusCode, HttpContent content = null)
         {
@@ -55,7 +53,7 @@ namespace Nfield.Services
             //setup the mocked HttpClient to return httpStatusCode for all methods that send a request to the server
 
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<Interviewer>()))
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
                 .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
@@ -75,7 +73,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(It.IsAny<string>(), It.IsAny<UpdateInterviewer>()))
+                .Setup(client => client.PatchAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
                 .Returns(Task.Factory.StartNew(() => new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
 
             return mockedHttpClient;

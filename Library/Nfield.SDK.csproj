@@ -100,6 +100,8 @@
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\StopFieldworkModel.cs" />
+    <Compile Include="Models\SurveyInterviewerAddModel.cs" />
+    <Compile Include="Models\SurveyInterviewerAssignmentChangeModel.cs" />
     <Compile Include="Models\SurveyStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInterviewerAssignmentsService.cs" />
     <Compile Include="Services\Implementation\NfieldLanguagesService.cs" />
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
@@ -132,6 +135,9 @@
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\INfieldSurveyInterviewersService.cs" />
+    <Compile Include="Services\INfieldSurveyInterviewerWorkpackageDistributionService.cs" />
+    <Compile Include="Services\INfieldSurveyInterviewerAssignmentsService.cs" />
     <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
@@ -148,6 +154,10 @@
     <Compile Include="Services\INfieldSurveysService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyResponseCodesService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInterviewersService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInterviewerWorkpackageDistributionService.cs" />
+    <Compile Include="Models\SurveyInterviewerAssignmentModel.cs" />
+    <Compile Include="Models\SurveyInterviewerDistributeModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

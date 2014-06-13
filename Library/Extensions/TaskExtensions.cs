@@ -28,6 +28,10 @@ namespace Nfield.Extensions
         /// </summary>
         public static Task<T> FlattenExceptions<T>(this Task<T> task)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException("task");
+            }
             return task.ContinueWith(previousTask =>
                 {
                     var tcs = new TaskCompletionSource<T>();

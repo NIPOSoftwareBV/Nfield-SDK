@@ -14,23 +14,25 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
+using Nfield.Models;
 
-namespace Nfield.Models
+namespace Nfield.Services
 {
     /// <summary>
-    /// Indicates the kind of the sampling point
+    /// Represents a set of methods to manage assignements of interviewers to surveys.
     /// </summary>
-    public enum SamplingPointKind
+    public interface INfieldSurveyInterviewerWorkpackageDistributionService
     {
         /// <summary>
-        /// A regular sampling point that can be used for assignment
+        /// Distribute workpackages to interviewers on a survey.
         /// </summary>
-        Regular = 0,
-
-        /// <summary>
-        /// A spare sampling point that can be selected as spare to another sampling point
-        /// </summary>
-        Spare = 1
-
+        /// <param name="surveyId">The id of the survey.</param>
+        /// <param name="model">The target and the interviewers to distribute.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task DistributeAsync(string surveyId, SurveyInterviewerDistributeModel model);
     }
 }
