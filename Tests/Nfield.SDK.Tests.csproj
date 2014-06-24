@@ -85,6 +85,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NfieldAddressesServiceTests.cs" />
     <Compile Include="Services\NfieldBackgroundTasksServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInterviewerWorkpackageDistributionServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInterviewersServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInterviewerAssignmentsServiceTests.cs" />
     <Compile Include="Services\NfieldLanguagesServiceTests.cs" />
     <Compile Include="Services\NfieldMediaFilesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyResponseCodesServiceTests.cs" />

@@ -1,4 +1,4 @@
-﻿//    This file is part of Nfield.SDK.
+//    This file is part of Nfield.SDK.
 //
 //    Nfield.SDK is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU Lesser General Public License as published by
@@ -13,24 +13,22 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
 namespace Nfield.Models
 {
     /// <summary>
-    /// Indicates the kind of the sampling point
+    /// Change state of interviewer's assignment to a survey
     /// </summary>
-    public enum SamplingPointKind
+    public class SurveyInterviewerAssignmentChangeModel
     {
         /// <summary>
-        /// A regular sampling point that can be used for assignment
+        /// InterviewerId
         /// </summary>
-        Regular = 0,
+        public string InterviewerId { get; set; }
 
         /// <summary>
-        /// A spare sampling point that can be selected as spare to another sampling point
+        /// Whether to assign the interviewer to this survey
         /// </summary>
-        Spare = 1
+        public bool Assign { get; set; }
 
     }
 }

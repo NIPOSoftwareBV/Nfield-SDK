@@ -1,4 +1,4 @@
-﻿//    This file is part of Nfield.SDK.
+//    This file is part of Nfield.SDK.
 //
 //    Nfield.SDK is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU Lesser General Public License as published by
@@ -13,24 +13,28 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// Indicates the kind of the sampling point
+    /// The target and the interviewers to distribute.
     /// </summary>
-    public enum SamplingPointKind
+    public class SurveyInterviewerDistributeModel
     {
         /// <summary>
-        /// A regular sampling point that can be used for assignment
+        /// The gross target to distribute
         /// </summary>
-        Regular = 0,
+        public int SurveyGrossTargetToDistribute { get; set; }
 
         /// <summary>
-        /// A spare sampling point that can be selected as spare to another sampling point
+        /// The id's of the interviewers to distribute the target to
         /// </summary>
-        Spare = 1
+        public IEnumerable<string> InterviewerIds { get; set; }
 
+        /// <summary>
+        /// Description of this work package distribution. May be null.
+        /// </summary>
+        public string Description { get; set; }
     }
 }
