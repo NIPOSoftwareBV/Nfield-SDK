@@ -103,7 +103,7 @@ namespace Nfield.Services.Implementation
         public Task <Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
-            string uri = string.Format(@"{0}?clientInterviewerId={1}", InterviewersApi.AbsoluteUri, clientInterviewerId);
+            string uri = string.Format(@"{0}/GetByClientId/{1}", InterviewersApi.AbsoluteUri, clientInterviewerId);
 
             return Client.GetAsync(uri)
                          .ContinueWith(
