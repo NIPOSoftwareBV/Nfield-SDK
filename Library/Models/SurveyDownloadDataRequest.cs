@@ -38,6 +38,11 @@ namespace Nfield.Models
         public bool DownloadSuccessfulLiveInterviewData { get; set; }
 
         /// <summary>
+        /// Download data of rejected live interviews that were once successful
+        /// </summary>
+        public bool DownloadRejectedLiveInterviewData { get; set; }
+
+        /// <summary>
         /// Download data of not successful live interviews
         /// </summary>
         public bool DownloadNotSuccessfulLiveInterviewData { get; set; }

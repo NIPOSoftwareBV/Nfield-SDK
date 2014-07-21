@@ -98,7 +98,10 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
+    <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
+    <Compile Include="Models\InterviewQuality.cs" />
+    <Compile Include="Models\QualityNewStateChange.cs" />
     <Compile Include="Models\StopFieldworkModel.cs" />
     <Compile Include="Models\SurveyInterviewerAddModel.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentChangeModel.cs" />
@@ -125,6 +128,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldInterviewQualityService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInterviewerAssignmentsService.cs" />
     <Compile Include="Services\Implementation\NfieldLanguagesService.cs" />
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
@@ -135,6 +139,7 @@
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\INfieldInterviewQualityService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewersService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerWorkpackageDistributionService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerAssignmentsService.cs" />

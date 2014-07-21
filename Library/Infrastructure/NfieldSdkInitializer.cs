@@ -37,6 +37,7 @@ namespace Nfield.Infrastructure
         {
             registerTransient(typeof(NfieldConnection), typeof(NfieldConnection));
             registerTransient(typeof(INfieldInterviewersService), typeof(NfieldInterviewersService));
+            registerTransient(typeof(INfieldInterviewQualityService), typeof(NfieldInterviewQualityService));
             registerTransient(typeof(INfieldSurveysService), typeof(NfieldSurveysService));
             registerTransient(typeof(INfieldSurveyDataService), typeof(NfieldSurveyDataService));
             registerTransient(typeof(INfieldBackgroundTasksService), typeof(NfieldBackgroundTasksService));
