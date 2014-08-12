@@ -157,7 +157,7 @@ namespace Nfield.Services
         {
             _mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<QualityNewStateChange>()))
-                .Returns(CreateTask(HttpStatusCode.OK));
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new InterviewDetailsModel()))));
 
             _target.PutAsync(SurveyId, InterviewId, 1).Wait();
             _mockedHttpClient
