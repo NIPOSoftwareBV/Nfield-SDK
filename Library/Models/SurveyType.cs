@@ -39,5 +39,10 @@ namespace Nfield.Models
         /// Survey that has sampling points with targets
         /// </summary>
         EuroBarometer,
+
+        /// <summary>
+        /// Basic online survey type, this survey type has no features
+        /// </summary>
+        OnlineBasic,
     }
 }
