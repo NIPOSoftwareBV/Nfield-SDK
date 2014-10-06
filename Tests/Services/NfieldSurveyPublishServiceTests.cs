@@ -18,7 +18,9 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using Moq;
+using Newtonsoft.Json;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -27,23 +29,23 @@ namespace Nfield.Services
     /// <summary>
     /// Tests for <see cref="NfieldSurveyScriptService"/>
     /// </summary>
-    public class NfieldPublishSurveyServiceTests : NfieldServiceTestsBase
+    public class NfieldSurveyPublishServiceTests : NfieldServiceTestsBase
     {
-        private readonly NfieldPublishSurveyService _target;
+        private readonly NfieldSurveyPublishService _target;
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
         readonly Mock<INfieldConnectionClient> _mockedNfieldConnection;
 
-        public NfieldPublishSurveyServiceTests()
+        public NfieldSurveyPublishServiceTests()
         {
             _mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(_mockedNfieldConnection);
 
-            _target = new NfieldPublishSurveyService();
+            _target = new NfieldSurveyPublishService();
             _target.InitializeNfieldConnection(_mockedNfieldConnection.Object);
 
         }
 
-        #region GetStatusAsync
+        #region GetAsync
 
         [Fact]
         public void TestGetAsync_WhenSurveyIdIsNull_Throws()
@@ -67,49 +69,55 @@ namespace Nfield.Services
         public void TestGetAsync_Always_CallsCorrectURI()
         {
             const string surveyId = "SurveyId";
-            
+            var testModel = new SurveyPackageStateModel() { Live = (PackagePublishState)1, Test = (PackagePublishState)2 };
             _mockedHttpClient
                 .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/Publish"))
-                .Returns(CreateTask(HttpStatusCode.OK, new ObjectContent<int>(0, new JsonMediaTypeFormatter())));
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(testModel))));
 
             var actual = _target.GetAsync(surveyId).Result;
 
-            Assert.Equal(0, (int) actual);
+            Assert.Equal((PackagePublishState)1, actual.Live);
+            Assert.Equal((PackagePublishState)2, actual.Test);
         }
 
         #endregion
 
-        #region StartFieldworkAsync
+        #region PutAsync
 
         [Fact]
         public void TestPutAsync_WhenSurveyIdIsNull_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync(null)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync(null,It.IsAny<SurveyPublishTypeUpgradeModel>())));
         }
 
         [Fact]
         public void TestPutAsync_WhenSurveyIdIsEmptyString_Throws()
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PutAsync(string.Empty)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PutAsync(string.Empty, It.IsAny<SurveyPublishTypeUpgradeModel>())));
         }
 
         [Fact]
         public void TestPutAsync_WhenSurveyIdIsWhiteSpace_Throws()
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PutAsync(" ")));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PutAsync(" ", It.IsAny<SurveyPublishTypeUpgradeModel>())));
         }
 
         [Fact]
         public void TestPutAsync_Always_CallsCorrectURI()
         {
             const string surveyId = "SurveyId";
-            _mockedHttpClient.Setup(c => c.PutAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
+            _mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyPublishTypeUpgradeModel>()))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(JsonConvert.SerializeObject( It.IsAny<SurveyPublishTypeUpgradeModel>()))));
 
-            _target.PutAsync(surveyId);
+            _target.PutAsync(surveyId, new SurveyPublishTypeUpgradeModel()).Wait();
 
             _mockedHttpClient
-                .Verify(client => client.PutAsync(ServiceAddress + "Surveys/" + surveyId + "/Publish", It.IsAny<HttpContent>()), Times.Once());
+                .Verify(
+                    client =>
+                        client.PutAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/Publish", It.IsAny<SurveyPublishTypeUpgradeModel>()),
+                    Times.Once());
         }
 
         #endregion

@@ -21,12 +21,12 @@ namespace Nfield.Services
     /// <summary>
     /// Represents a couple of methods to read state and publish survey to survey package.
     /// </summary>
-    public interface INfieldPublishSurveyService
+    public interface INfieldSurveyPublishService
     {
         /// <summary>
         /// Gets the publish state of the survey in the context.   
         /// </summary>
-        Task<PackagePublishState> GetAsync(string surveyId);
+        Task<SurveyPackageStateModel> GetAsync(string surveyId);
 
         /// <summary>
         /// Publish the latest survey artifacts to the survey package,
@@ -34,10 +34,12 @@ namespace Nfield.Services
         /// upadtes the database
         /// </summary>
         /// <param name="surveyId">The id of the survey.</param>
+        /// <param name="surveyPublishTypeUpgrade">A model that handels the interview package type
+        /// and force interviews on older packages to upgrade to this package</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task PutAsync(string surveyId);
+        Task PutAsync(string surveyId, SurveyPublishTypeUpgradeModel surveyPublishTypeUpgrade);
     }
 }

@@ -25,11 +25,11 @@ using Nfield.Models;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldPublishSurveyService"/>
+    /// Implementation of <see cref="INfieldSurveyPublishService"/>
     /// </summary>
-    internal class NfieldPublishSurveyService : INfieldPublishSurveyService, INfieldConnectionClientObject
+    internal class NfieldSurveyPublishService : INfieldSurveyPublishService, INfieldConnectionClientObject
     {
-        public Task<PackagePublishState> GetAsync(string surveyId)
+        public Task<SurveyPackageStateModel> GetAsync(string surveyId)
         {
             CheckSurveyId(surveyId);
 
@@ -39,17 +39,20 @@ namespace Nfield.Services.Implementation
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
                     stringTask =>
-                        JsonConvert.DeserializeObject<PackagePublishState>(stringTask.Result))
+                        JsonConvert.DeserializeObject<SurveyPackageStateModel>(stringTask.Result))
                 .FlattenExceptions();
         }
 
-        public Task PutAsync(string surveyId)
+        public Task PutAsync(string surveyId, SurveyPublishTypeUpgradeModel surveyPublishTypeUpgrade)
         {
             CheckSurveyId(surveyId);
-
-            return
-                Client.PutAsync(PublishSurveyApi(surveyId).AbsoluteUri, new StringContent(string.Empty))
-                    .FlattenExceptions();
+            return Client.PutAsJsonAsync(PublishSurveyApi(surveyId).AbsoluteUri, surveyPublishTypeUpgrade).
+                ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(
+                    stringTask => JsonConvert.DeserializeObjectAsync<SurveyPublishTypeUpgradeModel>(stringTask.Result).Result)
+                .FlattenExceptions();
+            
         }
 
 
