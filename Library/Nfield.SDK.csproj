@@ -105,6 +105,7 @@
     <Compile Include="Models\StopFieldworkModel.cs" />
     <Compile Include="Models\SurveyInterviewerAddModel.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentChangeModel.cs" />
+    <Compile Include="Models\PackagePublishState.cs" />
     <Compile Include="Models\SurveyStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldPublishSurveyService.cs" />
     <Compile Include="Services\Implementation\NfieldInterviewQualityService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInterviewerAssignmentsService.cs" />
     <Compile Include="Services\Implementation\NfieldLanguagesService.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="Services\INfieldSurveyDataService.cs" />
     <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
+    <Compile Include="Services\INfieldPublishSurveyService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />
