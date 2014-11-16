@@ -16,6 +16,7 @@
 using System;
 using Nfield.Services;
 using Nfield.Services.Implementation;
+using Nfield.Utilities;
 
 namespace Nfield.Infrastructure
 {
@@ -56,6 +57,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService));
             registerTransient(typeof(INfieldHttpClient), typeof(NfieldHttpClient));
             registerTransient(typeof(IFileSystem), typeof(FileSystem));
+            registerTransient(typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility));
         }
 
     }

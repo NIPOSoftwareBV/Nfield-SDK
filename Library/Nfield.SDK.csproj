@@ -93,11 +93,13 @@
     <Compile Include="Infrastructure\NfieldConnection.cs" />
     <Compile Include="Infrastructure\NfieldConnectionFactory.cs" />
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
+    <Compile Include="Infrastructure\NfieldUtilityProvider.cs" />
     <Compile Include="Infrastructure\PathBase.cs" />
     <Compile Include="Infrastructure\PathWrapper.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
+    <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\PackageForceUpgrade.cs" />
@@ -170,6 +172,8 @@
     <Compile Include="Services\Implementation\NfieldSurveyInterviewerWorkpackageDistributionService.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentModel.cs" />
     <Compile Include="Models\SurveyInterviewerDistributeModel.cs" />
+    <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
+    <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
