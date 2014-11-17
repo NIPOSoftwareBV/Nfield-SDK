@@ -58,6 +58,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldHttpClient), typeof(NfieldHttpClient));
             registerTransient(typeof(IFileSystem), typeof(FileSystem));
             registerTransient(typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility));
+            registerTransient(typeof(IAesManagedWrapper), typeof(AesManagedWrapper));
         }
 
     }

@@ -13,6 +13,13 @@ namespace Nfield.Utilities
     /// </summary>
     class NfieldEncryptionUtility : INfieldEncryptionUtility
     {
+        private readonly IAesManagedWrapper _aesWrapper;
+
+        public NfieldEncryptionUtility(IAesManagedWrapper aesWrapper)
+        {
+            _aesWrapper = aesWrapper;
+        }
+
         #region INfieldEncryptionService
 
         /// <summary>
@@ -20,11 +27,17 @@ namespace Nfield.Utilities
         /// </summary>
         public EncryptedDataModel EncryptText(string input, string key)
         {
+            if (string.IsNullOrEmpty(input))
+                throw new ArgumentNullException("input");
+
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException("key");
+
             var bytesInput = Encoding.UTF8.GetBytes(input);
             var bytesKey = Convert.FromBase64String(key);
             byte[] iv;
 
-            var result = AesEncrypt(bytesInput, bytesKey, out iv);
+            var result = _aesWrapper.Encrypt(bytesInput, bytesKey, out iv);
 
             return new EncryptedDataModel
             {
@@ -38,11 +51,20 @@ namespace Nfield.Utilities
         /// </summary>
         public string DecryptText(string input, string key, string initializationVector)
         {
+            if (string.IsNullOrEmpty(input))
+                throw new ArgumentNullException("input");
+
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException("key");
+
+            if (string.IsNullOrEmpty(initializationVector))
+                throw new ArgumentNullException("initializationVector");
+
             var bytesInput = Convert.FromBase64String(input);
             var bytesKey = Convert.FromBase64String(key);
             var bytesIv = Convert.FromBase64String(initializationVector);
 
-            var result = AesDecrypt(bytesInput, bytesKey, bytesIv);
+            var result = _aesWrapper.Decrypt(bytesInput, bytesKey, bytesIv);
 
             return Encoding.UTF8.GetString(result);
         }
@@ -60,8 +82,33 @@ namespace Nfield.Utilities
         }
 
         #endregion INfieldEncryptionService
+    }
 
-        static byte[] AesEncrypt(byte[] bytesToBeEncrypted, byte[] aesKey, out byte[] aesIv)
+    /// <summary>
+    /// Facade to the Aes encryption
+    /// </summary>
+    interface IAesManagedWrapper
+    {
+        /// <summary>
+        /// Encrypts the data using the key and the iv
+        /// </summary>
+        byte[] Encrypt(byte[] bytesToBeEncrypted, byte[] aesKey, out byte[] aesIv);
+
+        /// <summary>
+        /// Decrypts the data using the key and the iv
+        /// </summary>
+        byte[] Decrypt(byte[] bytesToBeDecrypted, byte[] aesKey, byte[] aesIv);
+    }
+
+    /// <summary>
+    /// <see cref="IAesManagedWrapper"/>
+    /// </summary>
+    class AesManagedWrapper : IAesManagedWrapper
+    {
+        /// <summary>
+        /// <see cref="IAesManagedWrapper.Encrypt"/>
+        /// </summary>
+        public byte[] Encrypt(byte[] bytesToBeEncrypted, byte[] aesKey, out byte[] aesIv)
         {
             byte[] encryptedBytes;
 
@@ -89,7 +136,10 @@ namespace Nfield.Utilities
             return encryptedBytes;
         }
 
-        static byte[] AesDecrypt(byte[] bytesToBeDecrypted, byte[] aesKey, byte[] aesIv)
+        /// <summary>
+        /// <see cref="IAesManagedWrapper.Encrypt"/>
+        /// </summary>
+        public byte[] Decrypt(byte[] bytesToBeDecrypted, byte[] aesKey, byte[] aesIv)
         {
             byte[] decryptedBytes;
 
