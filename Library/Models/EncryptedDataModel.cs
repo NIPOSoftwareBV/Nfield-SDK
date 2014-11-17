@@ -26,7 +26,7 @@ namespace Nfield.Models
         public string Data { get; set; }
 
         /// <summary>
-        /// Initialization Vector that is used to encrypt this data
+        /// Initialization Vector that was used to encrypt this data
         /// In Base64 string format
         /// </summary>
         public string InitializationVector { get; set; }

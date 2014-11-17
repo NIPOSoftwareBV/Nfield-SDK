@@ -53,10 +53,10 @@ namespace Nfield.Utilities
         public string CreateQueryStringSegment(EncryptedDataModel model)
         {
             var queryString = string.Format(CultureInfo.InvariantCulture, "data={0}&iv={1}",
-                model.Data,
-                model.InitializationVector);
+                HttpUtility.UrlEncode(model.Data),
+                HttpUtility.UrlEncode(model.InitializationVector));
 
-            return HttpUtility.UrlEncode(queryString);
+            return queryString;
         }
 
         #endregion INfieldEncryptionService
