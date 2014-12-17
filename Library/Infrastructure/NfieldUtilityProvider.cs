@@ -13,36 +13,20 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
-namespace Nfield.Models
+namespace Nfield.Infrastructure
 {
     /// <summary>
-    /// Survey types
+    /// Class that provides disconnected Nfield utilities
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
-    public enum SurveyType
+    public class NfieldUtilityProvider
     {
         /// <summary>
-        /// Basic survey type, this survey type has no features
+        /// Static method that provides an Nfield utility based on its type
         /// </summary>
-        Basic,
-
-        /// <summary>
-        /// Survey that sampling points assigned
-        /// </summary>
-        Advanced,
-
-        /// <summary>
-        /// Survey that has sampling points with targets
-        /// </summary>
-        EuroBarometer,
-
-        /// <summary>
-        /// Basic online survey type, this survey type has no features
-        /// </summary>
-        OnlineBasic,
+        public static TUtility GetUtility<TUtility>()
+        {
+            var utilityInstance = DependencyResolver.Current.Resolve(typeof(TUtility));
+            return (TUtility) utilityInstance;
+        }
     }
 }

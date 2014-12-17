@@ -16,6 +16,7 @@
 using System;
 using Nfield.Services;
 using Nfield.Services.Implementation;
+using Nfield.Utilities;
 
 namespace Nfield.Infrastructure
 {
@@ -53,8 +54,11 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldSurveyInterviewerWorkpackageDistributionService), typeof(NfieldSurveyInterviewerWorkpackageDistributionService));
             registerTransient(typeof(INfieldSurveyFieldworkService), typeof(NfieldSurveyFieldworkService));
             registerTransient(typeof(INfieldAddressesService), typeof(NfieldAddressesService));
+            registerTransient(typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService));
             registerTransient(typeof(INfieldHttpClient), typeof(NfieldHttpClient));
             registerTransient(typeof(IFileSystem), typeof(FileSystem));
+            registerTransient(typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility));
+            registerTransient(typeof(IAesManagedWrapper), typeof(AesManagedWrapper));
         }
 
     }

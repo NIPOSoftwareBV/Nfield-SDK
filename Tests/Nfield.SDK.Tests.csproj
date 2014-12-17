@@ -86,6 +86,7 @@
     <Compile Include="Services\NfieldAddressesServiceTests.cs" />
     <Compile Include="Services\NfieldBackgroundTasksServiceTests.cs" />
     <Compile Include="Services\NfieldInterviewQualityTests.cs" />
+    <Compile Include="Services\NfieldSurveyPublishServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyInterviewerWorkpackageDistributionServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyInterviewersServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyInterviewerAssignmentsServiceTests.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Services\NfieldSurveySettingsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveysServiceTests.cs" />
     <Compile Include="Services\NfieldTranslationsServiceTests.cs" />
+    <Compile Include="Utilities\NfieldEncryptionUtilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Nfield.SDK.csproj">

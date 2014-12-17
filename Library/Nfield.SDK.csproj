@@ -93,18 +93,25 @@
     <Compile Include="Infrastructure\NfieldConnection.cs" />
     <Compile Include="Infrastructure\NfieldConnectionFactory.cs" />
     <Compile Include="Infrastructure\NfieldSdkInitializer.cs" />
+    <Compile Include="Infrastructure\NfieldUtilityProvider.cs" />
     <Compile Include="Infrastructure\PathBase.cs" />
     <Compile Include="Infrastructure\PathWrapper.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
+    <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
+    <Compile Include="Models\PackageForceUpgrade.cs" />
+    <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
+    <Compile Include="Models\SurveyPublishTypeUpgradeModel.cs" />
+    <Compile Include="Models\SurveyPackageStateModel.cs" />
     <Compile Include="Models\QualityNewStateChange.cs" />
     <Compile Include="Models\StopFieldworkModel.cs" />
     <Compile Include="Models\SurveyInterviewerAddModel.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentChangeModel.cs" />
+    <Compile Include="Models\PackagePublishState.cs" />
     <Compile Include="Models\SurveyStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
@@ -128,6 +135,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyPublishService.cs" />
     <Compile Include="Services\Implementation\NfieldInterviewQualityService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInterviewerAssignmentsService.cs" />
     <Compile Include="Services\Implementation\NfieldLanguagesService.cs" />
@@ -148,6 +156,7 @@
     <Compile Include="Services\INfieldSurveyDataService.cs" />
     <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
+    <Compile Include="Services\INfieldSurveyPublishService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />
@@ -163,6 +172,8 @@
     <Compile Include="Services\Implementation\NfieldSurveyInterviewerWorkpackageDistributionService.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentModel.cs" />
     <Compile Include="Models\SurveyInterviewerDistributeModel.cs" />
+    <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
+    <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

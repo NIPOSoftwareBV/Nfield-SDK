@@ -13,36 +13,21 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
 namespace Nfield.Models
 {
     /// <summary>
-    /// Survey types
+    /// Class to hold the current package state of a survey
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))] // Serialize as string value, not underlying int value
-    public enum SurveyType
+    public class SurveyPackageStateModel
     {
         /// <summary>
-        /// Basic survey type, this survey type has no features
+        /// The state of the package for live interviewing
         /// </summary>
-        Basic,
+        public PackagePublishState Live { get; set; }
 
         /// <summary>
-        /// Survey that sampling points assigned
+        /// The state of the package for test interviewing
         /// </summary>
-        Advanced,
-
-        /// <summary>
-        /// Survey that has sampling points with targets
-        /// </summary>
-        EuroBarometer,
-
-        /// <summary>
-        /// Basic online survey type, this survey type has no features
-        /// </summary>
-        OnlineBasic,
+        public PackagePublishState Test { get; set; }
     }
 }
