@@ -24,14 +24,34 @@ namespace Nfield.Models
     public class SurveyPackage
     {
         /// <summary>
-        /// Quick code for te survey.
+        /// The name of the survey when this package was published
         /// </summary>
-        public byte[] QuickCode { get; set; }
+        public string SurveyName { get; set; }
 
         /// <summary>
-        /// Survey languages.
+        /// The Etag for the package
         /// </summary>
-        public IEnumerable<SurveyPackageLanguage> Languages { get; set; }
+        public long ETag { get; set; }
+
+        /// <summary>
+        /// The description of the survey when this package was published
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The client of the survey when this package was published
+        /// </summary>
+        public string ClientName { get; set; }
+
+        /// <summary>
+        /// The owner of the survey when this package was published
+        /// </summary>
+        public string Owner { get; set; }
+
+        /// <summary>
+        /// The instruction text of the survey when this package was published
+        /// </summary>
+        public string InterviewerInstructionText { get; set; }
 
         /// <summary>
         /// Survey response codes.
@@ -39,9 +59,9 @@ namespace Nfield.Models
         public IEnumerable<SurveyPackageResponseCode> ResponseCodes { get; set; }
 
         /// <summary>
-        /// Survey settings.
+        /// Survey languages.
         /// </summary>
-        public IEnumerable<SurveyPackageSetting> Settings { get; set; }
+        public IEnumerable<SurveyPackageLanguage> Languages { get; set; }
 
         /// <summary>
         /// Survey relocations.
@@ -49,39 +69,10 @@ namespace Nfield.Models
         public IEnumerable<SurveyPackageRelocation> Relocations { get; set; }
 
         /// <summary>
-        /// The strategy to apply when restoring from this package
+        /// Survey settings.
         /// </summary>
-        public InterviewRestoreStrategy RestoreStrategy { get; set; }
+        public IEnumerable<SurveyPackageSetting> Settings { get; set; }
 
-        /// <summary>
-        /// The survey name
-        /// </summary>
-        public string SurveyName { get; set; }
-
-        /// <summary>
-        /// The interviewer instruction text for CAPI surveys
-        /// </summary>
-        public string InterviewerInstructionText { get; set; }
-
-        /// <summary>
-        /// The survey description
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// The survey client name
-        /// </summary>
-        public string ClientName { get; set; }
-
-        /// <summary>
-        /// The id of the survey owner
-        /// </summary>
-        public string Owner { get; set; }
-
-        /// <summary>
-        /// The target for online surveys
-        /// </summary>
-        public int? OnlineTarget { get; set; }
 
         /// <summary>
         /// The interviewer instructions file info for CAPI surveys
@@ -92,6 +83,12 @@ namespace Nfield.Models
         /// The media files that are associated with the survey
         /// </summary>
         public IEnumerable<SurveyPackageBinaryFile> MediaFiles { get; set; }
+
+        /// <summary>
+        /// The md5 of the questionnaire when this package was published
+        /// </summary>
+        public string QuestionnaireMd5 { get; set; }
+
 
     }
 }
