@@ -105,6 +105,13 @@
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
+    <Compile Include="Models\SurveyPackage.cs" />
+    <Compile Include="Models\SurveyPackageBinaryFile.cs" />
+    <Compile Include="Models\SurveyPackageLanguage.cs" />
+    <Compile Include="Models\SurveyPackageRelocation.cs" />
+    <Compile Include="Models\SurveyPackageResponseCode.cs" />
+    <Compile Include="Models\SurveyPackageSetting.cs" />
+    <Compile Include="Models\SurveyPackageTranslation.cs" />
     <Compile Include="Models\SurveyPublishTypeUpgradeModel.cs" />
     <Compile Include="Models\SurveyPackageStateModel.cs" />
     <Compile Include="Models\QualityNewStateChange.cs" />
@@ -135,6 +142,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyPackageService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPublishService.cs" />
     <Compile Include="Services\Implementation\NfieldInterviewQualityService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInterviewerAssignmentsService.cs" />
@@ -154,6 +162,7 @@
     <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
+    <Compile Include="Services\INfieldSurveyPackageService.cs" />
     <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\INfieldSurveyPublishService.cs" />
