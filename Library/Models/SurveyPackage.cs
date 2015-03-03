@@ -54,6 +54,11 @@ namespace Nfield.Models
         public string InterviewerInstructionText { get; set; }
 
         /// <summary>
+        /// The target for online surveys
+        /// </summary>
+        public int? OnlineTarget { get; set; }
+
+        /// <summary>
         /// Survey response codes.
         /// </summary>
         public IEnumerable<SurveyPackageResponseCode> ResponseCodes { get; set; }
