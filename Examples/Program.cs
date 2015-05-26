@@ -16,6 +16,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Nfield.Infrastructure;
@@ -37,6 +38,10 @@ namespace Nfield.SDK.Samples
             // In most cases the IoC container is created and managed through the application. 
             using(IKernel kernel = new StandardKernel())
             {
+#if DEBUG
+                ServicePointManager.ServerCertificateValidationCallback +=
+                        (sender, cert, chain, sslPolicyErrors) => true;
+#endif
                 InitializeNfield(kernel);
 
                 const string serverUrl = "http://localhost:81/v1";
@@ -85,14 +90,14 @@ namespace Nfield.SDK.Samples
 
                 interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
                 interviewersManager.RemoveInterviewer(interviewer2);
-                
+
                 // Request the Survey service and the sampling point managment
                 INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
                 NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(surveysService);
 
                 // Example of performing operations on sampling points.
                 samplingPointsManager.QueryForSamplingPoints("some surveyId");
-                
+
                 //
                 // Survey Management
                 //
@@ -126,7 +131,7 @@ namespace Nfield.SDK.Samples
                 // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
                 var surveyScriptService = connection.GetService<INfieldSurveyScriptService>();
                 var scriptModel = surveyScriptService.GetAsync("surveyWithOdinScriptId").Result;
- 
+
                 // Upload ODIN script for survey
                 // Note: the survey with id 'surveyWithOdinScriptId' has a odin script uploaded
                 var myScript = new SurveyScript
@@ -153,7 +158,7 @@ namespace Nfield.SDK.Samples
                 }).Result;
 
                 surveyScriptService.PostAsync(newSurvey.SurveyId, myScript).Wait();
-                
+
                 var surveyFieldworkService = connection.GetService<INfieldSurveyFieldworkService>();
                 //Get survey fieldwork status 
                 var surveyFieldworkStatus = surveyFieldworkService.GetStatusAsync(newSurvey.SurveyId).Result; //Should be under construction
@@ -161,7 +166,7 @@ namespace Nfield.SDK.Samples
                 // Start the fieldwork for the survey
                 surveyFieldworkService.StartFieldworkAsync(newSurvey.SurveyId).Wait();
                 surveyFieldworkStatus = surveyFieldworkService.GetStatusAsync(newSurvey.SurveyId).Result; //Should be started
-                
+
                 // Example of a download data request: filtering testdata collected today
                 var surveyDataService = connection.GetService<INfieldSurveyDataService>();
 
@@ -180,7 +185,7 @@ namespace Nfield.SDK.Samples
                     EndDate = DateTime.Today.AddDays(1).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time end of today
                     SurveyId = "SomeSurveyId"
                 };
-                
+
                 var task = surveyDataService.PostAsync(myRequest).Result;
 
                 // request the background tasks service 
