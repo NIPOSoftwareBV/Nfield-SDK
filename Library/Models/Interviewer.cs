@@ -91,12 +91,6 @@ namespace Nfield.Models
         public DateTime? LastSyncDate { get; internal set; }
 
         /// <summary>
-        /// interviewer full-sync status: true if fully synced, false if not fully synced
-        /// </summary>
-        [JsonProperty]
-        public bool IsFullSynced { get; set; }
-
-        /// <summary>
         /// Last time the password of the interviewer was changed
         /// </summary>
         [JsonProperty]
