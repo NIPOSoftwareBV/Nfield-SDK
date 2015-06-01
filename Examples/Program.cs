@@ -16,6 +16,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Nfield.Infrastructure;
@@ -37,6 +38,10 @@ namespace Nfield.SDK.Samples
             // In most cases the IoC container is created and managed through the application. 
             using(IKernel kernel = new StandardKernel())
             {
+#if DEBUG
+                ServicePointManager.ServerCertificateValidationCallback +=
+                        (sender, cert, chain, sslPolicyErrors) => true;
+#endif
                 InitializeNfield(kernel);
 
                 const string serverUrl = "http://localhost:81/v1";
