@@ -30,7 +30,7 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldAddressesService : INfieldAddressesService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldLanguagesService
+        #region Implementation of INfieldAddressesService
 
         /// <summary>
         /// See <see cref="INfieldAddressesService.QueryAsync"/>
@@ -39,7 +39,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
 
-            return Client.GetAsync(AdressesApi(surveyId, samplingPointId,  null).AbsoluteUri)
+            return Client.GetAsync(AddressesApi(surveyId, samplingPointId,  null).AbsoluteUri)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -55,7 +55,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
 
-            return Client.PostAsJsonAsync(AdressesApi(surveyId, samplingPointId, null).AbsoluteUri, address)
+            return Client.PostAsJsonAsync(AddressesApi(surveyId, samplingPointId, null).AbsoluteUri, address)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Address>(task.Result).Result)
                          .FlattenExceptions();
@@ -69,7 +69,7 @@ namespace Nfield.Services.Implementation
             if (addressId.Trim().Length == 0)
                 throw new ArgumentException("addressId cannot be empty");
 
-            var uri = AdressesApi(surveyId, samplingPointId, addressId).AbsoluteUri;
+            var uri = AddressesApi(surveyId, samplingPointId, addressId).AbsoluteUri;
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
@@ -104,20 +104,14 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri AdressesApi(string surveyId, string samplingPointId, string id)
+        private Uri AddressesApi(string surveyId, string samplingPointId, string addressId)
         {
             StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.AppendFormat("Surveys/{0}/SamplingPoints/{1}/Addresses",
                 surveyId, samplingPointId);
-            if (!string.IsNullOrEmpty(id))
-                uriText.AppendFormat("/{0}", id);
+            if (!string.IsNullOrEmpty(addressId))
+                uriText.AppendFormat("/{0}", addressId);
             return new Uri(uriText.ToString());
         }
-    }
-
-    internal class UpdateAddress
-    {
-        public string Details { get; set; }
-        public DateTime? AppointmentDate { get; set; }
     }
 }

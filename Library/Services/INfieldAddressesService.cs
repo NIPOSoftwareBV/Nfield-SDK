@@ -25,7 +25,7 @@ namespace Nfield.Services
     public interface INfieldAddressesService
     {
         /// <summary>
-        /// Gets all addresses for a surveys sampling point
+        /// Gets all addresses for a survey's sampling point
         /// </summary>
         /// <param name="surveyId">The survey for which to return addresses</param>
         /// <param name="samplingPointId">The sampling point for which to return addresses</param>
