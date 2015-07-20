@@ -102,6 +102,7 @@
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
+    <Compile Include="Models\InterviewerSamplingPointAssignmentModel.cs" />
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
     <Compile Include="Services\INfieldInterviewQualityService.cs" />
+    <Compile Include="Services\INfieldSamplingPointsInterviewerAssignmentsService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewersService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerWorkpackageDistributionService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerAssignmentsService.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="Services\Implementation\NfieldSurveyInterviewerWorkpackageDistributionService.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentModel.cs" />
     <Compile Include="Models\SurveyInterviewerDistributeModel.cs" />
+    <Compile Include="Services\Implementation\NfieldSamplingPointsInterviewerAssignmentsService.cs" />
     <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
   </ItemGroup>
