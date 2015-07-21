@@ -41,12 +41,16 @@ namespace Nfield.Models
         public string LastName { get; set; }
 
         /// <summary>
-        /// Whether this interviewer is assigned or not
+        /// Whether this interviewer is assigned or not to this sampling point
+        /// true : Interviewer will become active (when not already) after next sync
+        /// false : Interviewer will become not active (when not already) after next sync
         /// </summary>
         public bool Assigned { get; set; }
 
         /// <summary>
-        /// Whether this interviewer is active
+        /// Whether this interviewer is active or not on this sampling point
+        /// true : Interviewer is assigned and has synced
+        /// false : Interviewer is not assigned or has not yet synced
         /// </summary>
         public bool Active { get; set; }
     }
