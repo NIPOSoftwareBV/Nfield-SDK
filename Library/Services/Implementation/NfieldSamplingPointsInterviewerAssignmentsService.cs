@@ -54,10 +54,7 @@ namespace Nfield.Services.Implementation
 
             var uri = AssignmentsApi(surveyId, samplingPointId, null).AbsoluteUri;
 
-            return Client.PostAsJsonAsync(uri, interviewerId)
-                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Address>(task.Result).Result)
-                         .FlattenExceptions();
+            return Client.PostAsJsonAsync(uri, interviewerId).FlattenExceptions();
         }
 
         public Task UnassignAsync(string surveyId, string samplingPointId, string interviewerId)
