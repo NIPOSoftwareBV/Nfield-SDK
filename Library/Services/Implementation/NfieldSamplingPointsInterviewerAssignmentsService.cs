@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -52,9 +53,9 @@ namespace Nfield.Services.Implementation
         {
             CheckParameters(surveyId, samplingPointId, interviewerId);
 
-            var uri = AssignmentsApi(surveyId, samplingPointId, null).AbsoluteUri;
+            var uri = AssignmentsApi(surveyId, samplingPointId, interviewerId).AbsoluteUri;
 
-            return Client.PostAsJsonAsync(uri, interviewerId).FlattenExceptions();
+            return Client.PostAsync(uri, null ).FlattenExceptions();
         }
 
         public Task UnassignAsync(string surveyId, string samplingPointId, string interviewerId)
