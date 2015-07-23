@@ -27,9 +27,9 @@ using Xunit;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Tests for <see cref="NfieldSamplingPointsInterviewerAssignmentsService"/>
+    /// Tests for <see cref="NfieldSamplingPointInterviewerAssignmentsService"/>
     /// </summary>
-    public class NfieldSamplingPointsInterviewerAssignmentsServiceTests : NfieldServiceTestsBase
+    public class NfieldSamplingPointInterviewerAssignmentsServiceTests : NfieldServiceTestsBase
     {
         const string SurveyId = "MySurvey";
         const string SamplingPointId = "MySamplingPoint";
@@ -40,7 +40,7 @@ namespace Nfield.Services
         [Fact]
         public void TestAssignAsync_SurveyIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.AssignAsync(null, SamplingPointId, InterviewerId)));
         }
@@ -48,14 +48,14 @@ namespace Nfield.Services
         [Fact]
         public void TestAssignAsync_SurveyIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.AssignAsync("", SamplingPointId, InterviewerId)));
         }
 
         [Fact]
         public void TestAssignAsync_SamplingPointIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.AssignAsync(SurveyId, null, InterviewerId)));
         }
@@ -63,14 +63,14 @@ namespace Nfield.Services
         [Fact]
         public void TestAssignAsync_SamplingPointIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.AssignAsync(SurveyId, "", InterviewerId)));
         }
 
         [Fact]
         public void TestAssignAsync_InterviewerIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.AssignAsync(SurveyId, SamplingPointId, null)));
         }
@@ -78,7 +78,7 @@ namespace Nfield.Services
         [Fact]
         public void TestAssignAsync_InterviewerIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.AssignAsync(SurveyId, SamplingPointId, "")));
         }
 
@@ -90,7 +90,7 @@ namespace Nfield.Services
 
             mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).Returns(CreateTask(HttpStatusCode.OK));
 
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
            target.AssignAsync(SurveyId, SamplingPointId, InterviewerId);
@@ -109,7 +109,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_SurveyIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                     UnwrapAggregateException(target.QueryAsync(null, SamplingPointId)));
         }
@@ -117,7 +117,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_SurveyIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() =>
                 UnwrapAggregateException(target.QueryAsync("", SamplingPointId)));
         }
@@ -125,7 +125,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_SamplingPointIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                     UnwrapAggregateException(target.QueryAsync(SurveyId, null)));
         }
@@ -133,7 +133,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_SamplingPointIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() =>
                 UnwrapAggregateException(target.QueryAsync(SurveyId, "")));
         }
@@ -153,7 +153,7 @@ namespace Nfield.Services
             mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<string>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAssignments))));
 
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualAssignments = target.QueryAsync(SurveyId, SamplingPointId).Result;
@@ -171,7 +171,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUnassignAsync_SurveyIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.UnassignAsync(null, SamplingPointId, InterviewerId)));
         }
@@ -179,14 +179,14 @@ namespace Nfield.Services
         [Fact]
         public void TestUnassignAsync_SurveyIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UnassignAsync("", SamplingPointId, InterviewerId)));
         }
 
         [Fact]
         public void TestUnassignAsync_SamplingPointIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.UnassignAsync(SurveyId, null, InterviewerId)));
         }
@@ -194,14 +194,14 @@ namespace Nfield.Services
         [Fact]
         public void TestUnassignAsync_SamplingPointIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UnassignAsync(SurveyId, "", InterviewerId)));
         }
 
         [Fact]
         public void TestUnassignAsync_InterviewerIdIsNull_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.UnassignAsync(SurveyId, SamplingPointId, null)));
         }
@@ -209,7 +209,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUnassignAsync_InterviewerIdIsEmpty_Throws()
         {
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UnassignAsync(SurveyId, SamplingPointId, "")));
         }
 
@@ -222,7 +222,7 @@ namespace Nfield.Services
             mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<string>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
-            var target = new NfieldSamplingPointsInterviewerAssignmentsService();
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             target.UnassignAsync(SurveyId, SamplingPointId, InterviewerId).Wait();

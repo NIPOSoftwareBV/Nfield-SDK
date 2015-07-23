@@ -27,12 +27,12 @@ using Nfield.Models;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldSamplingPointsInterviewerAssignmentsService"/>
+    /// Implementation of <see cref="INfieldSamplingPointInterviewerAssignmentsService"/>
     /// </summary>
-    internal class NfieldSamplingPointsInterviewerAssignmentsService :
-        INfieldSamplingPointsInterviewerAssignmentsService, INfieldConnectionClientObject
+    internal class NfieldSamplingPointInterviewerAssignmentsService :
+        INfieldSamplingPointInterviewerAssignmentsService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldSamplingPointsInterviewerAssignmentsService
+        #region Implementation of INfieldSamplingPointInterviewerAssignmentsService
 
         public Task<IQueryable<InterviewerSamplingPointAssignmentModel>> QueryAsync(string surveyId, string samplingPointId)
         {

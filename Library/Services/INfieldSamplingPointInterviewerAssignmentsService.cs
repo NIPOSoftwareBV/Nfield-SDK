@@ -22,7 +22,7 @@ namespace Nfield.Services
     /// <summary>
     /// Represents a set of methods to manage assignements of interviewers to sampling points.
     /// </summary>
-    public interface INfieldSamplingPointsInterviewerAssignmentsService
+    public interface INfieldSamplingPointInterviewerAssignmentsService
     {
         /// <summary>
         /// Gets all interviewers for a survey's sampling point
