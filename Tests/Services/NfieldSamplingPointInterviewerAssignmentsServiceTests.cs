@@ -34,6 +34,48 @@ namespace Nfield.Services
         const string SurveyId = "MySurvey";
         const string SamplingPointId = "MySamplingPoint";
         const string InterviewerId = "MyInterviewer";
+        
+        #region BatchAssignAsync
+
+        [Fact]
+        public void TestBatchAssignAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.AssignAsync(null, new SamplingPointInterviewerAssignmentsModel())));
+        }
+
+        [Fact]
+        public void TestBatchAssignAsync_ModelIsNull_Throws()
+        {
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.AssignAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestBatchAssignAsync_ServerAcceptsAssign_ReturnsNoError()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<SamplingPointInterviewerAssignmentsModel>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var model = new SamplingPointInterviewerAssignmentsModel();
+            target.AssignAsync(SurveyId, model);
+
+            mockedHttpClient.Verify(hc =>
+                hc.PostAsJsonAsync(
+                    It.Is<string>(url => url.EndsWith("Surveys/" + SurveyId + "/SamplingPointsAssignments")),
+                    It.Is<SamplingPointInterviewerAssignmentsModel>(m => m == model)),
+                Times.Once());
+        }
+
+        #endregion
 
         #region AssignAsync
 
@@ -163,6 +205,48 @@ namespace Nfield.Services
 
         }
 
+
+        #endregion
+
+        #region BatchUnassignAsync
+
+        [Fact]
+        public void TestBatchUnassignAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.AssignAsync(null, new SamplingPointInterviewerAssignmentsModel())));
+        }
+
+        [Fact]
+        public void TestBatchUnassignAsync_ModelIsNull_Throws()
+        {
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.AssignAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestBatchUnassignAsync_ServerAcceptsUnassign_ReturnsNoError()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.DeleteAsJsonAsync(It.IsAny<string>(), It.IsAny<SamplingPointInterviewerAssignmentsModel>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldSamplingPointInterviewerAssignmentsService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var model = new SamplingPointInterviewerAssignmentsModel();
+            target.UnassignAsync(SurveyId, model);
+
+            mockedHttpClient.Verify(hc =>
+                hc.DeleteAsJsonAsync(
+                    It.Is<string>(url => url.EndsWith("Surveys/" + SurveyId + "/SamplingPointsAssignments")),
+                    It.Is<SamplingPointInterviewerAssignmentsModel>(m => m == model)),
+                Times.Once());
+        }
 
         #endregion
 

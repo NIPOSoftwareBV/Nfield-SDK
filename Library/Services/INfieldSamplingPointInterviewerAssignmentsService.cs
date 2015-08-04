@@ -48,6 +48,17 @@ namespace Nfield.Services
         Task AssignAsync(string surveyId, string samplingPointId, string interviewerId);
 
         /// <summary>
+        /// Assign many interviewers from many sampling points
+        /// </summary>
+        /// <param name="surveyId">The id of the survey for which to assign the interviewer.</param>
+        /// <param name="model">The id's of the sampling points and the interviewers to assign</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task AssignAsync(string surveyId, SamplingPointInterviewerAssignmentsModel model);
+
+        /// <summary>
         /// Unassign an interviewer from a survey.
         /// </summary>
         /// <param name="surveyId">The id of the survey for which to unassign the interviewer.</param>
@@ -58,5 +69,16 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task UnassignAsync(string surveyId, string samplingPointId, string interviewerId);
+
+        /// <summary>
+        /// Unassign many interviewers from many sampling points
+        /// </summary>
+        /// <param name="surveyId">The id of the survey for which to unassign the interviewer.</param>
+        /// <param name="model">The id's of the sampling points and the interviewers to unassign</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task UnassignAsync(string surveyId, SamplingPointInterviewerAssignmentsModel model);
     }
 }

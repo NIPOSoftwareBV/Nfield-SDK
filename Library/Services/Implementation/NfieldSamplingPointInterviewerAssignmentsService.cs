@@ -58,6 +58,15 @@ namespace Nfield.Services.Implementation
             return Client.PostAsync(uri, null ).FlattenExceptions();
         }
 
+        public Task AssignAsync(string surveyId, SamplingPointInterviewerAssignmentsModel model)
+        {
+            CheckParameters(surveyId, model);
+
+            var uri = AssignmentsApi(surveyId).AbsoluteUri;
+
+            return Client.PostAsJsonAsync(uri, model).FlattenExceptions();
+        }
+
         public Task UnassignAsync(string surveyId, string samplingPointId, string interviewerId)
         {
             CheckParameters(surveyId, samplingPointId, interviewerId);
@@ -65,6 +74,15 @@ namespace Nfield.Services.Implementation
             var uri = AssignmentsApi(surveyId, samplingPointId, interviewerId).AbsoluteUri;
 
             return Client.DeleteAsync(uri).FlattenExceptions();
+        }
+
+        public Task UnassignAsync(string surveyId, SamplingPointInterviewerAssignmentsModel model)
+        {
+            CheckParameters(surveyId, model);
+
+            var uri = AssignmentsApi(surveyId).AbsoluteUri;
+
+            return Client.DeleteAsJsonAsync(uri, model).FlattenExceptions();
         }
 
         #endregion
@@ -101,6 +119,15 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentException("interviewerId cannot be empty");
         }
 
+        private static void CheckParameters(string surveyId, SamplingPointInterviewerAssignmentsModel model)
+        {
+            if (surveyId == null)
+                throw new ArgumentNullException("surveyId");
+
+            if (model == null)
+                throw new ArgumentNullException("model");
+        }
+
         private INfieldHttpClient Client
         {
             get { return ConnectionClient.Client; }
@@ -113,6 +140,13 @@ namespace Nfield.Services.Implementation
                 surveyId, samplingPointId);
             if (!string.IsNullOrEmpty(interviewerId))
                 uriText.AppendFormat("/{0}", interviewerId);
+            return new Uri(uriText.ToString());
+        }
+
+        private Uri AssignmentsApi(string surveyId)
+        {
+            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            uriText.AppendFormat("Surveys/{0}/SamplingPointsAssignments", surveyId);
             return new Uri(uriText.ToString());
         }
 
