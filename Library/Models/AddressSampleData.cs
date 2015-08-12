@@ -13,35 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-
 namespace Nfield.Models
 {
-    /// <summary>
-    /// Model to hold address data
-    /// </summary>
-    public class Address
+    public class AddressSampleData
     {
         /// <summary>
-        /// Unique id of the address
+        /// The name of the variable
         /// </summary>
-        public string AddressId { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Details of the address
+        /// Its value
         /// </summary>
-        public string Details { get; set; }
-
-        /// <summary>
-        /// Appointment Date of the address
-        /// </summary>
-        public DateTime? AppointmentDate { get; set; }
-
-        /// <summary>
-        /// SampleData variables for Odin
-        /// </summary>
-        public IEnumerable<AddressSampleData> SampleData { get; set; }
+        public string Value { get; set; }
     }
 }

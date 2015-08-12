@@ -97,6 +97,7 @@
     <Compile Include="Infrastructure\PathBase.cs" />
     <Compile Include="Infrastructure\PathWrapper.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\AddressSampleData.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
