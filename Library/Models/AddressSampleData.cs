@@ -15,6 +15,9 @@
 
 namespace Nfield.Models
 {
+    /// <summary>
+    /// Sample data of address
+    /// </summary>
     public class AddressSampleData
     {
         /// <summary>
