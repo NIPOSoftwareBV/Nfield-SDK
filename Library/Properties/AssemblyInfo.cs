@@ -19,11 +19,11 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Nfield.SDK")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("NIPO Software Nfield SDK for Windows")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NIPO Software")]
 [assembly: AssemblyProduct("Nfield.SDK")]
-[assembly: AssemblyCopyright("Copyright © NIPO Software 2013")]
+[assembly: AssemblyCopyright("Copyright © NIPO Software 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,7 +37,7 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.4.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("Nfield.SDK.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
