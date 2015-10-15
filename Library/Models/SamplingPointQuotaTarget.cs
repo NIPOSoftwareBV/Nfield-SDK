@@ -51,5 +51,11 @@ namespace Nfield.Models
         /// </summary>
         [JsonProperty]
         public int DroppedOutCount { get; internal set; }
+
+        /// <summary>
+        /// Number of rejected interviews
+        /// </summary>
+        [JsonProperty]
+        public int RejectedCount { get; internal set; }
     }
 }
