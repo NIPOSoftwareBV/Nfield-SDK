@@ -144,30 +144,6 @@ namespace Nfield.Infrastructure
 
         #endregion
 
-        #region Dispose Tests
-
-        [Fact]
-        public void TestDispose_HasClient_CallsDisposeOnClient()
-        {
-            var mockedHttpClient = new Mock<INfieldHttpClient>();
-            var mockedResolver = new Mock<IDependencyResolver>();
-            DependencyResolver.Register(mockedResolver.Object);
-            mockedResolver
-                .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
-                .Returns(mockedHttpClient.Object);
-            mockedHttpClient
-                .Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .Returns(CreateTask(HttpStatusCode.OK));
-
-            var target = new NfieldConnection();
-            var result = target.SignInAsync("", "", "").Result;
-            target.Dispose();
-
-            mockedHttpClient.Verify(client => client.Dispose());
-        }
-
-        #endregion
-
         private Task<HttpResponseMessage> CreateTask(HttpStatusCode httpStatusCode)
         {
             return Task.Factory.StartNew(() => new HttpResponseMessage(httpStatusCode));

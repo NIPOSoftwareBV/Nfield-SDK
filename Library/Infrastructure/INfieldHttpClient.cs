@@ -19,8 +19,10 @@ using System.Threading.Tasks;
 
 namespace Nfield.Infrastructure
 {
-    internal interface INfieldHttpClient : IDisposable
+    internal interface INfieldHttpClient
     {
+        
+        string AuthToken { get; set; }
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
         Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content);
         Task<HttpResponseMessage> GetAsync(string requestUri);

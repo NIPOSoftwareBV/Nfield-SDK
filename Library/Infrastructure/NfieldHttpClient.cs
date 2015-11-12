@@ -15,11 +15,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Xml.Schema;
 using Newtonsoft.Json;
 using System.Text;
 using Nfield.Extensions;
@@ -32,43 +31,40 @@ namespace Nfield.Infrastructure
     /// </summary>
     internal sealed class NfieldHttpClient : INfieldHttpClient
     {
-        private readonly HttpClient _httpClient;
 
-        public NfieldHttpClient()
-        {
-            _httpClient = new HttpClient();
-        }
+        #region INfieldHttpClient Members
 
-        #region IHttpClient Members
+        public string AuthToken { get; set; }
 
         public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.SendAsync(request));
+            return SendAndHandleAuthToken(client => client.SendAsync(request));
         }
+
 
         public Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.PostAsync(requestUri, content));
+            return SendAndHandleAuthToken(client => client.PostAsync(requestUri, content));
         }
 
         public Task<HttpResponseMessage> GetAsync(string requestUri)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.GetAsync(requestUri));
+            return SendAndHandleAuthToken(client => client.GetAsync(requestUri));
         }
 
         public Task<HttpResponseMessage> PostAsJsonAsync<TContent>(string requestUri, TContent content)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.PostAsJsonAsync(requestUri, content));
+            return SendAndHandleAuthToken(client => client.PostAsJsonAsync(requestUri, content));
         }
 
         public Task<HttpResponseMessage> PutAsJsonAsync<TContent>(string requestUri, TContent content)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.PutAsJsonAsync(requestUri, content));
+            return SendAndHandleAuthToken(client => client.PutAsJsonAsync(requestUri, content));
         }
 
         public Task<HttpResponseMessage> DeleteAsync(string requestUri)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.DeleteAsync(requestUri));
+            return SendAndHandleAuthToken(client => client.DeleteAsync(requestUri));
         }
 
         public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content)
@@ -78,7 +74,7 @@ namespace Nfield.Infrastructure
                 Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
             };
 
-            return SendRequestAndHandleAuthenticationToken(_httpClient.SendAsync(request));
+            return SendAndHandleAuthToken(client => client.SendAsync(request));
         }
 
         public Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content)
@@ -87,42 +83,44 @@ namespace Nfield.Infrastructure
             {
                 Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
             };
-
-            return SendRequestAndHandleAuthenticationToken(_httpClient.SendAsync(request));
+            return SendAndHandleAuthToken(client => client.SendAsync(request));
         }
 
         public Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content)
         {
-            return SendRequestAndHandleAuthenticationToken(_httpClient.PutAsync(requestUri, content));
+            return SendAndHandleAuthToken(client => client.PutAsync(requestUri, content));
         }
 
         #endregion
 
-        #region IDisposable Members
-
-        public void Dispose()
+        private Task<HttpResponseMessage> SendAndHandleAuthToken(Func<HttpClient, Task<HttpResponseMessage>> call)
         {
-            _httpClient.Dispose();
-        }
 
-        #endregion
-
-        private Task<HttpResponseMessage> SendRequestAndHandleAuthenticationToken(Task<HttpResponseMessage> sendTask)
-        {
-            return sendTask.ContinueWith(responseTask =>
+            var request = new TaskFactory().StartNew(() =>
             {
-                var response = responseTask.Result;
-
-                IEnumerable<string> headerValues;
-                if(response.Headers.TryGetValues("X-AuthenticationToken", out headerValues))
+                using (var client = new HttpClient())
                 {
-                    _httpClient.DefaultRequestHeaders.Authorization = 
-                        new AuthenticationHeaderValue("Basic", headerValues.First());
+                    if (AuthToken != null)
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", AuthToken);
+                    }
+
+                    var response = call(client).Result;
+
+                    IEnumerable<string> headerValues;
+                    if (response.Headers.TryGetValues("X-AuthenticationToken", out headerValues))
+                    {
+                        // auth token may have been 'null', or may have been refreshed on the server, so set it always
+                        AuthToken = headerValues.First();
+                    }
+
+                    return response.ValidateResponse();
+
                 }
 
-                return response.ValidateResponse();
             });
-        }
 
+            return request;
+        }
     }
 }

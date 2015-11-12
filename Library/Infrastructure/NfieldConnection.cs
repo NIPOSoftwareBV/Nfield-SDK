@@ -43,10 +43,12 @@ namespace Nfield.Infrastructure
             var serviceInstance = DependencyResolver.Current.Resolve(serviceType);
 
             var nfieldConnectionClientObject = serviceInstance as INfieldConnectionClientObject;
-            if (nfieldConnectionClientObject != null)
-            {
-                nfieldConnectionClientObject.InitializeNfieldConnection(this);
-            }
+            
+            if (nfieldConnectionClientObject == null) return serviceInstance;
+            
+            Client = (INfieldHttpClient)DependencyResolver.Current.Resolve(typeof(INfieldHttpClient));
+            Client.AuthToken = _token;
+            nfieldConnectionClientObject.InitializeNfieldConnection(this);
 
             return serviceInstance;
         }
@@ -74,11 +76,16 @@ namespace Nfield.Infrastructure
                     {"Password", password}
                 };
             var content = new FormUrlEncodedContent(data);
+            return Client.PostAsync(NfieldServerUri + "SignIn", content)
+                .ContinueWith(responseMessageTask =>
+                {
+                    var result = responseMessageTask.Result;
 
-            return
-                Client.PostAsync(NfieldServerUri + "SignIn", content)
-                      .ContinueWith(responseMessageTask => responseMessageTask.Result.StatusCode == HttpStatusCode.OK)
-                      .FlattenExceptions();
+                    _token = Client.AuthToken;
+                    
+                    return result.StatusCode == HttpStatusCode.OK;
+
+                }).FlattenExceptions();
         }
 
         /// <summary>
@@ -105,7 +112,7 @@ namespace Nfield.Infrastructure
             if (!disposing || Client == null)
                 return;
 
-            Client.Dispose();
+            
             Client = null;
         }
 
@@ -120,6 +127,8 @@ namespace Nfield.Infrastructure
         }
 
         #endregion
+
+        private string _token;
 
         #region Implementation of INfieldConnectionClient
 
