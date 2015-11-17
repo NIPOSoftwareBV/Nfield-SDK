@@ -114,12 +114,15 @@ namespace Nfield.Infrastructure
         public void TestGetService_ServiceExists_ReturnsService()
         {
             var stubbedNfieldConnectionClientObject = new Mock<INfieldConnectionClientObject>().Object;
+            var stubbedHttpClientObject = new Mock<INfieldHttpClient>().Object;
             var mockedResolver = new Mock<IDependencyResolver>();
             DependencyResolver.Register(mockedResolver.Object);
             mockedResolver
                 .Setup(resolver => resolver.Resolve(typeof(INfieldConnectionClientObject)))
                 .Returns(stubbedNfieldConnectionClientObject);
-
+            mockedResolver
+                .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
+                .Returns(stubbedHttpClientObject);
             var target = new NfieldConnection();
             var result = target.GetService<INfieldConnectionClientObject>();
 
@@ -130,12 +133,15 @@ namespace Nfield.Infrastructure
         public void TestGetService_ServiceExistsAndImplementsINfieldConnectionClientObject_CallsInitializeConnectionOnService()
         {
             var mockedNfieldConnectionClientObject = new Mock<INfieldConnectionClientObject>();
+            var stubbedHttpClientObject = new Mock<INfieldHttpClient>().Object;
             var mockedResolver = new Mock<IDependencyResolver>();
             DependencyResolver.Register(mockedResolver.Object);
             mockedResolver
                 .Setup(resolver => resolver.Resolve(typeof(INfieldConnectionClientObject)))
                 .Returns(mockedNfieldConnectionClientObject.Object);
-
+            mockedResolver
+                .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
+                .Returns(stubbedHttpClientObject);
             var target = new NfieldConnection();
             var result = target.GetService<INfieldConnectionClientObject>();
 
