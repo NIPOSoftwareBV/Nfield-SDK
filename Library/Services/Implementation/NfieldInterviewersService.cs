@@ -72,7 +72,8 @@ namespace Nfield.Services.Implementation
                     EmailAddress = interviewer.EmailAddress,
                     FirstName = interviewer.FirstName,
                     LastName = interviewer.LastName,
-                    TelephoneNumber = interviewer.TelephoneNumber
+                    TelephoneNumber = interviewer.TelephoneNumber,
+                    IsSupervisor = interviewer.IsSupervisor
                 };
 
             return Client.PatchAsJsonAsync(InterviewersApi + interviewer.InterviewerId, updatedInterviewer)
@@ -198,5 +199,6 @@ namespace Nfield.Services.Implementation
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public string TelephoneNumber { get; set; }
+        public bool IsSupervisor { get; set; }
     }
 }

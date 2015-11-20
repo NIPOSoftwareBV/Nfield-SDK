@@ -67,6 +67,11 @@ namespace Nfield.Models
         public string Password { get; set; }
 
         /// <summary>
+        /// Property indicating weather the interviewer is a supervisor or not.  
+        /// </summary>
+        public bool IsSupervisor { get; set; }
+
+        /// <summary>
         /// Total number of successful interviews the interviewer has done
         /// </summary>
         [JsonProperty]
