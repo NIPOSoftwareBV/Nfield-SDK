@@ -108,6 +108,7 @@
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
     <Compile Include="Models\SamplingPointsInterviewersAssignmentModel.cs" />
+    <Compile Include="Models\SurveyCounts.cs" />
     <Compile Include="Models\SurveyPackage.cs" />
     <Compile Include="Models\SurveyPackageBinaryFile.cs" />
     <Compile Include="Models\SurveyPackageLanguage.cs" />

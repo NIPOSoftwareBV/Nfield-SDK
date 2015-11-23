@@ -196,6 +196,20 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+
+        public Task<SurveyCounts> CountsQueryAsync(string surveyId)
+        {
+            var uri = string.Format(@"{0}{1}/{2}", SurveysApi.AbsoluteUri, surveyId, CountsControllerName);
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SurveyCounts>(stringTask.Result))
+                         .FlattenExceptions();
+        }
+
         /// <summary>
         /// See <see cref="INfieldSurveysService.SamplingPointsQueryAsync"/>
         /// </summary>
@@ -432,6 +446,12 @@ namespace Nfield.Services.Implementation
         {
             get { return "quota"; }
         }
+
+        private static string CountsControllerName
+        {
+            get { return "counts"; }
+        }
+
         private static string SamplingPointsQuotaControllerName
         {
             get { return "quotatargets"; }

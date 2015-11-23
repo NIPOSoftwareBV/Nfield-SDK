@@ -107,6 +107,16 @@ namespace Nfield.Services
 
         #endregion
 
+        #region Counts
+        /// <summary>
+        /// Get counts for given survey
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<SurveyCounts> CountsQueryAsync(string surveyId);
+
+            #endregion
+
         #region Sampling Points for a survey
 
         /// <summary>

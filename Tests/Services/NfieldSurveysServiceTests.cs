@@ -301,6 +301,43 @@ namespace Nfield.Services
 
         #endregion
 
+        #region Survey Counts
+
+        [Fact]
+        public void TestCountsQueryAsync_ServerReturnsQuery_ReturnsCounts()
+        {
+            const int expectedDroppedOutCount = 1;
+            const int expectedRejectedCount = 2;
+            const int expectedScreenedOutCount = 3;
+            const int expectedSuccessfulCount = 4;
+            var surveyId = Guid.NewGuid().ToString();
+            var expectedCounts =  new SurveyCounts
+            {
+                DroppedOutCount = expectedDroppedOutCount,
+                RejectedCount = expectedRejectedCount,
+                ScreenedOutCount = expectedScreenedOutCount,
+                SuccessfulCount = expectedSuccessfulCount
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var url = string.Format("{0}surveys/{1}/counts", ServiceAddress, surveyId);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(url))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedCounts))));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var result = target.CountsQueryAsync(surveyId).Result;
+
+            Assert.Equal(expectedDroppedOutCount, result.DroppedOutCount);
+            Assert.Equal(expectedRejectedCount, result.RejectedCount);
+            Assert.Equal(expectedScreenedOutCount, result.ScreenedOutCount);
+            Assert.Equal(expectedSuccessfulCount, result.SuccessfulCount);
+        }
+
+        #endregion
+
         #region SamplingPointQueryAsync
 
         [Fact]
