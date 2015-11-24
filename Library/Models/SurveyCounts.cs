@@ -31,5 +31,41 @@ namespace Nfield.Models
         /// </summary>
         public int? RejectedCount { get; set; }
 
+        /// <summary>
+        /// The detailed counts per quota cell for surveys with quota
+        /// </summary>
+        public IEnumerable<SurveyQuotaCountsModel> QuotaCounts { get; set; }
+
+    }
+    /// <summary>
+    /// Counts per quota level
+    /// </summary>
+    public class SurveyQuotaCountsModel
+    {
+        /// <summary>
+        /// The quota level
+        /// </summary>
+        public string QuotaLevelId { get; set; }
+        /// <summary>
+        /// The count of interviews successfully completed
+        /// </summary>
+        public int? SuccessfulCount { get; set; }
+
+        /// <summary>
+        /// The count of interviews that ended with *ENDST or #ENDNGB
+        /// </summary>
+        public int? ScreenedOutCount { get; set; }
+
+        /// <summary>
+        /// Number of currently timed-out non-test interviews
+        /// </summary>
+        public int? DroppedOutCount { get; set; }
+
+        /// <summary>
+        /// The count of interviews successfully completed
+        /// </summary>
+        public int? RejectedCount { get; set; }
+
+
     }
 }
