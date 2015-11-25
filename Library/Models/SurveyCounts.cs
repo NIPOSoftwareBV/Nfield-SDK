@@ -34,7 +34,7 @@ namespace Nfield.Models
         /// <summary>
         /// The detailed counts per quota cell for surveys with quota
         /// </summary>
-        public IEnumerable<SurveyQuotaCountsModel> QuotaCounts { get; set; }
+        public QuotaLevel QuotaCounts { get; set; }
 
     }
     /// <summary>
