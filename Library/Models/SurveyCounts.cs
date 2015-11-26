@@ -12,7 +12,7 @@ namespace Nfield.Models
     {
 
         /// <summary>
-        /// Number of successfully completed interviews for this interviewer
+        /// Number of successfully completed interviews
         /// </summary>
         public int? SuccessfulCount { get; set; }
 
@@ -22,50 +22,19 @@ namespace Nfield.Models
         public int? ScreenedOutCount { get; set; }
 
         /// <summary>
-        /// Number of dropped out interviews for this interviewer
+        /// Number of dropped out interviews
         /// </summary>
         public int? DroppedOutCount { get; set; }
 
         /// <summary>
-        /// 
+        /// Number of rejected interviews
         /// </summary>
         public int? RejectedCount { get; set; }
 
         /// <summary>
         /// The detailed counts per quota cell for surveys with quota
         /// </summary>
-        public QuotaLevel QuotaCounts { get; set; }
-
-    }
-    /// <summary>
-    /// Counts per quota level
-    /// </summary>
-    public class SurveyQuotaCountsModel
-    {
-        /// <summary>
-        /// The quota level
-        /// </summary>
-        public string QuotaLevelId { get; set; }
-        /// <summary>
-        /// The count of interviews successfully completed
-        /// </summary>
-        public int? SuccessfulCount { get; set; }
-
-        /// <summary>
-        /// The count of interviews that ended with *ENDST or #ENDNGB
-        /// </summary>
-        public int? ScreenedOutCount { get; set; }
-
-        /// <summary>
-        /// Number of currently timed-out non-test interviews
-        /// </summary>
-        public int? DroppedOutCount { get; set; }
-
-        /// <summary>
-        /// The count of interviews successfully completed
-        /// </summary>
-        public int? RejectedCount { get; set; }
-
+        public QuotaLevelWithCounts QuotaCounts { get; set; }
 
     }
 }
