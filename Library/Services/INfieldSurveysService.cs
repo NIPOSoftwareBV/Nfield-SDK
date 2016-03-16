@@ -127,6 +127,13 @@ namespace Nfield.Services
         Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId);
 
         /// <summary>
+        /// Gets the number of sampling points for a given survey.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<int> SamplingPointsCountAsync(string surveyId);
+
+        /// <summary>
         /// Gets a specific sampling point.
         /// </summary>
         /// <param name="surveyId"></param>

@@ -365,6 +365,29 @@ namespace Nfield.Services
 
         #endregion
 
+        #region SamplingPointsCountAsync
+
+        [Fact]
+        public void TestSamplingPointsCountAsync_ServerReturnsCount_ReturnsNumberOfSamplingPointsForTheSurvey()
+        {
+            const string surveyId = "123";
+            const int samplingPointCount = 5;
+            var uri = $@"{ServiceAddress}surveys/{surveyId}/samplingpoints/Counts";
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(uri))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(samplingPointCount.ToString())));
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var result = target.SamplingPointsCountAsync(surveyId).Result;
+
+            Assert.Equal(samplingPointCount, result);
+        }
+
+        #endregion
+
         #region SamplingPointAddAsync
 
         [Fact]

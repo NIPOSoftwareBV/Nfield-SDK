@@ -34,6 +34,13 @@ namespace Nfield.Services
         Task<IQueryable<string>> QueryAsync(string surveyId);
 
         /// <summary>
+        /// Returns the number of media files
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<int> GetCountAsync(string surveyId);
+
+        /// <summary>
         /// Gets the needed media file for a survey
         /// </summary>
         /// <param name="surveyId">The survey for which to return media files</param>

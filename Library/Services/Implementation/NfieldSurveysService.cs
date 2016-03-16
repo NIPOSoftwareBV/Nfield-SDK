@@ -20,6 +20,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -225,6 +226,19 @@ namespace Nfield.Services.Implementation
                              JsonConvert.DeserializeObject<List<SamplingPoint>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
         }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointsCountAsync"/>
+        /// </summary>
+        public Task<int> SamplingPointsCountAsync(string surveyId)
+        {
+            string uri = $@"{SurveysApi.AbsoluteUri}{surveyId}/{SamplingPointsControllerName}/Counts";
+
+            return Client.GetAsync(uri)
+                .ContinueWith(rm => int.Parse(rm.Result.Content.ReadAsStringAsync().Result))
+                .FlattenExceptions();
+        }
+
 
         /// <summary>
         /// See <see cref="INfieldSurveysService.SamplingPointQueryAsync"/>

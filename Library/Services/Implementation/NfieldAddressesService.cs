@@ -48,6 +48,16 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        public Task<int> GetCountAsync(string surveyId, string samplingPointId)
+        {
+            CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
+
+            var uri = $"{AddressesApi(surveyId, samplingPointId, null).AbsoluteUri}/Counts";
+            return Client.GetAsync(uri)
+                .ContinueWith(rmt => int.Parse(rmt.Result.Content.ReadAsStringAsync().Result))
+                .FlattenExceptions();
+        }
+
         /// <summary>
         /// See <see cref="INfieldAddressesService.AddAsync"/>
         /// </summary>
