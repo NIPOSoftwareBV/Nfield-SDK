@@ -148,7 +148,7 @@ namespace Nfield.Services
         [Fact]
         public void TestGetCountAsync_ServerReturnsCount_ReturnsNumberOfAddresses()
         {
-            var uri = $"{ServiceAddress}Surveys/{SurveyId}/SamplingPoints/{SamplingPointId}/Addresses/Counts";
+            var uri = $"{ServiceAddress}Surveys/{SurveyId}/SamplingPoints/{SamplingPointId}/Addresses/Count";
             var expectedCount = 8;
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();

@@ -20,7 +20,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -232,7 +231,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<int> SamplingPointsCountAsync(string surveyId)
         {
-            string uri = $@"{SurveysApi.AbsoluteUri}{surveyId}/{SamplingPointsControllerName}/Counts";
+            string uri = $@"{SurveysApi.AbsoluteUri}{surveyId}/{SamplingPointsControllerName}/Count";
 
             return Client.GetAsync(uri)
                 .ContinueWith(rm => int.Parse(rm.Result.Content.ReadAsStringAsync().Result))

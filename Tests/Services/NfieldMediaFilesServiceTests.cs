@@ -61,7 +61,7 @@ namespace Nfield.Services
         {
             const string surveyId = "SurveyId";
             const int expectedCount = 4;
-            const string uri = ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/Counts";
+            const string uri = ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/Count";
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);

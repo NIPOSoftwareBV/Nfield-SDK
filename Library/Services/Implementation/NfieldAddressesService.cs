@@ -52,7 +52,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
 
-            var uri = $"{AddressesApi(surveyId, samplingPointId, null).AbsoluteUri}/Counts";
+            var uri = $"{AddressesApi(surveyId, samplingPointId, null).AbsoluteUri}/Count";
             return Client.GetAsync(uri)
                 .ContinueWith(rmt => int.Parse(rmt.Result.Content.ReadAsStringAsync().Result))
                 .FlattenExceptions();

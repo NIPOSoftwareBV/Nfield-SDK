@@ -53,7 +53,7 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("surveyId");
             }
-            var uri = $"{MediaFilesApi(surveyId, null).AbsoluteUri}Counts";
+            var uri = $"{MediaFilesApi(surveyId, null).AbsoluteUri}Count";
             return Client.GetAsync(uri)
                 .ContinueWith(rmt => int.Parse(rmt.Result.Content.ReadAsStringAsync().Result))
                 .FlattenExceptions();

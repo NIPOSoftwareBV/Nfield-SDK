@@ -372,7 +372,7 @@ namespace Nfield.Services
         {
             const string surveyId = "123";
             const int samplingPointCount = 5;
-            var uri = $@"{ServiceAddress}surveys/{surveyId}/samplingpoints/Counts";
+            var uri = $@"{ServiceAddress}surveys/{surveyId}/samplingpoints/Count";
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
