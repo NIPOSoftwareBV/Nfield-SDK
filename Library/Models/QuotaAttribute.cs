@@ -55,8 +55,14 @@ namespace Nfield.Models
 
     }
 
+    /// <summary>
+    /// QuotaAttribute with counts in it 
+    /// </summary>
     public class QuotaAttributeWithCounts : QuotaAttribute
     {
+        /// <summary>
+        /// QuotaAttribute with counts in it 
+        /// </summary>
         public QuotaAttributeWithCounts()
         {
             Levels = new Collection<QuotaLevelWithCounts>();

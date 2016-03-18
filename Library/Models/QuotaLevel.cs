@@ -81,6 +81,9 @@ namespace Nfield.Models
     public class QuotaLevelWithCounts : QuotaLevel
     {
 
+        /// <summary>
+        /// Class representing a quota level
+        /// </summary>
         public QuotaLevelWithCounts()
         {
             Attributes = new Collection<QuotaAttributeWithCounts>();
