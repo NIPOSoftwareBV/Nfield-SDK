@@ -123,6 +123,8 @@
     <Compile Include="Models\SurveyInterviewerAddModel.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentChangeModel.cs" />
     <Compile Include="Models\PackagePublishState.cs" />
+    <Compile Include="Models\SurveyRelocation.cs" />
+    <Compile Include="Models\SurveyPublicId.cs" />
     <Compile Include="Models\SurveyStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
@@ -155,6 +157,8 @@
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyFieldworkService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyRelocationsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
@@ -178,6 +182,8 @@
     <Compile Include="Services\Implementation\NfieldInterviewersService.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Services\INfieldInterviewersService.cs" />
+    <Compile Include="Services\INfieldSurveyRelocationsService.cs" />
+    <Compile Include="Services\INfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\INfieldSurveySettingsService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
