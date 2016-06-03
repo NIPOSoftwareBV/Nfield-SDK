@@ -9,7 +9,7 @@ using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
-    internal class NfieldSurveyEncryptionService : INfieldCryptographyService, INfieldConnectionClientObject
+    internal class NfieldRespondentDataEncryptService : INfieldRespondentDataEncryptService, INfieldConnectionClientObject
     {
         private INfieldHttpClient Client => ConnectionClient.Client;
 

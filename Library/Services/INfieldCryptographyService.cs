@@ -7,7 +7,7 @@ namespace Nfield.Services
     /// <summary>
     /// 
     /// </summary>
-    public interface INfieldCryptographyService
+    public interface INfieldRespondentDataEncryptService
     {
         /// <summary>
         /// Encrypts the data.
