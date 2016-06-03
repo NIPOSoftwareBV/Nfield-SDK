@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Nfield.Extensions;
@@ -34,7 +35,7 @@ namespace Nfield.Services.Implementation
 
             var uri = SurveyDataEncryptionUrl(surveyId);
             var result = Client.PostAsJsonAsync(uri, model).
-                ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                ContinueWith(task => task.Result.Content.ReadAsAsync<string>().Result)
                 .FlattenExceptions();
             return result;
         }
