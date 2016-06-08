@@ -1,4 +1,6 @@
-﻿namespace Nfield.Models
+﻿using System.Collections.Generic;
+
+namespace Nfield.Models
 {
     /// <summary>
     /// 
@@ -19,6 +21,6 @@
         /// <value>
         /// The data.
         /// </value>
-        public string Data { get; set; }
+        public IDictionary<string, string> Data { get; set; }
     }
 }
