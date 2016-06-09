@@ -13,29 +13,22 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using System.Threading.Tasks;
+using Nfield.Models;
 
-namespace Nfield.Models
+namespace Nfield.Services
 {
     /// <summary>
     /// 
     /// </summary>
-    public class DataCryptographyModel
+    public interface INfieldRespondentDataEncryptService
     {
         /// <summary>
-        /// Gets or sets the iv.
+        /// Encrypts the data.
         /// </summary>
-        /// <value>
-        /// The iv.
-        /// </value>
-        public string IV { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data.
-        /// </summary>
-        /// <value>
-        /// The data.
-        /// </value>
-        public IDictionary<string, string> Data { get; set; }
+        /// <param name="surveyId">The survey identifier.</param>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        Task<string> EncryptData(string surveyId, DataCryptographyModel model);
     }
 }

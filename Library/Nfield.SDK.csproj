@@ -164,7 +164,7 @@
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
-    <Compile Include="Services\INfieldCryptographyService.cs" />
+    <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
     <Compile Include="Services\INfieldInterviewQualityService.cs" />
     <Compile Include="Services\INfieldSamplingPointInterviewerAssignmentsService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewersService.cs" />
@@ -195,7 +195,7 @@
     <Compile Include="Models\SurveyInterviewerAssignmentModel.cs" />
     <Compile Include="Models\SurveyInterviewerDistributeModel.cs" />
     <Compile Include="Services\Implementation\NfieldSamplingPointInterviewerAssignmentsService.cs" />
-    <Compile Include="Services\Implementation\NfieldSurveyCryptographyService.cs" />
+    <Compile Include="Services\Implementation\NfieldRespondentDataEncryptService.cs" />
     <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
   </ItemGroup>
