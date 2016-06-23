@@ -93,7 +93,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PostAsJsonAsync(uri, responseCode)
                 .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SurveyResponseCode>(task.Result).Result)
+                .ContinueWith(task => JsonConvert.DeserializeObject<SurveyResponseCode>(task.Result))
                 .FlattenExceptions();
         }
 
@@ -126,7 +126,7 @@ namespace Nfield.Services.Implementation
                         responseMessageTask => 
                             responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                     .ContinueWith(
-                        stringTask => JsonConvert.DeserializeObjectAsync<SurveyResponseCode>(stringTask.Result).Result)
+                        stringTask => JsonConvert.DeserializeObject<SurveyResponseCode>(stringTask.Result))
                     .FlattenExceptions();
         }
 

@@ -26,6 +26,8 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Quota.Editing;
+using QuotaFrame = Nfield.Quota.QuotaFrame;
 
 namespace Nfield.Services.Implementation
 {
@@ -62,7 +64,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PostAsJsonAsync(SurveysApi.AbsoluteUri, survey)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Survey>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<Survey>(task.Result))
                          .FlattenExceptions();
         }
 
@@ -103,7 +105,7 @@ namespace Nfield.Services.Implementation
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
-                 stringTask => JsonConvert.DeserializeObjectAsync<Survey>(stringTask.Result).Result)
+                 stringTask => JsonConvert.DeserializeObject<Survey>(stringTask.Result))
              .FlattenExceptions();
         }
 
@@ -179,6 +181,20 @@ namespace Nfield.Services.Implementation
                              stringTask =>
                              JsonConvert.DeserializeObject<QuotaLevel>(stringTask.Result))
                          .FlattenExceptions();    
+        }
+
+        public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
+        {
+            string uri = string.Format(@"{0}{1}/{2}", SurveysApi.AbsoluteUri, surveyId, QuotaControllerName);
+
+            return Client.GetAsync(uri)
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(
+                    stringTask =>
+                        JsonConvert.DeserializeObject<Quota.Editing.QuotaFrame>(stringTask.Result))
+                .ContinueWith(editFrame => QuotaFrameFromEditingConverter.Convert(editFrame.Result))
+                .FlattenExceptions();
         }
 
         /// <summary>
@@ -280,7 +296,7 @@ namespace Nfield.Services.Implementation
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObjectAsync<SamplingPoint>(stringTask.Result).Result)
+                             stringTask => JsonConvert.DeserializeObject<SamplingPoint>(stringTask.Result))
                          .FlattenExceptions();
         }
 
@@ -292,7 +308,7 @@ namespace Nfield.Services.Implementation
             string uri = string.Format(@"{0}{1}/{2}", SurveysApi.AbsoluteUri, surveyId, SamplingPointsControllerName);
             return Client.PostAsJsonAsync(uri, samplingPoint)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SamplingPoint>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<SamplingPoint>(task.Result))
                          .FlattenExceptions();            
         }
 
@@ -367,7 +383,7 @@ namespace Nfield.Services.Implementation
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
-                 stringTask => JsonConvert.DeserializeObjectAsync<SamplingPointQuotaTarget>(stringTask.Result).Result)
+                 stringTask => JsonConvert.DeserializeObject<SamplingPointQuotaTarget>(stringTask.Result))
              .FlattenExceptions();
         }
 

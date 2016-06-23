@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Models;
+using Nfield.Quota;
 
 namespace Nfield.Services
 {
@@ -97,6 +98,13 @@ namespace Nfield.Services
         /// Gets quota definition for survey.
         /// </summary>
         Task<QuotaLevel> QuotaQueryAsync(string surveyId);
+
+        /// <summary>
+        /// Get the quota definition for an online survey
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId);
 
         /// <summary>
         /// Assigns the supplied <paramref name="quota"/> to the survey with the provided <paramref name="surveyId"/>.

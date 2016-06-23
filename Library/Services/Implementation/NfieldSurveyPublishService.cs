@@ -50,7 +50,7 @@ namespace Nfield.Services.Implementation
                 ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
-                    stringTask => JsonConvert.DeserializeObjectAsync<SurveyPublishTypeUpgradeModel>(stringTask.Result).Result)
+                    stringTask => JsonConvert.DeserializeObject<SurveyPublishTypeUpgradeModel>(stringTask.Result))
                 .FlattenExceptions();
             
         }
