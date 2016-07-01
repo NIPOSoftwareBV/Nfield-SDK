@@ -4,7 +4,7 @@ branches:
     - development
     - /ci-.+/
 
-version: 1.1.{build}
+version: 1.5.{build}
 
 install:
   - ps: ./prerelease.ps1 # this will update the package name to mark it as prerelease
