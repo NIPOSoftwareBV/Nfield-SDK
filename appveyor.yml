@@ -1,0 +1,55 @@
+branches:
+  only:
+    - master
+    - development
+    - /ci-.+/
+
+version: 1.1.{build}
+
+install:
+  - ps: ./prerelease.ps1 # this will update the package name to mark it as prerelease
+
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '$(assembly_informational_version)'
+
+before_build:
+  - nuget restore
+
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+
+nuget:
+  account_feed: true
+
+deploy:
+  # Deploying to NuGet feed for development branch as prerelease
+  - provider: NuGet
+    api_key:
+      secure: FtEm5cB4Y8e/+IshAAD19yRnxMX++DWrHeB3kUWu9KTl7KlGp1OYBuXtV6vs4PZD
+    skip_symbols: false
+    artifact: /.*\.nupkg/
+    on:
+      branch: development
+  # Create a GitHub (draft) release when committing to the master branch
+  - provider: Environment
+    name: GitHub
+    artifact: /.*\.nupkg/
+    on:
+      branch: master
+      appveyor_repo_tag: false
+  # Deploying to NuGet feed when committing to master branch
+  - provider: NuGet
+    api_key:
+      secure: FtEm5cB4Y8e/+IshAAD19yRnxMX++DWrHeB3kUWu9KTl7KlGp1OYBuXtV6vs4PZD
+    skip_symbols: false
+    artifact: /.*\.nupkg/
+    on:
+      branch: master
+      appveyor_repo_tag: false
+  
