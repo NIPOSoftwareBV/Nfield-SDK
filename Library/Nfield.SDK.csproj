@@ -100,6 +100,7 @@
     <Compile Include="Models\AddressSampleData.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
+    <Compile Include="Models\DataCryptographyModel.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
@@ -123,6 +124,8 @@
     <Compile Include="Models\SurveyInterviewerAddModel.cs" />
     <Compile Include="Models\SurveyInterviewerAssignmentChangeModel.cs" />
     <Compile Include="Models\PackagePublishState.cs" />
+    <Compile Include="Models\SurveyRelocation.cs" />
+    <Compile Include="Models\SurveyPublicId.cs" />
     <Compile Include="Models\SurveyStatus.cs" />
     <Compile Include="Models\BackgroundTaskType.cs" />
     <Compile Include="Models\FieldworkOffice.cs" />
@@ -155,10 +158,13 @@
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyFieldworkService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyRelocationsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
     <Compile Include="Services\INfieldInterviewQualityService.cs" />
     <Compile Include="Services\INfieldSamplingPointInterviewerAssignmentsService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewersService.cs" />
@@ -178,6 +184,8 @@
     <Compile Include="Services\Implementation\NfieldInterviewersService.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Services\INfieldInterviewersService.cs" />
+    <Compile Include="Services\INfieldSurveyRelocationsService.cs" />
+    <Compile Include="Services\INfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\INfieldSurveySettingsService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
@@ -187,6 +195,7 @@
     <Compile Include="Models\SurveyInterviewerAssignmentModel.cs" />
     <Compile Include="Models\SurveyInterviewerDistributeModel.cs" />
     <Compile Include="Services\Implementation\NfieldSamplingPointInterviewerAssignmentsService.cs" />
+    <Compile Include="Services\Implementation\NfieldRespondentDataEncryptService.cs" />
     <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
   </ItemGroup>

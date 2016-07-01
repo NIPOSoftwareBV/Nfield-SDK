@@ -55,6 +55,30 @@ namespace Nfield.Services
 
         #endregion
 
+        #region  GetCountAsync
+        [Fact]
+        public void TestGetCountAsync_Always_ReturnsCorrectCount()
+        {
+            const string surveyId = "SurveyId";
+            const int expectedCount = 4;
+            const string uri = ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/Count";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(uri))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(expectedCount.ToString())));
+
+            var target = new NfieldMediaFilesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.GetCountAsync(surveyId).Result;
+
+            Assert.Equal(expectedCount, actual);
+        }
+
+        #endregion
+
         #region GetAsync
 
         [Fact]

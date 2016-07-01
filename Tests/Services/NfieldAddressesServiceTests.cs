@@ -146,6 +146,25 @@ namespace Nfield.Services
         }
 
         [Fact]
+        public void TestGetCountAsync_ServerReturnsCount_ReturnsNumberOfAddresses()
+        {
+            var uri = $"{ServiceAddress}Surveys/{SurveyId}/SamplingPoints/{SamplingPointId}/Addresses/Count";
+            var expectedCount = 8;
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(uri))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(expectedCount.ToString())));
+
+            var target = new NfieldAddressesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualCount = target.GetCountAsync(SurveyId, SamplingPointId).Result;
+            Assert.Equal(expectedCount, actualCount);
+        }
+
+        [Fact]
         public void TestDeleteAsync_ServerAcceptsDelete_ReturnsNoError()
         {
             const string surveyId = "SurveyId";

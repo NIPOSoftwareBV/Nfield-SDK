@@ -74,4 +74,44 @@ namespace Nfield.Models
         public ICollection<QuotaAttribute> Attributes { get; set; }
 
     }
+
+    /// <summary>
+    /// Class representing a quota level
+    /// </summary>
+    public class QuotaLevelWithCounts : QuotaLevel
+    {
+
+        /// <summary>
+        /// Class representing a quota level
+        /// </summary>
+        public QuotaLevelWithCounts()
+        {
+            Attributes = new Collection<QuotaAttributeWithCounts>();
+        }
+        /// <summary>
+        /// Number of successfully completed interviews for this level.
+        /// </summary>
+        public int? SuccessfulCount { get; set; }
+
+        /// <summary>
+        /// Number of unsuccessfully completed interviews
+        /// </summary>
+        public int? UnsuccessfulCount { get; set; }
+
+        /// <summary>
+        /// Number of dropped out interviews
+        /// </summary>
+        public int? DroppedOutCount { get; set; }
+
+        /// <summary>
+        /// Number of rejected interviews
+        /// </summary>
+        public int? RejectedCount { get; set; }
+
+        /// <summary>
+        /// Child Attributes of the QuotaLevel
+        /// </summary>
+        public new ICollection<QuotaAttributeWithCounts> Attributes { get; set; }
+
+    }
 }

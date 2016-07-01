@@ -227,6 +227,19 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
+        /// See <see cref="INfieldSurveysService.SamplingPointsCountAsync"/>
+        /// </summary>
+        public Task<int> SamplingPointsCountAsync(string surveyId)
+        {
+            string uri = $@"{SurveysApi.AbsoluteUri}{surveyId}/{SamplingPointsControllerName}/Count";
+
+            return Client.GetAsync(uri)
+                .ContinueWith(rm => int.Parse(rm.Result.Content.ReadAsStringAsync().Result))
+                .FlattenExceptions();
+        }
+
+
+        /// <summary>
         /// See <see cref="INfieldSurveysService.SamplingPointQueryAsync"/>
         /// </summary>
         public Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId)
