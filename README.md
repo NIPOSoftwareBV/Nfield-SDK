@@ -8,7 +8,13 @@ This SDK allows you to build applications that take advantage of the Nfield serv
 - To use this SDK to call Nfield services you need an Nfield account.
 
 ##Usage
-To get the source code of the SDK clone this repository and include the _Library_ project in your solution.
+The recommended way to consume this project is to reference the NuGet package. You can install it by executing the following command in the Package Manager Console.
+
+```
+PM> Install-Package Nfield-SDK
+```
+
+Alternatively get the source code of the SDK by cloning this repository and include the _Library_ project in your solution.
 
 ##Code Samples
 A comprehensive sample project can be found in the _Examples_ folder.
