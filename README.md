@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/vc9at8xo1q2nthcd/branch/master?svg=true)](https://ci.appveyor.com/project/NIPOSoftware/nfield-sdk/branch/master)
+
 #NIPO Software Nfield SDK for Windows
 This SDK allows you to build applications that take advantage of the Nfield services.
     
