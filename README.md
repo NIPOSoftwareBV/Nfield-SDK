@@ -14,7 +14,7 @@ The basic required steps are shown below.
 
 First we need to use and register a dependency resolver. In this example we're using
 [Ninject].
-```csharp
+```c#
 using(IKernel kernel = new StandardKernel()) {
     DependencyResolver.Register(type => kernel.Get(type), type => kernel.GetAll(type));
     NfieldSdkInitializer.Initialize((bind, resolve) => kernel.Bind(bind).To(resolve).InTransientScope(),
@@ -22,22 +22,22 @@ using(IKernel kernel = new StandardKernel()) {
                                     (bind, resolve) => kernel.Bind(bind).ToConstant(resolve));
 ```
 Create a connection.
-```csharp
+```c#
 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri("https://api.nfieldmr.com/v1/"));
 ```
 
 Sign in using your Nfield credentials.
-```csharp
+```c#
 connection.SignInAsync("testdomain", "user1", "password123").Wait();
 ```
 
 Get a service.
-```csharp
+```c#
 INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
 ```
 
 Then you can perform any operations that you want to perform on the service, for example add an interviewer.
-```csharp
+```c#
 Interviewer interviewer = new Interviewer
 {
   ClientInterviewerId = "sales123",
