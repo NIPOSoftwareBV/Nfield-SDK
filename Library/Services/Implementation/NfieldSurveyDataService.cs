@@ -30,7 +30,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PostAsJsonAsync(uri, surveyDownloadDataRequest)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<BackgroundTask>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundTask>(task.Result))
                          .FlattenExceptions();
         }
 

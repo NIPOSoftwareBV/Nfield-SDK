@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Models;
+using Nfield.Quota;
 
 namespace Nfield.Services
 {
@@ -99,11 +100,25 @@ namespace Nfield.Services
         Task<QuotaLevel> QuotaQueryAsync(string surveyId);
 
         /// <summary>
+        /// Get the quota definition for an online survey
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId);
+
+        /// <summary>
         /// Assigns the supplied <paramref name="quota"/> to the survey with the provided <paramref name="surveyId"/>.
         /// When this method is called on a survey that has a quota frame already 
         /// then the frame is completely replaced by the new one.
         /// </summary>
         Task<QuotaLevel> CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota);
+
+        /// <summary>
+        /// Assigns the supplied <paramref name="quotaFrame"/> to the survey with the provided <paramref name="surveyId"/>.
+        /// When this method is called on a survey that has a quota frame already 
+        /// then the frame is completely replaced by the new one.
+        /// </summary>
+        Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame);
 
         #endregion
 
