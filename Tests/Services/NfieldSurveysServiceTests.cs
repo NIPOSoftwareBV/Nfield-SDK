@@ -256,7 +256,6 @@ namespace Nfield.Services
         {
             var quotaFrame = new QuotaFrame
             {
-                Id = Guid.NewGuid().ToString(),
                 Target = 10
             };
 
@@ -271,8 +270,7 @@ namespace Nfield.Services
             var actualQuotaFrame = target.OnlineQuotaQueryAsync("1").Result;
             mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<string>()), Times.Once());
 
-            Assert.Equal(quotaFrame.Id, actualQuotaFrame.Id);
-            Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
+           Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
 
 
         }
@@ -339,8 +337,7 @@ namespace Nfield.Services
 
             var quotaFrame = new QuotaFrame
             {
-                Id = Guid.NewGuid().ToString(),
-                Target = 10
+               Target = 10
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -354,6 +351,7 @@ namespace Nfield.Services
 
             var actualQuotaFrame = target.CreateOrUpdateOnlineQuotaAsync(surveyId, quotaFrame).Result;
 
+            Assert.Equal(10, actualQuotaFrame.Target);
 
         }
 
