@@ -32,7 +32,7 @@ namespace Nfield.Services.Implementation
 
             return Client.GetAsync(SurveyPackageApi(surveyId, interviewPackageType).AbsoluteUri)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SurveyPackage>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyPackage>(task.Result))
                          .FlattenExceptions();
         }
 

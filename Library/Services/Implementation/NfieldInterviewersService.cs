@@ -38,7 +38,7 @@ namespace Nfield.Services.Implementation
         {
             return Client.PostAsJsonAsync(InterviewersApi.AbsoluteUri, interviewer)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<Interviewer>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<Interviewer>(task.Result))
                          .FlattenExceptions();
         }
 
@@ -80,7 +80,7 @@ namespace Nfield.Services.Implementation
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObjectAsync<Interviewer>(stringTask.Result).Result)
+                             stringTask => JsonConvert.DeserializeObject<Interviewer>(stringTask.Result))
                          .FlattenExceptions();
         }
 
@@ -129,7 +129,7 @@ namespace Nfield.Services.Implementation
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObjectAsync<Interviewer>(stringTask.Result).Result)
+                             stringTask => JsonConvert.DeserializeObject<Interviewer>(stringTask.Result))
                          .FlattenExceptions();
         }
 

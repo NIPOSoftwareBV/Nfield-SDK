@@ -78,7 +78,7 @@ namespace Nfield.Services.Implementation
                 ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
-                    stringTask => JsonConvert.DeserializeObjectAsync<InterviewDetailsModel>(stringTask.Result).Result)
+                    stringTask => JsonConvert.DeserializeObject<InterviewDetailsModel>(stringTask.Result))
                 .FlattenExceptions();
         }
 

@@ -62,7 +62,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PutAsJsonAsync(RelocationsApi(surveyId).AbsoluteUri, relocation)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SurveyRelocation>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyRelocation>(task.Result))
                          .FlattenExceptions();
         }
 

@@ -62,7 +62,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PostAsJsonAsync(SettingsApi(surveyId, null).AbsoluteUri, setting)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObjectAsync<SurveySetting>(task.Result).Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveySetting>(task.Result))
                          .FlattenExceptions();
         }
 

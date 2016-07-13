@@ -19,6 +19,7 @@ using Moq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
+using Nfield.TestHelpers;
 
 namespace Nfield.Services
 {
@@ -62,7 +63,7 @@ namespace Nfield.Services
 
             mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.Factory.StartNew(() => new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
+                .Returns(NfieldTaskHelpers.FromResult(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
 
             mockedHttpClient
                 .Setup(client => client.SendAsync(It.IsAny<HttpRequestMessage>()))
@@ -74,7 +75,7 @@ namespace Nfield.Services
 
             mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
-                .Returns(Task.Factory.StartNew(() => new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
+                .Returns(NfieldTaskHelpers.FromResult(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
 
             return mockedHttpClient;
         }
