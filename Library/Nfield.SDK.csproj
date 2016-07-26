@@ -54,8 +54,8 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Nfield.Quota, Version=1.0.120.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nfield.Quota.1.0.120\lib\net40\Nfield.Quota.dll</HintPath>
+    <Reference Include="Nfield.Quota, Version=1.0.131.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nfield.Quota.1.0.131-prerelease\lib\net40\Nfield.Quota.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
