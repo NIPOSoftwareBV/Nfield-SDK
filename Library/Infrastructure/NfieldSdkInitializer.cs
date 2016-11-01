@@ -60,6 +60,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldAddressesService), typeof(NfieldAddressesService));
             registerTransient(typeof(INfieldSurveyPackageService), typeof(NfieldSurveyPackageService));
             registerTransient(typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService));
+            registerTransient(typeof(INfieldSurveySampleDataService), typeof(NfieldSurveySampleDataService));
             registerTransient(typeof(INfieldHttpClient), typeof(NfieldHttpClient));
             registerTransient(typeof(IFileSystem), typeof(FileSystem));
             registerTransient(typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility));

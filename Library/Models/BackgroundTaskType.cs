@@ -33,6 +33,10 @@ namespace Nfield.Models
         /// </summary>
         DownloadSurveyData = 1,
 
+        /// <summary>
+        /// The task to prepare a download of survey sample data
+        /// </summary>
+        DownloadSurveySampleData = 9
 
     }
 }

@@ -164,6 +164,7 @@
     <Compile Include="Services\Implementation\NfieldLanguagesService.cs" />
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveySampleDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyRelocationsService.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\INfieldSurveyPublishService.cs" />
+    <Compile Include="Services\INfieldSurveySampleDataService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />
