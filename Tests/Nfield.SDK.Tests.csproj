@@ -106,6 +106,7 @@
     <Compile Include="Services\NfieldMediaFilesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyResponseCodesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyFieldworkServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveySampleDataServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyScriptServiceTests.cs" />
     <Compile Include="Services\NfieldServiceTestsBase.cs" />
     <Compile Include="Services\NfieldFieldworkOfficesServiceTests.cs" />
