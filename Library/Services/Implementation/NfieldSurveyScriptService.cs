@@ -40,7 +40,7 @@ namespace Nfield.Services.Implementation
         #region Implementation of INfieldSurveyScriptService
 
         /// <summary>
-        /// See <see cref="INfieldSurveyScriptService.GetAsync"/>
+        /// See <see cref="INfieldSurveyScriptService.GetAsync(string)"/>
         /// </summary>
         public Task<SurveyScript> GetAsync(string surveyId)
         {
@@ -54,24 +54,20 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        #endregion
-
-        #region Implementation of INfieldConnectionClientObject
-
-        public INfieldConnectionClient ConnectionClient { get; internal set; }
-
-        public void InitializeNfieldConnection(INfieldConnectionClient connection)
+        /// <summary>
+        /// See <see cref="INfieldSurveyScriptService.GetAsync(string, string)"/> 
+        /// </summary>
+        public Task<SurveyScript> GetAsync(string surveyId, string eTag)
         {
-            ConnectionClient = connection;
+            var uri = SurveyScriptUrl(surveyId, eTag);
+            return Client.GetAsync(uri)
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(
+                    stringTask =>
+                        JsonConvert.DeserializeObject<SurveyScript>(stringTask.Result))
+                .FlattenExceptions();
         }
-
-        #endregion
-
-        private INfieldHttpClient Client
-        {
-            get { return ConnectionClient.Client; }
-        }
-
 
         /// <summary>
         /// See <see cref="INfieldSurveyScriptService.PostAsync(string,Nfield.Models.SurveyScript)"/>
@@ -102,7 +98,7 @@ namespace Nfield.Services.Implementation
 
             if (!_fileSystem.File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
-            
+
             var surveyScript = new SurveyScript
             {
                 FileName = fileName,
@@ -112,10 +108,31 @@ namespace Nfield.Services.Implementation
             return PostAsync(surveyId, surveyScript);
         }
 
-        private string SurveyScriptUrl(string surveyId)
+        #endregion
+
+        #region Implementation of INfieldConnectionClientObject
+
+        public INfieldConnectionClient ConnectionClient { get; internal set; }
+
+        public void InitializeNfieldConnection(INfieldConnectionClient connection)
+        {
+            ConnectionClient = connection;
+        }
+
+        #endregion
+
+        private INfieldHttpClient Client
+        {
+            get { return ConnectionClient.Client; }
+        }
+
+        private string SurveyScriptUrl(string surveyId, string eTag = null)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Script/", surveyId);
+
+            if (!string.IsNullOrEmpty(eTag))
+                result.AppendFormat("{0}", eTag);
 
             return result.ToString();
         }
