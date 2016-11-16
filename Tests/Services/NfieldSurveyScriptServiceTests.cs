@@ -13,17 +13,15 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
+using System;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using Xunit;
 
 namespace Nfield.Services
@@ -64,6 +62,28 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId).Result;
+
+            Assert.Equal(script, actual.Script);
+            Assert.Equal(fileName, actual.FileName);
+        }
+
+        [Fact]
+        public void TestGetAsync_WhenSpecificVersionOfScriptExits_ReturnsCorrectScript()
+        {
+            const string surveyId = "SurveyId";
+            const string script = "this is the script";
+            const string fileName = "fileq.odin";
+            const string eTag = "etag";
+
+            var expected = new SurveyScript { Script = script, FileName = fileName };
+
+            var v1 = string.Format("{0}Surveys/{1}/Script/{2}", ServiceAddress, surveyId, eTag);
+
+            _mockedHttpClient
+                 .Setup(client => client.GetAsync(string.Format("{0}Surveys/{1}/Script/{2}", ServiceAddress, surveyId, eTag)))
+                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
+
+            var actual = _target.GetAsync(surveyId, eTag).Result;
 
             Assert.Equal(script, actual.Script);
             Assert.Equal(fileName, actual.FileName);

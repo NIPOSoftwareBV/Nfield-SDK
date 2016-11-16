@@ -31,6 +31,11 @@ namespace Nfield.Services
         Task<SurveyScript> GetAsync(string surveyId);
 
         /// <summary>
+        /// Gets specific version of the script.
+        /// </summary>
+        Task<SurveyScript> GetAsync(string surveyId, string eTag);
+
+        /// <summary>
         /// Upload script for survey.
         /// The repeated upload for the survey just replace the previous script. 
         /// </summary>
