@@ -34,15 +34,22 @@ namespace Nfield.Extensions
         public static HttpResponseMessage ValidateResponse(this HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
+            {
                 return response;
+            }
+
+            var message = response.Content.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(message))
+            {
+                message = response.ReasonPhrase;
+            }
 
             Dictionary<string, object> httpErrorDictionary = null;
             if (response.Content != null)
             {
-                var contentString = response.Content.ReadAsStringAsync().Result;
                 try
                 {
-                    httpErrorDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(contentString);
+                    httpErrorDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(message);
                 }
                 catch (Exception)
                 {
@@ -55,12 +62,12 @@ namespace Nfield.Extensions
             {
                 NfieldErrorCode nfieldErrorCode = (NfieldErrorCode)Enum.Parse(typeof(NfieldErrorCode), temp.ToString());
 
-                string message = httpErrorDictionary.TryGetValue("Message", out temp) ? temp.ToString() : response.ReasonPhrase;
+                string nfieldMessage = httpErrorDictionary.TryGetValue("Message", out temp) ? temp.ToString() : message;
 
-                throw new NfieldErrorException(response.StatusCode, nfieldErrorCode, message);
+                throw new NfieldErrorException(response.StatusCode, nfieldErrorCode, nfieldMessage);
             }
 
-            throw new NfieldHttpResponseException(response.StatusCode, response.ReasonPhrase);
+            throw new NfieldHttpResponseException(response.StatusCode, message);
         }
     }
 }
