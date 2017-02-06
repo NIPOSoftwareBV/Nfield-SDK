@@ -23,6 +23,12 @@ namespace Nfield.Infrastructure
         public enum NfieldErrorCode
         {
             /// <summary>
+            /// No error code is returned. This should never be returned in production code and is mainly added
+            /// to be able to test that the expected error code is used.
+            /// </summary>
+            None,
+
+            /// <summary>
             /// (One of the) provided arguments is null
             /// </summary>
             ArgumentIsNull,
@@ -45,7 +51,32 @@ namespace Nfield.Infrastructure
             /// <summary>
             /// Database cannot be updated
             /// </summary>
-            DataUpdateError
+            DataUpdateError,
+
+            /// <summary>
+            /// An unknown server error has occurred
+            /// </summary>
+            UnknownServerError,
+
+            /// <summary>
+            /// The requested entity could not be found
+            /// </summary>
+            EntityNotFound,
+
+            /// <summary>
+            /// The user could not be authenticated. Either the domain name, the username or the password is incorrect.
+            /// </summary>
+            NotAuthenticated,
+
+            /// <summary>
+            /// Access to the requested domain has been blocked by the SaaS Administrator
+            /// </summary>
+            DomainAccessDenied,
+
+            /// <summary>
+            /// This means an invalid survey type. (e.g. request sampling points for a survey that is not of this specific type)
+            /// </summary>
+            InvalidSurveyType
         }
     }
 }

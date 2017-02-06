@@ -34,33 +34,40 @@ namespace Nfield.Extensions
         public static HttpResponseMessage ValidateResponse(this HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
-                return response;
-
-            Dictionary<string, object> httpErrorDictionary = null;
-            if (response.Content != null)
             {
-                var contentString = response.Content.ReadAsStringAsync().Result;
+                return response;
+            }
+
+            var message = response.Content?.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(message))
+            {
+                message = response.ReasonPhrase;
+            }
+            else
+            {
                 try
                 {
-                    httpErrorDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(contentString);
+                    var httpErrorDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(message);
+                    object temp;
+                    if (httpErrorDictionary.TryGetValue("NfieldErrorCode", out temp))
+                    {
+                        var nfieldErrorCode = (NfieldErrorCode)Enum.Parse(typeof(NfieldErrorCode), temp.ToString());
+
+                        var nfieldMessage = httpErrorDictionary.TryGetValue("Message", out temp)
+                            ? temp.ToString()
+                            : message;
+
+                        throw new NfieldErrorException(response.StatusCode, nfieldErrorCode, nfieldMessage);
+                    }
                 }
-                catch (Exception)
+                catch (JsonException)
                 {
                     // it's not json
                 }
+
             }
 
-            object temp;
-            if (httpErrorDictionary != null && httpErrorDictionary.TryGetValue("NfieldErrorCode", out temp))
-            {
-                NfieldErrorCode nfieldErrorCode = (NfieldErrorCode)Enum.Parse(typeof(NfieldErrorCode), temp.ToString());
-
-                string message = httpErrorDictionary.TryGetValue("Message", out temp) ? temp.ToString() : response.ReasonPhrase;
-
-                throw new NfieldErrorException(response.StatusCode, nfieldErrorCode, message);
-            }
-
-            throw new NfieldHttpResponseException(response.StatusCode, response.ReasonPhrase);
+            throw new NfieldHttpResponseException(response.StatusCode, message);
         }
     }
 }
