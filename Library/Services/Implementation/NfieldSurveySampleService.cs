@@ -1,11 +1,13 @@
 ﻿using System;
+
+using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
@@ -35,14 +37,18 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<string> DeleteAsync(string surveyId, string sampleRecordId)
+        public Task<string> DeleteAsync(string surveyId, string respondentKey)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredStringArgument(sampleRecordId, nameof(sampleRecordId));
+            CheckRequiredStringArgument(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId, sampleRecordId);
-            var filters = $"[{{\"Name\":\"RespondentKey\",\"Op\":\"eq\",\"Value\":\"{sampleRecordId}\"}}]";
-            return Client.DeleteAsJsonAsync(uri, filters)
+            var uri = SurveySampleUrl(surveyId);
+            var filters = new List<SampleFilter>
+            {
+                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+            };
+
+            return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .FlattenExceptions();
         }
@@ -59,14 +65,6 @@ namespace Nfield.Services.Implementation
         #endregion
 
         private INfieldHttpClient Client => ConnectionClient.Client;
-
-        private string SurveySampleUrl(string surveyId, string sampleRecordId)
-        {
-            var result = new StringBuilder(SurveySampleUrl(surveyId));
-            result.AppendFormat(CultureInfo.InvariantCulture, @"/{0}", sampleRecordId);
-
-            return result.ToString();
-        }
 
         private string SurveySampleUrl(string surveyId)
         {

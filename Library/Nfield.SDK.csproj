@@ -120,6 +120,7 @@
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
+    <Compile Include="Models\SampleFilter.cs" />
     <Compile Include="Models\SamplingPointsInterviewersAssignmentModel.cs" />
     <Compile Include="Models\SurveyCounts.cs" />
     <Compile Include="Models\SurveyPackage.cs" />

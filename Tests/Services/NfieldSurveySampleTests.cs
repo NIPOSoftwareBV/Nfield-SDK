@@ -14,10 +14,13 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Moq;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -172,19 +175,23 @@ namespace Nfield.Services
         [Fact]
         public void TestDeleteAsync_SampleExists_ReturnsStatusMessage()
         {
-            const string sampleRecordId = "a sample record id";
+            const string respondentKey = "a sample record id";
             const string message = "a message";
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/{sampleRecordId}", It.IsAny<string>()))
+                .Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample",
+                    It.Is<IEnumerable<SampleFilter>>(
+                        filters => filters.Single().Name.Equals("RespondentKey")
+                                   && filters.Single().Op.Equals("eq")
+                                   && filters.Single().Value.Equals(respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(message)));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var actual = target.DeleteAsync(SurveyId, sampleRecordId).Result;
+            var actual = target.DeleteAsync(SurveyId, respondentKey).Result;
 
             Assert.Equal(message, actual);
         }

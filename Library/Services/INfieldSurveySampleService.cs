@@ -43,7 +43,6 @@ namespace Nfield.Services
         /// <param name="filePath">The full path of sample file</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="FileNotFoundException"></exception>
         /// <returns>An message indicating the status of the action</returns>
         Task<string> PostAsync(string surveyId, string filePath);
 
@@ -51,10 +50,10 @@ namespace Nfield.Services
         /// delete a sample record
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
-        /// <param name="sampleRecordId">the id of the sample record</param>
+        /// <param name="respondentKey">the id of the sample record</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <returns>An message indicating the status of the action</returns>
-        Task<string> DeleteAsync(string surveyId, string sampleRecordId);
+        Task<string> DeleteAsync(string surveyId, string respondentKey);
     }
 }
