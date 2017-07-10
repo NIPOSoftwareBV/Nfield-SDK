@@ -19,6 +19,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Moq;
+using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
@@ -116,20 +117,45 @@ namespace Nfield.Services
         public void TestPostAsync_ServerAccepts_ReturnsStatusMessage()
         {
             const string sample = "a sample";
-            const string message = "a message";
+            var uploadStatus = new SampleUploadStatus
+            {
+                DuplicateKeyCount = 1,
+                EmptyKeyCount = 2,
+                HeaderDataMismatch = true,
+                HeaderInvalid = true,
+                HeaderInvalidColumnsCount = 3,
+                InsertedCount = 4,
+                InvalidDataCount = 5,
+                InvalidKeyCount = 6,
+                ProcessingStatus = "good status",
+                SkippedCount = 7,
+                TotalRecordCount = 8,
+                UpdatedCount = 9
+            };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
                 .Setup(client => client.PostAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample", It.Is<StringContent>(stringContent => stringContent.ReadAsStringAsync().Result.Equals(sample))))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(message)));
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(uploadStatus))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
             var actual = target.PostAsync(SurveyId, sample).Result;
 
-            Assert.Equal(message, actual);
+            Assert.Equal(uploadStatus.DuplicateKeyCount, actual.DuplicateKeyCount);
+            Assert.Equal(uploadStatus.EmptyKeyCount, actual.EmptyKeyCount);
+            Assert.Equal(uploadStatus.HeaderDataMismatch, actual.HeaderDataMismatch);
+            Assert.Equal(uploadStatus.HeaderInvalid, actual.HeaderInvalid);
+            Assert.Equal(uploadStatus.HeaderInvalidColumnsCount, actual.HeaderInvalidColumnsCount);
+            Assert.Equal(uploadStatus.InsertedCount, actual.InsertedCount);
+            Assert.Equal(uploadStatus.InvalidDataCount, actual.InvalidDataCount);
+            Assert.Equal(uploadStatus.InvalidKeyCount, actual.InvalidKeyCount);
+            Assert.Equal(uploadStatus.ProcessingStatus, actual.ProcessingStatus);
+            Assert.Equal(uploadStatus.SkippedCount, actual.SkippedCount);
+            Assert.Equal(uploadStatus.TotalRecordCount, actual.TotalRecordCount);
+            Assert.Equal(uploadStatus.UpdatedCount, actual.UpdatedCount);
         }
 
         #endregion
