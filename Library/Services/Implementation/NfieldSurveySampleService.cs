@@ -11,7 +11,7 @@ using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
-    internal class NfieldSurveySampleService : INfieldSurveySampleService
+    internal class NfieldSurveySampleService : INfieldSurveySampleService, INfieldConnectionClientObject
     {
 
         public Task<string> GetAsync(string surveyId)
