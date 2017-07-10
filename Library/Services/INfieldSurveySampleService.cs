@@ -35,16 +35,16 @@ namespace Nfield.Services
         Task<string> GetAsync(string surveyId);
 
         /// <summary>
-        /// upload csv sample file
+        /// upload csv sample
         /// new respondents will be added
         /// existing repondents will be updated
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
-        /// <param name="filePath">The full path of sample file</param>
+        /// <param name="sample">sample</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <returns>An message indicating the status of the action</returns>
-        Task<string> PostAsync(string surveyId, string filePath);
+        Task<SampleUploadStatus> PostAsync(string surveyId, string sample);
 
         /// <summary>
         /// delete a sample record

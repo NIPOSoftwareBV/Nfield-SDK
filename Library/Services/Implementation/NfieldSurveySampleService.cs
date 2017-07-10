@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -25,7 +26,7 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<string> PostAsync(string surveyId, string sample)
+        public Task<SampleUploadStatus> PostAsync(string surveyId, string sample)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredStringArgument(sample, nameof(sample));
@@ -34,6 +35,7 @@ namespace Nfield.Services.Implementation
             var sampleContent = new StringContent(sample);
             return Client.PostAsync(uri, sampleContent)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult.Result))
                 .FlattenExceptions();
         }
 
