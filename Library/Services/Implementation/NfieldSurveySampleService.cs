@@ -54,7 +54,7 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<string> DeleteAsync(string surveyId, string respondentKey)
+        public Task<int> DeleteAsync(string surveyId, string respondentKey)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredStringArgument(respondentKey, nameof(respondentKey));
@@ -67,6 +67,7 @@ namespace Nfield.Services.Implementation
 
             return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleDeleteStatus>(stringResult.Result).DeletedCount)
                 .FlattenExceptions();
         }
 

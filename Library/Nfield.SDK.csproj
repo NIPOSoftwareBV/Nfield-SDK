@@ -121,6 +121,7 @@
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
     <Compile Include="Models\SampleFilter.cs" />
+    <Compile Include="Models\SampleDeleteStatus.cs" />
     <Compile Include="Models\SampleUploadStatus.cs" />
     <Compile Include="Models\SamplingPointsInterviewersAssignmentModel.cs" />
     <Compile Include="Models\SurveyCounts.cs" />

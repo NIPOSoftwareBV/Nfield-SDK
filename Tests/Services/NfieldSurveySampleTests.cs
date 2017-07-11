@@ -199,10 +199,10 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestDeleteAsync_SampleExists_ReturnsStatusMessage()
+        public void TestDeleteAsync_SampleExists_ReturnsDeletedCount()
         {
             const string respondentKey = "a sample record id";
-            const string message = "a message";
+            const int deletedCount = 887;
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -210,18 +210,25 @@ namespace Nfield.Services
             mockedHttpClient
                 .Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample",
                     It.Is<IEnumerable<SampleFilter>>(
-                        filters => filters.Single().Name.Equals("RespondentKey")
-                                   && filters.Single().Op.Equals("eq")
-                                   && filters.Single().Value.Equals(respondentKey))))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(message)));
+                        filters => FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new SampleDeleteStatus {DeletedCount = deletedCount}))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
             var actual = target.DeleteAsync(SurveyId, respondentKey).Result;
 
-            Assert.Equal(message, actual);
+            Assert.Equal(deletedCount, actual);
         }
 
         #endregion
+
+        private static bool FilterEquals(SampleFilter filter, string name, string op, string value)
+        {
+            return filter.Name.Equals(name)
+                   && filter.Op.Equals(op)
+                   && filter.Value.Equals(value);
+        }
     }
 }

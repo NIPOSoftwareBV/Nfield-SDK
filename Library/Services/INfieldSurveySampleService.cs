@@ -43,7 +43,7 @@ namespace Nfield.Services
         /// <param name="sample">sample</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        /// <returns>An message indicating the status of the action</returns>
+        /// <returns><see cref="SampleUploadStatus"/></returns>
         Task<SampleUploadStatus> PostAsync(string surveyId, string sample);
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Nfield.Services
         /// <param name="respondentKey">the id of the sample record</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        /// <returns>An message indicating the status of the action</returns>
-        Task<string> DeleteAsync(string surveyId, string respondentKey);
+        /// <returns>number of deleted sample records</returns>
+        Task<int> DeleteAsync(string surveyId, string respondentKey);
     }
 }
