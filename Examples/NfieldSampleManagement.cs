@@ -45,7 +45,7 @@ namespace Nfield.SDK.Samples
         /// Note that this example does not return the result, allthough your real class will do so.
         /// </summary>
         /// <param name="surveyId">id of the survey where we want to upload the sample records to</param>
-        /// <param name="sample">path of the csv file containing the sample</param>
+        /// <param name="sample">the sample to upload</param>
         public void UploadSample(string surveyId, string sample)
         {
             var result = _surveySampleService.PostAsync(surveyId, sample).Result;
