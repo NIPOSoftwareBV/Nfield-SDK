@@ -120,6 +120,9 @@
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
+    <Compile Include="Models\SampleFilter.cs" />
+    <Compile Include="Models\SampleDeleteStatus.cs" />
+    <Compile Include="Models\SampleUploadStatus.cs" />
     <Compile Include="Models\SamplingPointsInterviewersAssignmentModel.cs" />
     <Compile Include="Models\SurveyCounts.cs" />
     <Compile Include="Models\SurveyPackage.cs" />
@@ -169,6 +172,7 @@
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySampleDataService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveySampleService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyRelocationsService.cs" />
@@ -191,6 +195,7 @@
     <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\INfieldSurveyPublishService.cs" />
     <Compile Include="Services\INfieldSurveySampleDataService.cs" />
+    <Compile Include="Services\INfieldSurveySampleService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />
