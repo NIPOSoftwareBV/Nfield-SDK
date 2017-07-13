@@ -17,10 +17,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Nfield.Services.Implementation
+namespace Nfield.Services
 {
-    public class NfieldSurveyInvitationTemplateService : INfieldSurveyInvitationTemplateService
+    public interface INfieldSurveyInvitationTemplatesService
     {
+        Task<string> GetAsync(string surveyId);
     }
 }
