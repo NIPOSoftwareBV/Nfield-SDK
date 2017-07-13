@@ -13,16 +13,13 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Nfield.Models;
 
 namespace Nfield.Services
 {
     public interface INfieldSurveyInvitationTemplatesService
     {
-        Task<string> GetAsync(string surveyId);
+        Task<InvitationTemplateModel> GetAsync(string surveyId);
     }
 }

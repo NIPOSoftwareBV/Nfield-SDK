@@ -8,6 +8,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using Moq;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Xunit;
 
 namespace Nfield.Services
@@ -35,10 +36,15 @@ namespace Nfield.Services
         [Fact]
         public void TestGetAsync_SurveyHasInvitationTemplates_ReturnsInvitationTemplates()
         {
+            var expected = new InvitationTemplateModel();
+
             var target = new NfieldSurveyInvitationTemplatesService();
             var mockClient = InitMockClient();
             target.InitializeNfieldConnection(mockClient);
-            Assert.Equal(true,true);
+            var actual = target.GetAsync("surveyId").Result;
+
+            //TODO: check single fields, not reference
+            Assert.Equal(expected, actual);
         }
 
         private INfieldConnectionClient InitMockClient()
