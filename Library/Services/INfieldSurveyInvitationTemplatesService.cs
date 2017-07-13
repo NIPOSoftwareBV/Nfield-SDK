@@ -19,8 +19,16 @@ using Nfield.Models;
 
 namespace Nfield.Services
 {
+    /// <summary>
+    /// Interface for a service that gets the invitation templates for a survey
+    /// </summary>
     public interface INfieldSurveyInvitationTemplatesService
     {
+        /// <summary>
+        /// Get the invitation templates for the specified survey
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
         Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId);
     }
 }
