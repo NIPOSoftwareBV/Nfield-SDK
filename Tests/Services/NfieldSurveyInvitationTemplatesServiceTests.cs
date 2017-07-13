@@ -37,28 +37,37 @@ namespace Nfield.Services
         [Fact]
         public void TestGetAsync_SurveyHasInvitationTemplates_ReturnsInvitationTemplates()
         {
-            const string SurveyId = "TestSurveyId";
+            const string surveyId = "TestSurveyId";
 
-            var expected = new InvitationTemplateModel()
+            var expected1 = new InvitationTemplateModel()
             {
                 Id = 1,
                 InvitationType = 1,
-                Name = "TestTemplate",
-                Subject = "TestSubject",
-                Body = "TestBody"
+                Name = "TestTemplate1",
+                Subject = "TestSubject1",
+                Body = "TestBody1"
+            };
+
+            var expected2 = new InvitationTemplateModel()
+            {
+                Id = 2,
+                InvitationType = 2,
+                Name = "TestTemplate2",
+                Subject = "TestSubject2",
+                Body = "TestBody2"
             };
 
             var target = new NfieldSurveyInvitationTemplatesService();
-            var mockClient = InitMockClient(SurveyId, expected);
+            var returnObject = new List<InvitationTemplateModel>() { expected1, expected2 };
+            var mockClient = InitMockClient<IEnumerable<InvitationTemplateModel>>(surveyId, returnObject);
             target.InitializeNfieldConnection(mockClient);
-            var actualResults = target.GetAsync(SurveyId).Result;
+            var actualResults = target.GetAsync(surveyId).Result.ToArray();
 
-            var actual = actualResults.First();
-            Assert.Equal(expected.Id, actual.Id);
-            Assert.Equal(expected.InvitationType, actual.InvitationType);
-            Assert.Equal(expected.Name, actual.Name);
-            Assert.Equal(expected.Subject, actual.Subject);
-            Assert.Equal(expected.Body, actual.Body);
+            var actual1 = actualResults[0];
+            AssertOnInvitationTemplatesFields(expected1, actual1);
+
+            var actual2 = actualResults[1];
+            AssertOnInvitationTemplatesFields(expected2, actual2);
         }
 
         private INfieldConnectionClient InitMockClient<T>(string surveyId, T content)
@@ -67,11 +76,19 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var responseContent = new ObjectContent<T>(content, new JsonMediaTypeFormatter());
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/URL"))
+                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplate"))
                 .Returns(CreateTask(HttpStatusCode.OK, responseContent));
 
             return mockedNfieldConnection.Object;
         }
 
+        private void AssertOnInvitationTemplatesFields(InvitationTemplateModel expected, InvitationTemplateModel actual)
+        {
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.InvitationType, actual.InvitationType);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Subject, actual.Subject);
+            Assert.Equal(expected.Body, actual.Body);
+        }
     }
 }

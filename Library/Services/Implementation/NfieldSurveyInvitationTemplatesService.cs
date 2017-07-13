@@ -49,8 +49,7 @@ namespace Nfield.Services.Implementation
         private string SurveyInvitationTemplatesUrl(string surveyId)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/INVITATION_TEMPLATES?", surveyId);
-
+            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InvitationTemplate", surveyId);
             return result.ToString();
         }
 
