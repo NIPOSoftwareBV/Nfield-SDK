@@ -1,12 +1,25 @@
-﻿using Nfield.Services.Implementation;
+﻿//    This file is part of Nfield.SDK.
+//
+//    Nfield.SDK is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Lesser General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Nfield.SDK is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Lesser General Public License for more details.
+//
+//    You should have received a copy of the GNU Lesser General Public License
+//    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
+
+using Nfield.Services.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using Moq;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -58,7 +71,7 @@ namespace Nfield.Services
             };
 
             var target = new NfieldSurveyInvitationTemplatesService();
-            var returnObject = new List<InvitationTemplateModel>() { expected1, expected2 };
+            var returnObject = new [] { expected1, expected2 };
             var mockClient = InitMockClient<IEnumerable<InvitationTemplateModel>>(surveyId, returnObject);
             target.InitializeNfieldConnection(mockClient);
             var actualResults = target.GetAsync(surveyId).Result.ToArray();
@@ -76,7 +89,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var responseContent = new ObjectContent<T>(content, new JsonMediaTypeFormatter());
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplate"))
+                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates"))
                 .Returns(CreateTask(HttpStatusCode.OK, responseContent));
 
             return mockedNfieldConnection.Object;
