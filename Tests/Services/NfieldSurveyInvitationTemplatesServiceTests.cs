@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using Moq;
@@ -36,25 +37,38 @@ namespace Nfield.Services
         [Fact]
         public void TestGetAsync_SurveyHasInvitationTemplates_ReturnsInvitationTemplates()
         {
-            var expected = new InvitationTemplateModel();
+            const string SurveyId = "TestSurveyId";
+
+            var expected = new InvitationTemplateModel()
+            {
+                Id = 1,
+                InvitationType = 1,
+                Name = "TestTemplate",
+                Subject = "TestSubject",
+                Body = "TestBody"
+            };
 
             var target = new NfieldSurveyInvitationTemplatesService();
-            var mockClient = InitMockClient();
+            var mockClient = InitMockClient(SurveyId, expected);
             target.InitializeNfieldConnection(mockClient);
-            var actual = target.GetAsync("surveyId").Result;
+            var actualResults = target.GetAsync(SurveyId).Result;
 
-            //TODO: check single fields, not reference
-            Assert.Equal(expected, actual);
+            var actual = actualResults.First();
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Equal(expected.InvitationType, actual.InvitationType);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Subject, actual.Subject);
+            Assert.Equal(expected.Body, actual.Body);
         }
 
-        private INfieldConnectionClient InitMockClient()
+        private INfieldConnectionClient InitMockClient<T>(string surveyId, T content)
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            //var content = new StringContent(sample);
-            //mockedHttpClient
-            //    .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/Sample"))
-            //    .Returns(CreateTask(HttpStatusCode.OK, content));
+            var responseContent = new ObjectContent<T>(content, new JsonMediaTypeFormatter());
+            mockedHttpClient
+                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/URL"))
+                .Returns(CreateTask(HttpStatusCode.OK, responseContent));
 
             return mockedNfieldConnection.Object;
         }

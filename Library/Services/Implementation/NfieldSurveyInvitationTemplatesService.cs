@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,14 +27,14 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInvitationTemplatesService : INfieldSurveyInvitationTemplatesService, INfieldConnectionClientObject
     {
-        public Task<InvitationTemplateModel> GetAsync(string surveyId)
+        public Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
             return Client.GetAsync(uri)
-                .ContinueWith(task => JsonConvert.DeserializeObject<InvitationTemplateModel>(
+                .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationTemplateModel>>(
                     task.Result.Content.ReadAsStringAsync().Result))
                 .FlattenExceptions();
         }
