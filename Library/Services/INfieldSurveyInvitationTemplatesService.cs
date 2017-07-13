@@ -27,8 +27,6 @@ namespace Nfield.Services
         /// <summary>
         /// Get the invitation templates for the specified survey
         /// </summary>
-        /// <param name="surveyId"></param>
-        /// <returns></returns>
         Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId);
     }
 }
