@@ -125,6 +125,7 @@
     <Compile Include="Models\SampleUploadStatus.cs" />
     <Compile Include="Models\SamplingPointsInterviewersAssignmentModel.cs" />
     <Compile Include="Models\SurveyCounts.cs" />
+    <Compile Include="Models\InvitationTemplateModel.cs" />
     <Compile Include="Models\SurveyPackage.cs" />
     <Compile Include="Models\SurveyPackageBinaryFile.cs" />
     <Compile Include="Models\SurveyPackageLanguage.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInvitationTemplatesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPackageService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPublishService.cs" />
     <Compile Include="Services\Implementation\NfieldInterviewQualityService.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
+    <Compile Include="Services\INfieldSurveyInvitationTemplatesService.cs" />
     <Compile Include="Services\INfieldSurveyPackageService.cs" />
     <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
