@@ -41,12 +41,17 @@ namespace Nfield.Models
         /// <summary>
         /// The scheduled date for the email being send
         /// </summary>
-        public DateTime ScheduledFor { get; set; }
+        public DateTime? ScheduledFor { get; set; }
 
         /// <summary>
         /// The id of the invitation template
         /// </summary>
         public int InvitationTemplateId { get; set; }
+
+        /// <summary>
+        /// Respondent filters
+        /// </summary>
+        internal IEnumerable<SampleFilter> Filters { get; set; }
 
     }
 }

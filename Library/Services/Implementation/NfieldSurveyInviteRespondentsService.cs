@@ -16,8 +16,10 @@
 using System;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 
@@ -29,11 +31,21 @@ namespace Nfield.Services.Implementation
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(batch, nameof(batch));
+
             var uri = SurveyInviteRespondentsUrl(surveyId);
-            return null;
+            batch.Filters = batch.RespondentKeys.Select(rk => new SampleFilter()
+            {
+                Name = "RespondentKey",
+                Op = "eq",
+                Value = rk
+            });
+
+            return Client.PostAsJsonAsync(uri, batch)
+                .ContinueWith(task => Int32.Parse(task.Result.Content.ReadAsStringAsync().Result))
+                .FlattenExceptions();
         }
 
-        private object SurveyInviteRespondentsUrl(string surveyId)
+        private string SurveyInviteRespondentsUrl(string surveyId)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InviteRespondents", surveyId);
@@ -51,6 +63,8 @@ namespace Nfield.Services.Implementation
         }
 
         #endregion
+
+        private INfieldHttpClient Client => ConnectionClient.Client;
 
         private static void CheckRequiredStringArgument(string argument, string name)
         {
