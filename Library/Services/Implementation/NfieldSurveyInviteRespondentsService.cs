@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Text;
