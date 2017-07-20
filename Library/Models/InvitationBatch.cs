@@ -36,7 +36,7 @@ namespace Nfield.Models
         /// <summary>
         /// The id of the sample record
         /// </summary>
-        public List<string> RespondentKeys { get; set; }
+        public IEnumerable<string> RespondentKeys { get; set; }
 
         /// <summary>
         /// The scheduled date for the email being send

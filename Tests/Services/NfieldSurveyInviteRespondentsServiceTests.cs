@@ -90,9 +90,9 @@ namespace Nfield.Services
             Assert.Equal(batchId, result);
 
             // Test if the right filter is send
-            Assert.Equal(invitationBatch.RespondentKeys.Count, sampleFiltersActual.Count);
-            Assert.True(FilterEquals(sampleFiltersActual[0], "RespondentKey", "eq", invitationBatch.RespondentKeys[0]));
-            Assert.True(FilterEquals(sampleFiltersActual[1], "RespondentKey", "eq", invitationBatch.RespondentKeys[1]));
+            Assert.Equal(invitationBatch.RespondentKeys.Count(), sampleFiltersActual.Count);
+            Assert.True(FilterEquals(sampleFiltersActual[0], "RespondentKey", "eq", invitationBatch.RespondentKeys.First()));
+            Assert.True(FilterEquals(sampleFiltersActual[1], "RespondentKey", "eq", invitationBatch.RespondentKeys.ElementAt(1)));
         }
 
         private static bool FilterEquals(SampleFilter filter, string name, string op, string value)
