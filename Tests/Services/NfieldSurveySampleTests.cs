@@ -75,7 +75,7 @@ namespace Nfield.Services
 
         #endregion
 
-        #region PostAsync
+        #region SendInvitationsAsync
 
         [Fact]
         public void TestPostAsync_SurveyIdIsNull_Throws()

@@ -29,6 +29,6 @@ namespace Nfield.Services
         /// <param name="surveyId">Id of the survey</param>
         /// <param name="batch">Properties of the batch</param>
         /// <returns>Id of the batch</returns>
-        Task<int> PostAsync(string surveyId, InvitationBatch batch);
+        Task<int> SendInvitationsAsync(string surveyId, InvitationBatch batch);
     }
 }

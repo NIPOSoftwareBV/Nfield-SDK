@@ -30,7 +30,7 @@ namespace Nfield.Services
     {
         private const string SurveyId = "MySurveyId";
 
-        #region PostAsync
+        #region SendInvitationsAsync
 
         [Fact]
         public void TestPostAsync_SurveyIdIsNull_Throws()
@@ -38,7 +38,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInviteRespondentsService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PostAsync(null, null)));
+                UnwrapAggregateException(target.SendInvitationsAsync(null, null)));
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInviteRespondentsService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.PostAsync("  ", null)));
+                UnwrapAggregateException(target.SendInvitationsAsync("  ", null)));
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInviteRespondentsService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PostAsync(SurveyId, null)));
+                UnwrapAggregateException(target.SendInvitationsAsync(SurveyId, null)));
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace Nfield.Services
 
             var target = new NfieldSurveyInviteRespondentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var result = target.PostAsync(SurveyId, invitationBatch).Result;
+            var result = target.SendInvitationsAsync(SurveyId, invitationBatch).Result;
 
             // Test result
             Assert.Equal(batchId, result);

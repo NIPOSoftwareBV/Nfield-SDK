@@ -26,7 +26,7 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInviteRespondentsService : INfieldSurveyInviteRespondentsService, INfieldConnectionClientObject
     {
-        public Task<int> PostAsync(string surveyId, InvitationBatch batch)
+        public Task<int> SendInvitationsAsync(string surveyId, InvitationBatch batch)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(batch, nameof(batch));
