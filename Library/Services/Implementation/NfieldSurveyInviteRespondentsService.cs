@@ -15,7 +15,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -33,14 +32,12 @@ namespace Nfield.Services.Implementation
             CheckRequiredArgument(batch, nameof(batch));
 
             var uri = SurveyInviteRespondentsUrl(surveyId);
-            if (batch.Filters == null)
+            if (batch.Filters == null && batch.RespondentKeys != null)
             {
-                batch.Filters = batch.RespondentKeys.Select(rk => new SampleFilter()
+                batch.Filters = new[]
                 {
-                    Name = "RespondentKey",
-                    Op = "eq",
-                    Value = rk
-                });
+                    new SampleFilter {Name = "RespondentKey", Op = "in", Value = string.Join(",", batch.RespondentKeys)}
+                };
             }
 
             return Client.PostAsJsonAsync(uri, batch)
