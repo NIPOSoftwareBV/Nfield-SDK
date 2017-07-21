@@ -18,6 +18,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -26,7 +27,7 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInviteRespondentsService : INfieldSurveyInviteRespondentsService, INfieldConnectionClientObject
     {
-        public Task<int> SendInvitationsAsync(string surveyId, InvitationBatch batch)
+        public Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(batch, nameof(batch));
@@ -40,7 +41,8 @@ namespace Nfield.Services.Implementation
             });
 
             return Client.PostAsJsonAsync(uri, batch)
-                .ContinueWith(task => Int32.Parse(task.Result.Content.ReadAsStringAsync().Result))
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<InviteRespondentsStatus>(stringResult.Result))
                 .FlattenExceptions();
         }
 

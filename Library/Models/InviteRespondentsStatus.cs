@@ -13,22 +13,23 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
+using System;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Represents a set of methods to manage invitations
+    /// Status of the invite respondents request
     /// </summary>
-    public interface INfieldSurveyInviteRespondentsService
+    public class InviteRespondentsStatus
     {
         /// <summary>
-        /// Send a batch of invitations to respondents
+        /// Description of the status of the upload operation
         /// </summary>
-        /// <param name="surveyId">Id of the survey</param>
-        /// <param name="batch">Properties of the batch</param>
-        /// <returns>Status of the batch send</returns>
-        Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch);
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Number of respondents invited
+        /// </summary>
+        public int Count { get; set; }
     }
 }
