@@ -23,13 +23,18 @@ namespace Nfield.Models
     public class InviteRespondentsStatus
     {
         /// <summary>
-        /// Description of the status of the upload operation
+        /// Number of respondents invited
+        /// </summary>
+        public int Count { get; set; }
+
+        /// <summary>
+        /// Description of the status of the invite operation
         /// </summary>
         public string Status { get; set; }
 
         /// <summary>
-        /// Number of respondents invited
+        /// Message detail when <see cref="Status"/> indicates an error
         /// </summary>
-        public int Count { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }
