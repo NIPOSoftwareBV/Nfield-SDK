@@ -118,6 +118,7 @@
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\InterviewerSamplingPointAssignmentModel.cs" />
     <Compile Include="Models\InvitationBatch.cs" />
+    <Compile Include="Models\InviteRespondentsStatus.cs" />
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
