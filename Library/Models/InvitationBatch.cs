@@ -34,12 +34,8 @@ namespace Nfield.Models
         public string EmailColumnName { get; set; }
 
         /// <summary>
-        /// The id of the sample record
-        /// </summary>
-        public IEnumerable<string> RespondentKeys { get; set; }
-
-        /// <summary>
-        /// The scheduled date for the email being send
+        /// The scheduled date for the email being send.
+        /// If this is null then the batch will be sent immediately.
         /// </summary>
         public DateTime? ScheduledFor { get; set; }
 
@@ -49,9 +45,15 @@ namespace Nfield.Models
         public int InvitationTemplateId { get; set; }
 
         /// <summary>
-        /// Respondent filters
+        /// Respondent filters.
+        /// If this is null then the batch will be sent for all <see cref="RespondentKeys"/>
         /// </summary>
-        internal IEnumerable<SampleFilter> Filters { get; set; }
+        public IEnumerable<SampleFilter> Filters { get; set; }
 
+        /// <summary>
+        /// List of sample records to send the invitation to.
+        /// If this is null then the batch will be sent using the <see cref="Filters"/>
+        /// </summary>
+        public IEnumerable<string> RespondentKeys { get; set; }
     }
 }

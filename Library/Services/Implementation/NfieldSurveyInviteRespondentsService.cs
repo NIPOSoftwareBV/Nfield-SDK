@@ -33,12 +33,15 @@ namespace Nfield.Services.Implementation
             CheckRequiredArgument(batch, nameof(batch));
 
             var uri = SurveyInviteRespondentsUrl(surveyId);
-            batch.Filters = batch.RespondentKeys.Select(rk => new SampleFilter()
+            if (batch.Filters == null)
             {
-                Name = "RespondentKey",
-                Op = "eq",
-                Value = rk
-            });
+                batch.Filters = batch.RespondentKeys.Select(rk => new SampleFilter()
+                {
+                    Name = "RespondentKey",
+                    Op = "eq",
+                    Value = rk
+                });
+            }
 
             return Client.PostAsJsonAsync(uri, batch)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
