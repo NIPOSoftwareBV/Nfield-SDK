@@ -21,7 +21,7 @@ namespace Nfield.Models
     /// <summary>
     /// Class representing a batch of invitations
     /// </summary>
-    public class InvitationBatch
+    public class InvitationBatchWithFilter
     {
         /// <summary>
         /// The name of the batch
@@ -45,9 +45,10 @@ namespace Nfield.Models
         public int InvitationTemplateId { get; set; }
 
         /// <summary>
-        /// List of sample records to send the invitation to.
-        /// If this is null then the batch will be sent using the <see cref="Filters"/>
+        /// Respondent filters.
+        /// If this is null then the batch will be sent for all <see cref="RespondentKeys"/>
         /// </summary>
-        public IEnumerable<string> RespondentKeys { get; set; }
+        public IEnumerable<SampleFilter> Filters { get; set; }
+
     }
 }

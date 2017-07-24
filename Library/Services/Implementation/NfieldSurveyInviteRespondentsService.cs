@@ -31,18 +31,21 @@ namespace Nfield.Services.Implementation
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(batch, nameof(batch));
-            CheckBatchFields(batch, nameof(batch));
 
             var uri = SurveyInviteRespondentsUrl(surveyId);
-            if (batch.Filters == null && batch.RespondentKeys != null)
+            var batchWithFilter = new InvitationBatchWithFilter()
             {
-                batch.Filters = new[]
-                {
-                    new SampleFilter {Name = "RespondentKey", Op = "in", Value = string.Join(",", batch.RespondentKeys)}
-                };
-            }
+                EmailColumnName = batch.EmailColumnName,
+                InvitationTemplateId = batch.InvitationTemplateId,
+                Name = batch.Name,
+                ScheduledFor = batch.ScheduledFor
+            };
+            batchWithFilter.Filters = new[]
+            {
+                new SampleFilter {Name = "RespondentKey", Op = "in", Value = string.Join(",", batch.RespondentKeys)}
+            };
 
-            return Client.PostAsJsonAsync(uri, batch)
+            return Client.PostAsJsonAsync(uri, batchWithFilter)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<InviteRespondentsStatus>(stringResult.Result))
                 .FlattenExceptions();
@@ -82,15 +85,5 @@ namespace Nfield.Services.Implementation
             if (argument == null)
                 throw new ArgumentNullException(name);
         }
-
-        private void CheckBatchFields(InvitationBatch batch, string name)
-        {
-            if ( batch.RespondentKeys != null && batch.Filters != null)
-            {
-                throw new ArgumentException("Either specify a filter or a list of respondentKeys, but not both.", name);
-            }
-        }
-
-
     }
 }

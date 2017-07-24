@@ -61,27 +61,6 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestPostAsync_BatchDataBothRespondentKeysAndFilter_Throws()
-        {
-            var target = new NfieldSurveyInviteRespondentsService();
-            var batch = new InvitationBatch()
-            {
-                RespondentKeys = new List<string>() { "r1", "r2" },
-                EmailColumnName = "email",
-                InvitationTemplateId = 2,
-                Name = "FirstBatch",
-                ScheduledFor = DateTime.Now.AddDays(2),
-                Filters = new List<SampleFilter>()
-                {
-                    new SampleFilter(){Name = "RespondentKeys", Op = "eq", Value = "r5"}
-                }
-            };
-
-            Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.SendInvitationsAsync(SurveyId, batch)));
-        }
-
-        [Fact]
         public void TestPostAsync_ServerAccepts_ReturnsCorrectInviteRespondentsStatus()
         {
             var scheduledFor = DateTime.Now.AddDays(2);
@@ -106,7 +85,7 @@ namespace Nfield.Services
 
             var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents";
             mockedHttpClient.Setup(client => client
-                    .PostAsJsonAsync(url, It.Is<InvitationBatch>(b =>
+                    .PostAsJsonAsync(url, It.Is<InvitationBatchWithFilter>(b =>
                         b.Name == batch.Name &&
                         b.ScheduledFor == batch.ScheduledFor &&
                         b.EmailColumnName == batch.EmailColumnName &&
@@ -121,7 +100,7 @@ namespace Nfield.Services
             // Verify the filter send
             mockedHttpClient.Verify(s => s.PostAsJsonAsync(
                 url, 
-                It.Is<InvitationBatch>(b => 
+                It.Is<InvitationBatchWithFilter>(b => 
                     b.Filters.Count() == 1 &&
                     FilterEquals(b.Filters.First(), "RespondentKey", "in", string.Join(",", batch.RespondentKeys)) )), 
                 Times.Once());
