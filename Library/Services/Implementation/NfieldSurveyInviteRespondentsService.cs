@@ -85,9 +85,7 @@ namespace Nfield.Services.Implementation
 
         private void CheckBatchFields(InvitationBatch batch, string name)
         {
-            var hasRespondentKeys = batch.RespondentKeys != null && batch.RespondentKeys.Any();
-            var hasFilters = batch.Filters != null && batch.Filters.Any();
-            if ( hasRespondentKeys && hasFilters)
+            if ( batch.RespondentKeys != null && batch.Filters != null)
             {
                 throw new ArgumentException("Either specify a filter or a list of respondentKeys, but not both.", name);
             }
