@@ -19,6 +19,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Moq;
+using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
@@ -60,10 +61,10 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestPostAsync_ServerAccepts_ReturnsBatchId()
+        public void TestPostAsync_ServerAccepts_ReturnsCorrectInviteRespondentsStatus()
         {
             var scheduledFor = DateTime.Now.AddDays(2);
-            var invitationBatch = new InvitationBatch()
+            var batch = new InvitationBatch()
             {
                 RespondentKeys = new List<string>() { "r1", "r2" },
                 EmailColumnName = "email",
@@ -71,27 +72,45 @@ namespace Nfield.Services
                 Name = "FirstBatch",
                 ScheduledFor = scheduledFor
             };
-            const int batchId = 101;
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            List<SampleFilter> sampleFiltersActual = new List<SampleFilter>();
+            var expectedResult = new InviteRespondentsStatus
+            {
+                Count = 2,
+                Status = "Completed",
+                ErrorMessage = ""
+            };
+
+            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents";
             mockedHttpClient.Setup(client => client
-                        .PostAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents", invitationBatch))
-                        .Returns(CreateTask(HttpStatusCode.OK, new StringContent("{}")))
-                        .Callback<string, InvitationBatch>((s, b) =>  sampleFiltersActual = b.Filters.ToList()); 
+                    .PostAsJsonAsync(url, It.Is<InvitationBatch>(b =>
+                        b.Name == batch.Name &&
+                        b.ScheduledFor == batch.ScheduledFor &&
+                        b.EmailColumnName == batch.EmailColumnName &&
+                        b.InvitationTemplateId == batch.InvitationTemplateId
+                        )))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedResult))));
 
             var target = new NfieldSurveyInviteRespondentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var result = target.SendInvitationsAsync(SurveyId, invitationBatch).Result;
+            var result = target.SendInvitationsAsync(SurveyId, batch).Result;
 
-            // Test result
-            // Assert.Equal(batchId, result);
+            // Verify the filter send
+            mockedHttpClient.Verify(s => s.PostAsJsonAsync(
+                url, 
+                It.Is<InvitationBatch>(b => 
+                    b.Filters.Count() == 1 &&
+                    b.Filters.First().Name == "RespondentKey" &&
+                    b.Filters.First().Op == "in" &&
+                    b.Filters.First().Value == string.Join(",", batch.RespondentKeys)
+                    )), 
+                Times.Once());
 
-            // Test if the right filter is send
-            Assert.Equal(1, sampleFiltersActual.Count);
-            Assert.True(FilterEquals(sampleFiltersActual[0], "RespondentKey", "in", "r1,r2"));
+            Assert.Equal(expectedResult.Count, result.Count);
+            Assert.Equal(expectedResult.Status, result.Status);
+            Assert.Equal(expectedResult.ErrorMessage, result.ErrorMessage);
         }
 
         private static bool FilterEquals(SampleFilter filter, string name, string op, string value)

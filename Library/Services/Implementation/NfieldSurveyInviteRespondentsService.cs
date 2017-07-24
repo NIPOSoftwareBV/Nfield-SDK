@@ -15,6 +15,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -30,6 +31,7 @@ namespace Nfield.Services.Implementation
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(batch, nameof(batch));
+            CheckBatchFields(batch, nameof(batch));
 
             var uri = SurveyInviteRespondentsUrl(surveyId);
             if (batch.Filters == null && batch.RespondentKeys != null)
@@ -80,6 +82,17 @@ namespace Nfield.Services.Implementation
             if (argument == null)
                 throw new ArgumentNullException(name);
         }
+
+        private void CheckBatchFields(InvitationBatch batch, string name)
+        {
+            var hasRespondentKeys = batch.RespondentKeys != null && batch.RespondentKeys.Any();
+            var hasFilters = batch.Filters != null && batch.Filters.Any();
+            if ( hasRespondentKeys && hasFilters)
+            {
+                throw new ArgumentException("Either specify a filter or a list of respondentKeys, but not both.", name);
+            }
+        }
+
 
     }
 }
