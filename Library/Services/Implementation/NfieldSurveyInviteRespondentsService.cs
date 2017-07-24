@@ -38,11 +38,11 @@ namespace Nfield.Services.Implementation
                 EmailColumnName = batch.EmailColumnName,
                 InvitationTemplateId = batch.InvitationTemplateId,
                 Name = batch.Name,
-                ScheduledFor = batch.ScheduledFor
-            };
-            batchWithFilter.Filters = new[]
-            {
-                new SampleFilter {Name = "RespondentKey", Op = "in", Value = string.Join(",", batch.RespondentKeys)}
+                ScheduledFor = batch.ScheduledFor,
+                Filters = new[]
+                {
+                    new SampleFilter {Name = "RespondentKey", Op = "in", Value = string.Join(",", batch.RespondentKeys)}
+                }
             };
 
             return Client.PostAsJsonAsync(uri, batchWithFilter)
