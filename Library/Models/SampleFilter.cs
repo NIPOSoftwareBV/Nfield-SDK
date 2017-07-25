@@ -20,7 +20,7 @@ namespace Nfield.Models
     /// <summary>
     /// class to define sample filters
     /// </summary>
-    public class SampleFilter
+    internal class SampleFilter
     {
         /// <summary>
         /// Name of a field in a sample record

@@ -21,7 +21,7 @@ namespace Nfield.Models
     /// <summary>
     /// Class representing a batch of invitations
     /// </summary>
-    public class InvitationBatchWithFilter
+    internal class InvitationBatchWithFilter
     {
         /// <summary>
         /// The name of the batch
