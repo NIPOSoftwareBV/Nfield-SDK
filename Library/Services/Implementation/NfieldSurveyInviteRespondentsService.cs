@@ -25,41 +25,19 @@ using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
-    //temporary (?)
-    public class InvitationStatusDto
-    {
-        public string RespondentId { get; set; }
-        public string InvitationStatus { get; set; }
-        public string Email { get; set; }
-    }
-
     internal class NfieldSurveyInviteRespondentsService : INfieldSurveyInviteRespondentsService, INfieldConnectionClientObject
     {
-        public Task<IEnumerable<InvitationStatusDto>> GetInvitationStatusAsync(string surveyId, string batchName)
+        public Task<IEnumerable<InvitationBatchStatus>> GetInvitationStatusAsync(string surveyId, string batchName)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredStringArgument(batchName, nameof(batchName));
 
-            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}?filters={GetJsonInvitationBatchFilter(batchName)}";
+            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/InvitationStatus/{batchName}";
 
-            //probably will be a post instead
             return Client.GetAsync(uri)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationStatusDto>>(
+                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationBatchStatus>>(
                               task.Result.Content.ReadAsStringAsync().Result))
                          .FlattenExceptions();
-        }
-
-        internal string GetJsonInvitationBatchFilter(string batchName)
-        {
-            return JsonConvert.SerializeObject(new[] 
-            {
-                new SampleFilter
-                {
-                    Name = "InvitationBatch",
-                    Op = "con",
-                    Value = batchName
-                }
-            });
         }
 
         public Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch)

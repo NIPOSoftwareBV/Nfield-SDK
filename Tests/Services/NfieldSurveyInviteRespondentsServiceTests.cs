@@ -150,8 +150,8 @@ namespace Nfield.Services
         [Fact]
         public void TestGetStatusAsync_ProvideBatchName_ReturnsData()
         {
+            const string batchName = "TestBatch";
             const string respondentKey = "TestRespondent";
-            const string email = "test@email.com";
             const string expectedStatus = "Test";
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -160,24 +160,20 @@ namespace Nfield.Services
             var target = new NfieldSurveyInviteRespondentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var expectedResult = new InvitationStatusDto
+            var expectedResult = new InvitationBatchStatus
             {
-                RespondentId = respondentKey,
-                Email = email,
-                InvitationStatus = expectedStatus
+                RespondentKey = respondentKey,
+                Status = expectedStatus
             };
-            var filtersString = target.GetJsonInvitationBatchFilter(email);
 
-            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents?filters={filtersString}";
+            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents/InvitationStatus/{batchName}";
             mockedHttpClient.Setup(client => client.GetAsync(url))
                             .Returns(CreateTask(HttpStatusCode.OK, 
                                                 new StringContent(JsonConvert.SerializeObject(new[] {expectedResult}))));
 
-            var json = target.GetInvitationStatusAsync(SurveyId, email).Result;
-            var result = json.ToArray();
-            Assert.Equal(respondentKey, result[0].RespondentId);
-            Assert.Equal(email, result[0].Email);
-            Assert.Equal(expectedStatus, result[0].InvitationStatus);
+            var result = target.GetInvitationStatusAsync(SurveyId, batchName).Result.ToArray();
+            Assert.Equal(respondentKey, result[0].RespondentKey);
+            Assert.Equal(expectedStatus, result[0].Status);
         }
     }
 }
