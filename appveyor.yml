@@ -9,9 +9,6 @@ version: 1.5.{build}
 install:
   - ps: ./prerelease.ps1 # this will update the package name to mark it as prerelease
 
-hosts:
-  api.nuget.org: 93.184.221.200
-
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
