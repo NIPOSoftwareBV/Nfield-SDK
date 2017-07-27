@@ -13,8 +13,10 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nfield.Models;
+using Nfield.Services.Implementation;
 
 namespace Nfield.Services
 {
@@ -30,5 +32,10 @@ namespace Nfield.Services
         /// <param name="batch">Properties of the batch</param>
         /// <returns>Status of the batch send</returns>
         Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch);
+
+        /// <summary>
+        /// Get the invitation status for the specified batch belonging to the survey
+        /// </summary>
+        Task<IEnumerable<InvitationStatusDto>> GetInvitationStatusAsync(string surveyId, string batchName);
     }
 }

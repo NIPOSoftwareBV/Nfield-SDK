@@ -120,6 +120,64 @@ namespace Nfield.Services
 
         #endregion
 
+        [Fact]
+        public void TestGetStatusAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
 
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync(null, null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync("  ", null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_BatchDataIsNull_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_ProvideBatchName_ReturnsData()
+        {
+            const string respondentKey = "TestRespondent";
+            const string email = "test@email.com";
+            const string expectedStatus = "Test";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var target = new NfieldSurveyInviteRespondentsService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var expectedResult = new InvitationStatusDto
+            {
+                RespondentId = respondentKey,
+                Email = email,
+                InvitationStatus = expectedStatus
+            };
+            var filtersString = target.GetJsonInvitationBatchFilter(email);
+
+            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents?filters={filtersString}";
+            mockedHttpClient.Setup(client => client.GetAsync(url))
+                            .Returns(CreateTask(HttpStatusCode.OK, 
+                                                new StringContent(JsonConvert.SerializeObject(new[] {expectedResult}))));
+
+            var json = target.GetInvitationStatusAsync(SurveyId, email).Result;
+            var result = json.ToArray();
+            Assert.Equal(respondentKey, result[0].RespondentId);
+            Assert.Equal(email, result[0].Email);
+            Assert.Equal(expectedStatus, result[0].InvitationStatus);
+        }
     }
 }

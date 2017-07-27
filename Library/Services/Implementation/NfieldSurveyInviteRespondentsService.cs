@@ -14,8 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -25,8 +25,43 @@ using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
+    //temporary (?)
+    public class InvitationStatusDto
+    {
+        public string RespondentId { get; set; }
+        public string InvitationStatus { get; set; }
+        public string Email { get; set; }
+    }
+
     internal class NfieldSurveyInviteRespondentsService : INfieldSurveyInviteRespondentsService, INfieldConnectionClientObject
     {
+        public Task<IEnumerable<InvitationStatusDto>> GetInvitationStatusAsync(string surveyId, string batchName)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredStringArgument(batchName, nameof(batchName));
+
+            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}?filters={GetJsonInvitationBatchFilter(batchName)}";
+
+            //probably will be a post instead
+            return Client.GetAsync(uri)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationStatusDto>>(
+                              task.Result.Content.ReadAsStringAsync().Result))
+                         .FlattenExceptions();
+        }
+
+        internal string GetJsonInvitationBatchFilter(string batchName)
+        {
+            return JsonConvert.SerializeObject(new[] 
+            {
+                new SampleFilter
+                {
+                    Name = "InvitationBatch",
+                    Op = "con",
+                    Value = batchName
+                }
+            });
+        }
+
         public Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
