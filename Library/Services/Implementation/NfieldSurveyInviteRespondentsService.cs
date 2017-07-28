@@ -27,19 +27,6 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInviteRespondentsService : INfieldSurveyInviteRespondentsService, INfieldConnectionClientObject
     {
-        public Task<IEnumerable<InvitationBatchStatus>> GetInvitationStatusAsync(string surveyId, string batchName)
-        {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredStringArgument(batchName, nameof(batchName));
-
-            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/InvitationStatus/{batchName}";
-
-            return Client.GetAsync(uri)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationBatchStatus>>(
-                              task.Result.Content.ReadAsStringAsync().Result))
-                         .FlattenExceptions();
-        }
-
         public Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
@@ -62,6 +49,19 @@ namespace Nfield.Services.Implementation
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<InviteRespondentsStatus>(stringResult.Result))
                 .FlattenExceptions();
+        }
+
+        public Task<IEnumerable<InvitationBatchStatus>> GetInvitationStatusAsync(string surveyId, string batchName)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredStringArgument(batchName, nameof(batchName));
+
+            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/InvitationStatus/{batchName}";
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationBatchStatus>>(
+                              task.Result.Content.ReadAsStringAsync().Result))
+                         .FlattenExceptions();
         }
 
         private string SurveyInviteRespondentsUrl(string surveyId)
