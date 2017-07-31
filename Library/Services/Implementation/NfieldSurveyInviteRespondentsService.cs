@@ -14,8 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -49,6 +49,19 @@ namespace Nfield.Services.Implementation
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<InviteRespondentsStatus>(stringResult.Result))
                 .FlattenExceptions();
+        }
+
+        public Task<IEnumerable<InvitationBatchStatus>> GetInvitationStatusAsync(string surveyId, string batchName)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredStringArgument(batchName, nameof(batchName));
+
+            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/InvitationStatus/{batchName}";
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationBatchStatus>>(
+                              task.Result.Content.ReadAsStringAsync().Result))
+                         .FlattenExceptions();
         }
 
         private string SurveyInviteRespondentsUrl(string surveyId)

@@ -120,6 +120,69 @@ namespace Nfield.Services
 
         #endregion
 
+        [Fact]
+        public void TestGetStatusAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
 
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync(null, null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync(string.Empty, null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync("   ", null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_BatchDataIsNull_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_ProvideBatchName_ReturnsData()
+        {
+            const string batchName = "TestBatch";
+            const string respondentKey = "TestRespondent";
+            const string expectedStatus = "Test";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var target = new NfieldSurveyInviteRespondentsService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var expectedResult = new InvitationBatchStatus
+            {
+                RespondentKey = respondentKey,
+                Status = expectedStatus
+            };
+
+            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents/InvitationStatus/{batchName}";
+            mockedHttpClient.Setup(client => client.GetAsync(url))
+                            .Returns(CreateTask(HttpStatusCode.OK, 
+                                                new StringContent(JsonConvert.SerializeObject(new[] {expectedResult}))));
+
+            var result = target.GetInvitationStatusAsync(SurveyId, batchName).Result.ToArray();
+            Assert.Equal(respondentKey, result[0].RespondentKey);
+            Assert.Equal(expectedStatus, result[0].Status);
+        }
     }
 }
