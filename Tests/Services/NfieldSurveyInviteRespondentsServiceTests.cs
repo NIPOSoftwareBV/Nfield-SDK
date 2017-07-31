@@ -135,7 +135,16 @@ namespace Nfield.Services
             var target = new NfieldSurveyInviteRespondentsService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.GetInvitationStatusAsync("  ", null)));
+                UnwrapAggregateException(target.GetInvitationStatusAsync(string.Empty, null)));
+        }
+
+        [Fact]
+        public void TestGetStatusAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.GetInvitationStatusAsync("   ", null)));
         }
 
         [Fact]
