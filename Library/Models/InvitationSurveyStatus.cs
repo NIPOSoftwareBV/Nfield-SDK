@@ -14,6 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 
+using System;
+
 namespace Nfield.Models
 {
     /// <summary>
@@ -24,6 +26,76 @@ namespace Nfield.Models
         /// <summary>
         /// 
         /// </summary>
-        public string Name { get; set; }
+        public string Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string SurveyName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool InvitationsBlocked { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? LastActivity { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public long Total { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Scheduled { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Pending { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int NotSent { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Error { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Sent { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Opened { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Clicked { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Unsubscribed { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int AbuseReport { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Unknown { get; set; }
     }
 }
