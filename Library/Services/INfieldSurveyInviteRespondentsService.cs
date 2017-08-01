@@ -35,7 +35,7 @@ namespace Nfield.Services
         /// <summary>
         /// Gets the status of all surveys' invitations
         /// </summary>
-        Task<IEnumerable<InvitationSurveyStatus>> GetSurveysInvitationStatusAsync();
+        Task<IEnumerable<InvitationMonitorSurveyStatus>> GetSurveysInvitationStatusAsync();
 
         /// <summary>
         /// Gets the invitation status of all batches for the specified survey

@@ -26,7 +26,7 @@ namespace Nfield.Models
         /// <summary>
         /// Name of the Batch
         /// </summary>
-        public string Name { get; set; }
+        public string BatchName { get; set; }
 
         /// <summary>
         /// Id of the relative survey
@@ -44,58 +44,58 @@ namespace Nfield.Models
         public DateTime ScheduledFor { get; set; }
 
         /// <summary>
-        /// Total number of respondents invited
+        /// Total number of respondents invited with the current batch
         /// </summary>
-        public int Total { get; set; }
+        public int TotalCount { get; set; }
 
         /// <summary>
-        /// Number of respondents for which an invitation is currently scheduled
+        /// Number of respondents for which an invitation is currently scheduled in the current batch
         /// </summary>
-        public int Scheduled { get; set; }
+        public int ScheduledCount { get; set; }
 
         /// <summary>
-        /// Number of respondents for which an invitation is currently pending
+        /// Number of respondents for which an invitation is currently pending in the current batch
         /// </summary>
-        public int Pending { get; set; }
+        public int PendingCount { get; set; }
 
         /// <summary>
-        /// Number of invitations that haven't been sent
+        /// Number of invitations that haven't been sent in the current batch
         /// </summary>
-        public int NotSent { get; set; }
+        public int NotSentCount { get; set; }
 
         /// <summary>
-        /// Number of invitations that resulted in an error
+        /// Number of invitations that resulted in an error in the current batch
         /// </summary>
-        public int Error { get; set; }
+        public int ErrorCount { get; set; }
 
         /// <summary>
-        /// Number of invitations that have already been sent
+        /// Number of invitations that have already been sent in the current batch
         /// </summary>
-        public int Sent { get; set; }
+        public int SentCount { get; set; }
 
         /// <summary>
-        /// Number of invitations that have been opened
+        /// Number of invitations that have been opened in the current batch
         /// </summary>
-        public int Opened { get; set; }
+        public int OpenedCount { get; set; }
 
         /// <summary>
-        /// Number of invitations that have been clicked
+        /// Number of invitations that have been clicked in the current batch
         /// </summary>
-        public int Clicked { get; set; }
+        public int ClickedCount { get; set; }
 
         /// <summary>
-        /// Number of respondent that have unsubscribed
+        /// Number of respondent that have unsubscribed in the current batch
         /// </summary>
-        public int Unsubscribed { get; set; }
+        public int UnsubscribedCount { get; set; }
 
         /// <summary>
-        /// Number of respondent that have been reported
+        /// Number of respondent that have been reported in the current batch
         /// </summary>
-        public int AbuseReport { get; set; }
+        public int AbuseReportCount { get; set; }
 
         /// <summary>
-        /// Number of invitations with unknown status
+        /// Number of invitations with unknown status in the current batch
         /// </summary>
-        public int Unknown { get; set; }
+        public int UnknownCount { get; set; }
     }
 }

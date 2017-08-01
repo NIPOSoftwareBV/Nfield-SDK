@@ -53,13 +53,13 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<IEnumerable<InvitationSurveyStatus>> GetSurveysInvitationStatusAsync()
+        public Task<IEnumerable<InvitationMonitorSurveyStatus>> GetSurveysInvitationStatusAsync()
         {
             // TODO not string.empty
             var uri = $"{SurveyInviteRespondentsUrl(string.Empty)}/SurveysInvitationStatus/";
 
             return Client.GetAsync(uri)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationSurveyStatus>>(
+                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationMonitorSurveyStatus>>(
                               task.Result.Content.ReadAsStringAsync().Result))
                          .FlattenExceptions();
         }

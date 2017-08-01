@@ -64,9 +64,9 @@ namespace Nfield.Services
         public void TestSendInvitationsAsync_ServerAccepts_ReturnsCorrectInviteRespondentsStatus()
         {
             var scheduledFor = DateTime.Now.AddDays(2);
-            var batch = new InvitationBatch()
+            var batch = new InvitationBatch
             {
-                RespondentKeys = new List<string>() { "r1", "r2" },
+                RespondentKeys = new List<string> { "r1", "r2" },
                 EmailColumnName = "email",
                 InvitationTemplateId = 2,
                 Name = "FirstBatch",
@@ -121,9 +121,142 @@ namespace Nfield.Services
 
         #region GetSurveysInvitationStatusAsync
 
+        [Fact]
+        public void TestGetSurveysInvitationStatusAsync_ProvideBatchName_ReturnsData()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var target = new NfieldSurveyInviteRespondentsService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var expectedResult = new
+            {
+                SurveyId = SurveyId,
+                SurveyName = "SurveyName",
+                InvitationsBlocked = true,
+                LastActivity = DateTime.UtcNow,
+                TotalCount = 1,
+                ScheduledCount = 2,
+                PendingCount = 3,
+                NotSentCount = 4,
+                ErrorCount = 5,
+                SentCount = 6,
+                OpenedCount = 7,
+                ClickedCount = 8,
+                UnsubscribedCount = 9,
+                AbuseReportCount = 10,
+                UnknownCount = 11
+            };
+
+            var url = $"{ServiceAddress}Surveys//InviteRespondents/SurveysInvitationStatus/";
+            mockedHttpClient.Setup(client => client.GetAsync(url))
+                            .Returns(CreateTask(HttpStatusCode.OK,
+                                                new StringContent(JsonConvert.SerializeObject(new[] { expectedResult }))));
+
+            var result = target.GetSurveysInvitationStatusAsync().Result.ToArray();
+
+            Assert.Equal(1, result.Length);
+            Assert.Equal(expectedResult.SurveyId, result[0].SurveyId);
+            Assert.Equal(expectedResult.SurveyName, result[0].SurveyName);
+            Assert.Equal(expectedResult.InvitationsBlocked, result[0].InvitationsBlocked);
+            Assert.Equal(expectedResult.LastActivity, result[0].LastActivity);
+            Assert.Equal(expectedResult.TotalCount, result[0].TotalCount);
+            Assert.Equal(expectedResult.ScheduledCount, result[0].ScheduledCount);
+            Assert.Equal(expectedResult.PendingCount, result[0].PendingCount);
+            Assert.Equal(expectedResult.NotSentCount, result[0].NotSentCount);
+            Assert.Equal(expectedResult.ErrorCount, result[0].ErrorCount);
+            Assert.Equal(expectedResult.SentCount, result[0].SentCount);
+            Assert.Equal(expectedResult.OpenedCount, result[0].OpenedCount);
+            Assert.Equal(expectedResult.ClickedCount, result[0].ClickedCount);
+            Assert.Equal(expectedResult.UnsubscribedCount, result[0].UnsubscribedCount);
+            Assert.Equal(expectedResult.AbuseReportCount, result[0].AbuseReportCount);
+            Assert.Equal(expectedResult.UnknownCount, result[0].UnknownCount);
+        }
+
         #endregion
 
         #region GetSurveyBatchesStatusAsync
+
+        [Fact]
+        public void TestGetSurveyBatchesStatusAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.GetSurveyBatchesStatusAsync(null)));
+        }
+
+        [Fact]
+        public void TestGetSurveyBatchesStatusAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.GetSurveyBatchesStatusAsync(string.Empty)));
+        }
+
+        [Fact]
+        public void TestGetSurveyBatchesStatusAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveyInviteRespondentsService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.GetSurveyBatchesStatusAsync("   ")));
+        }
+
+        [Fact]
+        public void TestGetSurveyBatchesStatusAsync_ProvideBatchName_ReturnsData()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var target = new NfieldSurveyInviteRespondentsService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var expectedResult = new
+            {
+                SurveyId = SurveyId,
+                BatchName = "BatchName",
+                Status = "Status",
+                ScheduledFor = DateTime.UtcNow,
+                TotalCount = 1,
+                ScheduledCount = 2,
+                PendingCount = 3,
+                NotSentCount = 4,
+                ErrorCount = 5,
+                SentCount = 6,
+                OpenedCount = 7,
+                ClickedCount = 8,
+                UnsubscribedCount = 9,
+                AbuseReportCount = 10,
+                UnknownCount = 11
+            };
+
+            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents/SurveyBatchesStatus/";
+            mockedHttpClient.Setup(client => client.GetAsync(url))
+                            .Returns(CreateTask(HttpStatusCode.OK,
+                                                new StringContent(JsonConvert.SerializeObject(new[] { expectedResult }))));
+
+            var result = target.GetSurveyBatchesStatusAsync(SurveyId).Result.ToArray();
+
+            Assert.Equal(1, result.Length);
+            Assert.Equal(expectedResult.SurveyId, result[0].SurveyId);
+            Assert.Equal(expectedResult.BatchName, result[0].BatchName);
+            Assert.Equal(expectedResult.Status, result[0].Status);
+            Assert.Equal(expectedResult.ScheduledFor, result[0].ScheduledFor);
+            Assert.Equal(expectedResult.TotalCount, result[0].TotalCount);
+            Assert.Equal(expectedResult.ScheduledCount, result[0].ScheduledCount);
+            Assert.Equal(expectedResult.PendingCount, result[0].PendingCount);
+            Assert.Equal(expectedResult.NotSentCount, result[0].NotSentCount);
+            Assert.Equal(expectedResult.ErrorCount, result[0].ErrorCount);
+            Assert.Equal(expectedResult.SentCount, result[0].SentCount);
+            Assert.Equal(expectedResult.OpenedCount, result[0].OpenedCount);
+            Assert.Equal(expectedResult.ClickedCount, result[0].ClickedCount);
+            Assert.Equal(expectedResult.UnsubscribedCount, result[0].UnsubscribedCount);
+            Assert.Equal(expectedResult.AbuseReportCount, result[0].AbuseReportCount);
+            Assert.Equal(expectedResult.UnknownCount, result[0].UnknownCount);
+        }
 
         #endregion
 
@@ -178,7 +311,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInviteRespondentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var expectedResult = new InvitationBatchStatus
+            var expectedResult = new
             {
                 RespondentKey = respondentKey,
                 Status = expectedStatus
@@ -190,6 +323,8 @@ namespace Nfield.Services
                                                 new StringContent(JsonConvert.SerializeObject(new[] {expectedResult}))));
 
             var result = target.GetInvitationStatusAsync(SurveyId, batchName).Result.ToArray();
+
+            Assert.Equal(1, result.Length);
             Assert.Equal(respondentKey, result[0].RespondentKey);
             Assert.Equal(expectedStatus, result[0].Status);
         }
