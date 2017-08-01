@@ -33,6 +33,16 @@ namespace Nfield.Services
         Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch);
 
         /// <summary>
+        /// Gets the status of all surveys' invitations
+        /// </summary>
+        Task<IEnumerable<InvitationSurveyStatus>> GetSurveysInvitationStatusAsync();
+
+        /// <summary>
+        /// Gets the invitation status of all batches for the specified survey
+        /// </summary>
+        Task<IEnumerable<InvitationMonitorBatchStatus>> GetSurveyBatchesStatusAsync(string surveyId);
+
+        /// <summary>
         /// Get the invitation status for the specified batch belonging to the survey
         /// </summary>
         Task<IEnumerable<InvitationBatchStatus>> GetInvitationStatusAsync(string surveyId, string batchName);
