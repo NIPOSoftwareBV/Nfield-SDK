@@ -34,7 +34,7 @@ namespace Nfield.Services
         #region SendInvitationsAsync
 
         [Fact]
-        public void TestPostAsync_SurveyIdIsNull_Throws()
+        public void TestSendInvitationsAsync_SurveyIdIsNull_Throws()
         {
             var target = new NfieldSurveyInviteRespondentsService();
 
@@ -43,7 +43,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestPostAsync_SurveyIdIsEmpty_Throws()
+        public void TestSendInvitationsAsync_SurveyIdIsEmpty_Throws()
         {
             var target = new NfieldSurveyInviteRespondentsService();
 
@@ -52,7 +52,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestPostAsync_BatchDataIsNull_Throws()
+        public void TestSendInvitationsAsync_BatchDataIsNull_Throws()
         {
             var target = new NfieldSurveyInviteRespondentsService();
 
@@ -61,7 +61,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestPostAsync_ServerAccepts_ReturnsCorrectInviteRespondentsStatus()
+        public void TestSendInvitationsAsync_ServerAccepts_ReturnsCorrectInviteRespondentsStatus()
         {
             var scheduledFor = DateTime.Now.AddDays(2);
             var batch = new InvitationBatch()
@@ -117,11 +117,20 @@ namespace Nfield.Services
                    && filter.Value.Equals(value);
         }
 
+        #endregion
+
+        #region GetSurveysInvitationStatusAsync
 
         #endregion
 
+        #region GetSurveyBatchesStatusAsync
+
+        #endregion
+
+        #region GetInvitationStatusAsync
+
         [Fact]
-        public void TestGetStatusAsync_SurveyIdIsNull_Throws()
+        public void TestGetInvitationStatusAsync_SurveyIdIsNull_Throws()
         {
             var target = new NfieldSurveyInviteRespondentsService();
 
@@ -130,7 +139,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetStatusAsync_SurveyIdIsEmpty_Throws()
+        public void TestGetInvitationStatusAsync_SurveyIdIsEmpty_Throws()
         {
             var target = new NfieldSurveyInviteRespondentsService();
 
@@ -139,7 +148,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetStatusAsync_SurveyIdIsWhitespace_Throws()
+        public void TestGetInvitationStatusAsync_SurveyIdIsWhitespace_Throws()
         {
             var target = new NfieldSurveyInviteRespondentsService();
 
@@ -148,7 +157,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetStatusAsync_BatchDataIsNull_Throws()
+        public void TestGetInvitationStatusAsync_BatchDataIsNull_Throws()
         {
             var target = new NfieldSurveyInviteRespondentsService();
 
@@ -157,7 +166,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetStatusAsync_ProvideBatchName_ReturnsData()
+        public void TestGetInvitationStatusAsync_ProvideBatchName_ReturnsData()
         {
             const string batchName = "TestBatch";
             const string respondentKey = "TestRespondent";
@@ -184,5 +193,8 @@ namespace Nfield.Services
             Assert.Equal(respondentKey, result[0].RespondentKey);
             Assert.Equal(expectedStatus, result[0].Status);
         }
+
+        #endregion
+
     }
 }
