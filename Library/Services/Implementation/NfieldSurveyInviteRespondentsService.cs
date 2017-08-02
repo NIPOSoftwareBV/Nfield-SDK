@@ -55,7 +55,6 @@ namespace Nfield.Services.Implementation
 
         public Task<IEnumerable<InvitationMonitorSurveyStatus>> GetSurveysInvitationStatusAsync()
         {
-            // TODO not string.empty
             var uri = $"{SurveyInviteRespondentsUrl(string.Empty)}/SurveysInvitationStatus/";
 
             return Client.GetAsync(uri)
