@@ -117,6 +117,7 @@
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\InterviewerSamplingPointAssignmentModel.cs" />
+    <Compile Include="Models\InvitationMonitorStatusBase.cs" />
     <Compile Include="Models\InvitationMonitorSurveyStatus.cs" />
     <Compile Include="Models\InvitationMonitorBatchStatus.cs" />
     <Compile Include="Models\InvitationBatchStatus.cs" />

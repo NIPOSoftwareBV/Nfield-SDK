@@ -21,13 +21,8 @@ namespace Nfield.Models
     /// <summary>
     /// Represent an overview of the status of all the invitation batches for a survey
     /// </summary>
-    public class InvitationMonitorSurveyStatus
+    public class InvitationMonitorSurveyStatus : InvitationMonitorStatusBase
     {
-        /// <summary>
-        /// Id of the survey
-        /// </summary>
-        public string SurveyId { get; set; }
-
         /// <summary>
         /// Name of the survey
         /// </summary>
@@ -42,60 +37,5 @@ namespace Nfield.Models
         /// Survey's batches latest activity (most recent ScheduledFor value for the batches)
         /// </summary>
         public DateTime? LastActivity { get; set; }
-
-        /// <summary>
-        /// Total number of respondents invited
-        /// </summary>
-        public int TotalCount { get; set; }
-
-        /// <summary>
-        /// Number of respondents for which an invitation is currently scheduled
-        /// </summary>
-        public int ScheduledCount { get; set; }
-
-        /// <summary>
-        /// Number of respondents for which an invitation is currently pending
-        /// </summary>
-        public int PendingCount { get; set; }
-
-        /// <summary>
-        /// Number of invitations that haven't been sent
-        /// </summary>
-        public int NotSentCount { get; set; }
-
-        /// <summary>
-        /// Number of invitations that resulted in an error
-        /// </summary>
-        public int ErrorCount { get; set; }
-
-        /// <summary>
-        /// Number of invitations that have already been sent
-        /// </summary>
-        public int SentCount { get; set; }
-
-        /// <summary>
-        /// Number of invitations that have been opened
-        /// </summary>
-        public int OpenedCount { get; set; }
-
-        /// <summary>
-        /// Number of invitations that have been clicked
-        /// </summary>
-        public int ClickedCount { get; set; }
-
-        /// <summary>
-        /// Number of respondent that have unsubscribed
-        /// </summary>
-        public int UnsubscribedCount { get; set; }
-
-        /// <summary>
-        /// Number of respondent that have been reported
-        /// </summary>
-        public int AbuseReportCount { get; set; }
-
-        /// <summary>
-        /// Number of invitations with unknown status
-        /// </summary>
-        public int UnknownCount { get; set; }
     }
 }
