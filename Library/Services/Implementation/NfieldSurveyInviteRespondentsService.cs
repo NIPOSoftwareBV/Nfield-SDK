@@ -27,6 +27,8 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInviteRespondentsService : INfieldSurveyInviteRespondentsService, INfieldConnectionClientObject
     {
+        #region Implementation of INfieldSurveyInviteRespondentsService
+
         public Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
@@ -51,6 +53,28 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
+        public Task<IEnumerable<InvitationMonitorSurveyStatus>> GetSurveysInvitationStatusAsync()
+        {
+            var uri = $"{SurveyInviteRespondentsUrl(string.Empty)}/SurveysInvitationStatus/";
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationMonitorSurveyStatus>>(
+                              task.Result.Content.ReadAsStringAsync().Result))
+                         .FlattenExceptions();
+        }
+
+        public Task<IEnumerable<InvitationMonitorBatchStatus>> GetSurveyBatchesStatusAsync(string surveyId)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+
+            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/SurveyBatchesStatus/";
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationMonitorBatchStatus>>(
+                              task.Result.Content.ReadAsStringAsync().Result))
+                         .FlattenExceptions();
+        }
+
         public Task<IEnumerable<InvitationBatchStatus>> GetInvitationStatusAsync(string surveyId, string batchName)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
@@ -64,13 +88,7 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
-        private string SurveyInviteRespondentsUrl(string surveyId)
-        {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InviteRespondents", surveyId);
-
-            return result.ToString();
-        }
+        #endregion
 
         #region Implementation of INfieldConnectionClientObject
 
@@ -98,5 +116,14 @@ namespace Nfield.Services.Implementation
             if (argument == null)
                 throw new ArgumentNullException(name);
         }
+
+        private string SurveyInviteRespondentsUrl(string surveyId)
+        {
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InviteRespondents", surveyId);
+
+            return result.ToString();
+        }
+
     }
 }
