@@ -27,6 +27,11 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInvitationTemplatesService : INfieldSurveyInvitationTemplatesService, INfieldConnectionClientObject
     {
+        public Task AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
@@ -37,6 +42,16 @@ namespace Nfield.Services.Implementation
                 .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationTemplateModel>>(
                     task.Result.Content.ReadAsStringAsync().Result))
                 .FlattenExceptions();
+        }
+
+        public Task UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAsync(string surveyId, string templateId)
+        {
+            throw new NotImplementedException();
         }
 
         private INfieldHttpClient Client => ConnectionClient.Client;
