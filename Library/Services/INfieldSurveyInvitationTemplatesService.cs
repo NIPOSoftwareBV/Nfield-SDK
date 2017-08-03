@@ -42,6 +42,6 @@ namespace Nfield.Services
         /// <summary>
         /// Delete an invitation template for the specific survey
         /// </summary>
-        Task<bool> RemoveAsync(string surveyId, string templateId);
+        Task<bool> RemoveAsync(string surveyId, InvitationTemplateModel invitationTemplate);
     }
 }

@@ -30,6 +30,7 @@ namespace Nfield.Services.Implementation
         public Task<InvitationTemplateModel> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
             return Client.PostAsJsonAsync(uri, invitationTemplate)
@@ -53,6 +54,7 @@ namespace Nfield.Services.Implementation
         public Task<InvitationTemplateModel> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
@@ -70,13 +72,14 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<bool> RemoveAsync(string surveyId, string templateId)
+        public Task<bool> RemoveAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
-            return Client.DeleteAsync(uri + "/" + templateId)
+            return Client.DeleteAsync(uri + "/" + invitationTemplate.Id)
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringTask => JsonConvert.DeserializeObject<bool>(stringTask.Result))
                 .FlattenExceptions();
@@ -98,10 +101,15 @@ namespace Nfield.Services.Implementation
 
         private static void CheckRequiredStringArgument(string argument, string name)
         {
-            if (argument == null)
-                throw new ArgumentNullException(name);
+            CheckRequiredArgument(argument, name);
             if (argument.Trim().Length == 0)
                 throw new ArgumentException($"{name} cannot be empty");
+        }
+
+        private static void CheckRequiredArgument(object argument, string name)
+        {
+            if (argument == null)
+                throw new ArgumentNullException(name);
         }
 
         internal class UpdateInvitationTemplate
