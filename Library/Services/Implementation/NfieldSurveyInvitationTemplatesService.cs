@@ -81,7 +81,7 @@ namespace Nfield.Services.Implementation
 
             return Client.DeleteAsync(uri + "/" + invitationTemplate.Id)
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringTask => JsonConvert.DeserializeObject<bool>(stringTask.Result))
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<DeleteInvitationResponse>(stringTask.Result).IsSuccess)
                 .FlattenExceptions();
         }
 
@@ -119,5 +119,11 @@ namespace Nfield.Services.Implementation
             public string Subject { get; set; }
             public string Body { get; set; }
         }
+
+        private class DeleteInvitationResponse
+        {
+            public bool IsSuccess { get; set; }
+        }
+
     }
 }

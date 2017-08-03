@@ -266,7 +266,7 @@ namespace Nfield.Services
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var content = new StringContent(JsonConvert.SerializeObject(true));
+            var content = new StringContent(JsonConvert.SerializeObject(new {IsSuccess = true}));
             mockedHttpClient
                 .Setup(client => client.DeleteAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + invitationTemplate.Id))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
