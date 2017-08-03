@@ -27,9 +27,15 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInvitationTemplatesService : INfieldSurveyInvitationTemplatesService, INfieldConnectionClientObject
     {
-        public Task AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        public Task<InvitationTemplateModel> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
-            throw new NotImplementedException();
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+            return Client.PostAsJsonAsync(uri, invitationTemplate)
+                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(task => JsonConvert.DeserializeObject<InvitationTemplateModel>(task.Result))
+                .FlattenExceptions();
         }
 
         public Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId)
@@ -44,14 +50,36 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        public Task<InvitationTemplateModel> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
-            throw new NotImplementedException();
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+
+            var updatedInvitationTemplate = new UpdateInvitationTemplate
+            {
+                Body = invitationTemplate.Body,
+                Subject = invitationTemplate.Subject,
+                Name = invitationTemplate.Name,
+                InvitationType = invitationTemplate.InvitationType
+            };
+
+            return Client.PatchAsJsonAsync(uri + "/" + invitationTemplate.Id, updatedInvitationTemplate)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<InvitationTemplateModel>(stringTask.Result))
+                .FlattenExceptions();
         }
 
-        public Task<bool> DeleteAsync(string surveyId, string templateId)
+        public Task<bool> RemoveAsync(string surveyId, string templateId)
         {
-            throw new NotImplementedException();
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+
+            return Client.DeleteAsync(uri + "/" + templateId)
+                .ContinueWith(response => response.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<bool>(stringTask.Result))
+                .FlattenExceptions();
         }
 
         private INfieldHttpClient Client => ConnectionClient.Client;
@@ -74,6 +102,14 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(name);
             if (argument.Trim().Length == 0)
                 throw new ArgumentException($"{name} cannot be empty");
+        }
+
+        internal class UpdateInvitationTemplate
+        {
+            public int InvitationType { get; set; }
+            public string Name { get; set; }
+            public string Subject { get; set; }
+            public string Body { get; set; }
         }
     }
 }

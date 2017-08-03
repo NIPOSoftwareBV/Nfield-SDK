@@ -27,7 +27,7 @@ namespace Nfield.Services
         /// <summary>
         /// Add an invitation template for the specific survey
         /// </summary>
-        Task AddAsync(string surveyId, InvitationTemplateModel invitationTemplate);
+        Task<InvitationTemplateModel> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate);
 
         /// <summary>
         /// Get the invitation templates for the specified survey
@@ -37,11 +37,11 @@ namespace Nfield.Services
         /// <summary>
         /// Update an invitation template for the specific survey
         /// </summary>
-        Task UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate);
+        Task<InvitationTemplateModel> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate);
 
         /// <summary>
         /// Delete an invitation template for the specific survey
         /// </summary>
-        Task<bool> DeleteAsync(string surveyId, string templateId);
+        Task<bool> RemoveAsync(string surveyId, string templateId);
     }
 }
