@@ -27,18 +27,6 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInvitationTemplatesService : INfieldSurveyInvitationTemplatesService, INfieldConnectionClientObject
     {
-        public Task<InvitationTemplateModel> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
-        {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
-
-            var uri = SurveyInvitationTemplatesUrl(surveyId);
-            return Client.PostAsJsonAsync(uri, invitationTemplate)
-                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(task => JsonConvert.DeserializeObject<InvitationTemplateModel>(task.Result))
-                .FlattenExceptions();
-        }
-
         public Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
@@ -48,6 +36,18 @@ namespace Nfield.Services.Implementation
             return Client.GetAsync(uri)
                 .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationTemplateModel>>(
                     task.Result.Content.ReadAsStringAsync().Result))
+                .FlattenExceptions();
+        }
+
+        public Task<InvitationTemplateModel> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+            return Client.PostAsJsonAsync(uri, invitationTemplate)
+                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(task => JsonConvert.DeserializeObject<InvitationTemplateModel>(task.Result))
                 .FlattenExceptions();
         }
 

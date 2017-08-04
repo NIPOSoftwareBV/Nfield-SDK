@@ -30,6 +30,61 @@ namespace Nfield.Services
 {
     public class NfieldSurveyInvitationTemplatesServiceTests : NfieldServiceTestsBase
     {
+        #region GetAsync
+
+        [Fact]
+        public void TestGetAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveyInvitationTemplatesService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.GetAsync(null)));
+        }
+
+        [Fact]
+        public void TestGetAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveyInvitationTemplatesService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.GetAsync("  ")));
+        }
+
+        [Fact]
+        public void TestGetAsync_SurveyHasInvitationTemplates_ReturnsInvitationTemplates()
+        {
+            const string surveyId = "TestSurveyId";
+
+            var expected1 = new InvitationTemplateModel()
+            {
+                Id = 1,
+                InvitationType = 1,
+                Name = "TestTemplate1",
+                Subject = "TestSubject1",
+                Body = "TestBody1"
+            };
+
+            var expected2 = new InvitationTemplateModel()
+            {
+                Id = 2,
+                InvitationType = 2,
+                Name = "TestTemplate2",
+                Subject = "TestSubject2",
+                Body = "TestBody2"
+            };
+
+            var target = new NfieldSurveyInvitationTemplatesService();
+            var returnObject = new[] { expected1, expected2 };
+            var mockClient = InitMockClient<IEnumerable<InvitationTemplateModel>>(surveyId, returnObject);
+            target.InitializeNfieldConnection(mockClient);
+            var actualResults = target.GetAsync(surveyId).Result.ToArray();
+
+            Assert.Equal(expected1, actualResults[0], new InvitationTemplateComparer());
+            Assert.Equal(expected2, actualResults[1], new InvitationTemplateComparer());
+        }
+
+        #endregion
+
         #region AddAsync
 
         [Fact]
@@ -93,61 +148,6 @@ namespace Nfield.Services
             var actual = target.AddAsync(surveyId, invitationTemplate).Result;
 
             Assert.Equal(expected, actual, new InvitationTemplateComparer());
-        }
-
-        #endregion
-
-        #region GetAsync
-
-        [Fact]
-        public void TestGetAsync_SurveyIdIsNull_Throws()
-        {
-            var target = new NfieldSurveyInvitationTemplatesService();
-
-            Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.GetAsync(null)));
-        }
-
-        [Fact]
-        public void TestGetAsync_SurveyIdIsEmpty_Throws()
-        {
-            var target = new NfieldSurveyInvitationTemplatesService();
-
-            Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.GetAsync("  ")));
-        }
-
-        [Fact]
-        public void TestGetAsync_SurveyHasInvitationTemplates_ReturnsInvitationTemplates()
-        {
-            const string surveyId = "TestSurveyId";
-
-            var expected1 = new InvitationTemplateModel()
-            {
-                Id = 1,
-                InvitationType = 1,
-                Name = "TestTemplate1",
-                Subject = "TestSubject1",
-                Body = "TestBody1"
-            };
-
-            var expected2 = new InvitationTemplateModel()
-            {
-                Id = 2,
-                InvitationType = 2,
-                Name = "TestTemplate2",
-                Subject = "TestSubject2",
-                Body = "TestBody2"
-            };
-
-            var target = new NfieldSurveyInvitationTemplatesService();
-            var returnObject = new [] { expected1, expected2 };
-            var mockClient = InitMockClient<IEnumerable<InvitationTemplateModel>>(surveyId, returnObject);
-            target.InitializeNfieldConnection(mockClient);
-            var actualResults = target.GetAsync(surveyId).Result.ToArray();
-
-            Assert.Equal(expected1, actualResults[0], new InvitationTemplateComparer());
-            Assert.Equal(expected2, actualResults[1], new InvitationTemplateComparer());
         }
 
         #endregion
