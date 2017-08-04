@@ -32,12 +32,12 @@ namespace Nfield.Services
         /// <summary>
         /// Add an invitation template for the specific survey
         /// </summary>
-        Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModelUpdate invitationTemplate);
+        Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate);
 
         /// <summary>
         /// Update an invitation template for the specific survey
         /// </summary>
-        Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, int templateId, InvitationTemplateModelUpdate invitationTemplate);
+        Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate);
 
         /// <summary>
         /// Delete an invitation template for the specific survey

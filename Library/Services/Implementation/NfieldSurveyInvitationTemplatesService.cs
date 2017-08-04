@@ -39,7 +39,7 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModelUpdate invitationTemplate)
+        public Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
@@ -51,14 +51,14 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, int templateId, InvitationTemplateModelUpdate invitationTemplate)
+        public Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
-            return Client.PutAsJsonAsync(uri + "/" + templateId, invitationTemplate)
+            return Client.PutAsJsonAsync(uri + "/" + invitationTemplate.Id, invitationTemplate)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringTask => JsonConvert.DeserializeObject<InvitationTemplateModelValidated>(stringTask.Result))
                 .FlattenExceptions();

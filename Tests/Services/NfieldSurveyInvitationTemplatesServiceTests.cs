@@ -119,7 +119,7 @@ namespace Nfield.Services
         {
             const string surveyId = "TestSurveyId";
 
-            var invitationTemplate = new InvitationTemplateModelUpdate
+            var invitationTemplate = new InvitationTemplateModel
             {
                 InvitationType = 1,
                 Name = "TestTemplate1",
@@ -160,7 +160,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.UpdateAsync(null, 0, null)));
+                UnwrapAggregateException(target.UpdateAsync(null, null)));
         }
 
         [Fact]
@@ -169,7 +169,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.UpdateAsync("  ", 0, null)));
+                UnwrapAggregateException(target.UpdateAsync("  ", null)));
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.UpdateAsync("a survey", 0, null)));
+                UnwrapAggregateException(target.UpdateAsync("a survey", null)));
         }
 
         [Fact]
@@ -187,8 +187,9 @@ namespace Nfield.Services
             const string surveyId = "TestSurveyId";
             const int templateId = 42;
 
-            var invitationTemplate = new InvitationTemplateModelUpdate
+            var invitationTemplate = new InvitationTemplateModel
             {
+                Id = templateId,
                 InvitationType = 1,
                 Body = "TestBody1"
             };
@@ -205,18 +206,18 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(expected));
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + templateId, It.Is<InvitationTemplateModelUpdate>(t => VerifyInvitationTemplate(t, invitationTemplate))))
+                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + templateId, It.Is<InvitationTemplateModel>(t => VerifyInvitationTemplate(t, invitationTemplate))))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyInvitationTemplatesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.UpdateAsync(surveyId, templateId, invitationTemplate).Result;
+            var actual = target.UpdateAsync(surveyId, invitationTemplate).Result;
 
             Assert.Equal(expected, actual, new InvitationTemplateComparer());
         }
 
-        private static bool VerifyInvitationTemplate(InvitationTemplateModelUpdate updatedInvitationTemplate, InvitationTemplateModelUpdate t1)
+        private static bool VerifyInvitationTemplate(InvitationTemplateModel updatedInvitationTemplate, InvitationTemplateModel t1)
         {
             return updatedInvitationTemplate.InvitationType.Equals(t1.InvitationType)
                    && updatedInvitationTemplate.Body.Equals(t1.Body)
