@@ -16,13 +16,30 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Email invitation template
+    /// Model for creating and updating an email invitation template
     /// </summary>
-    public class InvitationTemplateModel : InvitationTemplateModelUpdate
+    public class InvitationTemplateModelUpdate
     {
         /// <summary>
-        /// Invitation template id
+        /// Invitation type.
+        /// 1 = Invitation.
+        /// 2 = Reminder.
         /// </summary>
-        public int Id { get; set; }
+        public int InvitationType { get; set; }
+
+        /// <summary>
+        /// Name of the invitation template
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Subject of the invitation
+        /// </summary>
+        public string Subject { get; set; }
+
+        /// <summary>
+        /// Body of the invitation
+        /// </summary>
+        public string Body { get; set; }
     }
 }

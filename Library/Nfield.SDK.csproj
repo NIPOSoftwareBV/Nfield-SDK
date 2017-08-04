@@ -123,6 +123,8 @@
     <Compile Include="Models\InvitationBatchStatus.cs" />
     <Compile Include="Models\InvitationBatchWithFilter.cs" />
     <Compile Include="Models\InvitationBatch.cs" />
+    <Compile Include="Models\InvitationTemplateModelUpdate.cs" />
+    <Compile Include="Models\InvitationTemplateModelValidated.cs" />
     <Compile Include="Models\InviteRespondentsStatus.cs" />
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />

@@ -119,7 +119,7 @@ namespace Nfield.Services
         {
             const string surveyId = "TestSurveyId";
 
-            var invitationTemplate = new InvitationTemplateModel
+            var invitationTemplate = new InvitationTemplateModelUpdate
             {
                 InvitationType = 1,
                 Name = "TestTemplate1",
@@ -160,7 +160,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.UpdateAsync(null, null)));
+                UnwrapAggregateException(target.UpdateAsync(null, 0, null)));
         }
 
         [Fact]
@@ -169,7 +169,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.UpdateAsync("  ", null)));
+                UnwrapAggregateException(target.UpdateAsync("  ", 0, null)));
         }
 
         [Fact]
@@ -178,23 +178,23 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.UpdateAsync("a survey", null)));
+                UnwrapAggregateException(target.UpdateAsync("a survey", 0, null)));
         }
 
         [Fact]
         public void TestUpdateAsync_InvitationTemplateIsUpdated_ReturnsInvitationTemplate()
         {
             const string surveyId = "TestSurveyId";
+            const int templateId = 42;
 
-            var invitationTemplate = new InvitationTemplateModel
+            var invitationTemplate = new InvitationTemplateModelUpdate
             {
-                Id = 999,
                 InvitationType = 1,
                 Body = "TestBody1"
             };
             var expected = new InvitationTemplateModel
             {
-                Id = invitationTemplate.Id,
+                Id = templateId,
                 InvitationType = invitationTemplate.InvitationType,
                 Name = "a Name",
                 Subject = "a Subject",
@@ -205,18 +205,18 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(expected));
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + invitationTemplate.Id, It.Is<NfieldSurveyInvitationTemplatesService.UpdateInvitationTemplate>(t => VerifyInvitationTemplate(t, invitationTemplate))))
+                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + templateId, It.Is<InvitationTemplateModelUpdate>(t => VerifyInvitationTemplate(t, invitationTemplate))))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyInvitationTemplatesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.UpdateAsync(surveyId, invitationTemplate).Result;
+            var actual = target.UpdateAsync(surveyId, templateId, invitationTemplate).Result;
 
             Assert.Equal(expected, actual, new InvitationTemplateComparer());
         }
 
-        private static bool VerifyInvitationTemplate(NfieldSurveyInvitationTemplatesService.UpdateInvitationTemplate updatedInvitationTemplate, InvitationTemplateModel t1)
+        private static bool VerifyInvitationTemplate(InvitationTemplateModelUpdate updatedInvitationTemplate, InvitationTemplateModelUpdate t1)
         {
             return updatedInvitationTemplate.InvitationType.Equals(t1.InvitationType)
                    && updatedInvitationTemplate.Body.Equals(t1.Body)
@@ -234,7 +234,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.RemoveAsync(null, null)));
+                UnwrapAggregateException(target.RemoveAsync(null, 0)));
         }
 
         [Fact]
@@ -243,38 +243,26 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationTemplatesService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.RemoveAsync("  ", null)));
-        }
-
-        [Fact]
-        public void TestRemoveAsync_InvitationTemplateIsNull_Throws()
-        {
-            var target = new NfieldSurveyInvitationTemplatesService();
-
-            Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.RemoveAsync("a survey", null)));
+                UnwrapAggregateException(target.RemoveAsync("  ", 0)));
         }
 
         [Fact]
         public void TestRemoveAsync_InvitationTemplateIsRemoved_ReturnsTrue()
         {
             const string surveyId = "TestSurveyId";
-            var invitationTemplate = new InvitationTemplateModel
-            {
-                Id = 987
-            };
+            const int templateId = 42;
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(new {IsSuccess = true}));
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + invitationTemplate.Id))
+                .Setup(client => client.DeleteAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + templateId))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyInvitationTemplatesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.RemoveAsync(surveyId, invitationTemplate).Result;
+            var actual = target.RemoveAsync(surveyId, templateId).Result;
 
             Assert.Equal(true, actual);
         }

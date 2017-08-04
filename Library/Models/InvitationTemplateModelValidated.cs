@@ -16,13 +16,18 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Email invitation template
+    /// Extension of <see cref="InvitationTemplateModel"/> that says whether the template is valid
     /// </summary>
-    public class InvitationTemplateModel : InvitationTemplateModelUpdate
+    public class InvitationTemplateModelValidated : InvitationTemplateModel
     {
         /// <summary>
-        /// Invitation template id
+        /// Whether the template is valid
         /// </summary>
-        public int Id { get; set; }
+        public bool IsValid { get; internal set; }
+
+        /// <summary>
+        /// The validation error in case the template is invalid
+        /// </summary>
+        public string ValidationError { get; internal set; }
     }
 }
