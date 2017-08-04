@@ -27,18 +27,6 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInvitationTemplatesService : INfieldSurveyInvitationTemplatesService, INfieldConnectionClientObject
     {
-        public Task<InvitationTemplateModel> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
-        {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
-
-            var uri = SurveyInvitationTemplatesUrl(surveyId);
-            return Client.PostAsJsonAsync(uri, invitationTemplate)
-                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(task => JsonConvert.DeserializeObject<InvitationTemplateModel>(task.Result))
-                .FlattenExceptions();
-        }
-
         public Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
@@ -51,35 +39,38 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<InvitationTemplateModel> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        public Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
-
-            var updatedInvitationTemplate = new UpdateInvitationTemplate
-            {
-                Body = invitationTemplate.Body,
-                Subject = invitationTemplate.Subject,
-                Name = invitationTemplate.Name,
-                InvitationType = invitationTemplate.InvitationType
-            };
-
-            return Client.PatchAsJsonAsync(uri + "/" + invitationTemplate.Id, updatedInvitationTemplate)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringTask => JsonConvert.DeserializeObject<InvitationTemplateModel>(stringTask.Result))
+            return Client.PostAsJsonAsync(uri, invitationTemplate)
+                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(task => JsonConvert.DeserializeObject<InvitationTemplateModelValidated>(task.Result))
                 .FlattenExceptions();
         }
 
-        public Task<bool> RemoveAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        public Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
-            return Client.DeleteAsync(uri + "/" + invitationTemplate.Id)
+            return Client.PutAsJsonAsync(uri + "/" + invitationTemplate.Id, invitationTemplate)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<InvitationTemplateModelValidated>(stringTask.Result))
+                .FlattenExceptions();
+        }
+
+        public Task<bool> RemoveAsync(string surveyId, int templateId)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+
+            return Client.DeleteAsync(uri + "/" + templateId)
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringTask => JsonConvert.DeserializeObject<DeleteInvitationResponse>(stringTask.Result).IsSuccess)
                 .FlattenExceptions();
@@ -110,14 +101,6 @@ namespace Nfield.Services.Implementation
         {
             if (argument == null)
                 throw new ArgumentNullException(name);
-        }
-
-        internal class UpdateInvitationTemplate
-        {
-            public int InvitationType { get; set; }
-            public string Name { get; set; }
-            public string Subject { get; set; }
-            public string Body { get; set; }
         }
 
         private class DeleteInvitationResponse

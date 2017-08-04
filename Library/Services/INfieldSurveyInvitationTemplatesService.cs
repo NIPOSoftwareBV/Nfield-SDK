@@ -25,23 +25,23 @@ namespace Nfield.Services
     public interface INfieldSurveyInvitationTemplatesService
     {
         /// <summary>
-        /// Add an invitation template for the specific survey
-        /// </summary>
-        Task<InvitationTemplateModel> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate);
-
-        /// <summary>
         /// Get the invitation templates for the specified survey
         /// </summary>
         Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId);
 
         /// <summary>
+        /// Add an invitation template for the specific survey
+        /// </summary>
+        Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate);
+
+        /// <summary>
         /// Update an invitation template for the specific survey
         /// </summary>
-        Task<InvitationTemplateModel> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate);
+        Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate);
 
         /// <summary>
         /// Delete an invitation template for the specific survey
         /// </summary>
-        Task<bool> RemoveAsync(string surveyId, InvitationTemplateModel invitationTemplate);
+        Task<bool> RemoveAsync(string surveyId, int templateId);
     }
 }
