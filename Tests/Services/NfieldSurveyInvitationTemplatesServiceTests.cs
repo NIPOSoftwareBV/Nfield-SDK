@@ -97,7 +97,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestAddAsync_SurveyIdIsEmpty_Throws()
+        public void TestAddAsync_SurveyIdIsWhitespace_Throws()
         {
             var target = new NfieldSurveyInvitationTemplatesService();
 
@@ -164,7 +164,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestUpdateAsync_SurveyIdIsEmpty_Throws()
+        public void TestUpdateAsync_SurveyIdIsWhitespace_Throws()
         {
             var target = new NfieldSurveyInvitationTemplatesService();
 
