@@ -7,7 +7,7 @@ namespace Nfield.Services
     /// <summary>
     /// Service for uploading images for a survey
     /// </summary>
-    interface INfieldSurveyInvitationImagesService
+    public interface INfieldSurveyInvitationImagesService
     {
         /// <summary>
         /// Uploads an image for the specified survey, so it can be used in invitation templates
