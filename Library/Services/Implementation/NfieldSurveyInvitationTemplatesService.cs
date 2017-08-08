@@ -39,6 +39,43 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
+        public Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+            return Client.PostAsJsonAsync(uri, invitationTemplate)
+                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(task => JsonConvert.DeserializeObject<InvitationTemplateModelValidated>(task.Result))
+                .FlattenExceptions();
+        }
+
+        public Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+
+            return Client.PutAsJsonAsync(uri + "/" + invitationTemplate.Id, invitationTemplate)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<InvitationTemplateModelValidated>(stringTask.Result))
+                .FlattenExceptions();
+        }
+
+        public Task<bool> RemoveAsync(string surveyId, int templateId)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+
+            var uri = SurveyInvitationTemplatesUrl(surveyId);
+
+            return Client.DeleteAsync(uri + "/" + templateId)
+                .ContinueWith(response => response.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<DeleteInvitationResponse>(stringTask.Result).IsSuccess)
+                .FlattenExceptions();
+        }
+
         private INfieldHttpClient Client => ConnectionClient.Client;
         public INfieldConnectionClient ConnectionClient { get; internal set; }
         public void InitializeNfieldConnection(INfieldConnectionClient connection)
@@ -55,10 +92,21 @@ namespace Nfield.Services.Implementation
 
         private static void CheckRequiredStringArgument(string argument, string name)
         {
-            if (argument == null)
-                throw new ArgumentNullException(name);
+            CheckRequiredArgument(argument, name);
             if (argument.Trim().Length == 0)
                 throw new ArgumentException($"{name} cannot be empty");
         }
+
+        private static void CheckRequiredArgument(object argument, string name)
+        {
+            if (argument == null)
+                throw new ArgumentNullException(name);
+        }
+
+        private class DeleteInvitationResponse
+        {
+            public bool IsSuccess { get; set; }
+        }
+
     }
 }
