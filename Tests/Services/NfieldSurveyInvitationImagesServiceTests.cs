@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Security.Policy;
 using System.Text;
 using Moq;
 using Newtonsoft.Json;
@@ -26,7 +22,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationImagesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.AddImage(null, "somefilename", new MemoryStream())));
+                UnwrapAggregateException(target.AddImageAsync(null, "somefilename", new MemoryStream())));
         }
 
         [Fact]
@@ -35,7 +31,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationImagesService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.AddImage(string.Empty, "somefilename", new MemoryStream())));
+                UnwrapAggregateException(target.AddImageAsync(string.Empty, "somefilename", new MemoryStream())));
         }
 
         [Fact]
@@ -44,7 +40,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationImagesService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.AddImage("   ", "somefilename", new MemoryStream())));
+                UnwrapAggregateException(target.AddImageAsync("   ", "somefilename", new MemoryStream())));
         }
 
         [Fact]
@@ -53,7 +49,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationImagesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.AddImage("survey", null, new MemoryStream())));
+                UnwrapAggregateException(target.AddImageAsync("survey", null, new MemoryStream())));
         }
 
         [Fact]
@@ -62,7 +58,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationImagesService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.AddImage("survey", string.Empty, new MemoryStream())));
+                UnwrapAggregateException(target.AddImageAsync("survey", string.Empty, new MemoryStream())));
         }
 
         [Fact]
@@ -71,7 +67,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationImagesService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.AddImage("survey", "   ", new MemoryStream())));
+                UnwrapAggregateException(target.AddImageAsync("survey", "   ", new MemoryStream())));
         }
 
         [Fact]
@@ -80,7 +76,7 @@ namespace Nfield.Services
             var target = new NfieldSurveyInvitationImagesService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.AddImage("survey", "somefilename", null)));
+                UnwrapAggregateException(target.AddImageAsync("survey", "somefilename", null)));
         }
 
         #endregion
@@ -98,7 +94,7 @@ namespace Nfield.Services
             AddInvitationImageResult actual;
             using (var stream = new MemoryStream(new byte[] {0, 1, 2, 3, 4, 5, 6, 7}))
             {           
-                actual = target.AddImage(surveyId, filename, stream).Result;
+                actual = target.AddImageAsync(surveyId, filename, stream).Result;
             }
 
             Assert.NotEmpty(actual.Link);

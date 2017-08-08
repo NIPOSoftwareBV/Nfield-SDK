@@ -12,6 +12,6 @@ namespace Nfield.Services
         /// <summary>
         /// Uploads an image for the specified survey, so it can be used in invitation templates
         /// </summary>
-        Task<AddInvitationImageResult> AddImage(string surveyId, string filename, Stream content);
+        Task<AddInvitationImageResult> AddImageAsync(string surveyId, string filename, Stream content);
     }
 }

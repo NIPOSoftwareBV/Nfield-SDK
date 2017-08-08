@@ -13,7 +13,7 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyInvitationImagesService : INfieldSurveyInvitationImagesService, INfieldConnectionClientObject
     {
-        public Task<AddInvitationImageResult> AddImage(string surveyId, string filename, Stream content)
+        public Task<AddInvitationImageResult> AddImageAsync(string surveyId, string filename, Stream content)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredStringArgument(filename, nameof(filename));
