@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Nfield.Models;
 
@@ -55,5 +54,13 @@ namespace Nfield.Services
         /// <exception cref="ArgumentException"></exception>
         /// <returns>number of deleted sample records</returns>
         Task<int> DeleteAsync(string surveyId, string respondentKey);
+
+        /// <summary>
+        /// Block the specified respondent in the survey
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="respondentKey">The id of the respondent to be blocked</param>
+        /// <returns>True if the respondent has been successfully blocked</returns>
+        Task<bool> BlockAsync(string surveyId, string respondentKey);
     }
 }
