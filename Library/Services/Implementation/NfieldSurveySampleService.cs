@@ -76,7 +76,7 @@ namespace Nfield.Services.Implementation
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredStringArgument(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId);
+            var uri = SurveySampleUrl(surveyId) + @"/Block";
 
             var filters = new List<SampleFilter>
             {
