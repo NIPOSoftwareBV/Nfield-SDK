@@ -300,7 +300,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
             var result = target.BlockAsync(SurveyId, respondentKey).Result;
 
-            Assert.True(result);
+            Assert.Equal(1, result);
         }
 
         [Fact]
@@ -322,7 +322,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
             var result = target.BlockAsync(SurveyId, respondentKey).Result;
 
-            Assert.False(result);
+            Assert.Equal(0, result);
         }
 
         #endregion

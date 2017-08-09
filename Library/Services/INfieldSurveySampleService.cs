@@ -60,7 +60,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="respondentKey">The id of the respondent to be blocked</param>
-        /// <returns>True if the respondent has been successfully blocked</returns>
-        Task<bool> BlockAsync(string surveyId, string respondentKey);
+        /// <returns>The number of respondents successfully blocked</returns>
+        Task<int> BlockAsync(string surveyId, string respondentKey);
     }
 }

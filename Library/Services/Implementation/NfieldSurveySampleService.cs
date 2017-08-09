@@ -71,7 +71,7 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<bool> BlockAsync(string surveyId, string respondentKey)
+        public Task<int> BlockAsync(string surveyId, string respondentKey)
         {
             CheckRequiredStringArgument(surveyId, nameof(surveyId));
             CheckRequiredStringArgument(respondentKey, nameof(respondentKey));
@@ -85,7 +85,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                     .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                    .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleBlockStatus>(stringResult.Result).BlockedCount == 1)
+                    .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleBlockStatus>(stringResult.Result).BlockedCount)
                     .FlattenExceptions();
         }
 
