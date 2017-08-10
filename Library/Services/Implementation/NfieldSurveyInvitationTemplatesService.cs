@@ -13,7 +13,6 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -22,6 +21,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -29,7 +29,7 @@ namespace Nfield.Services.Implementation
     {
         public Task<IEnumerable<InvitationTemplateModel>> GetAsync(string surveyId)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
@@ -41,8 +41,8 @@ namespace Nfield.Services.Implementation
 
         public Task<InvitationTemplateModelValidated> AddAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
             return Client.PostAsJsonAsync(uri, invitationTemplate)
@@ -53,8 +53,8 @@ namespace Nfield.Services.Implementation
 
         public Task<InvitationTemplateModelValidated> UpdateAsync(string surveyId, InvitationTemplateModel invitationTemplate)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredArgument(invitationTemplate, nameof(invitationTemplate));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(invitationTemplate, nameof(invitationTemplate));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
@@ -66,7 +66,7 @@ namespace Nfield.Services.Implementation
 
         public Task<bool> RemoveAsync(string surveyId, int templateId)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
@@ -89,24 +89,5 @@ namespace Nfield.Services.Implementation
             result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InvitationTemplates", surveyId);
             return result.ToString();
         }
-
-        private static void CheckRequiredStringArgument(string argument, string name)
-        {
-            CheckRequiredArgument(argument, name);
-            if (argument.Trim().Length == 0)
-                throw new ArgumentException($"{name} cannot be empty");
-        }
-
-        private static void CheckRequiredArgument(object argument, string name)
-        {
-            if (argument == null)
-                throw new ArgumentNullException(name);
-        }
-
-        private class DeleteInvitationResponse
-        {
-            public bool IsSuccess { get; set; }
-        }
-
     }
 }

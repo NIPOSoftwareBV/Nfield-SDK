@@ -114,6 +114,7 @@
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\DataCryptographyModel.cs" />
+    <Compile Include="Models\DeleteInvitationResponse.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Services\Implementation\NfieldSurveyInviteRespondentsService.cs" />
     <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
+    <Compile Include="Utilities\Ensure.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -13,20 +13,16 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.IO;
-using System.Threading.Tasks;
-using Nfield.Models;
-
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service for uploading images for a survey
+    /// Dto for the response of a delete invitation template operation
     /// </summary>
-    public interface INfieldSurveyInvitationImagesService
+    public class DeleteInvitationResponse
     {
         /// <summary>
-        /// Uploads an image for the specified survey, so it can be used in invitation templates
+        /// True if the deletion has succeded
         /// </summary>
-        Task<AddInvitationImageResult> AddImageAsync(string surveyId, string filename, Stream content);
+        public bool IsSuccess { get; set; }
     }
 }
