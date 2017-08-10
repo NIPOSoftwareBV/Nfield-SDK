@@ -89,5 +89,11 @@ namespace Nfield.Services.Implementation
             result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InvitationTemplates", surveyId);
             return result.ToString();
         }
+
+        // ReSharper disable once ClassNeverInstantiated.Local, used for deserializing api response
+        private class DeleteInvitationResponse
+        {
+            public bool IsSuccess { get; set; }
+        }
     }
 }
