@@ -17,6 +17,9 @@ using System;
 
 namespace Nfield.Utilities
 {
+    /// <summary>
+    /// Class that contains the basic method parameter checks
+    /// </summary>
     public class Ensure
     {
         /// <summary>
