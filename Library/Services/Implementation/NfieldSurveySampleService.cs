@@ -13,7 +13,6 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
@@ -24,6 +23,7 @@ using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -32,7 +32,7 @@ namespace Nfield.Services.Implementation
 
         public Task<string> GetAsync(string surveyId)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = SurveySampleUrl(surveyId);
 
@@ -43,8 +43,8 @@ namespace Nfield.Services.Implementation
 
         public Task<SampleUploadStatus> PostAsync(string surveyId, string sample)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredStringArgument(sample, nameof(sample));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(sample, nameof(sample));
 
             var uri = SurveySampleUrl(surveyId);
             var sampleContent = new StringContent(sample);
@@ -56,8 +56,8 @@ namespace Nfield.Services.Implementation
 
         public Task<int> DeleteAsync(string surveyId, string respondentKey)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredStringArgument(respondentKey, nameof(respondentKey));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
             var uri = SurveySampleUrl(surveyId);
             var filters = new List<SampleFilter>
@@ -73,8 +73,8 @@ namespace Nfield.Services.Implementation
 
         public Task<int> BlockAsync(string surveyId, string respondentKey)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredStringArgument(respondentKey, nameof(respondentKey));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
             var uri = SurveySampleUrl(surveyId) + @"/Block";
 
@@ -108,14 +108,6 @@ namespace Nfield.Services.Implementation
             result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Sample", surveyId);
 
             return result.ToString();
-        }
-
-        private static void CheckRequiredStringArgument(string argument, string name)
-        {
-            if (argument == null)
-                throw new ArgumentNullException(name);
-            if (argument.Trim().Length == 0)
-                throw new ArgumentException($"{name} cannot be empty");
         }
     }
 }
