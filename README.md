@@ -1,13 +1,13 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/vc9at8xo1q2nthcd/branch/master?svg=true)](https://ci.appveyor.com/project/NIPOSoftware/nfield-sdk/branch/master) [![NuGet version](https://badge.fury.io/nu/Nfield.SDK.svg)](https://badge.fury.io/nu/Nfield.SDK)
 
-#NIPO Software Nfield SDK for Windows
+# NIPO Software Nfield SDK for Windows
 This SDK allows you to build applications that take advantage of the Nfield services.
     
-##Requirements
+## Requirements
 - .NET Framework 4.0 or later<
 - To use this SDK to call Nfield services you need an Nfield account.
 
-##Usage
+## Usage
 The recommended way to consume this project is to reference the NuGet package. You can install it by executing the following command in the Package Manager Console.
 
 ```
@@ -16,7 +16,7 @@ PM> Install-Package Nfield-SDK
 
 Alternatively get the source code of the SDK by cloning this repository and include the _Library_ project in your solution.
 
-##Code Samples
+## Code Samples
 A comprehensive sample project can be found in the _Examples_ folder.
 The basic required steps are shown below.
 
@@ -61,7 +61,7 @@ await _interviewersService.AddAsync(interviewer);
 }
 ```
 
-##Feedback
+## Feedback
 For feedback related to this SDK please visit the
 [Nfield website].
 
