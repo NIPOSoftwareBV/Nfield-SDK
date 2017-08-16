@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
@@ -68,6 +69,24 @@ namespace Nfield.Services.Implementation
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleDeleteStatus>(stringResult.Result).DeletedCount)
                 .FlattenExceptions();
+        }
+
+        public Task<int> BlockAsync(string surveyId, string respondentKey)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
+
+            var uri = SurveySampleUrl(surveyId) + @"/Block";
+
+            var filters = new List<SampleFilter>
+            {
+                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+            };
+
+            return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
+                    .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                    .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleBlockStatus>(stringResult.Result).BlockedCount)
+                    .FlattenExceptions();
         }
 
         #region Implementation of INfieldConnectionClientObject
