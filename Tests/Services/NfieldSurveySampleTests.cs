@@ -22,6 +22,7 @@ using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -220,6 +221,108 @@ namespace Nfield.Services
             var actual = target.DeleteAsync(SurveyId, respondentKey).Result;
 
             Assert.Equal(deletedCount, actual);
+        }
+
+        #endregion
+
+        #region BlockAsync
+
+        [Fact]
+        public void TestBlockAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.BlockAsync(null, "anything")));
+        }
+
+        [Fact]
+        public void TestBlockAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.BlockAsync(string.Empty, "anything")));
+        }
+
+        [Fact]
+        public void TestBlockAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.BlockAsync("  ", "anything")));
+        }
+
+        [Fact]
+        public void TestBlockAsync_RespondentKeyIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.BlockAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestBlockAsync_RespondentKeyIsWhiteSpace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.BlockAsync(SurveyId, "   ")));
+        }
+
+        [Fact]
+        public void TestBlockAsync_RespondentKeyIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.BlockAsync(SurveyId, string.Empty)));
+        }
+
+        [Fact]
+        public void TestBlockAsync_ParamsAreOk_Successful()
+        {
+            const string respondentKey = "testRespondent123";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Block",
+                                It.Is<IEnumerable<SampleFilter>>(filters => 
+                                    FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
+                            .Returns(CreateTask(HttpStatusCode.OK,
+                                new StringContent(
+                                    JsonConvert.SerializeObject(new SampleBlockStatus { BlockedCount = 1 }))));
+
+            var target = new NfieldSurveySampleService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            var result = target.BlockAsync(SurveyId, respondentKey).Result;
+
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void TestBlockAsync_NotExistingRespondent_Successful()
+        {
+            const string respondentKey = "not-a-respondent";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Block",
+                    It.Is<IEnumerable<SampleFilter>>(filters =>
+                        FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new SampleBlockStatus { BlockedCount = 0 }))));
+
+            var target = new NfieldSurveySampleService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            var result = target.BlockAsync(SurveyId, respondentKey).Result;
+
+            Assert.Equal(0, result);
         }
 
         #endregion

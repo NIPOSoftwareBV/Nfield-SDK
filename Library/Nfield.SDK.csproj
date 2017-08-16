@@ -108,6 +108,7 @@
     <Compile Include="Infrastructure\NfieldUtilityProvider.cs" />
     <Compile Include="Infrastructure\PathBase.cs" />
     <Compile Include="Infrastructure\PathWrapper.cs" />
+    <Compile Include="Models\AddInvitationImageResult.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\AddressSampleData.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
+    <Compile Include="Models\SampleBlockStatus.cs" />
     <Compile Include="Models\SampleFilter.cs" />
     <Compile Include="Models\SampleDeleteStatus.cs" />
     <Compile Include="Models\SampleUploadStatus.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInvitationImagesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInvitationTemplatesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPackageService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPublishService.cs" />
@@ -200,6 +203,7 @@
     <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
+    <Compile Include="Services\INfieldSurveyInvitationImagesService.cs" />
     <Compile Include="Services\INfieldSurveyInviteRespondentsService.cs" />
     <Compile Include="Services\INfieldSurveyInvitationTemplatesService.cs" />
     <Compile Include="Services\INfieldSurveyPackageService.cs" />
@@ -230,6 +234,7 @@
     <Compile Include="Services\Implementation\NfieldSurveyInviteRespondentsService.cs" />
     <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
+    <Compile Include="Utilities\Ensure.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

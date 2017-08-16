@@ -100,6 +100,7 @@
     <Compile Include="Services\NfieldBackgroundTasksServiceTests.cs" />
     <Compile Include="Services\NfieldInterviewQualityTests.cs" />
     <Compile Include="Services\NfieldRespondentDataEncryptServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInvitationImagesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyInvitationTemplatesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyInviteRespondentsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyPackageServiceTests.cs" />

@@ -13,7 +13,6 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -22,6 +21,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -31,8 +31,8 @@ namespace Nfield.Services.Implementation
 
         public Task<InviteRespondentsStatus> SendInvitationsAsync(string surveyId, InvitationBatch batch)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredArgument(batch, nameof(batch));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(batch, nameof(batch));
 
             var uri = SurveyInviteRespondentsUrl(surveyId);
             var batchWithFilter = new InvitationBatchWithFilter()
@@ -65,7 +65,7 @@ namespace Nfield.Services.Implementation
 
         public Task<IEnumerable<InvitationMonitorBatchStatus>> GetSurveyBatchesStatusAsync(string surveyId)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/SurveyBatchesStatus/";
 
@@ -77,8 +77,8 @@ namespace Nfield.Services.Implementation
 
         public Task<IEnumerable<InvitationBatchStatus>> GetInvitationStatusAsync(string surveyId, string batchName)
         {
-            CheckRequiredStringArgument(surveyId, nameof(surveyId));
-            CheckRequiredStringArgument(batchName, nameof(batchName));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(batchName, nameof(batchName));
 
             var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/InvitationStatus/{batchName}";
 
@@ -103,20 +103,6 @@ namespace Nfield.Services.Implementation
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private static void CheckRequiredStringArgument(string argument, string name)
-        {
-            if (argument == null)
-                throw new ArgumentNullException(name);
-            if (argument.Trim().Length == 0)
-                throw new ArgumentException($"{name} cannot be empty");
-        }
-
-        private static void CheckRequiredArgument(object argument, string name)
-        {
-            if (argument == null)
-                throw new ArgumentNullException(name);
-        }
-
         private string SurveyInviteRespondentsUrl(string surveyId)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
@@ -124,6 +110,5 @@ namespace Nfield.Services.Implementation
 
             return result.ToString();
         }
-
     }
 }
