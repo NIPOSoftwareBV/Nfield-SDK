@@ -14,11 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using Moq;
-using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
@@ -58,7 +53,7 @@ namespace Nfield.Services
             var expected = GetTestEmailSettings();
 
             var target = new NfieldSurveyEmailSettingsService();
-            var mockClient = InitMockClientGet(SurveyId, expected);
+            var mockClient = InitMockClientGet(GetEmailSettingsUrl(SurveyId), expected);
             target.InitializeNfieldConnection(mockClient);
 
             var actual = target.GetAsync(SurveyId).Result;
@@ -107,7 +102,7 @@ namespace Nfield.Services
             var expected = GetTestEmailSettings();
 
             var target = new NfieldSurveyEmailSettingsService();
-            var mockClient = InitMockClientPut(SurveyId, expected, expected);
+            var mockClient = InitMockClientPut(GetEmailSettingsUrl(SurveyId), expected, expected);
             target.InitializeNfieldConnection(mockClient);
 
             var actual = target.PutAsync(SurveyId, expected).Result;
@@ -116,29 +111,9 @@ namespace Nfield.Services
 
         #endregion
 
-        private INfieldConnectionClient InitMockClientGet<T>(string surveyId, T responseObjectContent)
+        private static string GetEmailSettingsUrl(string surveyId)
         {
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var responseContent = new ObjectContent<T>(responseObjectContent, new JsonMediaTypeFormatter());
-            mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/EmailSettings"))
-                .Returns(CreateTask(HttpStatusCode.OK, responseContent));
-
-            return mockedNfieldConnection.Object;
-        }
-
-        private INfieldConnectionClient InitMockClientPut<T1, T2>(string surveyId, T1 requestContent,  T2 responseObjectContent)
-        {
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var responseContent = new ObjectContent<T2>(responseObjectContent, new JsonMediaTypeFormatter());
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/EmailSettings",
-                                    requestContent))
-                .Returns(CreateTask(HttpStatusCode.OK, responseContent));
-
-            return mockedNfieldConnection.Object;
+            return ServiceAddress + "Surveys/" + SurveyId + "/EmailSettings";
         }
 
         private static SurveyEmailSettings GetTestEmailSettings()
