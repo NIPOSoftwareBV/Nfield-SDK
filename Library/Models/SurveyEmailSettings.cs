@@ -13,19 +13,32 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Nfield.Models
 {
+    /// <summary>
+    /// Model for the email settings for a survey
+    /// </summary>
     public class SurveyEmailSettings
     {
+        /// <summary>
+        /// The survey's id
+        /// </summary>
         public string Id { get; set; }
+        /// <summary>
+        /// The 'from' email address
+        /// </summary>
         public string FromAddress { get; set; }
+        /// <summary>
+        /// Name of the sender
+        /// </summary>
         public string FromName { get; set; }
+        /// <summary>
+        /// The 'reply to' address
+        /// </summary>
         public string ReplyToAddress { get; set; }
+        /// <summary>
+        /// The physical address
+        /// </summary>
         public string PostalAddress { get; set; }
     }
 }
