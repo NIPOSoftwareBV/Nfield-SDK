@@ -19,13 +19,18 @@ using Nfield.Models;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// Service for getting and changing the email settings for a survey (only at survey level)
     /// </summary>
-    public interface INfieldSurveyDataService
+    public interface INfieldSurveyEmailSettingsService
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Gets the email settings for a survey
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        Task<SurveyEmailSettings> GetAsync(string surveyId);
+
+        /// <summary>
+        /// Changes the email settings for a survey (validation will be enforced on email addresses)
+        /// </summary>
+        Task<SurveyEmailSettings> PutAsync(string surveyId, SurveyEmailSettings settings);
     }
 }

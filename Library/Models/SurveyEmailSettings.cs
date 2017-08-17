@@ -13,19 +13,19 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
-    /// <summary>
-    /// Service for making a download data request.
-    /// </summary>
-    public interface INfieldSurveyDataService
+    public class SurveyEmailSettings
     {
-        /// <summary>
-        /// Gets the download data url.
-        /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        public string Id { get; set; }
+        public string FromAddress { get; set; }
+        public string FromName { get; set; }
+        public string ReplyToAddress { get; set; }
+        public string PostalAddress { get; set; }
     }
 }
