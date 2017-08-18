@@ -26,7 +26,7 @@ namespace Nfield.Services
         /// <summary>
         /// Gets the email settings for a survey
         /// </summary>
-        Task<SurveyEmailSettings> GetAsync(string surveyId);
+        Task<SurveyEmailSettingsResponse> GetAsync(string surveyId);
 
         /// <summary>
         /// Changes the email settings for a survey (validation will be enforced on email addresses)

@@ -114,6 +114,7 @@
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\DataCryptographyModel.cs" />
+    <Compile Include="Models\DomainEmailSettings.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />

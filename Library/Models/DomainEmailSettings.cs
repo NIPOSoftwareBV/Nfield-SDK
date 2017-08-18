@@ -16,31 +16,10 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Dto for the response of a get survey email settings request
+    /// Dto for the email settings of a domain
     /// </summary>
-    public class SurveyEmailSettingsResponse
+    public class DomainEmailSettings
     {
-        /// <summary>
-        /// The domain's email settings
-        /// </summary>
-        public DomainEmailSettings DomainEmailSettings { get; set; }
-
-        /// <summary>
-        /// The survey's email settings
-        /// </summary>
-        public SurveyEmailSettings SurveyEmailSettings { get; set; }
-    }
-
-    /// <summary>
-    /// Model for the email settings for a survey
-    /// </summary>
-    public class SurveyEmailSettings
-    {
-        /// <summary>
-        /// The survey's id
-        /// </summary>
-        public string Id { get; set; }
-
         /// <summary>
         /// The 'from' email address
         /// </summary>
@@ -60,5 +39,15 @@ namespace Nfield.Models
         /// The physical address
         /// </summary>
         public string PostalAddress { get; set; }
+
+        /// <summary>
+        /// The default 'from' email address
+        /// </summary>
+        public string DefaultFromAddress { get; set; }
+
+        /// <summary>
+        /// The default 'reply to' address
+        /// </summary>
+        public string DefaultReplyToAddress { get; set; }
     }
 }

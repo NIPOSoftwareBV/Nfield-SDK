@@ -26,14 +26,14 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyEmailSettingsService : INfieldSurveyEmailSettingsService, INfieldConnectionClientObject
     {
-        public Task<SurveyEmailSettings> GetAsync(string surveyId)
+        public Task<SurveyEmailSettingsResponse> GetAsync(string surveyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = SurveyEmailSettingsUrl(surveyId);
 
             return Client.GetAsync(uri)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyEmailSettings>(
+                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyEmailSettingsResponse>(
                             task.Result.Content.ReadAsStringAsync().Result))
                          .FlattenExceptions();
         }

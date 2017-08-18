@@ -20,6 +20,9 @@ using Xunit;
 
 namespace Nfield.Services
 {
+    /// <summary>
+    /// Tests for <see cref="NfieldSurveyEmailSettingsService"/>
+    /// </summary>
     public class NfieldSurveyEmailSettingsServiceTests : NfieldServiceTestsBase
     {
         private const string SurveyId = "TestSurveyId";
@@ -51,13 +54,17 @@ namespace Nfield.Services
         public void TestGetAsync_SurveyExists_ReturnsData()
         {
             var expected = GetTestEmailSettings();
+            var expectedDto = new SurveyEmailSettingsResponse
+            {
+                SurveyEmailSettings = expected
+            };
 
             var target = new NfieldSurveyEmailSettingsService();
-            var mockClient = InitMockClientGet(GetEmailSettingsUrl(SurveyId), expected);
+            var mockClient = InitMockClientGet(GetEmailSettingsUrl(SurveyId), expectedDto);
             target.InitializeNfieldConnection(mockClient);
 
             var actual = target.GetAsync(SurveyId).Result;
-            AssertOnEmailSettings(expected, actual);
+            AssertOnEmailSettings(expected, actual.SurveyEmailSettings);
         }
 
         #endregion
