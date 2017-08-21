@@ -327,6 +327,87 @@ namespace Nfield.Services
 
         #endregion
 
+        #region ResetAsync
+
+        [Fact]
+        public void TestResetAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ResetAsync(null, "anything")));
+        }
+
+        [Fact]
+        public void TestResetAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ResetAsync(string.Empty, "anything")));
+        }
+
+        [Fact]
+        public void TestResetAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ResetAsync("  ", "anything")));
+        }
+
+        [Fact]
+        public void TestResetAsync_RespondentKeyIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ResetAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestResetAsync_RespondentKeyIsWhiteSpace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ResetAsync(SurveyId, "   ")));
+        }
+
+        [Fact]
+        public void TestResetAsync_RespondentKeyIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ResetAsync(SurveyId, string.Empty)));
+        }
+
+        [Fact]
+        public void TestResetAsync_ParamsAreOk_Successful()
+        {
+            const string respondentKey = "testRespondent123";
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Reset",
+                    It.Is<IEnumerable<SampleFilter>>(filters =>
+                        FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new SampleResetStatus { ResetCount = 1 }))));
+
+            var target = new NfieldSurveySampleService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            var result = target.ResetAsync(SurveyId, respondentKey).Result;
+
+            Assert.Equal(1, result);
+        }
+
+        #endregion
+
+
         private static bool FilterEquals(SampleFilter filter, string name, string op, string value)
         {
             return filter.Name.Equals(name)
