@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
@@ -75,7 +74,8 @@ namespace Nfield.Services
 
             var target = new NfieldSurveyInvitationTemplatesService();
             var returnObject = new[] { expected1, expected2 };
-            var mockClient = InitMockClient<IEnumerable<InvitationTemplateModel>>(surveyId, returnObject);
+            var requestUri = ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates";
+            var mockClient = InitMockClientGet<IEnumerable<InvitationTemplateModel>>(requestUri, returnObject);
             target.InitializeNfieldConnection(mockClient);
             var actualResults = target.GetAsync(surveyId).Result.ToArray();
 
@@ -269,18 +269,6 @@ namespace Nfield.Services
         }
 
         #endregion
-
-        private INfieldConnectionClient InitMockClient<T>(string surveyId, T content)
-        {
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var responseContent = new ObjectContent<T>(content, new JsonMediaTypeFormatter());
-            mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates"))
-                .Returns(CreateTask(HttpStatusCode.OK, responseContent));
-
-            return mockedNfieldConnection.Object;
-        }
 
         private class InvitationTemplateComparer : IEqualityComparer<InvitationTemplateModel>
         {

@@ -114,6 +114,7 @@
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\DataCryptographyModel.cs" />
+    <Compile Include="Models\DomainEmailSettings.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Models\SamplingPointsInterviewersAssignmentModel.cs" />
     <Compile Include="Models\SurveyCounts.cs" />
     <Compile Include="Models\InvitationTemplateModel.cs" />
+    <Compile Include="Models\SurveyEmailSettings.cs" />
     <Compile Include="Models\SurveyPackage.cs" />
     <Compile Include="Models\SurveyPackageBinaryFile.cs" />
     <Compile Include="Models\SurveyPackageLanguage.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyEmailSettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInvitationImagesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInvitationTemplatesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPackageService.cs" />
@@ -197,6 +200,7 @@
     <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
     <Compile Include="Services\INfieldInterviewQualityService.cs" />
     <Compile Include="Services\INfieldSamplingPointInterviewerAssignmentsService.cs" />
+    <Compile Include="Services\INfieldSurveyEmailSettingsService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewersService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerWorkpackageDistributionService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerAssignmentsService.cs" />
