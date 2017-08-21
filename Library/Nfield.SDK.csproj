@@ -172,6 +172,7 @@
     <Compile Include="Models\SurveyScript.cs" />
     <Compile Include="Models\SurveySetting.cs" />
     <Compile Include="Models\SurveyType.cs" />
+    <Compile Include="Models\SurveyVarFile.cs" />
     <Compile Include="Models\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Services\Implementation\NfieldSurveyRelocationsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySettingsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyVarFileService.cs" />
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="Services\INfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\INfieldSurveySettingsService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
+    <Compile Include="Services\INfieldSurveyVarFileService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInterviewersService.cs" />
