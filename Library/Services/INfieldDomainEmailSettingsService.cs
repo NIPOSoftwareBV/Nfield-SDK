@@ -13,21 +13,24 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace Nfield.Models
+using System.Threading.Tasks;
+using Nfield.Models;
+
+namespace Nfield.Services
 {
     /// <summary>
-    /// Dto for reading the email settings of a domain
+    /// Service for getting and changing the email settings at the domain level
     /// </summary>
-    public class DomainEmailSettings : DomainEmailSettingsEditable
+    public interface INfieldDomainEmailSettingsService
     {
         /// <summary>
-        /// The default 'from' email address
+        /// Gets the email settings at the domain level
         /// </summary>
-        public string DefaultFromAddress { get; set; }
+        Task<DomainEmailSettings> GetAsync();
 
         /// <summary>
-        /// The default 'reply to' address
+        /// Changes the email settings at the domain level (dns validation on from email address)
         /// </summary>
-        public string DefaultReplyToAddress { get; set; }
+        Task<DomainEmailSettingsEditable> PutAsync(DomainEmailSettingsEditable settings);
     }
 }
