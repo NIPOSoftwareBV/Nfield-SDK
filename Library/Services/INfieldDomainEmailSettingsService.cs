@@ -13,33 +13,24 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace Nfield.Models
+using System.Threading.Tasks;
+using Nfield.Models;
+
+namespace Nfield.Services
 {
     /// <summary>
-    /// Dto for the response of a get survey email settings request
+    /// Service for getting and changing the email settings at the domain level
     /// </summary>
-    public class SurveyEmailSettingsResponse
+    public interface INfieldDomainEmailSettingsService
     {
         /// <summary>
-        /// The domain's email settings
+        /// Gets the email settings at the domain level
         /// </summary>
-        public DomainEmailSettings DomainEmailSettings { get; set; }
+        Task<DomainEmailSettings> GetAsync();
 
         /// <summary>
-        /// The survey's email settings
+        /// Changes the email settings at the domain level (dns validation on from email address)
         /// </summary>
-        public SurveyEmailSettings SurveyEmailSettings { get; set; }
-    }
-
-    /// <summary>
-    /// Model for the email settings for a survey
-    /// </summary>
-    public class SurveyEmailSettings : EmailSettingsEditable
-    {
-        /// <summary>
-        /// The survey's id
-        /// </summary>
-        public string Id { get; set; }
-
+        Task<EmailSettingsEditable> PutAsync(EmailSettingsEditable settings);
     }
 }
