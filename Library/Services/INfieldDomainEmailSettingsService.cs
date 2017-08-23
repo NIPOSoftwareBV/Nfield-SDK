@@ -31,6 +31,6 @@ namespace Nfield.Services
         /// <summary>
         /// Changes the email settings at the domain level (dns validation on from email address)
         /// </summary>
-        Task<DomainEmailSettingsEditable> PutAsync(DomainEmailSettingsEditable settings);
+        Task<EmailSettingsEditable> PutAsync(EmailSettingsEditable settings);
     }
 }

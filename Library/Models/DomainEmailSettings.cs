@@ -18,7 +18,7 @@ namespace Nfield.Models
     /// <summary>
     /// Dto for reading the email settings of a domain
     /// </summary>
-    public class DomainEmailSettings : DomainEmailSettingsEditable
+    public class DomainEmailSettings : EmailSettingsEditable
     {
         /// <summary>
         /// The default 'from' email address

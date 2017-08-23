@@ -1,6 +1,6 @@
 namespace Nfield.Models
 {
-    public class DomainEmailSettingsEditable
+    public class EmailSettingsEditable
     {
         /// <summary>
         /// The 'from' email address

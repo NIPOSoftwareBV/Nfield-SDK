@@ -36,14 +36,14 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task<DomainEmailSettingsEditable> PutAsync(DomainEmailSettingsEditable settings)
+        public Task<EmailSettingsEditable> PutAsync(EmailSettingsEditable settings)
         {
             Ensure.ArgumentNotNull(settings, nameof(settings));
 
             var uri = DomainEmailSettingsUrl();
 
             return Client.PutAsJsonAsync(uri, settings)
-                        .ContinueWith(task => JsonConvert.DeserializeObject<DomainEmailSettingsEditable>(
+                        .ContinueWith(task => JsonConvert.DeserializeObject<EmailSettingsEditable>(
                             task.Result.Content.ReadAsStringAsync().Result))
                         .FlattenExceptions();
         }

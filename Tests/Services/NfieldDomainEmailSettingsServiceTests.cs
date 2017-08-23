@@ -63,7 +63,7 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_ReturnsData()
         {
-            var expected = new DomainEmailSettingsEditable
+            var expected = new EmailSettingsEditable
             {
                 FromAddress = "TestFromAddress",
                 FromName = "TestFromName",
@@ -86,7 +86,7 @@ namespace Nfield.Services
             return ServiceAddress + "EmailSettings";
         }
 
-        private static void AssertOnEditableEmailSettings(DomainEmailSettingsEditable expected, DomainEmailSettingsEditable actual)
+        private static void AssertOnEditableEmailSettings(EmailSettingsEditable expected, EmailSettingsEditable actual)
         {
             Assert.Equal(expected.FromAddress, actual.FromAddress);
             Assert.Equal(expected.FromName, actual.FromName);
