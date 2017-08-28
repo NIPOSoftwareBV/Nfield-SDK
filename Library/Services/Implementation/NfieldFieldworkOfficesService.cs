@@ -45,6 +45,22 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldFieldworkOfficesService.CreateFieldworkOfficeAsync"/>
+        /// </summary>
+        public Task<FieldworkOffice> CreateFieldworkOfficeAsync(string name, string description)
+        {
+            var fieldworkOffice = new FieldworkOffice() { OfficeName = name, Description = description };
+
+            return ConnectionClient.Client.PostAsJsonAsync(OfficesApi.AbsoluteUri, fieldworkOffice)
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(
+                    stringTask =>
+                        JsonConvert.DeserializeObject<FieldworkOffice>(stringTask.Result))
+                .FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject

@@ -35,5 +35,13 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
         Task<IQueryable<FieldworkOffice>> QueryAsync();
+
+        /// <summary>
+        /// Creates a new fieldwork office
+        /// </summary>
+        /// <param name="name">Name of the office</param>
+        /// <param name="description">Description of the office</param>
+        /// <returns>The fieldwork office created</returns>
+        Task<FieldworkOffice> CreateFieldworkOfficeAsync(string name, string description);
     }
 }
