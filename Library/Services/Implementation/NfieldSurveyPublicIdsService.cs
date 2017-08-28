@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -46,6 +47,16 @@ namespace Nfield.Services.Implementation
                              stringTask =>
                              JsonConvert.DeserializeObject<List<SurveyPublicId>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
+        }
+
+        public Task PutAsync(string surveyId, IEnumerable<SurveyPublicId> models)
+        {
+            CheckSurveyId(surveyId);
+
+            return Client.PostAsJsonAsync(PublicIdsApi(surveyId).AbsoluteUri, models)
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .FlattenExceptions();
         }
 
         #endregion
