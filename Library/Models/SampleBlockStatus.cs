@@ -13,19 +13,19 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
-
-namespace Nfield.Services
+namespace Nfield.Models
 {
-    /// <summary>
-    /// Service for making a download data request.
-    /// </summary>
-    public interface INfieldSurveyDataService
+    namespace NipoSoftware.Nfield.Manager.Api.Models
     {
         /// <summary>
-        /// Gets the download data url.
+        /// DTO for returning the result of a SampleData block operation
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        public class SampleBlockStatus
+        {
+            /// <summary>
+            /// Total number of records blocked
+            /// </summary>
+            public int BlockedCount { get; set; }
+        }
     }
 }

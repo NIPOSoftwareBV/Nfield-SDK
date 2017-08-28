@@ -13,19 +13,36 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
+using System;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// class to define sample filters
     /// </summary>
-    public interface INfieldSurveyDataService
+    internal class SampleFilter
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Name of a field in a sample record
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        public string Name { get; set; }
+      
+        /// <summary>
+        /// Operator, supported operators:
+        /// "con" : contains
+        /// "ncon": not contains
+        /// "eq"  : equals
+        /// "lt"  : less than
+        /// "gt"  : greater than
+        /// "lte" : less or equal
+        /// "gte" : greater or equal
+        /// "neq" : not equal
+        /// </summary>
+        public string Op { get; set; }
+      
+        /// <summary>
+        /// Value
+        /// </summary>
+        public string Value { get; set; }
     }
 }

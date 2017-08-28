@@ -48,6 +48,9 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldMediaFilesService), typeof(NfieldMediaFilesService));
             registerTransient(typeof(INfieldLanguagesService), typeof(NfieldLanguagesService));
             registerTransient(typeof(INfieldTranslationsService), typeof(NfieldTranslationsService));
+            registerTransient(typeof(INfieldSurveyEmailSettingsService), typeof(NfieldSurveyEmailSettingsService));
+            registerTransient(typeof(INfieldSurveyInvitationImagesService), typeof(NfieldSurveyInvitationImagesService));
+            registerTransient(typeof(INfieldSurveyInvitationTemplatesService), typeof(NfieldSurveyInvitationTemplatesService)); 
             registerTransient(typeof(INfieldSurveySettingsService), typeof(NfieldSurveySettingsService));
             registerTransient(typeof(INfieldSurveyResponseCodesService), typeof(NfieldSurveyResponseCodesService));
             registerTransient(typeof(INfieldSurveyRelocationsService), typeof(NfieldSurveyRelocationsService));
@@ -61,10 +64,12 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldSurveyPackageService), typeof(NfieldSurveyPackageService));
             registerTransient(typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService));
             registerTransient(typeof(INfieldSurveySampleDataService), typeof(NfieldSurveySampleDataService));
+            registerTransient(typeof(INfieldSurveySampleService), typeof(NfieldSurveySampleService));
             registerTransient(typeof(INfieldHttpClient), typeof(NfieldHttpClient));
             registerTransient(typeof(IFileSystem), typeof(FileSystem));
             registerTransient(typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility));
             registerTransient(typeof(IAesManagedWrapper), typeof(AesManagedWrapper));
+            registerTransient(typeof(INfieldSurveyInviteRespondentsService), typeof(NfieldSurveyInviteRespondentsService));
         }
 
     }

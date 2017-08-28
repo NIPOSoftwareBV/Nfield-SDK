@@ -13,19 +13,21 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
-
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// Extension of <see cref="InvitationTemplateModel"/> that says whether the template is valid
     /// </summary>
-    public interface INfieldSurveyDataService
+    public class InvitationTemplateModelValidated : InvitationTemplateModel
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Whether the template is valid
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        public bool IsValid { get; internal set; }
+
+        /// <summary>
+        /// The validation error in case the template is invalid
+        /// </summary>
+        public string ValidationError { get; internal set; }
     }
 }

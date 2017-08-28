@@ -243,6 +243,26 @@ namespace Nfield.SDK.Samples
                         language.Id, translation).Wait();
                 }
 
+                //
+                // sample management
+                //
+
+                // sample is a csv file with headers
+                const string sample = @"
+RepondentKey, Email, Gender
+rk1, jan@apekool.com, male
+rk2, truus@apekool.com, female";
+
+                var sampleManagement = new NfieldSampleManagement(connection.GetService<INfieldSurveySampleService>());
+
+                // upload the sample
+                sampleManagement.UploadSample(survey.SurveyId, sample);
+
+                // download the sample
+                sampleManagement.DownloadSample(survey.SurveyId);
+
+                // delete a sample record
+                sampleManagement.DeleteSample(survey.SurveyId, "rk1");
             }
         }
 

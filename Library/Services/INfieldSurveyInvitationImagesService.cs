@@ -13,19 +13,20 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.IO;
 using System.Threading.Tasks;
 using Nfield.Models;
 
 namespace Nfield.Services
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// Service for uploading images for a survey
     /// </summary>
-    public interface INfieldSurveyDataService
+    public interface INfieldSurveyInvitationImagesService
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Uploads an image for the specified survey, so it can be used in invitation templates
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        Task<AddInvitationImageResult> AddImageAsync(string surveyId, string filename, Stream content);
     }
 }
