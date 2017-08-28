@@ -13,7 +13,9 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Nfield.Models;
 
@@ -35,6 +37,17 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task<IQueryable<SurveyPublicId>> QueryAsync(string surveyId);
+
+        /// <summary>
+        /// Gets public ids queryable object.
+        /// </summary>
+        /// <param name="surveyId">The survey for which public ids are returned</param>
+        /// <param name="models"></param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task PutAsync(string surveyId, IEnumerable<SurveyPublicId> models);
 
         #endregion
     }
