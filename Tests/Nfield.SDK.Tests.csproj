@@ -100,6 +100,10 @@
     <Compile Include="Services\NfieldBackgroundTasksServiceTests.cs" />
     <Compile Include="Services\NfieldInterviewQualityTests.cs" />
     <Compile Include="Services\NfieldRespondentDataEncryptServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyEmailSettingsServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInvitationImagesServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInvitationTemplatesServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInviteRespondentsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyPackageServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyPublishServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyInterviewerWorkpackageDistributionServiceTests.cs" />
@@ -110,6 +114,7 @@
     <Compile Include="Services\NfieldSurveyResponseCodesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyFieldworkServiceTests.cs" />
     <Compile Include="Services\NfieldSurveySampleDataServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveySampleTests.cs" />
     <Compile Include="Services\NfieldSurveyScriptServiceTests.cs" />
     <Compile Include="Services\NfieldServiceTestsBase.cs" />
     <Compile Include="Services\NfieldFieldworkOfficesServiceTests.cs" />

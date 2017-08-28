@@ -13,19 +13,29 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
 
-namespace Nfield.Services
+using System;
+
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// Represent an overview of the status of all the invitation batches for a survey
     /// </summary>
-    public interface INfieldSurveyDataService
+    public class InvitationMonitorSurveyStatus : InvitationMonitorStatusBase
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Name of the survey
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        public string SurveyName { get; set; }
+
+        /// <summary>
+        /// True if invitations are blocked
+        /// </summary>
+        public bool InvitationsBlocked { get; set; }
+
+        /// <summary>
+        /// Survey's batches latest activity (most recent ScheduledFor value for the batches)
+        /// </summary>
+        public DateTime? LastActivity { get; set; }
     }
 }

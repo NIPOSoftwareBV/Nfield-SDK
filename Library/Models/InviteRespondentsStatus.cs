@@ -13,19 +13,28 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
+using System;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// Status of the invite respondents request
     /// </summary>
-    public interface INfieldSurveyDataService
+    public class InviteRespondentsStatus
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Number of respondents invited
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        public int Count { get; set; }
+
+        /// <summary>
+        /// Description of the status of the invite operation
+        /// </summary>
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Message detail when <see cref="Status"/> indicates an error
+        /// </summary>
+        public string ErrorMessage { get; set; }
     }
 }

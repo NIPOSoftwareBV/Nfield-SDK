@@ -13,19 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
+using System;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// Status of deleted sample
     /// </summary>
-    public interface INfieldSurveyDataService
+    public class SampleDeleteStatus
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Number of deleted sample records
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        public int DeletedCount { get; set; }
     }
 }
