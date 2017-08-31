@@ -29,7 +29,7 @@ namespace Nfield.Models
         public int? RejectedCount { get; set; }
 
         /// <summary>
-        /// Number of currently active non-test interviews
+        /// Number of currently active live interviews
         /// </summary>
         public int? ActiveLiveCount { get; set; }
 
