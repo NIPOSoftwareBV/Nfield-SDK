@@ -46,7 +46,7 @@ namespace Nfield.Models
 
         /// <summary>
         /// Respondent filters.
-        /// If this is null then the batch will be sent for all <see cref="RespondentKeys"/>
+        /// If this is null then the batch will be sent for all <see cref="InvitationBatch.RespondentKeys"/>
         /// </summary>
         public IEnumerable<SampleFilter> Filters { get; set; }
 

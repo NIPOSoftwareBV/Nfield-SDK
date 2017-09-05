@@ -46,7 +46,7 @@ namespace Nfield.Models
 
         /// <summary>
         /// List of sample records to send the invitation to.
-        /// If this is null then the batch will be sent using the <see cref="Filters"/>
+        /// If this is null then the batch will be sent using the <see cref="InvitationBatchWithFilter.Filters"/>
         /// </summary>
         public IEnumerable<string> RespondentKeys { get; set; }
     }
