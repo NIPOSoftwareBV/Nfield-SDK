@@ -125,6 +125,7 @@
     <Compile Include="Services\NfieldSurveyPublicIdsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveySettingsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveysServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyVarFileServiceTests.cs" />
     <Compile Include="Services\NfieldTranslationsServiceTests.cs" />
     <Compile Include="TestHelpers\TaskHelpers.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtilityTests.cs" />

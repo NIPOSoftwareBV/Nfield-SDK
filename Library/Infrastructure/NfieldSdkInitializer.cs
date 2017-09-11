@@ -70,6 +70,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility));
             registerTransient(typeof(IAesManagedWrapper), typeof(AesManagedWrapper));
             registerTransient(typeof(INfieldSurveyInviteRespondentsService), typeof(NfieldSurveyInviteRespondentsService));
+            registerTransient(typeof(INfieldSurveyVarFileService), typeof(NfieldSurveyVarFileService));
         }
 
     }
