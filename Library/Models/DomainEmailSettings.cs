@@ -16,30 +16,10 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Dto for the email settings of a domain
+    /// Dto for reading the email settings of a domain
     /// </summary>
-    public class DomainEmailSettings
+    public class DomainEmailSettings : EmailSettingsEditable
     {
-        /// <summary>
-        /// The 'from' email address
-        /// </summary>
-        public string FromAddress { get; set; }
-
-        /// <summary>
-        /// Name of the sender
-        /// </summary>
-        public string FromName { get; set; }
-
-        /// <summary>
-        /// The 'reply to' address
-        /// </summary>
-        public string ReplyToAddress { get; set; }
-
-        /// <summary>
-        /// The physical address
-        /// </summary>
-        public string PostalAddress { get; set; }
-
         /// <summary>
         /// The default 'from' email address
         /// </summary>

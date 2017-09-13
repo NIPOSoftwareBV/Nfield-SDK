@@ -1,4 +1,4 @@
-﻿//    This file is part of Nfield.SDK.
+//    This file is part of Nfield.SDK.
 //
 //    Nfield.SDK is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU Lesser General Public License as published by
@@ -16,30 +16,28 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Dto for the response of a get survey email settings request
+    /// Base email settings class
     /// </summary>
-    public class SurveyEmailSettingsResponse
+    public class EmailSettingsEditable
     {
         /// <summary>
-        /// The domain's email settings
+        /// The 'from' email address
         /// </summary>
-        public DomainEmailSettings DomainEmailSettings { get; set; }
+        public string FromAddress { get; set; }
 
         /// <summary>
-        /// The survey's email settings
+        /// Name of the sender
         /// </summary>
-        public SurveyEmailSettings SurveyEmailSettings { get; set; }
-    }
+        public string FromName { get; set; }
 
-    /// <summary>
-    /// Model for the email settings for a survey
-    /// </summary>
-    public class SurveyEmailSettings : EmailSettingsEditable
-    {
         /// <summary>
-        /// The survey's id
+        /// The 'reply to' address
         /// </summary>
-        public string Id { get; set; }
+        public string ReplyToAddress { get; set; }
 
+        /// <summary>
+        /// The physical address
+        /// </summary>
+        public string PostalAddress { get; set; }
     }
 }

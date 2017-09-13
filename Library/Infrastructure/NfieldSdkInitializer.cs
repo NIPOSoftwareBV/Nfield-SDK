@@ -48,6 +48,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldMediaFilesService), typeof(NfieldMediaFilesService));
             registerTransient(typeof(INfieldLanguagesService), typeof(NfieldLanguagesService));
             registerTransient(typeof(INfieldTranslationsService), typeof(NfieldTranslationsService));
+            registerTransient(typeof(INfieldDomainEmailSettingsService), typeof(NfieldDomainEmailSettingsService));
             registerTransient(typeof(INfieldSurveyEmailSettingsService), typeof(NfieldSurveyEmailSettingsService));
             registerTransient(typeof(INfieldSurveyInvitationImagesService), typeof(NfieldSurveyInvitationImagesService));
             registerTransient(typeof(INfieldSurveyInvitationTemplatesService), typeof(NfieldSurveyInvitationTemplatesService)); 
