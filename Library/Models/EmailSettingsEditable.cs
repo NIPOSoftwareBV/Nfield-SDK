@@ -15,6 +15,9 @@
 
 namespace Nfield.Models
 {
+    /// <summary>
+    /// Base email settings class
+    /// </summary>
     public class EmailSettingsEditable
     {
         /// <summary>
