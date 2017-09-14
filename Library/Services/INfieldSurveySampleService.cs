@@ -62,5 +62,14 @@ namespace Nfield.Services
         /// <param name="respondentKey">The id of the respondent to be blocked</param>
         /// <returns>The number of respondents successfully blocked</returns>
         Task<int> BlockAsync(string surveyId, string respondentKey);
+
+        /// <summary>
+        /// Reset the specified respondent in the survey
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="respondentKey">The id of the respondent to be reset</param>
+        /// <returns>The number of respondents successfully reset</returns>
+        Task<int> ResetAsync(string surveyId, string respondentKey);
+
     }
 }

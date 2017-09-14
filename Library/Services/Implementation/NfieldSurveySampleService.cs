@@ -89,6 +89,24 @@ namespace Nfield.Services.Implementation
                     .FlattenExceptions();
         }
 
+        public Task<int> ResetAsync(string surveyId, string respondentKey)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
+
+            var uri = SurveySampleUrl(surveyId) + @"/Reset";
+
+            var filters = new List<SampleFilter>
+            {
+                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+            };
+
+            return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleResetStatus>(stringResult.Result).ResetCount)
+                .FlattenExceptions();
+        }
+
         #region Implementation of INfieldConnectionClientObject
 
         public INfieldConnectionClient ConnectionClient { get; internal set; }
