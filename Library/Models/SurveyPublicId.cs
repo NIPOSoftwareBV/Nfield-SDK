@@ -21,6 +21,11 @@ namespace Nfield.Models
     public class SurveyPublicId
     {
         /// <summary>
+        /// The public id that is used to link to the survey
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
         /// The link type.
         /// </summary>
         public string LinkType { get; set; }

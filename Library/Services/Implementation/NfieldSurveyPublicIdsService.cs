@@ -48,6 +48,17 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldSurveyPublicIdsService.PutAsync"/>
+        /// </summary>
+        public Task PutAsync(string surveyId, IEnumerable<SurveyPublicId> models)
+        {
+            CheckSurveyId(surveyId);
+
+            return Client.PutAsJsonAsync(PublicIdsApi(surveyId).AbsoluteUri, models)
+                .FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
