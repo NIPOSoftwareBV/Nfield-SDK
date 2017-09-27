@@ -30,6 +30,7 @@ namespace Nfield.Models
 
         /// <summary>
         /// Number of currently active live interviews
+        /// Number of ghjgcurrently active live interviews
         /// </summary>
         public int? ActiveLiveCount { get; set; }
 
