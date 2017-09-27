@@ -20,6 +20,7 @@ using System.Net;
 using System.Net.Http;
 using Moq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
@@ -31,7 +32,7 @@ namespace Nfield.Services
     /// <summary>
     /// Tests for <see cref="NfieldSurveySampleService"/>
     /// </summary>
-    public class NfieldSurveySampleTests: NfieldServiceTestsBase
+    public class NfieldSurveySampleTests : NfieldServiceTestsBase
     {
         private const string SurveyId = "MySurvey";
 
@@ -214,7 +215,7 @@ namespace Nfield.Services
                         filters => FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
-                        JsonConvert.SerializeObject(new SampleDeleteStatus {DeletedCount = deletedCount}))));
+                        JsonConvert.SerializeObject(new SampleDeleteStatus { DeletedCount = deletedCount }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -290,7 +291,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Block",
-                                It.Is<IEnumerable<SampleFilter>>(filters => 
+                                It.Is<IEnumerable<SampleFilter>>(filters =>
                                     FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                             .Returns(CreateTask(HttpStatusCode.OK,
                                 new StringContent(
@@ -396,7 +397,11 @@ namespace Nfield.Services
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
-                        JsonConvert.SerializeObject(new SampleResetStatus { ResetCount = 1 }))));
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, ResetTotal = 1 }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);

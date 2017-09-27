@@ -111,6 +111,7 @@
     <Compile Include="Models\AddInvitationImageResult.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\AddressSampleData.cs" />
+    <Compile Include="Models\BackgroundActivityStatus.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\DataCryptographyModel.cs" />
