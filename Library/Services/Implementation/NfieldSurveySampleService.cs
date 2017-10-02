@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Nfield.Exceptions;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -140,7 +141,7 @@ namespace Nfield.Services.Implementation
                             return tcs.Task;
                         case 3: // failed
                         default: 
-                            throw new Exception("Reset did not complete successfully");
+                            throw new NfieldErrorException("Reset did not complete successfully");
                     }
                 })
                 .Unwrap();
