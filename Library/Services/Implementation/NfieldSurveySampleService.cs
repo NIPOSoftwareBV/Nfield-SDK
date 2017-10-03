@@ -13,12 +13,17 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Nfield.Exceptions;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -103,8 +108,43 @@ namespace Nfield.Services.Implementation
 
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleResetStatus>(stringResult.Result).ResetCount)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result))
+                .Unwrap()
                 .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// Recursive method that polls the activity status until it completes.
+        /// </summary>
+        /// <param name="activityId">The id of the activity to wait for.</param>
+        /// <returns></returns>
+        private Task<int> GetActivityResultAsync(string activityId)
+        {
+            return Client.GetAsync(BackgroundActivityUrl(activityId))
+                .ContinueWith(response => response.Result.Content.ReadAsStringAsync())
+                .Unwrap()
+                .ContinueWith(content =>
+                {
+                    var obj = JObject.Parse(content.Result);
+                    var status = obj["Status"].Value<int>();
+
+                    switch (status)
+                    {
+                        case 0: // pending
+                        case 1: // started
+                            Thread.Sleep(millisecondsTimeout: 200);
+                            return GetActivityResultAsync(activityId);
+                        case 2: // succeeded
+                            var tcs = new TaskCompletionSource<int>();
+                            tcs.SetResult(obj["ResetTotal"].Value<int>());
+                            return tcs.Task;
+                        case 3: // failed
+                        default: 
+                            throw new NfieldErrorException("Reset did not complete successfully");
+                    }
+                })
+                .Unwrap();
         }
 
         #region Implementation of INfieldConnectionClientObject
@@ -120,6 +160,13 @@ namespace Nfield.Services.Implementation
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
+        private string BackgroundActivityUrl(string activityId)
+        {
+            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            result.AppendFormat(CultureInfo.InvariantCulture, @"BackgroundActivities/{0}", activityId);
+
+            return result.ToString();
+        }
         private string SurveySampleUrl(string surveyId)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
