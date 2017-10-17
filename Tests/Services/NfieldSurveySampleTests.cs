@@ -201,27 +201,29 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestDeleteAsync_SampleExists_ReturnsDeletedCount()
+        public void TestDeleteAsync_ParamsAreOk_Successful()
         {
             const string respondentKey = "a sample record id";
-            const int deletedCount = 887;
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient
-                .Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample",
-                    It.Is<IEnumerable<SampleFilter>>(
-                        filters => FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Delete",
+                    It.Is<IEnumerable<SampleFilter>>(filters =>
+                        FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
-                        JsonConvert.SerializeObject(new SampleDeleteStatus { DeletedCount = deletedCount }))));
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var actual = target.DeleteAsync(SurveyId, respondentKey).Result;
+            var result = target.DeleteAsync(SurveyId, respondentKey).Result;
 
-            Assert.Equal(deletedCount, actual);
+            Assert.Equal(1, result);
         }
 
         #endregion

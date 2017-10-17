@@ -64,15 +64,17 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId);
+            var uri = SurveySampleUrl(surveyId) + @"/Delete";
             var filters = new List<SampleFilter>
             {
                 new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
             };
 
-            return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
+            return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleDeleteStatus>(stringResult.Result).DeletedCount)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "DeletedTotal"))
+                .Unwrap()
                 .FlattenExceptions();
         }
 
@@ -109,7 +111,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result))
+                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "ResetTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -118,8 +120,9 @@ namespace Nfield.Services.Implementation
         /// Recursive method that polls the activity status until it completes.
         /// </summary>
         /// <param name="activityId">The id of the activity to wait for.</param>
+        /// <param name="fieldNameResult">The name of the result field</param>
         /// <returns></returns>
-        private Task<int> GetActivityResultAsync(string activityId)
+        private Task<int> GetActivityResultAsync(string activityId, string fieldNameResult)
         {
             return Client.GetAsync(BackgroundActivityUrl(activityId))
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync())
@@ -134,14 +137,14 @@ namespace Nfield.Services.Implementation
                         case 0: // pending
                         case 1: // started
                             Thread.Sleep(millisecondsTimeout: 200);
-                            return GetActivityResultAsync(activityId);
+                            return GetActivityResultAsync(activityId, fieldNameResult);
                         case 2: // succeeded
                             var tcs = new TaskCompletionSource<int>();
-                            tcs.SetResult(obj["ResetTotal"].Value<int>());
+                            tcs.SetResult(obj[fieldNameResult].Value<int>());
                             return tcs.Task;
                         case 3: // failed
                         default: 
-                            throw new NfieldErrorException("Reset did not complete successfully");
+                            throw new NfieldErrorException("Action did not complete successfully");
                     }
                 })
                 .Unwrap();
