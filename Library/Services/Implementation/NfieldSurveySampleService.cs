@@ -70,7 +70,7 @@ namespace Nfield.Services.Implementation
                 new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
             };
 
-            return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
+            return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
                 .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "DeletedTotal"))
