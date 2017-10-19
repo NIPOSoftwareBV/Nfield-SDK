@@ -64,7 +64,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId) + @"/Delete";
+            var uri = SurveySampleUrl(surveyId);
             var filters = new List<SampleFilter>
             {
                 new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}

@@ -208,7 +208,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Delete",
+            mockedHttpClient.Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample",
                     It.Is<IEnumerable<SampleFilter>>(filters =>
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
