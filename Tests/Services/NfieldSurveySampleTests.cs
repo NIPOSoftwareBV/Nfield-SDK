@@ -170,7 +170,7 @@ namespace Nfield.Services
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PostAsync(null, null)));
+                UnwrapAggregateException(target.DeleteAsync(null, null)));
         }
 
         [Fact]
@@ -179,25 +179,25 @@ namespace Nfield.Services
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.PostAsync("  ", null)));
+                UnwrapAggregateException(target.DeleteAsync("  ", null)));
         }
 
         [Fact]
-        public void TestDeleteAsync_SampleRecordIdIsNull_Throws()
+        public void TestDeleteAsync_RespondentKeyIsNull_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PostAsync(SurveyId, null)));
+                UnwrapAggregateException(target.DeleteAsync(SurveyId, null)));
         }
 
         [Fact]
-        public void TestDeleteAsync_SampleRecordIdIsEmpty_Throws()
+        public void TestDeleteAsync_RespondentKeyIsEmpty_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.PostAsync(SurveyId, "  ")));
+                UnwrapAggregateException(target.DeleteAsync(SurveyId, "  ")));
         }
 
         [Fact]
@@ -208,7 +208,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Delete",
+            mockedHttpClient.Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Delete",
                     It.Is<IEnumerable<SampleFilter>>(filters =>
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
