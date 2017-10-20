@@ -295,9 +295,13 @@ namespace Nfield.Services
             mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Block",
                                 It.Is<IEnumerable<SampleFilter>>(filters =>
                                     FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
-                            .Returns(CreateTask(HttpStatusCode.OK,
-                                new StringContent(
-                                    JsonConvert.SerializeObject(new SampleBlockStatus { BlockedCount = 1 }))));
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 1 }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -319,7 +323,11 @@ namespace Nfield.Services
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
-                        JsonConvert.SerializeObject(new SampleBlockStatus { BlockedCount = 0 }))));
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 0 }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);

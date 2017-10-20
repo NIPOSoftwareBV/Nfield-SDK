@@ -91,9 +91,11 @@ namespace Nfield.Services.Implementation
             };
 
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
-                    .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                    .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleBlockStatus>(stringResult.Result).BlockedCount)
-                    .FlattenExceptions();
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "BlockedTotal"))
+                .Unwrap()
+                .FlattenExceptions();
         }
 
         public Task<int> ResetAsync(string surveyId, string respondentKey)
