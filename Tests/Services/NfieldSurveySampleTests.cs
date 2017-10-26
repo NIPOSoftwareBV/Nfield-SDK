@@ -170,7 +170,7 @@ namespace Nfield.Services
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PostAsync(null, null)));
+                UnwrapAggregateException(target.DeleteAsync(null, null)));
         }
 
         [Fact]
@@ -179,49 +179,51 @@ namespace Nfield.Services
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.PostAsync("  ", null)));
+                UnwrapAggregateException(target.DeleteAsync("  ", null)));
         }
 
         [Fact]
-        public void TestDeleteAsync_SampleRecordIdIsNull_Throws()
+        public void TestDeleteAsync_RespondentKeyIsNull_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PostAsync(SurveyId, null)));
+                UnwrapAggregateException(target.DeleteAsync(SurveyId, null)));
         }
 
         [Fact]
-        public void TestDeleteAsync_SampleRecordIdIsEmpty_Throws()
+        public void TestDeleteAsync_RespondentKeyIsEmpty_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.PostAsync(SurveyId, "  ")));
+                UnwrapAggregateException(target.DeleteAsync(SurveyId, "  ")));
         }
 
         [Fact]
-        public void TestDeleteAsync_SampleExists_ReturnsDeletedCount()
+        public void TestDeleteAsync_ParamsAreOk_Successful()
         {
             const string respondentKey = "a sample record id";
-            const int deletedCount = 887;
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient
-                .Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample",
-                    It.Is<IEnumerable<SampleFilter>>(
-                        filters => FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
+            mockedHttpClient.Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample",
+                    It.Is<IEnumerable<SampleFilter>>(filters =>
+                        FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
-                        JsonConvert.SerializeObject(new SampleDeleteStatus { DeletedCount = deletedCount }))));
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var actual = target.DeleteAsync(SurveyId, respondentKey).Result;
+            var result = target.DeleteAsync(SurveyId, respondentKey).Result;
 
-            Assert.Equal(deletedCount, actual);
+            Assert.Equal(1, result);
         }
 
         #endregion
@@ -293,9 +295,13 @@ namespace Nfield.Services
             mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Block",
                                 It.Is<IEnumerable<SampleFilter>>(filters =>
                                     FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
-                            .Returns(CreateTask(HttpStatusCode.OK,
-                                new StringContent(
-                                    JsonConvert.SerializeObject(new SampleBlockStatus { BlockedCount = 1 }))));
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 1 }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -317,7 +323,11 @@ namespace Nfield.Services
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
-                        JsonConvert.SerializeObject(new SampleBlockStatus { BlockedCount = 0 }))));
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 0 }))));
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
