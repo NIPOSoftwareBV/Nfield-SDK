@@ -35,12 +35,12 @@ namespace Nfield.Services
         /// <summary>
         /// Adds a new survey script fragment.
         /// </summary>
-        Task<SurveyScript> AddAsync(string surveyId, SurveyScript surveyScript);
+        Task AddAsync(string surveyId, SurveyScript surveyScript);
 
         /// <summary>
         /// Updates the survey script fragment.
         /// </summary>
-        Task<SurveyScript> UpdateAsync(string surveyId, SurveyScript surveyScript);
+        Task UpdateAsync(string surveyId, SurveyScript surveyScript);
 
         /// <summary>
         /// Removes the survey script fragment.
