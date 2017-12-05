@@ -233,6 +233,7 @@
     <Compile Include="Services\INfieldSurveyRelocationsService.cs" />
     <Compile Include="Services\INfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\INfieldSurveySettingsService.cs" />
+    <Compile Include="Services\INfieldSurveyScriptFragmentService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
     <Compile Include="Services\INfieldSurveyVarFileService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
