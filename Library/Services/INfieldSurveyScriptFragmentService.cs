@@ -33,14 +33,10 @@ namespace Nfield.Services
         Task<IQueryable<SurveyScript>> QueryAsync(string surveyId);
 
         /// <summary>
-        /// Adds a new survey script fragment.
+        /// Upload script fragment for survey.
+        /// Will add or replace a script fragment with the specified <see cref="SurveyScript.FileName"/>.
         /// </summary>
-        Task AddAsync(string surveyId, SurveyScript surveyScript);
-
-        /// <summary>
-        /// Updates the survey script fragment.
-        /// </summary>
-        Task UpdateAsync(string surveyId, SurveyScript surveyScript);
+        Task PostAsync(string surveyId, SurveyScript surveyScript);
 
         /// <summary>
         /// Removes the survey script fragment.
