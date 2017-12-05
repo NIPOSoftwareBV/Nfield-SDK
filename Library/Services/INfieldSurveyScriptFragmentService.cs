@@ -14,22 +14,39 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Nfield.Models;
 
-namespace Nfield.Models
+namespace Nfield.Services
 {
     /// <summary>
-    /// Model for the ODIN script (fragment) for a survey
+    /// Represents a set of methods to read and update survey script fragments.
     /// </summary>
-    public class SurveyScript
+    public interface INfieldSurveyScriptFragmentService
     {
-        /// <summary>
-        /// The ODIN script or script fragment
-        /// </summary>
-        public string Script { get; set; }
+        #region CRUD on survey script fragments
 
         /// <summary>
-        /// The file name
+        /// Gets survey script fragment queryable object.
         /// </summary>
-        public string FileName { get; set; }
+        Task<IQueryable<SurveyScript>> QueryAsync(string surveyId);
+
+        /// <summary>
+        /// Adds a new survey script fragment.
+        /// </summary>
+        Task AddAsync(string surveyId, SurveyScript surveyScript);
+
+        /// <summary>
+        /// Updates the survey script fragment.
+        /// </summary>
+        Task UpdateAsync(string surveyId, SurveyScript surveyScript);
+
+        /// <summary>
+        /// Removes the survey script fragment.
+        /// </summary>
+        Task RemoveAsync(string surveyId, string fileName);
+
+        #endregion
     }
 }
