@@ -24,9 +24,14 @@ namespace Nfield.Services.Implementation
     {
         #region Implementation of INfieldSurveyScriptFragmentService
 
-        public Task<IQueryable<SurveyScript>> QueryAsync(string surveyId)
+        public Task<IQueryable<string>> QueryAsync(string surveyId)
         {
-            return Task.Factory.StartNew(() => { return Enumerable.Empty<SurveyScript>().AsQueryable(); });
+            return Task.Factory.StartNew(() => { return Enumerable.Empty<string>().AsQueryable(); });
+        }
+
+        public Task<SurveyScript> GetAsync(string surveyId, string fileName)
+        {
+            return Task.Factory.StartNew(() => { return new SurveyScript(); });
         }
 
         public Task PostAsync(string surveyId, SurveyScript surveyScript)
