@@ -46,8 +46,26 @@ namespace Nfield.Services
         {
             var expectedInterviewers = new[]
             {
-                new SurveyInterviewerAssignmentModel {InterviewerId = "id1", IsActive = true, IsAssigned = true},
-                new SurveyInterviewerAssignmentModel {InterviewerId = "id2", IsActive = false, IsAssigned = false}
+                new SurveyInterviewerAssignmentModel
+                {
+                    InterviewerId = "id1",
+                    IsActive = true,
+                    IsAssigned = true,
+                    SuccessfulCount = 1,
+                    UnsuccessfulCount = 1,
+                    DroppedOutCount = 2,
+                    RejectedCount = 2
+                },
+                new SurveyInterviewerAssignmentModel
+                {
+                    InterviewerId = "id2",
+                    IsActive = false,
+                    IsAssigned = false,
+                    SuccessfulCount = 0,
+                    UnsuccessfulCount = 0,
+                    DroppedOutCount = 0,
+                    RejectedCount = 0
+                }
             };
             const string surveyId = "surveyId";
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -66,9 +84,18 @@ namespace Nfield.Services
             Assert.Equal(expectedInterviewers[0].InterviewerId, actual[0].InterviewerId);
             Assert.Equal(expectedInterviewers[0].IsActive, actual[0].IsActive);
             Assert.Equal(expectedInterviewers[0].IsAssigned, actual[0].IsAssigned);
+            Assert.Equal(expectedInterviewers[0].SuccessfulCount, actual[0].SuccessfulCount);
+            Assert.Equal(expectedInterviewers[0].UnsuccessfulCount, actual[0].UnsuccessfulCount);
+            Assert.Equal(expectedInterviewers[0].DroppedOutCount, actual[0].DroppedOutCount);
+            Assert.Equal(expectedInterviewers[0].RejectedCount, actual[0].RejectedCount);
+
             Assert.Equal(expectedInterviewers[1].InterviewerId, actual[1].InterviewerId);
             Assert.Equal(expectedInterviewers[1].IsActive, actual[1].IsActive);
             Assert.Equal(expectedInterviewers[1].IsAssigned, actual[1].IsAssigned);
+            Assert.Equal(expectedInterviewers[1].SuccessfulCount, actual[1].SuccessfulCount);
+            Assert.Equal(expectedInterviewers[1].UnsuccessfulCount, actual[1].UnsuccessfulCount);
+            Assert.Equal(expectedInterviewers[1].DroppedOutCount, actual[1].DroppedOutCount);
+            Assert.Equal(expectedInterviewers[1].RejectedCount, actual[1].RejectedCount);
         }
 
         #endregion
