@@ -13,10 +13,10 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Infrastructure;
-using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
@@ -29,12 +29,12 @@ namespace Nfield.Services.Implementation
             return Task.Factory.StartNew(() => { return Enumerable.Empty<string>().AsQueryable(); });
         }
 
-        public Task<SurveyScript> GetAsync(string surveyId, string fileName)
+        public Task<string> GetAsync(string surveyId, string fileName)
         {
-            return Task.Factory.StartNew(() => { return new SurveyScript(); });
+            return Task.Factory.StartNew(() => { return String.Empty; });
         }
 
-        public Task PostAsync(string surveyId, SurveyScript surveyScript)
+        public Task AddOrUpdateAsync(string surveyId, string fileName, string script)
         {
             return Task.Factory.StartNew(() => { });
         }
