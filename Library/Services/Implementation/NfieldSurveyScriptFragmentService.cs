@@ -14,8 +14,15 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using Newtonsoft.Json;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
 
 namespace Nfield.Services.Implementation
@@ -26,22 +33,64 @@ namespace Nfield.Services.Implementation
 
         public Task<IQueryable<string>> QueryAsync(string surveyId)
         {
-            return Task.Factory.StartNew(() => { return Enumerable.Empty<string>().AsQueryable(); });
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+
+            return Client.GetAsync(FragmentsApi(surveyId, null).AbsoluteUri)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<List<string>>(stringTask.Result).AsQueryable())
+                .FlattenExceptions();
         }
 
         public Task<string> GetAsync(string surveyId, string fileName)
         {
-            return Task.Factory.StartNew(() => { return String.Empty; });
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException("fileName");
+            }
+
+            return Client.GetAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync())
+                .ContinueWith(b => b.Result.Result)
+                .FlattenExceptions();
         }
 
         public Task AddOrUpdateAsync(string surveyId, string fileName, string script)
         {
-            return Task.Factory.StartNew(() => { });
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException("fileName");
+            }
+
+            var postContent = new StringContent(script);
+            postContent.Headers.ContentType = new MediaTypeHeaderValue("text/plain") {CharSet = "UTF-8"};
+            return Client.PutAsync(FragmentsApi(surveyId, fileName).AbsoluteUri, postContent)
+                .FlattenExceptions();
         }
 
         public Task RemoveAsync(string surveyId, string fileName)
         {
-            return Task.Factory.StartNew(() => { });
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException("fileName");
+            }
+
+            return Client.DeleteAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
+                .FlattenExceptions();
         }
 
         #endregion
@@ -56,5 +105,22 @@ namespace Nfield.Services.Implementation
         }
 
         #endregion
+
+        private INfieldHttpClient Client
+        {
+            get { return ConnectionClient.Client; }
+        }
+
+        private Uri FragmentsApi(string surveyId, string fileName)
+        {
+            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
+            uriText.AppendFormat("Surveys/{0}/ScriptFragments/", surveyId);
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                uriText.Append(HttpUtility.UrlEncode(fileName));
+            }
+            return new Uri(uriText.ToString());
+        }
+
     }
 }
