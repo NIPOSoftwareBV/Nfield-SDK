@@ -24,6 +24,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -33,10 +34,7 @@ namespace Nfield.Services.Implementation
 
         public Task<IQueryable<string>> QueryAsync(string surveyId)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             return Client.GetAsync(FragmentsApi(surveyId, null).AbsoluteUri)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -46,14 +44,8 @@ namespace Nfield.Services.Implementation
 
         public Task<string> GetAsync(string surveyId, string fileName)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentNullException("fileName");
-            }
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
 
             return Client.GetAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync())
@@ -63,14 +55,9 @@ namespace Nfield.Services.Implementation
 
         public Task AddOrUpdateAsync(string surveyId, string fileName, string script)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentNullException("fileName");
-            }
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
+            Ensure.ArgumentNotNull(script, nameof(script));
 
             var postContent = new StringContent(script);
             postContent.Headers.ContentType = new MediaTypeHeaderValue("text/plain") {CharSet = "UTF-8"};
@@ -80,14 +67,8 @@ namespace Nfield.Services.Implementation
 
         public Task RemoveAsync(string surveyId, string fileName)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentNullException("fileName");
-            }
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
 
             return Client.DeleteAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
                 .FlattenExceptions();
