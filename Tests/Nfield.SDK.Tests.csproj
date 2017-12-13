@@ -116,6 +116,7 @@
     <Compile Include="Services\NfieldSurveyFieldworkServiceTests.cs" />
     <Compile Include="Services\NfieldSurveySampleDataServiceTests.cs" />
     <Compile Include="Services\NfieldSurveySampleTests.cs" />
+    <Compile Include="Services\NfieldSurveyScriptFragmentServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyScriptServiceTests.cs" />
     <Compile Include="Services\NfieldServiceTestsBase.cs" />
     <Compile Include="Services\NfieldFieldworkOfficesServiceTests.cs" />

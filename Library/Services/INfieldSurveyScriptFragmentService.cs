@@ -28,15 +28,19 @@ namespace Nfield.Services
         #region CRUD on survey script fragments
 
         /// <summary>
-        /// Gets survey script fragment queryable object.
+        /// Gets all script fragment names for a survey.
         /// </summary>
-        Task<IQueryable<SurveyScript>> QueryAsync(string surveyId);
+        Task<IQueryable<string>> QueryAsync(string surveyId);
 
         /// <summary>
-        /// Upload script fragment for survey.
-        /// Will add or replace a script fragment with the specified <see cref="SurveyScript.FileName"/>.
+        /// Gets a survey script fragment object.
         /// </summary>
-        Task PostAsync(string surveyId, SurveyScript surveyScript);
+        Task<string> GetAsync(string surveyId, string fileName);
+
+        /// <summary>
+        /// Adds or updates the script fragment for survey.
+        /// </summary>
+        Task AddOrUpdateAsync(string surveyId, string fileName, string script);
 
         /// <summary>
         /// Removes the survey script fragment.
