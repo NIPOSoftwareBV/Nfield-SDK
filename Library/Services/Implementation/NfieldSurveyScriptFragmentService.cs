@@ -48,8 +48,8 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
 
             return Client.GetAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync())
-                .ContinueWith(b => b.Result.Result)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<string>())
+                .ContinueWith(b => b.Result.Result )
                 .FlattenExceptions();
         }
 
