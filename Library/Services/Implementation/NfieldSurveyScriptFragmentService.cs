@@ -61,7 +61,7 @@ namespace Nfield.Services.Implementation
 
             var postContent = new StringContent(script);
             postContent.Headers.ContentType = new MediaTypeHeaderValue("text/plain") {CharSet = "UTF-8"};
-            return Client.PutAsync(FragmentsApi(surveyId, fileName).AbsoluteUri, postContent)
+            return Client.PostAsync(FragmentsApi(surveyId, fileName).AbsoluteUri, postContent)
                 .FlattenExceptions();
         }
 
