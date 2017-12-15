@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -48,7 +47,8 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
 
             return Client.GetAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync())
+                .ContinueWith(b => b.Result.Result)
                 .FlattenExceptions();
         }
 
@@ -58,8 +58,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
             Ensure.ArgumentNotNull(script, nameof(script));
 
-            var postContent = new StringContent(script);
-            postContent.Headers.ContentType = new MediaTypeHeaderValue("text/plain") {CharSet = "UTF-8"};
+            var postContent = new StringContent(script, Encoding.Unicode);
             return Client.PostAsync(FragmentsApi(surveyId, fileName).AbsoluteUri, postContent)
                 .FlattenExceptions();
         }
