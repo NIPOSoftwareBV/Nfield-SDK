@@ -4,7 +4,7 @@
 This SDK allows you to build applications that take advantage of the Nfield services.
     
 ## Requirements
-- .NET Framework 4.0 or later<
+- .NET Framework 4.0 or later.
 - To use this SDK to call Nfield services you need an Nfield account.
 
 ## Usage
@@ -66,4 +66,4 @@ For feedback related to this SDK please visit the
 [Nfield website].
 
 [Ninject]: http://www.ninject.org/
-[Nfield website]: http://www.nfieldmr.com/contact.aspx
+[Nfield website]: https://www.nipo.com/

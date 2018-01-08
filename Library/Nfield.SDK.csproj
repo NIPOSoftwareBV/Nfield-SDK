@@ -233,6 +233,7 @@
     <Compile Include="Services\INfieldSurveyRelocationsService.cs" />
     <Compile Include="Services\INfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\INfieldSurveySettingsService.cs" />
+    <Compile Include="Services\INfieldSurveyScriptFragmentService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
     <Compile Include="Services\INfieldSurveyVarFileService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="Services\Implementation\NfieldSamplingPointInterviewerAssignmentsService.cs" />
     <Compile Include="Services\Implementation\NfieldRespondentDataEncryptService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInviteRespondentsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyScriptFragmentService.cs" />
     <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\Ensure.cs" />
