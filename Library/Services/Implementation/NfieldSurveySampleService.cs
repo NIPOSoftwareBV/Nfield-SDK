@@ -17,6 +17,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -34,6 +35,19 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveySampleService : INfieldSurveySampleService, INfieldConnectionClientObject
     {
+
+        public class ClearSurveySampleModel
+        {
+            /// <summary>
+            /// [MANDATORY] Filters to be applied for the clear operation
+            /// </summary>
+            public IEnumerable<SampleFilter> Filters { get; set; }
+
+            /// <summary>
+            /// The name of the columns to be cleared
+            /// </summary>
+            public IEnumerable<string> Columns { get; set; }
+        }
 
         public Task<string> GetAsync(string surveyId)
         {
@@ -114,6 +128,37 @@ namespace Nfield.Services.Implementation
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
                 .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "ResetTotal"))
+                .Unwrap()
+                .FlattenExceptions();
+        }
+
+        public Task<int> ClearAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
+
+            if (columnsToClear == null || !columnsToClear.Any())
+            {
+                throw new ArgumentException(nameof(columnsToClear));
+            }
+
+            var uri = SurveySampleUrl(surveyId) + @"/Clear";
+
+            var filters = new List<SampleFilter>
+            {
+                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+            };
+
+            var request = new ClearSurveySampleModel
+            {
+                Filters = filters,
+                Columns = columnsToClear
+            };
+
+            return Client.PutAsJsonAsync(uri, request)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "ClearTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }

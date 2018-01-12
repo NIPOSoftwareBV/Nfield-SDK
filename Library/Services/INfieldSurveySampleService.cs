@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nfield.Models;
 
@@ -71,5 +72,13 @@ namespace Nfield.Services
         /// <returns>The number of respondents successfully reset</returns>
         Task<int> ResetAsync(string surveyId, string respondentKey);
 
+        /// <summary>
+        /// Clears the specified columns for the specified respondent in the survey.
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="respondentKey">The id of the respondent to be cleared</param>
+        /// <param name="columnsToClear">The name of the columns to be cleared</param>
+        /// <returns>The number of respondents successfully clear</returns>
+        Task<int> ClearAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear);
     }
 }
