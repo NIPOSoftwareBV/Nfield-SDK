@@ -146,7 +146,7 @@ namespace Nfield.Services.Implementation
             var request = new ClearSurveySampleModel
             {
                 Filters = filters,
-                Columns = null
+                Columns = columnsToClear
             };
 
             return Client.PutAsJsonAsync(uri, request)
