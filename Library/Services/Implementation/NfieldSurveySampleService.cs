@@ -17,6 +17,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -135,6 +136,11 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
+
+            if (columnsToClear == null || !columnsToClear.Any())
+            {
+                throw new ArgumentException(nameof(columnsToClear));
+            }
 
             var uri = SurveySampleUrl(surveyId) + @"/Clear";
 
