@@ -423,6 +423,111 @@ namespace Nfield.Services
         #endregion
 
 
+        #region ClearAsync
+
+        [Fact]
+        public void TestClearAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearAsync(null, "anything", null)));
+        }
+
+        [Fact]
+        public void TestClearAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearAsync(string.Empty, "anything", null)));
+        }
+
+        [Fact]
+        public void TestClearAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearAsync("  ", "anything", null)));
+        }
+
+        [Fact]
+        public void TestClearAsync_RespondentKeyIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearAsync(SurveyId, null, null)));
+        }
+
+        [Fact]
+        public void TestClearAsync_RespondentKeyIsWhiteSpace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearAsync(SurveyId, "   ", null)));
+        }
+
+        [Fact]
+        public void TestClearAsync_RespondentKeyIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearAsync(SurveyId, string.Empty, null)));
+        }
+
+        [Fact]
+        public void TestClearAsync_ColumnsAreNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearAsync(SurveyId, "anything", null)));
+        }
+
+        [Fact]
+        public void TestClearAsync_ColumnsAreEmptyList_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearAsync(SurveyId, "anything", new List<string>())));
+        }
+
+        [Fact]
+        public void TestClearAsync_ParamsAreOk_Successful()
+        {
+            const string respondentKey = "testRespondent123";
+            var columns = new List<string> { "ColumnName1", "ColumnName2" };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Clear",
+                    It.Is<NfieldSurveySampleService.ClearSurveySampleModel>(c =>
+                        FilterEquals(c.Filters.Single(), "RespondentKey", "eq", respondentKey) && c.Columns.Any(n => n == "ColumnName1") && c.Columns.Any(n => n == "ColumnName2"))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+
+            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
+
+            var target = new NfieldSurveySampleService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            var result = target.ClearAsync(SurveyId, respondentKey, columns).Result;
+
+            Assert.Equal(1, result);
+        }
+
+        #endregion
+
+
         private static bool FilterEquals(SampleFilter filter, string name, string op, string value)
         {
             return filter.Name.Equals(name)
