@@ -9,7 +9,7 @@ Postman is a tool for working with APIs. It has a lot of nice features:
 * Automate: run a collection for repetitive tasks (sign in, create survey, upload script, publish survey, start fieldwork)
 * Generate code: postman can even generate code based on a request
 
-![Postman with Nfield API Collection](Postman.PNG)
+![Postman with Nfield API Collection](Postman.png)
 *Figure 1. Postman with Nfield API Collections*
 
 
