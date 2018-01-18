@@ -18,12 +18,12 @@ using System;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Model for the ODIN script for a survey
+    /// Model for the ODIN script (fragment) for a survey
     /// </summary>
     public class SurveyScript
     {
         /// <summary>
-        /// The ODIN script
+        /// The ODIN script or script fragment
         /// </summary>
         public string Script { get; set; }
 

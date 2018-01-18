@@ -34,5 +34,25 @@ namespace Nfield.Models
         /// Whether the interviewer has downloaded the survey
         /// </summary>
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Number of successfully completed interviews for this interviewer on this survey
+        /// </summary>
+        public int SuccessfulCount { get; set; }
+        
+        /// <summary>
+        /// Number of unsuccessfully completed interviews for this interviewer on this survey
+        /// </summary>
+        public int UnsuccessfulCount { get; set; }
+        
+        /// <summary>
+        /// Number of dropped out interviews for this interviewer on this survey
+        /// </summary>
+        public int DroppedOutCount { get; set; }
+        
+        /// <summary>
+        /// Number of rejected interviews for this interviewer on this survey
+        /// </summary>
+        public int RejectedCount { get; set; }
     }
 }
