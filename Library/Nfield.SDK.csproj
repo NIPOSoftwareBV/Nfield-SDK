@@ -81,6 +81,7 @@
     <Compile Include="Exceptions\NfieldHttpResponseException.cs" />
     <Compile Include="Exceptions\NfieldErrorException.cs" />
     <Compile Include="Extensions\NfieldBackgroundTasksServiceExtensions.cs" />
+    <Compile Include="Extensions\NfieldConnectionClientExtensions.cs" />
     <Compile Include="Extensions\NfieldConnectionExtensions.cs" />
     <Compile Include="Extensions\NfieldInterviewersServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldLanguagesServiceExtensions.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Models\EmailSettingsEditable.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
+    <Compile Include="Models\Interview.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\InterviewerSamplingPointAssignmentModel.cs" />
     <Compile Include="Models\InvitationMonitorStatusBase.cs" />

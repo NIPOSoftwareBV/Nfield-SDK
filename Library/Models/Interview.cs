@@ -13,20 +13,26 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
+using System;
+using Newtonsoft.Json;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service to delete interview data
+    /// Holds all properties of an interviewer
     /// </summary>
-    public interface INfieldDeleteInterviewService
+    public class Interview
     {
         /// <summary>
-        /// Delete an interview of a survey
-        /// <param name="surveyId">Survey identifier</param>
-        /// <param name="interviewId">Interview identifier to be deleted</param>
+        /// Unique id of the survey
         /// </summary>
-        Task<int> DeleteAsync(string surveyId, string interviewId);
+        [JsonProperty]
+        public string SurveyId { get; internal set; }
+
+        /// <summary>
+        /// Unique id of the interview
+        /// </summary>
+        [JsonProperty]
+        public string InterviewId { get; internal set; }
     }
 }

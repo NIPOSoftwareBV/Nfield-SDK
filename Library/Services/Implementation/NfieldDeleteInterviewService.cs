@@ -17,6 +17,11 @@ using Nfield.Infrastructure;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Nfield.Extensions;
+using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -25,9 +30,19 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldDeleteInterviewService : INfieldDeleteInterviewService, INfieldConnectionClientObject
     {
-        public Task<string> DeleteAsync(string surveyId, string interviewId)
+        public Task<int> DeleteAsync(string surveyId, string interviewId)
         {
-            throw new NotImplementedException();
+            CheckSurveyId(surveyId);
+            CheckInterviewId(interviewId);
+            return Client.PutAsJsonAsync(DeleteIntervieApiUri(surveyId, interviewId),
+                    new Interview() {SurveyId = surveyId, InterviewId = interviewId})
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => 
+                     JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "DeletedTotal"))
+                .Unwrap()
+                .FlattenExceptions();
         }
 
         #region Implementation of INfieldConnectionClientObject
@@ -43,27 +58,25 @@ namespace Nfield.Services.Implementation
 
         private static void CheckSurveyId(string surveyId)
         {
-            if (surveyId == null)
-                throw new ArgumentNullException(nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             if (!Guid.TryParse(surveyId,out var _))
                 throw new ArgumentException("surveyId is not a valid identifier");
         }
 
         private static void CheckInterviewId(string interviewId)
         {
-            if (interviewId == null)
-                throw new ArgumentNullException(nameof(interviewId));
-            if(!Guid.TryParse(interviewId, out var _))
+            Ensure.ArgumentNotNullOrEmptyString(interviewId, nameof(interviewId));
+            if (!Guid.TryParse(interviewId, out var _))
                 throw new ArgumentException("interviewId is not a valid identifier");
         }
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private Uri DeleteIntervieApi(string surveyId, string interviewId)
+        private string DeleteIntervieApiUri(string surveyId, string interviewId)
         {
             var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.Append($"Surveys/{surveyId}/DeleteInterview/{interviewId}");
-            return new Uri(uriText.ToString());
+            return new Uri(uriText.ToString()).AbsoluteUri;
         }
     }
 }
