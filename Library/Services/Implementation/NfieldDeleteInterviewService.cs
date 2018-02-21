@@ -15,6 +15,7 @@
 
 using Nfield.Infrastructure;
 using System;
+using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -30,11 +31,10 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldDeleteInterviewService : INfieldDeleteInterviewService, INfieldConnectionClientObject
     {
-        public Task<int> DeleteAsync(string surveyId, string interviewId)
+        public Task<int> DeleteAsync(string surveyId, int interviewId)
         {
             CheckSurveyId(surveyId);
-            CheckInterviewId(interviewId);
-            return Client.PutAsJsonAsync(DeleteIntervieApiUri(surveyId, interviewId),
+            return Client.PutAsJsonAsync(DeleteInterviewsApiUri(surveyId, interviewId),
                     new Interview() {SurveyId = surveyId, InterviewId = interviewId})
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -63,16 +63,9 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentException("surveyId is not a valid identifier");
         }
 
-        private static void CheckInterviewId(string interviewId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(interviewId, nameof(interviewId));
-            if (!Guid.TryParse(interviewId, out var _))
-                throw new ArgumentException("interviewId is not a valid identifier");
-        }
-
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private string DeleteIntervieApiUri(string surveyId, string interviewId)
+        private string DeleteInterviewsApiUri(string surveyId, int interviewId)
         {
             var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.Append($"Surveys/{surveyId}/DeleteInterview/{interviewId}");

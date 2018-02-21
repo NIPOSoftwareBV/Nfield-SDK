@@ -33,6 +33,6 @@ namespace Nfield.Models
         /// Unique id of the interview
         /// </summary>
         [JsonProperty]
-        public string InterviewId { get; internal set; }
+        public int InterviewId { get; internal set; }
     }
 }

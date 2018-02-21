@@ -27,6 +27,6 @@ namespace Nfield.Services
         /// <param name="surveyId">Survey identifier</param>
         /// <param name="interviewId">Interview identifier to be deleted</param>
         /// </summary>
-        Task<int> DeleteAsync(string surveyId, string interviewId);
+        Task<int> DeleteAsync(string surveyId, int interviewId);
     }
 }
