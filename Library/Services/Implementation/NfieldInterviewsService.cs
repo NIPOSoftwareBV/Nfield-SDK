@@ -59,7 +59,8 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             // the unnamed var _ fails to compile in appveyor
-            if (!Guid.TryParse(surveyId, out var g))
+            Guid g;
+            if (!Guid.TryParse(surveyId, out g))
                 throw new ArgumentException($"SurveyId {surveyId} is not a valid identifier");
         }
 

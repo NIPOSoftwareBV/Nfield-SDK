@@ -93,12 +93,12 @@
     <Compile Include="Infrastructure\NfieldConnectionTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\NfieldInterviewTests.cs" />
+    <Compile Include="Services\NfieldInterviewsServiceTests.cs" />
     <Compile Include="Services\NfieldSamplingPointInterviewerAssignmentsServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NfieldAddressesServiceTests.cs" />
     <Compile Include="Services\NfieldBackgroundTasksServiceTests.cs" />
-    <Compile Include="Services\NfieldInterviewQualityTests.cs" />
+    <Compile Include="Services\NfieldInterviewQualityServiceTests.cs" />
     <Compile Include="Services\NfieldRespondentDataEncryptServiceTests.cs" />
     <Compile Include="Services\NfieldDomainEmailSettingsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyEmailSettingsServiceTests.cs" />
