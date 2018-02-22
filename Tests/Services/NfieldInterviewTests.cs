@@ -22,24 +22,25 @@ using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
 namespace Nfield.Services
 {
-    public class NfieldDeleteInterviewServiceTests : NfieldServiceTestsBase
+    public class NfieldInterviewServiceTests : NfieldServiceTestsBase
     {
         private readonly string _surveyId = Guid.NewGuid().ToString();
         private readonly int _interviewId = new Random().Next(9999);
-        private readonly NfieldDeleteInterviewService _target;
+        private readonly NfieldInterviewService _target;
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
 
-        public NfieldDeleteInterviewServiceTests()
+        public NfieldInterviewServiceTests()
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            _target = new NfieldDeleteInterviewService();
+            _target = new NfieldInterviewService();
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
         }
@@ -57,5 +58,22 @@ namespace Nfield.Services
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DeleteAsync("id", _interviewId)));
         }
 
+        [Fact]
+        public void TDeleteAsync_Success()
+        {
+            _mockedHttpClient.Setup(client => client.DeleteAsync($"{ServiceAddress}Surveys/{_surveyId}/Interviews/{_interviewId}"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+
+           _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
+
+            var expected = 1;
+            var actual = _target.DeleteAsync(_surveyId, _interviewId).Result;
+            Assert.Equal(expected, actual);
+        }
     }
 }

@@ -183,7 +183,7 @@
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
     <Compile Include="Services\Implementation\NfieldDomainEmailSettingsService.cs" />
-    <Compile Include="Services\Implementation\NfieldDeleteInterviewService.cs" />
+    <Compile Include="Services\Implementation\NfieldInterviewService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyEmailSettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInvitationImagesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInvitationTemplatesService.cs" />
@@ -207,7 +207,7 @@
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
     <Compile Include="Services\INfieldInterviewQualityService.cs" />
     <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
-    <Compile Include="Services\INfieldDeleteInterviewService.cs" />
+    <Compile Include="Services\INfieldInterviewService.cs" />
     <Compile Include="Services\INfieldSamplingPointInterviewerAssignmentsService.cs" />
     <Compile Include="Services\INfieldDomainEmailSettingsService.cs" />
     <Compile Include="Services\INfieldSurveyEmailSettingsService.cs" />

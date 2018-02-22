@@ -29,13 +29,12 @@ namespace Nfield.Services.Implementation
     /// <summary>
     /// Implementation of <see cref="INfieldInterviewQualityService"/>
     /// </summary>
-    internal class NfieldDeleteInterviewService : INfieldDeleteInterviewService, INfieldConnectionClientObject
+    internal class NfieldInterviewService : INfieldInterviewService, INfieldConnectionClientObject
     {
         public Task<int> DeleteAsync(string surveyId, int interviewId)
         {
             CheckSurveyId(surveyId);
-            return Client.PutAsJsonAsync(DeleteInterviewsApiUri(surveyId, interviewId),
-                    new Interview() {SurveyId = surveyId, InterviewId = interviewId})
+            return Client.DeleteAsync(DeleteInterviewsApiUri(surveyId, interviewId))
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => 
@@ -68,7 +67,7 @@ namespace Nfield.Services.Implementation
         private string DeleteInterviewsApiUri(string surveyId, int interviewId)
         {
             var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.Append($"Surveys/{surveyId}/DeleteInterview/{interviewId}");
+            uriText.Append($"Surveys/{surveyId}/Interviews/{interviewId}");
             return new Uri(uriText.ToString()).AbsoluteUri;
         }
     }
