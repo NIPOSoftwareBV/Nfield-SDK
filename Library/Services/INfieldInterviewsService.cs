@@ -20,7 +20,7 @@ namespace Nfield.Services
     /// <summary>
     /// Service to delete interview data
     /// </summary>
-    public interface INfieldInterviewService
+    public interface INfieldInterviewsService
     {
         /// <summary>
         /// Delete an interview of a survey

@@ -29,12 +29,12 @@ namespace Nfield.Services.Implementation
     /// <summary>
     /// Implementation of <see cref="INfieldInterviewQualityService"/>
     /// </summary>
-    internal class NfieldInterviewService : INfieldInterviewService, INfieldConnectionClientObject
+    internal class NfieldInterviewsService : INfieldInterviewsService, INfieldConnectionClientObject
     {
         public Task<int> DeleteAsync(string surveyId, int interviewId)
         {
             CheckSurveyId(surveyId);
-            return Client.DeleteAsync(DeleteInterviewsApiUri(surveyId, interviewId))
+            return Client.DeleteAsync(InterviewsApiUri(surveyId, interviewId))
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => 
@@ -59,12 +59,12 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             if (!Guid.TryParse(surveyId,out var _))
-                throw new ArgumentException("surveyId is not a valid identifier");
+                throw new ArgumentException($"SurveyId {surveyId} is not a valid identifier");
         }
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private string DeleteInterviewsApiUri(string surveyId, int interviewId)
+        private string InterviewsApiUri(string surveyId, int interviewId)
         {
             var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             uriText.Append($"Surveys/{surveyId}/Interviews/{interviewId}");

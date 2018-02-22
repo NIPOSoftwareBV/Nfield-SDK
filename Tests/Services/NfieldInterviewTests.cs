@@ -32,7 +32,7 @@ namespace Nfield.Services
     {
         private readonly string _surveyId = Guid.NewGuid().ToString();
         private readonly int _interviewId = new Random().Next(9999);
-        private readonly NfieldInterviewService _target;
+        private readonly NfieldInterviewsService _target;
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
 
         public NfieldInterviewServiceTests()
@@ -40,7 +40,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            _target = new NfieldInterviewService();
+            _target = new NfieldInterviewsService();
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
         }
