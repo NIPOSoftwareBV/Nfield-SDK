@@ -87,7 +87,7 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "DeletedTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "DeletedTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -107,7 +107,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "BlockedTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "BlockedTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -127,7 +127,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "ResetTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "ResetTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -158,43 +158,9 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync(uri, request)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => GetActivityResultAsync(activityResult.Result, "ClearTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "ClearTotal"))
                 .Unwrap()
                 .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// Recursive method that polls the activity status until it completes.
-        /// </summary>
-        /// <param name="activityId">The id of the activity to wait for.</param>
-        /// <param name="fieldNameResult">The name of the result field</param>
-        /// <returns></returns>
-        private Task<int> GetActivityResultAsync(string activityId, string fieldNameResult)
-        {
-            return Client.GetAsync(BackgroundActivityUrl(activityId))
-                .ContinueWith(response => response.Result.Content.ReadAsStringAsync())
-                .Unwrap()
-                .ContinueWith(content =>
-                {
-                    var obj = JObject.Parse(content.Result);
-                    var status = obj["Status"].Value<int>();
-
-                    switch (status)
-                    {
-                        case 0: // pending
-                        case 1: // started
-                            Thread.Sleep(millisecondsTimeout: 200);
-                            return GetActivityResultAsync(activityId, fieldNameResult);
-                        case 2: // succeeded
-                            var tcs = new TaskCompletionSource<int>();
-                            tcs.SetResult(obj[fieldNameResult].Value<int>());
-                            return tcs.Task;
-                        case 3: // failed
-                        default: 
-                            throw new NfieldErrorException("Action did not complete successfully");
-                    }
-                })
-                .Unwrap();
         }
 
         #region Implementation of INfieldConnectionClientObject
@@ -209,14 +175,7 @@ namespace Nfield.Services.Implementation
         #endregion
 
         private INfieldHttpClient Client => ConnectionClient.Client;
-
-        private string BackgroundActivityUrl(string activityId)
-        {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"BackgroundActivities/{0}", activityId);
-
-            return result.ToString();
-        }
+        
         private string SurveySampleUrl(string surveyId)
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
