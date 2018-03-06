@@ -24,7 +24,7 @@ namespace Nfield.Services.Implementation
         {
             if (surveyDownloadDataRequest == null)
             {
-                throw new ArgumentNullException("surveyDownloadDataRequest");
+                throw new ArgumentNullException(nameof(surveyDownloadDataRequest));
             }
             var uri = SurveyDataUrl(surveyDownloadDataRequest.SurveyId);
 
