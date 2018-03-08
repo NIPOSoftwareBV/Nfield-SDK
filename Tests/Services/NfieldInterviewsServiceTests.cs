@@ -59,7 +59,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TDeleteAsync_Success()
+        public void DeleteAsync_Success()
         {
             _mockedHttpClient.Setup(client => client.DeleteAsync($"{ServiceAddress}Surveys/{_surveyId}/Interviews/{_interviewId}"))
                 .Returns(CreateTask(HttpStatusCode.OK,
