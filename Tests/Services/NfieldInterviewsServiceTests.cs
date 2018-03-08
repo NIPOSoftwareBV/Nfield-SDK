@@ -31,7 +31,7 @@ namespace Nfield.Services
     public class NfieldInterviewsServiceTests : NfieldServiceTestsBase
     {
         private readonly string _surveyId = Guid.NewGuid().ToString();
-        private readonly int _interviewId = new Random().Next(9999);
+        private readonly int _interviewId = new Random().Next(1, 9999);
         private readonly NfieldInterviewsService _target;
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
 
