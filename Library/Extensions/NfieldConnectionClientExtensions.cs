@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Nfield.Exceptions;
 using Nfield.Infrastructure;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 
 namespace Nfield.Extensions
 {
@@ -42,7 +43,7 @@ namespace Nfield.Extensions
         /// <param name="client">NField Connection Client (this)</param>
         /// <param name="activityId">The id of the activity to wait for.</param>
         /// <param name="fieldNameResult">The name of the result field</param>
-        /// <returns></returns>
+        /// <returns>The <see cref="BackgroundActivityStatus" /> id.</returns>
         internal static Task<int> GetActivityResultAsync(this INfieldConnectionClient client, string activityId, string fieldNameResult)
         {
             return client.Client.GetAsync(client.BackgroundActivityUrl(activityId))

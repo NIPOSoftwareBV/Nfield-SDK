@@ -13,13 +13,12 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using Newtonsoft.Json;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds all properties of an interviewer
+    /// Holds all properties of an interview
     /// </summary>
     public class Interview
     {
