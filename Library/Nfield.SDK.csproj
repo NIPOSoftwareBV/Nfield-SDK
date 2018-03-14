@@ -81,6 +81,7 @@
     <Compile Include="Exceptions\NfieldHttpResponseException.cs" />
     <Compile Include="Exceptions\NfieldErrorException.cs" />
     <Compile Include="Extensions\NfieldBackgroundTasksServiceExtensions.cs" />
+    <Compile Include="Extensions\NfieldConnectionClientExtensions.cs" />
     <Compile Include="Extensions\NfieldConnectionExtensions.cs" />
     <Compile Include="Extensions\NfieldInterviewersServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldLanguagesServiceExtensions.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Models\EmailSettingsEditable.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
+    <Compile Include="Models\Interview.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\InterviewerSamplingPointAssignmentModel.cs" />
     <Compile Include="Models\InvitationMonitorStatusBase.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
     <Compile Include="Services\Implementation\NfieldDomainEmailSettingsService.cs" />
+    <Compile Include="Services\Implementation\NfieldInterviewsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyEmailSettingsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInvitationImagesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInvitationTemplatesService.cs" />
@@ -202,8 +205,9 @@
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
-    <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
     <Compile Include="Services\INfieldInterviewQualityService.cs" />
+    <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
+    <Compile Include="Services\INfieldInterviewsService.cs" />
     <Compile Include="Services\INfieldSamplingPointInterviewerAssignmentsService.cs" />
     <Compile Include="Services\INfieldDomainEmailSettingsService.cs" />
     <Compile Include="Services\INfieldSurveyEmailSettingsService.cs" />
