@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nfield.Models
 {
@@ -30,6 +27,16 @@ namespace Nfield.Models
         /// Number of rejected interviews
         /// </summary>
         public int? RejectedCount { get; set; }
+
+        /// <summary>
+        /// Number of currently active live interviews
+        /// </summary>
+        public int? ActiveLiveCount { get; set; }
+
+        /// <summary>
+        /// Number of currently active test interviews
+        /// </summary>
+        public int? ActiveTestCount { get; set; }
 
         /// <summary>
         /// The detailed counts per quota cell for surveys with quota
