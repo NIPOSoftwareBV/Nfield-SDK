@@ -16,7 +16,6 @@
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
