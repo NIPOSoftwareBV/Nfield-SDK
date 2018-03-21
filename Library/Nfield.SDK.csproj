@@ -58,9 +58,8 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Nfield.Quota, Version=1.0.173.0, Culture=neutral, PublicKeyToken=70ccf5815a0c0f1f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nfield.Quota.1.0.173\lib\net40\Nfield.Quota.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Nfield.Quota, Version=1.0.187.0, Culture=neutral, PublicKeyToken=70ccf5815a0c0f1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nfield.Quota.1.0.187\lib\net40\Nfield.Quota.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -82,6 +81,7 @@
     <Compile Include="Exceptions\NfieldHttpResponseException.cs" />
     <Compile Include="Exceptions\NfieldErrorException.cs" />
     <Compile Include="Extensions\NfieldBackgroundTasksServiceExtensions.cs" />
+    <Compile Include="Extensions\NfieldConnectionClientExtensions.cs" />
     <Compile Include="Extensions\NfieldConnectionExtensions.cs" />
     <Compile Include="Extensions\NfieldInterviewersServiceExtensions.cs" />
     <Compile Include="Extensions\NfieldLanguagesServiceExtensions.cs" />
@@ -108,20 +108,40 @@
     <Compile Include="Infrastructure\NfieldUtilityProvider.cs" />
     <Compile Include="Infrastructure\PathBase.cs" />
     <Compile Include="Infrastructure\PathWrapper.cs" />
+    <Compile Include="Models\AddInvitationImageResult.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\AddressSampleData.cs" />
+    <Compile Include="Models\BackgroundActivityStatus.cs" />
     <Compile Include="Models\BackgroundTask.cs" />
     <Compile Include="Models\BackgroundTaskStatus.cs" />
     <Compile Include="Models\DataCryptographyModel.cs" />
+    <Compile Include="Models\DomainEmailSettings.cs" />
+    <Compile Include="Models\EmailSettingsEditable.cs" />
     <Compile Include="Models\EncryptedDataModel.cs" />
     <Compile Include="Models\InterviewDetailsModel.cs" />
+    <Compile Include="Models\Interview.cs" />
     <Compile Include="Models\InterviewerFieldworkOfficeModel.cs" />
     <Compile Include="Models\InterviewerSamplingPointAssignmentModel.cs" />
+    <Compile Include="Models\InvitationMonitorStatusBase.cs" />
+    <Compile Include="Models\InvitationMonitorSurveyStatus.cs" />
+    <Compile Include="Models\InvitationMonitorBatchStatus.cs" />
+    <Compile Include="Models\InvitationBatchStatus.cs" />
+    <Compile Include="Models\InvitationBatchWithFilter.cs" />
+    <Compile Include="Models\InvitationBatch.cs" />
+    <Compile Include="Models\InvitationTemplateModelValidated.cs" />
+    <Compile Include="Models\InviteRespondentsStatus.cs" />
     <Compile Include="Models\PackageForceUpgrade.cs" />
     <Compile Include="Models\InterviewPackageType.cs" />
     <Compile Include="Models\InterviewQuality.cs" />
+    <Compile Include="Models\SampleResetStatus.cs" />
+    <Compile Include="Models\SampleBlockStatus.cs" />
+    <Compile Include="Models\SampleFilter.cs" />
+    <Compile Include="Models\SampleDeleteStatus.cs" />
+    <Compile Include="Models\SampleUploadStatus.cs" />
     <Compile Include="Models\SamplingPointsInterviewersAssignmentModel.cs" />
     <Compile Include="Models\SurveyCounts.cs" />
+    <Compile Include="Models\InvitationTemplateModel.cs" />
+    <Compile Include="Models\SurveyEmailSettings.cs" />
     <Compile Include="Models\SurveyPackage.cs" />
     <Compile Include="Models\SurveyPackageBinaryFile.cs" />
     <Compile Include="Models\SurveyPackageLanguage.cs" />
@@ -156,11 +176,17 @@
     <Compile Include="Models\SurveyScript.cs" />
     <Compile Include="Models\SurveySetting.cs" />
     <Compile Include="Models\SurveyType.cs" />
+    <Compile Include="Models\SurveyVarFile.cs" />
     <Compile Include="Models\Translation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\HttpResponseMessageExtensions.cs" />
     <Compile Include="Services\Implementation\NfieldAddressesService.cs" />
     <Compile Include="Services\Implementation\NfieldBackgroundTasksService.cs" />
+    <Compile Include="Services\Implementation\NfieldDomainEmailSettingsService.cs" />
+    <Compile Include="Services\Implementation\NfieldInterviewsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyEmailSettingsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInvitationImagesService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInvitationTemplatesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPackageService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPublishService.cs" />
     <Compile Include="Services\Implementation\NfieldInterviewQualityService.cs" />
@@ -169,28 +195,37 @@
     <Compile Include="Services\Implementation\NfieldMediaFilesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyDataService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySampleDataService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveySampleService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyRelocationsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveySettingsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyVarFileService.cs" />
     <Compile Include="Services\Implementation\NfieldTranslationsService.cs" />
     <Compile Include="Services\INfieldAddressesService.cs" />
     <Compile Include="Services\INfieldBackgroundTasksService.cs" />
-    <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
     <Compile Include="Services\INfieldInterviewQualityService.cs" />
+    <Compile Include="Services\INfieldRespondentDataEncryptService.cs" />
+    <Compile Include="Services\INfieldInterviewsService.cs" />
     <Compile Include="Services\INfieldSamplingPointInterviewerAssignmentsService.cs" />
+    <Compile Include="Services\INfieldDomainEmailSettingsService.cs" />
+    <Compile Include="Services\INfieldSurveyEmailSettingsService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewersService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerWorkpackageDistributionService.cs" />
     <Compile Include="Services\INfieldSurveyInterviewerAssignmentsService.cs" />
     <Compile Include="Services\INfieldLanguagesService.cs" />
     <Compile Include="Services\INfieldMediaFilesService.cs" />
     <Compile Include="Services\INfieldSurveyDataService.cs" />
+    <Compile Include="Services\INfieldSurveyInvitationImagesService.cs" />
+    <Compile Include="Services\INfieldSurveyInviteRespondentsService.cs" />
+    <Compile Include="Services\INfieldSurveyInvitationTemplatesService.cs" />
     <Compile Include="Services\INfieldSurveyPackageService.cs" />
     <Compile Include="Services\INfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\INfieldSurveyFieldworkService.cs" />
     <Compile Include="Services\INfieldSurveyPublishService.cs" />
     <Compile Include="Services\INfieldSurveySampleDataService.cs" />
+    <Compile Include="Services\INfieldSurveySampleService.cs" />
     <Compile Include="Services\INfieldSurveyScriptService.cs" />
     <Compile Include="Services\Implementation\NfieldFieldworkOfficesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveysService.cs" />
@@ -201,7 +236,9 @@
     <Compile Include="Services\INfieldSurveyRelocationsService.cs" />
     <Compile Include="Services\INfieldSurveyPublicIdsService.cs" />
     <Compile Include="Services\INfieldSurveySettingsService.cs" />
+    <Compile Include="Services\INfieldSurveyScriptFragmentService.cs" />
     <Compile Include="Services\INfieldSurveysService.cs" />
+    <Compile Include="Services\INfieldSurveyVarFileService.cs" />
     <Compile Include="Services\INfieldTranslationsService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyResponseCodesService.cs" />
     <Compile Include="Services\Implementation\NfieldSurveyInterviewersService.cs" />
@@ -210,8 +247,11 @@
     <Compile Include="Models\SurveyInterviewerDistributeModel.cs" />
     <Compile Include="Services\Implementation\NfieldSamplingPointInterviewerAssignmentsService.cs" />
     <Compile Include="Services\Implementation\NfieldRespondentDataEncryptService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyInviteRespondentsService.cs" />
+    <Compile Include="Services\Implementation\NfieldSurveyScriptFragmentService.cs" />
     <Compile Include="Utilities\INfieldEncryptionUtility.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtility.cs" />
+    <Compile Include="Utilities\Ensure.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

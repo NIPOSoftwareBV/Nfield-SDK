@@ -57,9 +57,8 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Nfield.Quota, Version=1.0.173.0, Culture=neutral, PublicKeyToken=70ccf5815a0c0f1f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nfield.Quota.1.0.173\lib\net40\Nfield.Quota.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Nfield.Quota, Version=1.0.187.0, Culture=neutral, PublicKeyToken=70ccf5815a0c0f1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nfield.Quota.1.0.187\lib\net40\Nfield.Quota.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,12 +93,18 @@
     <Compile Include="Infrastructure\NfieldConnectionTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\NfieldInterviewsServiceTests.cs" />
     <Compile Include="Services\NfieldSamplingPointInterviewerAssignmentsServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NfieldAddressesServiceTests.cs" />
     <Compile Include="Services\NfieldBackgroundTasksServiceTests.cs" />
-    <Compile Include="Services\NfieldInterviewQualityTests.cs" />
+    <Compile Include="Services\NfieldInterviewQualityServiceTests.cs" />
     <Compile Include="Services\NfieldRespondentDataEncryptServiceTests.cs" />
+    <Compile Include="Services\NfieldDomainEmailSettingsServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyEmailSettingsServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInvitationImagesServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInvitationTemplatesServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyInviteRespondentsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyPackageServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyPublishServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyInterviewerWorkpackageDistributionServiceTests.cs" />
@@ -110,6 +115,8 @@
     <Compile Include="Services\NfieldSurveyResponseCodesServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyFieldworkServiceTests.cs" />
     <Compile Include="Services\NfieldSurveySampleDataServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveySampleTests.cs" />
+    <Compile Include="Services\NfieldSurveyScriptFragmentServiceTests.cs" />
     <Compile Include="Services\NfieldSurveyScriptServiceTests.cs" />
     <Compile Include="Services\NfieldServiceTestsBase.cs" />
     <Compile Include="Services\NfieldFieldworkOfficesServiceTests.cs" />
@@ -120,6 +127,7 @@
     <Compile Include="Services\NfieldSurveyPublicIdsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveySettingsServiceTests.cs" />
     <Compile Include="Services\NfieldSurveysServiceTests.cs" />
+    <Compile Include="Services\NfieldSurveyVarFileServiceTests.cs" />
     <Compile Include="Services\NfieldTranslationsServiceTests.cs" />
     <Compile Include="TestHelpers\TaskHelpers.cs" />
     <Compile Include="Utilities\NfieldEncryptionUtilityTests.cs" />
@@ -132,7 +140,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Resources\1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

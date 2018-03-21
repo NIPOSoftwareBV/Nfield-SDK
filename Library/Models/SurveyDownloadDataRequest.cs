@@ -28,6 +28,12 @@ namespace Nfield.Models
         public string SurveyId { get; set; }
 
         /// <summary>
+        /// The id of the interview to download the data.
+        /// It will be present only if we want to download data for a single interview.
+        /// </summary>
+        public int? InterviewId { get; set; }
+
+        /// <summary>
         /// Download data of test interviews
         /// </summary>
         public bool DownloadTestInterviewData { get; set; }
