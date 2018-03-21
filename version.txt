@@ -1,0 +1,5 @@
+# Versioning of the NuGet package should be done in the following format: 
+# {major}.{minor}.{buildId}{suffix} where suffix should be either 
+# "-alpha", "-beta" or "" (empty) for respectively non-master-branches, master-branches
+# and release-versions (which is triggered once the prerelease tag is removed)
+0.4.{buildId}{suffix}
