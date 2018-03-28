@@ -4,13 +4,13 @@
     <Authors>NIPO</Authors>
     <Company>NIPO</Company>
     <Copyright>Copyright © NIPO 2018</Copyright>
-	<Description>"NIPO Software Nfield SDK for Windows"</Description>
-	<PackageLicenseUrl>http://www.gnu.org/licenses</PackageLicenseUrl>
-	<PackageProjectUrl>https://github.com/NIPOSoftware/Nfield-SDK</PackageProjectUrl>
+    <Description>"NIPO Software Nfield SDK for Windows"</Description>
+    <PackageLicenseUrl>http://www.gnu.org/licenses</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/NIPOSoftware/Nfield-SDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/NIPOSoftware/Nfield-SDK</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/NIPOSoftware/Nfield-SDK/master/icon-nfield.png</PackageIconUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageTags>nfield marketresearch capi cawi</PackageTags>
+    <PackageTags>nfield marketresearch capi cawi</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="4.0.30506" />
