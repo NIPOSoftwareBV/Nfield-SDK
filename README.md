@@ -1,5 +1,5 @@
-[![Build Status](https://niposoftware.visualstudio.com/_apis/public/build/definitions/15ce0e91-931d-4fbf-9169-8c3dde412b54/176/badge)] 
-[![NuGet version](https://badge.fury.io/nu/Nfield.SDK.svg)](https://badge.fury.io/nu/Nfield.SDK)]
+![Build Status](https://niposoftware.visualstudio.com/_apis/public/build/definitions/15ce0e91-931d-4fbf-9169-8c3dde412b54/176/badge) 
+![NuGet version](https://badge.fury.io/nu/Nfield.SDK.svg)](https://badge.fury.io/nu/Nfield.SDK)
 
 # NIPO Software Nfield SDK for Windows
 This SDK allows you to build applications that take advantage of the Nfield services.
