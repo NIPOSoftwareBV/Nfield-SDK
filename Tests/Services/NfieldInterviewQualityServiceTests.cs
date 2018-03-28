@@ -26,14 +26,14 @@ using Xunit;
 
 namespace Nfield.Services
 {
-    public class NfieldInterviewQualityTests : NfieldServiceTestsBase
+    public class NfieldInterviewQualityServiceTests : NfieldServiceTestsBase
     {
         private const string SurveyId = "MySurvey";
         private const string InterviewId = "InterviewId";
         private readonly NfieldInterviewQualityService _target;
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
 
-        public NfieldInterviewQualityTests()
+        public NfieldInterviewQualityServiceTests()
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);

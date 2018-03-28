@@ -14,6 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -31,22 +33,32 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldSurveyPublicIdsServiceTests : NfieldServiceTestsBase
     {
+        private readonly NfieldSurveyPublicIdsService _target;
+        readonly Mock<INfieldHttpClient> _mockedHttpClient;
+
         const string SurveyId = "MySurvey";
+
+        public NfieldSurveyPublicIdsServiceTests()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            _target = new NfieldSurveyPublicIdsService();
+            _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+        }
 
         #region QueryAsync
 
         [Fact]
         public void TestQueryAsync_SurveyIdIsNull_Throws()
         {
-            var target = new NfieldSurveyPublicIdsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.QueryAsync(null)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.QueryAsync(null)));
         }
 
         [Fact]
         public void TestQueryAsync_SurveyIdIsEmpty_Throws()
         {
-            var target = new NfieldSurveyPublicIdsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.QueryAsync("")));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.QueryAsync("")));
         }
 
         [Fact]
@@ -56,16 +68,12 @@ namespace Nfield.Services
             { new SurveyPublicId {  LinkType = "X Type", Active = false, Url = "X Url" },
               new SurveyPublicId {  LinkType = "Y Type", Active = true, Url = "Y Url" }
             };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
+            _mockedHttpClient
                 .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/PublicIds"))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedPublicIds))));
 
-            var target = new NfieldSurveyPublicIdsService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualPublicIds = target.QueryAsync(SurveyId).Result.ToArray(); ;
+            var actualPublicIds = _target.QueryAsync(SurveyId).Result.ToArray(); ;
             Assert.Equal(expectedPublicIds[0].LinkType, actualPublicIds[0].LinkType);
             Assert.Equal(expectedPublicIds[0].Active, actualPublicIds[0].Active);
             Assert.Equal(expectedPublicIds[0].Url, actualPublicIds[0].Url);
@@ -73,6 +81,32 @@ namespace Nfield.Services
             Assert.Equal(expectedPublicIds[1].Active, actualPublicIds[1].Active);
             Assert.Equal(expectedPublicIds[1].Url, actualPublicIds[1].Url);
             Assert.Equal(2, actualPublicIds.Length);
+        }
+
+        #endregion
+
+        #region PutAsync
+        [Fact]
+        public void TestPutAsync_SurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync(null, new List<SurveyPublicId>())));
+        }
+
+        [Fact]
+        public void TestPutAsync_Always_CallsCorrectURI()
+        {
+            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}Surveys/{1}/PublicIds",
+                ServiceAddress,
+                SurveyId);
+            
+            _mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<IEnumerable<SurveyPublicId>>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+            
+            _target.PutAsync(SurveyId, null);
+
+            _mockedHttpClient
+                .Verify(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<IEnumerable<SurveyPublicId>>()), Times.Once());
         }
 
         #endregion

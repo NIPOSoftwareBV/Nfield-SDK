@@ -19,6 +19,7 @@ using Moq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
+using System.Net.Http.Formatting;
 using Nfield.TestHelpers;
 
 namespace Nfield.Services
@@ -79,5 +80,30 @@ namespace Nfield.Services
 
             return mockedHttpClient;
         }
+
+        internal INfieldConnectionClient InitMockClientGet<T>(string url, T responseObjectContent)
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var responseContent = new ObjectContent<T>(responseObjectContent, new JsonMediaTypeFormatter());
+            mockedHttpClient
+                .Setup(client => client.GetAsync(url))
+                .Returns(CreateTask(HttpStatusCode.OK, responseContent));
+
+            return mockedNfieldConnection.Object;
+        }
+
+        internal INfieldConnectionClient InitMockClientPut<T1, T2>(string url, T1 requestContent, T2 responseObjectContent)
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var responseContent = new ObjectContent<T2>(responseObjectContent, new JsonMediaTypeFormatter());
+            mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(url, requestContent))
+                .Returns(CreateTask(HttpStatusCode.OK, responseContent));
+
+            return mockedNfieldConnection.Object;
+        }
+
     }
 }

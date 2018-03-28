@@ -91,7 +91,7 @@ namespace Nfield.Services
 
         #endregion
 
-        #region PostAsync
+        #region SendInvitationsAsync
 
         [Fact]
         public void TestPostAsync_FileDoesNotExist_ThrowsFileNotFoundException()

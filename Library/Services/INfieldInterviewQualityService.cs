@@ -11,7 +11,7 @@
 //    GNU Lesser General Public License for more details.
 //
 //    You should have received a copy of the GNU Lesser General Public License
-//    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.using System;
+//    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,0 +1,137 @@
+{
+	"info": {
+		"name": "SurveyScript",
+		"_postman_id": "e126d961-b2d7-01ba-6ec8-61881bc24ca0",
+		"description": "A controller for querying Surveys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get SurveyScript",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Script"
+					]
+				},
+				"description": "This method retrieves the ODIN script of a specific survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Create SurveyScript",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d221cce5-3b44-47f6-a39e-a8ec5503c8a0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response contains SurveyId\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.SurveyId.length).to.eql(36);",
+							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Script"
+					]
+				},
+				"description": "This method updates the ODIN script of a specific survey."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9a971aac-638c-41f8-8c2a-b0955c565e58",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d54d24d9-ee4d-4e5e-a4ad-e49b107125e2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
