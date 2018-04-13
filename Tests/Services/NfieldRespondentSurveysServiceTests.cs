@@ -66,7 +66,7 @@ namespace Nfield.Services
         {
             const string searchValue = "email@nipo.com";
 
-            var expectedSurvey = new Survey(SurveyType.OnlineBasic)
+            var expectedSurvey = new Survey
             {
                 SurveyId = SurveyId,
                 SurveyName = SurveyName
