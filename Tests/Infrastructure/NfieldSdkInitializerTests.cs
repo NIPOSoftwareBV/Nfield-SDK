@@ -51,19 +51,21 @@ namespace Nfield.Infrastructure
             }
         }
 
-        private void RegisterTransient(Type interfaceType, Type _)
+        private void RegisterTransient(Type interfaceType, Type classType)
         {
+            Assert.True(interfaceType.IsAssignableFrom(classType));
             _interfaceList.Add(interfaceType);
         }
 
-        private void RregisterSingleton(Type interfaceType, Type _)
+        private void RregisterSingleton(Type interfaceType, Type classType)
         {
+            Assert.True(interfaceType.IsAssignableFrom(classType));
             _interfaceList.Add(interfaceType);
-
         }
 
-        private void RegisterObject(Type interfaceType, Object _)
+        private void RegisterObject(Type interfaceType, Object objectReg)
         {
+            Assert.True(interfaceType.IsInstanceOfType(objectReg));
             _interfaceList.Add(interfaceType);
         }
     }
