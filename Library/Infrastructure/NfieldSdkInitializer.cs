@@ -38,6 +38,7 @@ namespace Nfield.Infrastructure
         {
             registerTransient(typeof(NfieldConnection), typeof(NfieldConnection));
             registerTransient(typeof(INfieldInterviewersService), typeof(NfieldInterviewersService));
+            registerTransient(typeof(INfieldInterviewsService), typeof(NfieldInterviewsService));
             registerTransient(typeof(INfieldInterviewQualityService), typeof(NfieldInterviewQualityService));
             registerTransient(typeof(INfieldSurveysService), typeof(NfieldSurveysService));
             registerTransient(typeof(INfieldRespondentDataEncryptService), typeof(NfieldRespondentDataEncryptService));
@@ -50,6 +51,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldLanguagesService), typeof(NfieldLanguagesService));
             registerTransient(typeof(INfieldTranslationsService), typeof(NfieldTranslationsService));
             registerTransient(typeof(INfieldDomainEmailSettingsService), typeof(NfieldDomainEmailSettingsService));
+            registerTransient(typeof(INfieldDomainSearchFieldsSettingService), typeof(NfieldDomainSearchFieldsSettingService));
             registerTransient(typeof(INfieldSurveyEmailSettingsService), typeof(NfieldSurveyEmailSettingsService));
             registerTransient(typeof(INfieldSurveyInvitationImagesService), typeof(NfieldSurveyInvitationImagesService));
             registerTransient(typeof(INfieldSurveyInvitationTemplatesService), typeof(NfieldSurveyInvitationTemplatesService)); 
@@ -73,8 +75,6 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(IAesManagedWrapper), typeof(AesManagedWrapper));
             registerTransient(typeof(INfieldSurveyInviteRespondentsService), typeof(NfieldSurveyInviteRespondentsService));
             registerTransient(typeof(INfieldSurveyVarFileService), typeof(NfieldSurveyVarFileService));
-            registerTransient(typeof(INfieldInterviewsService), typeof(NfieldInterviewsService));
-            registerTransient(typeof(INfieldDomainEmailSettingsService), typeof(NfieldDomainEmailSettingsService));
         }
 
     }
