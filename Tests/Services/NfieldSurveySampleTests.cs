@@ -583,7 +583,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Update",
-                It.Is<SurveyUpdateSampleRecordModel>(c => string.IsNullOrEmpty(SurveyId) && c.ColumnUpdates.Any(n => n.ColumnName == "dummyCol"))))
+                It.Is<SurveyUpdateSampleRecordModel>(c => c.SampleRecordId == sampleRecordId && c.ColumnUpdates.Any(n => n.ColumnName == "dummyCol"))))
                     .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new SampleUpdateStatus { ResultStatus = true }))));
 
             var target = new NfieldSurveySampleService();

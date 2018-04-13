@@ -18,7 +18,7 @@ using System.Collections.Generic;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Model that holds the encrypted data and the initialization vector that was used to encrypt it
+    /// Model used to clear columns from a Sample Model
     /// </summary>
     public class ClearSurveySampleModel
     {

@@ -18,17 +18,17 @@ using System;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Survey setting.
+    /// Model used to update columns from a Sample Model
     /// </summary>
     public class SampleColumnUpdate
     {
         /// <summary>
-        /// Setting name.
+        /// [MANDATORY] Name of the column.
         /// </summary>
         public string ColumnName { get; set; }
 
         /// <summary>
-        /// Setting value.
+        /// [MANDATORY] New value to set.
         /// </summary>
         public string Value { get; set; }
     }
