@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 
 namespace Nfield.Utilities
 {
@@ -43,6 +44,22 @@ namespace Nfield.Utilities
         public static void ArgumentNotNull(object value, string name)
         {
             if (value == null)
+                throw new ArgumentNullException(name);
+        }
+
+        /// <summary>
+        /// Throws an <see cref="ArgumentEnumerableNotNullOrEmpty"/> if the specified value is <see langword="null"/> or empty (no items in the collection).
+        /// </summary>
+        /// <param name="value">The value to test.</param>
+        /// <param name="name">The name of the parameter, which will appear in the exception message.</param>
+        public static void ArgumentEnumerableNotNullOrEmpty(IEnumerable<object> value, string name)
+        {
+            if (ReferenceEquals(value, null))
+            {
+                throw new ArgumentNullException(name);
+            }
+
+            if (!value.GetEnumerator().MoveNext()) //.Any() is not used to avoid a reference to System.Linq
                 throw new ArgumentNullException(name);
         }
     }

@@ -20,7 +20,6 @@ using System.Net;
 using System.Net.Http;
 using Moq;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
@@ -422,7 +421,6 @@ namespace Nfield.Services
 
         #endregion
 
-
         #region ClearAsync
 
         [Fact]
@@ -507,7 +505,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Clear",
-                    It.Is<NfieldSurveySampleService.ClearSurveySampleModel>(c =>
+                    It.Is<ClearSurveySampleModel>(c =>
                         FilterEquals(c.Filters.Single(), "RespondentKey", "eq", respondentKey) && c.Columns.Any(n => n == "ColumnName1") && c.Columns.Any(n => n == "ColumnName2"))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
@@ -527,6 +525,74 @@ namespace Nfield.Services
 
         #endregion
 
+        #region UpdateAsync
+
+        [Fact]
+        public void TestUpdateAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.UpdateAsync(null, 0, null)));
+        }
+
+        [Fact]
+        public void TestUpdateAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.UpdateAsync(string.Empty, 0, null)));
+        }
+
+        [Fact]
+        public void TestUpdateAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.UpdateAsync("  ", 0, null)));
+        }
+
+        [Fact]
+        public void TestUpdateAsync_ColumnsAreNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.UpdateAsync(SurveyId, 0, null)));
+        }
+
+        [Fact]
+        public void TestUpdateAsync_ColumnsAreEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.UpdateAsync(SurveyId, 0, new List<SampleColumnUpdate>())));
+        }
+
+        [Fact]
+        public void TestUpdateAsync_ParamsAreOk_Successful()
+        {
+            int sampleRecordId = 1;
+            var columns = new List<SampleColumnUpdate>();
+            columns.Add(new SampleColumnUpdate { ColumnName = "dummyCol", Value = "dummyVal" });
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Update",
+                It.Is<SurveyUpdateSampleRecordModel>(c => c.SampleRecordId == sampleRecordId && c.ColumnUpdates.Any(n => n.ColumnName == "dummyCol"))))
+                    .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new SampleUpdateStatus { ResultStatus = true }))));
+
+            var target = new NfieldSurveySampleService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            var result = target.UpdateAsync(SurveyId, sampleRecordId, columns).Result;
+
+            Assert.True(result);
+        }
+        #endregion
 
         private static bool FilterEquals(SampleFilter filter, string name, string op, string value)
         {

@@ -14,17 +14,13 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Nfield.Exceptions;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -35,19 +31,6 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveySampleService : INfieldSurveySampleService, INfieldConnectionClientObject
     {
-
-        public class ClearSurveySampleModel
-        {
-            /// <summary>
-            /// [MANDATORY] Filters to be applied for the clear operation
-            /// </summary>
-            public IEnumerable<SampleFilter> Filters { get; set; }
-
-            /// <summary>
-            /// The name of the columns to be cleared
-            /// </summary>
-            public IEnumerable<string> Columns { get; set; }
-        }
 
         public Task<string> GetAsync(string surveyId)
         {
@@ -109,6 +92,24 @@ namespace Nfield.Services.Implementation
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
                 .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "BlockedTotal"))
                 .Unwrap()
+                .FlattenExceptions();
+        }
+
+        public Task<bool> UpdateAsync(string surveyId, int sampleRecordId, IEnumerable<SampleColumnUpdate> columnsToUpdate)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentEnumerableNotNullOrEmpty(columnsToUpdate, nameof(columnsToUpdate));
+            var m = new SurveyUpdateSampleRecordModel
+            {
+                SampleRecordId = sampleRecordId,
+                ColumnUpdates = columnsToUpdate                
+            };
+
+            var uri = SurveySampleUrl(surveyId) + @"/Update";
+            
+            return Client.PutAsJsonAsync(uri, m)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUpdateStatus>(stringResult.Result).ResultStatus)
                 .FlattenExceptions();
         }
 
