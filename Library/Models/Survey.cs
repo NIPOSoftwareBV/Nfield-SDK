@@ -25,6 +25,13 @@ namespace Nfield.Models
         /// <summary>
         /// Survey Constructor
         /// </summary>
+        public Survey()
+        {
+        }
+
+        /// <summary>
+        /// Survey Constructor
+        /// </summary>
         /// <param name="surveyType">Type of the survey</param>
         public Survey(SurveyType surveyType)
         {
