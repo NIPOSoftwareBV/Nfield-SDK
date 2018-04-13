@@ -568,7 +568,7 @@ namespace Nfield.Services
         {
             var target = new NfieldSurveySampleService();
 
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.UpdateAsync(SurveyId, 0, new List<SampleColumnUpdate>())));
         }
 
