@@ -18,7 +18,7 @@ using System.Collections.Generic;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Dto for reading the email settings of a domain
+    /// Dto for reading the search fields setting of a domain
     /// </summary>
     public class DomainSearchFieldsSetting 
     {
