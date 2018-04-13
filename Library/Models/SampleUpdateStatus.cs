@@ -1,4 +1,4 @@
-﻿//    This file is part of Nfield.SDK.
+//    This file is part of Nfield.SDK.
 //
 //    Nfield.SDK is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU Lesser General Public License as published by
@@ -13,36 +13,17 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
 namespace Nfield.Models
 {
     /// <summary>
-    /// class to define sample filters
+    /// DTO for returning the result of a SampleData update operation
     /// </summary>
-    public class SampleFilter
+    public class SampleUpdateStatus
     {
         /// <summary>
-        /// Name of a field in a sample record
+        /// result of the update operation
         /// </summary>
-        public string Name { get; set; }
-      
-        /// <summary>
-        /// Operator, supported operators:
-        /// "con" : contains
-        /// "ncon": not contains
-        /// "eq"  : equals
-        /// "lt"  : less than
-        /// "gt"  : greater than
-        /// "lte" : less or equal
-        /// "gte" : greater or equal
-        /// "neq" : not equal
-        /// </summary>
-        public string Op { get; set; }
-      
-        /// <summary>
-        /// Value
-        /// </summary>
-        public string Value { get; set; }
+        public bool ResultStatus { get; set; }
+
     }
 }

@@ -13,36 +13,23 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// class to define sample filters
+    /// Model that holds the encrypted data and the initialization vector that was used to encrypt it
     /// </summary>
-    public class SampleFilter
+    public class ClearSurveySampleModel
     {
         /// <summary>
-        /// Name of a field in a sample record
+        /// [MANDATORY] Filters to be applied for the clear operation
         /// </summary>
-        public string Name { get; set; }
-      
+        public IEnumerable<SampleFilter> Filters { get; set; }
+
         /// <summary>
-        /// Operator, supported operators:
-        /// "con" : contains
-        /// "ncon": not contains
-        /// "eq"  : equals
-        /// "lt"  : less than
-        /// "gt"  : greater than
-        /// "lte" : less or equal
-        /// "gte" : greater or equal
-        /// "neq" : not equal
+        /// The name of the columns to be cleared
         /// </summary>
-        public string Op { get; set; }
-      
-        /// <summary>
-        /// Value
-        /// </summary>
-        public string Value { get; set; }
+        public IEnumerable<string> Columns { get; set; }
     }
 }
