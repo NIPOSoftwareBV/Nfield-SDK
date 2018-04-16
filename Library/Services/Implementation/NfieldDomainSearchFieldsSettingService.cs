@@ -28,7 +28,7 @@ namespace Nfield.Services.Implementation
     {
         public Task<DomainSearchFieldsSetting> GetAsync()
         {
-            var uri = DomainEmailSettingsUrl();
+            var uri = DomainSearchFieldsSettingUrl();
 
             return Client.GetAsync(uri)
                          .ContinueWith(task => JsonConvert.DeserializeObject<DomainSearchFieldsSetting>(
@@ -40,7 +40,7 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNull(settings, nameof(settings));
 
-            var uri = DomainEmailSettingsUrl();
+            var uri = DomainSearchFieldsSettingUrl();
 
             return Client.PutAsJsonAsync(uri, settings)
                         .ContinueWith(task => JsonConvert.DeserializeObject<DomainSearchFieldsSetting>(
@@ -55,7 +55,7 @@ namespace Nfield.Services.Implementation
             ConnectionClient = connection;
         }
 
-        private string DomainEmailSettingsUrl()
+        private string DomainSearchFieldsSettingUrl()
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
             result.AppendFormat(CultureInfo.InvariantCulture, @"DomainSearchFieldsSetting");
