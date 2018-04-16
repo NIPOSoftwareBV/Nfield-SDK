@@ -40,8 +40,6 @@ namespace Nfield.Services
         [Fact]
         public void TestGetAsync_ReturnsData()
         {
-            
-
             var target = new NfieldDomainSearchFieldsSettingService();
             var mockClient = InitMockClientGet(ServiceAddress + @"DomainSearchFieldsSetting", _expected);
             target.InitializeNfieldConnection(mockClient);
@@ -49,7 +47,6 @@ namespace Nfield.Services
 
             var actual = target.GetAsync().Result;
             Assert.Equal(_expected.Fields,actual.Fields);
-          
         }
 
         #endregion
@@ -67,7 +64,6 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_ReturnsData()
         {
-           
             var target = new NfieldDomainSearchFieldsSettingService();
             var mockClient = InitMockClientPut(ServiceAddress + @"DomainSearchFieldsSetting", _expected, _expected);
             target.InitializeNfieldConnection(mockClient);
