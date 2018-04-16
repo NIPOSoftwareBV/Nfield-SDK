@@ -41,7 +41,7 @@ namespace Nfield.Services
         public void TestGetAsync_ReturnsData()
         {
             var target = new NfieldDomainSearchFieldsSettingService();
-            var mockClient = InitMockClientGet(ServiceAddress + @"DomainSearchFieldsSetting", _expected);
+            var mockClient = InitMockClientGet(ServiceAddress + @"SearchFieldsSetting", _expected);
             target.InitializeNfieldConnection(mockClient);
 
 
@@ -65,7 +65,7 @@ namespace Nfield.Services
         public void TestPutAsync_ReturnsData()
         {
             var target = new NfieldDomainSearchFieldsSettingService();
-            var mockClient = InitMockClientPut(ServiceAddress + @"DomainSearchFieldsSetting", _expected, _expected);
+            var mockClient = InitMockClientPut(ServiceAddress + @"SearchFieldsSetting", _expected, _expected);
             target.InitializeNfieldConnection(mockClient);
 
             var actual = target.PutAsync(_expected).Result;
