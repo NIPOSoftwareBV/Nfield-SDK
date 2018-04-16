@@ -59,7 +59,7 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_SettingsNull_Throws()
         {
-            var target = new NfieldDomainEmailSettingsService();
+            var target = new NfieldDomainSearchFieldsSettingService();
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.PutAsync(null)));
         }
@@ -76,10 +76,6 @@ namespace Nfield.Services
             Assert.Equal(_expected.Fields, actual.Fields);
         }
 
-
-
         #endregion
-
-
     }
 }
