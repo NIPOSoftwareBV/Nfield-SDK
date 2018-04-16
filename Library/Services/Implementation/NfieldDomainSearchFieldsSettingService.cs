@@ -58,7 +58,7 @@ namespace Nfield.Services.Implementation
         private string DomainSearchFieldsSettingUrl()
         {
             var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"DomainSearchFieldsSetting");
+            result.AppendFormat(CultureInfo.InvariantCulture, @"SearchFieldsSetting");
             return result.ToString();
         }
     }
