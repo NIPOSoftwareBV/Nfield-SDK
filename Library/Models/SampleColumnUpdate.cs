@@ -18,7 +18,7 @@ using System;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Model used to update columns from a Sample Model
+    /// Model used to specify columns to be updated in a SurveyUpdateSampleRecordModel
     /// </summary>
     public class SampleColumnUpdate
     {
