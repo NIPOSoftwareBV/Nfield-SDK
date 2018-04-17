@@ -13,36 +13,23 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// class to define sample filters
+    /// Model for updating a sample record
     /// </summary>
-    public class SampleFilter
+    public class SurveyUpdateSampleRecordModel
     {
         /// <summary>
-        /// Name of a field in a sample record
+        /// The unique id of the survey
         /// </summary>
-        public string Name { get; set; }
-      
+        public int SampleRecordId { get; set; }
+
         /// <summary>
-        /// Operator, supported operators:
-        /// "con" : contains
-        /// "ncon": not contains
-        /// "eq"  : equals
-        /// "lt"  : less than
-        /// "gt"  : greater than
-        /// "lte" : less or equal
-        /// "gte" : greater or equal
-        /// "neq" : not equal
+        /// Custom columns to be updated
         /// </summary>
-        public string Op { get; set; }
-      
-        /// <summary>
-        /// Value
-        /// </summary>
-        public string Value { get; set; }
+        public IEnumerable<SampleColumnUpdate> ColumnUpdates { get; set; }
     }
 }

@@ -18,30 +18,17 @@ using System;
 namespace Nfield.Models
 {
     /// <summary>
-    /// class to define sample filters
+    /// Model used to specify columns to be updated in a SurveyUpdateSampleRecordModel
     /// </summary>
-    public class SampleFilter
+    public class SampleColumnUpdate
     {
         /// <summary>
-        /// Name of a field in a sample record
+        /// [MANDATORY] Name of the column.
         /// </summary>
-        public string Name { get; set; }
-      
+        public string ColumnName { get; set; }
+
         /// <summary>
-        /// Operator, supported operators:
-        /// "con" : contains
-        /// "ncon": not contains
-        /// "eq"  : equals
-        /// "lt"  : less than
-        /// "gt"  : greater than
-        /// "lte" : less or equal
-        /// "gte" : greater or equal
-        /// "neq" : not equal
-        /// </summary>
-        public string Op { get; set; }
-      
-        /// <summary>
-        /// Value
+        /// [MANDATORY] New value to set.
         /// </summary>
         public string Value { get; set; }
     }
