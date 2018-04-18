@@ -75,7 +75,7 @@ namespace Nfield.Services
             var expectedResult = new List<Survey> { expectedSurvey };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync($"{ServiceAddress}/RespondentSurveys/{searchValue}"))
+                .Setup(client => client.GetAsync($"{ServiceAddress}/Surveys/Search/{searchValue}"))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedResult))));
 
             var result = _target.GetAsync(searchValue).Result;

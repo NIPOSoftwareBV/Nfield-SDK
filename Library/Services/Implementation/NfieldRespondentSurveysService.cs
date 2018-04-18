@@ -66,7 +66,7 @@ namespace Nfield.Services.Implementation
 
         private string RespondentSurveysUrl(string searchValue)
         {
-            return $"{ConnectionClient.NfieldServerUri.AbsoluteUri}/RespondentSurveys/{searchValue}";
+            return $"{ConnectionClient.NfieldServerUri.AbsoluteUri}/Surveys/Search/{searchValue}";
         }
 
         private void CheckRequiredStringArgument(string argument)
