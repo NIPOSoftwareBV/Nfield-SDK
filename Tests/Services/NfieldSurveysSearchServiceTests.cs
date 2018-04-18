@@ -28,22 +28,22 @@ using Xunit;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Tests for <see cref="NfieldRespondentSurveysService"/>
+    /// Tests for <see cref="NfieldSurveysSearchService"/>
     /// </summary>
-    public class NfieldRespondentSurveysServiceTests : NfieldServiceTestsBase
+    public class NfieldSurveysSearchServiceTests : NfieldServiceTestsBase
     {
-        private readonly NfieldRespondentSurveysService _target;
+        private readonly NfieldSurveysSearchService _target;
         private readonly Mock<INfieldHttpClient> _mockedHttpClient;
 
         private const string SurveyId = "SurveyId";
         private const string SurveyName = "SurveyName";
 
-        public NfieldRespondentSurveysServiceTests()
+        public NfieldSurveysSearchServiceTests()
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            _target = new NfieldRespondentSurveysService();
+            _target = new NfieldSurveysSearchService();
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
         }
 
@@ -66,13 +66,13 @@ namespace Nfield.Services
         {
             const string searchValue = "email@nipo.com";
 
-            var expectedSurvey = new Survey
+            var expectedSurvey = new SurveyBase
             {
                 SurveyId = SurveyId,
                 SurveyName = SurveyName
             };
 
-            var expectedResult = new List<Survey> { expectedSurvey };
+            var expectedResult = new List<SurveyBase> { expectedSurvey };
 
             _mockedHttpClient
                 .Setup(client => client.GetAsync($"{ServiceAddress}/Surveys/Search/{searchValue}"))

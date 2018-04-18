@@ -13,22 +13,13 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Newtonsoft.Json;
-
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds the basic properties of a survey
+    /// Holds the properties of a survey
     /// </summary>
-    public class Survey
+    public class Survey : SurveyBase
     {
-        /// <summary>
-        /// Survey Constructor
-        /// </summary>
-        public Survey()
-        {
-        }
-
         /// <summary>
         /// Survey Constructor
         /// </summary>
@@ -37,17 +28,6 @@ namespace Nfield.Models
         {
             SurveyType = surveyType;
         }
-
-        /// <summary>
-        /// Survey ID
-        /// </summary>
-        [JsonProperty]
-        public string SurveyId { get; internal set; }
-
-        /// <summary>
-        /// Name of the survey
-        /// </summary>
-        public string SurveyName { get; set; }
 
         /// <summary>
         /// Type of the survey.

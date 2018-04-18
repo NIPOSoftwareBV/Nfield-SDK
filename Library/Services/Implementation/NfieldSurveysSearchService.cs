@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
-    internal class NfieldRespondentSurveysService : INfieldRespondentSurveysService, INfieldConnectionClientObject
+    internal class NfieldSurveysSearchService : INfieldSurveysSearchService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldConnectionClientObject
 
@@ -39,19 +39,19 @@ namespace Nfield.Services.Implementation
         #region Implementation of INfieldRespondentSurveysService
 
         /// <summary>
-        /// See <see cref="INfieldRespondentSurveysService.GetAsync"/>
+        /// See <see cref="INfieldSurveysSearchService.GetAsync"/>
         /// </summary>
-        public Task<IList<Survey>> GetAsync(string searchValue)
+        public Task<IList<SurveyBase>> GetAsync(string searchValue)
         {
             CheckRequiredStringArgument(searchValue);
 
-            var uri = RespondentSurveysUrl(searchValue);
+            var uri = SurveysSearchUrl(searchValue);
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
                     stringTask =>
-                        JsonConvert.DeserializeObject<IList<Survey>>(stringTask.Result))
+                        JsonConvert.DeserializeObject<IList<SurveyBase>>(stringTask.Result))
                 .FlattenExceptions();
         }
 
@@ -64,7 +64,7 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private string RespondentSurveysUrl(string searchValue)
+        private string SurveysSearchUrl(string searchValue)
         {
             return $"{ConnectionClient.NfieldServerUri.AbsoluteUri}/Surveys/Search/{searchValue}";
         }
