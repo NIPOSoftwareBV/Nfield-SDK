@@ -13,20 +13,24 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Nfield.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service to search respondent surveys
+    /// Holds the basic properties of a survey
     /// </summary>
-    public interface INfieldRespondentSurveysService
+    public class SurveyBase
     {
         /// <summary>
-        /// Search respondents across surveys
+        /// Survey ID
         /// </summary>
-        Task<IList<Survey>> GetAsync(string searchValue);
+        [JsonProperty]
+        public string SurveyId { get; internal set; }
+
+        /// <summary>
+        /// Name of the survey
+        /// </summary>
+        public string SurveyName { get; set; }
     }
 }
