@@ -133,22 +133,33 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<int> ClearAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear)
+        public Task<int> ClearAsync(string surveyId, string respondentKey, int? interviewId, IEnumerable<string> columnsToClear)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
             if (columnsToClear == null || !columnsToClear.Any())
             {
                 throw new ArgumentException(nameof(columnsToClear));
             }
 
+            if (string.IsNullOrEmpty(respondentKey) && !interviewId.HasValue)
+            {
+                throw new ArgumentException("RespondentKey or InterviewId must be specified");
+            }
+
             var uri = SurveySampleUrl(surveyId) + @"/Clear";
 
-            var filters = new List<SampleFilter>
+            var filters = new List<SampleFilter>();
+
+            if (!string.IsNullOrEmpty(respondentKey))
             {
-                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
-            };
+                filters.Add(new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey});
+            }
+
+            if (interviewId.HasValue)
+            {
+                filters.Add(new SampleFilter { Name = "InterviewId", Op = "eq", Value = interviewId.ToString() });
+            }
 
             var request = new ClearSurveySampleModel
             {

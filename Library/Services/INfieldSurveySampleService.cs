@@ -77,9 +77,10 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="respondentKey">The id of the respondent to be cleared</param>
+        /// <param name="interviewId">The interview id to be cleared</param>
         /// <param name="columnsToClear">The name of the columns to be cleared</param>
         /// <returns>The number of respondents successfully clear</returns>
-        Task<int> ClearAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear);
+        Task<int> ClearAsync(string surveyId, string respondentKey, int? interviewId, IEnumerable<string> columnsToClear);
 
         /// <summary>
         /// Updates the specified custom columns for the specified record in the survey.
