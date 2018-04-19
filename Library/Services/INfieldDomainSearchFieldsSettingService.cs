@@ -13,40 +13,24 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace Nfield.Models
+using System.Threading.Tasks;
+using Nfield.Models;
+
+namespace Nfield.Services
 {
     /// <summary>
-    /// Holds the properties of a survey
+    /// Service for getting and changing the search fields setting for a domain
     /// </summary>
-    public class Survey : SurveyBase
+    public interface INfieldDomainSearchFieldsSettingService
     {
         /// <summary>
-        /// Survey Constructor
+        /// Gets the search fields setting for a domain
         /// </summary>
-        /// <param name="surveyType">Type of the survey</param>
-        public Survey(SurveyType surveyType)
-        {
-            SurveyType = surveyType;
-        }
+        Task<DomainSearchFieldsSetting> GetAsync();
 
         /// <summary>
-        /// Type of the survey.
+        /// Changes the search fields setting for a domain
         /// </summary>
-        public SurveyType SurveyType { get; internal set; }
-
-        /// <summary>
-        /// Name of the survey client
-        /// </summary>
-        public string ClientName { get; set; }
-
-        /// <summary>
-        /// The description of the survey
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// The default interviewer instruction of a survey
-        /// </summary>
-        public string InterviewerInstruction { get; set; }
+        Task<DomainSearchFieldsSetting> PutAsync(DomainSearchFieldsSetting setting);
     }
 }

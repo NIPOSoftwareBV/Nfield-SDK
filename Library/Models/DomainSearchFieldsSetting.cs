@@ -13,40 +13,19 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
+
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds the properties of a survey
+    /// Dto for reading the search fields setting of a domain
     /// </summary>
-    public class Survey : SurveyBase
+    public class DomainSearchFieldsSetting 
     {
         /// <summary>
-        /// Survey Constructor
+        /// A list of fields to search respondent data within them
         /// </summary>
-        /// <param name="surveyType">Type of the survey</param>
-        public Survey(SurveyType surveyType)
-        {
-            SurveyType = surveyType;
-        }
-
-        /// <summary>
-        /// Type of the survey.
-        /// </summary>
-        public SurveyType SurveyType { get; internal set; }
-
-        /// <summary>
-        /// Name of the survey client
-        /// </summary>
-        public string ClientName { get; set; }
-
-        /// <summary>
-        /// The description of the survey
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// The default interviewer instruction of a survey
-        /// </summary>
-        public string InterviewerInstruction { get; set; }
+        public IEnumerable<string> Fields { get; set; }
+       
     }
 }
