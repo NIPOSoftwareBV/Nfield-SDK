@@ -115,7 +115,6 @@ namespace Nfield.Infrastructure
                     }
 
                     return response.ValidateResponse();
-
                 }
 
             });
