@@ -65,6 +65,7 @@ namespace Nfield.Services
         public void TestGetAsync_SearchValue_ReturnsRespondentSurveys()
         {
             const string searchValue = "email@nipo.com";
+            const string encodedSearchValue = "email%40nipo.com";
 
             var expectedSurvey = new SurveyBase
             {
@@ -75,7 +76,33 @@ namespace Nfield.Services
             var expectedResult = new List<SurveyBase> { expectedSurvey };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync($"{ServiceAddress}/Surveys/Search/{searchValue}"))
+                .Setup(client => client.GetAsync($"{ServiceAddress}/Surveys/Search?value={encodedSearchValue}"))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedResult))));
+
+            var result = _target.GetAsync(searchValue).Result;
+
+            Assert.NotNull(result);
+            Assert.True(result.Any());
+            Assert.Equal(expectedSurvey.SurveyId, result.First().SurveyId);
+            Assert.Equal(expectedSurvey.SurveyName, result.First().SurveyName);
+        }
+
+        [Fact]
+        public void TestGetAsync_SearchValueWithSpecialCharacters_ReturnsRespondentSurveys()
+        {
+            const string searchValue = @";/?:@=&$-_.+!*'(),";
+            const string encodedSearchValue = @"%3b%2f%3f%3a%40%3d%26%24-_.%2b!*%27()%2c";
+
+            var expectedSurvey = new SurveyBase
+            {
+                SurveyId = SurveyId,
+                SurveyName = SurveyName
+            };
+
+            var expectedResult = new List<SurveyBase> { expectedSurvey };
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync($"{ServiceAddress}/Surveys/Search?value={encodedSearchValue}"))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedResult))));
 
             var result = _target.GetAsync(searchValue).Result;

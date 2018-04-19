@@ -20,6 +20,7 @@ using Nfield.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Nfield.Services.Implementation
 {
@@ -66,7 +67,8 @@ namespace Nfield.Services.Implementation
 
         private string SurveysSearchUrl(string searchValue)
         {
-            return $"{ConnectionClient.NfieldServerUri.AbsoluteUri}/Surveys/Search/{searchValue}";
+            var encodedValue = HttpUtility.UrlEncode(searchValue);
+            return $"{ConnectionClient.NfieldServerUri.AbsoluteUri}/Surveys/Search?value={encodedValue}";
         }
 
         private void CheckRequiredStringArgument(string argument)
