@@ -25,6 +25,7 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldDomainSearchFieldsSettingServiceTests : NfieldServiceTestsBase
     {
+        private readonly NfieldDomainSearchFieldsSettingService _target;
 
         private readonly DomainSearchFieldsSetting _expected = new DomainSearchFieldsSetting()
         {
@@ -35,17 +36,20 @@ namespace Nfield.Services
             }
         };
 
+        public NfieldDomainSearchFieldsSettingServiceTests()
+        {
+            _target = new NfieldDomainSearchFieldsSettingService();
+        }
+
         #region Get
 
         [Fact]
         public void TestGetAsync_ReturnsData()
         {
-            var target = new NfieldDomainSearchFieldsSettingService();
             var mockClient = InitMockClientGet(ServiceAddress + @"SearchFieldsSetting", _expected);
-            target.InitializeNfieldConnection(mockClient);
+            _target.InitializeNfieldConnection(mockClient);
 
-
-            var actual = target.GetAsync().Result;
+            var actual = _target.GetAsync().Result;
             Assert.Equal(_expected.Fields,actual.Fields);
         }
 
@@ -56,19 +60,17 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_SettingsNull_Throws()
         {
-            var target = new NfieldDomainSearchFieldsSettingService();
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PutAsync(null)));
+                UnwrapAggregateException(_target.PutAsync(null)));
         }
 
         [Fact]
         public void TestPutAsync_ReturnsData()
         {
-            var target = new NfieldDomainSearchFieldsSettingService();
             var mockClient = InitMockClientPut(ServiceAddress + @"SearchFieldsSetting", _expected, _expected);
-            target.InitializeNfieldConnection(mockClient);
+            _target.InitializeNfieldConnection(mockClient);
 
-            var actual = target.PutAsync(_expected).Result;
+            var actual = _target.PutAsync(_expected).Result;
             Assert.Equal(_expected.Fields, actual.Fields);
         }
 

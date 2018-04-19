@@ -35,7 +35,7 @@ namespace Nfield.Infrastructure
         [Fact]
         public void TestSignInAsync_CredentialsAreIncorrect_ReturnsFalse()
         {
-            NfieldSdkInitializer.Initialize(RegisterTransient, RregisterSingleton, RegisterObject);
+            NfieldSdkInitializer.Initialize(RegisterTransient, RegisterSingleton, RegisterObject);
 
             // Add interfaces that not need to be registered
             _interfaceList.Add(typeof(IInterviewer));
@@ -57,7 +57,7 @@ namespace Nfield.Infrastructure
             _interfaceList.Add(interfaceType);
         }
 
-        private void RregisterSingleton(Type interfaceType, Type classType)
+        private void RegisterSingleton(Type interfaceType, Type classType)
         {
             Assert.True(interfaceType.IsAssignableFrom(classType));
             _interfaceList.Add(interfaceType);
