@@ -34,8 +34,6 @@ namespace Nfield.Services
     public class NfieldSurveySampleTests : NfieldServiceTestsBase
     {
         private const string SurveyId = "MySurvey";
-
-
         private const string RespondentKey = "testRespondent123";
         private const int InterviewId = 1;
         private readonly List<string> _columnsToClear = new List<string> { "ColumnName1", "ColumnName2" };
@@ -426,73 +424,82 @@ namespace Nfield.Services
 
         #endregion
 
-        #region ClearAsync
+        #region ClearByRespondentAsync
 
         [Fact]
-        public void TestClearAsync_SurveyIdIsNull_Throws()
+        public void TestClearByRespondentAsync_SurveyIdIsNull_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.ClearAsync(null, "anything", 1, _columnsToClear)));
+                UnwrapAggregateException(target.ClearByRespondentAsync(null, RespondentKey, _columnsToClear)));
         }
 
         [Fact]
-        public void TestClearAsync_SurveyIdIsEmpty_Throws()
+        public void TestClearByRespondentAsync_SurveyIdIsEmpty_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.ClearAsync(string.Empty, "anything", 1, _columnsToClear)));
+                UnwrapAggregateException(target.ClearByRespondentAsync(string.Empty, RespondentKey, _columnsToClear)));
         }
 
         [Fact]
-        public void TestClearAsync_SurveyIdIsWhitespace_Throws()
+        public void TestClearByRespondentAsync_SurveyIdIsWhitespace_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.ClearAsync("  ", "anything", 1, _columnsToClear)));
+                UnwrapAggregateException(target.ClearByRespondentAsync("  ", RespondentKey, _columnsToClear)));
         }
 
         [Fact]
-        public void TestClearAsync_RespondentKeyAndInterviewIdAreNull_Throws()
+        public void TestClearByRespondentAsync_RespondentKeyIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearByRespondentAsync(SurveyId, null, _columnsToClear)));
+        }
+
+        [Fact]
+        public void TestClearByRespondentAsync_RespondentKeyIsWhiteSpace_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.ClearAsync(SurveyId, null, null, _columnsToClear)));
+                UnwrapAggregateException(target.ClearByRespondentAsync(SurveyId, "   ", _columnsToClear)));
         }
 
         [Fact]
-        public void TestClearAsync_RespondentKeyAndInterviewIdAreEmpty_Throws()
+        public void TestClearByRespondentAsync_RespondentKeyIsEmpty_Throws()
         {
             var target = new NfieldSurveySampleService();
 
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.ClearAsync(SurveyId, string.Empty, null, _columnsToClear)));
+                UnwrapAggregateException(target.ClearByRespondentAsync(SurveyId, string.Empty, _columnsToClear)));
         }
 
         [Fact]
-        public void TestClearAsync_ColumnsAreNull_Throws()
+        public void TestClearByRespondentAsync_ColumnsAreNull_Throws()
         {
             var target = new NfieldSurveySampleService();
 
-            Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.ClearAsync(SurveyId, "anything", 1, null)));
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearByRespondentAsync(SurveyId, RespondentKey, null)));
         }
 
         [Fact]
-        public void TestClearAsync_ColumnsAreEmptyList_Throws()
+        public void TestClearByRespondentAsync_ColumnsAreEmptyList_Throws()
         {
             var target = new NfieldSurveySampleService();
 
-            Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(target.ClearAsync(SurveyId, "anything", 1, new List<string>())));
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearByRespondentAsync(SurveyId, RespondentKey, new List<string>())));
         }
 
         [Fact]
-        public void TestClearAsync_ClearByRespondentKey_Successful()
+        public void TestClearByRespondentAsync_ParamsAreOk_Successful()
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -511,13 +518,63 @@ namespace Nfield.Services
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var result = target.ClearAsync(SurveyId, RespondentKey, null, _columnsToClear).Result;
+            var result = target.ClearByRespondentAsync(SurveyId, RespondentKey, _columnsToClear).Result;
 
             Assert.Equal(1, result);
         }
 
+        #endregion
+
+
+        #region ClearByInterviewAsync
+
         [Fact]
-        public void TestClearAsync_ClearByInterviewId_Successful()
+        public void TestClearByInterviewAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearByInterviewAsync(null, InterviewId, _columnsToClear)));
+        }
+
+        [Fact]
+        public void TestClearByInterviewAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearByInterviewAsync(string.Empty, InterviewId, _columnsToClear)));
+        }
+
+        [Fact]
+        public void TestClearByInterviewAsync_SurveyIdIsWhitespace_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(target.ClearByInterviewAsync("  ", InterviewId, _columnsToClear)));
+        }
+
+        [Fact]
+        public void TestClearByInterviewAsync_ColumnsAreNull_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearByInterviewAsync(SurveyId, InterviewId, null)));
+        }
+
+        [Fact]
+        public void TestClearByInterviewAsync_ColumnsAreEmptyList_Throws()
+        {
+            var target = new NfieldSurveySampleService();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(target.ClearByInterviewAsync(SurveyId, InterviewId, new List<string>())));
+        }
+
+        [Fact]
+        public void TestClearByInterviewAsync_ParamsAreOk_Successful()
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -536,41 +593,12 @@ namespace Nfield.Services
 
             var target = new NfieldSurveySampleService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var result = target.ClearAsync(SurveyId, null, InterviewId, _columnsToClear).Result;
-
-            Assert.Equal(1, result);
-        }
-
-        [Fact]
-        public void TestClearAsync_ClearByRespondentKeyAndInterviewId_Successful()
-        {
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-
-            mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Clear",
-                    It.Is<ClearSurveySampleModel>(c =>
-                        FilterEquals(c.Filters.FirstOrDefault(), "RespondentKey", "eq", RespondentKey) 
-                        && FilterEquals(c.Filters.LastOrDefault(), "InterviewId", "eq", InterviewId.ToString()) 
-                        && c.Columns.Any(n => n == "ColumnName1") && 
-                        c.Columns.Any(n => n == "ColumnName2"))))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(
-                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
-
-            mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(
-                        JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
-
-            var target = new NfieldSurveySampleService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            var result = target.ClearAsync(SurveyId, RespondentKey, InterviewId, _columnsToClear).Result;
+            var result = target.ClearByInterviewAsync(SurveyId, InterviewId, _columnsToClear).Result;
 
             Assert.Equal(1, result);
         }
 
         #endregion
-
         #region UpdateAsync
 
         [Fact]
