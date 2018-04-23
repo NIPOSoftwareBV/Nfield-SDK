@@ -30,12 +30,12 @@ namespace Nfield.Services
         /// <summary>
         /// Adds a new external api.
         /// </summary>
-        Task<ExternalApi> AddAsync(ExternalApi survey);
+        Task<ExternalApi> AddAsync(ExternalApi externalApi);
 
         /// <summary>
         /// Removes the external api.
         /// </summary>
-        Task RemoveAsync(ExternalApi survey);
+        Task RemoveAsync(ExternalApi externalApi);
 
         /// <summary>
         /// Updates the external api.
@@ -43,6 +43,6 @@ namespace Nfield.Services
         /// All properties are updated (except the name).
         /// All headers are replaced
         /// </summary>
-        Task<ExternalApi> UpdateAsync(ExternalApi survey);
+        Task<ExternalApi> UpdateAsync(ExternalApi externalApi);
     }
 }
