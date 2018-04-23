@@ -11,6 +11,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/NIPOSoftware/Nfield-SDK/master/icon-nfield.png</PackageIconUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>nfield marketresearch capi cawi</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="4.0.30506" />

@@ -1,0 +1,1 @@
+@CopyToLocalNuget Library\bin\Debug\Nfield.SDK.1.0.0.nupkg
