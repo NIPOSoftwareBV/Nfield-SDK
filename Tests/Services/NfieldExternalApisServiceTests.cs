@@ -1,0 +1,200 @@
+﻿//    This file is part of Nfield.SDK.
+//
+//    Nfield.SDK is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Lesser General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Nfield.SDK is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Lesser General Public License for more details.
+//
+//    You should have received a copy of the GNU Lesser General Public License
+//    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
+
+using Moq;
+using Newtonsoft.Json;
+using Nfield.Infrastructure;
+using Nfield.Models;
+using Nfield.Services.Implementation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using Xunit;
+
+namespace Nfield.Services
+{
+    public class NfieldExternalApisServiceTests : NfieldServiceTestsBase
+    {
+        #region  QueryAsync
+
+        [Fact]
+        public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithExternalApis()
+        {
+            var header0 = new ExternalApiHeader
+            {
+                Name = "Header0",
+                Value = "Api 0 header 0"
+            };
+            var header1 = new ExternalApiHeader
+            {
+                Name = "Header1",
+                Value = "Api 1 header 1"
+            };
+            var expectedExternalApis = new[]
+            {
+                new ExternalApi
+                {
+                    Name = "TestExternalApi",
+                    Description = "Description",
+                    Headers = new List<ExternalApiHeader>
+                    {
+                        header0
+                    }
+                },
+                new ExternalApi
+                {
+                    Name = "AnotherTestExternalApi",
+                    Description = "Another Description",
+                    Headers = new List<ExternalApiHeader>
+                    {
+                        header1
+                    }
+                }
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(ServiceAddress + "externalapis/"))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedExternalApis))));
+
+            var target = new NfieldExternalApisService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualExternalApis = target.QueryAsync().Result.ToArray();
+
+            Assert.Equal(expectedExternalApis[0].Name, actualExternalApis[0].Name);
+            Assert.Equal(expectedExternalApis[0].Description, actualExternalApis[0].Description);
+            Assert.Equal(expectedExternalApis[0].Headers.First().Name, header0.Name);
+            Assert.Equal(expectedExternalApis[0].Headers.First().Value, header0.Value);
+            Assert.Equal(expectedExternalApis[1].Name, actualExternalApis[1].Name);
+            Assert.Equal(expectedExternalApis[1].Description, actualExternalApis[1].Description);
+            Assert.Equal(expectedExternalApis[1].Headers.First().Name, header1.Name);
+            Assert.Equal(expectedExternalApis[1].Headers.First().Value, header1.Value);
+            Assert.Equal(2, actualExternalApis.Count());
+        }
+
+        #endregion
+
+        #region AddAsync
+
+        [Fact]
+        public void TestAddAsync_ExternalApiIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldExternalApisService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null)));
+        }
+
+        [Fact]
+        public void TestAddAsync_ServerAccepts_ReturnsExternalApi()
+        {
+            var header = new ExternalApiHeader
+            {
+                Name = "Header",
+                Value = "Api header"
+            };
+            var externalApi = new ExternalApi
+            {
+                Name = "New ExternalApi",
+                Description = "New Description",
+                Headers = new List<ExternalApiHeader>
+                {
+                    header
+                }
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var content = new StringContent(JsonConvert.SerializeObject(externalApi));
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "externalapis/", externalApi))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var target = new NfieldExternalApisService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.AddAsync(externalApi).Result;
+
+            Assert.Equal(externalApi.Name, actual.Name);
+            Assert.Equal(externalApi.Description, actual.Description);
+            Assert.Equal(externalApi.Headers.First().Name, header.Name);
+            Assert.Equal(externalApi.Headers.First().Value, header.Value);
+        }
+
+        #endregion
+
+        #region RemoveAsync
+
+        [Fact]
+        public void TestRemoveAsync_ExternalApiIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldExternalApisService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null)));
+        }
+
+        [Fact]
+        public void TestRemoveAsync_ServerRemovedExternalApi_DoesNotThrow()
+        {
+            const string ExternalApiName = "ApiToDelete";
+            var externalApi = new ExternalApi { Name = ExternalApiName };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.DeleteAsync(ServiceAddress + "externalapis/" + ExternalApiName))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldExternalApisService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            Assert.DoesNotThrow(() => target.RemoveAsync(externalApi).Wait());
+        }
+
+        #endregion
+
+        #region UpdateAsync
+
+        [Fact]
+        public void TestUpdateAsync_ExternalApiArgumentIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldExternalApisService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null)));
+        }
+
+        [Fact]
+        public void TestUpdateAsync_ExternalApiExists_ReturnsExternalApi()
+        {
+            const string externalApiName = "ApiToUpdate";
+            var externalApi = new ExternalApi
+            {
+                Name = externalApiName,
+                Description = "updated description"
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "externalapis/", externalApi))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(externalApi))));
+
+            var target = new NfieldExternalApisService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.UpdateAsync(externalApi).Result;
+
+            Assert.Equal(externalApi.Description, actual.Description);
+        }
+
+        #endregion
+    }
+}
