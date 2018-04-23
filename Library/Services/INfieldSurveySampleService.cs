@@ -78,7 +78,7 @@ namespace Nfield.Services
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="respondentKey">The id of the respondent to be cleared</param>
         /// <param name="columnsToClear">The name of the columns to be cleared</param>
-        /// <returns>The number of respondents successfully clear</returns>
+        /// <returns>The number of respondents successfully cleared</returns>
         Task<int> ClearByRespondentAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear);
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Nfield.Services
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="interviewId">The interview id to be cleared</param>
         /// <param name="columnsToClear">The name of the columns to be cleared</param>
-        /// <returns>The number of respondents successfully clear</returns>
+        /// <returns>The number of respondents successfully cleared</returns>
         Task<int> ClearByInterviewAsync(string surveyId, int interviewId, IEnumerable<string> columnsToClear);
 
         /// <summary>
