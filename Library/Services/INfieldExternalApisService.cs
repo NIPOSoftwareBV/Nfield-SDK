@@ -41,7 +41,10 @@ namespace Nfield.Services
         /// Updates the external api.
         /// 
         /// All properties are updated (except the name).
-        /// All headers are replaced
+        /// Existing headers not present in 'externalApi' are deleted (matched on ExternalApiHeader.HeaderId)
+        /// Existing headers present in 'externalApi' with ExternalApiHeader.IsObfuscated set to false
+        /// have there value updated.
+        /// Headers in 'externalApi' where ExternalApiHeader.HeaderId is 0 are added.
         /// </summary>
         Task<ExternalApi> UpdateAsync(ExternalApi externalApi);
     }
