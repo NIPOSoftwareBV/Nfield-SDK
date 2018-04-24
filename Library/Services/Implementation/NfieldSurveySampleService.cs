@@ -31,6 +31,9 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveySampleService : INfieldSurveySampleService, INfieldConnectionClientObject
     {
+        private const string RespondentKey = "RespondentKey";
+        private const string InterviewId = "InterviewId";
+
 
         public Task<string> GetAsync(string surveyId)
         {
@@ -64,7 +67,7 @@ namespace Nfield.Services.Implementation
             var uri = SurveySampleUrl(surveyId);
             var filters = new List<SampleFilter>
             {
-                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+                new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
 
             return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
@@ -84,7 +87,7 @@ namespace Nfield.Services.Implementation
 
             var filters = new List<SampleFilter>
             {
-                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+                new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
 
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
@@ -122,7 +125,7 @@ namespace Nfield.Services.Implementation
 
             var filters = new List<SampleFilter>
             {
-                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+                new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
 
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
@@ -133,22 +136,36 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<int> ClearAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear)
+        public Task<int> ClearByRespondentAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
-
-            if (columnsToClear == null || !columnsToClear.Any())
-            {
-                throw new ArgumentException(nameof(columnsToClear));
-            }
-
-            var uri = SurveySampleUrl(surveyId) + @"/Clear";
+            Ensure.ArgumentEnumerableNotNullOrEmpty(columnsToClear, nameof(columnsToClear));
 
             var filters = new List<SampleFilter>
             {
-                new SampleFilter{Name = "RespondentKey", Op = "eq", Value = respondentKey}
+                new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
+
+            return ClearAsync(surveyId, filters, columnsToClear);
+        }
+
+        public Task<int> ClearByInterviewAsync(string surveyId, int interviewId, IEnumerable<string> columnsToClear)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentEnumerableNotNullOrEmpty(columnsToClear, nameof(columnsToClear));
+
+            var filters = new List<SampleFilter>
+            {
+                new SampleFilter{Name = InterviewId, Op = "eq", Value = interviewId.ToString()}
+            };
+
+            return ClearAsync(surveyId, filters, columnsToClear);
+        }
+
+        private Task<int> ClearAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
+        {
+            var uri = SurveySampleUrl(surveyId) + @"/Clear";
 
             var request = new ClearSurveySampleModel
             {
