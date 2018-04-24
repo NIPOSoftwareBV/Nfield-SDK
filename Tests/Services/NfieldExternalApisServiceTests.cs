@@ -34,14 +34,16 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithExternalApis()
         {
-            var header0 = new ExternalApiHeader
-            {
-                Name = "Header0",
-                Value = "Api 0 header 0"
-            };
             var header1 = new ExternalApiHeader
             {
+                HeaderId = 1,
                 Name = "Header1",
+                Value = "Api 0 header 0"
+            };
+            var header2 = new ExternalApiHeader
+            {
+                HeaderId = 2,
+                Name = "Header2",
                 Value = "Api 1 header 1"
             };
             var expectedExternalApis = new[]
@@ -52,7 +54,7 @@ namespace Nfield.Services
                     Description = "Description",
                     Headers = new List<ExternalApiHeader>
                     {
-                        header0
+                        header1
                     }
                 },
                 new ExternalApi
@@ -61,7 +63,7 @@ namespace Nfield.Services
                     Description = "Another Description",
                     Headers = new List<ExternalApiHeader>
                     {
-                        header1
+                        header2
                     }
                 }
             };
@@ -78,12 +80,14 @@ namespace Nfield.Services
 
             Assert.Equal(expectedExternalApis[0].Name, actualExternalApis[0].Name);
             Assert.Equal(expectedExternalApis[0].Description, actualExternalApis[0].Description);
-            Assert.Equal(expectedExternalApis[0].Headers.First().Name, header0.Name);
-            Assert.Equal(expectedExternalApis[0].Headers.First().Value, header0.Value);
+            Assert.Equal(expectedExternalApis[0].Headers.First().HeaderId, header1.HeaderId);
+            Assert.Equal(expectedExternalApis[0].Headers.First().Name, header1.Name);
+            Assert.Equal(expectedExternalApis[0].Headers.First().Value, header1.Value);
             Assert.Equal(expectedExternalApis[1].Name, actualExternalApis[1].Name);
             Assert.Equal(expectedExternalApis[1].Description, actualExternalApis[1].Description);
-            Assert.Equal(expectedExternalApis[1].Headers.First().Name, header1.Name);
-            Assert.Equal(expectedExternalApis[1].Headers.First().Value, header1.Value);
+            Assert.Equal(expectedExternalApis[1].Headers.First().HeaderId, header2.HeaderId);
+            Assert.Equal(expectedExternalApis[1].Headers.First().Name, header2.Name);
+            Assert.Equal(expectedExternalApis[1].Headers.First().Value, header2.Value);
             Assert.Equal(2, actualExternalApis.Count());
         }
 
