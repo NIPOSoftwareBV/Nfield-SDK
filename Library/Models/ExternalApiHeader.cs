@@ -21,6 +21,11 @@ namespace Nfield.Models
     public class ExternalApiHeader
     {
         /// <summary>
+        /// The database id of the header
+        /// </summary>
+        public int HeaderId { get; set; }
+
+        /// <summary>
         /// Header name
         /// </summary>
         public string Name { get; set; }
@@ -29,5 +34,12 @@ namespace Nfield.Models
         /// Header value
         /// </summary>
         public string Value { get; set; }
+
+        /// <summary>
+        /// Indication the value holds an obfuscated value.
+        /// When false the value is the real value and will be used in
+        /// an update call
+        /// </summary>
+        public bool IsObfuscated { get; set; }
     }
 }
