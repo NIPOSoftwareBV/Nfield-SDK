@@ -22,6 +22,7 @@ namespace Nfield.Models
     {
         /// <summary>
         /// The database id of the header
+        /// When used in an update call a value of 0 indicates a new header
         /// </summary>
         public int HeaderId { get; set; }
 
@@ -37,7 +38,7 @@ namespace Nfield.Models
 
         /// <summary>
         /// Indication the value holds an obfuscated value.
-        /// When false the value is the real value and will be used in
+        /// When true the value is obfuscated and will not be used in
         /// an update call
         /// </summary>
         public bool IsObfuscated { get; set; }
