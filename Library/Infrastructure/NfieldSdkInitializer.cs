@@ -76,6 +76,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldSurveyInviteRespondentsService), typeof(NfieldSurveyInviteRespondentsService));
             registerTransient(typeof(INfieldSurveyVarFileService), typeof(NfieldSurveyVarFileService));
             registerTransient(typeof(INfieldSurveysSearchService), typeof(NfieldSurveysSearchService));
+            registerTransient(typeof(INfieldExternalApisService), typeof(NfieldExternalApisService));
         }
 
     }
