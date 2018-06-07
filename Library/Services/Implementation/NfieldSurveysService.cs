@@ -27,6 +27,7 @@ using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Quota;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -375,10 +376,10 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetUpdateAsync(string surveyId, string samplingPointId, SamplingPointQuotaTarget samplingPointQuotaTarget)
         {
-            if (samplingPointQuotaTarget == null)
-            {
-                throw new ArgumentNullException("samplingPointQuotaTarget");
-            }
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(samplingPointId, nameof(samplingPointId));
+            Ensure.ArgumentNotNull(samplingPointQuotaTarget, nameof(samplingPointQuotaTarget));
+            Ensure.ArgumentNotNullOrEmptyString(samplingPointQuotaTarget.LevelId, nameof(samplingPointQuotaTarget.LevelId));
 
             var updatedSamplingPointQuotaTarget = new UpdateSamplingPointQuotaTarget
             {
