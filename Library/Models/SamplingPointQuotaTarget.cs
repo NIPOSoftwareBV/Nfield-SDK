@@ -27,7 +27,7 @@ namespace Nfield.Models
         /// The Id of the Quota Level
         /// </summary>
         [JsonProperty]
-        public string LevelId { get; internal set; }
+        public string LevelId { get; set; }
 
         /// <summary>
         /// Actual target of the level
