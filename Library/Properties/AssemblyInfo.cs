@@ -32,4 +32,5 @@ using System.Runtime.CompilerServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: InternalsVisibleTo("Nfield.SDK.Tests")]
+[assembly: InternalsVisibleTo("Nfield.Manager.Api.IntegrationTests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
