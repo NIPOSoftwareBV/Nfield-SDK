@@ -16,8 +16,9 @@
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.SDK.Models;
-using Nfield.SDK.Services.Implementation;
+using Nfield.Services.Implementation;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -28,29 +29,29 @@ namespace Nfield.Services
     public class NfieldExternalApisLogDataServiceTests : NfieldServiceTestsBase
     {
         [Fact]
-        public void TestPostAsync_LogDownloadDataRequestArgumentIsNull_Throws()
+        public void TestPostAsync_LogDownloadRequestArgumentIsNull_Throws()
         {
-            var target = new NfieldExternalApisLogDataService();
+            var target = new NfieldExternalApisLogService();
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.PostAsync(null)));
         }
 
         [Fact]
-        public void TestPostAsync_ValidInput_PostsData()
+        public void TestPostAsync_ValidInput_ReturnsLogData()
         {
+            var task = new BackgroundTask { ResultUrl = "BlobUrl" };
             var logDownload = new ExternalApiLogDownload();
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient.Setup(client => client.PostAsJsonAsync<ExternalApiLogDownload>(It.IsAny<string>(), It.IsAny<ExternalApiLogDownload>()))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(""))));
+            mockedHttpClient.Setup(client => client.PostAsJsonAsync<ExternalApiLogDownload>(
+                ServiceAddress + "externalapilogdownload/", logDownload))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(task))));
 
-            var target = new NfieldExternalApisLogDataService();
+            var target = new NfieldExternalApisLogService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            target.PostAsync(logDownload);
+            var result = target.PostAsync(logDownload).Result;
 
-            mockedHttpClient.Verify(client => client.PostAsJsonAsync<ExternalApiLogDownload>(It.IsAny<string>(), logDownload), Times.Once());
-
-            // finish this test !!!
+            Assert.Equal(task.ResultUrl, result.ResultUrl);
         }
     }
 }

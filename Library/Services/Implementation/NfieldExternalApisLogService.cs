@@ -21,24 +21,24 @@ using Nfield.SDK.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services.Implementation
+namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldExternalApisLogDataService"/>
+    /// Implementation of <see cref="INfieldExternalApisLogService"/>
     /// </summary>
-    internal class NfieldExternalApisLogDataService : INfieldExternalApisLogDataService, INfieldConnectionClientObject
+    internal class NfieldExternalApisLogService : INfieldExternalApisLogService, INfieldConnectionClientObject
     {
         /// <summary>
-        /// See <see cref="INfieldExternalApisLogDataService.PostAsync"/>
+        /// See <see cref="INfieldExternalApisLogService.PostAsync"/>
         /// </summary>
-        public Task<BackgroundTask> PostAsync(ExternalApiLogDownload logDownloadDataRequest)
+        public Task<BackgroundTask> PostAsync(ExternalApiLogDownload logDownloadRequest)
         {
-            if (logDownloadDataRequest == null)
+            if (logDownloadRequest == null)
             {
-                throw new ArgumentNullException("logDownloadDataRequest");
+                throw new ArgumentNullException("logDownloadRequest");
             }
 
-            return Client.PostAsJsonAsync(ExternalApiDownloaLogDatadUri.AbsoluteUri, logDownloadDataRequest)
+            return Client.PostAsJsonAsync(ExternalApiDownloaLogDatadUri.AbsoluteUri, logDownloadRequest)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundTask>(task.Result))
                          .FlattenExceptions();
@@ -62,7 +62,7 @@ namespace Nfield.SDK.Services.Implementation
 
         private Uri ExternalApiDownloaLogDatadUri
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "ExternalApiLogDownload/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "externalapilogdownload/"); }
         }
     }
 }

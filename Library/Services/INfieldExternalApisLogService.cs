@@ -17,16 +17,16 @@ using Nfield.Models;
 using Nfield.SDK.Models;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services
+namespace Nfield.Services
 {
     /// <summary>
     /// Service for making a download log data request for external APIs.
     /// </summary>
-    interface INfieldExternalApisLogDataService
+    public interface INfieldExternalApisLogService
     {
         /// <summary>
         /// Gets the download log data url.
         /// </summary>
-        Task<BackgroundTask> PostAsync(ExternalApiLogDownload logDownloadDataRequest);
+        Task<BackgroundTask> PostAsync(ExternalApiLogDownload logDownloadRequest);
     }
 }
