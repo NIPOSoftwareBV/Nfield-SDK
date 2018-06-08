@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.Models;
-using Nfield.SDK.Models;
 using System.Threading.Tasks;
 
 namespace Nfield.Services

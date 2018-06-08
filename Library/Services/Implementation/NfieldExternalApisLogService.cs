@@ -17,7 +17,6 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
-using Nfield.SDK.Models;
 using System;
 using System.Threading.Tasks;
 

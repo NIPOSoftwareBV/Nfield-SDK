@@ -17,7 +17,6 @@ using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
-using Nfield.SDK.Models;
 using Nfield.Services.Implementation;
 using System;
 using System.Net;
