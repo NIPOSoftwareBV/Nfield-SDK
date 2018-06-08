@@ -37,7 +37,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("logDownloadRequest");
             }
 
-            return Client.PostAsJsonAsync(ExternalApiDownloaLogDatadUri.AbsoluteUri, logDownloadRequest)
+            return Client.PostAsJsonAsync(ExternalApiDownloadLogUri.AbsoluteUri, logDownloadRequest)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundTask>(task.Result))
                          .FlattenExceptions();
@@ -59,7 +59,7 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri ExternalApiDownloaLogDatadUri
+        private Uri ExternalApiDownloadLogUri
         {
             get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "externalapilogdownload/"); }
         }
