@@ -25,11 +25,11 @@ namespace Nfield.Models
         /// <summary>
         /// The start date of log data to download
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
 
         /// <summary>
         /// The end date of log data to download
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public string EndDate { get; set; }
     }
 }
