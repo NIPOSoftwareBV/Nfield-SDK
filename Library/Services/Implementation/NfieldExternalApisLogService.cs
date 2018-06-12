@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldExternalApisLogService.PostAsync"/>
         /// </summary>
-        public Task<BackgroundTask> PostAsync(ExternalApiLogDownload logDownloadRequest)
+        public Task<string> PostAsync(ExternalApiLogDownload logDownloadRequest)
         {
             if (logDownloadRequest == null)
             {
@@ -39,7 +40,8 @@ namespace Nfield.Services.Implementation
 
             return Client.PostAsJsonAsync(ExternalApiDownloadLogUri.AbsoluteUri, logDownloadRequest)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundTask>(task.Result))
+                         .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
+                         .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
                          .FlattenExceptions();
         }
 

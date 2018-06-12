@@ -73,7 +73,7 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "DeletedTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "DeletedTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -93,7 +93,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "BlockedTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "BlockedTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -131,7 +131,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "ResetTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "ResetTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -176,7 +176,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync(uri, request)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "ClearTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "ClearTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }

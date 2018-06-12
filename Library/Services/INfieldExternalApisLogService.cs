@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using System.Threading.Tasks;
 
 namespace Nfield.Services
@@ -26,6 +27,6 @@ namespace Nfield.Services
         /// <summary>
         /// Gets the download log data url.
         /// </summary>
-        Task<BackgroundTask> PostAsync(ExternalApiLogDownload logDownloadRequest);
+        Task<string> PostAsync(ExternalApiLogDownload logDownloadRequest);
     }
 }

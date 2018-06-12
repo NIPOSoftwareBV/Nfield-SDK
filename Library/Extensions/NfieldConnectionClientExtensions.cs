@@ -44,7 +44,7 @@ namespace Nfield.Extensions
         /// <param name="activityId">The id of the activity to wait for.</param>
         /// <param name="fieldNameResult">The name of the result field</param>
         /// <returns>The <see cref="BackgroundActivityStatus" /> id.</returns>
-        internal static Task<int> GetActivityResultAsync(this INfieldConnectionClient client, string activityId, string fieldNameResult)
+        internal static Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient client, string activityId, string fieldNameResult)
         {
             return client.Client.GetAsync(client.BackgroundActivityUrl(activityId))
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync())
@@ -59,10 +59,10 @@ namespace Nfield.Extensions
                         case 0: // pending
                         case 1: // started
                             Thread.Sleep(millisecondsTimeout: 200);
-                            return client.GetActivityResultAsync(activityId, fieldNameResult);
+                            return client.GetActivityResultAsync<T>(activityId, fieldNameResult);
                         case 2: // succeeded
-                            var tcs = new TaskCompletionSource<int>();
-                            tcs.SetResult(obj[fieldNameResult].Value<int>());
+                            var tcs = new TaskCompletionSource<T>();
+                            tcs.SetResult(obj[fieldNameResult].Value<T>());
                             return tcs.Task;
                         case 3: // failed
                         default:

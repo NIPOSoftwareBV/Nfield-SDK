@@ -17,6 +17,7 @@ using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Services.Implementation;
 using System;
 using System.Net;
@@ -37,20 +38,26 @@ namespace Nfield.Services
         [Fact]
         public void TestPostAsync_ValidInput_ReturnsLogData()
         {
-            var task = new BackgroundTask { ResultUrl = "BlobUrl" };
+            const string ExpectedDownloadUrl = "http://download.me";
+
+            var activity = new BackgroundActivityStatus { ActivityId = "activityId" };
             var logDownload = new ExternalApiLogDownload();
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient.Setup(client => client.PostAsJsonAsync<ExternalApiLogDownload>(
                 ServiceAddress + "externalapilogdownload/", logDownload))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(task))));
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(activity))));
+
+            mockedHttpClient
+                .Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/{activity.ActivityId}"))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new { Status = 2, DownloadDataUrl = ExpectedDownloadUrl }))));
 
             var target = new NfieldExternalApisLogService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var result = target.PostAsync(logDownload).Result;
 
-            Assert.Equal(task.ResultUrl, result.ResultUrl);
+            Assert.Equal(ExpectedDownloadUrl, result);
         }
     }
 }
