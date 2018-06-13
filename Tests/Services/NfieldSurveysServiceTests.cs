@@ -612,22 +612,45 @@ namespace Nfield.Services
         #region SamplingPointQuotaTargetUpdateAsync
 
         [Fact]
+        public void TestSamplingPointQuotaTargetUpdateAsync_SurveyIdArgumentIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(null, It.IsAny<string>(), It.IsAny<SamplingPointQuotaTarget>()).Wait();
+            });
+        }
+
+        [Fact]
+        public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointIdArgumentIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(It.IsAny<string>(), null, It.IsAny<SamplingPointQuotaTarget>()).Wait();
+            });
+        }
+
+        [Fact]
         public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointQuotaTargetArgumentIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldSurveysService();
-            Assert.Throws<ArgumentNullException>(
-                () =>
-                {
-                    try
-                    {
-                        target.SamplingPointQuotaTargetUpdateAsync("", "", null).Wait();
-                    }
-                    catch (AggregateException ex)
-                    {
-                        throw ex.InnerException;
-                    }
-                }
-                );
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(It.IsAny<string>(), It.IsAny<string>(), null).Wait();
+            });
+        }
+
+        [Fact]
+        public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointQuotaTargetLevelIdIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            var samplingPointQuotaTarget = new SamplingPointQuotaTarget{ Target = 4 };
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(It.IsAny<string>(), It.IsAny<string>(), samplingPointQuotaTarget).Wait();
+            });
         }
 
         [Fact]
