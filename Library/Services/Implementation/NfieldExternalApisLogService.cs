@@ -18,6 +18,7 @@ using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.Utilities;
 using System;
 using System.Threading.Tasks;
 
@@ -33,10 +34,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<string> PostAsync(ExternalApiLogDownload logDownloadRequest)
         {
-            if (logDownloadRequest == null)
-            {
-                throw new ArgumentNullException("logDownloadRequest");
-            }
+            Ensure.ArgumentNotNull(logDownloadRequest, nameof(logDownloadRequest));
 
             return Client.PostAsJsonAsync(ExternalApiDownloadLogUri.AbsoluteUri, logDownloadRequest)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
