@@ -19,6 +19,7 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -91,7 +92,7 @@ namespace Nfield.Services
 
         #endregion
 
-        #region SendInvitationsAsync
+        #region PostAsync
 
         [Fact]
         public void TestPostAsync_FileDoesNotExist_ThrowsFileNotFoundException()
@@ -131,6 +132,34 @@ namespace Nfield.Services
 
             Assert.Equal(surveyScript.FileName, actual.FileName);
             Assert.Equal(surveyScript.Script, actual.Script);
+            Assert.Null(actual.WarningMessages);
+        }
+
+        [Fact]
+        public void TestPostAsync_ServerAccepts_WarningMessages_ReturnsSurveyScriptAndMessages()
+        {
+            const string surveyId = "SurveyId";
+            const string script = "this is the script";
+            const string fileName = "fileq.odin";
+            var warningMessages = new List<string>
+            {
+                "Warning1",
+                "warning2"
+            };
+
+            var surveyScript = new SurveyScript { Script = script, FileName = fileName, WarningMessages = warningMessages };
+
+            var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
+
+            _mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(string.Format("{0}Surveys/{1}/Script/", ServiceAddress, surveyId), surveyScript))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var actual = _target.PostAsync(surveyId, surveyScript).Result;
+
+            Assert.Equal(surveyScript.FileName, actual.FileName);
+            Assert.Equal(surveyScript.Script, actual.Script);
+            Assert.Equal(surveyScript.WarningMessages, actual.WarningMessages);
         }
 
         [Fact]

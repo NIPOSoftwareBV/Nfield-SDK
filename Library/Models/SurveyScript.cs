@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 
 namespace Nfield.Models
 {
@@ -31,5 +32,10 @@ namespace Nfield.Models
         /// The file name
         /// </summary>
         public string FileName { get; set; }
+
+        /// <summary>
+        /// Warning messages that resulted from the parse
+        /// </summary>
+        public IEnumerable<string> WarningMessages { get; set; }
     }
 }
