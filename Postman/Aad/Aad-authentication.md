@@ -14,7 +14,7 @@ just double-click the executable again to get a new one.
 
 ## Using Postman
 
-The collections in this folder use AAD Authentication. Each request have On the `Authorization` tab of each request, the authorization type is set to `Inherent auth from parent`. In the collection folder, click edit to edit the collection. On the `Authorization` tab, the option `Bearer Token` is selected. In the `Token` textbox, you should paste the token you got from the ADTokenHelper tool. You can now update and close the collection. 
+The collections in this folder use AAD Authentication. Each request have On the `Authorization` tab of each request, the authorization type is set to `Inherent auth from parent`. In the collection folder, click edit to edit the collection. On the `Authorization` tab, the option `Bearer Token` is selected. In the `Token` textbox, you should paste the token you got from the ADTokenHelper tool. You can now update and close the collection.
 
 ## Access
 

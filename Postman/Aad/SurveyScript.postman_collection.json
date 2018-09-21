@@ -36,8 +36,8 @@
 						"value": "application/octet-stream"
 					},
 					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}"
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
 					}
 				],
 				"body": {},
@@ -87,8 +87,8 @@
 						"value": "application/json"
 					},
 					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}"
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
 					}
 				],
 				"body": {
