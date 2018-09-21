@@ -32,7 +32,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyFieldworkService.GetStatusAsync"/>
         /// </summary>
-        public Task<SurveyStatus> GetStatusAsync(string surveyId)
+        public Task<SurveyState> GetStatusAsync(string surveyId)
         {
             CheckSurveyId(surveyId);
 
@@ -40,7 +40,7 @@ namespace Nfield.Services.Implementation
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
-                .ContinueWith(stringTask => (SurveyStatus) stringTask.Result)
+                .ContinueWith(stringTask => (SurveyState) stringTask.Result)
                 .FlattenExceptions();
         }
 

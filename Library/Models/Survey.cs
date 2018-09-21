@@ -48,5 +48,10 @@ namespace Nfield.Models
         /// The default interviewer instruction of a survey
         /// </summary>
         public string InterviewerInstruction { get; set; }
+
+        /// <summary>
+        /// The current state of the survey
+        /// </summary>
+        public SurveyState SurveyState { get; set; }
     }
 }
