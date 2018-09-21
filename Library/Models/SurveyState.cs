@@ -20,7 +20,7 @@ namespace Nfield.Models
     /// <summary>
     /// The fieldwork status of the survey
     /// </summary>
-    public enum SurveyStatus
+    public enum SurveyState
     {
         /// <summary>
         /// Fieldwork under construction, i.e. fieldwork has not been started yet.

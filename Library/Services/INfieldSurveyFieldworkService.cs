@@ -28,7 +28,7 @@ namespace Nfield.Services
         /// This method returns fieldwork status
         /// </summary>
         /// <param name="surveyId">The id of the survey to get the status</param>
-        Task<SurveyStatus> GetStatusAsync(string surveyId);
+        Task<SurveyState> GetStatusAsync(string surveyId);
 
         /// <summary>
         /// This method starts the fieldwork of the survey.
