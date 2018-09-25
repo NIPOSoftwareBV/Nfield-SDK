@@ -1,0 +1,169 @@
+{
+	"info": {
+		"name": "SurveyFieldwork",
+		"_postman_id": "535bce8d-8e05-ca58-aa0c-4d5cc6a298f0",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get SurveyFieldwork Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Status",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Status"
+					]
+				},
+				"description": "This method returns fieldwork status."
+			},
+			"response": []
+		},
+		{
+			"name": "Start SurveyFieldwork",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Start",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Start"
+					]
+				},
+				"description": "This method starts the fieldwork of the survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Stop SurveyFieldwork",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"TerminateRunningInterviews\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Stop",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Stop"
+					]
+				},
+				"description": "This method stops the fieldwork of the survey."
+			},
+			"response": []
+		}
+	]
+}

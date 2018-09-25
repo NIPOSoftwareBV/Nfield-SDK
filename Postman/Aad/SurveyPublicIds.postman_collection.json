@@ -1,0 +1,83 @@
+{
+	"info": {
+		"name": "SurveyPublicIds",
+		"_postman_id": "23b8653b-4d28-4b03-28d5-78abb59e57a1",
+		"description": "SurveyRelocationsController class provides methods to query and manage survey specific public ids (survey links)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Public Ids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"PublicIds"
+					]
+				},
+				"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d3f376d0-5528-4a7e-a243-c1266efd9113",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "cd512a9d-b413-42f4-9630-6127f37c6574",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
