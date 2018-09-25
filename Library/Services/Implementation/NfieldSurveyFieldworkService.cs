@@ -39,8 +39,8 @@ namespace Nfield.Services.Implementation
             var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Status");
             return Client.GetAsync(uri)
                 .ContinueWith(
-                    responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
-                .ContinueWith(stringTask => (SurveyState) stringTask.Result)
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<SurveyState>().Result)
+                .ContinueWith(stringTask => stringTask.Result)
                 .FlattenExceptions();
         }
 
