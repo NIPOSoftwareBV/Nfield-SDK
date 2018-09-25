@@ -32,15 +32,15 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyFieldworkService.GetStatusAsync"/>
         /// </summary>
-        public Task<SurveyStatus> GetStatusAsync(string surveyId)
+        public Task<SurveyState> GetStatusAsync(string surveyId)
         {
             CheckSurveyId(surveyId);
 
             var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Status");
             return Client.GetAsync(uri)
                 .ContinueWith(
-                    responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
-                .ContinueWith(stringTask => (SurveyStatus) stringTask.Result)
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<SurveyState>().Result)
+                .ContinueWith(stringTask => stringTask.Result)
                 .FlattenExceptions();
         }
 
