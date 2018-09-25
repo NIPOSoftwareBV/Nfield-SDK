@@ -1,0 +1,69 @@
+{
+	"info": {
+		"name": "SurveyPublishStart",
+		"_postman_id": "9ed9b35b-e25f-9f56-9fef-f7cb225e90a6",
+		"description": "The Publish Survey Start controller. Allows to start publishing an Online (Glu) Survey into Survey package.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start Publishing Process",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3d03bbae-8dc2-468a-8a12-2d7717b59f20",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response contains ActivityId\", function () {",
+							"    const activity = pm.response.json();",
+							"    pm.expect(activity.ActivityId.length).to.eql(36);",
+							"    pm.environment.set(\"ActivityId\", activity.ActivityId);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish/Start",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Publish",
+						"Start"
+					]
+				},
+				"description": "Creates an activity that starts the publishing process. Use the activity id to wait for the publish result."
+			},
+			"response": []
+		}
+	]
+}

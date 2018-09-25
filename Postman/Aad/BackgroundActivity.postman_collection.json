@@ -1,0 +1,63 @@
+{
+	"info": {
+		"name": "BackgroundActivity",
+		"_postman_id": "dee95ffb-fe79-57c2-7363-a5769b8c6e5d",
+		"description": "A controller for querying background activities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/BackgroundActivities/{{activityId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"BackgroundActivities",
+						"{{activityId}}"
+					]
+				},
+				"description": "This method retrieve details of a specific background activity."
+			},
+			"response": []
+		}
+	]
+}

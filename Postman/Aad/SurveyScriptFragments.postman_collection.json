@@ -1,0 +1,256 @@
+{
+	"info": {
+		"name": "SurveyScriptFragments",
+		"_postman_id": "a7d7ea57-a378-8c96-9db0-93c7a60222c2",
+		"description": "Controller to handle survey script fragments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get ScriptFragments for Survey",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f1e7414-0d25-4d27-87f7-c5a9e01020fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"SurveyId\": \"123456789\",\r\n  \"SurveyName\": \"Postman Survey\",\r\n  \"ClientName\": \"Postman\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"whatever\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"ScriptFragments"
+					]
+				},
+				"description": "Gets a list of all script fragment names for a survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Create ScriptFragment in Survey",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b50f56-1a53-468a-baa6-b845b0e35649",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"//postman.setNextRequest(\"Get ScriptFragment by FragmentName for Survey\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "*LIST destination\r\n1:Amsterdam\r\n2:Buenos Aires\r\n3:Madrid\r\n4:Hong Kong"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/destinationlist",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"ScriptFragments",
+						"destinationlist"
+					]
+				},
+				"description": "Add or update the specified survey script fragment"
+			},
+			"response": []
+		},
+		{
+			"name": "Create another ScriptFragment in Survey",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d5f743e9-245f-4055-956d-d5266da3d47d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "01: Volkswagen\n02: Toyota\n03: Honda\n88: Other *OPEN\n99: Don't know *NMUL"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/CarBrandList",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"ScriptFragments",
+						"CarBrandList"
+					]
+				},
+				"description": "Add or update the specified survey script fragment"
+			},
+			"response": []
+		},
+		{
+			"name": "Get ScriptFragment by FragmentName for Survey",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"SurveyId\": \"123456789\",\r\n  \"SurveyName\": \"Postman Survey\",\r\n  \"ClientName\": \"Postman\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"whatever\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/destinationlist",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"ScriptFragments",
+						"destinationlist"
+					]
+				},
+				"description": "Gets the specified script fragment for the survey"
+			},
+			"response": []
+		},
+		{
+			"name": "Remove ScriptFragment by FragmentName from Survey",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/destinationlist",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"ScriptFragments",
+						"destinationlist"
+					]
+				},
+				"description": "Delete the specified survey script fragment."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5bb58946-6433-4468-ab60-637f89316885",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "62b9cd51-b058-45bf-afe4-9de8e2856e42",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
