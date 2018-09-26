@@ -52,6 +52,8 @@ namespace Nfield.Models
         /// <summary>
         /// The survey state.
         /// </summary>
+        /// <remarks>The member is called SurveyState for compatibility with the member type from the API SurveyModel.SurveyState
+        /// and the database column name under table Surveys. This allows to Deserialize from the SurveyModel to the SDK Survey.</remarks>
         public SurveyStatus SurveyState { get; set; }
     }
 }
