@@ -13,14 +13,11 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Text;
 using Nfield.Extensions;
 
 namespace Nfield.Infrastructure
@@ -29,101 +26,24 @@ namespace Nfield.Infrastructure
     /// A wrapper around <see cref="HttpClient"/> that also adds an authentication header to the response
     /// if it was received in the request.
     /// </summary>
-    internal sealed class DefaultNfieldHttpClient : INfieldHttpClient
+    internal sealed class DefaultNfieldHttpClient : NfieldHttpClientBase
     {
-        private readonly NfieldConnection _connection;
+        private string _token;
 
-        public DefaultNfieldHttpClient(NfieldConnection connection)
+        public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            _connection = connection;
-        }
+            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", _token);
 
-        #region INfieldHttpClient Members
+            var response = await Client.SendAsync(request);
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            return SendAndHandleAuthToken(client => client.SendAsync(request));
-        }
-
-
-        public Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content)
-        {
-            return SendAndHandleAuthToken(client => client.PostAsync(requestUri, content));
-        }
-
-        public Task<HttpResponseMessage> GetAsync(string requestUri)
-        {
-            return SendAndHandleAuthToken(client => client.GetAsync(requestUri));
-        }
-
-        public Task<HttpResponseMessage> PostAsJsonAsync<TContent>(string requestUri, TContent content)
-        {
-            return SendAndHandleAuthToken(client => client.PostAsJsonAsync(requestUri, content));
-        }
-
-        public Task<HttpResponseMessage> PutAsJsonAsync<TContent>(string requestUri, TContent content)
-        {
-            return SendAndHandleAuthToken(client => client.PutAsJsonAsync(requestUri, content));
-        }
-
-        public Task<HttpResponseMessage> DeleteAsync(string requestUri)
-        {
-            return SendAndHandleAuthToken(client => client.DeleteAsync(requestUri));
-        }
-
-        public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content)
-        {
-            var request = new HttpRequestMessage(new HttpMethod("DELETE"), requestUri)
+            IEnumerable<string> headerValues;
+            if (response.Headers.TryGetValues("X-AuthenticationToken", out headerValues))
             {
-                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
-            };
+                // auth token may have been 'null', or may have been refreshed on the server, so set it always
+                _token = headerValues.First();
+            }
 
-            return SendAndHandleAuthToken(client => client.SendAsync(request));
-        }
-
-        public Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content)
-        {
-            var request = new HttpRequestMessage(new HttpMethod("PATCH"), requestUri)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
-            };
-            return SendAndHandleAuthToken(client => client.SendAsync(request));
-        }
-
-        public Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content)
-        {
-            return SendAndHandleAuthToken(client => client.PutAsync(requestUri, content));
-        }
-
-        #endregion
-
-        private Task<HttpResponseMessage> SendAndHandleAuthToken(Func<HttpClient, Task<HttpResponseMessage>> call)
-        {
-
-            var request = new TaskFactory().StartNew(() =>
-            {
-                using (var client = new HttpClient())
-                {
-                    if (_connection.Token != null)
-                    {
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", _connection.Token);
-                    }
-
-                    var response = call(client).Result;
-
-                    IEnumerable<string> headerValues;
-                    if (response.Headers.TryGetValues("X-AuthenticationToken", out headerValues))
-                    {
-                        // auth token may have been 'null', or may have been refreshed on the server, so set it always
-                        _connection.Token = headerValues.First();
-                    }
-
-                    return response.ValidateResponse();
-                }
-
-            });
-
-            return request;
+            return response.ValidateResponse();
         }
     }
 }

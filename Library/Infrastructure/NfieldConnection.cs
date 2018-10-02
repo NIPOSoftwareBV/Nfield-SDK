@@ -22,12 +22,9 @@ using Nfield.Extensions;
 
 namespace Nfield.Infrastructure
 {
-    internal class NfieldConnection : INfieldConnection, INfieldConnectionClient
+    internal class NfieldConnection : INfieldConnectionV2, INfieldConnectionClient
     {
-        internal string Token { get; set; }
-        internal string DomainName { get; set; }
-
-        public INfieldHttpClient Client { get; private set; }
+        public INfieldHttpClient Client { get; internal /* for tests */ set; }
 
         #region Implementation of IServiceProvider
 
@@ -69,7 +66,7 @@ namespace Nfield.Infrastructure
         {
             if (Client == null)
             {
-                Client = new DefaultNfieldHttpClient(this);
+                Client = new DefaultNfieldHttpClient();
             }
 
             var data = new Dictionary<string, string>
@@ -79,8 +76,6 @@ namespace Nfield.Infrastructure
                     {"Password", password}
                 };
             var content = new FormUrlEncodedContent(data);
-
-            DomainName = domainName;
 
             // client will update the Token
             return Client.PostAsync(NfieldServerUri + "SignIn", content)
@@ -95,11 +90,8 @@ namespace Nfield.Infrastructure
         {
             if (Client == null)
             {
-                Client = new ActiveDirectoryNfieldHttpClient(this);
+                Client = new BearerTokenNfieldHttpClient(domainName, token);
             }
-
-            DomainName = domainName;
-            Token = token;
 
             return Task.FromResult<object>(null);
         }

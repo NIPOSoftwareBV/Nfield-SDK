@@ -14,62 +14,29 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Nfield.Infrastructure
 {
-    internal sealed class ActiveDirectoryNfieldHttpClient : INfieldHttpClient
+    internal sealed class BearerTokenNfieldHttpClient : NfieldHttpClientBase
     {
-        private readonly NfieldConnection _connection;
+        private readonly string _domainName;
+        private readonly string _token;
 
-        public ActiveDirectoryNfieldHttpClient(NfieldConnection connection) => _connection = connection;
-
-        public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = GetHttpContentForValue(content) });
-
-        public Task<HttpResponseMessage> DeleteAsync(string requestUri)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri));
-
-        public Task<HttpResponseMessage> GetAsync(string requestUri)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri));
-
-        public Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = GetHttpContentForValue(content) });
-
-        public Task<HttpResponseMessage> PostAsJsonAsync<TContent>(string requestUri, TContent content)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = GetHttpContentForValue(content) });
-
-        public Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = content });
-
-        public Task<HttpResponseMessage> PutAsJsonAsync<TContent>(string requestUri, TContent content)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = GetHttpContentForValue(content) });
-
-        public Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = content });
-
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        public BearerTokenNfieldHttpClient(string domainName, string token)
         {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _connection.Token);
-                client.DefaultRequestHeaders.Add("X-Nfield-Domain", _connection.DomainName);
-
-                return client.SendAsync(request);
-            }
+            _domainName = domainName;
+            _token = token;
         }
 
-        private HttpContent GetHttpContentForValue<TContent>(TContent content)
+        public override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            return new StringContent(
-                JsonConvert.SerializeObject(content, Formatting.None),
-                Encoding.UTF8,
-                "application/json"
-            );
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+            request.Headers.Add("X-Nfield-Domain", _domainName);
+
+            return Client.SendAsync(request);
         }
     }
 }

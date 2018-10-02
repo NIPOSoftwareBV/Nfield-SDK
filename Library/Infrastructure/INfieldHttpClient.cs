@@ -13,12 +13,13 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Nfield.Infrastructure
 {
-    internal interface INfieldHttpClient
+    internal interface INfieldHttpClient : IDisposable
     {
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
         Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content);

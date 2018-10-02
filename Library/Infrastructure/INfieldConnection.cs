@@ -47,4 +47,9 @@ namespace Nfield.Infrastructure
 
     }
 
+    public interface INfieldConnectionV2 : INfieldConnection
+    {
+        Task SignInAsync(string domainName, string token);
+    }
+
 }
