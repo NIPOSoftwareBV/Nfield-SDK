@@ -29,12 +29,16 @@ namespace Nfield.Infrastructure
     /// A wrapper around <see cref="HttpClient"/> that also adds an authentication header to the response
     /// if it was received in the request.
     /// </summary>
-    internal sealed class NfieldHttpClient : INfieldHttpClient
+    internal sealed class DefaultNfieldHttpClient : INfieldHttpClient
     {
+        private readonly NfieldConnection _connection;
+
+        public DefaultNfieldHttpClient(NfieldConnection connection)
+        {
+            _connection = connection;
+        }
 
         #region INfieldHttpClient Members
-
-        public string AuthToken { get; set; }
 
         public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
@@ -100,9 +104,9 @@ namespace Nfield.Infrastructure
             {
                 using (var client = new HttpClient())
                 {
-                    if (AuthToken != null)
+                    if (_connection.Token != null)
                     {
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", AuthToken);
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", _connection.Token);
                     }
 
                     var response = call(client).Result;
@@ -111,7 +115,7 @@ namespace Nfield.Infrastructure
                     if (response.Headers.TryGetValues("X-AuthenticationToken", out headerValues))
                     {
                         // auth token may have been 'null', or may have been refreshed on the server, so set it always
-                        AuthToken = headerValues.First();
+                        _connection.Token = headerValues.First();
                     }
 
                     return response.ValidateResponse();

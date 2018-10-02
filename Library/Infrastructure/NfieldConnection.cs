@@ -22,9 +22,13 @@ using Nfield.Extensions;
 
 namespace Nfield.Infrastructure
 {
-
     internal class NfieldConnection : INfieldConnection, INfieldConnectionClient
     {
+        internal string Token { get; set; }
+        internal string DomainName { get; set; }
+
+        public INfieldHttpClient Client { get; private set; }
+
         #region Implementation of IServiceProvider
 
         /// <summary>
@@ -46,8 +50,6 @@ namespace Nfield.Infrastructure
             
             if (nfieldConnectionClientObject == null) return serviceInstance;
             
-            Client = (INfieldHttpClient)DependencyResolver.Current.Resolve(typeof(INfieldHttpClient));
-            Client.AuthToken = _token;
             nfieldConnectionClientObject.InitializeNfieldConnection(this);
 
             return serviceInstance;
@@ -67,8 +69,9 @@ namespace Nfield.Infrastructure
         {
             if (Client == null)
             {
-                Client = (INfieldHttpClient)DependencyResolver.Current.Resolve(typeof(INfieldHttpClient));
+                Client = new DefaultNfieldHttpClient(this);
             }
+
             var data = new Dictionary<string, string>
                 {
                     {"Domain", domainName},
@@ -76,16 +79,29 @@ namespace Nfield.Infrastructure
                     {"Password", password}
                 };
             var content = new FormUrlEncodedContent(data);
+
+            DomainName = domainName;
+
+            // client will update the Token
             return Client.PostAsync(NfieldServerUri + "SignIn", content)
                 .ContinueWith(responseMessageTask =>
                 {
                     var result = responseMessageTask.Result;
-
-                    _token = Client.AuthToken;
-                    
                     return result.StatusCode == HttpStatusCode.OK;
-
                 }).FlattenExceptions();
+        }
+
+        public Task SignInAsync(string domainName, string token)
+        {
+            if (Client == null)
+            {
+                Client = new ActiveDirectoryNfieldHttpClient(this);
+            }
+
+            DomainName = domainName;
+            Token = token;
+
+            return Task.FromResult<object>(null);
         }
 
         /// <summary>
@@ -125,14 +141,6 @@ namespace Nfield.Infrastructure
 
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        private string _token;
-
-        #region Implementation of INfieldConnectionClient
-
-        public INfieldHttpClient Client { get; private set; }
 
         #endregion
     }
