@@ -79,7 +79,7 @@ namespace Nfield.Infrastructure
         /// <param name="registerTransient">Method that registers a Transient type.</param>
         /// <param name="registerSingleton">Method that registers a Singleton.</param>
         /// <param name="registerInstance">Method that registers an instance.</param>
-        [Obsolete("Dependency injection for Nfield Services is no longer supported. Please use NfieldConnectionClient.GetService instead.")]
+        [Obsolete("Dependency injection for Nfield Services is no longer supported. Please use NfieldConnection.GetService instead.")]
         public static void Initialize(Action<Type, Type> registerTransient,
                                       Action<Type, Type> registerSingleton,
                                       Action<Type, object> registerInstance)

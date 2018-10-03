@@ -30,7 +30,7 @@ namespace Nfield.Infrastructure
         }
 
         public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content)
-            => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = GetHttpContentForValue(content) });
+            => SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = GetHttpContentForValue(content) });
 
         public Task<HttpResponseMessage> DeleteAsync(string requestUri)
             => SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri));
