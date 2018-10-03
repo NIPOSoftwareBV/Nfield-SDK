@@ -14,6 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 
+using Nfield.Exceptions;
+using Nfield.Extensions;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -31,12 +33,27 @@ namespace Nfield.Infrastructure
             _token = token;
         }
 
-        public override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token);
             request.Headers.Add("X-Nfield-Domain", _domainName);
 
-            return Client.SendAsync(request);
+            var response = await Client.SendAsync(request);
+
+            try
+            {
+                return response.ValidateResponse();
+            }
+            catch (NfieldHttpResponseException ex)
+            {
+                if (ex.Message.Contains("X-NFIELD-DOMAIN"))
+                {
+                    // message is not very useful in the SDK case
+                    throw new NfieldHttpResponseException(ex.HttpStatusCode, $"Invalid domain '{_domainName}'");
+                }
+
+                throw;
+            }
         }
     }
 }
