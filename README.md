@@ -4,7 +4,7 @@
 This SDK allows you to build applications that take advantage of the Nfield services.
     
 ## Requirements
-- .NET Framework 4.0 or later.
+- .NET Framework 4.5.2 or later.
 - To use this SDK to call Nfield services you need an Nfield account.
 
 ## Usage
@@ -20,15 +20,6 @@ Alternatively get the source code of the SDK by cloning this repository and incl
 A comprehensive sample project can be found in the _Examples_ folder.
 The basic required steps are shown below.
 
-First we need to use and register a dependency resolver. In this example we're using
-[Ninject].
-```c#
-using(IKernel kernel = new StandardKernel()) {
-    DependencyResolver.Register(type => kernel.Get(type), type => kernel.GetAll(type));
-    NfieldSdkInitializer.Initialize((bind, resolve) => kernel.Bind(bind).To(resolve).InTransientScope(),
-                                    (bind, resolve) => kernel.Bind(bind).To(resolve).InSingletonScope(),
-                                    (bind, resolve) => kernel.Bind(bind).ToConstant(resolve));
-```
 Create a connection.
 ```c#
 INfieldConnection connection = NfieldConnectionFactory.Create(new Uri("https://api.nfieldmr.com/v1/"));
@@ -65,5 +56,4 @@ await _interviewersService.AddAsync(interviewer);
 For feedback related to this SDK please visit the
 [Nfield website].
 
-[Ninject]: http://www.ninject.org/
 [Nfield website]: https://www.nipo.com/

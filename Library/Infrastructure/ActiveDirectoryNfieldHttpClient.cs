@@ -13,22 +13,30 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Nfield.Infrastructure
 {
-    internal interface INfieldHttpClient : IDisposable
+    internal sealed class BearerTokenNfieldHttpClient : NfieldHttpClientBase
     {
-        Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
-        Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content);
-        Task<HttpResponseMessage> GetAsync(string requestUri);
-        Task<HttpResponseMessage> PostAsJsonAsync<TContent>(string requestUri, TContent content);
-        Task<HttpResponseMessage> PutAsJsonAsync<TContent>(string requestUri, TContent content);
-        Task<HttpResponseMessage> DeleteAsync(string requestUri);
-        Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content);
-        Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content);
-        Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content);
+        private readonly string _domainName;
+        private readonly string _token;
+
+        public BearerTokenNfieldHttpClient(string domainName, string token)
+        {
+            _domainName = domainName;
+            _token = token;
+        }
+
+        public override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+            request.Headers.Add("X-Nfield-Domain", _domainName);
+
+            return Client.SendAsync(request);
+        }
     }
 }

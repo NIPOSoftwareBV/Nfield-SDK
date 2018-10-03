@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
 
 namespace Nfield.Infrastructure
 {
@@ -26,7 +27,7 @@ namespace Nfield.Infrastructure
         /// <summary>
         /// Create a connection to the Nfield server on the specified <paramref name="nfieldServerUri"/>.
         /// </summary>
-        public static INfieldConnection Create(Uri nfieldServerUri)
+        public static INfieldConnectionV2 Create(Uri nfieldServerUri)
         {
             var connection = DependencyResolver.Current.Resolve<NfieldConnection>();
             var url = nfieldServerUri.ToString().TrimEnd('/') + "/";
@@ -36,5 +37,4 @@ namespace Nfield.Infrastructure
         }
 
     }
-
 }

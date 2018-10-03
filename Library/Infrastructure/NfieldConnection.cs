@@ -22,9 +22,10 @@ using Nfield.Extensions;
 
 namespace Nfield.Infrastructure
 {
-
-    internal class NfieldConnection : INfieldConnection, INfieldConnectionClient
+    internal class NfieldConnection : INfieldConnectionV2, INfieldConnectionClient
     {
+        public INfieldHttpClient Client { get; internal /* for tests */ set; }
+
         #region Implementation of IServiceProvider
 
         /// <summary>
@@ -46,8 +47,6 @@ namespace Nfield.Infrastructure
             
             if (nfieldConnectionClientObject == null) return serviceInstance;
             
-            Client = (INfieldHttpClient)DependencyResolver.Current.Resolve(typeof(INfieldHttpClient));
-            Client.AuthToken = _token;
             nfieldConnectionClientObject.InitializeNfieldConnection(this);
 
             return serviceInstance;
@@ -67,8 +66,9 @@ namespace Nfield.Infrastructure
         {
             if (Client == null)
             {
-                Client = (INfieldHttpClient)DependencyResolver.Current.Resolve(typeof(INfieldHttpClient));
+                Client = new DefaultNfieldHttpClient();
             }
+
             var data = new Dictionary<string, string>
                 {
                     {"Domain", domainName},
@@ -76,16 +76,24 @@ namespace Nfield.Infrastructure
                     {"Password", password}
                 };
             var content = new FormUrlEncodedContent(data);
+
+            // client will update the Token
             return Client.PostAsync(NfieldServerUri + "SignIn", content)
                 .ContinueWith(responseMessageTask =>
                 {
                     var result = responseMessageTask.Result;
-
-                    _token = Client.AuthToken;
-                    
                     return result.StatusCode == HttpStatusCode.OK;
-
                 }).FlattenExceptions();
+        }
+
+        public Task SignInAsync(string domainName, string token)
+        {
+            if (Client == null)
+            {
+                Client = new BearerTokenNfieldHttpClient(domainName, token);
+            }
+
+            return Task.FromResult<object>(null);
         }
 
         /// <summary>
@@ -125,14 +133,6 @@ namespace Nfield.Infrastructure
 
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        private string _token;
-
-        #region Implementation of INfieldConnectionClient
-
-        public INfieldHttpClient Client { get; private set; }
 
         #endregion
     }

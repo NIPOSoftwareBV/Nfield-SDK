@@ -32,6 +32,7 @@ namespace Nfield.Infrastructure
         /// <param name="registerTransient">Method that registers a Transient type.</param>
         /// <param name="registerSingleton">Method that registers a Singleton.</param>
         /// <param name="registerInstance">Method that registers an instance.</param>
+        [Obsolete("Dependency injection for Nfield Services is no longer supported. Please use NfieldConnectionClient.GetService instead.")]
         public static void Initialize(Action<Type, Type> registerTransient, 
                                       Action<Type, Type> registerSingleton,
                                       Action<Type, Object> registerInstance)
@@ -69,7 +70,7 @@ namespace Nfield.Infrastructure
             registerTransient(typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService));
             registerTransient(typeof(INfieldSurveySampleDataService), typeof(NfieldSurveySampleDataService));
             registerTransient(typeof(INfieldSurveySampleService), typeof(NfieldSurveySampleService));
-            registerTransient(typeof(INfieldHttpClient), typeof(NfieldHttpClient));
+            registerTransient(typeof(INfieldHttpClient), typeof(DefaultNfieldHttpClient));
             registerTransient(typeof(IFileSystem), typeof(FileSystem));
             registerTransient(typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility));
             registerTransient(typeof(IAesManagedWrapper), typeof(AesManagedWrapper));
