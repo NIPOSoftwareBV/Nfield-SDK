@@ -113,6 +113,11 @@ namespace Nfield.Infrastructure
         {
             public object Resolve(Type typeToResolve)
             {
+                if (NfieldSdkInitializer.TypeMap.ContainsKey(typeToResolve))
+                {
+                    return Activator.CreateInstance(NfieldSdkInitializer.TypeMap[typeToResolve]);
+                }
+
                 if (typeToResolve.IsInterface || typeToResolve.IsAbstract)
                 {
                     return null;
