@@ -32,6 +32,11 @@ namespace Nfield.Services.Implementation
     {
         readonly IFileSystem _fileSystem;
 
+        public NfieldSurveyScriptService()
+        {
+            _fileSystem = new FileSystem();
+        }
+
         public NfieldSurveyScriptService(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
