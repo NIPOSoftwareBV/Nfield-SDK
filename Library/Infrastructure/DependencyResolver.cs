@@ -115,7 +115,7 @@ namespace Nfield.Infrastructure
             {
                 if (NfieldSdkInitializer.TypeMap.ContainsKey(typeToResolve))
                 {
-                    return Activator.CreateInstance(NfieldSdkInitializer.TypeMap[typeToResolve]);
+                    return Instantiate(NfieldSdkInitializer.TypeMap[typeToResolve]);
                 }
 
                 if (typeToResolve.IsInterface || typeToResolve.IsAbstract)
@@ -123,19 +123,24 @@ namespace Nfield.Infrastructure
                     return null;
                 }
 
-                try
-                {
-                    return Activator.CreateInstance(typeToResolve);
-                }
-                catch
-                {
-                    return null;
-                }
+                return Instantiate(typeToResolve);
             }
 
             public IEnumerable<object> ResolveAll(Type typeToResolve)
             {
                 return Enumerable.Empty<object>();
+            }
+
+            private object Instantiate(Type type)
+            {
+                try
+                {
+                    return Activator.CreateInstance(type);
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
 
