@@ -92,11 +92,11 @@ namespace Nfield.Infrastructure
                 }).FlattenExceptions();
         }
 
-        public Task SignInAsync(string domainName, string token)
+        public Task SignInAsync(string domainName, Func<Task<string>> provideTokenAsync)
         {
             if (Client == null)
             {
-                Client = new BearerTokenNfieldHttpClient(_httpClient, domainName, token);
+                Client = new BearerTokenNfieldHttpClient(_httpClient, domainName, provideTokenAsync);
             }
 
             return Task.FromResult<object>(null);
