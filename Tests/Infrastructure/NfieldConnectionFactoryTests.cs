@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Net.Http;
 using Xunit;
 
 namespace Nfield.Infrastructure
@@ -26,13 +27,9 @@ namespace Nfield.Infrastructure
         [Fact]
         public void CreateCreatesAnNfieldConnection()
         {
-            var expectedConnection = new NfieldConnection();
             var expectedUri = new Uri("http://fake/");
-            DependencyResolver.Register(type => expectedConnection, type => null);
-
             var actualConnection = NfieldConnectionFactory.Create(expectedUri);
 
-            Assert.Same(expectedConnection, actualConnection);
             Assert.Equal(expectedUri, actualConnection.NfieldServerUri);
         }
     }

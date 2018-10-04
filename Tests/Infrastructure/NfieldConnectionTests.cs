@@ -33,7 +33,7 @@ namespace Nfield.Infrastructure
         [Fact]
         public void TestGetService_RequestedServiceTypeIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldConnection();
+            var target = NfieldConnectionFactory.Create(new Uri("http://fake/"));
             Assert.Throws(typeof(ArgumentNullException), () => target.GetService(null));
         }
 
@@ -46,7 +46,7 @@ namespace Nfield.Infrastructure
                 .Setup(resolver => resolver.Resolve(typeof(INfieldConnectionClientObject)))
                 .Returns(null);
 
-            var target = new NfieldConnection();
+            var target = NfieldConnectionFactory.Create(new Uri("http://fake/"));
             var result = target.GetService<INfieldConnectionClientObject>();
 
             Assert.Null(result);
@@ -65,7 +65,7 @@ namespace Nfield.Infrastructure
             mockedResolver
                 .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
                 .Returns(stubbedHttpClientObject);
-            var target = new NfieldConnection();
+            var target = NfieldConnectionFactory.Create(new Uri("http://fake/"));
             var result = target.GetService<INfieldConnectionClientObject>();
 
             Assert.Equal(result, stubbedNfieldConnectionClientObject);
@@ -84,7 +84,7 @@ namespace Nfield.Infrastructure
             mockedResolver
                 .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
                 .Returns(stubbedHttpClientObject);
-            var target = new NfieldConnection();
+            var target = (NfieldConnection)NfieldConnectionFactory.Create(new Uri("http://fake/"));
             var result = target.GetService<INfieldConnectionClientObject>();
 
             mockedNfieldConnectionClientObject.Verify(client => client.InitializeNfieldConnection(target));
