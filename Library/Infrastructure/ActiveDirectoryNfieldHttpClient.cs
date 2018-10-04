@@ -16,6 +16,7 @@
 
 using Nfield.Exceptions;
 using Nfield.Extensions;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -25,17 +26,19 @@ namespace Nfield.Infrastructure
     internal sealed class BearerTokenNfieldHttpClient : NfieldHttpClientBase
     {
         private readonly string _domainName;
-        private readonly string _token;
+        private readonly Func<Task<string>> _provideTokenAsync;
 
-        public BearerTokenNfieldHttpClient(string domainName, string token)
+        public BearerTokenNfieldHttpClient(HttpClient client, string domainName, Func<Task<string>> provideTokenAsync)
+            : base(client)
         {
             _domainName = domainName;
-            _token = token;
+            _provideTokenAsync = provideTokenAsync;
         }
 
         public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+            var token = await _provideTokenAsync();
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             request.Headers.Add("X-Nfield-Domain", _domainName);
 
             var response = await Client.SendAsync(request);

@@ -24,9 +24,9 @@ namespace Nfield.Infrastructure
     {
         protected HttpClient Client { get; }
 
-        public NfieldHttpClientBase()
+        public NfieldHttpClientBase(HttpClient client)
         {
-            Client = new HttpClient();
+            Client = client;
         }
 
         public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content)
