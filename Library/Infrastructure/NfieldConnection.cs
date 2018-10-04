@@ -24,7 +24,13 @@ namespace Nfield.Infrastructure
 {
     internal class NfieldConnection : INfieldConnectionV2, INfieldConnectionClient
     {
+        private readonly HttpClient _httpClient;
         public INfieldHttpClient Client { get; internal /* for tests */ set; }
+
+        public NfieldConnection(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         #region Implementation of IServiceProvider
 
@@ -66,7 +72,7 @@ namespace Nfield.Infrastructure
         {
             if (Client == null)
             {
-                Client = new DefaultNfieldHttpClient();
+                Client = new DefaultNfieldHttpClient(_httpClient);
             }
 
             var data = new Dictionary<string, string>
@@ -90,7 +96,7 @@ namespace Nfield.Infrastructure
         {
             if (Client == null)
             {
-                Client = new BearerTokenNfieldHttpClient(domainName, token);
+                Client = new BearerTokenNfieldHttpClient(_httpClient, domainName, token);
             }
 
             return Task.FromResult<object>(null);

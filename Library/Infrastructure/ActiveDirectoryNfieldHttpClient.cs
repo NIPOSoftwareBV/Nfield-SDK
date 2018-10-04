@@ -27,7 +27,8 @@ namespace Nfield.Infrastructure
         private readonly string _domainName;
         private readonly string _token;
 
-        public BearerTokenNfieldHttpClient(string domainName, string token)
+        public BearerTokenNfieldHttpClient(HttpClient client, string domainName, string token)
+            : base(client)
         {
             _domainName = domainName;
             _token = token;

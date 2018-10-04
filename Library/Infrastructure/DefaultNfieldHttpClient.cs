@@ -30,6 +30,9 @@ namespace Nfield.Infrastructure
     {
         private string _token;
 
+        public DefaultNfieldHttpClient(HttpClient client) : base(client)
+        { }
+
         public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", _token);
