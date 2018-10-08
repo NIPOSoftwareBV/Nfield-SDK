@@ -22,13 +22,13 @@ namespace Nfield.Infrastructure
     internal interface INfieldHttpClient : IDisposable
     {
         Task<HttpResponseMessage> SendAsync(HttpRequestMessage request);
-        Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content);
-        Task<HttpResponseMessage> GetAsync(string requestUri);
-        Task<HttpResponseMessage> PostAsJsonAsync<TContent>(string requestUri, TContent content);
-        Task<HttpResponseMessage> PutAsJsonAsync<TContent>(string requestUri, TContent content);
-        Task<HttpResponseMessage> DeleteAsync(string requestUri);
-        Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content);
-        Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content);
-        Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content);
+        Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content);
+        Task<HttpResponseMessage> GetAsync(Uri requestUri);
+        Task<HttpResponseMessage> PostAsJsonAsync<TContent>(Uri requestUri, TContent content);
+        Task<HttpResponseMessage> PutAsJsonAsync<TContent>(Uri requestUri, TContent content);
+        Task<HttpResponseMessage> DeleteAsync(Uri requestUri);
+        Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(Uri requestUri, TContent content);
+        Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content);
+        Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(Uri requestUri, TContent content);
     }
 }

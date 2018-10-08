@@ -32,7 +32,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<ExternalApi>> QueryAsync()
         {
-            return Client.GetAsync(ExternalApisApi.AbsoluteUri)
+            return Client.GetAsync(ExternalApisApi)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -51,7 +51,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("externalApi");
             }
 
-            return Client.PostAsJsonAsync(ExternalApisApi.AbsoluteUri, externalApi)
+            return Client.PostAsJsonAsync(ExternalApisApi, externalApi)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<ExternalApi>(task.Result))
                          .FlattenExceptions();
@@ -68,7 +68,7 @@ namespace Nfield.Services.Implementation
             }
 
             return
-                Client.DeleteAsync(ExternalApisApi.AbsoluteUri + externalApi.Name)
+                Client.DeleteAsync(new Uri(ExternalApisApi, externalApi.Name))
                       .FlattenExceptions();
         }
 
@@ -82,7 +82,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("externalApi");
             }
 
-            return Client.PutAsJsonAsync(ExternalApisApi.AbsoluteUri, externalApi)
+            return Client.PutAsJsonAsync(ExternalApisApi, externalApi)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<ExternalApi>(task.Result))
                          .FlattenExceptions();
@@ -107,7 +107,7 @@ namespace Nfield.Services.Implementation
 
         private Uri ExternalApisApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "externalapis/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "externalapis"); }
         }
     }
 }

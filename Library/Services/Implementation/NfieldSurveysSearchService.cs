@@ -65,10 +65,10 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private string SurveysSearchUrl(string searchValue)
+        private Uri SurveysSearchUrl(string searchValue)
         {
             var encodedValue = HttpUtility.UrlEncode(searchValue);
-            return $"{ConnectionClient.NfieldServerUri.AbsoluteUri}/Surveys/Search?value={encodedValue}";
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/Search?value={encodedValue}");
         }
 
         private void CheckRequiredStringArgument(string argument)

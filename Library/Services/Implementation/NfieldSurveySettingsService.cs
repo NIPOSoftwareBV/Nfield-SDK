@@ -39,7 +39,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            return Client.GetAsync(SettingsApi(surveyId, null).AbsoluteUri)
+            return Client.GetAsync(SettingsApi(surveyId, null))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -60,7 +60,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("setting");
             }
 
-            return Client.PostAsJsonAsync(SettingsApi(surveyId, null).AbsoluteUri, setting)
+            return Client.PostAsJsonAsync(SettingsApi(surveyId, null), setting)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<SurveySetting>(task.Result))
                          .FlattenExceptions();
@@ -94,11 +94,11 @@ namespace Nfield.Services.Implementation
 
         private Uri SettingsApi(string surveyId, string id)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/Settings", surveyId);
+            var path = new StringBuilder();
+            path.AppendFormat("Surveys/{0}/Settings", surveyId);
             if (!string.IsNullOrEmpty(id))
-                uriText.AppendFormat("/{0}", id);
-            return new Uri(uriText.ToString());
+                path.AppendFormat("/{0}", id);
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
     }
 }

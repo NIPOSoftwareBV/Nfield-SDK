@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            return Client.GetAsync(PublicIdsApi(surveyId).AbsoluteUri)
+            return Client.GetAsync(PublicIdsApi(surveyId))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -55,7 +56,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            return Client.PutAsJsonAsync(PublicIdsApi(surveyId).AbsoluteUri, models)
+            return Client.PutAsJsonAsync(PublicIdsApi(surveyId), models)
                 .FlattenExceptions();
         }
 
@@ -84,9 +85,8 @@ namespace Nfield.Services.Implementation
 
         private Uri PublicIdsApi(string surveyId)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/PublicIds", surveyId);
-            return new Uri(uriText.ToString());
+            return new Uri(ConnectionClient.NfieldServerUri,
+                string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/PublicIds", surveyId));
         }
     }
 }

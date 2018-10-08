@@ -39,7 +39,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
 
-            return Client.GetAsync(AddressesApi(surveyId, samplingPointId,  null).AbsoluteUri)
+            return Client.GetAsync(AddressesApi(surveyId, samplingPointId, null))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -52,7 +52,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
 
-            var uri = $"{AddressesApi(surveyId, samplingPointId, null).AbsoluteUri}/Count";
+            var uri = new Uri(AddressesApi(surveyId, samplingPointId, null), "Count");
             return Client.GetAsync(uri)
                 .ContinueWith(rmt => int.Parse(rmt.Result.Content.ReadAsStringAsync().Result))
                 .FlattenExceptions();
@@ -65,7 +65,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
 
-            return Client.PostAsJsonAsync(AddressesApi(surveyId, samplingPointId, null).AbsoluteUri, address)
+            return Client.PostAsJsonAsync(AddressesApi(surveyId, samplingPointId, null), address)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<Address>(task.Result))
                          .FlattenExceptions();
@@ -79,7 +79,7 @@ namespace Nfield.Services.Implementation
             if (addressId.Trim().Length == 0)
                 throw new ArgumentException("addressId cannot be empty");
 
-            var uri = AddressesApi(surveyId, samplingPointId, addressId).AbsoluteUri;
+            var uri = AddressesApi(surveyId, samplingPointId, addressId);
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
@@ -116,12 +116,13 @@ namespace Nfield.Services.Implementation
 
         private Uri AddressesApi(string surveyId, string samplingPointId, string addressId)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/SamplingPoints/{1}/Addresses",
+            var path = new StringBuilder();
+            path.AppendFormat("Surveys/{0}/SamplingPoints/{1}/Addresses",
                 surveyId, samplingPointId);
             if (!string.IsNullOrEmpty(addressId))
-                uriText.AppendFormat("/{0}", addressId);
-            return new Uri(uriText.ToString());
+                path.AppendFormat("/{0}", addressId);
+
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
     }
 }

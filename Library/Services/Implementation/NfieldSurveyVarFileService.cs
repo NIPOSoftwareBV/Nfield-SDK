@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using System;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,15 +80,15 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private string SurveyVarFileUrl(string surveyId, string eTag = null)
+        private Uri SurveyVarFileUrl(string surveyId, string eTag = null)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/VarFile/", surveyId);
+            var path = new StringBuilder();
+            path.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/VarFile/", surveyId);
 
             if (!string.IsNullOrEmpty(eTag))
-                result.AppendFormat("{0}", eTag);
+                path.AppendFormat("{0}", eTag);
 
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
     }
 }
