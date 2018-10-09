@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,11 +56,9 @@ namespace Nfield.Services.Implementation
             ConnectionClient = connection;
         }
 
-        private string DomainSearchFieldsSettingUrl()
+        private Uri DomainSearchFieldsSettingUrl()
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"SearchFieldsSetting");
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, "SearchFieldsSetting");
         }
     }
 }

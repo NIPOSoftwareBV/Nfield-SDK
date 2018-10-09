@@ -17,6 +17,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text;
+using System;
 
 namespace Nfield.Infrastructure
 {
@@ -29,28 +30,28 @@ namespace Nfield.Infrastructure
             Client = client;
         }
 
-        public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(string requestUri, TContent content)
+        public Task<HttpResponseMessage> DeleteAsJsonAsync<TContent>(Uri requestUri, TContent content)
             => SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = GetHttpContentForValue(content) });
 
-        public Task<HttpResponseMessage> DeleteAsync(string requestUri)
+        public Task<HttpResponseMessage> DeleteAsync(Uri requestUri)
             => SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri));
 
-        public Task<HttpResponseMessage> GetAsync(string requestUri)
+        public Task<HttpResponseMessage> GetAsync(Uri requestUri)
             => SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri));
 
-        public Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(string requestUri, TContent content)
+        public Task<HttpResponseMessage> PatchAsJsonAsync<TContent>(Uri requestUri, TContent content)
             => SendAsync(new HttpRequestMessage(new HttpMethod("PATCH"), requestUri) { Content = GetHttpContentForValue(content) });
 
-        public Task<HttpResponseMessage> PostAsJsonAsync<TContent>(string requestUri, TContent content)
+        public Task<HttpResponseMessage> PostAsJsonAsync<TContent>(Uri requestUri, TContent content)
             => SendAsync(new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = GetHttpContentForValue(content) });
 
-        public Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content)
+        public Task<HttpResponseMessage> PostAsync(Uri requestUri, HttpContent content)
             => SendAsync(new HttpRequestMessage(HttpMethod.Post, requestUri) { Content = content });
 
-        public Task<HttpResponseMessage> PutAsJsonAsync<TContent>(string requestUri, TContent content)
+        public Task<HttpResponseMessage> PutAsJsonAsync<TContent>(Uri requestUri, TContent content)
             => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = GetHttpContentForValue(content) });
 
-        public Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent content)
+        public Task<HttpResponseMessage> PutAsync(Uri requestUri, HttpContent content)
             => SendAsync(new HttpRequestMessage(HttpMethod.Put, requestUri) { Content = content });
 
         public abstract Task<HttpResponseMessage> SendAsync(HttpRequestMessage message);

@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -58,7 +59,7 @@ namespace Nfield.Services.Implementation
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
-            return Client.PutAsJsonAsync(uri + "/" + invitationTemplate.Id, invitationTemplate)
+            return Client.PutAsJsonAsync(new Uri(uri, invitationTemplate.Id.ToString()), invitationTemplate)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringTask => JsonConvert.DeserializeObject<InvitationTemplateModelValidated>(stringTask.Result))
                 .FlattenExceptions();
@@ -70,7 +71,7 @@ namespace Nfield.Services.Implementation
 
             var uri = SurveyInvitationTemplatesUrl(surveyId);
 
-            return Client.DeleteAsync(uri + "/" + templateId)
+            return Client.DeleteAsync(new Uri(uri, templateId.ToString()))
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringTask => JsonConvert.DeserializeObject<DeleteInvitationResponse>(stringTask.Result).IsSuccess)
                 .FlattenExceptions();
@@ -83,11 +84,12 @@ namespace Nfield.Services.Implementation
             ConnectionClient = connection;
         }
 
-        private string SurveyInvitationTemplatesUrl(string surveyId)
+        private Uri SurveyInvitationTemplatesUrl(string surveyId)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InvitationTemplates", surveyId);
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri,
+                string.Format(CultureInfo.InvariantCulture,
+                    "Surveys/{0}/InvitationTemplates/",
+                    surveyId));
         }
 
         // ReSharper disable once ClassNeverInstantiated.Local, used for deserializing api response

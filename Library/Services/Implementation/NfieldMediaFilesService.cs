@@ -38,7 +38,7 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("surveyId");
             }
-            return Client.GetAsync(MediaFilesApi(surveyId, null).AbsoluteUri)
+            return Client.GetAsync(MediaFilesApi(surveyId, null))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -53,7 +53,7 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("surveyId");
             }
-            var uri = $"{MediaFilesApi(surveyId, null).AbsoluteUri}Count";
+            var uri = new Uri(MediaFilesApi(surveyId, null), "Count");
             return Client.GetAsync(uri)
                 .ContinueWith(rmt => int.Parse(rmt.Result.Content.ReadAsStringAsync().Result))
                 .FlattenExceptions();
@@ -67,7 +67,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("surveyId");
             }
 
-            return Client.GetAsync(MediaFilesApi(surveyId, fileName).AbsoluteUri)
+            return Client.GetAsync(MediaFilesApi(surveyId, fileName))
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsByteArrayAsync())
                 .ContinueWith(b => b.Result.Result)
                 .FlattenExceptions();
@@ -84,7 +84,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("fileName");
             }
             return
-                Client.DeleteAsync(MediaFilesApi(surveyId, fileName).AbsoluteUri)
+                Client.DeleteAsync(MediaFilesApi(surveyId, fileName))
                       .FlattenExceptions();
         }
 
@@ -106,7 +106,7 @@ namespace Nfield.Services.Implementation
             postContent.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
             return
-                Client.PutAsync(MediaFilesApi(surveyId, fileName).AbsoluteUri, postContent)
+                Client.PutAsync(MediaFilesApi(surveyId, fileName), postContent)
                       .FlattenExceptions();
         }
 
@@ -130,13 +130,13 @@ namespace Nfield.Services.Implementation
 
         private Uri MediaFilesApi(string surveyId, string fileName)
         {
-            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/MediaFiles/", surveyId);
+            var path = new StringBuilder();
+            path.AppendFormat("Surveys/{0}/MediaFiles/", surveyId);
             if (!string.IsNullOrEmpty(fileName))
             {
-                uriText.AppendFormat("?fileName={0}", HttpUtility.UrlEncode(fileName));
+                path.AppendFormat("?fileName={0}", HttpUtility.UrlEncode(fileName));
             }
-            return new Uri(uriText.ToString());
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
     }
 }

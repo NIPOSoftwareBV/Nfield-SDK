@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -55,7 +56,7 @@ namespace Nfield.Services.Implementation
 
         public Task<IEnumerable<InvitationMonitorSurveyStatus>> GetSurveysInvitationStatusAsync()
         {
-            var uri = $"{SurveyInviteRespondentsUrl(string.Empty)}/SurveysInvitationStatus/";
+            var uri = new Uri(SurveyInviteRespondentsUrl(string.Empty), "SurveysInvitationStatus");
 
             return Client.GetAsync(uri)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationMonitorSurveyStatus>>(
@@ -67,7 +68,7 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
-            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/SurveyBatchesStatus/";
+            var uri = new Uri(SurveyInviteRespondentsUrl(surveyId), "SurveyBatchesStatus");
 
             return Client.GetAsync(uri)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationMonitorBatchStatus>>(
@@ -80,7 +81,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(batchName, nameof(batchName));
 
-            var uri = $"{SurveyInviteRespondentsUrl(surveyId)}/InvitationStatus/{batchName}";
+            var uri = new Uri(SurveyInviteRespondentsUrl(surveyId), string.Format(CultureInfo.InvariantCulture, "InvitationStatus/{0}", batchName));
 
             return Client.GetAsync(uri)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationBatchStatus>>(
@@ -103,12 +104,10 @@ namespace Nfield.Services.Implementation
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private string SurveyInviteRespondentsUrl(string surveyId)
+        private Uri SurveyInviteRespondentsUrl(string surveyId)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InviteRespondents", surveyId);
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
+                "Surveys/{0}/InviteRespondents/", surveyId));
         }
     }
 }

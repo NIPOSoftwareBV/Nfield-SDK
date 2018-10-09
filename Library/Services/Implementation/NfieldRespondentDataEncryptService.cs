@@ -70,12 +70,10 @@ namespace Nfield.Services.Implementation
         /// </summary>
         /// <param name="surveyId">The survey identifier.</param>
         /// <returns></returns>
-        private string SurveyDataEncryptionUrl(string surveyId)
+        private Uri SurveyDataEncryptionUrl(string surveyId)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/RespondentDataEncrypt", surveyId);
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
+                "Surveys/{0}/RespondentDataEncrypt", surveyId));
         }
     }
 }

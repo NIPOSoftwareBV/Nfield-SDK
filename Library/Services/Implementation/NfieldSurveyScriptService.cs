@@ -131,15 +131,15 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private string SurveyScriptUrl(string surveyId, string eTag = null)
+        private Uri SurveyScriptUrl(string surveyId, string eTag = null)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Script/", surveyId);
+            var path = new StringBuilder();
+            path.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Script/", surveyId);
 
             if (!string.IsNullOrEmpty(eTag))
-                result.AppendFormat("{0}", eTag);
+                path.AppendFormat("{0}", eTag);
 
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
     }
 }

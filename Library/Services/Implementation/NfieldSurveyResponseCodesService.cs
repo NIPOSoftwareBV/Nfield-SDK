@@ -167,13 +167,12 @@ namespace Nfield.Services.Implementation
         /// Constructs and returns the url for survey response code 
         /// based on supplied <paramref name="surveyId"/>  and <paramref name="code"/>
         /// </summary>
-        private string SurveyResponseCodeUrl(string surveyId, int? code)
+        private Uri SurveyResponseCodeUrl(string surveyId, int? code)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/ResponseCodes/{1}", surveyId,
-                code.HasValue ? code.Value.ToString(CultureInfo.InvariantCulture) : "");
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
+                @"Surveys/{0}/ResponseCodes/{1}", surveyId,
+                code.HasValue ? code.Value.ToString(CultureInfo.InvariantCulture) : ""
+                ));
         }
     }
 

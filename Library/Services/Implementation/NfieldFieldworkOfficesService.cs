@@ -36,7 +36,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<FieldworkOffice>> QueryAsync()
         {
-            return ConnectionClient.Client.GetAsync(OfficesApi.AbsoluteUri)
+            return ConnectionClient.Client.GetAsync(OfficesApi)
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
@@ -60,7 +60,7 @@ namespace Nfield.Services.Implementation
 
         private Uri OfficesApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "offices/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "offices"); }
         }
 
     }

@@ -36,7 +36,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            return Client.GetAsync(TranslationsApi(surveyId, languageId, null).AbsoluteUri)
+            return Client.GetAsync(TranslationsApi(surveyId, languageId, null))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -57,7 +57,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("translation");
             }
 
-            return Client.PostAsJsonAsync(TranslationsApi(surveyId, languageId, null).AbsoluteUri, translation)
+            return Client.PostAsJsonAsync(TranslationsApi(surveyId, languageId, null), translation)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<Translation>(task.Result))
                          .FlattenExceptions();
@@ -76,7 +76,7 @@ namespace Nfield.Services.Implementation
             }
 
             return
-                Client.DeleteAsync(TranslationsApi(surveyId, languageId, translation.Name).AbsoluteUri)
+                Client.DeleteAsync(TranslationsApi(surveyId, languageId, translation.Name))
                       .FlattenExceptions();
         }
 
@@ -92,7 +92,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("translation");
             }
 
-            return Client.PutAsJsonAsync(TranslationsApi(surveyId, languageId, null).AbsoluteUri,
+            return Client.PutAsJsonAsync(TranslationsApi(surveyId, languageId, null),
                 translation).FlattenExceptions();
         }
 
@@ -104,7 +104,7 @@ namespace Nfield.Services.Implementation
         {
             get
             {
-                return Client.GetAsync(ConnectionClient.NfieldServerUri.AbsoluteUri + "DefaultTexts")
+                return Client.GetAsync(new Uri(ConnectionClient.NfieldServerUri, "DefaultTexts"))
                              .ContinueWith(
                                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                              .ContinueWith(
@@ -142,12 +142,13 @@ namespace Nfield.Services.Implementation
 
         private Uri TranslationsApi(string surveyId, int languageId, string translationName)
         {
-            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/Languages/{1}/Translations",
+            var path = new StringBuilder();
+            path.AppendFormat("Surveys/{0}/Languages/{1}/Translations",
                     surveyId, languageId);
             if (!string.IsNullOrEmpty(translationName))
-                uriText.AppendFormat("/{0}", translationName);
-            return new Uri(uriText.ToString());
+                path.AppendFormat("/{0}", translationName);
+
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
 
     }

@@ -84,7 +84,7 @@ namespace Nfield.Infrastructure
             var content = new FormUrlEncodedContent(data);
 
             // client will update the Token
-            return Client.PostAsync(NfieldServerUri + "SignIn", content)
+            return Client.PostAsync(new Uri(NfieldServerUri, "SignIn"), content)
                 .ContinueWith(responseMessageTask =>
                 {
                     var result = responseMessageTask.Result;

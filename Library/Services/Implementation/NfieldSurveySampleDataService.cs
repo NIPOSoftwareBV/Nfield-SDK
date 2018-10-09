@@ -58,12 +58,10 @@ namespace Nfield.Services.Implementation
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private string SurveySampleDataUrl(string surveyId, string fileName)
+        private Uri SurveySampleDataUrl(string surveyId, string fileName)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/SampleData/{1}", surveyId, fileName);
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri,
+                string.Format(CultureInfo.InvariantCulture, @"Surveys/{0}/SampleData/{1}", surveyId, fileName));
         }
 
         private static void CheckRequiredStringArgument(string argument, string name)
