@@ -38,7 +38,7 @@ namespace Nfield.Services.Implementation
             CheckSurveyId(surveyId);
 
             var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
-                "{0}/{1}/status", surveyId, SurveyFieldworkControllerName));
+                "{0}/{1}/Status", surveyId, SurveyFieldworkControllerName));
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
@@ -54,7 +54,7 @@ namespace Nfield.Services.Implementation
             CheckSurveyId(surveyId);
 
             var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
-                "{0}/{1}/start", surveyId, SurveyFieldworkControllerName));
+                "{0}/{1}/Start", surveyId, SurveyFieldworkControllerName));
 
             return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
         }
@@ -67,7 +67,7 @@ namespace Nfield.Services.Implementation
             CheckSurveyId(surveyId);
 
             var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
-                "{0}/{1}/stop", surveyId, SurveyFieldworkControllerName));
+                "{0}/{1}/Stop", surveyId, SurveyFieldworkControllerName));
 
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
@@ -100,7 +100,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveysApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "surveys/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
         }
 
         public string SurveyFieldworkControllerName { get { return "Fieldwork"; } }

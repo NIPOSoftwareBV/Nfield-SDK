@@ -83,7 +83,7 @@ namespace Nfield.Services
                 ErrorMessage = ""
             };
 
-            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents";
+            var url = new Uri(ServiceAddress, $"Surveys/{SurveyId}/InviteRespondents/");
             mockedHttpClient.Setup(client => client
                     .PostAsJsonAsync(url, It.Is<InvitationBatchWithFilter>(b =>
                         b.Name == batch.Name &&
@@ -149,7 +149,7 @@ namespace Nfield.Services
                 UnknownCount = 11
             };
 
-            var url = $"{ServiceAddress}Surveys//InviteRespondents/SurveysInvitationStatus/";
+            var url = new Uri(ServiceAddress, $"Surveys/InviteRespondents/SurveysInvitationStatus/");
             mockedHttpClient.Setup(client => client.GetAsync(url))
                             .Returns(CreateTask(HttpStatusCode.OK,
                                                 new StringContent(JsonConvert.SerializeObject(new[] { expectedResult }))));
@@ -233,7 +233,7 @@ namespace Nfield.Services
                 UnknownCount = 11
             };
 
-            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents/SurveyBatchesStatus/";
+            var url = new Uri(ServiceAddress, $"Surveys/{SurveyId}/InviteRespondents/SurveyBatchesStatus/");
             mockedHttpClient.Setup(client => client.GetAsync(url))
                             .Returns(CreateTask(HttpStatusCode.OK,
                                                 new StringContent(JsonConvert.SerializeObject(new[] { expectedResult }))));
@@ -317,7 +317,7 @@ namespace Nfield.Services
                 Status = expectedStatus
             };
 
-            var url = $"{ServiceAddress}Surveys/{SurveyId}/InviteRespondents/InvitationStatus/{batchName}";
+            var url = new Uri(ServiceAddress, $"Surveys/{SurveyId}/InviteRespondents/InvitationStatus/{batchName}");
             mockedHttpClient.Setup(client => client.GetAsync(url))
                             .Returns(CreateTask(HttpStatusCode.OK, 
                                                 new StringContent(JsonConvert.SerializeObject(new[] {expectedResult}))));

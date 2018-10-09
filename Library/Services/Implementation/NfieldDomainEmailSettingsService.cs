@@ -58,7 +58,7 @@ namespace Nfield.Services.Implementation
 
         private Uri DomainEmailSettingsUrl()
         {
-            return new Uri(ConnectionClient.NfieldServerUri, "EmailSettings");
+            return new Uri(ConnectionClient.NfieldServerUri, "EmailSettings/");
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(relocation));
             mockedHttpClient
                 .Setup(
-                    client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + SurveyId + "/Relocations", relocation))
+                    client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Relocations"), relocation))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyRelocationsService();
@@ -75,7 +75,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyRelocation>()))
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyRelocation>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(It.IsAny<SurveyRelocation>()))));
 
@@ -87,7 +87,7 @@ namespace Nfield.Services
             mockedHttpClient
                 .Verify(
                     client =>
-                        client.PutAsJsonAsync(ServiceAddress + "Surveys/" + SurveyId + "/Relocations", It.IsAny<SurveyRelocation>()),
+                        client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Relocations"), It.IsAny<SurveyRelocation>()),
                     Times.Once());
         }
 
@@ -119,7 +119,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/Relocations"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Relocations")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedRelocationss))));
 
             var target = new NfieldSurveyRelocationsService();

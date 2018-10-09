@@ -33,7 +33,7 @@ namespace Nfield.Extensions
         private static Uri BackgroundActivityUrl(this INfieldConnectionClient client, string activityId)
         {
             return new Uri(client.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "backgroundActivities/{0}", activityId));
+                "BackgroundActivities/{0}/", activityId));
         }
 
         /// <summary>

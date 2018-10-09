@@ -50,7 +50,7 @@ namespace Nfield.Services
 
             // API call response
             var expectedResult = @"IV=VGhpc0lzQUJhc2U2NDY0Ng==&DATA=kDdE+WOvPi45K6q1fC8iLIJ+M7j5xZmETPf24AS81jk=";
-            _mockedHttpClient.Setup(client => client.PostAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/RespondentDataEncrypt", dataModel))
+            _mockedHttpClient.Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/RespondentDataEncrypt"), dataModel))
                .Returns(CreateTask(HttpStatusCode.OK, new ObjectContent<string>(expectedResult, new JsonMediaTypeFormatter())));
 
             _target = new NfieldRespondentDataEncryptService();

@@ -72,7 +72,7 @@ namespace Nfield.Services
             const string sample = "a sample";
             var content = new StringContent(sample);
             _mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/Sample"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Sample/")))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var actual = _target.GetAsync(SurveyId).Result;
@@ -133,7 +133,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.PostAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample", It.Is<StringContent>(stringContent => stringContent.ReadAsStringAsync().Result.Equals(sample))))
+                .Setup(client => client.PostAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/"), It.Is<StringContent>(stringContent => stringContent.ReadAsStringAsync().Result.Equals(sample))))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(uploadStatus))));
 
             var actual = _target.PostAsync(SurveyId, sample).Result;
@@ -189,13 +189,13 @@ namespace Nfield.Services
         {
             const string respondentKey = "a sample record id";
 
-            _mockedHttpClient.Setup(client => client.DeleteAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample",
+            _mockedHttpClient.Setup(client => client.DeleteAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/"),
                     It.Is<IEnumerable<SampleFilter>>(filters =>
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
-            _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1/")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
@@ -257,13 +257,13 @@ namespace Nfield.Services
         {
             const string respondentKey = "testRespondent123";
 
-            _mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Block",
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Block"),
                                 It.Is<IEnumerable<SampleFilter>>(filters =>
                                     FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
-            _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, "BackgroundActivities/activity1/")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 1 }))));
@@ -278,13 +278,13 @@ namespace Nfield.Services
         {
             const string respondentKey = "not-a-respondent";
 
-            _mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Block",
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Block"),
                     It.Is<IEnumerable<SampleFilter>>(filters =>
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
-            _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1/")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 0 }))));
@@ -345,13 +345,13 @@ namespace Nfield.Services
         {
             const string respondentKey = "testRespondent123";
 
-            _mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Reset",
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Reset"),
                     It.Is<IEnumerable<SampleFilter>>(filters =>
                         FilterEquals(filters.Single(), "RespondentKey", "eq", respondentKey))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
-            _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1/")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ResetTotal = 1 }))));
@@ -424,14 +424,14 @@ namespace Nfield.Services
         [Fact]
         public void TestClearByRespondentAsync_ParamsAreOk_Successful()
         {
-            _mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Clear",
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Clear"),
                     It.Is<ClearSurveySampleModel>(c =>
                         FilterEquals(c.Filters.Single(), "RespondentKey", "eq", RespondentKey) && c.Columns.Any(n => n == "ColumnName1") && c.Columns.Any(n => n == "ColumnName2"))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
 
-            _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1/")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
@@ -484,14 +484,14 @@ namespace Nfield.Services
         [Fact]
         public void TestClearByInterviewAsync_ParamsAreOk_Successful()
         {
-            _mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Clear",
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Clear"),
                     It.Is<ClearSurveySampleModel>(c =>
                         FilterEquals(c.Filters.Single(), "InterviewId", "eq", InterviewId.ToString()) && c.Columns.Any(n => n == "ColumnName1") && c.Columns.Any(n => n == "ColumnName2"))))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
 
-            _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1/")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
@@ -546,7 +546,7 @@ namespace Nfield.Services
             var columns = new List<SampleColumnUpdate>();
             columns.Add(new SampleColumnUpdate { ColumnName = "dummyCol", Value = "dummyVal" });
 
-            _mockedHttpClient.Setup(client => client.PutAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/Sample/Update",
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Update"),
                 It.Is<SurveyUpdateSampleRecordModel>(c => c.SampleRecordId == sampleRecordId && c.ColumnUpdates.Any(n => n.ColumnName == "dummyCol"))))
                     .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new SampleUpdateStatus { ResultStatus = true }))));
             

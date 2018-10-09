@@ -26,7 +26,7 @@ namespace Nfield.Services
 {
     public abstract class NfieldServiceTestsBase
     {
-        protected const string ServiceAddress = "http://localhost/nfieldapi/";
+        protected readonly Uri ServiceAddress = new Uri("http://localhost/nfieldapi/");
 
         protected Task<HttpResponseMessage> CreateTask(HttpStatusCode httpStatusCode, HttpContent content = null)
         {
@@ -50,20 +50,20 @@ namespace Nfield.Services
             var mockedHttpClient = new Mock<INfieldHttpClient>();
 
             mockedNfieldConnection.SetupGet(connection => connection.Client).Returns(mockedHttpClient.Object);
-            mockedNfieldConnection.SetupGet(connection => connection.NfieldServerUri).Returns(new Uri(ServiceAddress));
+            mockedNfieldConnection.SetupGet(connection => connection.NfieldServerUri).Returns(ServiceAddress);
 
             //setup the mocked HttpClient to return httpStatusCode for all methods that send a request to the server
 
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<object>()))
                 .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
-                .Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+                .Setup(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<object>()))
                 .Returns(NfieldTaskHelpers.FromResult(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
 
             mockedHttpClient
@@ -71,17 +71,17 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
-                .Setup(client => client.GetAsync(It.IsAny<string>()))
+                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
                 .Returns(CreateTask(HttpStatusCode.BadRequest));
 
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(It.IsAny<string>(), It.IsAny<object>()))
+                .Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<object>()))
                 .Returns(NfieldTaskHelpers.FromResult(new HttpResponseMessage(HttpStatusCode.BadRequest) { Content = new StringContent("") }));
 
             return mockedHttpClient;
         }
 
-        internal INfieldConnectionClient InitMockClientGet<T>(string url, T responseObjectContent)
+        internal INfieldConnectionClient InitMockClientGet<T>(Uri url, T responseObjectContent)
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -93,7 +93,7 @@ namespace Nfield.Services
             return mockedNfieldConnection.Object;
         }
 
-        internal INfieldConnectionClient InitMockClientPut<T1, T2>(string url, T1 requestContent, T2 responseObjectContent)
+        internal INfieldConnectionClient InitMockClientPut<T1, T2>(Uri url, T1 requestContent, T2 responseObjectContent)
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);

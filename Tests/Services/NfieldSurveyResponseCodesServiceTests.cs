@@ -43,7 +43,7 @@ namespace Nfield.Services
 
             var target = new NfieldSurveyResponseCodesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<string>()))
+            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<Uri>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(new List<SurveyResponseCode>()))));
 
@@ -52,7 +52,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify(
-                hc => hc.GetAsync(It.Is<string>(url => url.EndsWith("Surveys/" + surveyId + "/ResponseCodes/"))), Times.Once());
+                hc => hc.GetAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/ResponseCodes/"))), Times.Once());
         }
 
         #endregion
@@ -84,7 +84,7 @@ namespace Nfield.Services
 
             var target = new NfieldSurveyResponseCodesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<string>()))
+            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<Uri>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(new SurveyResponseCode()))));
 
@@ -93,8 +93,8 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify(hc =>
-                hc.GetAsync(It.Is<string>(url =>
-                    url.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
+                hc.GetAsync(It.Is<Uri>(url =>
+                    url.AbsolutePath.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
                 Times.Once());
         }
 
@@ -140,7 +140,7 @@ namespace Nfield.Services
                 IsDefinite = true,
                 AllowAppointment = false
             };
-            mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyResponseCode>()))
+            mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(new SurveyResponseCode()))));
             var target = new NfieldSurveyResponseCodesService();
@@ -151,7 +151,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify( hc =>
-                    hc.PostAsJsonAsync(It.Is<string>(url => url.EndsWith("Surveys/" + surveyId + "/ResponseCodes/")), responseCodeToAdd), 
+                    hc.PostAsJsonAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/ResponseCodes/")), responseCodeToAdd), 
                     Times.Once());
         }
 
@@ -170,7 +170,7 @@ namespace Nfield.Services
                 IsDefinite = true,
                 AllowAppointment = false
             };
-            mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyResponseCode>()))
+            mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(responseCodeToAdd))));
             var target = new NfieldSurveyResponseCodesService();
@@ -231,7 +231,7 @@ namespace Nfield.Services
                 IsDefinite = true,
                 AllowAppointment = false
             };
-            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<string>(), It.IsAny<UpdateSurveyResponseCode>()))
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<UpdateSurveyResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(new SurveyResponseCode()))));
             var target = new NfieldSurveyResponseCodesService();
@@ -243,8 +243,8 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.PatchAsJsonAsync(
-                    It.Is<string>(
-                        url => url.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code))),
+                    It.Is<Uri>(
+                        url => url.AbsolutePath.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code))),
                     It.IsAny<UpdateSurveyResponseCode>()),
                 Times.Once());
         }
@@ -265,7 +265,7 @@ namespace Nfield.Services
                 IsDefinite = true,
                 AllowAppointment = false
             };
-            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<string>(), It.IsAny<UpdateSurveyResponseCode>()))
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<UpdateSurveyResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(responseCodeToUpdate))));
             var target = new NfieldSurveyResponseCodesService();
@@ -309,7 +309,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<string>()))
+            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<Uri>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
             var target = new NfieldSurveyResponseCodesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -319,8 +319,8 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify(hc =>
-                hc.DeleteAsync(It.Is<string>(
-                        url => url.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
+                hc.DeleteAsync(It.Is<Uri>(
+                        url => url.AbsolutePath.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
                 Times.Once());
         }
 

@@ -258,7 +258,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<int> SamplingPointsCountAsync(string surveyId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/count", surveyId, SamplingPointsControllerName));
+            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/Count", surveyId, SamplingPointsControllerName));
 
             return Client.GetAsync(uri)
                 .ContinueWith(rm => int.Parse(rm.Result.Content.ReadAsStringAsync().Result))
@@ -479,27 +479,27 @@ namespace Nfield.Services.Implementation
 
         private static string SamplingPointsControllerName
         {
-            get { return "samplingpoints";  }
+            get { return "SamplingPoints";  }
         }
 
         private static string QuotaControllerName
         {
-            get { return "quota"; }
+            get { return "Quota"; }
         }
 
         private static string CountsControllerName
         {
-            get { return "counts"; }
+            get { return "Counts"; }
         }
 
         private static string SamplingPointsQuotaControllerName
         {
-            get { return "quotatargets"; }
+            get { return "QuotaTargets"; }
         }
 
         private Uri SurveysApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "surveys/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
         }
 
         private static string SurveyInterviewerInstructionsControllerName

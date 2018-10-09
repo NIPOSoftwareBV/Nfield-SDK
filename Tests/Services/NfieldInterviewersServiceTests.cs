@@ -42,7 +42,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(interviewer));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "interviewers/", interviewer))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "interviewers/"), interviewer))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldInterviewersService();
@@ -72,7 +72,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "interviewers/" + InterviewerId))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "interviewers/" + InterviewerId)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldInterviewersService();
@@ -104,7 +104,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(ServiceAddress + "interviewers/" + InterviewerId, It.IsAny<UpdateInterviewer>()))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, "interviewers/" + InterviewerId), It.IsAny<UpdateInterviewer>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewer))));
 
             var target = new NfieldInterviewersService();
@@ -129,7 +129,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "interviewers/"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "interviewers/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedInterviewers))));
 
             var target = new NfieldInterviewersService();
@@ -161,7 +161,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "interviewers/" + InterviewerId, It.IsAny<object>()))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "interviewers/" + InterviewerId), It.IsAny<object>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewer))));
 
             var target = new NfieldInterviewersService();
@@ -192,8 +192,9 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.GetAsync(
-                    string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices", ServiceAddress,
-                        interviewerId))
+                    new Uri(ServiceAddress,
+                    string.Format(CultureInfo.InvariantCulture, "interviewers/{0}/Offices",
+                        interviewerId)))
                 )
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(expectedFieldworkOffices))));
@@ -219,15 +220,14 @@ namespace Nfield.Services
             const string interviewerId = "interviewerId";
             const string fieldworkOfficeId = "Barcelona";
 
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices",
-                ServiceAddress,
-                interviewerId);
+            var expectedUrl = new Uri(ServiceAddress, string.Format(CultureInfo.InvariantCulture, "interviewers/{0}/Offices",
+                interviewerId));
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<InterviewerFieldworkOfficeModel>()))
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<InterviewerFieldworkOfficeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
             
 
@@ -253,8 +253,7 @@ namespace Nfield.Services
             const string interviewerId = "interviewerId";
             const string fieldworkOfficeId = "Barcelona";
 
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}interviewers/{1}/Offices/{2}",
-                ServiceAddress,
+            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "interviewers/{0}/Offices/{1}",
                 interviewerId,
                 fieldworkOfficeId);
 
@@ -262,7 +261,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(It.IsAny<string>()))
+                .Setup(client => client.DeleteAsync(It.IsAny<Uri>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
 
@@ -275,7 +274,7 @@ namespace Nfield.Services
 
             mockedHttpClient.Verify(
                 h =>
-                    h.DeleteAsync(expectedUrl),
+                    h.DeleteAsync(new Uri(ServiceAddress, expectedUrl)),
                 Times.Once());
         }
 

@@ -56,7 +56,7 @@ namespace Nfield.Services.Implementation
 
         public Task<IEnumerable<InvitationMonitorSurveyStatus>> GetSurveysInvitationStatusAsync()
         {
-            var uri = new Uri(SurveyInviteRespondentsUrl(string.Empty), "SurveysInvitationStatus");
+            var uri = new Uri(SurveyInviteRespondentsUrl(string.Empty), "SurveysInvitationStatus/");
 
             return Client.GetAsync(uri)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationMonitorSurveyStatus>>(
@@ -68,7 +68,7 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
-            var uri = new Uri(SurveyInviteRespondentsUrl(surveyId), "SurveyBatchesStatus");
+            var uri = new Uri(SurveyInviteRespondentsUrl(surveyId), "SurveyBatchesStatus/");
 
             return Client.GetAsync(uri)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationMonitorBatchStatus>>(
@@ -106,6 +106,11 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyInviteRespondentsUrl(string surveyId)
         {
+            if (surveyId == string.Empty)
+            {
+                return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
+                    "Surveys/InviteRespondents/", surveyId));
+            }
             return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
                 "Surveys/{0}/InviteRespondents/", surveyId));
         }

@@ -69,7 +69,7 @@ namespace Nfield.Services
               new SurveyPublicId {  LinkType = "Y Type", Active = true, Url = "Y Url" }
             };
             _mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/PublicIds"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/PublicIds")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedPublicIds))));
 
 
@@ -95,9 +95,8 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_Always_CallsCorrectURI()
         {
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}Surveys/{1}/PublicIds",
-                ServiceAddress,
-                SurveyId);
+            var expectedUrl = new Uri(ServiceAddress, string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/PublicIds",
+                SurveyId));
             
             _mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<IEnumerable<SurveyPublicId>>()))
