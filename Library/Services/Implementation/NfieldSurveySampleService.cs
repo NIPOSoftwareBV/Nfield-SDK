@@ -196,7 +196,7 @@ namespace Nfield.Services.Implementation
         
         private Uri SurveySampleUrl(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture, @"Surveys/{0}/Sample", surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture, @"Surveys/{0}/Sample/", surveyId));
         }
     }
 }

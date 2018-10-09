@@ -107,7 +107,7 @@ namespace Nfield.Services.Implementation
         private Uri SurveyInviteRespondentsUrl(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "Surveys/{0}/InviteRespondents", surveyId));
+                "Surveys/{0}/InviteRespondents/", surveyId));
         }
     }
 }

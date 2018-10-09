@@ -117,10 +117,10 @@ namespace Nfield.Services.Implementation
         private Uri AddressesApi(string surveyId, string samplingPointId, string addressId)
         {
             var path = new StringBuilder();
-            path.AppendFormat("Surveys/{0}/SamplingPoints/{1}/Addresses",
+            path.AppendFormat("Surveys/{0}/SamplingPoints/{1}/Addresses/",
                 surveyId, samplingPointId);
             if (!string.IsNullOrEmpty(addressId))
-                path.AppendFormat("/{0}", addressId);
+                path.AppendFormat("{0}/", addressId);
 
             return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }

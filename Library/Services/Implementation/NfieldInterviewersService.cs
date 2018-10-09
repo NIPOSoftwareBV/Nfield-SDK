@@ -189,7 +189,7 @@ namespace Nfield.Services.Implementation
 
         private Uri InterviewersApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "interviewers"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "interviewers/"); }
         }
     }
 

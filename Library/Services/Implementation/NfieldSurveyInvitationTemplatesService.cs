@@ -88,7 +88,7 @@ namespace Nfield.Services.Implementation
         {
             return new Uri(ConnectionClient.NfieldServerUri,
                 string.Format(CultureInfo.InvariantCulture,
-                    "Surveys/{0}/InvitationTemplates",
+                    "Surveys/{0}/InvitationTemplates/",
                     surveyId));
         }
 

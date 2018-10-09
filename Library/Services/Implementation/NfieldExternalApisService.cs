@@ -107,7 +107,7 @@ namespace Nfield.Services.Implementation
 
         private Uri ExternalApisApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "externalapis"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "externalapis/"); }
         }
     }
 }

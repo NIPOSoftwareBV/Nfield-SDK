@@ -100,7 +100,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveysApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "surveys"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "surveys/"); }
         }
 
         public string SurveyFieldworkControllerName { get { return "Fieldwork"; } }
