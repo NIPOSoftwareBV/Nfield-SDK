@@ -128,8 +128,8 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var responseContentString = JsonConvert.SerializeObject(expectedResponseContent);
             var responseContent = new StringContent(responseContentString, Encoding.Unicode, "application/json");
-            var uri = ServiceAddress + "Surveys/" + surveyId + "/InvitationImages/" + filename;
-            mockedHttpClient.Setup(client => client.PostAsync(It.Is<string>(s => s == uri), 
+            var uri = "Surveys/" + surveyId + "/InvitationImages/" + filename;
+            mockedHttpClient.Setup(client => client.PostAsync(It.Is<Uri>(s => s.AbsolutePath.EndsWith(uri)), 
                                 It.IsAny<StreamContent>()))
                             .Returns(CreateTask(HttpStatusCode.OK, responseContent));
 

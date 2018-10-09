@@ -61,7 +61,7 @@ namespace Nfield.Services.Implementation
 
         private Uri ExternalApiDownloadLogUri
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "externalapilogdownload"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "externalapilogdownload/"); }
         }
     }
 }

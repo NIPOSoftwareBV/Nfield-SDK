@@ -59,7 +59,7 @@ namespace Nfield.Services
             var expected = new SurveyScript{Script = script,FileName = fileName};
 
            _mockedHttpClient
-                .Setup(client => client.GetAsync(string.Format("{0}Surveys/{1}/Script/", ServiceAddress, surveyId)))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/", surveyId))))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId).Result;
@@ -78,10 +78,8 @@ namespace Nfield.Services
 
             var expected = new SurveyScript { Script = script, FileName = fileName };
 
-            var v1 = string.Format("{0}Surveys/{1}/Script/{2}", ServiceAddress, surveyId, eTag);
-
             _mockedHttpClient
-                 .Setup(client => client.GetAsync(string.Format("{0}Surveys/{1}/Script/{2}", ServiceAddress, surveyId, eTag)))
+                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/{1}", surveyId, eTag))))
                  .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId, eTag).Result;
@@ -125,7 +123,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(string.Format("{0}Surveys/{1}/Script/", ServiceAddress, surveyId), surveyScript))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/", surveyId)), surveyScript))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var actual = _target.PostAsync(surveyId,surveyScript).Result;
@@ -152,7 +150,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(string.Format("{0}Surveys/{1}/Script/", ServiceAddress, surveyId), surveyScript))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/", surveyId)), surveyScript))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var actual = _target.PostAsync(surveyId, surveyScript).Result;
@@ -179,12 +177,12 @@ namespace Nfield.Services
             
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyScript>()))
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyScript>()))
                 .Returns(CreateTask(HttpStatusCode.OK, stringContent));
             
             _target.PostAsync(surveyId, fileName);
 
-            _mockedHttpClient.Verify(hc => hc.PostAsJsonAsync(It.Is<string>(uri => uri.Contains(surveyId)),
+            _mockedHttpClient.Verify(hc => hc.PostAsJsonAsync(It.Is<Uri>(uri => uri.AbsolutePath.Contains(surveyId)),
                         It.Is<SurveyScript>(scripts => scripts.FileName == fileName && scripts.Script == script)), Times.Once());
         }
 

@@ -70,7 +70,7 @@ namespace Nfield.Services.Implementation
         private Uri InterviewsApiUri(string surveyId, int interviewId)
         {
             return new Uri(ConnectionClient.NfieldServerUri,
-                string.Format(CultureInfo.InvariantCulture, "surveys/{0}/interviews/{1}",
+                string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/Interviews/{1}",
                     surveyId, interviewId));
         }
     }

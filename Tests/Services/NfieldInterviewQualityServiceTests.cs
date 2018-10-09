@@ -113,7 +113,7 @@ namespace Nfield.Services
             };
             
             _mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/InterviewQuality"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewQuality")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(fakeInterviewDetails))));
 
@@ -139,7 +139,7 @@ namespace Nfield.Services
            _mockedHttpClient
                 .Setup(
                     client =>
-                        client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/InterviewQuality/" + InterviewId))
+                        client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewQuality/" + InterviewId)))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(fakeInterviewDetail))));
 
@@ -155,12 +155,12 @@ namespace Nfield.Services
         public void TestPutAsync_Always_CallsCorrectURI()
         {
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<QualityNewStateChange>()))
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<QualityNewStateChange>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new InterviewDetailsModel()))));
 
             _target.PutAsync(SurveyId, InterviewId, 1).Wait();
             _mockedHttpClient
-                .Verify(client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + SurveyId + "/InterviewQuality", It.IsAny<QualityNewStateChange>()), Times.Once());
+                .Verify(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewQuality"), It.IsAny<QualityNewStateChange>()), Times.Once());
         }
 
         #endregion

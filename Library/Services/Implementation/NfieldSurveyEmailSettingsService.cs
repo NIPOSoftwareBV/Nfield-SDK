@@ -62,7 +62,7 @@ namespace Nfield.Services.Implementation
         private Uri SurveyEmailSettingsUrl(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "surveys/{0}/emailsettings", surveyId));
+                "Surveys/{0}/EmailSettings", surveyId));
         }
     }
 }

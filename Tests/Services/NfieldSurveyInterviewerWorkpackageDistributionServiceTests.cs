@@ -54,7 +54,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyInterviewerDistributeModel>()))
+            mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyInterviewerDistributeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
             var target = new NfieldSurveyInterviewerWorkpackageDistributionService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -66,7 +66,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                     hc.PostAsJsonAsync(
-                        It.Is<string>(url => url.EndsWith("Surveys/" + surveyId + "/Distribute/")),
+                        It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/Distribute/")),
                         It.Is<SurveyInterviewerDistributeModel>(m => m == model)),
                     Times.Once());
         }

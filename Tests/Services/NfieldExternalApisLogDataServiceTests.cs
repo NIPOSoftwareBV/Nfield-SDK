@@ -45,11 +45,11 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient.Setup(client => client.PostAsJsonAsync<ExternalApiLogDownload>(
-                ServiceAddress + "externalapilogdownload/", logDownload))
+                new Uri(ServiceAddress, "externalapilogdownload/"), logDownload))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(activity))));
 
             mockedHttpClient
-                .Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/{activity.ActivityId}"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activity.ActivityId}/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new { Status = 2, DownloadDataUrl = ExpectedDownloadUrl }))));
 
             var target = new NfieldExternalApisLogService();

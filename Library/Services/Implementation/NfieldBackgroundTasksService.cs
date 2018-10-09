@@ -65,7 +65,7 @@ namespace Nfield.Services.Implementation
 
         private Uri BackgroundTasksApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "backgroundtasks"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "backgroundtasks/"); }
         }
     }
 }
