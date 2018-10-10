@@ -99,6 +99,8 @@ namespace Nfield.Infrastructure
                 Client = new BearerTokenNfieldHttpClient(_httpClient, domainName, provideTokenAsync);
             }
 
+            // the http client will request a token for every request.
+            // we don't have to do anything more here.
             return Task.FromResult<object>(null);
         }
 

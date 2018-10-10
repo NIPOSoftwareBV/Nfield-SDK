@@ -47,6 +47,10 @@ namespace Nfield.Infrastructure
 
     }
 
+    /// <summary>
+    /// Represents a connection to an Nfield server. Use the <see cref="INfieldConnectionV2"/> to gain access to the 
+    /// various services that Nfield provides.
+    /// </summary>
     public interface INfieldConnectionV2 : INfieldConnection
     {
         /// <summary>

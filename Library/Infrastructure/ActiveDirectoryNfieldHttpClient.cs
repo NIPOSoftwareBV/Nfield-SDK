@@ -39,7 +39,7 @@ namespace Nfield.Infrastructure
         {
             var token = await _provideTokenAsync();
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            request.Headers.Add("X-Nfield-Domain", _domainName);
+            request.Headers.Add("X-NFIELD-DOMAIN", _domainName);
 
             var response = await Client.SendAsync(request);
 

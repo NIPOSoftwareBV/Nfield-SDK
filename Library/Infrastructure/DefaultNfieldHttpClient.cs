@@ -35,7 +35,10 @@ namespace Nfield.Infrastructure
 
         public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", _token);
+            if (_token != null) // always null for the first request (SignIn)
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", _token);
+            }
 
             var response = await Client.SendAsync(request);
 
