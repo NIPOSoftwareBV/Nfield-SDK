@@ -70,10 +70,7 @@ namespace Nfield.Infrastructure
         /// <returns><c>true</c> if sign-in was successful, <c>false</c> otherwise.</returns>
         public Task<bool> SignInAsync(string domainName, string username, string password)
         {
-            if (Client == null)
-            {
-                Client = new DefaultNfieldHttpClient(_httpClient);
-            }
+            Client = new DefaultNfieldHttpClient(_httpClient);
 
             var data = new Dictionary<string, string>
                 {
@@ -92,16 +89,9 @@ namespace Nfield.Infrastructure
                 }).FlattenExceptions();
         }
 
-        public Task SignInAsync(string domainName, Func<Task<string>> provideTokenAsync)
+        public void RegisterTokenProvider(string domainName, Func<Task<string>> provideTokenAsync)
         {
-            if (Client == null)
-            {
-                Client = new BearerTokenNfieldHttpClient(_httpClient, domainName, provideTokenAsync);
-            }
-
-            // the http client will request a token for every request.
-            // we don't have to do anything more here.
-            return Task.FromResult<object>(null);
+            Client = new BearerTokenNfieldHttpClient(_httpClient, domainName, provideTokenAsync);
         }
 
         /// <summary>
