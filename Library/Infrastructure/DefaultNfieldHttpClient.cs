@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -37,7 +38,9 @@ namespace Nfield.Infrastructure
         {
             if (_token != null) // always null for the first request (SignIn)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Basic", _token);
+                // set the header on the client, so our consumers (who may have provided it)
+                // can benefit from the header.
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", _token);
             }
 
             var response = await Client.SendAsync(request);
