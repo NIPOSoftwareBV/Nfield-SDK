@@ -68,9 +68,9 @@ namespace Nfield.Infrastructure
         /// Sign into the specified domain, using the specified username and password
         /// </summary>
         /// <returns><c>true</c> if sign-in was successful, <c>false</c> otherwise.</returns>
-        public Task<bool> SignInAsync(string domainName, string username, string password)
+        public async Task<bool> SignInAsync(string domainName, string username, string password)
         {
-            Client = new DefaultNfieldHttpClient(_httpClient);
+            var newClient = new DefaultNfieldHttpClient(_httpClient);
 
             var data = new Dictionary<string, string>
                 {
@@ -81,12 +81,14 @@ namespace Nfield.Infrastructure
             var content = new FormUrlEncodedContent(data);
 
             // client will update the Token
-            return Client.PostAsync(new Uri(NfieldServerUri, "SignIn"), content)
-                .ContinueWith(responseMessageTask =>
-                {
-                    var result = responseMessageTask.Result;
-                    return result.StatusCode == HttpStatusCode.OK;
-                }).FlattenExceptions();
+            var response = await newClient.PostAsync(new Uri(NfieldServerUri, "SignIn"), content);
+
+            // note: do not set the new client *before* the sign in has completed,
+            // because otherwise calling sign in may cause unrelated requests on the
+            // old client to fail (in case of sign in for token refresh)
+            Client = newClient;
+
+            return response.StatusCode == HttpStatusCode.OK;
         }
 
         public void RegisterTokenProvider(string domainName, Func<Task<string>> provideTokenAsync)
