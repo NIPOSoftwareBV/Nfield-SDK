@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <TargetFramework>net40</TargetFramework>
+      <TargetFramework>net452</TargetFramework>
       <!-- Insert the root namespace of the assembly under test below-->
       <RootNamespace>Nfield</RootNamespace>
       <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

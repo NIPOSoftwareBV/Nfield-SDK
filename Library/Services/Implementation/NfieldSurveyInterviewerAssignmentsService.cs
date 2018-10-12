@@ -69,11 +69,12 @@ namespace Nfield.Services.Implementation
         /// Constructs and returns the url for survey interviewer assignments
         /// based on supplied <paramref name="surveyId"/>
         /// </summary>
-        private string SurveyInterviewerAssignmentsUrl(string surveyId)
+        private Uri SurveyInterviewerAssignmentsUrl(string surveyId)
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                "{0}/Surveys/{1}/Assignment/",
-                ConnectionClient.NfieldServerUri.AbsoluteUri, surveyId);
+            return new Uri(ConnectionClient.NfieldServerUri,
+                string.Format(CultureInfo.InvariantCulture,
+                    "Surveys/{0}/Assignment/",
+                    surveyId));
         }
 
         private INfieldHttpClient Client

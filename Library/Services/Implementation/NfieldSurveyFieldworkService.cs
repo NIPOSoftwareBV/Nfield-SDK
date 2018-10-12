@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Nfield.Extensions;
@@ -36,7 +37,8 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Status");
+            var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
+                "{0}/{1}/Status", surveyId, SurveyFieldworkControllerName));
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
@@ -51,7 +53,8 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Start");
+            var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
+                "{0}/{1}/Start", surveyId, SurveyFieldworkControllerName));
 
             return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
         }
@@ -63,7 +66,8 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Stop");
+            var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
+                "{0}/{1}/Stop", surveyId, SurveyFieldworkControllerName));
 
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
@@ -96,7 +100,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveysApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveys/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
         }
 
         public string SurveyFieldworkControllerName { get { return "Fieldwork"; } }

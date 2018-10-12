@@ -83,7 +83,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId) + @"/Block";
+            var uri = new Uri(SurveySampleUrl(surveyId), "Block");
 
             var filters = new List<SampleFilter>
             {
@@ -108,7 +108,7 @@ namespace Nfield.Services.Implementation
                 ColumnUpdates = columnsToUpdate                
             };
 
-            var uri = SurveySampleUrl(surveyId) + @"/Update";
+            var uri = new Uri(SurveySampleUrl(surveyId), "Update");
             
             return Client.PutAsJsonAsync(uri, m)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -121,7 +121,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId) + @"/Reset";
+            var uri = new Uri(SurveySampleUrl(surveyId), "Reset");
 
             var filters = new List<SampleFilter>
             {
@@ -165,7 +165,7 @@ namespace Nfield.Services.Implementation
 
         private Task<int> ClearAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
         {
-            var uri = SurveySampleUrl(surveyId) + @"/Clear";
+            var uri = new Uri(SurveySampleUrl(surveyId) + "Clear");
 
             var request = new ClearSurveySampleModel
             {
@@ -194,12 +194,9 @@ namespace Nfield.Services.Implementation
 
         private INfieldHttpClient Client => ConnectionClient.Client;
         
-        private string SurveySampleUrl(string surveyId)
+        private Uri SurveySampleUrl(string surveyId)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Sample", surveyId);
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture, @"Surveys/{0}/Sample/", surveyId));
         }
     }
 }

@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -38,7 +39,7 @@ namespace Nfield.Services.Implementation
         {
             CheckParameters(surveyId, samplingPointId);
 
-            var uri = AssignmentsApi(surveyId, samplingPointId, null).AbsoluteUri;
+            var uri = AssignmentsApi(surveyId, samplingPointId, null);
 
             return Client.GetAsync(uri)
                  .ContinueWith(
@@ -53,7 +54,7 @@ namespace Nfield.Services.Implementation
         {
             CheckParameters(surveyId, samplingPointId, interviewerId);
 
-            var uri = AssignmentsApi(surveyId, samplingPointId, interviewerId).AbsoluteUri;
+            var uri = AssignmentsApi(surveyId, samplingPointId, interviewerId);
 
             return Client.PostAsync(uri, null ).FlattenExceptions();
         }
@@ -62,7 +63,7 @@ namespace Nfield.Services.Implementation
         {
             CheckParameters(surveyId, model);
 
-            var uri = AssignmentsApi(surveyId).AbsoluteUri;
+            var uri = AssignmentsApi(surveyId);
 
             return Client.PostAsJsonAsync(uri, model).FlattenExceptions();
         }
@@ -71,7 +72,7 @@ namespace Nfield.Services.Implementation
         {
             CheckParameters(surveyId, samplingPointId, interviewerId);
 
-            var uri = AssignmentsApi(surveyId, samplingPointId, interviewerId).AbsoluteUri;
+            var uri = AssignmentsApi(surveyId, samplingPointId, interviewerId);
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
@@ -80,7 +81,7 @@ namespace Nfield.Services.Implementation
         {
             CheckParameters(surveyId, model);
 
-            var uri = AssignmentsApi(surveyId).AbsoluteUri;
+            var uri = AssignmentsApi(surveyId);
 
             return Client.DeleteAsJsonAsync(uri, model).FlattenExceptions();
         }
@@ -135,19 +136,19 @@ namespace Nfield.Services.Implementation
 
         private Uri AssignmentsApi(string surveyId, string samplingPointId, string interviewerId)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/SamplingPoints/{1}/Assignments",
+            var path = new StringBuilder();
+            path.AppendFormat("Surveys/{0}/SamplingPoints/{1}/Assignments",
                 surveyId, samplingPointId);
             if (!string.IsNullOrEmpty(interviewerId))
-                uriText.AppendFormat("/{0}", interviewerId);
-            return new Uri(uriText.ToString());
+                path.AppendFormat("/{0}", interviewerId);
+
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
 
         private Uri AssignmentsApi(string surveyId)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/SamplingPointsAssignments", surveyId);
-            return new Uri(uriText.ToString());
+            return new Uri(ConnectionClient.NfieldServerUri, string.Format(
+                CultureInfo.InvariantCulture, "Surveys/{0}/SamplingPointsAssignments", surveyId));
         }
 
     }

@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Globalization;
 using System.Text;
 using System.Threading;
@@ -29,12 +30,10 @@ namespace Nfield.Extensions
     /// </summary>
     public static class NfieldConnectionClientExtensions
     {
-        private static string BackgroundActivityUrl(this INfieldConnectionClient client, string activityId)
+        private static Uri BackgroundActivityUrl(this INfieldConnectionClient client, string activityId)
         {
-            var result = new StringBuilder(client.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"BackgroundActivities/{0}", activityId);
-
-            return result.ToString();
+            return new Uri(client.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
+                "BackgroundActivities/{0}/", activityId));
         }
 
         /// <summary>

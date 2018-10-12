@@ -28,70 +28,12 @@ namespace Nfield.Infrastructure
     /// </summary>
     public class NfieldConnectionTests
     {
-        #region SignInAsync Tests
-
-        [Fact]
-        public void TestSignInAsync_CredentialsAreIncorrect_ReturnsFalse()
-        {
-            var mockedHttpClient = new Mock<INfieldHttpClient>();
-            var mockedResolver = new Mock<IDependencyResolver>();
-            DependencyResolver.Register(mockedResolver.Object);
-            mockedResolver
-                .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
-                .Returns(mockedHttpClient.Object);
-            mockedHttpClient
-                .Setup(httpClient => httpClient.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .Returns(CreateTask(HttpStatusCode.BadRequest));
-
-            var target = new NfieldConnection();
-            var result = target.SignInAsync("", "", "").Result;
-
-            Assert.False(result);
-        }
-
-        [Fact]
-        public void TestSignInAsync_CredentialsAreCorrect_ReturnsTrue()
-        {
-            Uri ServerUri = new Uri(@"http://localhost/");
-
-            const string Domain = "Domain";
-            const string Username = "UserName";
-            const string Password = "Password";
-
-            var mockedHttpClient = new Mock<INfieldHttpClient>();
-            var mockedResolver = new Mock<IDependencyResolver>();
-            DependencyResolver.Register(mockedResolver.Object);
-            mockedResolver
-                .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
-                .Returns(mockedHttpClient.Object);
-            var content = new FormUrlEncodedContent(new Dictionary<string, string>
-                {
-                    {"Domain", Domain},
-                    {"Username", Username},
-                    {"Password", Password}
-                });
-            mockedHttpClient
-                .Setup(httpClient => httpClient.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
-                .Returns(CreateTask(HttpStatusCode.BadRequest));
-            mockedHttpClient
-                .Setup(httpClient => httpClient.PostAsync(ServerUri + "SignIn", It.Is<HttpContent>(c => CheckContent(c, content))))
-                .Returns(CreateTask(HttpStatusCode.OK));
-
-            var target = new NfieldConnection();
-            target.NfieldServerUri = ServerUri;
-            var result = target.SignInAsync(Domain, Username, Password).Result;
-
-            Assert.True(result);
-        }
-
-        #endregion
-
         #region GetService Tests
 
         [Fact]
         public void TestGetService_RequestedServiceTypeIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldConnection();
+            var target = NfieldConnectionFactory.Create(new Uri("http://fake/"));
             Assert.Throws(typeof(ArgumentNullException), () => target.GetService(null));
         }
 
@@ -104,7 +46,7 @@ namespace Nfield.Infrastructure
                 .Setup(resolver => resolver.Resolve(typeof(INfieldConnectionClientObject)))
                 .Returns(null);
 
-            var target = new NfieldConnection();
+            var target = NfieldConnectionFactory.Create(new Uri("http://fake/"));
             var result = target.GetService<INfieldConnectionClientObject>();
 
             Assert.Null(result);
@@ -123,7 +65,7 @@ namespace Nfield.Infrastructure
             mockedResolver
                 .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
                 .Returns(stubbedHttpClientObject);
-            var target = new NfieldConnection();
+            var target = NfieldConnectionFactory.Create(new Uri("http://fake/"));
             var result = target.GetService<INfieldConnectionClientObject>();
 
             Assert.Equal(result, stubbedNfieldConnectionClientObject);
@@ -142,7 +84,7 @@ namespace Nfield.Infrastructure
             mockedResolver
                 .Setup(resolver => resolver.Resolve(typeof(INfieldHttpClient)))
                 .Returns(stubbedHttpClientObject);
-            var target = new NfieldConnection();
+            var target = (NfieldConnection)NfieldConnectionFactory.Create(new Uri("http://fake/"));
             var result = target.GetService<INfieldConnectionClientObject>();
 
             mockedNfieldConnectionClientObject.Verify(client => client.InitializeNfieldConnection(target));

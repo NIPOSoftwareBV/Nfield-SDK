@@ -39,7 +39,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            return Client.GetAsync(LanguagesApi(surveyId, 0).AbsoluteUri)
+            return Client.GetAsync(LanguagesApi(surveyId, 0))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -60,7 +60,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("language");
             }
 
-            return Client.PostAsJsonAsync(LanguagesApi(surveyId, 0).AbsoluteUri, language)
+            return Client.PostAsJsonAsync(LanguagesApi(surveyId, 0), language)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<Language>(task.Result))
                          .FlattenExceptions();
@@ -79,7 +79,7 @@ namespace Nfield.Services.Implementation
             }
 
             return
-                Client.DeleteAsync(LanguagesApi(surveyId, language.Id).AbsoluteUri)
+                Client.DeleteAsync(LanguagesApi(surveyId, language.Id))
                       .FlattenExceptions();
         }
 
@@ -95,7 +95,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("language");
             }
 
-            return Client.PutAsJsonAsync(LanguagesApi(surveyId, 0).AbsoluteUri,
+            return Client.PutAsJsonAsync(LanguagesApi(surveyId, 0),
                 language).FlattenExceptions();
         }
 
@@ -128,11 +128,11 @@ namespace Nfield.Services.Implementation
 
         private Uri LanguagesApi(string surveyId, int id)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/Languages", surveyId);
+            var path = new StringBuilder();
+            path.AppendFormat("Surveys/{0}/Languages", surveyId);
             if (id > 0)
-                uriText.AppendFormat("/{0}", id);
-            return new Uri(uriText.ToString());
+                path.AppendFormat("/{0}", id);
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
 
     }

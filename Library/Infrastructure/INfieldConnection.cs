@@ -47,4 +47,18 @@ namespace Nfield.Infrastructure
 
     }
 
+    /// <summary>
+    /// Represents a connection to an Nfield server. Use the <see cref="INfieldConnectionV2"/> to gain access to the 
+    /// various services that Nfield provides.
+    /// </summary>
+    public interface INfieldConnectionV2 : INfieldConnection
+    {
+        /// <summary>
+        /// Register the provided callback to acquire a token for every request.
+        /// </summary>
+        /// <param name="domainName">The name of the domain to sign in to</param>
+        /// <param name="acquireToken">The callback that is invoked for every request, which provides the token to use.</param>
+        void RegisterTokenProvider(string domainName, Func<Task<string>> provideTokenAsync);
+    }
+
 }

@@ -36,7 +36,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<BackgroundTask>> QueryAsync()
         {
-            return Client.GetAsync(BackgroundTasksApi.AbsoluteUri)
+            return Client.GetAsync(BackgroundTasksApi)
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
@@ -65,7 +65,7 @@ namespace Nfield.Services.Implementation
 
         private Uri BackgroundTasksApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "backgroundtasks/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "backgroundtasks/"); }
         }
     }
 }

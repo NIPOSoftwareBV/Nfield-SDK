@@ -23,6 +23,7 @@ namespace Nfield.Infrastructure
     /// Exposes the implementation of the IoC container through the <see cref="Current"/> property.
     /// To register your own implementation use one of the 'Register' overloads to register your favorite IoC container.
     /// </summary>
+    [Obsolete("Dependency injection for Nfield Services is no longer supported. Please use NfieldConnection.GetService instead.")]
     public class DependencyResolver
     {
         private static readonly DependencyResolver Instance = new DependencyResolver();
@@ -113,24 +114,34 @@ namespace Nfield.Infrastructure
         {
             public object Resolve(Type typeToResolve)
             {
+                if (NfieldSdkInitializer.TypeMap.ContainsKey(typeToResolve))
+                {
+                    return Instantiate(NfieldSdkInitializer.TypeMap[typeToResolve]);
+                }
+
                 if (typeToResolve.IsInterface || typeToResolve.IsAbstract)
                 {
                     return null;
                 }
 
-                try
-                {
-                    return Activator.CreateInstance(typeToResolve);
-                }
-                catch
-                {
-                    return null;
-                }
+                return Instantiate(typeToResolve);
             }
 
             public IEnumerable<object> ResolveAll(Type typeToResolve)
             {
                 return Enumerable.Empty<object>();
+            }
+
+            private object Instantiate(Type type)
+            {
+                try
+                {
+                    return Activator.CreateInstance(type);
+                }
+                catch
+                {
+                    return null;
+                }
             }
         }
 

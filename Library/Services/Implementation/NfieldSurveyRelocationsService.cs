@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            return Client.GetAsync(RelocationsApi(surveyId).AbsoluteUri)
+            return Client.GetAsync(RelocationsApi(surveyId))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -60,7 +61,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(nameof(relocation));
             }
 
-            return Client.PutAsJsonAsync(RelocationsApi(surveyId).AbsoluteUri, relocation)
+            return Client.PutAsJsonAsync(RelocationsApi(surveyId), relocation)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<SurveyRelocation>(task.Result))
                          .FlattenExceptions();
@@ -91,9 +92,8 @@ namespace Nfield.Services.Implementation
 
         private Uri RelocationsApi(string surveyId)
         {
-            StringBuilder uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/Relocations", surveyId);
-            return new Uri(uriText.ToString());
+            return new Uri(ConnectionClient.NfieldServerUri,
+                string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/Relocations", surveyId));
         }
     }
 }

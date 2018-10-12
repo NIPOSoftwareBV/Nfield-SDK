@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -40,7 +41,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var target = new NfieldMediaFilesService();
@@ -60,7 +61,7 @@ namespace Nfield.Services
         {
             const string surveyId = "SurveyId";
             const int expectedCount = 4;
-            const string uri = ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/Count";
+            var uri = new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/Count");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -90,7 +91,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName)))
                 .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
 
             var target = new NfieldMediaFilesService();
@@ -113,7 +114,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/?fileName=MyFileName%26"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=MyFileName%26")))
                 .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
 
             var target = new NfieldMediaFilesService();
@@ -139,7 +140,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldMediaFilesService();
@@ -162,7 +163,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsync(ServiceAddress + "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName,
+                .Setup(client => client.PutAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName),
                         It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 

@@ -23,6 +23,7 @@ using Nfield.Extensions;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Utilities;
+using System.Globalization;
 
 namespace Nfield.Services.Implementation
 {
@@ -66,11 +67,11 @@ namespace Nfield.Services.Implementation
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private string InterviewsApiUri(string surveyId, int interviewId)
+        private Uri InterviewsApiUri(string surveyId, int interviewId)
         {
-            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.Append($"Surveys/{surveyId}/Interviews/{interviewId}");
-            return new Uri(uriText.ToString()).AbsoluteUri;
+            return new Uri(ConnectionClient.NfieldServerUri,
+                string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/Interviews/{1}",
+                    surveyId, interviewId));
         }
     }
 }

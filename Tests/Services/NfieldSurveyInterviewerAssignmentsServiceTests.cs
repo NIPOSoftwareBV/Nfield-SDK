@@ -55,7 +55,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyInterviewerAssignmentChangeModel>()))
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyInterviewerAssignmentChangeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
             var target = new NfieldSurveyInterviewerAssignmentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -66,7 +66,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                     hc.PutAsJsonAsync(
-                        It.Is<string>(url => url.EndsWith("Surveys/" + surveyId + "/Assignment/")),
+                        It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/Assignment/")),
                         It.Is<SurveyInterviewerAssignmentChangeModel>(model => model.InterviewerId == interviewerId && model.Assign)),
                     Times.Once());
         }
@@ -100,7 +100,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyInterviewerAssignmentChangeModel>()))
+            mockedHttpClient.Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyInterviewerAssignmentChangeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
             var target = new NfieldSurveyInterviewerAssignmentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -111,7 +111,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                     hc.PutAsJsonAsync(
-                        It.Is<string>(url => url.EndsWith("Surveys/" + surveyId + "/Assignment/")),
+                        It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/Assignment/")),
                         It.Is<SurveyInterviewerAssignmentChangeModel>(model => model.InterviewerId == interviewerId && !model.Assign)),
                     Times.Once());
         }

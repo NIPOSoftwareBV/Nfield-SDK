@@ -47,11 +47,12 @@ namespace Nfield.Services.Implementation
         /// Constructs and returns the url for survey interviewers distribution
         /// based on supplied <paramref name="surveyId"/>
         /// </summary>
-        private string SurveyDistributeUrl(string surveyId)
+        private Uri SurveyDistributeUrl(string surveyId)
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                "{0}/Surveys/{1}/Distribute/",
-                ConnectionClient.NfieldServerUri.AbsoluteUri, surveyId);
+            return new Uri(ConnectionClient.NfieldServerUri,
+                string.Format(CultureInfo.InvariantCulture,
+                    "Surveys/{0}/Distribute/",
+                    surveyId));
         }
 
         private INfieldHttpClient Client
