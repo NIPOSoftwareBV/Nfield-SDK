@@ -14,8 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -32,8 +30,7 @@ namespace Nfield.Extensions
     {
         private static Uri BackgroundActivityUrl(this INfieldConnectionClient client, string activityId)
         {
-            return new Uri(client.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "BackgroundActivities/{0}/", activityId));
+            return new Uri(client.NfieldServerUri, $"BackgroundActivities/{activityId}/");
         }
 
         /// <summary>
