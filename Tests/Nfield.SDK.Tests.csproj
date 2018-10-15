@@ -5,6 +5,9 @@
       <RootNamespace>Nfield</RootNamespace>
       <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
       <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+      <SignAssembly>true</SignAssembly>
+      <AssemblyOriginatorKeyFile>..\Nfield.SDK.snk</AssemblyOriginatorKeyFile>
+      <DelaySign>false</DelaySign>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Moq" Version="4.0.10827" />
