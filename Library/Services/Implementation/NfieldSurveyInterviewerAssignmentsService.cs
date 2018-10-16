@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
@@ -71,10 +70,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private Uri SurveyInterviewerAssignmentsUrl(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri,
-                string.Format(CultureInfo.InvariantCulture,
-                    "Surveys/{0}/Assignment/",
-                    surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignment/");
         }
 
         private INfieldHttpClient Client

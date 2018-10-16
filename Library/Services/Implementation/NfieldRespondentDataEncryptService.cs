@@ -14,9 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
@@ -72,8 +70,7 @@ namespace Nfield.Services.Implementation
         /// <returns></returns>
         private Uri SurveyDataEncryptionUrl(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "Surveys/{0}/RespondentDataEncrypt", surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/RespondentDataEncrypt");
         }
     }
 }

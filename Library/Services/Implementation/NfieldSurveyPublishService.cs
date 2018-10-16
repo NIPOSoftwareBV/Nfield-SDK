@@ -14,9 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -85,8 +82,7 @@ namespace Nfield.Services.Implementation
 
         private Uri PublishSurveyApi(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "Surveys/{0}/Publish", surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Publish");
         }
     }
 }

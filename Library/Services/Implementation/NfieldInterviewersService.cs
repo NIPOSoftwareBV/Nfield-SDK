@@ -104,7 +104,7 @@ namespace Nfield.Services.Implementation
         public Task <Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
-            var uri = new Uri(InterviewersApi, string.Format(@"GetByClientId/{0}", clientInterviewerId));
+            var uri = new Uri(InterviewersApi, $"GetByClientId/{clientInterviewerId}");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -138,7 +138,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId)
         {
-            var uri = new Uri(InterviewersApi, string.Format(@"{0}/Offices", interviewerId));
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -154,7 +154,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
         {
-            var uri = new Uri(InterviewersApi, string.Format(@"{0}/Offices", interviewerId));
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
 
             return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel{OfficeId = officeId}).FlattenExceptions();
         }
@@ -164,7 +164,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
-            var uri = new Uri(InterviewersApi, string.Format(@"{0}/Offices/{1}", interviewerId, fieldworkOfficeId));
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }

@@ -15,9 +15,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -92,8 +90,7 @@ namespace Nfield.Services.Implementation
 
         private Uri RelocationsApi(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri,
-                string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/Relocations", surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Relocations");
         }
     }
 }
