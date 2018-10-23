@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using Nfield.Infrastructure;
 using Nfield.Services.Implementation;
 using Xunit;
@@ -192,9 +191,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.GetAsync(
-                    new Uri(ServiceAddress,
-                    string.Format(CultureInfo.InvariantCulture, "interviewers/{0}/Offices",
-                        interviewerId)))
+                    new Uri(ServiceAddress, $"interviewers/{interviewerId}/Offices"))
                 )
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(expectedFieldworkOffices))));
@@ -220,8 +217,7 @@ namespace Nfield.Services
             const string interviewerId = "interviewerId";
             const string fieldworkOfficeId = "Barcelona";
 
-            var expectedUrl = new Uri(ServiceAddress, string.Format(CultureInfo.InvariantCulture, "interviewers/{0}/Offices",
-                interviewerId));
+            var expectedUrl = new Uri(ServiceAddress, $"interviewers/{interviewerId}/Offices");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -253,9 +249,7 @@ namespace Nfield.Services
             const string interviewerId = "interviewerId";
             const string fieldworkOfficeId = "Barcelona";
 
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "interviewers/{0}/Offices/{1}",
-                interviewerId,
-                fieldworkOfficeId);
+            var expectedUrl = $"interviewers/{interviewerId}/Offices/{fieldworkOfficeId}";
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);

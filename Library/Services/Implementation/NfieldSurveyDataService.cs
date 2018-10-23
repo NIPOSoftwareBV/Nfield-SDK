@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -52,8 +47,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyDataUrl(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "surveys/{0}/data", surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/data");
         }
 
     }

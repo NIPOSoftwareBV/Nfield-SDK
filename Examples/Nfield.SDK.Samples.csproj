@@ -6,9 +6,6 @@
     <Copyright>Copyright © NIPO 2018</Copyright>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Ninject" Version="3.0.1.10" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Library\Nfield.SDK.csproj" />
   </ItemGroup>
 </Project>

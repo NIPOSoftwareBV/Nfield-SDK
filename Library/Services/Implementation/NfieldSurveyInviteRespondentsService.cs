@@ -15,8 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -81,7 +79,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(batchName, nameof(batchName));
 
-            var uri = new Uri(SurveyInviteRespondentsUrl(surveyId), string.Format(CultureInfo.InvariantCulture, "InvitationStatus/{0}", batchName));
+            var uri = new Uri(SurveyInviteRespondentsUrl(surveyId), $"InvitationStatus/{batchName}");
 
             return Client.GetAsync(uri)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<InvitationBatchStatus>>(
@@ -108,11 +106,9 @@ namespace Nfield.Services.Implementation
         {
             if (surveyId == string.Empty)
             {
-                return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                    "Surveys/InviteRespondents/", surveyId));
+                return new Uri(ConnectionClient.NfieldServerUri, "Surveys/InviteRespondents/");
             }
-            return new Uri(ConnectionClient.NfieldServerUri, string.Format(CultureInfo.InvariantCulture,
-                "Surveys/{0}/InviteRespondents/", surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InviteRespondents/");
         }
     }
 }

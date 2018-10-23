@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -70,10 +69,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private Uri SurveyInterviewersUrl(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, 
-                string.Format(CultureInfo.InvariantCulture,
-                    "Surveys/{0}/Interviewers/",
-                    surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/");
         }
 
         private INfieldHttpClient Client

@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -95,8 +94,7 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_Always_CallsCorrectURI()
         {
-            var expectedUrl = new Uri(ServiceAddress, string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/PublicIds",
-                SurveyId));
+            var expectedUrl = new Uri(ServiceAddress, $"Surveys/{SurveyId}/PublicIds");
             
             _mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<IEnumerable<SurveyPublicId>>()))

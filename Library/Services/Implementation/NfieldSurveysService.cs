@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -172,7 +171,7 @@ namespace Nfield.Services.Implementation
         /// <returns></returns>
         public Task<QuotaLevel> QuotaQueryAsync(string surveyId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}", surveyId, QuotaControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -185,7 +184,7 @@ namespace Nfield.Services.Implementation
 
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}", surveyId, QuotaControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
 
             return Client.GetAsync(uri)
                 .ContinueWith(
@@ -201,7 +200,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<QuotaLevel> CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}", surveyId, QuotaControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
 
             return Client.PutAsJsonAsync(uri, quota)
                          .ContinueWith(
@@ -213,7 +212,7 @@ namespace Nfield.Services.Implementation
 
         public Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}", surveyId, QuotaControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
 
             return Client.PutAsJsonAsync(uri, quotaFrame)
                          .ContinueWith(
@@ -226,7 +225,7 @@ namespace Nfield.Services.Implementation
 
         public Task<SurveyCounts> CountsQueryAsync(string surveyId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}", surveyId, CountsControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{CountsControllerName}");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -242,7 +241,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}", surveyId, SamplingPointsControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}");
             
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -258,7 +257,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<int> SamplingPointsCountAsync(string surveyId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/Count", surveyId, SamplingPointsControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/Count");
 
             return Client.GetAsync(uri)
                 .ContinueWith(rm => int.Parse(rm.Result.Content.ReadAsStringAsync().Result))
@@ -271,7 +270,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/{2}", surveyId, SamplingPointsControllerName, samplingPointId));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/{samplingPointId}");
             
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -301,7 +300,7 @@ namespace Nfield.Services.Implementation
                 Stratum = samplingPoint.Stratum
             };
 
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/{2}", surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/{samplingPoint.SamplingPointId}");
 
             return Client.PatchAsJsonAsync(uri, updatedSamplingPoint)
                          .ContinueWith(
@@ -316,7 +315,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}", surveyId, SamplingPointsControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}");
             return Client.PostAsJsonAsync(uri, samplingPoint)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<SamplingPoint>(task.Result))
@@ -332,7 +331,7 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("samplingPoint");
             }
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/{2}", surveyId, SamplingPointsControllerName, samplingPoint.SamplingPointId));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/{samplingPoint.SamplingPointId}");
             return Client.DeleteAsync(uri)
                         .FlattenExceptions();
         }
@@ -342,8 +341,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<SamplingPointQuotaTarget>> SamplingPointQuotaTargetsQueryAsync(string surveyId, string samplingPointId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/{2}/{3}", surveyId,
-                SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/{samplingPointId}/{SamplingPointsQuotaControllerName}");
 
             return Client.GetAsync(uri)
              .ContinueWith(
@@ -359,8 +357,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SamplingPointQuotaTarget> SamplingPointQuotaTargetQueryAsync(string surveyId, string samplingPointId, string levelId)
         {
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/{2}/{3}/{4}", surveyId,
-                SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName, levelId));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/{samplingPointId}/{SamplingPointsQuotaControllerName}/{levelId}");
 
             return Client.GetAsync(uri)
              .ContinueWith(
@@ -386,9 +383,7 @@ namespace Nfield.Services.Implementation
                 Target = samplingPointQuotaTarget.Target
             };
 
-            var uri = new Uri(SurveysApi, string.Format(@"{0}/{1}/{2}/{3}/{4}", surveyId,
-                SamplingPointsControllerName, samplingPointId, SamplingPointsQuotaControllerName,
-                samplingPointQuotaTarget.LevelId));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/{samplingPointId}/{SamplingPointsQuotaControllerName}/{samplingPointQuotaTarget.LevelId}");
 
             return Client.PatchAsJsonAsync(uri, updatedSamplingPointQuotaTarget)
              .ContinueWith(
@@ -534,12 +529,8 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private Uri GetSamplingPointImageUri(string surveyId, string samplingPointId, string fileName)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, string.Format(
-                                        CultureInfo.InvariantCulture, @"{0}/{1}/SamplingPoint/{2}/Image/{3}",
-                                        SamplingPointImageControllerName,
-                                        surveyId,
-                                        Uri.EscapeUriString(samplingPointId),
-                                        !string.IsNullOrEmpty(fileName) ? Uri.EscapeUriString(fileName) : ""));
+            var fileNameString = !string.IsNullOrEmpty(fileName) ? Uri.EscapeUriString(fileName) : string.Empty;
+            return new Uri(ConnectionClient.NfieldServerUri, $"{SamplingPointImageControllerName}/{surveyId}/SamplingPoint/{Uri.EscapeUriString(samplingPointId)}/Image/{fileNameString}");
         }
     }
 
