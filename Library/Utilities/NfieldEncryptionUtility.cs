@@ -15,6 +15,12 @@ namespace Nfield.Utilities
     {
         private readonly IAesManagedWrapper _aesWrapper;
 
+        public NfieldEncryptionUtility()
+            : this(new AesManagedWrapper())
+        {
+            
+        }
+
         public NfieldEncryptionUtility(IAesManagedWrapper aesWrapper)
         {
             _aesWrapper = aesWrapper;
