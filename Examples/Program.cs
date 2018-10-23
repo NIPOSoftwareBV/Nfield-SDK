@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services;
-using Ninject;
 
 namespace Nfield.SDK.Samples
 {
