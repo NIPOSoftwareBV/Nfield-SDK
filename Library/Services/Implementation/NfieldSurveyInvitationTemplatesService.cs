@@ -15,8 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -86,10 +84,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyInvitationTemplatesUrl(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri,
-                string.Format(CultureInfo.InvariantCulture,
-                    "Surveys/{0}/InvitationTemplates/",
-                    surveyId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InvitationTemplates/");
         }
 
         // ReSharper disable once ClassNeverInstantiated.Local, used for deserializing api response

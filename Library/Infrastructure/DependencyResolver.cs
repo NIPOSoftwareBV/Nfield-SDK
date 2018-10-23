@@ -88,7 +88,7 @@ namespace Nfield.Infrastructure
                 getAllInstancesMethod.ReturnType != typeof (IEnumerable<object>))
             {
                 throw new ArgumentException(
-                    String.Format("The type {0} does not appear to implement IServiceLocator.", commonServiceLocatorType),
+                    $"The type {commonServiceLocatorType} does not appear to implement IServiceLocator.",
                     "commonServiceLocator");
             }
             var resolveMethod = (Func<Type, object>)Delegate.CreateDelegate(typeof(Func<Type, object>), commonServiceLocator, getInstanceMethod);

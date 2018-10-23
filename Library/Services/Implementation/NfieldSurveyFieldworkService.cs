@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Nfield.Extensions;
@@ -37,8 +36,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
-                "{0}/{1}/Status", surveyId, SurveyFieldworkControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Status");
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
@@ -53,8 +51,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
-                "{0}/{1}/Start", surveyId, SurveyFieldworkControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Start");
 
             return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
         }
@@ -66,8 +63,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = new Uri(SurveysApi, string.Format(CultureInfo.InvariantCulture,
-                "{0}/{1}/Stop", surveyId, SurveyFieldworkControllerName));
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Stop");
 
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }

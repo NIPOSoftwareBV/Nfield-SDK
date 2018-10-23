@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -80,9 +79,7 @@ namespace Nfield.Utilities
         /// </summary>
         public string CreateQueryStringSegment(EncryptedDataModel model)
         {
-            var queryString = string.Format(CultureInfo.InvariantCulture, "data={0}&iv={1}",
-                HttpUtility.UrlEncode(model.Data),
-                HttpUtility.UrlEncode(model.InitializationVector));
+            var queryString = $"data={HttpUtility.UrlEncode(model.Data)}&iv={HttpUtility.UrlEncode(model.InitializationVector)}";
 
             return queryString;
         }

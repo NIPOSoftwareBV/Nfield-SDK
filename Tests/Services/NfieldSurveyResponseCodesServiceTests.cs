@@ -94,7 +94,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.GetAsync(It.Is<Uri>(url =>
-                    url.AbsolutePath.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
+                    url.AbsolutePath.EndsWith($"Surveys/{surveyId}/ResponseCodes/{code}"))),
                 Times.Once());
         }
 
@@ -244,7 +244,7 @@ namespace Nfield.Services
             mockedHttpClient.Verify(hc =>
                 hc.PatchAsJsonAsync(
                     It.Is<Uri>(
-                        url => url.AbsolutePath.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code))),
+                        url => url.AbsolutePath.EndsWith($"Surveys/{surveyId}/ResponseCodes/{code}")),
                     It.IsAny<UpdateSurveyResponseCode>()),
                 Times.Once());
         }
@@ -320,7 +320,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.DeleteAsync(It.Is<Uri>(
-                        url => url.AbsolutePath.EndsWith(string.Format("Surveys/{0}/ResponseCodes/{1}", surveyId, code)))),
+                        url => url.AbsolutePath.EndsWith($"Surveys/{surveyId}/ResponseCodes/{code}"))),
                 Times.Once());
         }
 

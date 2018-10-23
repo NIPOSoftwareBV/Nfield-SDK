@@ -14,10 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -54,10 +52,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyInvitationImagesTemplatesUrl(string surveyId, string filename)
         {
-            return new Uri(ConnectionClient.NfieldServerUri,
-                string.Format(CultureInfo.InvariantCulture,
-                    "Surveys/{0}/InvitationImages/{1}",
-                    surveyId, filename));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InvitationImages/{filename}");
         }
     }
 }

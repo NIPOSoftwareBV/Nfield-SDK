@@ -59,7 +59,7 @@ namespace Nfield.Services
             var expected = new SurveyScript{Script = script,FileName = fileName};
 
            _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/", surveyId))))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId).Result;
@@ -79,7 +79,7 @@ namespace Nfield.Services
             var expected = new SurveyScript { Script = script, FileName = fileName };
 
             _mockedHttpClient
-                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/{1}", surveyId, eTag))))
+                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/{eTag}")))
                  .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId, eTag).Result;
@@ -123,7 +123,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/", surveyId)), surveyScript))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/"), surveyScript))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var actual = _target.PostAsync(surveyId,surveyScript).Result;
@@ -150,7 +150,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, string.Format("Surveys/{0}/Script/", surveyId)), surveyScript))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/"), surveyScript))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var actual = _target.PostAsync(surveyId, surveyScript).Result;

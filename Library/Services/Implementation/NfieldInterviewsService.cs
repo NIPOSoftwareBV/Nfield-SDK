@@ -15,15 +15,11 @@
 
 using Nfield.Infrastructure;
 using System;
-using System.Collections;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
-using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Utilities;
-using System.Globalization;
 
 namespace Nfield.Services.Implementation
 {
@@ -69,9 +65,7 @@ namespace Nfield.Services.Implementation
 
         private Uri InterviewsApiUri(string surveyId, int interviewId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri,
-                string.Format(CultureInfo.InvariantCulture, "Surveys/{0}/Interviews/{1}",
-                    surveyId, interviewId));
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviews/{interviewId}");
         }
     }
 }
