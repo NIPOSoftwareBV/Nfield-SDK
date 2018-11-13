@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <Authors>NIPO</Authors>
     <Company>NIPO</Company>
     <Copyright>Copyright © NIPO 2018</Copyright>
@@ -17,8 +17,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="4.0.30506" />
-    <PackageReference Include="Newtonsoft.Json" Version="8.0.1" />
-    <PackageReference Include="Nfield.Quota" Version="1.0.187.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Nfield.Quota" Version="1.0.236-prerelease" />
     <PackageReference Include="System.Net.Http" Version="2.0.20710" />
   </ItemGroup>
   <ItemGroup>

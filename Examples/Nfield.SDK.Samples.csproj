@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <Authors>NIPO</Authors>
     <Company>NIPO</Company>
     <Copyright>Copyright © NIPO 2018</Copyright>
