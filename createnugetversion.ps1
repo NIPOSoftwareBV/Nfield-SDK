@@ -45,9 +45,9 @@ else
     $Branch = $env:BUILD_SOURCEBRANCHNAME
     Write-Host "Branch:" $Branch
     $Suffix = if ($Branch -eq "master") {"-beta"} else {"-alpha"}	
+    Write-Host "Suffix:" $Suffix
 }
 
-Write-Host "Suffix:" $Suffix
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
 Write-Host "##vso[task.setvariable variable=Version]$Version"
 Write-Host "Version:" $Version
