@@ -2,8 +2,8 @@ param(
     [Parameter(Mandatory=$true)] $AccessToken
 )
 
-$organization = "marcoNipo" # "NIPOSoftware"
-$repository = "releases-test" # "Nfield-SDK"
+$organization = "NIPOSoftware"
+$repository = "Nfield-SDK"
 
 $Headers = @{
     Authorization = 'Basic {0}' -f [System.Convert]::ToBase64String([char[]]($AccessToken));
