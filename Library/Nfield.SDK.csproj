@@ -19,7 +19,6 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="4.0.30506" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Nfield.Quota" Version="1.0.236-prerelease" />
-    <PackageReference Include="System.Net.Http" Version="2.0.20710" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
   <ItemGroup>
