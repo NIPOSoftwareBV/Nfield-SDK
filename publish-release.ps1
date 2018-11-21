@@ -4,8 +4,8 @@ param(
 
 # TODO: put back SDK params
 
-$organization = marcoNipo #"NIPOSoftware"
-$repository = releases-test #"Nfield-SDK"
+$organization = "marcoNipo" #"NIPOSoftware"
+$repository = "releases-test" #"Nfield-SDK"
 
 $Headers = @{
     Authorization = 'Basic {0}' -f [System.Convert]::ToBase64String([char[]]($AccessToken));
