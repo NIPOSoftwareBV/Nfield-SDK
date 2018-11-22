@@ -2,6 +2,12 @@ param(
     [Parameter(Mandatory=$true)] $AccessToken
 )
 
+if (-not $env:releaseId)
+{
+    Write-Host Not a release build, done
+    exit
+}
+
 $organization = "NIPOSoftware"
 $repository = "Nfield-SDK"
 
