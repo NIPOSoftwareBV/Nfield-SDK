@@ -23,6 +23,7 @@ if( -Not (Test-Path version.txt))
     Write-Error "version.txt does not exist"
     exit 1	
 }
+
 $VersionFormat = Get-Content version.txt | Where-Object { !$_.StartsWith("#") }
 Write-Host "VersionFormat:" $VersionFormat
 if(([regex]::Matches($VersionFormat, "\." )).count -ne 2) 
@@ -34,19 +35,19 @@ if(([regex]::Matches($VersionFormat, "\." )).count -ne 2)
 $BuildId = $env:BUILD_BUILDID
 Write-Host "BuildId:" $BuildId
 
-Write-Host "releaseversion:" $env:releaseversion
-if ($env:releaseversion -eq "true")
+if ($env:releaseId)
 {
-# releaseversion is set to true in azure function
-$Suffix = ""
+    Write-Host "Building for release" $env:releaseId
+    $Suffix = ""
 }
 else
 {
-$Branch = $env:BUILD_SOURCEBRANCHNAME
-Write-Host "Branch:" $Branch
-$Suffix = if ($Branch -eq "master") {"-beta"} else {"-alpha"}	
+    $Branch = $env:BUILD_SOURCEBRANCHNAME
+    Write-Host "Branch:" $Branch
+    $Suffix = if ($Branch -eq "master") {"-beta"} else {"-alpha"}	
+    Write-Host "Suffix:" $Suffix
 }
-Write-Host "Suffix:" $Suffix
+
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
 Write-Host "##vso[task.setvariable variable=Version]$Version"
 Write-Host "Version:" $Version
