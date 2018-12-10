@@ -4,7 +4,10 @@
 This SDK allows you to build applications that take advantage of the Nfield services.
     
 ## Requirements
-- .NET Framework 4.5.2 or later.
+- A compatible framework:
+  - .Net Framework 4.6.1 or later
+  - .Net Standard 2.0 or later
+  - .Net Core 2.0 or later
 - To use this SDK to call Nfield services you need an Nfield account.
 
 ## Usage
