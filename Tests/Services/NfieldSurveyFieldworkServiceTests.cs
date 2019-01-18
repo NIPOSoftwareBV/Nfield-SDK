@@ -152,5 +152,39 @@ namespace Nfield.Services
 
         #endregion
 
+        #region FinishFieldworkAsync
+
+        [Fact]
+        public void TestFinishFieldworkAsync_WhenSurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.StartFieldworkAsync(null)));
+        }
+
+        [Fact]
+        public void TestFinishFieldworkAsync_WhenSurveyIdIsEmptyString_Throws()
+        {
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StartFieldworkAsync(string.Empty)));
+        }
+
+        [Fact]
+        public void TestFinishFieldworkAsync_WhenSurveyIdIsWhiteSpace_Throws()
+        {
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StartFieldworkAsync(" ")));
+        }
+
+        [Fact]
+        public void TestFinishFieldworkAsync_Always_CallsCorrectURI()
+        {
+            const string surveyId = "SurveyId";
+            _mockedHttpClient.Setup(c => c.PutAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
+
+            _target.FinishFieldworkAsync(surveyId);
+
+            _mockedHttpClient
+                .Verify(client => client.PutAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Fieldwork/Finish"), It.IsAny<HttpContent>()), Times.Once());
+        }
+
     }
+    #endregion
 }
