@@ -157,19 +157,19 @@ namespace Nfield.Services
         [Fact]
         public void TestFinishFieldworkAsync_WhenSurveyIdIsNull_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.StartFieldworkAsync(null)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.FinishFieldworkAsync(null)));
         }
 
         [Fact]
         public void TestFinishFieldworkAsync_WhenSurveyIdIsEmptyString_Throws()
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StartFieldworkAsync(string.Empty)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.FinishFieldworkAsync(string.Empty)));
         }
 
         [Fact]
         public void TestFinishFieldworkAsync_WhenSurveyIdIsWhiteSpace_Throws()
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StartFieldworkAsync(" ")));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.FinishFieldworkAsync(" ")));
         }
 
         [Fact]
