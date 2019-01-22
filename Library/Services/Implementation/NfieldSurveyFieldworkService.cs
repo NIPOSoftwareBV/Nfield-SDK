@@ -68,6 +68,18 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldSurveyFieldworkService.FinishFieldworkAsync"/>
+        /// </summary>
+        public Task FinishFieldworkAsync(string surveyId)
+        {
+            CheckSurveyId(surveyId);
+
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Finish");
+
+            return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
+        }
+        
         #endregion
 
         #region Implementation of INfieldConnectionClientObject

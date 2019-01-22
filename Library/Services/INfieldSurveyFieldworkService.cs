@@ -42,5 +42,11 @@ namespace Nfield.Services
         /// <param name="surveyId">The id of the survey to Start</param>
         /// <param name="model">The settings for the Startping of the fieldwork</param>
         Task StopFieldworkAsync(string surveyId, StopFieldworkModel model);
+
+        /// <summary>
+        /// This method Finish the fieldwork of the survey if stopped.
+        /// </summary>
+        /// <param name="surveyId">The id of the survey to Start</param>
+        Task FinishFieldworkAsync(string surveyId);
     }
 }
