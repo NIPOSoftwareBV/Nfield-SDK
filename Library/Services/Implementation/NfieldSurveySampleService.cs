@@ -33,43 +33,43 @@ namespace Nfield.Services.Implementation
         private const string InterviewId = "InterviewId";
 
 
-        public Task<string> GetAsync(string surveyId)
+        public async Task<string> GetAsync(string surveyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = SurveySampleUrl(surveyId);
 
-            return Client.GetAsync(uri)
-                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                .FlattenExceptions();
+            var response = await Client.GetAsync(uri);
+            return await response.Content.ReadAsStringAsync();
         }
 
-        public Task<SampleUploadStatus> PostAsync(string surveyId, string sample)
+        public async Task<SampleUploadStatus> PostAsync(string surveyId, string sample)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(sample, nameof(sample));
 
             var uri = SurveySampleUrl(surveyId);
             var sampleContent = new StringContent(sample);
-            return Client.PostAsync(uri, sampleContent)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult.Result))
-                .FlattenExceptions();
+
+            var responseMessage = await Client.PostAsync(uri, sampleContent);
+            var stringResult = await responseMessage.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult);
         }
         
-        public Task<SampleUploadStatus> PostJsonAsync<TContent>(string surveyId, TContent sample)
+        public async Task<SampleUploadStatus> PostJsonAsync<TContent>(string surveyId, TContent sample)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(sample, nameof(sample));
 
             var uri = SurveySampleUrl(surveyId);
-            return Client.PostAsJsonAsync(uri, sample)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult.Result))
-                .FlattenExceptions();
+            var responseMessage = await Client.PostAsJsonAsync(uri, sample);
+            var stringResult = await responseMessage.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult);
         }
 
-        public Task<int> DeleteAsync(string surveyId, string respondentKey)
+        public async Task<int> DeleteAsync(string surveyId, string respondentKey)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
@@ -80,15 +80,15 @@ namespace Nfield.Services.Implementation
                 new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
 
-            return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "DeletedTotal"))
-                .Unwrap()
-                .FlattenExceptions();
+            var responseMessage = await Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters);
+
+            var stringResult = await responseMessage.Content.ReadAsStringAsync();
+            var activityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult);
+
+            return await ConnectionClient.GetActivityResultAsync<int>(activityStatus.ActivityId, "DeletedTotal");
         }
 
-        public Task<int> BlockAsync(string surveyId, string respondentKey)
+        public async Task<int> BlockAsync(string surveyId, string respondentKey)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
@@ -100,15 +100,15 @@ namespace Nfield.Services.Implementation
                 new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
 
-            return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "BlockedTotal"))
-                .Unwrap()
-                .FlattenExceptions();
+            var responseMessage = await Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters);
+
+            var stringResult = await responseMessage.Content.ReadAsStringAsync();
+            var activityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult);
+
+            return await ConnectionClient.GetActivityResultAsync<int>(activityStatus.ActivityId, "BlockedTotal");
         }
 
-        public Task<bool> UpdateAsync(string surveyId, int sampleRecordId, IEnumerable<SampleColumnUpdate> columnsToUpdate)
+        public async Task<bool> UpdateAsync(string surveyId, int sampleRecordId, IEnumerable<SampleColumnUpdate> columnsToUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(columnsToUpdate, nameof(columnsToUpdate));
@@ -119,14 +119,14 @@ namespace Nfield.Services.Implementation
             };
 
             var uri = new Uri(SurveySampleUrl(surveyId), "Update");
-            
-            return Client.PutAsJsonAsync(uri, m)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUpdateStatus>(stringResult.Result).ResultStatus)
-                .FlattenExceptions();
+
+            var responseMessage = await Client.PutAsJsonAsync(uri, m);
+            var stringResult = await responseMessage.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<SampleUpdateStatus>(stringResult).ResultStatus;
         }
 
-        public Task<int> ResetAsync(string surveyId, string respondentKey)
+        public async Task<int> ResetAsync(string surveyId, string respondentKey)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
@@ -138,15 +138,14 @@ namespace Nfield.Services.Implementation
                 new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
 
-            return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "ResetTotal"))
-                .Unwrap()
-                .FlattenExceptions();
+            var responseMessage = await Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters);
+            var stringResult = await responseMessage.Content.ReadAsStringAsync();
+            var activityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult);
+
+            return await ConnectionClient.GetActivityResultAsync<int>(activityStatus.ActivityId, "ResetTotal");
         }
 
-        public Task<int> ClearByRespondentAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear)
+        public async Task<int> ClearByRespondentAsync(string surveyId, string respondentKey, IEnumerable<string> columnsToClear)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
@@ -157,10 +156,10 @@ namespace Nfield.Services.Implementation
                 new SampleFilter{Name = RespondentKey, Op = "eq", Value = respondentKey}
             };
 
-            return ClearAsync(surveyId, filters, columnsToClear);
+            return await ClearAsync(surveyId, filters, columnsToClear);
         }
 
-        public Task<int> ClearByInterviewAsync(string surveyId, int interviewId, IEnumerable<string> columnsToClear)
+        public async Task<int> ClearByInterviewAsync(string surveyId, int interviewId, IEnumerable<string> columnsToClear)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(columnsToClear, nameof(columnsToClear));
@@ -170,10 +169,10 @@ namespace Nfield.Services.Implementation
                 new SampleFilter{Name = InterviewId, Op = "eq", Value = interviewId.ToString()}
             };
 
-            return ClearAsync(surveyId, filters, columnsToClear);
+            return await ClearAsync(surveyId, filters, columnsToClear);
         }
 
-        private Task<int> ClearAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
+        private async Task<int> ClearAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
         {
             var uri = new Uri(SurveySampleUrl(surveyId) + "Clear");
 
@@ -183,12 +182,11 @@ namespace Nfield.Services.Implementation
                 Columns = columnsToClear
             };
 
-            return Client.PutAsJsonAsync(uri, request)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "ClearTotal"))
-                .Unwrap()
-                .FlattenExceptions();
+            var responseMessage = await Client.PutAsJsonAsync(uri, request);
+            var stringResult = await responseMessage.Content.ReadAsStringAsync();
+            var activityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult);
+
+            return await ConnectionClient.GetActivityResultAsync<int>(activityStatus.ActivityId, "ClearTotal");
         }
 
         #region Implementation of INfieldConnectionClientObject
