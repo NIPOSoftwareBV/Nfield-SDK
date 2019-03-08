@@ -92,6 +92,20 @@ namespace Nfield.Services
         }
 
         [Fact]
+        public void TestPostJsonAsync_SurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.PostJsonAsync(null, new { })));
+        }
+
+        [Fact]
+        public void TestPostJsonAsync_SurveyIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.PostJsonAsync<object>(SurveyId, null)));
+        }
+
+        [Fact]
         public void TestPostAsync_SurveyIdIsEmpty_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
@@ -137,6 +151,52 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(uploadStatus))));
 
             var actual = _target.PostAsync(SurveyId, sample).Result;
+
+            Assert.Equal(uploadStatus.DuplicateKeyCount, actual.DuplicateKeyCount);
+            Assert.Equal(uploadStatus.EmptyKeyCount, actual.EmptyKeyCount);
+            Assert.Equal(uploadStatus.HeaderDataMismatch, actual.HeaderDataMismatch);
+            Assert.Equal(uploadStatus.HeaderInvalid, actual.HeaderInvalid);
+            Assert.Equal(uploadStatus.HeaderInvalidColumnsCount, actual.HeaderInvalidColumnsCount);
+            Assert.Equal(uploadStatus.InsertedCount, actual.InsertedCount);
+            Assert.Equal(uploadStatus.InvalidDataCount, actual.InvalidDataCount);
+            Assert.Equal(uploadStatus.InvalidKeyCount, actual.InvalidKeyCount);
+            Assert.Equal(uploadStatus.ProcessingStatus, actual.ProcessingStatus);
+            Assert.Equal(uploadStatus.SkippedCount, actual.SkippedCount);
+            Assert.Equal(uploadStatus.TotalRecordCount, actual.TotalRecordCount);
+            Assert.Equal(uploadStatus.UpdatedCount, actual.UpdatedCount);
+        }
+
+        [Fact]
+        public void TestPostJsonAsync_ServerAccepts_ReturnsStatusMessage()
+        {
+            var uploadStatus = new SampleUploadStatus
+            {
+                DuplicateKeyCount = 1,
+                EmptyKeyCount = 2,
+                HeaderDataMismatch = true,
+                HeaderInvalid = true,
+                HeaderInvalidColumnsCount = 3,
+                InsertedCount = 4,
+                InvalidDataCount = 5,
+                InvalidKeyCount = 6,
+                ProcessingStatus = "good status",
+                SkippedCount = 7,
+                TotalRecordCount = 8,
+                UpdatedCount = 9
+            };
+
+            var sample = new
+            {
+                sample = "a sample",
+            };
+
+            var json = JsonConvert.SerializeObject(sample);
+
+            _mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/"), sample))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(uploadStatus))));
+
+            var actual = _target.PostJsonAsync(SurveyId, sample).Result;
 
             Assert.Equal(uploadStatus.DuplicateKeyCount, actual.DuplicateKeyCount);
             Assert.Equal(uploadStatus.EmptyKeyCount, actual.EmptyKeyCount);
