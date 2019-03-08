@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -51,6 +52,18 @@ namespace Nfield.Services.Implementation
             var uri = SurveySampleUrl(surveyId);
             var sampleContent = new StringContent(sample);
             return Client.PostAsync(uri, sampleContent)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult.Result))
+                .FlattenExceptions();
+        }
+        
+        public Task<SampleUploadStatus> PostJsonAsync<TContent>(string surveyId, TContent sample)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(sample, nameof(sample));
+
+            var uri = SurveySampleUrl(surveyId);
+            return Client.PostAsJsonAsync(uri, sample)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult.Result))
                 .FlattenExceptions();

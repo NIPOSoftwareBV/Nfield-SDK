@@ -47,6 +47,18 @@ namespace Nfield.Services
         Task<SampleUploadStatus> PostAsync(string surveyId, string sample);
 
         /// <summary>
+        /// upload object sample
+        /// new respondents will be added
+        /// existing repondents will be updated
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="sample">sample</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <returns><see cref="SampleUploadStatus"/></returns>
+        Task<SampleUploadStatus> PostJsonAsync<TContent>(string surveyId, TContent sample);
+
+        /// <summary>
         /// delete a sample record
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
