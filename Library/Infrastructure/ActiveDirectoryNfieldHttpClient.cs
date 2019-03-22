@@ -27,12 +27,14 @@ namespace Nfield.Infrastructure
     {
         private readonly string _domainName;
         private readonly Func<Task<string>> _provideTokenAsync;
+        private readonly string _version;
 
         public BearerTokenNfieldHttpClient(HttpClient client, string domainName, Func<Task<string>> provideTokenAsync)
             : base(client)
         {
             _domainName = domainName;
             _provideTokenAsync = provideTokenAsync;
+            _version = GetType().Assembly.GetName().Version.ToString();
         }
 
         public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
@@ -40,6 +42,7 @@ namespace Nfield.Infrastructure
             var token = await _provideTokenAsync();
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             request.Headers.Add("X-NFIELD-DOMAIN", _domainName);
+            request.Headers.Add("X-Nfield-SDK-Version", _version);
 
             var response = await Client.SendAsync(request);
 

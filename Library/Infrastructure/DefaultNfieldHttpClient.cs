@@ -30,9 +30,12 @@ namespace Nfield.Infrastructure
     internal sealed class DefaultNfieldHttpClient : NfieldHttpClientBase
     {
         private string _token;
+        private readonly string _version;
 
         public DefaultNfieldHttpClient(HttpClient client) : base(client)
-        { }
+        {
+            _version = GetType().Assembly.GetName().Version.ToString();
+        }
 
         public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
@@ -42,6 +45,8 @@ namespace Nfield.Infrastructure
                 // can benefit from the header.
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", _token);
             }
+
+            request.Headers.Add("X-Nfield-SDK-Version", _version);
 
             var response = await Client.SendAsync(request);
 
