@@ -68,7 +68,7 @@ jobs:
     displayName: '(when not pull): dotnet pack'
     inputs:
       command: pack
-      packagesToPack: Nfield.Quota.sln
+      packagesToPack: Library/Nfield.SDK.csproj
       nobuild: true
       versioningScheme: byEnvVar
       versionEnvVar: Version
