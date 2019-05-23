@@ -2,9 +2,15 @@ variables:
   BuildConfiguration: Release
   BuildPlatform: 'Any CPU'
 
-# trigger: 
+# trigger:
+#   batch: false
+#   branches:
+#     include: ['master', '*/ci-*']
 
 # pr:
+#   autoCancel: true
+#   branches:
+#     include: ['master', '*/ci-*'] 
 
 jobs:
 - job:
