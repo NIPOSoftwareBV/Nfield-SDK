@@ -1,6 +1,7 @@
 variables:
   BuildConfiguration: Release
   BuildPlatform: 'Any CPU'
+  System.Debug: true
 
 # trigger:
 #   batch: false
