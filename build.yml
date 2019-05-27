@@ -17,7 +17,7 @@ jobs:
 - job:
   displayName: Build project
   pool:
-    name: Hosted VS2017
+    vmImage: 'vs2017-win2016'
   variables:
   - group: Nfield-Variables
   steps:
@@ -33,7 +33,7 @@ jobs:
       vstsFeed: 'e4b9b306-e6e3-47e2-b840-ef9089528984'
 
   - task: VSBuild@1
-    displayName: 'Build solution Nfield.SDK.sln '
+    displayName: 'Build solution Nfield.SDK.sln'
     inputs:
       solution: 'Nfield.SDK.sln'
       vsVersion: 15.0
