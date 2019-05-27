@@ -1,7 +1,4 @@
-variables:
-  BuildConfiguration: Release
-  BuildPlatform: 'Any CPU'
-  System.Debug: true
+name: $(BuildID)
 
 # trigger:
 #   batch: false
@@ -17,7 +14,8 @@ jobs:
 - job:
   displayName: Build project
   pool:
-    vmImage: 'vs2017-win2016'
+    name: Hosted VS2017
+    vmImage: vs2017-win2016
   variables:
   - group: Nfield-Variables
   steps:
@@ -32,6 +30,7 @@ jobs:
       restoreSolution: 'Nfield.SDK.sln'
       vstsFeed: 'e4b9b306-e6e3-47e2-b840-ef9089528984'
 
+  # Build solution
   - task: VSBuild@1
     displayName: 'Build solution Nfield.SDK.sln'
     inputs:
@@ -40,6 +39,7 @@ jobs:
       platform: '$(BuildPlatform)'
       configuration: '$(BuildConfiguration)'
 
+  # Test Assemblies
   - task: VSTest@2
     displayName: 'VsTest - testAssemblies'
     inputs:
@@ -83,8 +83,9 @@ jobs:
       versionEnvVar: Version
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
+  # Push NuGet package to Azure DevOps
   - task: NuGetCommand@2
-    displayName: '(when not pull): NuGet push'
+    displayName: '(when not pull): Push NuGet package to Azure DevOps'
     inputs:
       command: push
       nuGetFeedType: external
