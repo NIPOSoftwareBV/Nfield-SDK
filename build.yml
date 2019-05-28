@@ -14,8 +14,7 @@ jobs:
 - job:
   displayName: Build project
   pool:
-    name: Hosted VS2017
-    vmImage: vs2017-win2016
+    vmImage: windows-2019      # Name: 'Hosted Windows 2019 with VS 2019'
   variables:
   - group: Nfield-Variables
   steps:
