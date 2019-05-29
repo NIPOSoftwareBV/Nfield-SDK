@@ -64,6 +64,11 @@ namespace Nfield.Models
         public int? Target { get; set; }
 
         /// <summary>
+        /// Maximum target for this level
+        /// </summary>
+        public int? MaxTarget { get; set; }
+
+        /// <summary>
         /// Gross target for this level
         /// </summary>
         public int? GrossTarget { get; set; }
