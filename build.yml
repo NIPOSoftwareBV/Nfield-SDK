@@ -34,7 +34,7 @@ jobs:
     displayName: 'Build solution Nfield.SDK.sln'
     inputs:
       solution: 'Nfield.SDK.sln'
-      vsVersion: 15.0
+      vsVersion: 16.0
       platform: '$(BuildPlatform)'
       configuration: '$(BuildConfiguration)'
 
