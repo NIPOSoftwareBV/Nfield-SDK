@@ -1,14 +1,14 @@
 name: $(BuildID)
 
-# trigger:
-#   batch: false
-#   branches:
-#     include: ['master', '*/ci-*']
+trigger:
+  batch: false
+  branches:
+    include: ['master', '*/ci-*']
 
-# pr:
-#   autoCancel: true
-#   branches:
-#     include: ['master', '*/ci-*'] 
+pr:
+  autoCancel: true
+  branches:
+    include: ['*/ci-*'] 
 
 jobs:
 - job:
