@@ -88,7 +88,7 @@ jobs:
     inputs:
       command: push
       nuGetFeedType: external
-      publishFeedCredentials: 'NuGet (Publish Packages)'
+      publishFeedCredentials: 'NuGet (Publish)'
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
   - task: PowerShell@2
