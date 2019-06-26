@@ -8,6 +8,7 @@
       <SignAssembly>true</SignAssembly>
       <AssemblyOriginatorKeyFile>..\Nfield.SDK.snk</AssemblyOriginatorKeyFile>
       <DelaySign>false</DelaySign>
+      <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Moq" Version="4.0.10827" />
