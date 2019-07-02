@@ -48,6 +48,11 @@ namespace Nfield.Models
         /// <summary>
         ///  Survey that has sampling points with targets and addresses
         /// </summary>
-        EuroBarometerAdvanced
+        EuroBarometerAdvanced,
+
+        /// <summary>
+        /// Cati survey type
+        /// </summary>
+        Cati
     }
 }
