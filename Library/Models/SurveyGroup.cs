@@ -18,7 +18,26 @@ using System;
 
 namespace Nfield.Models
 {
-    public class SurveyGroup
+    /// <summary>
+    /// Model representing the settable values in a survey group.
+    /// </summary>
+    public class SurveyGroupValues
+    {
+        /// <summary>
+        /// The name of the survey group.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// A description of the survey group.
+        /// </summary>
+        public string Description { get; set; }
+    }
+
+    /// <summary>
+    /// Model representing a survey group.
+    /// </summary>
+    public class SurveyGroup : SurveyGroupValues
     {
         /// <summary>
         /// The Id of the survey group.
@@ -31,15 +50,5 @@ namespace Nfield.Models
         /// </summary>
         [JsonProperty]
         public DateTime CreationDate { get; internal set; }
-
-        /// <summary>
-        /// The name of the survey group.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// A description of the survey group.
-        /// </summary>
-        public string Description { get; set; }
     }
 }

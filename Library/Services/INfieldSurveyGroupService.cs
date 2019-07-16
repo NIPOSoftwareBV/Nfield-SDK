@@ -19,10 +19,38 @@ using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
+    /// <summary>
+    /// Service used to list, update, create and delete survey groups.
+    /// </summary>
     public interface INfieldSurveyGroupService
     {
+        /// <summary>
+        /// Lists all survey groups in the domain.
+        /// </summary>
         Task<IEnumerable<SurveyGroup>> GetAllAsync();
 
+        /// <summary>
+        /// Lists all surveys in the specified survey group.
+        /// </summary>
+        /// <param name="surveyGroupId">The id of the group to list the surveys for.</param>
         Task<IEnumerable<Survey>> GetSurveysAsync(int surveyGroupId);
+
+        /// <summary>
+        /// Creates a new survey group.
+        /// </summary>
+        /// <param name="model">Details of the group to create.</param>
+        Task<SurveyGroup> CreateAsync(SurveyGroupValues model);
+
+        /// <summary>
+        /// Updates an existing survey group. Null values are ignored.
+        /// </summary>
+        /// <param name="model">The new values for the survey group.</param>
+        Task<SurveyGroup> UpdateAsync(int surveyGroupId, SurveyGroupValues model);
+
+        /// <summary>
+        /// Deletes the specified survey group.
+        /// </summary>
+        /// <param name="surveyGroupId">The id of the group to delete.</param>
+        Task DeleteAsync(int surveyGroupId);
     }
 }
