@@ -16,17 +16,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
-using Nfield.Quota;
-using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -58,6 +52,40 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        public async Task<SurveyGroup> CreateAsync(SurveyGroupValues model)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, "SurveyGroups");
+
+            using (var response = await ConnectionClient.Client.PostAsJsonAsync(uri, model))
+            {
+                var result = await DeserializeJsonAsync<SurveyGroup>(response);
+
+                return result;
+            }
+        }
+
+        public async Task<SurveyGroup> UpdateAsync(int surveyGroupId, SurveyGroupValues model)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
+
+            using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model))
+            {
+                var result = await DeserializeJsonAsync<SurveyGroup>(response);
+
+                return result;
+            }
+        }
+
+        public async Task DeleteAsync(int surveyGroupId)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
+
+            
+            using(await ConnectionClient.Client.DeleteAsync(uri))
+            {
+            }
+        }
+
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
         {
             using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync()))
@@ -69,5 +97,6 @@ namespace Nfield.Services.Implementation
                 }
             }
         }
+
     }
 }

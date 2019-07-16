@@ -31,6 +31,100 @@ namespace Nfield.Services
     public class NfieldSurveyGroupServiceTests : NfieldServiceTestsBase
     {
         [Fact]
+        public async Task CanCreateNewGroup()
+        {
+            var expectedGroup = new SurveyGroup
+            {
+                SurveyGroupId = 1,
+                Name = "Default",
+                Description = null,
+                CreationDate = new DateTime(1799, 11, 10)
+            };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "SurveyGroups"), It.IsAny<SurveyGroupValues>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedGroup))));
+
+            var target = new NfieldSurveyGroupService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var result = await target.CreateAsync(new SurveyGroupValues
+            {
+                Name = "Default",
+                Description = null
+            });
+
+            Assert.NotNull(result);
+            Assert.Equal("Default", result.Name);
+            Assert.Equal(null, result.Description);
+            Assert.Equal(new DateTime(1799, 11, 10), result.CreationDate);
+            Assert.Equal(1, result.SurveyGroupId);
+        }
+
+        [Fact]
+        public async Task CanCreateModifyAndDeleteGroup()
+        {
+            var createdGroup = new SurveyGroup
+            {
+                SurveyGroupId = 2,
+                Name = "Default",
+                Description = null,
+                CreationDate = new DateTime(1799, 11, 10)
+            };
+
+            var updatedGroup = new SurveyGroup
+            {
+                SurveyGroupId = 2,
+                Name = "Default with a twist",
+                Description = "Modified description",
+                CreationDate = new DateTime(1799, 11, 10)
+            };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "SurveyGroups"), It.IsAny<SurveyGroupValues>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(createdGroup))));
+            mockedHttpClient
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, "SurveyGroups/2"), It.IsAny<SurveyGroupValues>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(updatedGroup))));
+            mockedHttpClient
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "SurveyGroups/2")))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldSurveyGroupService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var result = await target.CreateAsync(new SurveyGroupValues
+            {
+                Name = "Default",
+                Description = null
+            });
+
+            Assert.NotNull(result);
+            Assert.Equal("Default", result.Name);
+            Assert.Equal(null, result.Description);
+            Assert.Equal(new DateTime(1799, 11, 10), result.CreationDate);
+            Assert.Equal(2, result.SurveyGroupId);
+
+            // modify survey group object we got back, then post it
+            result.Name = "Default with a twist";
+            result.Description = "Modified description";
+
+            result = await target.UpdateAsync(result.SurveyGroupId, result);
+
+            Assert.NotNull(result);
+            Assert.Equal("Default with a twist", result.Name);
+            Assert.Equal("Modified description", result.Description);
+            Assert.Equal(new DateTime(1799, 11, 10), result.CreationDate);
+            Assert.Equal(2, result.SurveyGroupId);
+
+            await target.DeleteAsync(result.SurveyGroupId);
+        }
+
+        [Fact]
         public async Task CanGetAllSurveyGroups()
         {
             var expectedSurveyGroups = new[]
@@ -61,16 +155,16 @@ namespace Nfield.Services
 
             var actualSurveyGroups = await target.GetAllAsync();
 
-            Assert.Equal(actualSurveyGroups.Count(), 2);
+            Assert.Equal(2, actualSurveyGroups.Count());
 
             var defaultGroup = actualSurveyGroups.Single(sg => sg.SurveyGroupId == 1);
-            Assert.Equal(defaultGroup.Name, "Default");
-            Assert.Equal(defaultGroup.CreationDate, new DateTime(1799, 11, 10));
+            Assert.Equal("Default", defaultGroup.Name);
+            Assert.Equal(new DateTime(1799, 11, 10), defaultGroup.CreationDate);
 
             var secondGroup = actualSurveyGroups.Single(sg => sg.SurveyGroupId == 2);
-            Assert.Equal(secondGroup.Name, "War & Peace");
-            Assert.Equal(secondGroup.Description, "Napoleon satisfaction surveys");
-            Assert.Equal(secondGroup.CreationDate, new DateTime(1812, 06, 26));
+            Assert.Equal("War & Peace", secondGroup.Name);
+            Assert.Equal("Napoleon satisfaction surveys", secondGroup.Description);
+            Assert.Equal(new DateTime(1812, 06, 26), secondGroup.CreationDate);
         }
 
         [Fact]
