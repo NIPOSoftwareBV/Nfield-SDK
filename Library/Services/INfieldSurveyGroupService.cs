@@ -28,7 +28,6 @@ namespace Nfield.Services
         /// Retrieve a specific survey group
         /// </summary>
         /// <param name="surveyGroupId"></param>
-        /// <returns></returns>
         Task<SurveyGroup> GetAsync(int surveyGroupId);
 
         /// <summary>
