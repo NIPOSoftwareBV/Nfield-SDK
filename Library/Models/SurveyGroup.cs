@@ -40,6 +40,11 @@ namespace Nfield.Models
     public class SurveyGroup : SurveyGroupValues
     {
         /// <summary>
+        /// The id of the default survey group that exists in every domain.
+        /// </summary>
+        public const int DefaultSurveyGroupId = 1;
+
+        /// <summary>
         /// The Id of the survey group.
         /// </summary>
         [JsonProperty]
