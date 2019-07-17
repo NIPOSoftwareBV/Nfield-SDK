@@ -42,6 +42,16 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        public async Task<SurveyGroup> GetAsync(int surveyGroupId)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
+
+            using (var response = await ConnectionClient.Client.GetAsync(uri))
+            {
+                return await DeserializeJsonAsync<SurveyGroup>(response);
+            }
+        }
+
         public async Task<IEnumerable<Survey>> GetSurveysAsync(int surveyGroupId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Surveys");

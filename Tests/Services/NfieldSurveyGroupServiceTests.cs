@@ -168,6 +168,45 @@ namespace Nfield.Services
         }
 
         [Fact]
+        public async Task CanGetSpecificSurveyGroup()
+        {
+            var defaultSurveyGroup = new SurveyGroup
+            {
+                SurveyGroupId = 1,
+                Name = "Default",
+                Description = "Default Survey Group",
+                CreationDate = DateTime.UtcNow
+            };
+
+            var expectedSurveyGroup = new SurveyGroup
+            {
+                SurveyGroupId = 2,
+                Name = "SG",
+                Description = "Some description for a survey group",
+                CreationDate = DateTime.UtcNow
+
+            };
+
+            var surveyGroups = new[] { defaultSurveyGroup, expectedSurveyGroup };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"SurveyGroups/{expectedSurveyGroup.SurveyGroupId}")))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveyGroup))));
+
+            var target = new NfieldSurveyGroupService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualSurveyGroup = await target.GetAsync(expectedSurveyGroup.SurveyGroupId);
+
+            Assert.Equal(expectedSurveyGroup.SurveyGroupId, actualSurveyGroup.SurveyGroupId);
+            Assert.Equal(expectedSurveyGroup.Name, actualSurveyGroup.Name);
+            Assert.Equal(expectedSurveyGroup.Description, actualSurveyGroup.Description);
+            Assert.Equal(expectedSurveyGroup.CreationDate, actualSurveyGroup.CreationDate);
+        }
+
+        [Fact]
         public async Task CanGetSurveysInGroupAsync()
         {
             var expectedSurveys = new[]

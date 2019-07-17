@@ -25,6 +25,13 @@ namespace Nfield.Services
     public interface INfieldSurveyGroupService
     {
         /// <summary>
+        /// Retrieve a specific survey group
+        /// </summary>
+        /// <param name="surveyGroupId"></param>
+        /// <returns></returns>
+        Task<SurveyGroup> GetAsync(int surveyGroupId);
+
+        /// <summary>
         /// Lists all survey groups in the domain.
         /// </summary>
         Task<IEnumerable<SurveyGroup>> GetAllAsync();
