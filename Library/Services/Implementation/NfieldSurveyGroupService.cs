@@ -90,7 +90,9 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
 
-            await ConnectionClient.Client.DeleteAsync(uri);
+            using (await ConnectionClient.Client.DeleteAsync(uri))
+            {
+            }
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
