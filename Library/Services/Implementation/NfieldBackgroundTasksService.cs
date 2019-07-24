@@ -44,7 +44,7 @@ namespace Nfield.Services.Implementation
                  JsonConvert.DeserializeObject<List<BackgroundTask>>(stringTask.Result).AsQueryable())
              .FlattenExceptions();
         }
-        
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject

@@ -33,7 +33,7 @@ namespace Nfield.SDK.Samples
         /// </summary>
         public void QueryForSamplingPoints(string surveyId)
         {
-            IEnumerable<SamplingPoint> allSamplingPoints = _surveysService.SamplingPointsQuery(surveyId).ToList();               
+            IEnumerable<SamplingPoint> allSamplingPoints = _surveysService.SamplingPointsQuery(surveyId).ToList();
         }
 
         /// <summary>

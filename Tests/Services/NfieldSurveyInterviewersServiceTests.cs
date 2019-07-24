@@ -138,7 +138,7 @@ namespace Nfield.Services
             // Assert
             mockedHttpClient.Verify(hc =>
                     hc.PostAsJsonAsync(
-                        It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/Interviewers/")), 
+                        It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/Interviewers/")),
                         It.Is<SurveyInterviewerAddModel>(model => model.InterviewerId == interviewerId)),
                     Times.Once());
         }

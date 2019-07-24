@@ -50,7 +50,7 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockClient);
 
             var actual = _target.GetAsync().Result;
-            Assert.Equal(_expected.Fields,actual.Fields);
+            Assert.Equal(_expected.Fields, actual.Fields);
         }
 
         #endregion

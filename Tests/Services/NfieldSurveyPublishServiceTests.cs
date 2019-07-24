@@ -86,7 +86,7 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_WhenSurveyIdIsNull_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync(null,It.IsAny<SurveyPublishTypeUpgradeModel>())));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync(null, It.IsAny<SurveyPublishTypeUpgradeModel>())));
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Nfield.Services
             _mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyPublishTypeUpgradeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject( It.IsAny<SurveyPublishTypeUpgradeModel>()))));
+                    new StringContent(JsonConvert.SerializeObject(It.IsAny<SurveyPublishTypeUpgradeModel>()))));
 
             _target.PutAsync(surveyId, new SurveyPublishTypeUpgradeModel()).Wait();
 
@@ -121,6 +121,6 @@ namespace Nfield.Services
 
         #endregion
 
-       
+
     }
 }

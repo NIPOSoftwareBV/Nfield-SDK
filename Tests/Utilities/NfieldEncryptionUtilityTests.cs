@@ -45,7 +45,7 @@ namespace Nfield.Utilities
             var bytesInput = Encoding.UTF8.GetBytes(input);
             var keyBase64 = Convert.ToBase64String(key);
 
-            var encryptedData = new byte[] {1, 2, 3};
+            var encryptedData = new byte[] { 1, 2, 3 };
             var iv = new byte[] { 8, 9, 10 };
 
             var mockedAesWrapper = new Mock<IAesManagedWrapper>();
@@ -92,7 +92,7 @@ namespace Nfield.Utilities
             var ivBase64 = Convert.ToBase64String(iv);
 
             var cleanData = new byte[] { 1, 2, 3 };
-            
+
             var mockedAesWrapper = new Mock<IAesManagedWrapper>();
             mockedAesWrapper.Setup(aes => aes.Decrypt(input, key, iv))
                 .Returns(cleanData);

@@ -52,7 +52,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_ServerAcceptsRelocations_ReturnsOk()
         {
-            var relocation = new SurveyRelocation {Reason = "reason X", Url = "url X"};
+            var relocation = new SurveyRelocation { Reason = "reason X", Url = "url X" };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(relocation));
@@ -112,7 +112,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithRelocations()
         {
-            var expectedRelocationss = new []
+            var expectedRelocationss = new[]
             { new SurveyRelocation { Reason = "reason X", Url = "url X"},
               new SurveyRelocation { Reason = "reason Y", Url = "url Y"}
             };

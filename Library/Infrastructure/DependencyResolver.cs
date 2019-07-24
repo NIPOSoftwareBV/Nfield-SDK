@@ -81,11 +81,11 @@ namespace Nfield.Infrastructure
                 throw new ArgumentNullException("commonServiceLocator");
             }
             var commonServiceLocatorType = commonServiceLocator.GetType();
-            var getInstanceMethod = commonServiceLocatorType.GetMethod("GetInstance", new[] {typeof (Type)});
-            var getAllInstancesMethod = commonServiceLocatorType.GetMethod("GetAllInstances", new[] {typeof (Type)});
+            var getInstanceMethod = commonServiceLocatorType.GetMethod("GetInstance", new[] { typeof(Type) });
+            var getAllInstancesMethod = commonServiceLocatorType.GetMethod("GetAllInstances", new[] { typeof(Type) });
 
-            if (getInstanceMethod == null || getAllInstancesMethod == null || getInstanceMethod.ReturnType != typeof (object) ||
-                getAllInstancesMethod.ReturnType != typeof (IEnumerable<object>))
+            if (getInstanceMethod == null || getAllInstancesMethod == null || getInstanceMethod.ReturnType != typeof(object) ||
+                getAllInstancesMethod.ReturnType != typeof(IEnumerable<object>))
             {
                 throw new ArgumentException(
                     $"The type {commonServiceLocatorType} does not appear to implement IServiceLocator.",
