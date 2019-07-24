@@ -62,6 +62,20 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        public async Task MoveSurveyAsync(string surveyId, int newSurveyGroupId)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/SurveyGroup");
+            var content = new Dictionary<string, int>()
+            {
+                ["SurveyGroupId"] = newSurveyGroupId
+            };
+
+            // note: we need to dispose the response even when we don't use it
+            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, content))
+            {
+            }
+        }
+
         public async Task<SurveyGroup> CreateAsync(SurveyGroupValues model)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, "SurveyGroups");
@@ -90,6 +104,7 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
 
+            // note: we need to dispose the response even when we don't use it
             using (await ConnectionClient.Client.DeleteAsync(uri))
             {
             }
@@ -106,6 +121,5 @@ namespace Nfield.Services.Implementation
                 }
             }
         }
-
     }
 }

@@ -42,6 +42,14 @@ namespace Nfield.Services
         Task<IEnumerable<Survey>> GetSurveysAsync(int surveyGroupId);
 
         /// <summary>
+        /// Moves a survey to the specified survey group.
+        /// </summary>
+        /// <param name="surveyId">The id of the survey to move.</param>
+        /// <param name="newSurveyGroupId">The id of the survey group to move the survey to.</param>
+        /// <returns></returns>
+        Task MoveSurveyAsync(string surveyId, int newSurveyGroupId);
+
+        /// <summary>
         /// Creates a new survey group.
         /// </summary>
         /// <param name="model">Details of the group to create.</param>
