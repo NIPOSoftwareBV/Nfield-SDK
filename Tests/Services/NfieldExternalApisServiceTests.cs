@@ -162,7 +162,8 @@ namespace Nfield.Services
             var target = new NfieldExternalApisService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.RemoveAsync(externalApi).Wait());
+            // assert: no throw
+            target.RemoveAsync(externalApi).Wait();
         }
 
         #endregion

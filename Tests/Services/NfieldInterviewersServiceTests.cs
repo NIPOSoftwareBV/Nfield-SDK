@@ -77,7 +77,8 @@ namespace Nfield.Services
             var target = new NfieldInterviewersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.RemoveAsync(interviewer).Wait());
+            // assert: no throw
+            target.RemoveAsync(interviewer).Wait();
         }
 
         #endregion

@@ -62,8 +62,28 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        public async Task MoveSurveyAsync(string surveyId, int newSurveyGroupId)
+        {
+            if (surveyId == null)
+                throw new ArgumentNullException(nameof(surveyId));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/SurveyGroup");
+            var content = new Dictionary<string, int>()
+            {
+                ["SurveyGroupId"] = newSurveyGroupId
+            };
+
+            // note: we need to dispose the response even when we don't use it
+            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, content))
+            {
+            }
+        }
+
         public async Task<SurveyGroup> CreateAsync(SurveyGroupValues model)
         {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
+
             var uri = new Uri(ConnectionClient.NfieldServerUri, "SurveyGroups");
 
             using (var response = await ConnectionClient.Client.PostAsJsonAsync(uri, model))
@@ -76,6 +96,9 @@ namespace Nfield.Services.Implementation
 
         public async Task<SurveyGroup> UpdateAsync(int surveyGroupId, SurveyGroupValues model)
         {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
+
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
 
             using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model))
@@ -90,6 +113,7 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
 
+            // note: we need to dispose the response even when we don't use it
             using (await ConnectionClient.Client.DeleteAsync(uri))
             {
             }
@@ -106,6 +130,5 @@ namespace Nfield.Services.Implementation
                 }
             }
         }
-
     }
 }

@@ -19,6 +19,7 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,6 +41,24 @@ namespace Nfield.Services
 
             _target = new NfieldSurveyGroupService();
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+        }
+
+        [Fact]
+        public async Task MoveThrows_WhenArgumentNull()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await _target.MoveSurveyAsync(null, 1));
+        }
+
+        [Fact]
+        public async Task CreateThrows_WhenArgumentNull()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await _target.CreateAsync(null));
+        }
+
+        [Fact]
+        public async Task UpdateThrows_WhenArgumentNull()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await _target.UpdateAsync(1, null));
         }
 
         [Fact]
@@ -68,6 +87,20 @@ namespace Nfield.Services
             Assert.Equal(null, result.Description);
             Assert.Equal(new DateTime(1799, 11, 10), result.CreationDate);
             Assert.Equal(1, result.SurveyGroupId);
+        }
+
+        [Fact]
+        public async Task CanMoveSurvey()
+        {
+            _mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/test/SurveyGroup"), It.IsAny<Dictionary<string, int>>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            await _target.MoveSurveyAsync("test", 2);
+
+            _mockedHttpClient.Verify(c => c.PutAsJsonAsync(
+                It.IsAny<Uri>(),
+                It.Is<Dictionary<string, int>>(dict => dict.ContainsKey("SurveyGroupId") && dict["SurveyGroupId"] == 2)));
         }
 
         [Fact]
