@@ -34,7 +34,7 @@ namespace Nfield.Services
         const string SurveyId = "MySurvey";
         const string SamplingPointId = "MySamplingPoint";
         const string InterviewerId = "MyInterviewer";
-        
+
         #region BatchAssignAsync
 
         [Fact]
@@ -135,13 +135,13 @@ namespace Nfield.Services
             var target = new NfieldSamplingPointInterviewerAssignmentsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-           target.AssignAsync(SurveyId, SamplingPointId, InterviewerId);
+            target.AssignAsync(SurveyId, SamplingPointId, InterviewerId);
 
-           mockedHttpClient.Verify(hc =>
-               hc.PostAsync(
-                   It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + SurveyId + "/SamplingPoints/" + SamplingPointId + "/Assignments/" + InterviewerId)),
-                   null),
-               Times.Once());
+            mockedHttpClient.Verify(hc =>
+                hc.PostAsync(
+                    It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + SurveyId + "/SamplingPoints/" + SamplingPointId + "/Assignments/" + InterviewerId)),
+                    null),
+                Times.Once());
         }
 
         #endregion
@@ -183,7 +183,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithAssignments()
         {
-            var expectedAssignments = new []
+            var expectedAssignments = new[]
             {
                 new InterviewerSamplingPointAssignmentModel {Active = false, Assigned = false, FirstName = "fn1", InterviewerId = "id1", LastName = "ln1", UserName = "un1"},
                 new InterviewerSamplingPointAssignmentModel {Active = true, Assigned = true, FirstName = "fn2", InterviewerId = "id2", LastName = "ln2", UserName = "un2"}

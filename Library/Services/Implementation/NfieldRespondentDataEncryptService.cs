@@ -28,7 +28,7 @@ namespace Nfield.Services.Implementation
 
         #region Implementations
         public INfieldConnectionClient ConnectionClient { get; private set; }
-        
+
         /// <summary>
         /// Encrypts the data.
         /// </summary>

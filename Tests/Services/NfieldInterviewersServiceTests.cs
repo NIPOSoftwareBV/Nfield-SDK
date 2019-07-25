@@ -96,9 +96,9 @@ namespace Nfield.Services
         {
             const string InterviewerId = "Interviewer X";
             var interviewer = new Interviewer
-            { 
-                InterviewerId = InterviewerId,  
-                FirstName = "XXX" 
+            {
+                InterviewerId = InterviewerId,
+                FirstName = "XXX"
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -156,7 +156,7 @@ namespace Nfield.Services
         {
             const string Password = "Password";
             const string InterviewerId = "Interviewer X";
-            var interviewer = new Interviewer {InterviewerId = InterviewerId };
+            var interviewer = new Interviewer { InterviewerId = InterviewerId };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
@@ -225,12 +225,12 @@ namespace Nfield.Services
             mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<InterviewerFieldworkOfficeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
-            
+
 
             var target = new NfieldInterviewersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            target.AddInterviewerToFieldworkOfficesAsync(interviewerId, fieldworkOfficeId);            
+            target.AddInterviewerToFieldworkOfficesAsync(interviewerId, fieldworkOfficeId);
 
             mockedHttpClient.Verify(
                 h =>
@@ -264,7 +264,7 @@ namespace Nfield.Services
 
             target.RemoveInterviewerFromFieldworkOfficesAsync(interviewerId, fieldworkOfficeId).Wait();
 
-            
+
 
             mockedHttpClient.Verify(
                 h =>

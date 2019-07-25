@@ -21,7 +21,7 @@ namespace Nfield.Infrastructure
     /// <summary>
     /// Provides properties and methods for file 
     /// </summary>
-    public class PathWrapper :PathBase
+    public class PathWrapper : PathBase
     {
         /// <summary>
         /// <see cref="PathBase.GetFileName"/>

@@ -106,7 +106,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("surveyId");
             }
 
-            if(responseCode == null)
+            if (responseCode == null)
             {
                 throw new ArgumentNullException("responseCode");
             }
@@ -118,11 +118,11 @@ namespace Nfield.Services.Implementation
                 IsSelectable = responseCode.IsSelectable,
                 AllowAppointment = responseCode.AllowAppointment
             };
-            
+
             return
                 Client.PatchAsJsonAsync(SurveyResponseCodeUrl(surveyId, responseCode.ResponseCode), updatedresponseCode)
                     .ContinueWith(
-                        responseMessageTask => 
+                        responseMessageTask =>
                             responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                     .ContinueWith(
                         stringTask => JsonConvert.DeserializeObject<SurveyResponseCode>(stringTask.Result))
@@ -144,7 +144,7 @@ namespace Nfield.Services.Implementation
                 Client.DeleteAsync(SurveyResponseCodeUrl(surveyId, code))
                       .FlattenExceptions();
         }
-        
+
         #region Implementation of INfieldConnectionClientObject
 
         /// <summary>

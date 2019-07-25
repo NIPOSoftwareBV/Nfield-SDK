@@ -44,15 +44,15 @@ namespace Nfield.SDK.Samples
         public Interviewer AddInterviewer()
         {
             Interviewer interviewer = new Interviewer
-                {
-                    ClientInterviewerId = "pomn45dr",
-                    FirstName = "Steve",
-                    LastName = "Balmer",
-                    EmailAddress = "steve@hotmail.com",
-                    TelephoneNumber = "0207821569",
-                    UserName = "steve",
-                    Password = "password12"
-                };
+            {
+                ClientInterviewerId = "pomn45dr",
+                FirstName = "Steve",
+                LastName = "Balmer",
+                EmailAddress = "steve@hotmail.com",
+                TelephoneNumber = "0207821569",
+                UserName = "steve",
+                Password = "password12"
+            };
 
             return _interviewersService.Add(interviewer);
         }
@@ -94,7 +94,7 @@ namespace Nfield.SDK.Samples
         /// </summary>
         public Task<Interviewer> UpdateInterviewerAsync(Interviewer interviewer)
         {
-            if(interviewer == null)
+            if (interviewer == null)
             {
                 return null;
             }

@@ -26,7 +26,7 @@ namespace Nfield.Infrastructure
         public static TUtility GetUtility<TUtility>()
         {
             var utilityInstance = DependencyResolver.Current.Resolve(typeof(TUtility));
-            return (TUtility) utilityInstance;
+            return (TUtility)utilityInstance;
         }
     }
 }

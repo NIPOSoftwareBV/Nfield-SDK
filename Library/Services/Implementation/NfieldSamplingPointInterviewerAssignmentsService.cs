@@ -54,7 +54,7 @@ namespace Nfield.Services.Implementation
 
             var uri = AssignmentsApi(surveyId, samplingPointId, interviewerId);
 
-            return Client.PostAsync(uri, null ).FlattenExceptions();
+            return Client.PostAsync(uri, null).FlattenExceptions();
         }
 
         public Task AssignAsync(string surveyId, SamplingPointInterviewerAssignmentsModel model)

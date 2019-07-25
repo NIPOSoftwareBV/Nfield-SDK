@@ -34,7 +34,7 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsync(InterviewsApiUri(surveyId, interviewId))
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => 
+                .ContinueWith(stringResult =>
                      JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
                 .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "DeletedTotal"))
                 .Unwrap()

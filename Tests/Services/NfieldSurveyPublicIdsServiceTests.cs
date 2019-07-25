@@ -63,7 +63,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithPublicIds()
         {
-            var expectedPublicIds = new []
+            var expectedPublicIds = new[]
             { new SurveyPublicId {  LinkType = "X Type", Active = false, Url = "X Url" },
               new SurveyPublicId {  LinkType = "Y Type", Active = true, Url = "Y Url" }
             };
@@ -95,11 +95,11 @@ namespace Nfield.Services
         public void TestPutAsync_Always_CallsCorrectURI()
         {
             var expectedUrl = new Uri(ServiceAddress, $"Surveys/{SurveyId}/PublicIds");
-            
+
             _mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<IEnumerable<SurveyPublicId>>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
-            
+
             _target.PutAsync(SurveyId, null);
 
             _mockedHttpClient

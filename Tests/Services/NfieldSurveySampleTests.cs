@@ -199,7 +199,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
-            
+
             var result = _target.DeleteAsync(SurveyId, respondentKey).Result;
 
             Assert.Equal(1, result);
@@ -267,7 +267,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 1 }))));
-            
+
             var result = _target.BlockAsync(SurveyId, respondentKey).Result;
 
             Assert.Equal(1, result);
@@ -288,7 +288,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 0 }))));
-            
+
             var result = _target.BlockAsync(SurveyId, respondentKey).Result;
 
             Assert.Equal(0, result);
@@ -355,7 +355,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ResetTotal = 1 }))));
-            
+
             var result = _target.ResetAsync(SurveyId, respondentKey).Result;
 
             Assert.Equal(1, result);
@@ -435,7 +435,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
-            
+
             var result = _target.ClearByRespondentAsync(SurveyId, RespondentKey, _columnsToClear).Result;
 
             Assert.Equal(1, result);
@@ -495,7 +495,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
-            
+
             var result = _target.ClearByInterviewAsync(SurveyId, InterviewId, _columnsToClear).Result;
 
             Assert.Equal(1, result);
@@ -549,7 +549,7 @@ namespace Nfield.Services
             _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Update"),
                 It.Is<SurveyUpdateSampleRecordModel>(c => c.SampleRecordId == sampleRecordId && c.ColumnUpdates.Any(n => n.ColumnName == "dummyCol"))))
                     .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new SampleUpdateStatus { ResultStatus = true }))));
-            
+
             var result = _target.UpdateAsync(SurveyId, sampleRecordId, columns).Result;
 
             Assert.True(result);

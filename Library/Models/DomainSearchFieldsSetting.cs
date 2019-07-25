@@ -20,12 +20,12 @@ namespace Nfield.Models
     /// <summary>
     /// Dto for reading the search fields setting of a domain
     /// </summary>
-    public class DomainSearchFieldsSetting 
+    public class DomainSearchFieldsSetting
     {
         /// <summary>
         /// A list of fields to search respondent data within them
         /// </summary>
         public IEnumerable<string> Fields { get; set; }
-       
+
     }
 }

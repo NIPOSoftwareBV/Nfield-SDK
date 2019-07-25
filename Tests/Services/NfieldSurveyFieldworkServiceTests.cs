@@ -68,14 +68,14 @@ namespace Nfield.Services
         public void TestGetStatusAsync_Always_CallsCorrectURI()
         {
             const string surveyId = "SurveyId";
-            
+
             _mockedHttpClient
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Fieldwork/Status")))
                 .Returns(CreateTask(HttpStatusCode.OK, new ObjectContent<int>(0, new JsonMediaTypeFormatter())));
 
             var actual = _target.GetStatusAsync(surveyId).Result;
 
-            Assert.Equal(0, (int) actual);
+            Assert.Equal(0, (int)actual);
         }
 
         #endregion

@@ -72,7 +72,7 @@ namespace Nfield.Services.Implementation
             CheckSurveyId(surveyId);
             CheckInterviewId(interviewId);
 
-            var model = new QualityNewStateChange {InterviewId = interviewId, NewState = newQualityState};
+            var model = new QualityNewStateChange { InterviewId = interviewId, NewState = newQualityState };
 
             return Client.PutAsJsonAsync(InterviewQualityApi(surveyId, null), model).
                 ContinueWith(

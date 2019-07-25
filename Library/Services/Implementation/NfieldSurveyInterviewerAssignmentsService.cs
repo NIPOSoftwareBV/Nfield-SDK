@@ -40,7 +40,7 @@ namespace Nfield.Services.Implementation
             }
 
             var uri = SurveyInterviewerAssignmentsUrl(surveyId);
-            var model = new SurveyInterviewerAssignmentChangeModel {InterviewerId = interviewerId, Assign = true};
+            var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = true };
 
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
@@ -63,7 +63,7 @@ namespace Nfield.Services.Implementation
         }
 
         #endregion
-        
+
         /// <summary>
         /// Constructs and returns the url for survey interviewer assignments
         /// based on supplied <paramref name="surveyId"/>
@@ -81,7 +81,7 @@ namespace Nfield.Services.Implementation
         #region Implementation of INfieldConnectionClientObject
 
         public INfieldConnectionClient ConnectionClient { get; internal set; }
-        
+
         public void InitializeNfieldConnection(INfieldConnectionClient connection)
         {
             ConnectionClient = connection;

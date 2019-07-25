@@ -17,7 +17,7 @@ namespace Nfield.Utilities
         public NfieldEncryptionUtility()
             : this(new AesManagedWrapper())
         {
-            
+
         }
 
         public NfieldEncryptionUtility(IAesManagedWrapper aesWrapper)

@@ -50,7 +50,7 @@ namespace Nfield.Services.Implementation
                 .ContinueWith(
                     stringTask => JsonConvert.DeserializeObject<SurveyPublishTypeUpgradeModel>(stringTask.Result))
                 .FlattenExceptions();
-            
+
         }
 
 
@@ -73,7 +73,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentException("surveyId cannot be empty");
         }
 
-       
+
 
         private INfieldHttpClient Client
         {

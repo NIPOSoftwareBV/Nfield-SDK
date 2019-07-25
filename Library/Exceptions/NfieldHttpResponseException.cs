@@ -38,14 +38,14 @@ namespace Nfield.Exceptions
         {
             HttpStatusCode = httpStatusCode;
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NfieldHttpResponseException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">A message that describes the error.</param>
         public NfieldHttpResponseException(String message)
-            : base(message) {}
-        
+            : base(message) { }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NfieldHttpResponseException"/> class with a specified error message and a reference 
         /// to the inner exception that is the cause of this exception.
@@ -54,7 +54,7 @@ namespace Nfield.Exceptions
         /// <param name="inner">The exception that is the cause of the current exception. If the innerException parameter is not a null reference,
         /// the current exception is raised in a catch block that handles the inner exception.</param>
         public NfieldHttpResponseException(string message, Exception inner)
-            : base(message, inner) {}
+            : base(message, inner) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NfieldHttpResponseException"/> class with serialized data.
@@ -62,7 +62,7 @@ namespace Nfield.Exceptions
         /// <param name="info">The object that holds the serialized object data.</param>
         /// <param name="context">The contextual information about the source or destination.</param>
         public NfieldHttpResponseException(SerializationInfo info, StreamingContext context)
-            : base(info, context) {}
+            : base(info, context) { }
 
         /// <summary>
         /// The <see cref="HttpStatusCode" /> that was returned by the server

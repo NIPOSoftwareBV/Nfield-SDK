@@ -99,10 +99,10 @@ namespace Nfield.Services
 
             // Verify the filter send
             mockedHttpClient.Verify(s => s.PostAsJsonAsync(
-                url, 
-                It.Is<InvitationBatchWithFilter>(b => 
+                url,
+                It.Is<InvitationBatchWithFilter>(b =>
                     b.Filters.Count() == 1 &&
-                    FilterEquals(b.Filters.First(), "RespondentKey", "in", string.Join(",", batch.RespondentKeys)) )), 
+                    FilterEquals(b.Filters.First(), "RespondentKey", "in", string.Join(",", batch.RespondentKeys)))),
                 Times.Once());
 
             Assert.Equal(expectedResult.Count, result.Count);
@@ -319,8 +319,8 @@ namespace Nfield.Services
 
             var url = new Uri(ServiceAddress, $"Surveys/{SurveyId}/InviteRespondents/InvitationStatus/{batchName}");
             mockedHttpClient.Setup(client => client.GetAsync(url))
-                            .Returns(CreateTask(HttpStatusCode.OK, 
-                                                new StringContent(JsonConvert.SerializeObject(new[] {expectedResult}))));
+                            .Returns(CreateTask(HttpStatusCode.OK,
+                                                new StringContent(JsonConvert.SerializeObject(new[] { expectedResult }))));
 
             var result = target.GetInvitationStatusAsync(SurveyId, batchName).Result.ToArray();
 

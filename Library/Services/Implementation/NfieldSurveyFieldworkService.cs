@@ -40,7 +40,7 @@ namespace Nfield.Services.Implementation
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
-                .ContinueWith(stringTask => (SurveyStatus) stringTask.Result)
+                .ContinueWith(stringTask => (SurveyStatus)stringTask.Result)
                 .FlattenExceptions();
         }
 
@@ -79,7 +79,7 @@ namespace Nfield.Services.Implementation
 
             return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
         }
-        
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject

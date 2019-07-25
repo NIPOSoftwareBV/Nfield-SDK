@@ -115,11 +115,11 @@ namespace Nfield.Services.Implementation
         {
             var fileName = Path.GetFileName(filePath);
 
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
             var uri = GetInterviewerInstructionUri(surveyId, fileName);
-            
+
             var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
             byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
@@ -132,7 +132,7 @@ namespace Nfield.Services.Implementation
         public Task UploadInterviewerFileInstructionsAsync(byte[] fileContent, string fileName, string surveyId)
         {
             var uri = GetInterviewerInstructionUri(surveyId, fileName);
-            
+
             var byteArrayContent = new ByteArrayContent(fileContent);
             byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
@@ -149,10 +149,10 @@ namespace Nfield.Services.Implementation
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => new InterviewerInstruction
-                        {
-                            Content = responseMessageTask.Result.Content.ReadAsByteArrayAsync().Result,
-                            FileName = responseMessageTask.Result.Content.Headers.ContentDisposition.FileName
-                        })
+                    {
+                        Content = responseMessageTask.Result.Content.ReadAsByteArrayAsync().Result,
+                        FileName = responseMessageTask.Result.Content.Headers.ContentDisposition.FileName
+                    })
                 .FlattenExceptions();
         }
 
@@ -179,7 +179,7 @@ namespace Nfield.Services.Implementation
                          .ContinueWith(
                              stringTask =>
                              JsonConvert.DeserializeObject<QuotaLevel>(stringTask.Result))
-                         .FlattenExceptions();    
+                         .FlattenExceptions();
         }
 
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
@@ -242,7 +242,7 @@ namespace Nfield.Services.Implementation
         public Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}");
-            
+
             return Client.GetAsync(uri)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -271,14 +271,14 @@ namespace Nfield.Services.Implementation
         public Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{SamplingPointsControllerName}/{samplingPointId}");
-            
+
             return Client.GetAsync(uri)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
                              JsonConvert.DeserializeObject<SamplingPoint>(stringTask.Result))
-                         .FlattenExceptions();            
+                         .FlattenExceptions();
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Nfield.Services.Implementation
             return Client.PostAsJsonAsync(uri, samplingPoint)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<SamplingPoint>(task.Result))
-                         .FlattenExceptions();            
+                         .FlattenExceptions();
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Nfield.Services.Implementation
              .ContinueWith(
                  stringTask =>
                  JsonConvert.DeserializeObject<SamplingPointQuotaTarget>(stringTask.Result))
-             .FlattenExceptions();  
+             .FlattenExceptions();
         }
 
         /// <summary>
@@ -399,9 +399,9 @@ namespace Nfield.Services.Implementation
         /// <returns>image file name</returns>
         public Task<string> SamplingPointImageAddAsync(string surveyId, string samplingPointId, string filePath)
         {
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
                 throw new FileNotFoundException(filePath);
-           
+
             var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
             return SamplingPointImageAddAsync(surveyId, samplingPointId, Path.GetFileName(filePath), byteArrayContent);
         }
@@ -474,7 +474,7 @@ namespace Nfield.Services.Implementation
 
         private static string SamplingPointsControllerName
         {
-            get { return "SamplingPoints";  }
+            get { return "SamplingPoints"; }
         }
 
         private static string QuotaControllerName

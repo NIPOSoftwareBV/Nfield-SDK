@@ -26,7 +26,7 @@ namespace Nfield.Models
         /// Name of a field in a sample record
         /// </summary>
         public string Name { get; set; }
-      
+
         /// <summary>
         /// Operator, supported operators:
         /// "con" : contains
@@ -39,7 +39,7 @@ namespace Nfield.Models
         /// "neq" : not equal
         /// </summary>
         public string Op { get; set; }
-      
+
         /// <summary>
         /// Value
         /// </summary>

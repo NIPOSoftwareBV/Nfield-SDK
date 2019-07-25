@@ -107,8 +107,8 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockClient);
 
             AddInvitationImageResult actual;
-            using (var stream = new MemoryStream(new byte[] {0, 1, 2, 3, 4, 5, 6, 7}))
-            {           
+            using (var stream = new MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 }))
+            {
                 actual = target.AddImageAsync(surveyId, filename, stream).Result;
             }
 
@@ -129,7 +129,7 @@ namespace Nfield.Services
             var responseContentString = JsonConvert.SerializeObject(expectedResponseContent);
             var responseContent = new StringContent(responseContentString, Encoding.Unicode, "application/json");
             var uri = "Surveys/" + surveyId + "/InvitationImages/" + filename;
-            mockedHttpClient.Setup(client => client.PostAsync(It.Is<Uri>(s => s.AbsolutePath.EndsWith(uri)), 
+            mockedHttpClient.Setup(client => client.PostAsync(It.Is<Uri>(s => s.AbsolutePath.EndsWith(uri)),
                                 It.IsAny<StreamContent>()))
                             .Returns(CreateTask(HttpStatusCode.OK, responseContent));
 

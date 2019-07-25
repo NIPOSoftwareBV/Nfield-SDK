@@ -41,7 +41,7 @@ namespace Nfield.Models
         /// </summary>
         public QuotaLevel(bool isRootLevel) : this()
         {
-            if(isRootLevel)
+            if (isRootLevel)
             {
                 Id = RootLevelId;
                 Name = RootLevelName;

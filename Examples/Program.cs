@@ -38,14 +38,14 @@ namespace Nfield.SDK.Samples
                     (sender, cert, chain, sslPolicyErrors) => true;
 #endif
             const string serverUrl = "http://localhost:81/v1";
-                                                         
+
             // First step is to get an INfieldConnection which provides services used for data access and manipulation. 
             INfieldConnection connection = NfieldConnectionFactory.Create(new Uri(serverUrl));
 
             // User must sign in to the Nfield server with the appropriate credentials prior to using any of the services.
 
             connection.SignInAsync("testdomain", "user1", "password123").Wait();
-            
+
             // Request the Interviewers service to manage interviewers.
             INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
 
@@ -83,14 +83,14 @@ namespace Nfield.SDK.Samples
 
             interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
             interviewersManager.RemoveInterviewer(interviewer2);
-            
+
             // Request the Survey service and the sampling point managment
             INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
             NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(surveysService);
 
             // Example of performing operations on sampling points.
             samplingPointsManager.QueryForSamplingPoints("some surveyId");
-            
+
             //
             // Survey Management
             //
@@ -151,7 +151,7 @@ namespace Nfield.SDK.Samples
             }).Result;
 
             surveyScriptService.PostAsync(newSurvey.SurveyId, myScript).Wait();
-            
+
             var surveyFieldworkService = connection.GetService<INfieldSurveyFieldworkService>();
             //Get survey fieldwork status 
             var surveyFieldworkStatus = surveyFieldworkService.GetStatusAsync(newSurvey.SurveyId).Result; //Should be under construction
@@ -159,7 +159,7 @@ namespace Nfield.SDK.Samples
             // Start the fieldwork for the survey
             surveyFieldworkService.StartFieldworkAsync(newSurvey.SurveyId).Wait();
             surveyFieldworkStatus = surveyFieldworkService.GetStatusAsync(newSurvey.SurveyId).Result; //Should be started
-            
+
             // Example of a download data request: filtering testdata collected today
             var surveyDataService = connection.GetService<INfieldSurveyDataService>();
 
@@ -178,7 +178,7 @@ namespace Nfield.SDK.Samples
                 EndDate = DateTime.Today.AddDays(1).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time end of today
                 SurveyId = "SomeSurveyId"
             };
-            
+
             var task = surveyDataService.PostAsync(myRequest).Result;
 
             // request the background tasks service 

@@ -43,16 +43,17 @@ namespace Nfield.Infrastructure
         /// <param name="serviceType">An object that specifies the type of service object to get. </param>
         public object GetService(Type serviceType)
         {
-            if (serviceType == null) {
+            if (serviceType == null)
+            {
                 throw new ArgumentNullException("serviceType");
             }
 
             var serviceInstance = DependencyResolver.Current.Resolve(serviceType);
 
             var nfieldConnectionClientObject = serviceInstance as INfieldConnectionClientObject;
-            
+
             if (nfieldConnectionClientObject == null) return serviceInstance;
-            
+
             nfieldConnectionClientObject.InitializeNfieldConnection(this);
 
             return serviceInstance;
@@ -120,7 +121,7 @@ namespace Nfield.Infrastructure
             if (!disposing || Client == null)
                 return;
 
-            
+
             Client = null;
         }
 
