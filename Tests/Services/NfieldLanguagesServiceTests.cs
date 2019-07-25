@@ -107,7 +107,8 @@ namespace Nfield.Services
             var target = new NfieldLanguagesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.RemoveAsync(SurveyId, language).Wait());
+            // assert: no throw
+            target.RemoveAsync(SurveyId, language).Wait();
         }
 
         #endregion
@@ -154,7 +155,8 @@ namespace Nfield.Services
             var target = new NfieldLanguagesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.UpdateAsync(SurveyId, language).Wait());
+            // assert: no throw
+            target.UpdateAsync(SurveyId, language).Wait();
         }
 
         #endregion

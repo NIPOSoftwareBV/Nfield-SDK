@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -36,7 +37,7 @@ namespace Nfield.Extensions
             var serverResponse = new HttpResponseMessage(httpStatusCode);
 
             // Act
-            Assert.ThrowsDelegate actCode = () => serverResponse.ValidateResponse();
+            Func<object> actCode = () => serverResponse.ValidateResponse();
 
             // Assert
             var ex = Assert.Throws<NfieldHttpResponseException>(actCode);
@@ -61,7 +62,7 @@ namespace Nfield.Extensions
             serverResponse.Content = content;
 
             // Act
-            Assert.ThrowsDelegate actCode = () => serverResponse.ValidateResponse();
+            Func<object> actCode = () => serverResponse.ValidateResponse();
 
             // Assert
             var ex = Assert.Throws<NfieldErrorException>(actCode);
@@ -77,11 +78,8 @@ namespace Nfield.Extensions
             const HttpStatusCode httpStatusCode = HttpStatusCode.OK; // Succes
             var serverResponse = new HttpResponseMessage(httpStatusCode);
 
-            // Act
-            Assert.ThrowsDelegate actCode = () => serverResponse.ValidateResponse();
-
-            // Assert
-            Assert.DoesNotThrow(actCode);
+            // Act & assert: no throw
+            serverResponse.ValidateResponse();
         }
     }
 }

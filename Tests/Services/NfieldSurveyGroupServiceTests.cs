@@ -44,6 +44,24 @@ namespace Nfield.Services
         }
 
         [Fact]
+        public async Task MoveThrows_WhenArgumentNull()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await _target.MoveSurveyAsync(null, 1));
+        }
+
+        [Fact]
+        public async Task CreateThrows_WhenArgumentNull()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await _target.CreateAsync(null));
+        }
+
+        [Fact]
+        public async Task UpdateThrows_WhenArgumentNull()
+        {
+            await Assert.ThrowsAsync<ArgumentNullException>(async () => await _target.UpdateAsync(1, null));
+        }
+
+        [Fact]
         public async Task CanCreateNewGroup()
         {
             var expectedGroup = new SurveyGroup
