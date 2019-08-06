@@ -68,13 +68,13 @@ namespace Nfield.Services.Implementation
             }
 
             var updatedInterviewer = new UpdateInterviewer
-                {
-                    EmailAddress = interviewer.EmailAddress,
-                    FirstName = interviewer.FirstName,
-                    LastName = interviewer.LastName,
-                    TelephoneNumber = interviewer.TelephoneNumber,
-                    IsSupervisor = interviewer.IsSupervisor
-                };
+            {
+                EmailAddress = interviewer.EmailAddress,
+                FirstName = interviewer.FirstName,
+                LastName = interviewer.LastName,
+                TelephoneNumber = interviewer.TelephoneNumber,
+                IsSupervisor = interviewer.IsSupervisor
+            };
 
             return Client.PatchAsJsonAsync(new Uri(InterviewersApi, interviewer.InterviewerId), updatedInterviewer)
                          .ContinueWith(
@@ -101,7 +101,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.InterviewerByClientIdAsync"/>
         /// </summary>
-        public Task <Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
+        public Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
             var uri = new Uri(InterviewersApi, $"GetByClientId/{clientInterviewerId}");
@@ -156,7 +156,7 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
 
-            return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel{OfficeId = officeId}).FlattenExceptions();
+            return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel { OfficeId = officeId }).FlattenExceptions();
         }
 
         /// <summary>

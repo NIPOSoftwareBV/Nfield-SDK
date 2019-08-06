@@ -150,8 +150,8 @@ namespace Nfield.Services
             target.AddAsync(surveyId, responseCodeToAdd).Wait();
 
             // Assert
-            mockedHttpClient.Verify( hc =>
-                    hc.PostAsJsonAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/ResponseCodes/")), responseCodeToAdd), 
+            mockedHttpClient.Verify(hc =>
+                   hc.PostAsJsonAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/ResponseCodes/")), responseCodeToAdd),
                     Times.Once());
         }
 

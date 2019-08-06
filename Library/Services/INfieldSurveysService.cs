@@ -130,7 +130,7 @@ namespace Nfield.Services
         /// <returns></returns>
         Task<SurveyCounts> CountsQueryAsync(string surveyId);
 
-            #endregion
+        #endregion
 
         #region Sampling Points for a survey
 

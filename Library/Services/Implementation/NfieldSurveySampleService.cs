@@ -102,11 +102,11 @@ namespace Nfield.Services.Implementation
             var m = new SurveyUpdateSampleRecordModel
             {
                 SampleRecordId = sampleRecordId,
-                ColumnUpdates = columnsToUpdate                
+                ColumnUpdates = columnsToUpdate
             };
 
             var uri = new Uri(SurveySampleUrl(surveyId), "Update");
-            
+
             return Client.PutAsJsonAsync(uri, m)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUpdateStatus>(stringResult.Result).ResultStatus)
@@ -190,7 +190,7 @@ namespace Nfield.Services.Implementation
         #endregion
 
         private INfieldHttpClient Client => ConnectionClient.Client;
-        
+
         private Uri SurveySampleUrl(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Sample/");

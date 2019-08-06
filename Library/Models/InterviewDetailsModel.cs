@@ -16,10 +16,10 @@ using System;
 
 namespace Nfield.Models
 {
-   /// <summary>
-   /// 
-   /// </summary>
-   public class InterviewDetailsModel
+    /// <summary>
+    /// 
+    /// </summary>
+    public class InterviewDetailsModel
     {
         /// <summary>
         /// Interview Id

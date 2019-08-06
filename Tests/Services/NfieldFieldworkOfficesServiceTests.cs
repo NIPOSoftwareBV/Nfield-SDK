@@ -60,7 +60,7 @@ namespace Nfield.Services
                 .SetupGet(connection => connection.NfieldServerUri)
                 .Returns(ServiceAddress);
 
-            
+
             var target = new NfieldFieldworkOfficesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 

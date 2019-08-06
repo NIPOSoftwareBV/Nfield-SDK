@@ -176,10 +176,10 @@ namespace Nfield.Services
 
             const string fileName = "asp.net-web-api-poster.pdf";
             var file = Path.Combine(Directory.GetCurrentDirectory(), "Resources", fileName);
-           
+
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient.Setup( client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
+            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
                             .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveysService();
@@ -227,7 +227,7 @@ namespace Nfield.Services
             const string name = "Name";
 
             var expectedQuotaLevel = new QuotaLevel
-            { 
+            {
                 Id = levelId,
                 Name = name
             };
@@ -270,7 +270,7 @@ namespace Nfield.Services
             var actualQuotaFrame = target.OnlineQuotaQueryAsync("1").Result;
             mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
 
-           Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
+            Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
 
 
         }
@@ -283,7 +283,7 @@ namespace Nfield.Services
         public void TestCreateOrUpdateQuotaAsync_Normal_CallsCorrectRoute()
         {
             const string surveyId = "surveyId";
-            
+
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
@@ -337,7 +337,7 @@ namespace Nfield.Services
 
             var quotaFrame = new QuotaFrame
             {
-               Target = 10
+                Target = 10
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -367,7 +367,7 @@ namespace Nfield.Services
             const int expectedScreenedOutCount = 3;
             const int expectedSuccessfulCount = 4;
             var surveyId = Guid.NewGuid().ToString();
-            var expectedCounts =  new SurveyCounts
+            var expectedCounts = new SurveyCounts
             {
                 DroppedOutCount = expectedDroppedOutCount,
                 RejectedCount = expectedRejectedCount,
@@ -480,7 +480,7 @@ namespace Nfield.Services
         #endregion
 
         #region SamplingPointUpdateAsync
-        
+
         [Fact]
         public void TestSamplingPointUpdateAsync_SamplingPointArgumentIsNull_ThrowsArgumentNullException()
         {
@@ -596,7 +596,7 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSamplingPointQuotaTarget = target.SamplingPointQuotaTargetsQueryAsync("1","1").Result;
+            var actualSamplingPointQuotaTarget = target.SamplingPointQuotaTargetsQueryAsync("1", "1").Result;
 
             Assert.Equal(expectedSamplingPointQuotaTarget[0].LevelId, actualSamplingPointQuotaTarget.ToArray()[0].LevelId);
             Assert.Equal(expectedSamplingPointQuotaTarget[1].LevelId, actualSamplingPointQuotaTarget.ToArray()[1].LevelId);
@@ -641,7 +641,7 @@ namespace Nfield.Services
         public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointQuotaTargetLevelIdIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldSurveysService();
-            var samplingPointQuotaTarget = new SamplingPointQuotaTarget{ Target = 4 };
+            var samplingPointQuotaTarget = new SamplingPointQuotaTarget { Target = 4 };
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -674,7 +674,7 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.SamplingPointQuotaTargetUpdateAsync(surveyId,samplingPointId,samplingPointQuotaTarget).Result;
+            var actual = target.SamplingPointQuotaTargetUpdateAsync(surveyId, samplingPointId, samplingPointQuotaTarget).Result;
 
             Assert.Equal(samplingPointQuotaTarget.Target, actual.Target);
         }
@@ -701,7 +701,7 @@ namespace Nfield.Services
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            
+
             var result = target.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Result;
 
             Assert.Equal(fileName, result);
