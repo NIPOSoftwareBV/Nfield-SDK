@@ -64,8 +64,8 @@ namespace Nfield.Services
             var target = new NfieldSurveyRelocationsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.UpdateAsync(SurveyId, relocation).Wait());
-
+            // assert: no throw
+            target.UpdateAsync(SurveyId, relocation).Wait();
         }
 
         [Fact]

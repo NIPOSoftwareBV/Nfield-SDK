@@ -117,7 +117,8 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.RemoveAsync(survey).Wait());
+            // assert: no throw
+            target.RemoveAsync(survey).Wait();
         }
 
         #endregion
@@ -571,7 +572,8 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.SamplingPointDeleteAsync(surveyId, samplingPoint).Wait());
+            // assert: no throw
+            target.SamplingPointDeleteAsync(surveyId, samplingPoint).Wait();
         }
 
         #endregion
