@@ -25,31 +25,26 @@ namespace Nfield.Models
         /// <summary>
         /// Name of user
         /// </summary>
-        [JsonProperty]
         public string UserName { get; set; }
 
         /// <summary>
         /// First name of user
         /// </summary>
-        [JsonProperty]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Last name of user
         /// </summary>
-        [JsonProperty]
         public string LastName { get; set; }
 
         /// <summary>
         /// Email of the user
         /// </summary>
-        [JsonProperty]
         public string Email { get; set; }
 
         /// <summary>
         /// Role of the user
         /// </summary>
-        [JsonProperty]
         public string UserRole { get; set; }
     }
 
@@ -61,7 +56,6 @@ namespace Nfield.Models
         /// <summary>
         /// Password of the new user
         /// </summary>
-        [JsonProperty]
         public string Password { get; set; }
     }
 
