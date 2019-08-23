@@ -15,6 +15,7 @@
 
 using Nfield.Models;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Nfield.Services
@@ -44,11 +45,11 @@ namespace Nfield.Services
         /// <summary>
         /// Unassign local user from survey group
         /// </summary>
-        Task UnassignLocalAsync(int surveyGroupId, string identityId);
+        Task<HttpResponseMessage> UnassignLocalAsync(int surveyGroupId, string identityId);
 
         /// <summary>
         /// Unassign directory identity from survey group
         /// </summary>
-        Task UnassignDirectoryAsync(int surveyGroupId, DirectoryIdentityModel model);
+        Task<HttpResponseMessage> UnassignDirectoryAsync(int surveyGroupId, DirectoryIdentityModel model);
     }
 }

@@ -82,21 +82,26 @@ namespace Nfield.Services.Implementation
             }
         }
 
-        public async Task UnassignDirectoryAsync(int surveyGroupId, DirectoryIdentityModel model)
+        public async Task<HttpResponseMessage> UnassignDirectoryAsync(int surveyGroupId, DirectoryIdentityModel model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Unassign-Directory");
 
-            await ConnectionClient.Client.PutAsJsonAsync(uri, model);
+            return await ConnectionClient.Client.PutAsJsonAsync(uri, model);
         }
 
-        public async Task UnassignLocalAsync(int surveyGroupId, string identityId)
+        public async Task<HttpResponseMessage> UnassignLocalAsync(int surveyGroupId, string identityId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Unassign-Local");
 
-            await ConnectionClient.Client.PutAsJsonAsync(uri, identityId);
+            var dictionary = new Dictionary<string, string>
+            {
+                { "NativeIdentityId", identityId }
+            };
+
+            return await ConnectionClient.Client.PutAsJsonAsync(uri, dictionary);
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
