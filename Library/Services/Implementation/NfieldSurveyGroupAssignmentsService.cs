@@ -20,9 +20,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
-using Nfield.SDK.Models;
+using Nfield.Models;
 
-namespace Nfield.SDK.Services.Implementation
+namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyGroupAssignmentsService : INfieldSurveyGroupAssignmentsService, INfieldConnectionClientObject
     {

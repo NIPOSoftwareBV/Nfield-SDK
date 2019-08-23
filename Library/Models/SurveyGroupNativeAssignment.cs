@@ -14,10 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Nfield.SDK.Models
+namespace Nfield.Models
 {
     public class SurveyGroupNativeAssignment
     {

@@ -15,7 +15,7 @@
 
 using System;
 
-namespace Nfield.SDK.Models
+namespace Nfield.Models
 {
     /// <summary>
     /// Model for directory identity

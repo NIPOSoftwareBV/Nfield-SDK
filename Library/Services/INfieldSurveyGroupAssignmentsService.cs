@@ -13,11 +13,11 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Nfield.SDK.Models;
+using Nfield.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services
+namespace Nfield.Services
 {
     interface INfieldSurveyGroupAssignmentsService
     {
