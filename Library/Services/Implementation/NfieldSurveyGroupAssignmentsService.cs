@@ -69,7 +69,12 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Assign-Local");
 
-            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, identityId))
+            var dictionary = new Dictionary<string, string>
+            {
+                { "NativeIdentityId", identityId }
+            };
+
+            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, dictionary))
             {
                 var result = await DeserializeJsonAsync<SurveyGroupNativeAssignment>(response);
 
