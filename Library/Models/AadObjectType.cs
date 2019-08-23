@@ -21,11 +21,6 @@ namespace Nfield.SDK.Models
     public enum AadObjectType
     {
         /// <summary>
-        /// Unknown
-        /// </summary>
-        Unknown = 0,
-
-        /// <summary>
         /// User
         /// </summary>
         User = 1,

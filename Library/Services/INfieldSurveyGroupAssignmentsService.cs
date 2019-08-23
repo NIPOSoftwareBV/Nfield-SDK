@@ -14,9 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.SDK.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services
@@ -33,12 +31,24 @@ namespace Nfield.SDK.Services
         /// </summary>
         Task<IEnumerable<SurveyGroupDirectoryAssignment>> GetDirectoryAssignmentsAsync(int surveyGroupId);
 
-        Task<SurveyGroupNativeAssignment> AssignLocalAsync(int surveyGroupId, NativeIdentityModel model);
+        /// <summary>
+        /// Assign native identity to survey group
+        /// </summary>
+        Task<SurveyGroupNativeAssignment> AssignLocalAsync(int surveyGroupId, string nativeIdentityId);
 
+        /// <summary>
+        /// Assign directory identity to survey group
+        /// </summary>
         Task<SurveyGroupDirectoryAssignment> AssignDirectoryAsync(int surveyGroupId, DirectoryIdentityModel model);
 
-        Task UnassignLocalAsync(int surveyGroupId, NativeIdentityModel model);
+        /// <summary>
+        /// Unassign native identity from survey group
+        /// </summary>
+        Task UnassignLocalAsync(int surveyGroupId, string nativeIdentityId);
 
+        /// <summary>
+        /// Unassign directory identity from survey group
+        /// </summary>
         Task UnassignDirectoryAsync(int surveyGroupId, DirectoryIdentityModel model);
     }
 }

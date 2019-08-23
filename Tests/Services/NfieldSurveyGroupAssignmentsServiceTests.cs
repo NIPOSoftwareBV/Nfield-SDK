@@ -132,24 +132,21 @@ namespace Nfield.Services
         {
             const int surveyGroupId = 2;
 
-            var nativeIdentity = new NativeIdentityModel
-            {
-                NativeIdentityId = Guid.NewGuid().ToString()
-            };
+            var nativeIdentityId = Guid.NewGuid().ToString();
 
             var expectedAssignment = new SurveyGroupNativeAssignment
             {
-                NativeIdentityId = nativeIdentity.NativeIdentityId,
+                NativeIdentityId = nativeIdentityId,
                 SurveyGroupId = surveyGroupId
             };
 
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Assign-Local"), nativeIdentity))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Assign-Local"), nativeIdentityId))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAssignment))));
 
-            var actualAssignment = await _target.AssignLocalAsync(surveyGroupId, nativeIdentity);
+            var actualAssignment = await _target.AssignLocalAsync(surveyGroupId, nativeIdentityId);
 
-            Assert.Equal(nativeIdentity.NativeIdentityId, actualAssignment.NativeIdentityId);
+            Assert.Equal(nativeIdentityId, actualAssignment.NativeIdentityId);
             Assert.Equal(surveyGroupId, actualAssignment.SurveyGroupId);
         }
 
@@ -190,16 +187,13 @@ namespace Nfield.Services
         {
             const int surveyGroupId = 2;
 
-            var nativeIdentity = new NativeIdentityModel
-            {
-                NativeIdentityId = Guid.NewGuid().ToString()
-            };
+            var nativeIdentityId = Guid.NewGuid().ToString();
 
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Unassign-Local"), nativeIdentity))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Unassign-Local"), nativeIdentityId))
                 .Returns(CreateTask(HttpStatusCode.NoContent));
 
-            await _target.UnassignLocalAsync(surveyGroupId, nativeIdentity);
+            await _target.UnassignLocalAsync(surveyGroupId, nativeIdentityId);
         }
 
         [Fact]
