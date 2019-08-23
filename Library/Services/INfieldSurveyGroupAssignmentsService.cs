@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
-    interface INfieldSurveyGroupAssignmentsService
+    public interface INfieldSurveyGroupAssignmentsService
     {
         /// <summary>
         /// Lists all survey group local assignments in the domain.

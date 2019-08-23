@@ -17,7 +17,7 @@ using System;
 
 namespace Nfield.Models
 {
-    class SurveyGroupDirectoryAssignment
+    public class SurveyGroupDirectoryAssignment
     {
         public int SurveyGroupId { get; set; }
 
