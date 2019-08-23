@@ -19,6 +19,7 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -132,6 +133,11 @@ namespace Nfield.Services
 
             var nativeIdentityId = Guid.NewGuid().ToString();
 
+            var dictionary = new Dictionary<string, string>
+            {
+                { "NativeIdentityId", nativeIdentityId }
+            };
+
             var expectedAssignment = new SurveyGroupNativeAssignment
             {
                 NativeIdentityId = nativeIdentityId,
@@ -139,7 +145,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Assign-Local"), nativeIdentityId))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Assign-Local"), dictionary))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAssignment))));
 
             var actualAssignment = await _target.AssignLocalAsync(surveyGroupId, nativeIdentityId);
