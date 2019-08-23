@@ -22,7 +22,7 @@ namespace Nfield.Services
     interface INfieldSurveyGroupAssignmentsService
     {
         /// <summary>
-        /// Lists all survey group native assignments in the domain.
+        /// Lists all survey group local assignments in the domain.
         /// </summary>
         Task<IEnumerable<SurveyGroupNativeAssignment>> GetLocalAssignmentsAsync(int surveyGroupId);
 
@@ -32,9 +32,9 @@ namespace Nfield.Services
         Task<IEnumerable<SurveyGroupDirectoryAssignment>> GetDirectoryAssignmentsAsync(int surveyGroupId);
 
         /// <summary>
-        /// Assign native identity to survey group
+        /// Assign local user to survey group
         /// </summary>
-        Task<SurveyGroupNativeAssignment> AssignLocalAsync(int surveyGroupId, string nativeIdentityId);
+        Task<SurveyGroupNativeAssignment> AssignLocalAsync(int surveyGroupId, string identityId);
 
         /// <summary>
         /// Assign directory identity to survey group
@@ -42,9 +42,9 @@ namespace Nfield.Services
         Task<SurveyGroupDirectoryAssignment> AssignDirectoryAsync(int surveyGroupId, DirectoryIdentityModel model);
 
         /// <summary>
-        /// Unassign native identity from survey group
+        /// Unassign local user from survey group
         /// </summary>
-        Task UnassignLocalAsync(int surveyGroupId, string nativeIdentityId);
+        Task UnassignLocalAsync(int surveyGroupId, string identityId);
 
         /// <summary>
         /// Unassign directory identity from survey group

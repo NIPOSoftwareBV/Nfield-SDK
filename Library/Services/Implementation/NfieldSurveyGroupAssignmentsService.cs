@@ -65,11 +65,11 @@ namespace Nfield.Services.Implementation
             }
         }
 
-        public async Task<SurveyGroupNativeAssignment> AssignLocalAsync(int surveyGroupId, string nativeIdentityId)
+        public async Task<SurveyGroupNativeAssignment> AssignLocalAsync(int surveyGroupId, string identityId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Assign-Local");
 
-            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, nativeIdentityId))
+            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, identityId))
             {
                 var result = await DeserializeJsonAsync<SurveyGroupNativeAssignment>(response);
 
@@ -87,11 +87,11 @@ namespace Nfield.Services.Implementation
             await ConnectionClient.Client.PutAsJsonAsync(uri, model);
         }
 
-        public async Task UnassignLocalAsync(int surveyGroupId, string nativeIdentityId)
+        public async Task UnassignLocalAsync(int surveyGroupId, string identityId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Unassign-Local");
 
-            await ConnectionClient.Client.PutAsJsonAsync(uri, nativeIdentityId);
+            await ConnectionClient.Client.PutAsJsonAsync(uri, identityId);
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
