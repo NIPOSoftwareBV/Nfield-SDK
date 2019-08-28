@@ -32,7 +32,7 @@ namespace Nfield.Services.Implementation
 
         public async Task<IEnumerable<SurveyGroupDirectoryAssignment>> GetDirectoryAssignmentsAsync(int surveyGroupId)
         {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Directory-Assignments");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/DirectoryAssignments");
 
             using (var response = await ConnectionClient.Client.GetAsync(uri))
             {
@@ -42,7 +42,7 @@ namespace Nfield.Services.Implementation
 
         public async Task<IEnumerable<SurveyGroupNativeAssignment>> GetLocalAssignmentsAsync(int surveyGroupId)
         {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Local-Assignments");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/LocalAssignments");
 
             using (var response = await ConnectionClient.Client.GetAsync(uri))
             {
@@ -55,7 +55,7 @@ namespace Nfield.Services.Implementation
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Assign-Directory");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/AssignDirectory");
 
             using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, model))
             {
@@ -67,7 +67,7 @@ namespace Nfield.Services.Implementation
 
         public async Task<SurveyGroupNativeAssignment> AssignLocalAsync(int surveyGroupId, string identityId)
         {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Assign-Local");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/AssignLocal");
 
             var dictionary = new Dictionary<string, string>
             {
@@ -87,14 +87,14 @@ namespace Nfield.Services.Implementation
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Unassign-Directory");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/UnassignDirectory");
 
             return await ConnectionClient.Client.PutAsJsonAsync(uri, model);
         }
 
         public async Task<HttpResponseMessage> UnassignLocalAsync(int surveyGroupId, string identityId)
         {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/Unassign-Local");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/UnassignLocal");
 
             var dictionary = new Dictionary<string, string>
             {
