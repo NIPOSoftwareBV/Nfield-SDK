@@ -48,7 +48,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys/"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveys))));
 
             var target = new NfieldSurveysService();
@@ -80,7 +80,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(survey));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "surveys/", survey))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/"), survey))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveysService();
@@ -111,13 +111,14 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "surveys/" + surveyId))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + surveyId)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.RemoveAsync(survey).Wait());
+            // assert: no throw
+            target.RemoveAsync(survey).Wait();
         }
 
         #endregion
@@ -143,7 +144,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(ServiceAddress + "surveys/" + surveyId, It.IsAny<UpdateSurvey>()))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId), It.IsAny<UpdateSurvey>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(survey))));
 
             var target = new NfieldSurveysService();
@@ -175,10 +176,10 @@ namespace Nfield.Services
 
             const string fileName = "asp.net-web-api-poster.pdf";
             var file = Path.Combine(Directory.GetCurrentDirectory(), "Resources", fileName);
-           
+
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient.Setup( client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
                             .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveysService();
@@ -187,7 +188,7 @@ namespace Nfield.Services
             target.UploadInterviewerFileInstructionsAsync(file, surveyId);
 
             mockedHttpClient.Verify(
-                hc => hc.PostAsync(It.Is<string>(uri => uri.Contains(fileName) && uri.Contains(surveyId)),
+                hc => hc.PostAsync(It.Is<Uri>(uri => uri.AbsolutePath.Contains(fileName) && uri.AbsolutePath.Contains(surveyId)),
                         It.IsAny<HttpContent>()), Times.Once());
         }
 
@@ -202,7 +203,7 @@ namespace Nfield.Services
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveysService();
@@ -211,7 +212,7 @@ namespace Nfield.Services
             target.UploadInterviewerFileInstructionsAsync(fileContent, fileName, surveyId);
 
             mockedHttpClient.Verify(
-                hc => hc.PostAsync(It.Is<string>(uri => uri.Contains(fileName) && uri.Contains(surveyId)),
+                hc => hc.PostAsync(It.Is<Uri>(uri => uri.AbsolutePath.Contains(fileName) && uri.AbsolutePath.Contains(surveyId)),
                     It.IsAny<HttpContent>()), Times.Once());
         }
 
@@ -226,21 +227,21 @@ namespace Nfield.Services
             const string name = "Name";
 
             var expectedQuotaLevel = new QuotaLevel
-            { 
+            {
                 Id = levelId,
                 Name = name
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys/1/quota"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/1/Quota")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedQuotaLevel))));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualQuotaLevel = target.QuotaQueryAsync("1").Result;
-            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<string>()), Times.Once());
+            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
             Assert.Equal(expectedQuotaLevel.Id, actualQuotaLevel.Id);
             Assert.Equal(expectedQuotaLevel.Name, actualQuotaLevel.Name);
 
@@ -261,15 +262,15 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys/1/quota"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/1/Quota")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(quotaFrame))));
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualQuotaFrame = target.OnlineQuotaQueryAsync("1").Result;
-            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<string>()), Times.Once());
+            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
 
-           Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
+            Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
 
 
         }
@@ -282,11 +283,11 @@ namespace Nfield.Services
         public void TestCreateOrUpdateQuotaAsync_Normal_CallsCorrectRoute()
         {
             const string surveyId = "surveyId";
-            
+
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<QuotaLevel>()))
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<QuotaLevel>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent("")));
 
             var target = new NfieldSurveysService();
@@ -295,7 +296,7 @@ namespace Nfield.Services
             target.CreateOrUpdateQuotaAsync(surveyId, new QuotaLevel()).Wait();
 
             mockedHttpClient.Verify(
-                hc => hc.PutAsJsonAsync(ServiceAddress + "surveys/" + surveyId + "/quota", It.IsAny<QuotaLevel>()),
+                hc => hc.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Quota"), It.IsAny<QuotaLevel>()),
                 Times.Once());
         }
 
@@ -317,7 +318,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<QuotaLevel>()))
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<QuotaLevel>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent("")));
 
             var target = new NfieldSurveysService();
@@ -325,18 +326,18 @@ namespace Nfield.Services
 
             target.CreateOrUpdateQuotaAsync(surveyId, quota).Wait();
 
-            mockedHttpClient.Verify(hc => hc.PutAsJsonAsync(It.IsAny<string>(), quota), Times.Once());
+            mockedHttpClient.Verify(hc => hc.PutAsJsonAsync(It.IsAny<Uri>(), quota), Times.Once());
         }
 
         [Fact]
         public void TestCreateOrUpdateOnlineQuotaAsync_ReturnsCorrectQuotaFrame()
         {
             const string surveyId = "surveyId";
-            const string uri = ServiceAddress + "surveys/" + surveyId + "/quota";
+            var uri = new Uri(ServiceAddress, "Surveys/" + surveyId + "/Quota");
 
             var quotaFrame = new QuotaFrame
             {
-               Target = 10
+                Target = 10
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -366,7 +367,7 @@ namespace Nfield.Services
             const int expectedScreenedOutCount = 3;
             const int expectedSuccessfulCount = 4;
             var surveyId = Guid.NewGuid().ToString();
-            var expectedCounts =  new SurveyCounts
+            var expectedCounts = new SurveyCounts
             {
                 DroppedOutCount = expectedDroppedOutCount,
                 RejectedCount = expectedRejectedCount,
@@ -375,7 +376,7 @@ namespace Nfield.Services
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var url = string.Format("{0}surveys/{1}/counts", ServiceAddress, surveyId);
+            var url = new Uri(ServiceAddress, $"Surveys/{surveyId}/Counts");
             mockedHttpClient
                 .Setup(client => client.GetAsync(url))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedCounts))));
@@ -405,7 +406,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys/1/samplingpoints"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/1/SamplingPoints")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSamplingPoint))));
 
             var target = new NfieldSurveysService();
@@ -427,7 +428,7 @@ namespace Nfield.Services
         {
             const string surveyId = "123";
             const int samplingPointCount = 5;
-            var uri = $@"{ServiceAddress}surveys/{surveyId}/samplingpoints/Count";
+            var uri = new Uri(ServiceAddress, $@"Surveys/{surveyId}/SamplingPoints/Count");
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
@@ -462,11 +463,8 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(samplingPoint));
             mockedHttpClient
-                .Setup(
-                    client =>
-                        client.PostAsJsonAsync(
-                            string.Format("{0}surveys/{1}/samplingpoints", ServiceAddress, survey.SurveyId),
-                            samplingPoint))
+                .Setup(client => client.PostAsJsonAsync(
+                            new Uri(ServiceAddress, $"Surveys/{survey.SurveyId}/SamplingPoints"), samplingPoint))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveysService();
@@ -482,7 +480,7 @@ namespace Nfield.Services
         #endregion
 
         #region SamplingPointUpdateAsync
-        
+
         [Fact]
         public void TestSamplingPointUpdateAsync_SamplingPointArgumentIsNull_ThrowsArgumentNullException()
         {
@@ -518,11 +516,9 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(
-                    client =>
-                        client.PatchAsJsonAsync<UpdateSamplingPoint>(
-                            string.Format("{0}surveys/{1}/samplingpoints/{2}", ServiceAddress, surveyId,
-                                samplingPointId), It.IsAny<UpdateSamplingPoint>()))
+                .Setup(client => client.PatchAsJsonAsync(
+                            new Uri(ServiceAddress, $"Surveys/{surveyId}/SamplingPoints/{samplingPointId}"),
+                            It.IsAny<UpdateSamplingPoint>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(samplingPoint))));
 
@@ -570,14 +566,14 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(string.Format("{0}surveys/{1}/samplingpoints/{2}", ServiceAddress, surveyId,
-                                samplingPointId)))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/SamplingPoints/{samplingPointId}")))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.SamplingPointDeleteAsync(surveyId, samplingPoint).Wait());
+            // assert: no throw
+            target.SamplingPointDeleteAsync(surveyId, samplingPoint).Wait();
         }
 
         #endregion
@@ -594,13 +590,13 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys/1/samplingpoints/1/quotatargets"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/1/SamplingPoints/1/QuotaTargets")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSamplingPointQuotaTarget))));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSamplingPointQuotaTarget = target.SamplingPointQuotaTargetsQueryAsync("1","1").Result;
+            var actualSamplingPointQuotaTarget = target.SamplingPointQuotaTargetsQueryAsync("1", "1").Result;
 
             Assert.Equal(expectedSamplingPointQuotaTarget[0].LevelId, actualSamplingPointQuotaTarget.ToArray()[0].LevelId);
             Assert.Equal(expectedSamplingPointQuotaTarget[1].LevelId, actualSamplingPointQuotaTarget.ToArray()[1].LevelId);
@@ -612,22 +608,45 @@ namespace Nfield.Services
         #region SamplingPointQuotaTargetUpdateAsync
 
         [Fact]
+        public void TestSamplingPointQuotaTargetUpdateAsync_SurveyIdArgumentIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(null, It.IsAny<string>(), It.IsAny<SamplingPointQuotaTarget>()).Wait();
+            });
+        }
+
+        [Fact]
+        public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointIdArgumentIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(It.IsAny<string>(), null, It.IsAny<SamplingPointQuotaTarget>()).Wait();
+            });
+        }
+
+        [Fact]
         public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointQuotaTargetArgumentIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldSurveysService();
-            Assert.Throws<ArgumentNullException>(
-                () =>
-                {
-                    try
-                    {
-                        target.SamplingPointQuotaTargetUpdateAsync("", "", null).Wait();
-                    }
-                    catch (AggregateException ex)
-                    {
-                        throw ex.InnerException;
-                    }
-                }
-                );
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(It.IsAny<string>(), It.IsAny<string>(), null).Wait();
+            });
+        }
+
+        [Fact]
+        public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointQuotaTargetLevelIdIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveysService();
+            var samplingPointQuotaTarget = new SamplingPointQuotaTarget { Target = 4 };
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                target.SamplingPointQuotaTargetUpdateAsync(It.IsAny<string>(), It.IsAny<string>(), samplingPointQuotaTarget).Wait();
+            });
         }
 
         [Fact]
@@ -646,17 +665,16 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(
-                    client =>
-                        client.PatchAsJsonAsync<UpdateSamplingPointQuotaTarget>(
-                            string.Format("{0}surveys/{1}/samplingpoints/{2}/quotatargets/{3}", ServiceAddress, surveyId,
-                                samplingPointId, levelId), It.IsAny<UpdateSamplingPointQuotaTarget>()))
+                    client => client.PatchAsJsonAsync(
+                            new Uri(ServiceAddress, $"Surveys/{surveyId}/SamplingPoints/{samplingPointId}/QuotaTargets/{levelId}"),
+                            It.IsAny<UpdateSamplingPointQuotaTarget>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(samplingPointQuotaTarget))));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.SamplingPointQuotaTargetUpdateAsync(surveyId,samplingPointId,samplingPointQuotaTarget).Result;
+            var actual = target.SamplingPointQuotaTargetUpdateAsync(surveyId, samplingPointId, samplingPointQuotaTarget).Result;
 
             Assert.Equal(samplingPointQuotaTarget.Target, actual.Target);
         }
@@ -678,12 +696,12 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<string>(), It.IsAny<ByteArrayContent>()))
+            mockedHttpClient.Setup(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<ByteArrayContent>()))
                                     .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(fileName))));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            
+
             var result = target.SamplingPointImageAddAsync(surveyId, samplingPointId, filePath).Result;
 
             Assert.Equal(fileName, result);
@@ -707,7 +725,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<string>()))
+            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<Uri>()))
                                     .Returns(CreateTask(HttpStatusCode.OK, getContent));
 
             var target = new NfieldSurveysService();
@@ -727,7 +745,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<string>()))
+            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<Uri>()))
                                     .Returns(CreateTask(HttpStatusCode.NoContent));
 
             var target = new NfieldSurveysService();

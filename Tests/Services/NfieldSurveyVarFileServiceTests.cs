@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
+using System;
 using System.Net;
 using System.Net.Http;
 using Xunit;
@@ -53,7 +54,7 @@ namespace Nfield.Services
             var expected = new SurveyVarFile { FileContent = varFile, FileName = fileName };
 
             _mockedHttpClient
-                 .Setup(client => client.GetAsync($"{ServiceAddress}Surveys/{surveyId}/VarFile/"))
+                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/VarFile/")))
                  .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId).Result;
@@ -73,7 +74,7 @@ namespace Nfield.Services
             var expected = new SurveyVarFile { FileContent = varFile, FileName = fileName };
 
             _mockedHttpClient
-                 .Setup(client => client.GetAsync($"{ServiceAddress}Surveys/{surveyId}/VarFile/{eTag}"))
+                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/VarFile/{eTag}")))
                  .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId, eTag).Result;

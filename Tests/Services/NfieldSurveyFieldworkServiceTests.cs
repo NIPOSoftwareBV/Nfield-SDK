@@ -68,14 +68,14 @@ namespace Nfield.Services
         public void TestGetStatusAsync_Always_CallsCorrectURI()
         {
             const string surveyId = "SurveyId";
-            
+
             _mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "surveys/" + surveyId + "/Fieldwork/Status"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Fieldwork/Status")))
                 .Returns(CreateTask(HttpStatusCode.OK, new ObjectContent<int>(0, new JsonMediaTypeFormatter())));
 
             var actual = _target.GetStatusAsync(surveyId).Result;
 
-            Assert.Equal(0, (int) actual);
+            Assert.Equal(0, (int)actual);
         }
 
         #endregion
@@ -104,13 +104,13 @@ namespace Nfield.Services
         public void TestStartFieldworkAsync_Always_CallsCorrectURI()
         {
             const string surveyId = "SurveyId";
-            _mockedHttpClient.Setup(c => c.PutAsync(It.IsAny<string>(), It.IsAny<HttpContent>()))
+            _mockedHttpClient.Setup(c => c.PutAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
 
             _target.StartFieldworkAsync(surveyId);
 
             _mockedHttpClient
-                .Verify(client => client.PutAsync(ServiceAddress + "surveys/" + surveyId + "/Fieldwork/Start", It.IsAny<HttpContent>()), Times.Once());
+                .Verify(client => client.PutAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Fieldwork/Start"), It.IsAny<HttpContent>()), Times.Once());
         }
 
         #endregion
@@ -141,16 +141,50 @@ namespace Nfield.Services
             const string surveyId = "SurveyId";
             var model = new StopFieldworkModel();
 
-            _mockedHttpClient.Setup(c => c.PutAsJsonAsync(It.IsAny<string>(), model))
+            _mockedHttpClient.Setup(c => c.PutAsJsonAsync(It.IsAny<Uri>(), model))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
 
             _target.StopFieldworkAsync(surveyId, model);
 
             _mockedHttpClient
-                .Verify(client => client.PutAsJsonAsync(ServiceAddress + "surveys/" + surveyId + "/Fieldwork/Stop", model), Times.Once());
+                .Verify(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Fieldwork/Stop"), model), Times.Once());
         }
 
         #endregion
 
+        #region FinishFieldworkAsync
+
+        [Fact]
+        public void TestFinishFieldworkAsync_WhenSurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.FinishFieldworkAsync(null)));
+        }
+
+        [Fact]
+        public void TestFinishFieldworkAsync_WhenSurveyIdIsEmptyString_Throws()
+        {
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.FinishFieldworkAsync(string.Empty)));
+        }
+
+        [Fact]
+        public void TestFinishFieldworkAsync_WhenSurveyIdIsWhiteSpace_Throws()
+        {
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.FinishFieldworkAsync(" ")));
+        }
+
+        [Fact]
+        public void TestFinishFieldworkAsync_Always_CallsCorrectURI()
+        {
+            const string surveyId = "SurveyId";
+            _mockedHttpClient.Setup(c => c.PutAsync(It.IsAny<Uri>(), It.IsAny<HttpContent>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
+
+            _target.FinishFieldworkAsync(surveyId);
+
+            _mockedHttpClient
+                .Verify(client => client.PutAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Fieldwork/Finish"), It.IsAny<HttpContent>()), Times.Once());
+        }
+
     }
+    #endregion
 }

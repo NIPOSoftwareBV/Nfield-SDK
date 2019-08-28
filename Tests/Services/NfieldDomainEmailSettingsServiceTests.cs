@@ -81,9 +81,9 @@ namespace Nfield.Services
 
         #endregion
 
-        private static string GetEmailSettingsUrl()
+        private Uri GetEmailSettingsUrl()
         {
-            return ServiceAddress + "EmailSettings";
+            return new Uri(ServiceAddress, "EmailSettings/");
         }
 
         private static void AssertOnEditableEmailSettings(EmailSettingsEditable expected, EmailSettingsEditable actual)

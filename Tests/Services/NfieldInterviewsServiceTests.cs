@@ -44,12 +44,12 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
         }
-      
+
 
         [Fact]
         public void DeleteAsync_SurveyIdIsNull_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.DeleteAsync(null,_interviewId)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.DeleteAsync(null, _interviewId)));
         }
 
         [Fact]
@@ -61,15 +61,15 @@ namespace Nfield.Services
         [Fact]
         public void DeleteAsync_Success()
         {
-            _mockedHttpClient.Setup(client => client.DeleteAsync($"{ServiceAddress}Surveys/{_surveyId}/Interviews/{_interviewId}"))
+            _mockedHttpClient.Setup(client => client.DeleteAsync(new Uri(ServiceAddress, $"Surveys/{_surveyId}/Interviews/{_interviewId}")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
 
-           _mockedHttpClient.Setup(client => client.GetAsync($"{ServiceAddress}BackgroundActivities/activity1"))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(
-                        JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1/")))
+                 .Returns(CreateTask(HttpStatusCode.OK,
+                     new StringContent(
+                         JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
 
             var expected = 1;
             var actual = _target.DeleteAsync(_surveyId, _interviewId).Result;

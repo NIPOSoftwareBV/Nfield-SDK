@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -50,12 +45,9 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private string SurveyDataUrl(string surveyId)
+        private Uri SurveyDataUrl(string surveyId)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Data/", surveyId);
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/data");
         }
 
     }

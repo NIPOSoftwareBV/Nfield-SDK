@@ -13,8 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Globalization;
-using System.Text;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -29,12 +28,9 @@ namespace Nfield.Extensions
     /// </summary>
     public static class NfieldConnectionClientExtensions
     {
-        private static string BackgroundActivityUrl(this INfieldConnectionClient client, string activityId)
+        private static Uri BackgroundActivityUrl(this INfieldConnectionClient client, string activityId)
         {
-            var result = new StringBuilder(client.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"BackgroundActivities/{0}", activityId);
-
-            return result.ToString();
+            return new Uri(client.NfieldServerUri, $"BackgroundActivities/{activityId}/");
         }
 
         /// <summary>
@@ -44,7 +40,7 @@ namespace Nfield.Extensions
         /// <param name="activityId">The id of the activity to wait for.</param>
         /// <param name="fieldNameResult">The name of the result field</param>
         /// <returns>The <see cref="BackgroundActivityStatus" /> id.</returns>
-        internal static Task<int> GetActivityResultAsync(this INfieldConnectionClient client, string activityId, string fieldNameResult)
+        internal static Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient client, string activityId, string fieldNameResult)
         {
             return client.Client.GetAsync(client.BackgroundActivityUrl(activityId))
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync())
@@ -59,10 +55,10 @@ namespace Nfield.Extensions
                         case 0: // pending
                         case 1: // started
                             Thread.Sleep(millisecondsTimeout: 200);
-                            return client.GetActivityResultAsync(activityId, fieldNameResult);
+                            return client.GetActivityResultAsync<T>(activityId, fieldNameResult);
                         case 2: // succeeded
-                            var tcs = new TaskCompletionSource<int>();
-                            tcs.SetResult(obj[fieldNameResult].Value<int>());
+                            var tcs = new TaskCompletionSource<T>();
+                            tcs.SetResult(obj[fieldNameResult].Value<T>());
                             return tcs.Task;
                         case 3: // failed
                         default:

@@ -70,7 +70,7 @@ namespace Nfield.Services
             const string surveyId = "SurveyId";
             var testModel = new SurveyPackageStateModel() { Live = (PackagePublishState)1, Test = (PackagePublishState)2 };
             _mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/Publish"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Publish")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(testModel))));
 
             var actual = _target.GetAsync(surveyId).Result;
@@ -86,7 +86,7 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_WhenSurveyIdIsNull_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync(null,It.IsAny<SurveyPublishTypeUpgradeModel>())));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync(null, It.IsAny<SurveyPublishTypeUpgradeModel>())));
         }
 
         [Fact]
@@ -106,21 +106,21 @@ namespace Nfield.Services
         {
             const string surveyId = "SurveyId";
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyPublishTypeUpgradeModel>()))
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyPublishTypeUpgradeModel>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject( It.IsAny<SurveyPublishTypeUpgradeModel>()))));
+                    new StringContent(JsonConvert.SerializeObject(It.IsAny<SurveyPublishTypeUpgradeModel>()))));
 
             _target.PutAsync(surveyId, new SurveyPublishTypeUpgradeModel()).Wait();
 
             _mockedHttpClient
                 .Verify(
                     client =>
-                        client.PutAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/Publish", It.IsAny<SurveyPublishTypeUpgradeModel>()),
+                        client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Publish"), It.IsAny<SurveyPublishTypeUpgradeModel>()),
                     Times.Once());
         }
 
         #endregion
 
-       
+
     }
 }

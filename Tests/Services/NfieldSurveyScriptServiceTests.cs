@@ -19,6 +19,7 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -38,7 +39,7 @@ namespace Nfield.Services
         public NfieldSurveyScriptServiceTests()
         {
             _mockedFileSystem = new Mock<IFileSystem>();
-            
+
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
@@ -55,11 +56,11 @@ namespace Nfield.Services
             const string script = "this is the script";
             const string fileName = "fileq.odin";
 
-            var expected = new SurveyScript{Script = script,FileName = fileName};
+            var expected = new SurveyScript { Script = script, FileName = fileName };
 
-           _mockedHttpClient
-                .Setup(client => client.GetAsync(string.Format("{0}Surveys/{1}/Script/", ServiceAddress, surveyId)))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
+            _mockedHttpClient
+                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/")))
+                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId).Result;
 
@@ -77,10 +78,8 @@ namespace Nfield.Services
 
             var expected = new SurveyScript { Script = script, FileName = fileName };
 
-            var v1 = string.Format("{0}Surveys/{1}/Script/{2}", ServiceAddress, surveyId, eTag);
-
             _mockedHttpClient
-                 .Setup(client => client.GetAsync(string.Format("{0}Surveys/{1}/Script/{2}", ServiceAddress, surveyId, eTag)))
+                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/{eTag}")))
                  .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var actual = _target.GetAsync(surveyId, eTag).Result;
@@ -91,7 +90,7 @@ namespace Nfield.Services
 
         #endregion
 
-        #region SendInvitationsAsync
+        #region PostAsync
 
         [Fact]
         public void TestPostAsync_FileDoesNotExist_ThrowsFileNotFoundException()
@@ -109,7 +108,7 @@ namespace Nfield.Services
         {
             Assert.Throws<ArgumentNullException>(
                 () =>
-                    UnwrapAggregateException(_target.PostAsync("surveyId", surveyScript:null)));
+                    UnwrapAggregateException(_target.PostAsync("surveyId", surveyScript: null)));
         }
 
         [Fact]
@@ -124,13 +123,41 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(string.Format("{0}Surveys/{1}/Script/", ServiceAddress, surveyId), surveyScript))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/"), surveyScript))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
-            var actual = _target.PostAsync(surveyId,surveyScript).Result;
+            var actual = _target.PostAsync(surveyId, surveyScript).Result;
 
             Assert.Equal(surveyScript.FileName, actual.FileName);
             Assert.Equal(surveyScript.Script, actual.Script);
+            Assert.Null(actual.WarningMessages);
+        }
+
+        [Fact]
+        public void TestPostAsync_ServerAccepts_WarningMessages_ReturnsSurveyScriptAndMessages()
+        {
+            const string surveyId = "SurveyId";
+            const string script = "this is the script";
+            const string fileName = "fileq.odin";
+            var warningMessages = new List<string>
+            {
+                "Warning1",
+                "warning2"
+            };
+
+            var surveyScript = new SurveyScript { Script = script, FileName = fileName, WarningMessages = warningMessages };
+
+            var content = new StringContent(JsonConvert.SerializeObject(surveyScript));
+
+            _mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/Script/"), surveyScript))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var actual = _target.PostAsync(surveyId, surveyScript).Result;
+
+            Assert.Equal(surveyScript.FileName, actual.FileName);
+            Assert.Equal(surveyScript.Script, actual.Script);
+            Assert.Equal(surveyScript.WarningMessages, actual.WarningMessages);
         }
 
         [Fact]
@@ -147,15 +174,15 @@ namespace Nfield.Services
             var surveyScript = new SurveyScript { Script = script, FileName = fileName };
 
             var stringContent = new StringContent(JsonConvert.SerializeObject(surveyScript));
-            
+
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<string>(), It.IsAny<SurveyScript>()))
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyScript>()))
                 .Returns(CreateTask(HttpStatusCode.OK, stringContent));
-            
+
             _target.PostAsync(surveyId, fileName);
 
-            _mockedHttpClient.Verify(hc => hc.PostAsJsonAsync(It.Is<string>(uri => uri.Contains(surveyId)),
+            _mockedHttpClient.Verify(hc => hc.PostAsJsonAsync(It.Is<Uri>(uri => uri.AbsolutePath.Contains(surveyId)),
                         It.Is<SurveyScript>(scripts => scripts.FileName == fileName && scripts.Script == script)), Times.Once());
         }
 

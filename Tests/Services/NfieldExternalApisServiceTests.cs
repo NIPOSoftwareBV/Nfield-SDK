@@ -70,7 +70,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "externalapis/"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "externalapis/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedExternalApis))));
 
             var target = new NfieldExternalApisService();
@@ -123,7 +123,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(externalApi));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "externalapis/", externalApi))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "externalapis/"), externalApi))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldExternalApisService();
@@ -156,13 +156,14 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "externalapis/" + ExternalApiName))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "externalapis/" + ExternalApiName)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldExternalApisService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.RemoveAsync(externalApi).Wait());
+            // assert: no throw
+            target.RemoveAsync(externalApi).Wait();
         }
 
         #endregion
@@ -188,7 +189,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "externalapis/", externalApi))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "externalapis/"), externalApi))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(externalApi))));
 
             var target = new NfieldExternalApisService();

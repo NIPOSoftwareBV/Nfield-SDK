@@ -57,7 +57,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(language));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "Surveys/" + SurveyId + "/Languages", language))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages"), language))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldLanguagesService();
@@ -101,13 +101,14 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "Surveys/" + SurveyId + "/Languages/" + LanguageId.ToString()))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/" + LanguageId.ToString())))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldLanguagesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.RemoveAsync(SurveyId, language).Wait());
+            // assert: no throw
+            target.RemoveAsync(SurveyId, language).Wait();
         }
 
         #endregion
@@ -148,13 +149,14 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(
-                    ServiceAddress + "Surveys/" + SurveyId + "/Languages", language))
+                    new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages"), language))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldLanguagesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.DoesNotThrow(() => target.UpdateAsync(SurveyId, language).Wait());
+            // assert: no throw
+            target.UpdateAsync(SurveyId, language).Wait();
         }
 
         #endregion
@@ -185,7 +187,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/Languages"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedLanguages))));
 
             var target = new NfieldLanguagesService();

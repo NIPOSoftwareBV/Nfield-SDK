@@ -14,8 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -58,12 +56,9 @@ namespace Nfield.Services.Implementation
 
         private INfieldHttpClient Client => ConnectionClient.Client;
 
-        private string SurveySampleDataUrl(string surveyId, string fileName)
+        private Uri SurveySampleDataUrl(string surveyId, string fileName)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/SampleData/{1}", surveyId, fileName);
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/SampleData/{fileName}");
         }
 
         private static void CheckRequiredStringArgument(string argument, string name)

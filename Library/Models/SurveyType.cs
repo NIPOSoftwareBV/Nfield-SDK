@@ -44,5 +44,15 @@ namespace Nfield.Models
         /// Basic online survey type, this survey type has no features
         /// </summary>
         OnlineBasic,
+
+        /// <summary>
+        ///  Survey that has sampling points with targets and addresses
+        /// </summary>
+        EuroBarometerAdvanced,
+
+        /// <summary>
+        /// Cati survey type
+        /// </summary>
+        Cati
     }
 }

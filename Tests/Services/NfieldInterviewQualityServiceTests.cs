@@ -47,42 +47,42 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_SurveyIdIsNull_Throws()
         {
-            
+
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.QueryAsync(null)));
         }
 
         [Fact]
         public void TestQueryAsync_SurveyIdIsEmpty_Throws()
         {
-            
+
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.QueryAsync("")));
         }
 
         [Fact]
         public void TestQueryAsync_SurveyIdIsNull_InterviewIdIsNull_Throws()
         {
-            
+
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.QueryAsync(null, null)));
         }
 
         [Fact]
         public void TestQueryAsync_SurveyIdIsEmpty_InterveiwIdIsEmpty_Throws()
         {
-           
+
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.QueryAsync("", "")));
         }
 
         [Fact]
         public void TestQueryAsync_InterviewIdIsNull_Throws()
         {
-           
+
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.QueryAsync(SurveyId, null)));
         }
 
         [Fact]
         public void TestQueryAsync_InterveiwIdIsEmpty_Throws()
         {
-            
+
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.QueryAsync(SurveyId, "")));
         }
 
@@ -111,9 +111,9 @@ namespace Nfield.Services
                     StartDate = DateTime.UtcNow
                 }
             };
-            
+
             _mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/InterviewQuality"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewQuality")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(fakeInterviewDetails))));
 
@@ -129,21 +129,21 @@ namespace Nfield.Services
             var fakeInterviewDetail = new InterviewDetailsModel
             {
                 Id = "1",
-                InterviewQuality = (InterviewQuality) 1,
+                InterviewQuality = (InterviewQuality)1,
                 InterviewerId = "00000001",
                 OfficeId = "OfficeId1",
                 SamplingPointId = "SamplingPointId1",
                 StartDate = DateTime.UtcNow
             };
 
-           _mockedHttpClient
-                .Setup(
-                    client =>
-                        client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/InterviewQuality/" + InterviewId))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject(fakeInterviewDetail))));
+            _mockedHttpClient
+                 .Setup(
+                     client =>
+                         client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewQuality/" + InterviewId)))
+                 .Returns(CreateTask(HttpStatusCode.OK,
+                     new StringContent(JsonConvert.SerializeObject(fakeInterviewDetail))));
 
-            var actualInterviewDetails = _target.QueryAsync(SurveyId,InterviewId).Result;
+            var actualInterviewDetails = _target.QueryAsync(SurveyId, InterviewId).Result;
             Assert.Equal(fakeInterviewDetail.Id, actualInterviewDetails.Id);
         }
 
@@ -155,12 +155,12 @@ namespace Nfield.Services
         public void TestPutAsync_Always_CallsCorrectURI()
         {
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<string>(), It.IsAny<QualityNewStateChange>()))
+                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<QualityNewStateChange>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new InterviewDetailsModel()))));
 
             _target.PutAsync(SurveyId, InterviewId, 1).Wait();
             _mockedHttpClient
-                .Verify(client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + SurveyId + "/InterviewQuality", It.IsAny<QualityNewStateChange>()), Times.Once());
+                .Verify(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewQuality"), It.IsAny<QualityNewStateChange>()), Times.Once());
         }
 
         #endregion

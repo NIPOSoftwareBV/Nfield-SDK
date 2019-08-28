@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
@@ -41,7 +40,7 @@ namespace Nfield.Services.Implementation
             }
 
             var uri = SurveyInterviewerAssignmentsUrl(surveyId);
-            var model = new SurveyInterviewerAssignmentChangeModel {InterviewerId = interviewerId, Assign = true};
+            var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = true };
 
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
@@ -64,16 +63,14 @@ namespace Nfield.Services.Implementation
         }
 
         #endregion
-        
+
         /// <summary>
         /// Constructs and returns the url for survey interviewer assignments
         /// based on supplied <paramref name="surveyId"/>
         /// </summary>
-        private string SurveyInterviewerAssignmentsUrl(string surveyId)
+        private Uri SurveyInterviewerAssignmentsUrl(string surveyId)
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                "{0}/Surveys/{1}/Assignment/",
-                ConnectionClient.NfieldServerUri.AbsoluteUri, surveyId);
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignment/");
         }
 
         private INfieldHttpClient Client
@@ -84,7 +81,7 @@ namespace Nfield.Services.Implementation
         #region Implementation of INfieldConnectionClientObject
 
         public INfieldConnectionClient ConnectionClient { get; internal set; }
-        
+
         public void InitializeNfieldConnection(INfieldConnectionClient connection)
         {
             ConnectionClient = connection;

@@ -33,7 +33,7 @@ namespace Nfield.Infrastructure
         private readonly List<Type> _interfaceList = new List<Type>();
 
         [Fact]
-        public void TestSignInAsync_CredentialsAreIncorrect_ReturnsFalse()
+        public void Test_RegistersAllTheCorrectTypes()
         {
             NfieldSdkInitializer.Initialize(RegisterTransient, RegisterSingleton, RegisterObject);
 
@@ -41,6 +41,7 @@ namespace Nfield.Infrastructure
             _interfaceList.Add(typeof(IInterviewer));
             _interfaceList.Add(typeof(IDependencyResolver));
             _interfaceList.Add(typeof(INfieldConnection));
+            _interfaceList.Add(typeof(INfieldConnectionV2));
             _interfaceList.Add(typeof(INfieldConnectionClient));
             _interfaceList.Add(typeof(INfieldConnectionClientObject));
 

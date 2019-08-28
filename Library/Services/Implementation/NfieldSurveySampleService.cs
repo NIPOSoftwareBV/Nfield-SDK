@@ -15,10 +15,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -73,7 +70,7 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "DeletedTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "DeletedTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -83,7 +80,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId) + @"/Block";
+            var uri = new Uri(SurveySampleUrl(surveyId), "Block");
 
             var filters = new List<SampleFilter>
             {
@@ -93,7 +90,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "BlockedTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "BlockedTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -105,11 +102,11 @@ namespace Nfield.Services.Implementation
             var m = new SurveyUpdateSampleRecordModel
             {
                 SampleRecordId = sampleRecordId,
-                ColumnUpdates = columnsToUpdate                
+                ColumnUpdates = columnsToUpdate
             };
 
-            var uri = SurveySampleUrl(surveyId) + @"/Update";
-            
+            var uri = new Uri(SurveySampleUrl(surveyId), "Update");
+
             return Client.PutAsJsonAsync(uri, m)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUpdateStatus>(stringResult.Result).ResultStatus)
@@ -121,7 +118,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(respondentKey, nameof(respondentKey));
 
-            var uri = SurveySampleUrl(surveyId) + @"/Reset";
+            var uri = new Uri(SurveySampleUrl(surveyId), "Reset");
 
             var filters = new List<SampleFilter>
             {
@@ -131,7 +128,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "ResetTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "ResetTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -165,7 +162,7 @@ namespace Nfield.Services.Implementation
 
         private Task<int> ClearAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
         {
-            var uri = SurveySampleUrl(surveyId) + @"/Clear";
+            var uri = new Uri(SurveySampleUrl(surveyId) + "Clear");
 
             var request = new ClearSurveySampleModel
             {
@@ -176,7 +173,7 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync(uri, request)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync(activityResult.Result, "ClearTotal"))
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "ClearTotal"))
                 .Unwrap()
                 .FlattenExceptions();
         }
@@ -193,13 +190,10 @@ namespace Nfield.Services.Implementation
         #endregion
 
         private INfieldHttpClient Client => ConnectionClient.Client;
-        
-        private string SurveySampleUrl(string surveyId)
-        {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/Sample", surveyId);
 
-            return result.ToString();
+        private Uri SurveySampleUrl(string surveyId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Sample/");
         }
     }
 }

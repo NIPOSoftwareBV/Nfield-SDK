@@ -14,9 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
@@ -30,7 +28,7 @@ namespace Nfield.Services.Implementation
 
         #region Implementations
         public INfieldConnectionClient ConnectionClient { get; private set; }
-        
+
         /// <summary>
         /// Encrypts the data.
         /// </summary>
@@ -70,12 +68,9 @@ namespace Nfield.Services.Implementation
         /// </summary>
         /// <param name="surveyId">The survey identifier.</param>
         /// <returns></returns>
-        private string SurveyDataEncryptionUrl(string surveyId)
+        private Uri SurveyDataEncryptionUrl(string surveyId)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/RespondentDataEncrypt", surveyId);
-
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/RespondentDataEncrypt");
         }
     }
 }

@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -107,7 +106,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("surveyId");
             }
 
-            if(responseCode == null)
+            if (responseCode == null)
             {
                 throw new ArgumentNullException("responseCode");
             }
@@ -119,11 +118,11 @@ namespace Nfield.Services.Implementation
                 IsSelectable = responseCode.IsSelectable,
                 AllowAppointment = responseCode.AllowAppointment
             };
-            
+
             return
                 Client.PatchAsJsonAsync(SurveyResponseCodeUrl(surveyId, responseCode.ResponseCode), updatedresponseCode)
                     .ContinueWith(
-                        responseMessageTask => 
+                        responseMessageTask =>
                             responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                     .ContinueWith(
                         stringTask => JsonConvert.DeserializeObject<SurveyResponseCode>(stringTask.Result))
@@ -145,7 +144,7 @@ namespace Nfield.Services.Implementation
                 Client.DeleteAsync(SurveyResponseCodeUrl(surveyId, code))
                       .FlattenExceptions();
         }
-        
+
         #region Implementation of INfieldConnectionClientObject
 
         /// <summary>
@@ -167,13 +166,10 @@ namespace Nfield.Services.Implementation
         /// Constructs and returns the url for survey response code 
         /// based on supplied <paramref name="surveyId"/>  and <paramref name="code"/>
         /// </summary>
-        private string SurveyResponseCodeUrl(string surveyId, int? code)
+        private Uri SurveyResponseCodeUrl(string surveyId, int? code)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/ResponseCodes/{1}", surveyId,
-                code.HasValue ? code.Value.ToString(CultureInfo.InvariantCulture) : "");
-
-            return result.ToString();
+            var codeString = code.HasValue ? code.Value.ToString(CultureInfo.InvariantCulture) : string.Empty;
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/ResponseCodes/{codeString}");
         }
     }
 

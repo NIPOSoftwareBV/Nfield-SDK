@@ -29,11 +29,11 @@ namespace Nfield.Services
     /// <summary>
     /// 
     /// </summary>
-    public class NfieldRespondentDataEncryptServiceTests: NfieldServiceTestsBase
+    public class NfieldRespondentDataEncryptServiceTests : NfieldServiceTestsBase
     {
-        private  NfieldRespondentDataEncryptService _target;
-        private  Mock<INfieldHttpClient> _mockedHttpClient;
-        private  Mock<INfieldConnectionClient> _mockedNfieldConnection;
+        private NfieldRespondentDataEncryptService _target;
+        private Mock<INfieldHttpClient> _mockedHttpClient;
+        private Mock<INfieldConnectionClient> _mockedNfieldConnection;
 
         private const string SurveyId = "2cd16d44-f672-4845-88e2-598848e0b098";
 
@@ -44,13 +44,13 @@ namespace Nfield.Services
         public void TestEncryption_SurveyId_DoesntExists_ReturnsResourceNotFoundException()
         {
             var dataModel = new DataCryptographyModel { Data = new Dictionary<string, string> { { "DataExample1", "ValueExample1" }, { "DataExample2", "ValueExample2" } }, IV = "VGhpc0lzQUJhc2U2NDY0Ng==" };
-           
+
             _mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(_mockedNfieldConnection);
 
             // API call response
             var expectedResult = @"IV=VGhpc0lzQUJhc2U2NDY0Ng==&DATA=kDdE+WOvPi45K6q1fC8iLIJ+M7j5xZmETPf24AS81jk=";
-            _mockedHttpClient.Setup(client => client.PostAsJsonAsync($"{ServiceAddress}Surveys/{SurveyId}/RespondentDataEncrypt", dataModel))
+            _mockedHttpClient.Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/RespondentDataEncrypt"), dataModel))
                .Returns(CreateTask(HttpStatusCode.OK, new ObjectContent<string>(expectedResult, new JsonMediaTypeFormatter())));
 
             _target = new NfieldRespondentDataEncryptService();

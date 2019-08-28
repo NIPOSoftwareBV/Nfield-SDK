@@ -56,8 +56,7 @@ namespace Nfield.Extensions
                             break;
 
                         default:
-                            throw new InvalidOperationException(
-                                string.Format("Invalid task status: {0}", previousTask.Status));
+                            throw new InvalidOperationException($"Invalid task status: {previousTask.Status}");
                     }
 
                     return tcs.Task;

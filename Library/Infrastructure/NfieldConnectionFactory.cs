@@ -14,6 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Nfield.Infrastructure
 {
@@ -26,9 +28,17 @@ namespace Nfield.Infrastructure
         /// <summary>
         /// Create a connection to the Nfield server on the specified <paramref name="nfieldServerUri"/>.
         /// </summary>
-        public static INfieldConnection Create(Uri nfieldServerUri)
+        /// <param name="nfieldServerUri">The url for the Nfield API service</param>
+        public static INfieldConnectionV2 Create(Uri nfieldServerUri) => Create(nfieldServerUri, new HttpClient());
+
+        /// <summary>
+        /// Create a connection to the Nfield server on the specified <paramref name="nfieldServerUri"/>.
+        /// </summary>
+        /// <param name="nfieldServerUri">The url for the Nfield API service</param>
+        /// <param name="httpClient">The http client to use for the connection</param>
+        public static INfieldConnectionV2 Create(Uri nfieldServerUri, HttpClient httpClient)
         {
-            var connection = DependencyResolver.Current.Resolve<NfieldConnection>();
+            var connection = new NfieldConnection(httpClient);
             var url = nfieldServerUri.ToString().TrimEnd('/') + "/";
             connection.NfieldServerUri = new Uri(url);
 
@@ -36,5 +46,4 @@ namespace Nfield.Infrastructure
         }
 
     }
-
 }

@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
@@ -47,11 +46,9 @@ namespace Nfield.Services.Implementation
         /// Constructs and returns the url for survey interviewers distribution
         /// based on supplied <paramref name="surveyId"/>
         /// </summary>
-        private string SurveyDistributeUrl(string surveyId)
+        private Uri SurveyDistributeUrl(string surveyId)
         {
-            return string.Format(CultureInfo.InvariantCulture,
-                "{0}/Surveys/{1}/Distribute/",
-                ConnectionClient.NfieldServerUri.AbsoluteUri, surveyId);
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Distribute/");
         }
 
         private INfieldHttpClient Client

@@ -14,8 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -34,7 +32,7 @@ namespace Nfield.Services.Implementation
             CheckSurveyId(surveyId);
 
 
-            return Client.GetAsync(PublishSurveyApi(surveyId).AbsoluteUri)
+            return Client.GetAsync(PublishSurveyApi(surveyId))
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
@@ -46,13 +44,13 @@ namespace Nfield.Services.Implementation
         public Task PutAsync(string surveyId, SurveyPublishTypeUpgradeModel surveyPublishTypeUpgrade)
         {
             CheckSurveyId(surveyId);
-            return Client.PutAsJsonAsync(PublishSurveyApi(surveyId).AbsoluteUri, surveyPublishTypeUpgrade).
+            return Client.PutAsJsonAsync(PublishSurveyApi(surveyId), surveyPublishTypeUpgrade).
                 ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
                     stringTask => JsonConvert.DeserializeObject<SurveyPublishTypeUpgradeModel>(stringTask.Result))
                 .FlattenExceptions();
-            
+
         }
 
 
@@ -75,7 +73,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentException("surveyId cannot be empty");
         }
 
-       
+
 
         private INfieldHttpClient Client
         {
@@ -84,9 +82,7 @@ namespace Nfield.Services.Implementation
 
         private Uri PublishSurveyApi(string surveyId)
         {
-            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/Publish", surveyId);
-            return new Uri(uriText.ToString());
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Publish");
         }
     }
 }

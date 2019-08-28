@@ -74,7 +74,7 @@ namespace Nfield.Services
 
             var target = new NfieldSurveyInvitationTemplatesService();
             var returnObject = new[] { expected1, expected2 };
-            var requestUri = ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates";
+            var requestUri = new Uri(ServiceAddress, "Surveys/" + surveyId + "/InvitationTemplates/");
             var mockClient = InitMockClientGet<IEnumerable<InvitationTemplateModel>>(requestUri, returnObject);
             target.InitializeNfieldConnection(mockClient);
             var actualResults = target.GetAsync(surveyId).Result.ToArray();
@@ -139,7 +139,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(expected));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates", invitationTemplate))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/InvitationTemplates/"), invitationTemplate))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyInvitationTemplatesService();
@@ -206,7 +206,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(expected));
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + templateId, It.Is<InvitationTemplateModel>(t => VerifyInvitationTemplate(t, invitationTemplate))))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/InvitationTemplates/" + templateId), It.Is<InvitationTemplateModel>(t => VerifyInvitationTemplate(t, invitationTemplate))))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyInvitationTemplatesService();
@@ -255,9 +255,9 @@ namespace Nfield.Services
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var content = new StringContent(JsonConvert.SerializeObject(new {IsSuccess = true}));
+            var content = new StringContent(JsonConvert.SerializeObject(new { IsSuccess = true }));
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "Surveys/" + surveyId + "/InvitationTemplates/" + templateId))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/InvitationTemplates/" + templateId)))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyInvitationTemplatesService();

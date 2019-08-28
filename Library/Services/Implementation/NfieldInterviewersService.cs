@@ -36,7 +36,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<Interviewer> AddAsync(Interviewer interviewer)
         {
-            return Client.PostAsJsonAsync(InterviewersApi.AbsoluteUri, interviewer)
+            return Client.PostAsJsonAsync(InterviewersApi, interviewer)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<Interviewer>(task.Result))
                          .FlattenExceptions();
@@ -53,7 +53,7 @@ namespace Nfield.Services.Implementation
             }
 
             return
-                Client.DeleteAsync(InterviewersApi + interviewer.InterviewerId)
+                Client.DeleteAsync(new Uri(InterviewersApi, interviewer.InterviewerId))
                       .FlattenExceptions();
         }
 
@@ -68,15 +68,15 @@ namespace Nfield.Services.Implementation
             }
 
             var updatedInterviewer = new UpdateInterviewer
-                {
-                    EmailAddress = interviewer.EmailAddress,
-                    FirstName = interviewer.FirstName,
-                    LastName = interviewer.LastName,
-                    TelephoneNumber = interviewer.TelephoneNumber,
-                    IsSupervisor = interviewer.IsSupervisor
-                };
+            {
+                EmailAddress = interviewer.EmailAddress,
+                FirstName = interviewer.FirstName,
+                LastName = interviewer.LastName,
+                TelephoneNumber = interviewer.TelephoneNumber,
+                IsSupervisor = interviewer.IsSupervisor
+            };
 
-            return Client.PatchAsJsonAsync(InterviewersApi + interviewer.InterviewerId, updatedInterviewer)
+            return Client.PatchAsJsonAsync(new Uri(InterviewersApi, interviewer.InterviewerId), updatedInterviewer)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -89,7 +89,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<Interviewer>> QueryAsync()
         {
-            return Client.GetAsync(InterviewersApi.AbsoluteUri)
+            return Client.GetAsync(InterviewersApi)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -101,10 +101,10 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.InterviewerByClientIdAsync"/>
         /// </summary>
-        public Task <Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
+        public Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
-            string uri = string.Format(@"{0}/GetByClientId/{1}", InterviewersApi.AbsoluteUri, clientInterviewerId);
+            var uri = new Uri(InterviewersApi, $"GetByClientId/{clientInterviewerId}");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -125,7 +125,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("interviewer");
             }
 
-            return Client.PutAsJsonAsync(InterviewersApi + interviewer.InterviewerId, (object)new { Password = password })
+            return Client.PutAsJsonAsync(new Uri(InterviewersApi, interviewer.InterviewerId), (object)new { Password = password })
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -138,7 +138,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId)
         {
-            var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -154,9 +154,9 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
         {
-            var uri = string.Format(@"{0}{1}/Offices", InterviewersApi.AbsoluteUri, interviewerId);
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
 
-            return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel{OfficeId = officeId}).FlattenExceptions();
+            return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel { OfficeId = officeId }).FlattenExceptions();
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
-            var uri = string.Format(@"{0}{1}/Offices/{2}", InterviewersApi.AbsoluteUri, interviewerId, fieldworkOfficeId);
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
@@ -189,7 +189,7 @@ namespace Nfield.Services.Implementation
 
         private Uri InterviewersApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "interviewers/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "interviewers/"); }
         }
     }
 

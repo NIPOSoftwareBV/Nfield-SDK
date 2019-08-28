@@ -15,7 +15,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -64,12 +63,12 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithPublicIds()
         {
-            var expectedPublicIds = new []
+            var expectedPublicIds = new[]
             { new SurveyPublicId {  LinkType = "X Type", Active = false, Url = "X Url" },
               new SurveyPublicId {  LinkType = "Y Type", Active = true, Url = "Y Url" }
             };
             _mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/PublicIds"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/PublicIds")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedPublicIds))));
 
 
@@ -95,14 +94,12 @@ namespace Nfield.Services
         [Fact]
         public void TestPutAsync_Always_CallsCorrectURI()
         {
-            var expectedUrl = string.Format(CultureInfo.InvariantCulture, "{0}Surveys/{1}/PublicIds",
-                ServiceAddress,
-                SurveyId);
-            
+            var expectedUrl = new Uri(ServiceAddress, $"Surveys/{SurveyId}/PublicIds");
+
             _mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<IEnumerable<SurveyPublicId>>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
-            
+
             _target.PutAsync(SurveyId, null);
 
             _mockedHttpClient

@@ -1,0 +1,102 @@
+name: $(BuildID)
+
+trigger:
+  batch: false
+  branches:
+    include: ['master', '*/ci-*']
+
+pr:
+  autoCancel: true
+  branches:
+    include: ['*/ci-*'] 
+
+jobs:
+- job:
+  displayName: Build project
+  pool:
+    vmImage: windows-2019      # Name: 'Hosted Windows 2019 with VS 2019'
+  variables:
+  - group: Nfield-Variables
+  steps:
+  - task: NuGetToolInstaller@0
+    displayName: 'Use NuGet 4.4.1'
+    inputs:
+      versionSpec: 4.4.1
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: 'Nfield.SDK.sln'
+      vstsFeed: 'e4b9b306-e6e3-47e2-b840-ef9089528984'
+
+  # Build solution
+  - task: VSBuild@1
+    displayName: 'Build solution Nfield.SDK.sln'
+    inputs:
+      solution: 'Nfield.SDK.sln'
+      vsVersion: 16.0
+      platform: '$(BuildPlatform)'
+      configuration: '$(BuildConfiguration)'
+
+  # Test Assemblies
+  - task: VSTest@2
+    displayName: 'VsTest - testAssemblies'
+    inputs:
+      testAssemblyVer2: |
+        **\$(BuildConfiguration)\net*\*test*.dll
+        !**\obj\**
+      platform: '$(BuildPlatform)'
+      configuration: '$(BuildConfiguration)'
+
+  - task: PublishSymbols@2
+    displayName: 'Publish symbols path'
+    inputs:
+      SearchPattern: '**\bin\**\*.pdb'
+      PublishSymbols: false
+    continueOnError: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    inputs:
+      SourceFolder: '$(system.defaultworkingdirectory)'
+      Contents: '**\bin\$(BuildConfiguration)\**'
+      TargetFolder: '$(build.artifactstagingdirectory)'
+  
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+
+  - task: PowerShell@1
+    displayName: 'Create NuGet Version'
+    inputs:
+      scriptName: createnugetversion.ps1
+
+  - task: DotNetCoreCLI@2
+    displayName: '(when not pull): dotnet pack'
+    inputs:
+      command: pack
+      packagesToPack: Library/Nfield.SDK.csproj
+      nobuild: true
+      versioningScheme: byEnvVar
+      versionEnvVar: Version
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+  # Push NuGet package to Azure DevOps
+  - task: NuGetCommand@2
+    displayName: '(when not pull): Push NuGet package to Azure DevOps'
+    inputs:
+      command: push
+      nuGetFeedType: external
+      publishFeedCredentials: 'NuGet (Publish)'
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+  - task: PowerShell@2
+    displayName: 'Publish Github release (if needed)'
+    inputs:
+      targetType: filePath
+      filePath: './publish-release.ps1'
+      arguments: '-AccessToken $(GitAccessToken)'
+      errorActionPreference: continue
+    continueOnError: true
+

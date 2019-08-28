@@ -45,7 +45,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = new Mock<INfieldHttpClient>();
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "backgroundtasks/"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "backgroundtasks/")))
                 .Returns(
                     Task.Factory.StartNew(
                         () =>
@@ -58,7 +58,7 @@ namespace Nfield.Services
                 .Returns(mockedHttpClient.Object);
             mockedNfieldConnection
                 .SetupGet(connection => connection.NfieldServerUri)
-                .Returns(new Uri(ServiceAddress));
+                .Returns(ServiceAddress);
 
 
             var target = new NfieldBackgroundTasksService();

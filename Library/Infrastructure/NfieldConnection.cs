@@ -22,9 +22,16 @@ using Nfield.Extensions;
 
 namespace Nfield.Infrastructure
 {
-
-    internal class NfieldConnection : INfieldConnection, INfieldConnectionClient
+    internal class NfieldConnection : INfieldConnectionV2, INfieldConnectionClient
     {
+        private readonly HttpClient _httpClient;
+        public INfieldHttpClient Client { get; internal /* for tests */ set; }
+
+        public NfieldConnection(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         #region Implementation of IServiceProvider
 
         /// <summary>
@@ -36,18 +43,17 @@ namespace Nfield.Infrastructure
         /// <param name="serviceType">An object that specifies the type of service object to get. </param>
         public object GetService(Type serviceType)
         {
-            if (serviceType == null) {
+            if (serviceType == null)
+            {
                 throw new ArgumentNullException("serviceType");
             }
 
             var serviceInstance = DependencyResolver.Current.Resolve(serviceType);
 
             var nfieldConnectionClientObject = serviceInstance as INfieldConnectionClientObject;
-            
+
             if (nfieldConnectionClientObject == null) return serviceInstance;
-            
-            Client = (INfieldHttpClient)DependencyResolver.Current.Resolve(typeof(INfieldHttpClient));
-            Client.AuthToken = _token;
+
             nfieldConnectionClientObject.InitializeNfieldConnection(this);
 
             return serviceInstance;
@@ -63,12 +69,10 @@ namespace Nfield.Infrastructure
         /// Sign into the specified domain, using the specified username and password
         /// </summary>
         /// <returns><c>true</c> if sign-in was successful, <c>false</c> otherwise.</returns>
-        public Task<bool> SignInAsync(string domainName, string username, string password)
+        public async Task<bool> SignInAsync(string domainName, string username, string password)
         {
-            if (Client == null)
-            {
-                Client = (INfieldHttpClient)DependencyResolver.Current.Resolve(typeof(INfieldHttpClient));
-            }
+            var newClient = new DefaultNfieldHttpClient(_httpClient);
+
             var data = new Dictionary<string, string>
                 {
                     {"Domain", domainName},
@@ -76,16 +80,21 @@ namespace Nfield.Infrastructure
                     {"Password", password}
                 };
             var content = new FormUrlEncodedContent(data);
-            return Client.PostAsync(NfieldServerUri + "SignIn", content)
-                .ContinueWith(responseMessageTask =>
-                {
-                    var result = responseMessageTask.Result;
 
-                    _token = Client.AuthToken;
-                    
-                    return result.StatusCode == HttpStatusCode.OK;
+            // client will update the Token
+            var response = await newClient.PostAsync(new Uri(NfieldServerUri, "SignIn"), content);
 
-                }).FlattenExceptions();
+            // note: do not set the new client *before* the sign in has completed,
+            // because otherwise calling sign in may cause unrelated requests on the
+            // old client to fail (in case of sign in for token refresh)
+            Client = newClient;
+
+            return response.StatusCode == HttpStatusCode.OK;
+        }
+
+        public void RegisterTokenProvider(string domainName, Func<Task<string>> provideTokenAsync)
+        {
+            Client = new BearerTokenNfieldHttpClient(_httpClient, domainName, provideTokenAsync);
         }
 
         /// <summary>
@@ -112,7 +121,7 @@ namespace Nfield.Infrastructure
             if (!disposing || Client == null)
                 return;
 
-            
+
             Client = null;
         }
 
@@ -125,14 +134,6 @@ namespace Nfield.Infrastructure
 
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        private string _token;
-
-        #region Implementation of INfieldConnectionClient
-
-        public INfieldHttpClient Client { get; private set; }
 
         #endregion
     }

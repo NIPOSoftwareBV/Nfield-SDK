@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -39,7 +40,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/ScriptFragments/"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/ScriptFragments/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expected))));
 
             var target = new NfieldSurveyScriptFragmentService();
@@ -65,7 +66,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/ScriptFragments/" + fileName))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/ScriptFragments/" + fileName)))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(script)));
 
             var target = new NfieldSurveyScriptFragmentService();
@@ -87,7 +88,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + surveyId + "/ScriptFragments/MyFileName%26"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/ScriptFragments/MyFileName%26")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(script)));
 
             var target = new NfieldSurveyScriptFragmentService();
@@ -113,7 +114,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsync(ServiceAddress + "Surveys/" + surveyId + "/ScriptFragments/" + fileName,
+                .Setup(client => client.PutAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/ScriptFragments/" + fileName),
                     It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
@@ -136,7 +137,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(ServiceAddress + "Surveys/" + surveyId + "/ScriptFragments/" + fileName))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/ScriptFragments/" + fileName)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveyScriptFragmentService();

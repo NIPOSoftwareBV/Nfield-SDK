@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <Authors>NIPO</Authors>
     <Company>NIPO</Company>
     <Copyright>Copyright © NIPO 2018</Copyright>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Ninject" Version="3.0.1.10" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\Nfield.SDK.csproj" />
   </ItemGroup>

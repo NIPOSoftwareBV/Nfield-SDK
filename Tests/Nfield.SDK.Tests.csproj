@@ -1,32 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-      <TargetFramework>net40</TargetFramework>
-      <!-- Insert the root namespace of the assembly under test below-->
-      <RootNamespace>Nfield</RootNamespace>
-      <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-      <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    </PropertyGroup>
-    <ItemGroup>
-      <PackageReference Include="Moq" Version="4.0.10827" />
-      <PackageReference Include="xunit" Version="1.9.2" />
-      <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Library\Nfield.SDK.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-      <Reference Include="System.Net" />
-    </ItemGroup>
-    <ItemGroup>
-      <!-- This tells VS that this is a test project -->
-      <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-    </ItemGroup>
-    <ItemGroup>
-      <None Update="Resources\1.jpg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\asp.net-web-api-poster.pdf">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-  </Project>
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <!-- Insert the root namespace of the assembly under test below-->
+    <RootNamespace>Nfield</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Nfield.SDK.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.12.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Nfield.SDK.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- This tells VS that this is a test project -->
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Resources\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\asp.net-web-api-poster.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

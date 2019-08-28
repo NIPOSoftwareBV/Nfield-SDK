@@ -118,9 +118,9 @@ namespace Nfield.Services
 
         #endregion
 
-        private static string GetEmailSettingsUrl(string surveyId)
+        private Uri GetEmailSettingsUrl(string surveyId)
         {
-            return ServiceAddress + "Surveys/" + SurveyId + "/EmailSettings";
+            return new Uri(ServiceAddress, "Surveys/" + SurveyId + "/EmailSettings");
         }
 
         private static SurveyEmailSettings GetTestEmailSettings()

@@ -13,10 +13,9 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Globalization;
+using System;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -51,11 +50,9 @@ namespace Nfield.Services.Implementation
             ConnectionClient = connection;
         }
 
-        private string SurveyInvitationImagesTemplatesUrl(string surveyId, string filename)
+        private Uri SurveyInvitationImagesTemplatesUrl(string surveyId, string filename)
         {
-            var result = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            result.AppendFormat(CultureInfo.InvariantCulture, @"Surveys/{0}/InvitationImages/{1}", surveyId, filename);
-            return result.ToString();
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InvitationImages/{filename}");
         }
     }
 }

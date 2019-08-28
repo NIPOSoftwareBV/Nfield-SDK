@@ -41,7 +41,7 @@ namespace Nfield.Models
         /// </summary>
         public QuotaLevel(bool isRootLevel) : this()
         {
-            if(isRootLevel)
+            if (isRootLevel)
             {
                 Id = RootLevelId;
                 Name = RootLevelName;
@@ -62,6 +62,11 @@ namespace Nfield.Models
         /// Target for this level
         /// </summary>
         public int? Target { get; set; }
+
+        /// <summary>
+        /// Maximum target for this level
+        /// </summary>
+        public int? MaxTarget { get; set; }
 
         /// <summary>
         /// Gross target for this level

@@ -34,7 +34,7 @@ namespace Nfield.Infrastructure
         /// <returns>instance of type T</returns>
         public static T Resolve<T>(this IDependencyResolver dependencyResolver)
         {
-            return (T) dependencyResolver.Resolve(typeof (T));
+            return (T)dependencyResolver.Resolve(typeof(T));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Nfield.Infrastructure
         /// <returns>Enumeration of all instances of type T</returns>
         public static IEnumerable<T> ResolveAll<T>(this IDependencyResolver dependencyResolver)
         {
-            return dependencyResolver.ResolveAll(typeof (T))
+            return dependencyResolver.ResolveAll(typeof(T))
                                      .Cast<T>();
         }
 

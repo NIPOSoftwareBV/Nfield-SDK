@@ -76,7 +76,7 @@ namespace Nfield.Services
             var expectedResult = new List<SurveyBase> { expectedSurvey };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync($"{ServiceAddress}/Surveys/Search?value={encodedSearchValue}"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/Search?value={encodedSearchValue}")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedResult))));
 
             var result = _target.GetAsync(searchValue).Result;
@@ -102,7 +102,7 @@ namespace Nfield.Services
             var expectedResult = new List<SurveyBase> { expectedSurvey };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync($"{ServiceAddress}/Surveys/Search?value={encodedSearchValue}"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/Search?value={encodedSearchValue}")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedResult))));
 
             var result = _target.GetAsync(searchValue).Result;

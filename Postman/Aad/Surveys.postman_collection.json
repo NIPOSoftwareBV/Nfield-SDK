@@ -1,0 +1,287 @@
+{
+	"info": {
+		"name": "Surveys",
+		"_postman_id": "5f16b4a3-0f45-6164-b249-9a9993aea86b",
+		"description": "A controller for querying Surveys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Surveys",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c606000d-1cb3-4c7b-8854-a89a42fe6a6c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const hasSurveyName = (survey) => {",
+							"    return survey.SurveyName !== undefined;",
+							"}",
+							"",
+							"pm.test(\"All surveys should have a SurveyName\", function () {",
+							"    const surveys = pm.response.json();",
+							"    pm.expect(surveys.every(hasSurveyName)).to.be.true;",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys"
+					]
+				},
+				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Survey",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d221cce5-3b44-47f6-a39e-a8ec5503c8a0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response contains SurveyId\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.SurveyId.length).to.eql(36);",
+							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"SurveyId\": \"\",\r\n  \"SurveyName\": \"HOI Survey\",\r\n  \"ClientName\": \"KLM\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys"
+					]
+				},
+				"description": "This method creates a new survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Survey by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c8caf57-48e5-4d54-ac20-29e1202b4484",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"All surveys should have a SurveyName\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.SurveyName !== undefined).to.be.true;",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"SurveyId\": \"123456789\",\r\n  \"SurveyName\": \"Postman Survey\",\r\n  \"ClientName\": \"Postman\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"whatever\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}"
+					]
+				},
+				"description": "This method retrieve details of a specific survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Surveys by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d9df9b1f-d512-4983-b56c-798f9bfc0e41",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Updated description\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.Description).to.eql(\"This survey is updated via Postman\");",
+							"});",
+							"",
+							"pm.test(\"Updated clientname\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.ClientName).to.eql(\"White\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Description\": \"This survey is updated via Postman\",\r\n  \"ClientName\": \"White\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}"
+					]
+				},
+				"description": "Update a survey with the specified fields."
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Survey by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16048597-59ef-45a7-ae78-8449a0f9ef26",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"//pm.environment.unset(\"SurveyId\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}"
+					]
+				},
+				"description": "This method deletes a specified survey."
+			},
+			"response": []
+		}
+	]
+}

@@ -36,11 +36,11 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Status");
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Status");
             return Client.GetAsync(uri)
                 .ContinueWith(
                     responseMessageTask => responseMessageTask.Result.Content.ReadAsAsync<int>().Result)
-                .ContinueWith(stringTask => (SurveyStatus) stringTask.Result)
+                .ContinueWith(stringTask => (SurveyStatus)stringTask.Result)
                 .FlattenExceptions();
         }
 
@@ -51,7 +51,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Start");
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Start");
 
             return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
         }
@@ -63,9 +63,21 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = string.Format(@"{0}{1}/{2}/{3}", SurveysApi.AbsoluteUri, surveyId, SurveyFieldworkControllerName, "Stop");
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Stop");
 
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveyFieldworkService.FinishFieldworkAsync"/>
+        /// </summary>
+        public Task FinishFieldworkAsync(string surveyId)
+        {
+            CheckSurveyId(surveyId);
+
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Finish");
+
+            return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
         }
 
         #endregion
@@ -96,7 +108,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveysApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri.AbsoluteUri + "surveys/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
         }
 
         public string SurveyFieldworkControllerName { get { return "Fieldwork"; } }

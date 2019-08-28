@@ -13,8 +13,8 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-# Versioning of the NuGet package should be done in the following format: 
-# {major}.{minor}.{buildId}{suffix} where suffix should be either 
+# Versioning of the NuGet package should be done in the following format:
+# {major}.{minor}.{buildId}{suffix} where suffix should be either
 # "-alpha", "-beta" or "" (empty) for respectively non-master-branches, master-branches
 # and release-versions (which is triggered once a release is published)
-1.5.{buildId}{suffix}
+2.8.{buildId}{suffix}

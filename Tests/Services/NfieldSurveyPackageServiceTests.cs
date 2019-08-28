@@ -67,7 +67,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId + "/Package/?type=" + InterviewPackageType.Live))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Package/?type=" + InterviewPackageType.Live)))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedPackage))));
 
             var target = new NfieldSurveyPackageService();

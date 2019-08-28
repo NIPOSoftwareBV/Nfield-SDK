@@ -74,8 +74,8 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(address));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(ServiceAddress + "Surveys/" + SurveyId +
-                    "/SamplingPoints/" + SamplingPointId + "/Addresses", address))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId +
+                    "/SamplingPoints/" + SamplingPointId + "/Addresses/"), address))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldAddressesService();
@@ -132,8 +132,8 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(ServiceAddress + "Surveys/" + SurveyId +
-                    "/SamplingPoints/" + SamplingPointId + "/Addresses"))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId +
+                    "/SamplingPoints/" + SamplingPointId + "/Addresses/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAddresses))));
 
             var target = new NfieldAddressesService();
@@ -148,7 +148,7 @@ namespace Nfield.Services
         [Fact]
         public void TestGetCountAsync_ServerReturnsCount_ReturnsNumberOfAddresses()
         {
-            var uri = $"{ServiceAddress}Surveys/{SurveyId}/SamplingPoints/{SamplingPointId}/Addresses/Count";
+            var uri = new Uri(ServiceAddress, $"Surveys/{SurveyId}/SamplingPoints/{SamplingPointId}/Addresses/Count");
             var expectedCount = 8;
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -174,7 +174,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<string>()))
+            mockedHttpClient.Setup(client => client.DeleteAsync(It.IsAny<Uri>()))
                                     .Returns(CreateTask(HttpStatusCode.NoContent));
 
             var target = new NfieldAddressesService();

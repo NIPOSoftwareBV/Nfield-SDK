@@ -35,7 +35,7 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
-            return Client.GetAsync(FragmentsApi(surveyId, null).AbsoluteUri)
+            return Client.GetAsync(FragmentsApi(surveyId, null))
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(stringTask => JsonConvert.DeserializeObject<List<string>>(stringTask.Result).AsQueryable())
                 .FlattenExceptions();
@@ -46,7 +46,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
 
-            return Client.GetAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
+            return Client.GetAsync(FragmentsApi(surveyId, fileName))
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync())
                 .ContinueWith(b => b.Result.Result)
                 .FlattenExceptions();
@@ -59,7 +59,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNull(script, nameof(script));
 
             var postContent = new StringContent(script, Encoding.Unicode);
-            return Client.PostAsync(FragmentsApi(surveyId, fileName).AbsoluteUri, postContent)
+            return Client.PostAsync(FragmentsApi(surveyId, fileName), postContent)
                 .FlattenExceptions();
         }
 
@@ -68,7 +68,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
 
-            return Client.DeleteAsync(FragmentsApi(surveyId, fileName).AbsoluteUri)
+            return Client.DeleteAsync(FragmentsApi(surveyId, fileName))
                 .FlattenExceptions();
         }
 
@@ -92,13 +92,13 @@ namespace Nfield.Services.Implementation
 
         private Uri FragmentsApi(string surveyId, string fileName)
         {
-            var uriText = new StringBuilder(ConnectionClient.NfieldServerUri.AbsoluteUri);
-            uriText.AppendFormat("Surveys/{0}/ScriptFragments/", surveyId);
+            var path = new StringBuilder();
+            path.AppendFormat("Surveys/{0}/ScriptFragments/", surveyId);
             if (!string.IsNullOrEmpty(fileName))
             {
-                uriText.Append(HttpUtility.UrlEncode(fileName));
+                path.Append(HttpUtility.UrlEncode(fileName));
             }
-            return new Uri(uriText.ToString());
+            return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
 
     }
