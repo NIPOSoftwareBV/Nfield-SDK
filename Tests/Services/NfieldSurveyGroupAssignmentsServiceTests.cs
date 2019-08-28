@@ -67,7 +67,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Local-Assignments")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/LocalAssignments")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAssignments))));
 
             var actualAssignments = await _target.GetLocalAssignmentsAsync(surveyGroupId);
@@ -108,7 +108,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Directory-Assignments")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/DirectoryAssignments")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAssignments))));
 
             var actualAssignments = await _target.GetDirectoryAssignmentsAsync(surveyGroupId);
@@ -145,7 +145,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Assign-Local"), dictionary))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/AssignLocal"), dictionary))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAssignment))));
 
             var actualAssignment = await _target.AssignLocalAsync(surveyGroupId, nativeIdentityId);
@@ -175,7 +175,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Assign-Directory"), directoryIdentity))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/AssignDirectory"), directoryIdentity))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedAssignment))));
 
             var actualAssignment = await _target.AssignDirectoryAsync(surveyGroupId, directoryIdentity);
@@ -185,39 +185,5 @@ namespace Nfield.Services
             Assert.Equal(expectedAssignment.ObjectType, actualAssignment.ObjectType);
             Assert.Equal(expectedAssignment.SurveyGroupId, actualAssignment.SurveyGroupId);
         }
-
-        [Fact]
-        public async Task DeleteLocalAssignment_ReturnsNoError()
-        {
-            const int surveyGroupId = 2;
-
-            var nativeIdentityId = Guid.NewGuid().ToString();
-
-            _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Unassign-Local"), nativeIdentityId))
-                .Returns(CreateTask(HttpStatusCode.NoContent));
-
-            await _target.UnassignLocalAsync(surveyGroupId, nativeIdentityId);
-        }
-
-        [Fact]
-        public async Task DeleteDirectoryAssignment_ReturnsNoError()
-        {
-            const int surveyGroupId = 2;
-
-            var directoryIdentity = new DirectoryIdentityModel
-            {
-                TenantId = Guid.NewGuid(),
-                ObjectId = Guid.NewGuid(),
-                ObjectType = AadObjectType.User
-            };
-
-            _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyGroups/{surveyGroupId}/Unassign-Directory"), directoryIdentity))
-                .Returns(CreateTask(HttpStatusCode.NoContent));
-
-            await _target.UnassignDirectoryAsync(surveyGroupId, directoryIdentity);
-        }
-
     }
 }
