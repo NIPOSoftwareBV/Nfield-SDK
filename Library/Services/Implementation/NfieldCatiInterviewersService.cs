@@ -93,7 +93,7 @@ namespace Nfield.Services.Implementation
 
         #region Implementation of INfieldConnectionClientObject
 
-        public INfieldConnectionClient ConnectionClient { get; internal set; }
+        public INfieldConnectionClient ConnectionClient { get; private set; }
 
         public void InitializeNfieldConnection(INfieldConnectionClient connection)
         {
