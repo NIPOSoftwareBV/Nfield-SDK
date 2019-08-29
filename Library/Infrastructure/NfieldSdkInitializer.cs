@@ -62,6 +62,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveySampleDataService), typeof(NfieldSurveySampleDataService) },
             { typeof(INfieldSurveySampleService), typeof(NfieldSurveySampleService) },
             { typeof(INfieldSurveyGroupService), typeof(NfieldSurveyGroupService) },
+            { typeof(INfieldSurveyGroupAssignmentsService), typeof(NfieldSurveyGroupAssignmentsService) },
             { typeof(INfieldHttpClient), typeof(DefaultNfieldHttpClient) },
             { typeof(IFileSystem), typeof(FileSystem) },
             { typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility) },
