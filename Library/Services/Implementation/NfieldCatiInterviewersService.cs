@@ -34,59 +34,56 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCatiInterviewersService.AddAsync"/>
         /// </summary>
-        public Task<CatiInterviewer> AddAsync(CatiInterviewer catiInterviewer)
+        public async Task<CatiInterviewer> AddAsync(CatiInterviewer catiInterviewer)
         {
-            return Client.PostAsJsonAsync(CatiInterviewersApi, catiInterviewer)
-                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<CatiInterviewer>(task.Result))
-                         .FlattenExceptions();
+            using (var response = await Client.PostAsJsonAsync(CatiInterviewersApi, catiInterviewer))
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<CatiInterviewer>(result);
+            }
         }
 
         /// <summary>
         /// See <see cref="INfieldCatiInterviewersService.RemoveAsync"/>
         /// </summary>
-        public Task RemoveAsync(CatiInterviewer catiInterviewer)
+        public async Task RemoveAsync(CatiInterviewer catiInterviewer)
         {
             if (catiInterviewer == null)
             {
                 throw new ArgumentNullException("catiInterviewer");
             }
 
-            return
-                Client.DeleteAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId))
-                      .FlattenExceptions();
+            using (await Client.DeleteAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId)))
+            {
+            }
         }
 
         /// <summary>
         /// See <see cref="INfieldCatiInterviewersService.QueryAsync"/>
         /// </summary>
-        public Task<IQueryable<CatiInterviewer>> QueryAsync()
+        public async Task<IQueryable<CatiInterviewer>> QueryAsync()
         {
-            return Client.GetAsync(CatiInterviewersApi)
-                         .ContinueWith(
-                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(
-                             stringTask =>
-                             JsonConvert.DeserializeObject<List<CatiInterviewer>>(stringTask.Result).AsQueryable())
-                         .FlattenExceptions();
+            using (var response = await Client.GetAsync(CatiInterviewersApi))
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<CatiInterviewer>>(result).AsQueryable();
+            }
         }
 
         /// <summary>
         /// See <see cref="INfieldCatiInterviewersService.ChangePasswordAsync"/>
         /// </summary>
-        public Task<CatiInterviewer> ChangePasswordAsync(CatiInterviewer catiInterviewer, string password)
+        public async Task<CatiInterviewer> ChangePasswordAsync(CatiInterviewer catiInterviewer, string password)
         {
             if (catiInterviewer == null)
             {
                 throw new ArgumentNullException("catiInterviewer");
             }
-
-            return Client.PutAsJsonAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId), (object)new { Password = password })
-                         .ContinueWith(
-                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObject<CatiInterviewer>(stringTask.Result))
-                         .FlattenExceptions();
+            using (var response = await Client.PutAsJsonAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId), (object)new { Password = password }))
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<CatiInterviewer>(result);
+            }
         }
 
         #endregion
