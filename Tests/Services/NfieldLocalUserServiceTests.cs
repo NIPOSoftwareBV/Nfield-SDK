@@ -150,6 +150,7 @@ namespace Nfield.Services
         {
             var user1Id = Guid.NewGuid().ToString();
             var user2Id = Guid.NewGuid().ToString();
+            var lastLogonDateUser1 = DateTime.UtcNow.Subtract(TimeSpan.FromDays(2));
 
             var expectedUsers = new[]
             {
@@ -158,14 +159,16 @@ namespace Nfield.Services
                     Id = user1Id,
                     UserName = "user1",
                     Email = "p.pan@neverland.com",
-                    UserRole = "RegularUser"
+                    UserRole = "RegularUser",
+                    LastLogonDate = lastLogonDateUser1
                 },
                 new LocalUser
                 {
                     Id = user2Id,
                     UserName = "user2",
                     Email = "w.darling@neverland.com",
-                    UserRole = "Scripter"
+                    UserRole = "Scripter",
+                    LastLogonDate = null
                 }
             };
 
@@ -178,8 +181,10 @@ namespace Nfield.Services
             Assert.Equal(2, actualUsers.Count());
             var user1 = actualUsers.FirstOrDefault(u => u.Id == user1Id);
             Assert.Equal("user1", user1.UserName);
+            Assert.Equal(lastLogonDateUser1, user1.LastLogonDate);
             var user2 = actualUsers.FirstOrDefault(u => u.Id == user2Id);
             Assert.Equal("user2", user2.UserName);
+            Assert.Null(user2.LastLogonDate);
         }
     }
 }
