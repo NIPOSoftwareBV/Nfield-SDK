@@ -37,5 +37,10 @@ namespace Nfield.Models
         /// Warning messages that resulted from the parse
         /// </summary>
         public IEnumerable<string> WarningMessages { get; set; }
+
+        /// <summary>
+        /// Indicates if script with unfixed positions is allowed
+        /// </summary>
+        public bool UnfixedIsOk { get; set; }
     }
 }
