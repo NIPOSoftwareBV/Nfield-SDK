@@ -28,5 +28,9 @@ namespace Nfield.Models
         /// The state of published new package if upgrade for current interviews needed
         /// </summary>
         public PackageForceUpgrade ForceUpgrade { get; set; }
+        /// <summary>
+        /// Indicates if script with unfixed positions is allowed
+        /// </summary>
+        public bool UnfixedIsOk { get; set; }
     }
 }
