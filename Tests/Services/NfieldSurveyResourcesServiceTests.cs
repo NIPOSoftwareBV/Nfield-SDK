@@ -19,6 +19,7 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,27 +38,53 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyResources()
         {
-            var expectedSurveyResources = new[]
-            { new SurveyResources { Owner = "Owner1" },
-              new SurveyResources { Owner = "Owner2" },
-              new SurveyResources { Owner = "Owner3" }
-            };
+            var expectedSurveyResources = new List<SurveyResources>();
+
+            for (var i = 0; i < 5; i++)
+            {
+                var surveyResource = new SurveyResources
+                {
+                    SurveyId = Guid.NewGuid().ToString(),
+                    SurveyName = $"Survey{i}",
+                    Owner = $"Owner{i}",
+                    ClientName = $"Client{i}",
+                    Size = i,
+                    CreationDate = new DateTime(2020, 1, 1),
+                    LastDataDownloadDate = new DateTime(2020,1,2),
+                    LastDataCollectionDate = new DateTime(2020, 1, 3),
+                    State = SurveyStatus.UnderConstruction,
+                    Channel = SurveyChannel.Online
+                };
+
+                expectedSurveyResources.Add(surveyResource);
+            }
             
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, "SurveyResources/")))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveyResources))));
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(JsonConvert.SerializeObject(expectedSurveyResources))));
 
             var target = new NfieldSurveyResourcesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualSurveyResources = target.QueryAsync().Result;
 
-            Assert.Equal(expectedSurveyResources[0].Owner, actualSurveyResources.ToArray()[0].Owner);
-            Assert.Equal(expectedSurveyResources[1].Owner, actualSurveyResources.ToArray()[1].Owner);
-            Assert.Equal(expectedSurveyResources[2].Owner, actualSurveyResources.ToArray()[2].Owner);
-            Assert.Equal(3, actualSurveyResources.Count());
+            Assert.Equal(5, actualSurveyResources.Count());
+
+            for (var i = 0; i < 5; i++)
+            {
+                Assert.Equal(expectedSurveyResources[i].SurveyId, actualSurveyResources.ToArray()[i].SurveyId);
+                Assert.Equal(expectedSurveyResources[i].SurveyName, actualSurveyResources.ToArray()[i].SurveyName);
+                Assert.Equal(expectedSurveyResources[i].Owner, actualSurveyResources.ToArray()[i].Owner);
+                Assert.Equal(expectedSurveyResources[i].Size, actualSurveyResources.ToArray()[i].Size);
+                Assert.Equal(expectedSurveyResources[i].CreationDate, actualSurveyResources.ToArray()[i].CreationDate);
+                Assert.Equal(expectedSurveyResources[i].LastDataDownloadDate, actualSurveyResources.ToArray()[i].LastDataDownloadDate);
+                Assert.Equal(expectedSurveyResources[i].LastDataCollectionDate, actualSurveyResources.ToArray()[i].LastDataCollectionDate);
+                Assert.Equal(expectedSurveyResources[i].State, actualSurveyResources.ToArray()[i].State);
+                Assert.Equal(expectedSurveyResources[i].Channel, actualSurveyResources.ToArray()[i].Channel);
+            }
         }
 
         #endregion
