@@ -36,7 +36,7 @@ namespace Nfield.Services
         #region QueryAsync
 
         [Fact]
-        public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyResources()
+        public async Task TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyResources()
         {
             var expectedSurveyResources = new List<SurveyResources>();
 
@@ -69,21 +69,24 @@ namespace Nfield.Services
             var target = new NfieldSurveyResourcesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSurveyResources = target.QueryAsync().Result;
+            var actualSurveyResources = await target.QueryAsync();
 
             Assert.Equal(5, actualSurveyResources.Count());
 
             for (var i = 0; i < 5; i++)
             {
-                Assert.Equal(expectedSurveyResources[i].SurveyId, actualSurveyResources.ToArray()[i].SurveyId);
-                Assert.Equal(expectedSurveyResources[i].SurveyName, actualSurveyResources.ToArray()[i].SurveyName);
-                Assert.Equal(expectedSurveyResources[i].Owner, actualSurveyResources.ToArray()[i].Owner);
-                Assert.Equal(expectedSurveyResources[i].Size, actualSurveyResources.ToArray()[i].Size);
-                Assert.Equal(expectedSurveyResources[i].CreationDate, actualSurveyResources.ToArray()[i].CreationDate);
-                Assert.Equal(expectedSurveyResources[i].LastDataDownloadDate, actualSurveyResources.ToArray()[i].LastDataDownloadDate);
-                Assert.Equal(expectedSurveyResources[i].LastDataCollectionDate, actualSurveyResources.ToArray()[i].LastDataCollectionDate);
-                Assert.Equal(expectedSurveyResources[i].State, actualSurveyResources.ToArray()[i].State);
-                Assert.Equal(expectedSurveyResources[i].Channel, actualSurveyResources.ToArray()[i].Channel);
+                var actualSurveyResource = actualSurveyResources.ToArray()[i];
+                var expectedSurveyResource = expectedSurveyResources[i];
+
+                Assert.Equal(expectedSurveyResource.SurveyId, actualSurveyResource.SurveyId);
+                Assert.Equal(expectedSurveyResource.SurveyName, actualSurveyResource.SurveyName);
+                Assert.Equal(expectedSurveyResource.Owner, actualSurveyResource.Owner);
+                Assert.Equal(expectedSurveyResource.Size, actualSurveyResource.Size);
+                Assert.Equal(expectedSurveyResource.CreationDate, actualSurveyResource.CreationDate);
+                Assert.Equal(expectedSurveyResource.LastDataDownloadDate, actualSurveyResource.LastDataDownloadDate);
+                Assert.Equal(expectedSurveyResource.LastDataCollectionDate, actualSurveyResource.LastDataCollectionDate);
+                Assert.Equal(expectedSurveyResource.State, actualSurveyResource.State);
+                Assert.Equal(expectedSurveyResource.Channel, actualSurveyResource.Channel);
             }
         }
 
