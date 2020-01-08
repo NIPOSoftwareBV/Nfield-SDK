@@ -19,33 +19,13 @@ using Newtonsoft.Json;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds the properties of survey resources
+    /// Survey channel
     /// </summary>
-    public class SurveyResources : SurveyBase
+    public enum SurveyChannel
     {
-        [JsonProperty]
-        public DateTime? CreationDate { get; internal set; }
-
-        [JsonProperty]
-        public string ClientName { get; internal set; }
-
-        [JsonProperty]
-        public string Owner { get; internal set; }
-
-        [JsonProperty]
-        public DateTime? LastDataDownloadDate { get; internal set; }
-
-        [JsonProperty]
-        public DateTime? LastDataCollectionDate { get; internal set; }
-
-        [JsonProperty]
-        public long? Size { get; internal set; }
-
-        [JsonProperty]
-        public SurveyChannel Channel { get; internal set; }
-
-        [JsonProperty]
-        public SurveyStatus State { get; internal set; }
-
+        Unknown,
+        Cati,
+        Online,
+        Capi,
     }
 }
