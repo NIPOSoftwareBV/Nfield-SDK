@@ -75,7 +75,7 @@ namespace Nfield.Services
 
             for (var i = 0; i < 5; i++)
             {
-                var actualSurveyResource = actualSurveyResources.ToArray()[i];
+                var actualSurveyResource = actualSurveyResources.ElementAt(i);
                 var expectedSurveyResource = expectedSurveyResources[i];
 
                 Assert.Equal(expectedSurveyResource.SurveyId, actualSurveyResource.SurveyId);
