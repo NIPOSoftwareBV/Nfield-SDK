@@ -29,7 +29,7 @@ namespace Nfield.Services
         /// <summary>
         /// Gets survey resources queryable object.
         /// </summary>
-        Task<IQueryable<SurveyResources>> QueryAsync();
+        Task<IQueryable<SurveyResource>> QueryAsync();
         
         #endregion
     }

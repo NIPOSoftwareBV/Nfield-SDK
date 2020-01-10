@@ -38,11 +38,11 @@ namespace Nfield.Services
         [Fact]
         public async Task TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyResources()
         {
-            var expectedSurveyResources = new List<SurveyResources>();
+            var expectedSurveyResources = new List<SurveyResource>();
 
             for (var i = 0; i < 5; i++)
             {
-                var surveyResource = new SurveyResources
+                var surveyResource = new SurveyResource
                 {
                     SurveyId = Guid.NewGuid().ToString(),
                     SurveyName = $"Survey{i}",

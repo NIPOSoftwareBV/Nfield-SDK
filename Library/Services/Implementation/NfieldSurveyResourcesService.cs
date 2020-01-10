@@ -36,14 +36,14 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyResourcesService.QueryAsync"/>
         /// </summary>
-        public Task<IQueryable<SurveyResources>> QueryAsync()
+        public Task<IQueryable<SurveyResource>> QueryAsync()
         {
             return Client.GetAsync(SurveyResourcesApi)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<List<SurveyResources>>(stringTask.Result).AsQueryable())
+                             JsonConvert.DeserializeObject<List<SurveyResource>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
         }
         
