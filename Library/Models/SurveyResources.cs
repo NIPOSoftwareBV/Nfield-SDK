@@ -21,7 +21,7 @@ namespace Nfield.Models
     /// <summary>
     /// Holds the properties of survey resources
     /// </summary>
-    public class SurveyResources : SurveyBase
+    public class SurveyResource : SurveyBase
     {
         [JsonProperty]
         public DateTime? CreationDate { get; internal set; }
