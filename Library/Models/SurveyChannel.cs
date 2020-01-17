@@ -14,33 +14,18 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// Model for the ODIN script (fragment) for a survey
+    /// Survey channel
     /// </summary>
-    public class SurveyScript
+    public enum SurveyChannel
     {
-        /// <summary>
-        /// The ODIN script or script fragment
-        /// </summary>
-        public string Script { get; set; }
-
-        /// <summary>
-        /// The file name
-        /// </summary>
-        public string FileName { get; set; }
-
-        /// <summary>
-        /// Warning messages that resulted from the parse
-        /// </summary>
-        public IEnumerable<string> WarningMessages { get; set; }
-
-        /// <summary>
-        /// Indicates if script with unfixed positions is allowed
-        /// </summary>
-        public bool UnfixedIsOk { get; set; }
+        Unknown,
+        Cati,
+        Online,
+        Capi,
     }
 }

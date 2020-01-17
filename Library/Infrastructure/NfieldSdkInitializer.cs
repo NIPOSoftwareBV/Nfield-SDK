@@ -33,6 +33,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldInterviewsService), typeof(NfieldInterviewsService) },
             { typeof(INfieldInterviewQualityService), typeof(NfieldInterviewQualityService) },
             { typeof(INfieldSurveysService), typeof(NfieldSurveysService) },
+            { typeof(INfieldSurveyResourcesService), typeof(NfieldSurveyResourcesService) },
             { typeof(INfieldRespondentDataEncryptService), typeof(NfieldRespondentDataEncryptService) },
             { typeof(INfieldSurveyDataService), typeof(NfieldSurveyDataService) },
             { typeof(INfieldBackgroundTasksService), typeof(NfieldBackgroundTasksService) },
@@ -73,6 +74,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldExternalApisService), typeof(NfieldExternalApisService) },
             { typeof(INfieldExternalApisLogService), typeof(NfieldExternalApisLogService) },
             { typeof(INfieldLocalUserService), typeof(NfieldLocalUserService) },
+            { typeof(INfieldCatiInterviewersService), typeof(NfieldCatiInterviewersService) }
         };
 
         /// <summary>

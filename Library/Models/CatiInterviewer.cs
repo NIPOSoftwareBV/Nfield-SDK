@@ -13,34 +13,33 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace Nfield.Models
 {
-    /// <summary>
-    /// Model for the ODIN script (fragment) for a survey
-    /// </summary>
-    public class SurveyScript
+    public class CatiInterviewer
     {
         /// <summary>
-        /// The ODIN script or script fragment
+        /// Unique id of the cati interviewer
         /// </summary>
-        public string Script { get; set; }
+        [JsonProperty]
+        public string InterviewerId { get; internal set; }
 
         /// <summary>
-        /// The file name
+        /// User name cati interviewer uses to sign in
         /// </summary>
-        public string FileName { get; set; }
+        public string UserName { get; set; }
 
         /// <summary>
-        /// Warning messages that resulted from the parse
+        /// Password of cati interviewer, only used when creating a cati interviewer
         /// </summary>
-        public IEnumerable<string> WarningMessages { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
-        /// Indicates if script with unfixed positions is allowed
+        /// Last time the password of the cati interviewer was changed
         /// </summary>
-        public bool UnfixedIsOk { get; set; }
+        [JsonProperty]
+        public DateTime? LastPasswordChangeTime { get; internal set; }
     }
 }

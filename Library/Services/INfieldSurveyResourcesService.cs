@@ -13,34 +13,25 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
+using Nfield.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Nfield.Models
+namespace Nfield.Services
 {
     /// <summary>
-    /// Model for the ODIN script (fragment) for a survey
+    /// Represents a method to read survey resources data.
     /// </summary>
-    public class SurveyScript
+    public interface INfieldSurveyResourcesService
     {
-        /// <summary>
-        /// The ODIN script or script fragment
-        /// </summary>
-        public string Script { get; set; }
+        #region CRUD on Survey
 
         /// <summary>
-        /// The file name
+        /// Gets survey resources queryable object.
         /// </summary>
-        public string FileName { get; set; }
-
-        /// <summary>
-        /// Warning messages that resulted from the parse
-        /// </summary>
-        public IEnumerable<string> WarningMessages { get; set; }
-
-        /// <summary>
-        /// Indicates if script with unfixed positions is allowed
-        /// </summary>
-        public bool UnfixedIsOk { get; set; }
+        Task<IQueryable<SurveyResource>> QueryAsync();
+        
+        #endregion
     }
+
 }

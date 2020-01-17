@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
+using System;
 
 namespace Nfield.Models
 {
@@ -69,5 +70,11 @@ namespace Nfield.Models
         /// </summary>
         [JsonProperty]
         public string Id { get; internal set; }
+
+        /// <summary>
+        /// LastLogonDate of the local user to the Nfield System
+        /// </summary>
+        [JsonProperty]
+        public DateTime? LastLogonDate { get; internal set; }
     }
 }
