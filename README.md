@@ -30,7 +30,7 @@ INfieldConnection connection = NfieldConnectionFactory.Create(new Uri("https://a
 
 Sign in using your Nfield credentials.
 ```c#
-connection.SignInAsync("testdomain", "user1", "password123").Wait();
+await connection.SignInAsync("testdomain", "user1", "password123");
 ```
 
 Get a service.
@@ -52,7 +52,6 @@ Interviewer interviewer = new Interviewer
 };
 
 await _interviewersService.AddAsync(interviewer);
-}
 ```
 
 ## Versioning
