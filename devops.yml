@@ -23,20 +23,11 @@ jobs:
     inputs:
       versionSpec: 4.4.1
 
-  - task: NuGetCommand@2
-    displayName: 'NuGet restore'
+  - task: DotNetCoreCLI@2
+    displayName: 'Dotnet Build SDK'
     inputs:
-      restoreSolution: 'Nfield.SDK.sln'
-      vstsFeed: 'e4b9b306-e6e3-47e2-b840-ef9089528984'
-
-  # Build solution
-  - task: VSBuild@1
-    displayName: 'Build solution Nfield.SDK.sln'
-    inputs:
-      solution: 'Nfield.SDK.sln'
-      vsVersion: 16.0
-      platform: '$(BuildPlatform)'
-      configuration: '$(BuildConfiguration)'
+      projects: 'Nfield.SDK.sln'
+      arguments: '--configuration $(BuildConfiguration)'
 
   # Test Assemblies
   - task: VSTest@2
