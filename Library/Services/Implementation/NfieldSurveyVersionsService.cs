@@ -26,7 +26,7 @@ namespace Nfield.Services.Implementation
     {
         #region Implementation of INfieldSurveyPackageService
 
-        public System.Threading.Tasks.Task<IEnumerable<SurveyVersion>> GetSurveyPackageAsync(string surveyId)
+        public System.Threading.Tasks.Task<IEnumerable<SurveyVersion>> GetSurveyVersionsAsync(string surveyId)
         {
             ValidateParams(surveyId);
 

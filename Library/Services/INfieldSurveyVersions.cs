@@ -27,7 +27,7 @@ namespace Nfield.Services
         /// Returns the versions for the specified survey
         /// </summary>
         /// <param name="surveyId">The id of the survey to get the versions.</param>
-        /// <returns>A Task returning the survey package</returns>
-        System.Threading.Tasks.Task<IEnumerable<SurveyVersion>> GetSurveyPackageAsync(string surveyId);
+        /// <returns>A Task returning the survey versions</returns>
+        System.Threading.Tasks.Task<IEnumerable<SurveyVersion>> GetSurveyVersionsAsync(string surveyId);
     }
 }
