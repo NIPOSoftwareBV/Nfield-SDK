@@ -55,11 +55,11 @@ namespace Nfield.Services
         {
             var expectedVersions = new List<SurveyVersion>
             {
-                new SurveyVersion()
+                new SurveyVersion
                 {
                     Etag = "637235755520645294"
                 },
-                 new SurveyVersion()
+                new SurveyVersion
                 {
                     Etag = "637244319282906584"
                 }
