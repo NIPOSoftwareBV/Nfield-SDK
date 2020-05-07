@@ -24,7 +24,7 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyVersionsService : INfieldSurveyVersionsService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldSurveyPackageService
+        #region Implementation of INfieldSurveyVersionsService
 
         public System.Threading.Tasks.Task<IEnumerable<SurveyVersion>> GetSurveyVersionsAsync(string surveyId)
         {
