@@ -62,7 +62,7 @@ namespace Nfield.Services.Implementation
         private static void ValidateParams(string surveyId)
         {
             if (surveyId == null)
-                throw new ArgumentNullException("surveyId");
+                throw new ArgumentNullException(nameof(surveyId));
 
             if (surveyId.Trim().Length == 0)
                 throw new ArgumentException("surveyId cannot be empty");
