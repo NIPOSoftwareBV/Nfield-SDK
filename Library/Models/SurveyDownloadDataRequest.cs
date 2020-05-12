@@ -104,6 +104,6 @@ namespace Nfield.Models
         /// The survey version (Etag)
         /// May be null or 0 if no survey version is specified.
         /// </summary>
-        public long? SurveyVersion { get; set; }
+        public string SurveyVersion { get; set; }
     }
 }
