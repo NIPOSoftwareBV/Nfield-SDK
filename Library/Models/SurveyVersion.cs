@@ -32,6 +32,7 @@ namespace Nfield.Models
         /// <summary>
         /// The date when the survey package was published
         /// </summary>
-        public DateTime PublishDate { get; set; }
+        ///<remarks>Time format is in UTC</remarks>
+        public DateTime PublishDateUtc { get; set; }
     }
 }
