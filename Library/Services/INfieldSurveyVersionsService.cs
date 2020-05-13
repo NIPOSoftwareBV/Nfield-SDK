@@ -15,6 +15,7 @@
 
 using Nfield.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
@@ -28,6 +29,6 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The id of the survey to get the versions.</param>
         /// <returns>A Task returning the survey versions</returns>
-        System.Threading.Tasks.Task<IEnumerable<SurveyVersion>> GetSurveyVersionsAsync(string surveyId);
+        Task<IEnumerable<SurveyVersion>> GetSurveyVersionsAsync(string surveyId);
     }
 }
