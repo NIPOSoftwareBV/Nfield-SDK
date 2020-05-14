@@ -18,6 +18,15 @@ jobs:
   variables:
   - group: Nfield-Variables
   steps:
+
+  # Prepare SonarQube
+  - task: SonarQubePrepare@4
+    inputs:
+      SonarQube: 'SonarCloud'
+      scannerMode: 'MSBuild'
+      projectKey: 'Nfield-SDK'
+      projectName: 'Nfield-SDK'
+
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Build SDK'
     inputs:
@@ -33,6 +42,14 @@ jobs:
         !**\obj\**
       platform: '$(BuildPlatform)'
       configuration: '$(BuildConfiguration)'
+
+  # Run SonarQube analysis
+  - task: SonarQubeAnalyze@4
+
+  # Publish SonarQube results
+  - task: SonarQubePublish@4
+    inputs:
+      pollingTimeoutSec: '300'
 
   - task: PublishSymbols@2
     displayName: 'Publish symbols path'
