@@ -22,7 +22,7 @@ jobs:
   # Prepare SonarQube
   - task: SonarQubePrepare@4
     inputs:
-      SonarQube: 'SonarCloud'
+      SonarQube: 'SonarCloud service principal'
       scannerMode: 'MSBuild'
       projectKey: 'Nfield-SDK'
       projectName: 'Nfield-SDK'
