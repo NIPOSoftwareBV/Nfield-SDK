@@ -19,6 +19,7 @@
 *.tmp
 *.vspscc
 *.vssscc
+.sonarqube/
 
 # ReSharper is a .NET coding add-in
 _ReSharper*/

@@ -26,6 +26,7 @@ jobs:
       scannerMode: 'MSBuild'
       projectKey: 'Nfield-SDK'
       projectName: 'Nfield-SDK'
+      organization: 'nipo'
 
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet Build SDK'
