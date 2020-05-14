@@ -79,6 +79,11 @@ namespace Nfield.Models
         public bool DownloadOpenAnswerData { get; set; }
 
         /// <summary>
+        /// Download the variables file for the interviews
+        /// </summary>
+        public bool DownloadVarFile { get; set; }
+
+        /// <summary>
         /// The name specified by the user for the download file name
         /// </summary>
         public string DownloadFileName { get; set; }
@@ -94,5 +99,11 @@ namespace Nfield.Models
         /// May be null or empty if no end date is specified.
         /// </summary>
         public string EndDate { get; set; }
+
+        /// <summary>
+        /// The survey version (Etag)
+        /// May be null or empty if no survey version is specified.
+        /// </summary>
+        public string SurveyVersion { get; set; }
     }
 }

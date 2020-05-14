@@ -172,11 +172,13 @@ namespace Nfield.SDK.Samples
                 DownloadSuspendedLiveInterviewData = false,
                 DownloadCapturedMedia = false,
                 DownloadParaData = false,
+                DownloadVarFile = false,
                 DownloadTestInterviewData = true,
                 DownloadFileName = "MyFileName",
                 StartDate = DateTime.Today.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time start of today
                 EndDate = DateTime.Today.AddDays(1).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time end of today
-                SurveyId = "SomeSurveyId"
+                SurveyId = "SomeSurveyId",
+                SurveyVersion = "637242848690284790" // If the SurveyVersion (Etag) is specified only the surveys matching this version will be downloaded
             };
 
             var task = surveyDataService.PostAsync(myRequest).Result;
