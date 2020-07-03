@@ -113,8 +113,8 @@ namespace Nfield.Services
             }
 
             Assert.NotEmpty(actual.Link);
-            Assert.True(actual.Link.Contains(surveyId));
-            Assert.True(actual.Link.Contains(filename));
+            Assert.Contains(surveyId, actual.Link);
+            Assert.Contains(filename, actual.Link);
         }
 
         private INfieldConnectionClient InitMockClient(string surveyId, string filename)

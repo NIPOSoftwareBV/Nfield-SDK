@@ -34,7 +34,7 @@ namespace Nfield.Infrastructure
         public void TestGetService_RequestedServiceTypeIsNull_ThrowsArgumentNullException()
         {
             var target = NfieldConnectionFactory.Create(new Uri("http://fake/"));
-            Assert.Throws(typeof(ArgumentNullException), () => target.GetService(null));
+            Assert.Throws<ArgumentNullException>(() => target.GetService(null));
         }
 
         [Fact]
