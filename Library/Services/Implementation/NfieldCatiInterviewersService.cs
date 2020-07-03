@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
-using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using System;

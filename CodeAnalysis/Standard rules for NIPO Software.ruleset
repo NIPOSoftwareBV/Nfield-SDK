@@ -11,4 +11,8 @@
   <Rules AnalyzerId="Microsoft.NetCore.Analyzers" RuleNamespace="Microsoft.NetCore.Analyzers">
     <Rule Id="CA1303" Action="None" />
   </Rules>
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <Rule Id="S4457" Action="None" />
+    <Rule Id="S927" Action="None" />
+  </Rules>
 </RuleSet>

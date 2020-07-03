@@ -81,6 +81,7 @@ namespace Nfield.Utilities
             Assert.Throws<ArgumentNullException>(() => target.DecryptText("data", "key", null));
         }
 
+        [Fact]
         public void TestDecryptText_DecryptionSuccessful_ReturnsExpectedResult()
         {
             var input = new byte[] { 1, 2, 3 };

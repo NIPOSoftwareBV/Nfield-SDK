@@ -156,7 +156,7 @@ namespace Nfield.Services
 
             var result = target.GetSurveysInvitationStatusAsync().Result.ToArray();
 
-            Assert.Equal(1, result.Length);
+            Assert.Single(result);
             Assert.Equal(expectedResult.SurveyId, result[0].SurveyId);
             Assert.Equal(expectedResult.SurveyName, result[0].SurveyName);
             Assert.Equal(expectedResult.InvitationsBlocked, result[0].InvitationsBlocked);
@@ -240,7 +240,7 @@ namespace Nfield.Services
 
             var result = target.GetSurveyBatchesStatusAsync(SurveyId).Result.ToArray();
 
-            Assert.Equal(1, result.Length);
+            Assert.Single(result);
             Assert.Equal(expectedResult.SurveyId, result[0].SurveyId);
             Assert.Equal(expectedResult.BatchName, result[0].BatchName);
             Assert.Equal(expectedResult.Status, result[0].Status);
@@ -324,7 +324,7 @@ namespace Nfield.Services
 
             var result = target.GetInvitationStatusAsync(SurveyId, batchName).Result.ToArray();
 
-            Assert.Equal(1, result.Length);
+            Assert.Single(result);
             Assert.Equal(respondentKey, result[0].RespondentKey);
             Assert.Equal(expectedStatus, result[0].Status);
         }
