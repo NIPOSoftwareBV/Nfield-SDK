@@ -68,9 +68,9 @@ jobs:
       versionEnvVar: Version
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-  # Push NuGet package to Azure DevOps
+  # Publish NuGet package
   - task: NuGetCommand@2
-    displayName: '(when not pull): Push NuGet package to Azure DevOps'
+    displayName: '(when not pull): NuGet push'
     inputs:
       command: push
       nuGetFeedType: external
