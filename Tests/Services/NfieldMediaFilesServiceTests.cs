@@ -49,7 +49,7 @@ namespace Nfield.Services
 
             var actual = target.QueryAsync(surveyId).Result.ToList();
 
-            Assert.Equal(1, actual.Count);
+            Assert.Single(actual);
             Assert.Equal(fileName, actual[0]);
         }
 

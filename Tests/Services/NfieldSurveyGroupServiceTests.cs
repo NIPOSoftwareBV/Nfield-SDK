@@ -84,7 +84,7 @@ namespace Nfield.Services
 
             Assert.NotNull(result);
             Assert.Equal("Default", result.Name);
-            Assert.Equal(null, result.Description);
+            Assert.Null(result.Description);
             Assert.Equal(new DateTime(1799, 11, 10), result.CreationDate);
             Assert.Equal(1, result.SurveyGroupId);
         }
@@ -140,7 +140,7 @@ namespace Nfield.Services
 
             Assert.NotNull(result);
             Assert.Equal("Default", result.Name);
-            Assert.Equal(null, result.Description);
+            Assert.Null(result.Description);
             Assert.Equal(new DateTime(1799, 11, 10), result.CreationDate);
             Assert.Equal(2, result.SurveyGroupId);
 

@@ -265,7 +265,7 @@ namespace Nfield.Services
 
             var actual = target.RemoveAsync(surveyId, templateId).Result;
 
-            Assert.Equal(true, actual);
+            Assert.True(actual);
         }
 
         #endregion

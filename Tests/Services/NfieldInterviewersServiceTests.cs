@@ -149,7 +149,7 @@ namespace Nfield.Services
         public void TestChangePasswordAsync_InterviewerIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldInterviewersService();
-            Assert.Throws(typeof(ArgumentNullException), () => UnwrapAggregateException(target.ChangePasswordAsync(null, string.Empty)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.ChangePasswordAsync(null, string.Empty)));
         }
 
         [Fact]
