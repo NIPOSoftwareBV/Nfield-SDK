@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.SDK.Services.Implementation;
 using Nfield.Services;
 using Nfield.Services.Implementation;
 using Nfield.Utilities;
@@ -75,7 +76,8 @@ namespace Nfield.Infrastructure
             { typeof(INfieldExternalApisLogService), typeof(NfieldExternalApisLogService) },
             { typeof(INfieldLocalUserService), typeof(NfieldLocalUserService) },
             { typeof(INfieldCatiInterviewersService), typeof(NfieldCatiInterviewersService) },
-            { typeof(INfieldSurveyVersionsService), typeof(NfieldSurveyVersionsService) }
+            { typeof(INfieldSurveyVersionsService), typeof(NfieldSurveyVersionsService) },
+            { typeof(INfieldQuotaService), typeof(NfieldQuotaService) }
         };
 
         /// <summary>
