@@ -25,10 +25,18 @@ namespace Nfield.Services
     public interface INfieldQuotaService
     {
         /// <summary>
-        /// Get the quota definition for an online survey
+        /// Gets the quota definition for an online survey
         /// </summary>
         /// <param name="surveyId"></param>
         /// <returns></returns>
         Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId);
+
+        /// <summary>
+        /// Updates the survey quota targets for the specified quota frame version
+        /// </summary>
+        /// <param name="surveyId">The survey to set the quota targets for</param>
+        /// <param name="quotaETag">The quota frame version to set the targets for</param>
+        /// <param name="targets">The new quota frame targets</param>
+        Task SaveQuotaTargetsAsync(string surveyId, string quotaETag, IEnumerable<QuotaFrameLevelTarget> targets);
     }
 }

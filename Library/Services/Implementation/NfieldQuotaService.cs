@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services;
-using Nfield.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services.Implementation
@@ -35,6 +34,14 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
 
+        public Task SaveQuotaTargetsAsync(string surveyId, string quotaETag, IEnumerable<QuotaFrameLevelTarget> targets)
+        {
+            ValidateParams(surveyId);
+
+            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsApi(surveyId, quotaETag), targets)
+                         .FlattenExceptions();
+        }
+
         #endregion
         private INfieldHttpClient Client
         {
@@ -44,6 +51,11 @@ namespace Nfield.SDK.Services.Implementation
         private Uri QuotaFrameVersionsApi(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
+        }
+
+        private Uri EditingQuotaFrameTargetsApi(string surveyId, string version)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{version}/QuotaTargets");
         }
 
         private static void ValidateParams(string surveyId)
