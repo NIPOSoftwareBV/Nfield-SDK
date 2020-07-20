@@ -17,6 +17,7 @@ using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.SDK.Models;
 using Nfield.SDK.Services.Implementation;
 using Nfield.Services.Implementation;
 using System;
@@ -80,6 +81,50 @@ namespace Nfield.Services
 
             Assert.Equal(expectedVersions[0].Etag, actual[0].Etag);
             Assert.Equal(expectedVersions[1].Etag, actual[1].Etag);
+        }
+
+        #endregion
+
+        #region GetQuotaFrameAsync
+
+        [Fact]
+        public void Test_GetQuotaFrameAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldQuotaService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.GetQuotaFrameAsync(null, 1)));
+        }
+
+        [Fact]
+        public void Test_GetQuotaFrameAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldQuotaService();
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.GetQuotaFrameAsync(string.Empty, 1)));
+        }
+
+        [Fact]
+        public void Test_GetQuotaFrameAsync_ReturnsQuotaFrame()
+        {
+            const long quotaVersion = 3;
+            var expecteQuotaFrame = new QuotaFrame
+            {
+                Id = "frameId",
+                Target = 100
+            };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/QuotaVersions/" + quotaVersion)))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expecteQuotaFrame))));
+
+            var target = new NfieldQuotaService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.GetQuotaFrameAsync(SurveyId, quotaVersion).Result;
+
+            Assert.Equal(expecteQuotaFrame.Id, actual.Id);
+            Assert.Equal(expecteQuotaFrame.Target, actual.Target);
         }
 
         #endregion
