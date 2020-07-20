@@ -13,31 +13,49 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Nfield.Models;
-using Nfield.SDK.Models;
 
-namespace Nfield.Services
+namespace Nfield.SDK.Models
 {
     /// <summary>
-    /// Represents a set of methods to read survey quota.
+    /// Represents the quota frame level
     /// </summary>
-    public interface INfieldQuotaService
+    public class QuotaFrameLevel
     {
         /// <summary>
-        /// Gets the quota definition for an online survey
-        /// </summary>
-        /// <param name="surveyId">The survey id</param>
-        /// <returns></returns>
-        Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId);
+        /// The unique identifier of the level
+        /// </summary>    
+        public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets the specified version of the quota frame  
+        /// The level name
         /// </summary>
-        /// <param name="surveyId">The survey id</param>
-        /// <param name="eTag">The version of the quota frame to retrieve</param>
-        /// <returns></returns>
-        Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, long eTag);
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Collection of variables
+        /// </summary>
+        public IEnumerable<QuotaFrameVariable> Variables { get; set; }
+
+        /// <summary>
+        /// Level target
+        /// </summary>
+        public int? Target { get; set; }
+
+        /// <summary>
+        /// Level maximum target
+        /// </summary>
+        public int? MaxTarget { get; set; }
+
+        /// <summary>
+        /// Level maximum overshoot
+        /// </summary>
+        public int? MaxOvershoot { get; set; }
+
+        /// <summary>
+        /// Successful count
+        /// </summary>
+        public int Successful { get; set; }
     }
 }

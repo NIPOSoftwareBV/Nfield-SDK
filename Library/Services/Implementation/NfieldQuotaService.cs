@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.SDK.Models;
 using Nfield.Services;
-using Nfield.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services.Implementation
@@ -25,14 +25,30 @@ namespace Nfield.SDK.Services.Implementation
 
         #region Implementation of INfieldQuotaService
 
+        /// <summary>
+        /// See <see cref="INfieldQuotaService.GetQuotaFrameVersionsAsync"/>
+        /// </summary>
         public Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId)
         {
-            ValidateParams(surveyId);
+            ValidateSurveyId(surveyId);
 
-            return Client.GetAsync(QuotaFrameVersionsApi(surveyId))
+            return Client.GetAsync(QuotaFrameVersionsUri(surveyId))
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<QuotaFrameVersion>>(task.Result))
                          .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldQuotaService.GetQuotaFrameAsync"/>
+        /// </summary>
+        public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, long eTag)
+        {
+            ValidateSurveyId(surveyId);
+
+            return Client.GetAsync(QuotaFrameUri(surveyId, eTag))
+             .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+             .ContinueWith(task => JsonConvert.DeserializeObject<QuotaFrame>(task.Result))
+             .FlattenExceptions();
         }
 
         #endregion
@@ -41,12 +57,17 @@ namespace Nfield.SDK.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri QuotaFrameVersionsApi(string surveyId)
+        private Uri QuotaFrameVersionsUri(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
         }
 
-        private static void ValidateParams(string surveyId)
+        private Uri QuotaFrameUri(string surveyId, long eTag)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{eTag}");
+        }
+
+        private static void ValidateSurveyId(string surveyId)
         {
             if (surveyId == null)
                 throw new ArgumentNullException(nameof(surveyId));
