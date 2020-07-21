@@ -41,22 +41,22 @@ namespace Nfield.SDK.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldQuotaService.UpdateQuotaTargetsAsync"/>
         /// </summary>
-        public Task UpdateQuotaTargetsAsync(string surveyId, string ETag, IEnumerable<QuotaFrameLevelTarget> targets)
+        public Task UpdateQuotaTargetsAsync(string surveyId, string etag, IEnumerable<QuotaFrameLevelTarget> targets)
         {
             ValidateSurveyId(surveyId);
 
-            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsUri(surveyId, ETag), targets)
+            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsUri(surveyId, etag), targets)
                          .FlattenExceptions();
         }
 
         /// <summary>
         /// See <see cref="INfieldQuotaService.GetQuotaFrameAsync"/>
         /// </summary>
-        public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string Etag)
+        public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string etag)
         {
             ValidateSurveyId(surveyId);
 
-            return Client.GetAsync(QuotaFrameUri(surveyId, Etag))
+            return Client.GetAsync(QuotaFrameUri(surveyId, etag))
              .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(task => JsonConvert.DeserializeObject<QuotaFrame>(task.Result))
              .FlattenExceptions();
@@ -73,14 +73,14 @@ namespace Nfield.SDK.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
         }
 
-        private Uri EditingQuotaFrameTargetsUri(string surveyId, string version)
+        private Uri EditingQuotaFrameTargetsUri(string surveyId, string etag)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{version}/QuotaTargets");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{etag}/QuotaTargets");
         }
 
-        private Uri QuotaFrameUri(string surveyId, string Etag)
+        private Uri QuotaFrameUri(string surveyId, string etag)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{Etag}");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{etag}");
         }
 
         private static void ValidateSurveyId(string surveyId)
