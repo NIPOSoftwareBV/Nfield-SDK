@@ -61,11 +61,11 @@ namespace Nfield.Services
             {
                 new QuotaFrameVersion
                 {
-                    Etag = "637235755520645294"
+                    ETag = "637235755520645294"
                 },
                 new QuotaFrameVersion
                 {
-                    Etag = "637244319282906584"
+                    ETag = "637244319282906584"
                 }
             }.ToArray();
 
@@ -81,8 +81,8 @@ namespace Nfield.Services
 
             var actual = target.GetQuotaFrameVersionsAsync(SurveyId).Result.ToArray();
 
-            Assert.Equal(expectedVersions[0].Etag, actual[0].Etag);
-            Assert.Equal(expectedVersions[1].Etag, actual[1].Etag);
+            Assert.Equal(expectedVersions[0].ETag, actual[0].ETag);
+            Assert.Equal(expectedVersions[1].ETag, actual[1].ETag);
         }
 
         #endregion
