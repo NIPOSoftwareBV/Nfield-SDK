@@ -30,7 +30,7 @@ namespace Nfield.SDK.Services.Implementation
         /// </summary>
         public Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId)
         {
-            ValidateParams(surveyId);
+            ValidateSurveyId(surveyId);
 
             return Client.GetAsync(QuotaFrameVersionsUri(surveyId))
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -41,11 +41,11 @@ namespace Nfield.SDK.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldQuotaService.UpdateQuotaTargetsAsync"/>
         /// </summary>
-        public Task UpdateQuotaTargetsAsync(string surveyId, string quotaETag, IEnumerable<QuotaFrameLevelTarget> targets)
+        public Task UpdateQuotaTargetsAsync(string surveyId, string ETag, IEnumerable<QuotaFrameLevelTarget> targets)
         {
-            ValidateParams(surveyId);
+            ValidateSurveyId(surveyId);
 
-            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsUri(surveyId, quotaETag), targets)
+            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsUri(surveyId, ETag), targets)
                          .FlattenExceptions();
         }
 
@@ -54,7 +54,7 @@ namespace Nfield.SDK.Services.Implementation
         /// </summary>
         public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string Etag)
         {
-            ValidateParams(surveyId);
+            ValidateSurveyId(surveyId);
 
             return Client.GetAsync(QuotaFrameUri(surveyId, Etag))
              .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -83,7 +83,7 @@ namespace Nfield.SDK.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{Etag}");
         }
 
-        private static void ValidateParams(string surveyId)
+        private static void ValidateSurveyId(string surveyId)
         {
             if (surveyId == null)
                 throw new ArgumentNullException(nameof(surveyId));
