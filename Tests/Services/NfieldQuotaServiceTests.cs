@@ -35,6 +35,8 @@ namespace Nfield.Services
     public class NfieldQuotaServiceTests : NfieldServiceTestsBase
     {
         private const string SurveyId = "SurveyId";
+        private List<QuotaFrameLevelTarget> quotaFrameTargets = new List<QuotaFrameLevelTarget>();
+        private string quotaETag = "637235755520645297";
 
         #region GetQuotaFrameVersionsAsync
 
@@ -81,6 +83,24 @@ namespace Nfield.Services
 
             Assert.Equal(expectedVersions[0].Etag, actual[0].Etag);
             Assert.Equal(expectedVersions[1].Etag, actual[1].Etag);
+        }
+
+        #endregion
+
+        #region UpdateQuotaTargetsAsync
+
+        [Fact]
+        public void Test_UpdateQuotaTargetsAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldQuotaService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateQuotaTargetsAsync(null, quotaETag, quotaFrameTargets)));
+        }
+
+        [Fact]
+        public void Test_UpdateQuotaTargetsAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldQuotaService();
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateQuotaTargetsAsync(string.Empty, quotaETag, quotaFrameTargets)));
         }
 
         #endregion

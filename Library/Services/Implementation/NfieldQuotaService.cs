@@ -30,7 +30,7 @@ namespace Nfield.SDK.Services.Implementation
         /// </summary>
         public Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId)
         {
-            ValidateSurveyId(surveyId);
+            ValidateParams(surveyId);
 
             return Client.GetAsync(QuotaFrameVersionsUri(surveyId))
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -39,11 +39,22 @@ namespace Nfield.SDK.Services.Implementation
         }
 
         /// <summary>
+        /// See <see cref="INfieldQuotaService.UpdateQuotaTargetsAsync"/>
+        /// </summary>
+        public Task UpdateQuotaTargetsAsync(string surveyId, string quotaETag, IEnumerable<QuotaFrameLevelTarget> targets)
+        {
+            ValidateParams(surveyId);
+
+            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsUri(surveyId, quotaETag), targets)
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
         /// See <see cref="INfieldQuotaService.GetQuotaFrameAsync"/>
         /// </summary>
         public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string Etag)
         {
-            ValidateSurveyId(surveyId);
+            ValidateParams(surveyId);
 
             return Client.GetAsync(QuotaFrameUri(surveyId, Etag))
              .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -62,12 +73,17 @@ namespace Nfield.SDK.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
         }
 
+        private Uri EditingQuotaFrameTargetsUri(string surveyId, string version)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{version}/QuotaTargets");
+        }
+
         private Uri QuotaFrameUri(string surveyId, string Etag)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{Etag}");
         }
 
-        private static void ValidateSurveyId(string surveyId)
+        private static void ValidateParams(string surveyId)
         {
             if (surveyId == null)
                 throw new ArgumentNullException(nameof(surveyId));
