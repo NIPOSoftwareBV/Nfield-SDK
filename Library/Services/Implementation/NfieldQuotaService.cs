@@ -2,6 +2,7 @@
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.SDK.Models;
 using Nfield.Services;
 using System;
 using System.Collections.Generic;
@@ -24,22 +25,41 @@ namespace Nfield.SDK.Services.Implementation
 
         #region Implementation of INfieldQuotaService
 
+        /// <summary>
+        /// See <see cref="INfieldQuotaService.GetQuotaFrameVersionsAsync"/>
+        /// </summary>
         public Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId)
         {
             ValidateParams(surveyId);
 
-            return Client.GetAsync(QuotaFrameVersionsApi(surveyId))
+            return Client.GetAsync(QuotaFrameVersionsUri(surveyId))
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<QuotaFrameVersion>>(task.Result))
                          .FlattenExceptions();
         }
 
-        public Task SaveQuotaTargetsAsync(string surveyId, string quotaETag, IEnumerable<QuotaFrameLevelTarget> targets)
+        /// <summary>
+        /// See <see cref="INfieldQuotaService.UpdateQuotaTargetsAsync"/>
+        /// </summary>
+        public Task UpdateQuotaTargetsAsync(string surveyId, string quotaETag, IEnumerable<QuotaFrameLevelTarget> targets)
         {
             ValidateParams(surveyId);
 
-            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsApi(surveyId, quotaETag), targets)
+            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsUri(surveyId, quotaETag), targets)
                          .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldQuotaService.GetQuotaFrameAsync"/>
+        /// </summary>
+        public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, long eTag)
+        {
+            ValidateParams(surveyId);
+
+            return Client.GetAsync(QuotaFrameUri(surveyId, eTag))
+             .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+             .ContinueWith(task => JsonConvert.DeserializeObject<QuotaFrame>(task.Result))
+             .FlattenExceptions();
         }
 
         #endregion
@@ -48,14 +68,19 @@ namespace Nfield.SDK.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri QuotaFrameVersionsApi(string surveyId)
+        private Uri QuotaFrameVersionsUri(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
         }
 
-        private Uri EditingQuotaFrameTargetsApi(string surveyId, string version)
+        private Uri EditingQuotaFrameTargetsUri(string surveyId, string version)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{version}/QuotaTargets");
+        }
+
+        private Uri QuotaFrameUri(string surveyId, long eTag)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{eTag}");
         }
 
         private static void ValidateParams(string surveyId)
