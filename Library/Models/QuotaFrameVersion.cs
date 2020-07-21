@@ -32,7 +32,7 @@ namespace Nfield.Models
         /// The version of the quota frame
         /// </summary>
         [JsonProperty(PropertyName = "eTag")]
-        public string Etag { get; set; }
+        public string ETag { get; set; }
 
         /// <summary>
         /// The timestamp for when the quota frame was published

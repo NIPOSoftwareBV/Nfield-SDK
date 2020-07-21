@@ -29,22 +29,21 @@ namespace Nfield.Services
         /// Gets the quota definition for an online survey
         /// </summary>
         /// <param name="surveyId">The survey id</param>
-        /// <returns></returns>
         Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId);
 
         /// <summary>
         /// Updates the survey quota targets for the specified quota frame version
         /// </summary>
         /// <param name="surveyId">The survey to set the quota targets for</param>
-        /// <param name="quotaETag">The quota frame version to set the targets for</param>
+        /// <param name="eTag">The quota frame version to set the targets for</param>
         /// <param name="targets">The new quota frame targets</param>
-        Task UpdateQuotaTargetsAsync(string surveyId, string quotaETag, IEnumerable<QuotaFrameLevelTarget> targets);
+        Task UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets);
 
+        /// <summary>
         /// Gets the specified version of the quota frame  
         /// </summary>
         /// <param name="surveyId">The survey id</param>
         /// <param name="eTag">The version of the quota frame to retrieve</param>
-        /// <returns></returns>
-        Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, long eTag);
+        Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string eTag);
     }
 }
