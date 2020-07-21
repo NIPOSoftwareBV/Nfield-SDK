@@ -91,20 +91,20 @@ namespace Nfield.Services
         public void Test_GetQuotaFrameAsync_SurveyIdIsNull_Throws()
         {
             var target = new NfieldQuotaService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.GetQuotaFrameAsync(null, 1)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.GetQuotaFrameAsync(null, "1")));
         }
 
         [Fact]
         public void Test_GetQuotaFrameAsync_SurveyIdIsEmpty_Throws()
         {
             var target = new NfieldQuotaService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.GetQuotaFrameAsync(string.Empty, 1)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.GetQuotaFrameAsync(string.Empty, "1")));
         }
 
         [Fact]
         public void Test_GetQuotaFrameAsync_ReturnsQuotaFrame()
         {
-            const long quotaVersion = 3;
+            const string quotaVersion = "3";
             var expecteQuotaFrame = new QuotaFrame
             {
                 Id = "frameId",

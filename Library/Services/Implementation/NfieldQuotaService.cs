@@ -41,11 +41,11 @@ namespace Nfield.SDK.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldQuotaService.GetQuotaFrameAsync"/>
         /// </summary>
-        public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, long eTag)
+        public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string Etag)
         {
             ValidateSurveyId(surveyId);
 
-            return Client.GetAsync(QuotaFrameUri(surveyId, eTag))
+            return Client.GetAsync(QuotaFrameUri(surveyId, Etag))
              .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(task => JsonConvert.DeserializeObject<QuotaFrame>(task.Result))
              .FlattenExceptions();
@@ -62,9 +62,9 @@ namespace Nfield.SDK.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
         }
 
-        private Uri QuotaFrameUri(string surveyId, long eTag)
+        private Uri QuotaFrameUri(string surveyId, string Etag)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{eTag}");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{Etag}");
         }
 
         private static void ValidateSurveyId(string surveyId)

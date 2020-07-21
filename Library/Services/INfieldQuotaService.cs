@@ -36,8 +36,8 @@ namespace Nfield.Services
         /// Gets the specified version of the quota frame  
         /// </summary>
         /// <param name="surveyId">The survey id</param>
-        /// <param name="eTag">The version of the quota frame to retrieve</param>
+        /// <param name="Etag">The version of the quota frame to retrieve</param>
         /// <returns></returns>
-        Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, long eTag);
+        Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string Etag);
     }
 }
