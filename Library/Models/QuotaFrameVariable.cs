@@ -13,31 +13,34 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Nfield.Models;
-using Nfield.SDK.Models;
 
-namespace Nfield.Services
+namespace Nfield.SDK.Models
 {
     /// <summary>
-    /// Represents a set of methods to read survey quota.
+    /// Represents the quota frame variable
     /// </summary>
-    public interface INfieldQuotaService
+    public class QuotaFrameVariable
     {
         /// <summary>
-        /// Gets the quota definition for an online survey
-        /// </summary>
-        /// <param name="surveyId">The survey id</param>
-        /// <returns></returns>
-        Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId);
+        /// The unique identifier of the variable
+        /// </summary>        
+        public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets the specified version of the quota frame  
+        /// The variable name
         /// </summary>
-        /// <param name="surveyId">The survey id</param>
-        /// <param name="eTag">The version of the quota frame to retrieve</param>
-        /// <returns></returns>
-        Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, long eTag);
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Indication if it's a multi variable
+        /// </summary>
+        public bool IsMulti { get; set; }
+
+        /// <summary>
+        /// Collection of levels
+        /// </summary>
+        public IEnumerable<QuotaFrameLevel> Levels { get; set; }
     }
 }
