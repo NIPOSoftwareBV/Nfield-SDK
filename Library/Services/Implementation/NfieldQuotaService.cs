@@ -45,7 +45,7 @@ namespace Nfield.SDK.Services.Implementation
         {
             ValidateSurveyId(surveyId);
 
-            return Client.PutAsJsonAsync(EditingQuotaFrameTargetsUri(surveyId, eTag), targets)
+            return Client.PutAsJsonAsync(QuotaFrameTargetsUri(surveyId, eTag), targets)
                          .FlattenExceptions();
         }
 
@@ -73,9 +73,9 @@ namespace Nfield.SDK.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
         }
 
-        private Uri EditingQuotaFrameTargetsUri(string surveyId, string eTag)
+        private Uri QuotaFrameTargetsUri(string surveyId, string eTag)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions/{eTag}/QuotaTargets");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Quota/{eTag}");
         }
 
         private Uri QuotaFrameUri(string surveyId, string eTag)
