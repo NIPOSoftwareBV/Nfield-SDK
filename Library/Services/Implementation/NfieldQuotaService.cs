@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.SDK.Models;
@@ -28,38 +27,39 @@ namespace Nfield.SDK.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldQuotaService.GetQuotaFrameVersionsAsync"/>
         /// </summary>
-        public Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId)
+        public async Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId)
         {
             ValidateSurveyId(surveyId);
 
-            return Client.GetAsync(QuotaFrameVersionsUri(surveyId))
-                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<QuotaFrameVersion>>(task.Result))
-                         .FlattenExceptions();
+            var result = await Client.GetAsync(QuotaFrameVersionsUri(surveyId)).ConfigureAwait(false);
+
+            var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return JsonConvert.DeserializeObject<IEnumerable<QuotaFrameVersion>>(content);
         }
 
         /// <summary>
         /// See <see cref="INfieldQuotaService.UpdateQuotaTargetsAsync"/>
         /// </summary>
-        public Task UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets)
+        public async Task UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets)
         {
             ValidateSurveyId(surveyId);
 
-            return Client.PutAsJsonAsync(QuotaFrameTargetsUri(surveyId, eTag), targets)
-                         .FlattenExceptions();
+            await Client.PutAsJsonAsync(QuotaFrameTargetsUri(surveyId, eTag), targets).ConfigureAwait(false);
         }
 
         /// <summary>
         /// See <see cref="INfieldQuotaService.GetQuotaFrameAsync"/>
         /// </summary>
-        public Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string eTag)
+        public async Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string eTag)
         {
             ValidateSurveyId(surveyId);
 
-            return Client.GetAsync(QuotaFrameUri(surveyId, eTag))
-             .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-             .ContinueWith(task => JsonConvert.DeserializeObject<QuotaFrame>(task.Result))
-             .FlattenExceptions();
+            var result = await Client.GetAsync(QuotaFrameUri(surveyId, eTag)).ConfigureAwait(false);
+
+            var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return JsonConvert.DeserializeObject<QuotaFrame>(content);
         }
 
         #endregion
