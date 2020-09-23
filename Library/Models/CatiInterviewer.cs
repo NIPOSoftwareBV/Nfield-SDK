@@ -41,5 +41,10 @@ namespace Nfield.Models
         /// </summary>
         [JsonProperty]
         public DateTime? LastPasswordChangeTime { get; internal set; }
+
+        /// <summary>
+        /// The telephone number of the cati interviewer
+        /// </summary>
+        public string TelephoneNumber { get; set; }
     }
 }
