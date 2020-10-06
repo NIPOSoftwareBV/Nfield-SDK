@@ -131,7 +131,8 @@ namespace Nfield.Services
                 FromName = "TestFromName",
                 Id = "TestId",
                 PostalAddress = "TestPostalAddress",
-                ReplyToAddress = "TestReplyToAddress"
+                ReplyToAddress = "TestReplyToAddress",
+                EmailColumn = "TestEmailColumn"
             };
         }
 
@@ -142,6 +143,7 @@ namespace Nfield.Services
             Assert.Equal(expected.FromName, actual.FromName);
             Assert.Equal(expected.PostalAddress, actual.PostalAddress);
             Assert.Equal(expected.ReplyToAddress, actual.ReplyToAddress);
+            Assert.Equal(expected.EmailColumn, actual.EmailColumn);
         }
     }
 }
