@@ -41,5 +41,10 @@ namespace Nfield.Models
         /// </summary>
         public string Id { get; set; }
 
+        /// <summary>
+        /// The column used to store the emails
+        /// </summary>
+        public string EmailColumn { get; set; }
+
     }
 }
