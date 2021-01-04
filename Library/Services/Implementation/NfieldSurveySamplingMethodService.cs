@@ -32,10 +32,9 @@ namespace Nfield.Services.Implementation
 
         public async Task<SamplingMethodType> GetAsync(string surveyId)
         {
-            if (surveyId == null)
-                throw new ArgumentNullException(nameof(surveyId));
+            CheckSurveyId(surveyId);
 
-            var result = await Client.GetAsync(SurveySamplingMethodUri(surveyId)).ConfigureAwait(false);
+                        var result = await Client.GetAsync(SurveySamplingMethodUri(surveyId)).ConfigureAwait(false);
 
             var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
@@ -46,8 +45,7 @@ namespace Nfield.Services.Implementation
 
         public async Task UpdateAsync(string surveyId, SamplingMethodType samplingMethod)
         {
-            if (surveyId == null)
-                throw new ArgumentNullException(nameof(surveyId));
+            CheckSurveyId(surveyId);
 
             var samplingMethodModel = new SamplingMethodModel
             {
@@ -60,6 +58,15 @@ namespace Nfield.Services.Implementation
         private Uri SurveySamplingMethodUri(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/SamplingMethod/");
+        }
+
+        private static void CheckSurveyId(string surveyId)
+        {
+            if (surveyId == null)
+                throw new ArgumentNullException(nameof(surveyId));
+
+            if (surveyId.Trim().Length.Equals(0))
+                throw new ArgumentException("surveyId cannot be empty");
         }
 
         #endregion
