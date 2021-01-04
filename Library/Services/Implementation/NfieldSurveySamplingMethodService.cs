@@ -34,7 +34,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-                        var result = await Client.GetAsync(SurveySamplingMethodUri(surveyId)).ConfigureAwait(false);
+            var result = await Client.GetAsync(SurveySamplingMethodUri(surveyId)).ConfigureAwait(false);
 
             var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
