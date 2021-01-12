@@ -174,6 +174,7 @@ namespace Nfield.SDK.Samples
                 DownloadParaData = false,
                 DownloadVarFile = false,
                 DownloadTestInterviewData = true,
+                DownloadQuestionnaireScript = true,
                 DownloadFileName = "MyFileName",
                 StartDate = DateTime.Today.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time start of today
                 EndDate = DateTime.Today.AddDays(1).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time end of today

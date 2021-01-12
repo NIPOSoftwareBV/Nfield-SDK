@@ -83,6 +83,11 @@ namespace Nfield.Models
         /// </summary>
         public bool DownloadVarFile { get; set; }
 
+
+        /// <summary>
+        /// Download the questionnaire script
+        /// </summary>
+        public bool DownloadQuestionnaireScript { get; set; }
         /// <summary>
         /// The name specified by the user for the download file name
         /// </summary>
