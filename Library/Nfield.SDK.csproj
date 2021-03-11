@@ -11,7 +11,6 @@
     <PackageIconUrl>https://raw.githubusercontent.com/NIPOSoftware/Nfield-SDK/master/icon-nfield.png</PackageIconUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>nfield marketresearch capi cawi</PackageTags>
-    <CodeAnalysisRuleSet>..\CodeAnalysis\Standard Rules for NIPO Software.ruleset</CodeAnalysisRuleSet>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\Nfield.SDK.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
