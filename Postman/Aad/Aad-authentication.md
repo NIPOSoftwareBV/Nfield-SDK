@@ -3,15 +3,6 @@
 We recently added support for AAD (Office 365) authentication to the Nfield API. To
 use this from within NIPO, you can follow these steps.
 
-## Download the ADTokenHelper tool
-
-This tool can be found
-[here](https://ktglbuc.sharepoint.com/sites/niposoftware/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2Fniposoftware%2FShared%20Documents%2FTools%20and%20Installers%2FADTokenHelper).
-You need to download all the files, or the program won't work. You can
-double-click the executable to get a token. This token will be copied to your
-clipboard. Note that tokens expire at some point. When that happens you can
-just double-click the executable again to get a new one.
-
 ## Using Postman
 
 The collections in this folder use AAD Authentication.
@@ -22,7 +13,7 @@ In the collection folder, click `...` and then `Edit` to edit the collection, se
 *Figure 1. Edit the collection*
 
 On the `Authorization` tab, the option `Bearer Token` is selected.
-In the `Token` textbox, you should paste the token you got from the ADTokenHelper tool.
+In the `Token` textbox, you should paste the token you got from AAD using e.g. the [MSAL.NET](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-initializing-client-applications) library. The inputs to this library are your own application id, its secret (in case of a backend app) and the application id (resource) of the Nfield Public Api.
 
 ![Paste the Bearer Token](paste-bearer-token.png)
 *Figure 2. Paste the Bearer Token*
