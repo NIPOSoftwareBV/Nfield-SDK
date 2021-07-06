@@ -78,7 +78,8 @@ namespace Nfield.Infrastructure
             { typeof(INfieldCatiInterviewersService), typeof(NfieldCatiInterviewersService) },
             { typeof(INfieldSurveyVersionsService), typeof(NfieldSurveyVersionsService) },
             { typeof(INfieldQuotaService), typeof(NfieldQuotaService) },
-            { typeof(INfieldSurveySamplingMethodService), typeof(NfieldSurveySamplingMethodService) }
+            { typeof(INfieldSurveySamplingMethodService), typeof(NfieldSurveySamplingMethodService) },
+            { typeof(INfieldSurveyPerformanceService), typeof(NfieldSurveyPerformanceService) }
         };
 
         /// <summary>
