@@ -23,8 +23,8 @@ namespace Nfield.Models
         public int Warn { get; set; }
 
         /// <summary>
-        /// The number of times an interview reached the kill threshold
+        /// The number of times an interview reached the block threshold
         /// </summary>
-        public int Kill { get; set; }
+        public int Block { get; set; }
     }
 }

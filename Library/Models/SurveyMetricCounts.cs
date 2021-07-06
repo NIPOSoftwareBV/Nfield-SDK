@@ -29,12 +29,12 @@ namespace Nfield.Models
         public string MetricName { get; set; }
 
         /// <summary>
-        /// The number of times an interview reached the warn or kill threshold for the current published version of the survey, for the specified metric
+        /// The number of times an interview reached the warn or block threshold for the current published version of the survey, for the specified metric
         /// </summary>
         public MetricCounts All { get; set; }
 
         /// <summary>
-        /// The number of times an interview reached the warn or kill threshold for the current published version of the survey, for the specified metric
+        /// The number of times an interview reached the warn or block threshold for the current published version of the survey, for the specified metric
         /// </summary>
         public MetricCounts Published { get; set; }
     }

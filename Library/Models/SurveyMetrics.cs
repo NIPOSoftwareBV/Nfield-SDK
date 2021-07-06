@@ -25,17 +25,17 @@ namespace Nfield.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// The number of times an interview reached the warn or kill threshold for the current published version of the survey
+        /// The number of times an interview reached the warn or block threshold for the current published version of the survey
         /// </summary>
         public int PublishedCount { get; set; }
 
         /// <summary>
-        /// The number of times an interview reached the warn or kill threshold
+        /// The number of times an interview reached the warn or block threshold
         /// </summary>
         public int TotalCount { get; set; }
 
         /// <summary>
-        /// The warning and kill counts per metric
+        /// The warn and block counts per metric
         /// </summary>
         public IEnumerable<SurveyMetricCounts> Counts { get; set; }
     }
