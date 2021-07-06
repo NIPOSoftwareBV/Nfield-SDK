@@ -16,7 +16,7 @@
 using Nfield.Models;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services
+namespace Nfield.Services
 {
     /// <summary>
     /// Represents a set of methods to read survey performance metrics.
