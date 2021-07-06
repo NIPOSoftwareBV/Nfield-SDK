@@ -24,10 +24,10 @@ namespace Nfield.Services
     public interface INfieldSurveyPerformanceService
     {
         /// <summary>
-        /// Get the survey performance metrics, for the live survey, that indicate how many times the survey has reached the warn and kill thresholds of their respective metric.
+        /// Get the survey performance metrics, for the live interviews, that indicate how many times the survey has reached the warn and block thresholds of their respective metric.
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
-        /// <returns>The survey metrics containing the amount of times the survey reached the thresholds of warn and kill</returns>
+        /// <returns>The survey metrics containing the amount of times the survey reached the thresholds of warn and block</returns>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Exceptions.NfieldErrorException"></exception>
@@ -35,10 +35,10 @@ namespace Nfield.Services
         Task<SurveyMetrics> GetLiveMetricsAsync(string surveyId);
 
         /// <summary>
-        /// Get the survey performance metrics, for the test survey, that indicate how many times the survey has reached the warn and kill thresholds of their respective metric.
+        /// Get the survey performance metrics, for the test inteviews, that indicate how many times the survey has reached the warn and block thresholds of their respective metric.
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
-        /// <returns>The survey metrics containing the amount of times the survey reached the thresholds of warn and kill</returns>
+        /// <returns>The survey metrics containing the amount of times the survey reached the thresholds of warn and block</returns>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Exceptions.NfieldErrorException"></exception>
