@@ -755,5 +755,49 @@ namespace Nfield.Services
         }
 
         #endregion
+
+        #region DialMode
+
+
+        [Fact]
+        public void TestGetDialMode_ServerAcceptsGet_ReturnsDialMode()
+        {
+            SDK.Models.DialMode expectedDialMode = SDK.Models.DialMode.Predictive;
+            var dialModeModel = new UpdateDialMode
+            {
+                DialMode = expectedDialMode
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "surveys/1/dialmode")))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(dialModeModel))));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualDialMode = target.GetDialModeAsync("1").Result;
+
+            Assert.Equal(expectedDialMode, actualDialMode);
+        }
+
+        [Fact]
+        public void TestSetDialModeAsync_ServerAcceptsPatch_ReturnsNoError()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync<UpdateDialMode>(
+                new Uri(ServiceAddress, "surveys/1/dialmode"), It.IsAny<UpdateDialMode>()))
+                                    .Returns(CreateTask(HttpStatusCode.NoContent));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.SetDialModeAsync("1", SDK.Models.DialMode.Power).Wait();
+        }
+
+        #endregion
+
     }
 }
