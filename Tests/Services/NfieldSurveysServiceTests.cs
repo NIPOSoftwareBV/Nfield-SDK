@@ -763,7 +763,7 @@ namespace Nfield.Services
         public void TestGetDialMode_ServerAcceptsGet_ReturnsDialMode()
         {
             SDK.Models.DialMode expectedDialMode = SDK.Models.DialMode.Predictive;
-            var dialModeModel = new UpdateDialMode
+            var dialModeModel = new DialModeModel
             {
                 DialMode = expectedDialMode
             };
@@ -787,8 +787,8 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            mockedHttpClient.Setup(client => client.PatchAsJsonAsync<UpdateDialMode>(
-                new Uri(ServiceAddress, "surveys/1/dialmode"), It.IsAny<UpdateDialMode>()))
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync<DialModeModel>(
+                new Uri(ServiceAddress, "surveys/1/dialmode"), It.IsAny<DialModeModel>()))
                                     .Returns(CreateTask(HttpStatusCode.NoContent));
 
             var target = new NfieldSurveysService();

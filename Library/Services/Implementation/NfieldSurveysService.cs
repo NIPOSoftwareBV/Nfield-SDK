@@ -460,7 +460,7 @@ namespace Nfield.Services.Implementation
             using (var response = await Client.GetAsync(uri).ConfigureAwait(false))
             {
                 var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var model = JsonConvert.DeserializeObject<UpdateDialMode>(result);
+                var model = JsonConvert.DeserializeObject<DialModeModel>(result);
                 return model.DialMode;
             }
         }
@@ -468,7 +468,7 @@ namespace Nfield.Services.Implementation
         public async Task SetDialModeAsync(string surveyId, SDK.Models.DialMode dialMode)
         {
             var uri = GetDialModeUri(surveyId);
-            var model = new UpdateDialMode { DialMode = dialMode };
+            var model = new DialModeModel { DialMode = dialMode };
             (await Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false)).Dispose();
         }
 
@@ -608,7 +608,7 @@ namespace Nfield.Services.Implementation
         public string InterviewerInstruction { get; set; }
     }
 
-    internal class UpdateDialMode
+    internal class DialModeModel
     {
         public SDK.Models.DialMode DialMode { get; set; }
     }
