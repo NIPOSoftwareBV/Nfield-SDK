@@ -250,5 +250,12 @@ namespace Nfield.Services
 
         #endregion
 
+        #region DialMode
+
+        Task<SDK.Models.DialMode> GetDialModeAsync(string surveyId);
+
+        Task SetDialModeAsync(string surveyId, SDK.Models.DialMode dialMode);
+
+        #endregion
     }
 }
