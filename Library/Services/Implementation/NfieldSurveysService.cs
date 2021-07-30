@@ -454,6 +454,24 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
+        public async Task<SDK.Models.DialMode> GetDialModeAsync(string surveyId)
+        {
+            var uri = GetDialModeUri(surveyId);
+            using (var response = await Client.GetAsync(uri).ConfigureAwait(false))
+            {
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var model = JsonConvert.DeserializeObject<DialModeModel>(result);
+                return model.DialMode;
+            }
+        }
+
+        public async Task SetDialModeAsync(string surveyId, SDK.Models.DialMode dialMode)
+        {
+            var uri = GetDialModeUri(surveyId);
+            var model = new DialModeModel { DialMode = dialMode };
+            (await Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false)).Dispose();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -532,6 +550,15 @@ namespace Nfield.Services.Implementation
             var fileNameString = !string.IsNullOrEmpty(fileName) ? Uri.EscapeUriString(fileName) : string.Empty;
             return new Uri(ConnectionClient.NfieldServerUri, $"{SamplingPointImageControllerName}/{surveyId}/SamplingPoint/{Uri.EscapeUriString(samplingPointId)}/Image/{fileNameString}");
         }
+
+        /// <summary>
+        /// Returns the URI to get/set survey dialmode
+        /// <paramref name="surveyId"/>
+        /// </summary>
+        private Uri GetDialModeUri(string surveyId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/dialmode");
+        }
     }
 
     /// <summary>
@@ -579,6 +606,11 @@ namespace Nfield.Services.Implementation
         /// The default interviewer instruction of a survey
         /// </summary>
         public string InterviewerInstruction { get; set; }
+    }
+
+    internal class DialModeModel
+    {
+        public SDK.Models.DialMode DialMode { get; set; }
     }
 
 }
