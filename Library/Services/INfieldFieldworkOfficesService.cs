@@ -22,8 +22,10 @@ using Nfield.Models;
 
 namespace Nfield.Services
 {
+
+
     /// <summary>
-    /// Represents a set of methods to read the fieldwork office data.
+    /// Represents a set of methods to read and manage fieldwork offices.
     /// </summary>
     public interface INfieldFieldworkOfficesService
     {
@@ -35,5 +37,35 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
         Task<IQueryable<FieldworkOffice>> QueryAsync();
+
+        /// <summary>
+        /// Adds a new fieldwork office.
+        /// </summary>
+        /// <param name="office">The fieldwork office to add.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task<FieldworkOffice> AddAsync(FieldworkOffice office);
+
+        /// <summary>
+        /// Removes a fieldwork office.
+        /// </summary>
+        /// <param name="office">The fieldwork office to remove.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
+        Task RemoveAsync(FieldworkOffice office);
+
+        /// <summary>
+        /// Updates the details of a fieldwork office.
+        /// </summary>
+        /// <param name="interviewer">The fieldwork office to update.</param>
+        /// <exception cref="T:System.AggregateException"></exception> 
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task<FieldworkOffice> UpdateAsync(FieldworkOffice office);
     }
 }
