@@ -45,6 +45,71 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldFieldworkOfficesService.AddAsync"/>
+        /// </summary>
+        public Task<FieldworkOffice> AddAsync(FieldworkOffice office)
+        {
+            if (office == null)
+            {
+                throw new ArgumentNullException(nameof(office));
+            }
+
+            if (!string.IsNullOrEmpty(office.OfficeId))
+            {
+                throw new ArgumentException(nameof(office.OfficeId));
+            }
+
+            return ConnectionClient.Client.PostAsJsonAsync(OfficesApi, office)
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<FieldworkOffice>(task.Result))
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldFieldworkOfficesService.RemoveAsync"/>
+        /// </summary>
+        public Task RemoveAsync(FieldworkOffice office)
+        {
+            if (office == null)
+            {
+                throw new ArgumentNullException(nameof(office));
+            }
+
+            return
+                ConnectionClient.Client.DeleteAsync(new Uri(OfficesApi, office.OfficeId))
+                      .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldFieldworkOfficesService.UpdateAsync"/>
+        /// </summary>
+        public Task<FieldworkOffice> UpdateAsync(FieldworkOffice office)
+        {
+            if (office == null)
+            {
+                throw new ArgumentNullException(nameof(office));
+            }
+
+            if (string.IsNullOrEmpty(office.OfficeId))
+            {
+                throw new ArgumentException(nameof(office.OfficeId));
+            }
+
+            var updatedOffice = new UpdateOffice
+            {
+                OfficeName = office.OfficeName,
+                Description = office.Description
+            };
+
+            return ConnectionClient.Client.PatchAsJsonAsync(new Uri(OfficesApi, office.OfficeId), updatedOffice)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask => JsonConvert.DeserializeObject<FieldworkOffice>(stringTask.Result))
+                         .FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -61,6 +126,12 @@ namespace Nfield.Services.Implementation
         private Uri OfficesApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri, "offices/"); }
+        }
+
+        internal class UpdateOffice
+        {
+            public string OfficeName { get; set; }
+            public string Description { get; set; }
         }
 
     }
