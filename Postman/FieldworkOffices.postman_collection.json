@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "4151c996-1b1f-436f-af24-bd472a8ced37",
+		"name": "FieldworkOffices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Offices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const hasSurveyName = (survey) => {",
+							"    return survey.SurveyName !== undefined;",
+							"}",
+							"",
+							"pm.test(\"All surveys should have a SurveyName\", function () {",
+							"    const surveys = pm.response.json();",
+							"    pm.expect(surveys.every(hasSurveyName)).to.be.true;",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys"
+					]
+				},
+				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Office by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"All surveys should have a SurveyName\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.SurveyName !== undefined).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Offices",
+						"{{OfficeId}}"
+					]
+				},
+				"description": "This method retrieve details of a specific survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Office",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response contains SurveyId\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.SurveyId.length).to.eql(36);",
+							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OfficeName\": \"office\",\r\n  \"Description\": \"description\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Offices",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Offices"
+					]
+				},
+				"description": "This method creates a new survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Office",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Updated description\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.Description).to.eql(\"This survey is updated via Postman\");",
+							"});",
+							"",
+							"pm.test(\"Updated clientname\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.ClientName).to.eql(\"White\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"OfficeName\": \"office updated\",\r\n  \"Description\": \"description updated\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Offices",
+						"{{OfficeId}}"
+					]
+				},
+				"description": "Update a survey with the specified fields."
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Office",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"//pm.environment.unset(\"SurveyId\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Offices",
+						"{{OfficeId}}"
+					]
+				},
+				"description": "This method deletes a specified survey."
+			},
+			"response": []
+		}
+	]
+}
