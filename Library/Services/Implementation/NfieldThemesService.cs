@@ -13,14 +13,14 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
@@ -30,19 +30,37 @@ namespace Nfield.Services.Implementation
     internal class NfieldThemesService : INfieldThemesService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldFieldworkOfficesService
-        public Task UploadThemeAsync(Theme theme, string filePath)
+        public async Task UploadThemeAsync(Theme theme, string filePath)
+        {
+            var fileName = Path.GetFileName(filePath);
+
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException(fileName);
+
+            var uri = GetUploadThemeUri(theme.ThemeId, theme.TemplateId, theme.ThemeName);
+
+            using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
+            {
+                byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                await Client.PostAsync(uri, byteArrayContent).FlattenExceptions().ConfigureAwait(false);
+            }
+        }
+
+        public async Task RemoveAsync(Theme theme)
         {
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsync(Theme theme)
+        public async Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite)
         {
-            throw new NotImplementedException();
-        }
+            var fileName = Path.GetFileName(filePath);
 
-        public Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite)
-        {
-            throw new NotImplementedException();
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException(fileName);
+
+            var uri = GetThemesUri(theme.ThemeId);
+
+            var response =  await Client.GetAsync(uri).FlattenExceptions().ConfigureAwait(false);
         }
 
         #endregion
@@ -54,14 +72,31 @@ namespace Nfield.Services.Implementation
         public void InitializeNfieldConnection(INfieldConnectionClient connection)
         {
             ConnectionClient = connection;
-        }        
+        }
 
         #endregion
 
-        private Uri ThemesApi
-        {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "themes/"); }
+        /// <summary>
+        /// Returns the URI to upload the interviewer instructions 
+        /// based on the provided <paramref name="surveyId"/> and <paramref name="fileName"/>
+        /// </summary>
+        private Uri GetThemesUri(string themeId)
+        {            
+            return new Uri(ConnectionClient.NfieldServerUri, $"Themes/{themeId}");
         }
 
-    }
+        /// <summary>
+        /// Returns the URI to upload the interviewer instructions 
+        /// based on the provided <paramref name="surveyId"/> and <paramref name="fileName"/>
+        /// </summary>
+        private Uri GetUploadThemeUri(string themeId, string templateId, string themeName)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Themes/{themeId}?templateId={templateId}&themeName={themeName}");
+        }
+
+        private INfieldHttpClient Client
+        {
+            get { return ConnectionClient.Client; }
+        }
+    }       
 }
