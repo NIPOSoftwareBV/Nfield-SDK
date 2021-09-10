@@ -41,7 +41,7 @@ namespace Nfield.Services.Implementation
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
                  stringTask =>
-                 JsonConvert.DeserializeObject<List<Template>>(stringTask.Result).AsQueryable())
+                 JsonConvert.DeserializeObject<IEnumerable<Template>>(stringTask.Result).AsQueryable())
              .FlattenExceptions();
         }
 
