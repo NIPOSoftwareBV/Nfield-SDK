@@ -13,14 +13,14 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
@@ -36,7 +36,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<Template>> QueryAsync()
         {
-            return ConnectionClient.Client.GetAsync(ThemesApi)
+            return ConnectionClient.Client.GetAsync(TemplatesApi)
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
@@ -58,9 +58,9 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
-        private Uri ThemesApi
+        private Uri TemplatesApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "templates/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "Templates/"); }
         }
 
     }
