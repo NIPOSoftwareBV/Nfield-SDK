@@ -38,7 +38,7 @@ namespace Nfield.Services
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithTemplates()
         {
             const HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
-            var expectedFieldworkOffices = new Template[]
+            var expectedTemplates = new Template[]
             {
                 new Template
                 {
@@ -74,7 +74,7 @@ namespace Nfield.Services
                         () =>
                             new HttpResponseMessage(httpStatusCode)
                             {
-                                Content = new StringContent(JsonConvert.SerializeObject(expectedFieldworkOffices))
+                                Content = new StringContent(JsonConvert.SerializeObject(expectedTemplates))
                             }));
             mockedNfieldConnection
                 .SetupGet(connection => connection.Client)
@@ -89,17 +89,17 @@ namespace Nfield.Services
 
             var actualTemplates = target.QueryAsync().Result;
     
-            Assert.Equal(expectedFieldworkOffices.Length, actualTemplates.Count());
-            Assert.Equal(expectedFieldworkOffices[0].Themes.Count(), actualTemplates.First().Themes.Count());
-            Assert.Equal(expectedFieldworkOffices[0].Id, actualTemplates.First().Id);
-            Assert.Equal(expectedFieldworkOffices[0].Name, actualTemplates.First().Name);
-            Assert.Equal(expectedFieldworkOffices[1].Themes.Count(), actualTemplates.Last().Themes.Count());
-            Assert.Equal(expectedFieldworkOffices[1].Id, actualTemplates.Last().Id);
-            Assert.Equal(expectedFieldworkOffices[1].Name, actualTemplates.Last().Name);
-            Assert.Equal(expectedFieldworkOffices[1].Themes.First().Id, actualTemplates.Last().Themes.First().Id);
-            Assert.Equal(expectedFieldworkOffices[1].Themes.First().Name, actualTemplates.Last().Themes.First().Name);
-            Assert.Equal(expectedFieldworkOffices[1].Themes.Last().Id, actualTemplates.Last().Themes.Last().Id);
-            Assert.Equal(expectedFieldworkOffices[1].Themes.Last().Name, actualTemplates.Last().Themes.Last().Name);
+            Assert.Equal(expectedTemplates.Length, actualTemplates.Count());
+            Assert.Equal(expectedTemplates[0].Themes.Count(), actualTemplates.First().Themes.Count());
+            Assert.Equal(expectedTemplates[0].Id, actualTemplates.First().Id);
+            Assert.Equal(expectedTemplates[0].Name, actualTemplates.First().Name);
+            Assert.Equal(expectedTemplates[1].Themes.Count(), actualTemplates.Last().Themes.Count());
+            Assert.Equal(expectedTemplates[1].Id, actualTemplates.Last().Id);
+            Assert.Equal(expectedTemplates[1].Name, actualTemplates.Last().Name);
+            Assert.Equal(expectedTemplates[1].Themes.First().Id, actualTemplates.Last().Themes.First().Id);
+            Assert.Equal(expectedTemplates[1].Themes.First().Name, actualTemplates.Last().Themes.First().Name);
+            Assert.Equal(expectedTemplates[1].Themes.Last().Id, actualTemplates.Last().Themes.Last().Id);
+            Assert.Equal(expectedTemplates[1].Themes.Last().Name, actualTemplates.Last().Themes.Last().Name);
 
         }
 
