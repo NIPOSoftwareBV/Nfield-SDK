@@ -30,19 +30,19 @@ namespace Nfield.Services.Implementation
     internal class NfieldThemesService : INfieldThemesService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldFieldworkOfficesService
-
-        /// <summary>
-        /// See <see cref="INfieldFieldworkOfficesService.QueryAsync"/>
-        /// </summary>
-        public Task<IQueryable<Theme>> QueryAsync()
+        public Task UploadThemeAsync(Theme theme, string filePath)
         {
-            return ConnectionClient.Client.GetAsync(ThemesApi)
-             .ContinueWith(
-                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-             .ContinueWith(
-                 stringTask =>
-                 JsonConvert.DeserializeObject<List<Theme>>(stringTask.Result).AsQueryable())
-             .FlattenExceptions();
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(Theme theme)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -54,17 +54,7 @@ namespace Nfield.Services.Implementation
         public void InitializeNfieldConnection(INfieldConnectionClient connection)
         {
             ConnectionClient = connection;
-        }
-
-        public Task UploadThemeAsync(Theme theme, string filePath)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoveAsync(Theme theme)
-        {
-            throw new NotImplementedException();
-        }
+        }        
 
         #endregion
 

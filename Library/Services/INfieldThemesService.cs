@@ -28,19 +28,25 @@ namespace Nfield.Services
     public interface INfieldThemesService
     {
         /// <summary>
-        /// Gets theme queryable object.
+        /// Gets theme file.
         /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
+        /// <param name="theme">Theme data to download it</param>
+        /// <param name="filePath">Path where the theme will be saved.</param>
+        /// <param name="overwrite">Overwrite existing file or not.</param>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
-        Task<IQueryable<Theme>> QueryAsync();
+        Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite);
 
         /// <summary>
         /// This method upload a theme.
         /// </summary>
         /// <param name="theme">Theme data to upload it</param>
         /// <param name="filePath">Path of theme file</param>
+        /// /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
         Task UploadThemeAsync(Theme theme, string filePath);
 
         /// <summary>
