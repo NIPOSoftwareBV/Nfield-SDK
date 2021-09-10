@@ -14,34 +14,31 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds all properties of a template theme
+    /// Holds all properties of a template
     /// </summary>
-    public class TemplateTheme
+    public class Template
     {
+
         /// <summary>
-        /// Unique ID of the template theme
+        /// Unique ID of the template
         /// </summary>
         [JsonProperty]
-        public string ThemeId  { get; internal set; }
-
-        /// <summary>
-        /// Template ID
-        /// </summary>
         public string TemplateId { get; set; }
-
-        /// <summary>
-        /// Template theme name
-        /// </summary>
-        public string ThemeName { get; set; }
 
         /// <summary>
         /// Zip file Name
         /// </summary>
         public string ZipFileName { get; set; }
+
+        /// <summary>
+        /// Zip file Name
+        /// </summary>
+        public IEnumerable<TemplateTheme> Themes { get; set; }
 
     }
 }
