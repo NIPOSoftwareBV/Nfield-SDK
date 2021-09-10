@@ -60,7 +60,7 @@ namespace Nfield.Services.Implementation
 
         private Uri ThemesApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "themes/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "templates/"); }
         }
 
     }

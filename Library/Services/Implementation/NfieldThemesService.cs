@@ -56,6 +56,16 @@ namespace Nfield.Services.Implementation
             ConnectionClient = connection;
         }
 
+        public Task UploadThemeAsync(Theme theme, string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(Theme theme)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         private Uri ThemesApi

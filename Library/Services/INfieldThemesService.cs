@@ -35,5 +35,22 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
         Task<IQueryable<Theme>> QueryAsync();
+
+        /// <summary>
+        /// This method upload a theme.
+        /// </summary>
+        /// <param name="theme">Theme data to upload it</param>
+        /// <param name="filePath">Path of theme file</param>
+        Task UploadThemeAsync(Theme theme, string filePath);
+
+        /// <summary>
+        /// Removes the theme.
+        /// </summary>
+        /// <param name="theme">The theme to remove.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
+        Task RemoveAsync(Theme theme);
     }
 }
