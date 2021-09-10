@@ -48,19 +48,19 @@ namespace Nfield.Services.Implementation
 
         public async Task RemoveAsync(Theme theme)
         {
-            throw new NotImplementedException();
+            var uri = GetUploadThemeUri(theme.ThemeId, theme.TemplateId, theme.ThemeName);           
+            await Client.DeleteAsync(uri).FlattenExceptions().ConfigureAwait(false);            
         }
 
         public async Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite)
         {
-            var fileName = Path.GetFileName(filePath);
-
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException(fileName);
-
             var uri = GetThemesUri(theme.ThemeId);
 
             var response =  await Client.GetAsync(uri).FlattenExceptions().ConfigureAwait(false);
+            using (var outputFileStream = new FileStream(filePath, overwrite ? FileMode.Create : FileMode.CreateNew))
+            {
+                await response.Content.CopyToAsync(outputFileStream).ConfigureAwait(false);
+            }
         }
 
         #endregion
@@ -77,8 +77,7 @@ namespace Nfield.Services.Implementation
         #endregion
 
         /// <summary>
-        /// Returns the URI to upload the interviewer instructions 
-        /// based on the provided <paramref name="surveyId"/> and <paramref name="fileName"/>
+        /// Get theme uri based on the provided <paramref name="themeId"/>
         /// </summary>
         private Uri GetThemesUri(string themeId)
         {            
@@ -86,8 +85,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// Returns the URI to upload the interviewer instructions 
-        /// based on the provided <paramref name="surveyId"/> and <paramref name="fileName"/>
+        /// Get Upload theme uri based on the provided <paramref name="themeId"/>, <paramref name="templateId"/> and <paramref name="themeName"/>
         /// </summary>
         private Uri GetUploadThemeUri(string themeId, string templateId, string themeName)
         {
