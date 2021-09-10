@@ -37,7 +37,7 @@ namespace Nfield.Services.Implementation
             if (!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
-            var uri = GetUploadThemeUri(theme.ThemeId, theme.TemplateId, theme.ThemeName);
+            var uri = GetUploadThemeUri(theme.TemplateId, theme.ThemeName);
 
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
@@ -48,7 +48,7 @@ namespace Nfield.Services.Implementation
 
         public async Task RemoveAsync(Theme theme)
         {
-            var uri = GetUploadThemeUri(theme.ThemeId, theme.TemplateId, theme.ThemeName);           
+            var uri = GetThemesUri(theme.ThemeId);
             await Client.DeleteAsync(uri).FlattenExceptions().ConfigureAwait(false);            
         }
 
@@ -87,9 +87,9 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// Get Upload theme uri based on the provided <paramref name="themeId"/>, <paramref name="templateId"/> and <paramref name="themeName"/>
         /// </summary>
-        private Uri GetUploadThemeUri(string themeId, string templateId, string themeName)
+        private Uri GetUploadThemeUri(string templateId, string themeName)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Themes/{themeId}?templateId={templateId}&themeName={themeName}");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Templates/{templateId}/Themes/{themeName}");
         }
 
         private INfieldHttpClient Client
