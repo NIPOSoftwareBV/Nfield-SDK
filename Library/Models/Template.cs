@@ -38,7 +38,7 @@ namespace Nfield.Models
         /// <summary>
         /// Zip file Name
         /// </summary>
-        public IEnumerable<TemplateTheme> Themes { get; set; }
+        public IEnumerable<Theme> Themes { get; set; }
 
     }
 }

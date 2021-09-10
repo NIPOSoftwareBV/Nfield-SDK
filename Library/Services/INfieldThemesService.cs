@@ -13,35 +13,27 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Nfield.Models;
 
-namespace Nfield.Models
+namespace Nfield.Services
 {
     /// <summary>
-    /// Holds all properties of a template theme
+    /// Represents a set of methods to read the template themes data.
     /// </summary>
-    public class TemplateTheme
+    public interface INfieldThemesService
     {
         /// <summary>
-        /// Unique ID of the template theme
+        /// Gets theme queryable object.
+        /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
-        [JsonProperty]
-        public string ThemeId  { get; internal set; }
-
-        /// <summary>
-        /// Template ID
-        /// </summary>
-        public string TemplateId { get; set; }
-
-        /// <summary>
-        /// Template theme name
-        /// </summary>
-        public string ThemeName { get; set; }
-
-        /// <summary>
-        /// Zip file Name
-        /// </summary>
-        public string ZipFileName { get; set; }
-
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
+        Task<IQueryable<Theme>> QueryAsync();
     }
 }

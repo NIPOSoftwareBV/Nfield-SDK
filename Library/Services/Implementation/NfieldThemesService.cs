@@ -25,23 +25,23 @@ using Nfield.Models;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldTemplateThemesService"/>
+    /// Implementation of <see cref="INfieldThemesService"/>
     /// </summary>
-    internal class NfieldTemplateThemesService : INfieldTemplateThemesService, INfieldConnectionClientObject
+    internal class NfieldThemesService : INfieldThemesService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldFieldworkOfficesService
 
         /// <summary>
         /// See <see cref="INfieldFieldworkOfficesService.QueryAsync"/>
         /// </summary>
-        public Task<IQueryable<TemplateTheme>> QueryAsync()
+        public Task<IQueryable<Theme>> QueryAsync()
         {
             return ConnectionClient.Client.GetAsync(ThemesApi)
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
                  stringTask =>
-                 JsonConvert.DeserializeObject<List<TemplateTheme>>(stringTask.Result).AsQueryable())
+                 JsonConvert.DeserializeObject<List<Theme>>(stringTask.Result).AsQueryable())
              .FlattenExceptions();
         }
 
