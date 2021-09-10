@@ -37,7 +37,7 @@ namespace Nfield.Services.Implementation
             if (!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
-            var uri = GetUploadThemeUri(theme.TemplateId, theme.ThemeName);
+            var uri = GetUploadThemeUri(theme.TemplateId, theme.Name);
 
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
@@ -48,13 +48,13 @@ namespace Nfield.Services.Implementation
 
         public async Task RemoveAsync(Theme theme)
         {
-            var uri = GetThemesUri(theme.ThemeId);
+            var uri = GetThemesUri(theme.Id);
             await Client.DeleteAsync(uri).FlattenExceptions().ConfigureAwait(false);            
         }
 
         public async Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite)
         {
-            var uri = GetThemesUri(theme.ThemeId);
+            var uri = GetThemesUri(theme.Id);
 
             var response =  await Client.GetAsync(uri).FlattenExceptions().ConfigureAwait(false);
             using (var outputFileStream = new FileStream(filePath, overwrite ? FileMode.Create : FileMode.CreateNew))

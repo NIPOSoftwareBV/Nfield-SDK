@@ -28,12 +28,12 @@ namespace Nfield.Models
         /// Unique ID of the template
         /// </summary>
         [JsonProperty]
-        public string TemplateId { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// Zip file Name
+        /// Template Name
         /// </summary>
-        public string ZipFileName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Theme list
