@@ -36,7 +36,7 @@ namespace Nfield.Models
         public string ZipFileName { get; set; }
 
         /// <summary>
-        /// Zip file Name
+        /// Theme list
         /// </summary>
         public IEnumerable<Theme> Themes { get; set; }
 
