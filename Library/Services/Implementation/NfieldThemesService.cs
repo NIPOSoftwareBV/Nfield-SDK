@@ -15,7 +15,6 @@
 
 using Nfield.Extensions;
 using Nfield.Infrastructure;
-using Nfield.Models;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -30,14 +29,14 @@ namespace Nfield.Services.Implementation
     internal class NfieldThemesService : INfieldThemesService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldFieldworkOfficesService
-        public async Task UploadThemeAsync(Theme theme, string filePath)
+        public async Task UploadThemeAsync(string templateId, string themeName, string filePath)
         {
             var fileName = Path.GetFileName(filePath);
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
-            var uri = GetUploadThemeUri(theme.TemplateId, theme.Name);
+            var uri = GetUploadThemeUri(templateId, themeName);
 
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {

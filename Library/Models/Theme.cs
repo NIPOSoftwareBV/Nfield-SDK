@@ -26,12 +26,7 @@ namespace Nfield.Models
         /// Unique ID of the template theme
         /// </summary>
         [JsonProperty]
-        public string Id { get; internal set; }
-
-        /// <summary>
-        /// Template ID
-        /// </summary>
-        public string TemplateId { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Template theme name

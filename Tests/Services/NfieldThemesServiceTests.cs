@@ -41,8 +41,7 @@ namespace Nfield.Services
             var theme = new Theme
             {
                 Id = "Id",
-                Name = "Name",
-                TemplateId = "TemplateId"
+                Name = "Name"
             };
 
             string inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Theme.zip");
