@@ -31,13 +31,13 @@ namespace Nfield.Services
         /// Gets theme file.
         /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
-        /// <param name="theme">Theme data to download it</param>
+        /// <param name="themeId">The theme id to download</param>
         /// <param name="filePath">Path where the theme will be saved.</param>
         /// <param name="overwrite">Overwrite existing file or not.</param>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
-        Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite);
+        Task DownloadThemeAsync(string themeId, string filePath, bool overwrite);
 
         /// <summary>
         /// This method upload a theme.
@@ -52,11 +52,11 @@ namespace Nfield.Services
         /// <summary>
         /// Removes the theme.
         /// </summary>
-        /// <param name="theme">The theme to remove.</param>
+        /// <param name="themeId">The theme id to remove.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
-        Task RemoveAsync(Theme theme);
+        Task RemoveAsync(string themeId);
     }
 }

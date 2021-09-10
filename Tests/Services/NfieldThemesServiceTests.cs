@@ -13,20 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using Nfield.Infrastructure;
-using Nfield.Services.Implementation;
-using Xunit;
-using Nfield.Models;
 using Moq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Net;
-using Newtonsoft.Json;
-using System.Linq;
+using Nfield.Infrastructure;
+using Nfield.Models;
+using Nfield.Services.Implementation;
+using System;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Nfield.Services
 {
@@ -35,8 +33,6 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldThemesServiceTests : NfieldServiceTestsBase
     {
-        
-
         [Fact]
         public async Task TestDownloadThemeAsync_ServerReturnsFile_SaveFile()
         {
@@ -76,7 +72,7 @@ namespace Nfield.Services
             var target = new NfieldThemesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            await target.DownloadThemeAsync(theme, outputFilePath, true);
+            await target.DownloadThemeAsync(theme.Id, outputFilePath, true);
             stream.Close();
             stream.Dispose();
 

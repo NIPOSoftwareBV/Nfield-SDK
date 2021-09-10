@@ -46,15 +46,15 @@ namespace Nfield.Services.Implementation
             }
         }
 
-        public async Task RemoveAsync(Theme theme)
+        public async Task RemoveAsync(string themeId)
         {
-            var uri = GetThemesUri(theme.Id);
+            var uri = GetThemesUri(themeId);
             await Client.DeleteAsync(uri).FlattenExceptions().ConfigureAwait(false);            
         }
 
-        public async Task DownloadThemeAsync(Theme theme, string filePath, bool overwrite)
+        public async Task DownloadThemeAsync(string themeId, string filePath, bool overwrite)
         {
-            var uri = GetThemesUri(theme.Id);
+            var uri = GetThemesUri(themeId);
 
             var response =  await Client.GetAsync(uri).FlattenExceptions().ConfigureAwait(false);
             using (var outputFileStream = new FileStream(filePath, overwrite ? FileMode.Create : FileMode.CreateNew))
