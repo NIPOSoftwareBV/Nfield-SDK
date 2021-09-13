@@ -35,7 +35,8 @@ namespace Nfield.Services.Implementation
 
         public async Task UploadThemeAsync(string templateId, string themeName, string filePath)
         {
-            Ensure.ArgumentNotNull(theme, nameof(theme));
+            Ensure.ArgumentNotNullOrEmptyString(templateId, nameof(templateId));
+            Ensure.ArgumentNotNullOrEmptyString(themeName, nameof(themeName));
             Ensure.ArgumentNotNullOrEmptyString(filePath, nameof(filePath));
 
             var fileName = Path.GetFileName(filePath);
