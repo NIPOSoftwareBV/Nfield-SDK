@@ -33,6 +33,30 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldThemesServiceTests : NfieldServiceTestsBase
     {
+        private const string ThemesServiceAddress = "Themes/";
+        private readonly NfieldThemesService _target;
+
+        // Constructor acts as setup
+        public NfieldThemesServiceTests()
+        {
+            _target = new NfieldThemesService();
+        }
+
+        #region DownloadThemeAsync
+        [Fact]
+        public void TestRemoveAsync_ArgumentsNullorVoid()
+        {
+            const string FilePath = "-";
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(null, FilePath, true)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(string.Empty, FilePath, true)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, null, true)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, string.Empty, true)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(null, FilePath, false)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(string.Empty, FilePath, false)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, null, false)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, string.Empty, false)));
+        }
+
         [Fact]
         public async Task TestDownloadThemeAsync_ServerReturnsFile_SaveFile()
         {
@@ -53,7 +77,7 @@ namespace Nfield.Services
             var stream = new FileStream(inputFilePath, FileMode.Open);
             
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Themes/{theme.Id}")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"{ThemesServiceAddress}{theme.Id}")))
                 .Returns(
                     Task.Factory.StartNew(
                         () =>
@@ -66,18 +90,64 @@ namespace Nfield.Services
                 .Returns(mockedHttpClient.Object);
             mockedNfieldConnection
                 .SetupGet(connection => connection.NfieldServerUri)
-                .Returns(ServiceAddress);
+                .Returns(base.ServiceAddress);
             
 
-            var target = new NfieldThemesService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            await target.DownloadThemeAsync(theme.Id, outputFilePath, true);
+            await _target.DownloadThemeAsync(theme.Id, outputFilePath, true);
             stream.Close();
             stream.Dispose();
 
             Assert.Equal(GetFileHash(inputFilePath), GetFileHash(outputFilePath));
+
+            stream = new FileStream(inputFilePath, FileMode.Open);
+
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"{ThemesServiceAddress}{theme.Id}")))
+                .Returns(
+                    Task.Factory.StartNew(
+                        () =>
+                            new HttpResponseMessage(httpStatusCode)
+                            {
+                                Content = new StreamContent(stream)
+                            }));
+
+            _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            // Assert throws when overwrite is false and the file exists
+            await Assert.ThrowsAsync<IOException>( async () =>  await _target.DownloadThemeAsync(theme.Id, outputFilePath, false));
+
+            stream.Close();
+            stream.Dispose();
         }
+        #endregion
+
+        #region RemoveAsync
+
+        [Fact]
+        public void TestRemoveAsync_ThemeIsNull_ThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.RemoveAsync(null)));
+        }
+
+        [Fact]
+        public async void TestRemoveAsync_ServerRemovedSurvey_DoesNotThrow()
+        {
+            const string ThemeId = "ThemeId";
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, $"{ThemesServiceAddress}{ThemeId}")))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            // assert: no throw
+            await _target.RemoveAsync(ThemeId);
+        }
+
+        #endregion
 
         private string GetFileHash(string filename)
         {
