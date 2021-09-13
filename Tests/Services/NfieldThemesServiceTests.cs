@@ -44,23 +44,23 @@ namespace Nfield.Services
 
         #region DownloadThemeAsync
         [Fact]
-        public void TestRemoveAsync_ArgumentsNullorVoid()
+        public void TestDownloadThemeAsync_ArgumentsNullorVoid()
         {
-            const string FilePath = "-";
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(null, FilePath, true)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(string.Empty, FilePath, true)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, null, true)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, string.Empty, true)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(null, FilePath, false)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(string.Empty, FilePath, false)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, null, false)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(FilePath, string.Empty, false)));
+            const string NotEmptyString = "-";
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(null, NotEmptyString, true)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(string.Empty, NotEmptyString, true)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(NotEmptyString, null, true)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(NotEmptyString, string.Empty, true)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(null, NotEmptyString, false)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(string.Empty, NotEmptyString, false)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(NotEmptyString, null, false)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.DownloadThemeAsync(NotEmptyString, string.Empty, false)));
         }
 
         [Fact]
         public async Task TestDownloadThemeAsync_ServerReturnsFile_SaveFile()
         {
-            const HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
+            const HttpStatusCode httpStatusCode = HttpStatusCode.OK;
 
             var theme = new Theme
             {
@@ -132,7 +132,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async void TestRemoveAsync_ServerRemovedSurvey_DoesNotThrow()
+        public async void TestRemoveAsync_ServerRemoveTheme_DoesNotThrow()
         {
             const string ThemeId = "ThemeId";
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -147,6 +147,67 @@ namespace Nfield.Services
             await _target.RemoveAsync(ThemeId);
         }
 
+        #endregion
+
+        #region UploadThemeAsync
+        [Fact]
+        public void TestUploadThemeAsync_ArgumentsNullorVoid()
+        {
+            const string NotEmptyString = "-";
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UploadThemeAsync(null, NotEmptyString)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UploadThemeAsync(new Theme(), null)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.UploadThemeAsync(new Theme(), string.Empty)));
+        }
+
+        [Fact]
+        public async void TestUploadThemeAsync_ServerUploadTheme_DoesNotThrow()
+        {
+            const HttpStatusCode httpStatusCode = HttpStatusCode.OK;
+            string inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Theme.zip");
+            HttpContent httpContent = new HttpMessageContent(new HttpResponseMessage(httpStatusCode));
+            Theme theme = new Theme
+            {
+                Id = "Theme_Id",
+                Name = "Thmeme_Name",
+                TemplateId = "Template_Id"
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PostAsync(new Uri(ServiceAddress, $"{ThemesServiceAddress}{theme.Id}"), It.IsAny<HttpContent>()))
+                .Returns(
+                Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(httpStatusCode)
+                    {
+
+                    }));
+            mockedNfieldConnection
+                .SetupGet(connection => connection.Client)
+                .Returns(mockedHttpClient.Object);
+            mockedNfieldConnection
+                .SetupGet(connection => connection.NfieldServerUri)
+                .Returns(base.ServiceAddress);
+
+            _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            // assert: no throw
+            await _target.UploadThemeAsync(theme, inputFilePath);
+        }
+
+        [Fact]
+        public async void TestUploadThemeAsync_FileDoesNotExist_Throws()
+        {
+            string inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "ThemeThatDoesNotExist.zip");
+            Theme theme = new Theme
+            {
+                Id = "Theme_Id",
+                Name = "Thmeme_Name",
+                TemplateId = "Template_Id"
+            };
+            await Assert.ThrowsAsync<FileNotFoundException>(async () => await _target.UploadThemeAsync(theme, inputFilePath));
+        }
+    
         #endregion
 
         private string GetFileHash(string filename)
