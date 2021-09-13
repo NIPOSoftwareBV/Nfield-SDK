@@ -13,12 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Nfield.Models;
 
 namespace Nfield.Services
 {
@@ -47,7 +42,7 @@ namespace Nfield.Services
         /// /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
-        Task UploadThemeAsync(Theme theme, string filePath);
+        Task UploadThemeAsync(string templateId, string themeName, string filePath);
 
         /// <summary>
         /// Removes the theme.

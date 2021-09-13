@@ -30,9 +30,10 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldThemesService : INfieldThemesService, INfieldConnectionClientObject
     {
+
         #region Implementation of INfieldThemesService
 
-        public async Task UploadThemeAsync(Theme theme, string filePath)
+        public async Task UploadThemeAsync(string templateId, string themeName, string filePath)
         {
             Ensure.ArgumentNotNull(theme, nameof(theme));
             Ensure.ArgumentNotNullOrEmptyString(filePath, nameof(filePath));
@@ -42,7 +43,7 @@ namespace Nfield.Services.Implementation
             if (!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
-            var uri = GetUploadThemeUri(theme.TemplateId, theme.Name);
+            var uri = GetUploadThemeUri(templateId, themeName);
 
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
