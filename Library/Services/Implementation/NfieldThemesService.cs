@@ -15,6 +15,8 @@
 
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
+using Nfield.Utilities;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -28,9 +30,15 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldThemesService : INfieldThemesService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldFieldworkOfficesService
+
+        #region Implementation of INfieldThemesService
+
         public async Task UploadThemeAsync(string templateId, string themeName, string filePath)
         {
+            Ensure.ArgumentNotNullOrEmptyString(templateId, nameof(templateId));
+            Ensure.ArgumentNotNullOrEmptyString(themeName, nameof(themeName));
+            Ensure.ArgumentNotNullOrEmptyString(filePath, nameof(filePath));
+
             var fileName = Path.GetFileName(filePath);
 
             if (!File.Exists(filePath))
@@ -47,12 +55,17 @@ namespace Nfield.Services.Implementation
 
         public async Task RemoveAsync(string themeId)
         {
+            Ensure.ArgumentNotNullOrEmptyString(themeId, nameof(themeId));
+
             var uri = GetThemesUri(themeId);
             await Client.DeleteAsync(uri).FlattenExceptions().ConfigureAwait(false);            
         }
 
         public async Task DownloadThemeAsync(string themeId, string filePath, bool overwrite)
         {
+            Ensure.ArgumentNotNullOrEmptyString(themeId, nameof(themeId));
+            Ensure.ArgumentNotNullOrEmptyString(filePath, nameof(filePath));
+
             var uri = GetThemesUri(themeId);
 
             var response =  await Client.GetAsync(uri).FlattenExceptions().ConfigureAwait(false);
@@ -75,6 +88,7 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
+        #region private methods
         /// <summary>
         /// Get theme uri based on the provided <paramref name="themeId"/>
         /// </summary>
@@ -95,5 +109,7 @@ namespace Nfield.Services.Implementation
         {
             get { return ConnectionClient.Client; }
         }
-    }       
+
+        #endregion
+    }
 }
