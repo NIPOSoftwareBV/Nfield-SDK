@@ -82,12 +82,35 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        public async Task<LocalUser> ResetAsync(string identityId)
+        {
+            var model = new LocalUserValues();
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
+
+            using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model))
+            {
+                var result = await DeserializeJsonAsync<LocalUser>(response);
+
+                return result;
+            }
+        }
+
         public async Task DeleteAsync(string identityId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
 
             // note: we need to dispose the response even when we don't use it
             using (await ConnectionClient.Client.DeleteAsync(uri))
+            {
+            }
+        }
+
+        public async Task DeleteAllAsync()
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers");
+            // note: we need to dispose the response even when we don't use it
+            using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(true))
             {
             }
         }
