@@ -101,7 +101,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private Uri GetUploadThemeUri(string templateId, string themeName)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Templates/{templateId}/Themes/{themeName}");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Themes?templateId={templateId}&themeName={themeName}");
         }
 
         private INfieldHttpClient Client
