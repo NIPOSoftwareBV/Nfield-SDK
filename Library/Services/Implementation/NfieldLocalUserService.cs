@@ -13,14 +13,14 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
+using Nfield.Infrastructure;
+using Nfield.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Nfield.Infrastructure;
-using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
@@ -82,17 +82,14 @@ namespace Nfield.Services.Implementation
             }
         }
 
-        public async Task<LocalUser> ResetAsync(string identityId)
+        public async Task ResetAsync(string identityId, ChangePasswordLocalUser model)
         {
-            var model = new LocalUserValues();
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
-
-            using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model))
+            using (await ConnectionClient.Client.PutAsJsonAsync(uri, model))
             {
-                var result = await DeserializeJsonAsync<LocalUser>(response);
-
-                return result;
             }
         }
 
@@ -106,9 +103,9 @@ namespace Nfield.Services.Implementation
             }
         }
 
-        public async Task DeleteAllAsync()
+        public async Task DeleteAllAsync(bool all)
         {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers?all={all}");
             // note: we need to dispose the response even when we don't use it
             using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(true))
             {
