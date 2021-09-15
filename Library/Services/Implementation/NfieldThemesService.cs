@@ -15,7 +15,6 @@
 
 using Nfield.Extensions;
 using Nfield.Infrastructure;
-using Nfield.Models;
 using Nfield.Utilities;
 using System;
 using System.IO;
@@ -49,7 +48,7 @@ namespace Nfield.Services.Implementation
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                await Client.PostAsync(uri, byteArrayContent).FlattenExceptions().ConfigureAwait(false);
+                await Client.PutAsync(uri, byteArrayContent).FlattenExceptions().ConfigureAwait(false);
             }
         }
 
