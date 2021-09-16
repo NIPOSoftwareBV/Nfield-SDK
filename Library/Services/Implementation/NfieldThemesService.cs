@@ -15,7 +15,6 @@
 
 using Nfield.Extensions;
 using Nfield.Infrastructure;
-using Nfield.Models;
 using Nfield.Utilities;
 using System;
 using System.IO;
@@ -49,7 +48,7 @@ namespace Nfield.Services.Implementation
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                await Client.PostAsync(uri, byteArrayContent).FlattenExceptions().ConfigureAwait(false);
+                await Client.PutAsync(uri, byteArrayContent).FlattenExceptions().ConfigureAwait(false);
             }
         }
 
@@ -102,7 +101,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private Uri GetUploadThemeUri(string templateId, string themeName)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Templates/{templateId}/Themes/{themeName}");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Themes?templateId={templateId}&themeName={themeName}");
         }
 
         private INfieldHttpClient Client
