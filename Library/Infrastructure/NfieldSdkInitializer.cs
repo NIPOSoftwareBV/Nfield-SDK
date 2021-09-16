@@ -45,6 +45,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldLanguagesService), typeof(NfieldLanguagesService) },
             { typeof(INfieldTranslationsService), typeof(NfieldTranslationsService) },
             { typeof(INfieldDomainEmailSettingsService), typeof(NfieldDomainEmailSettingsService) },
+            { typeof(INfieldDomainPasswordSettingsService), typeof(NfieldDomainPasswordSettingsService) },
             { typeof(INfieldDomainSearchFieldsSettingService), typeof(NfieldDomainSearchFieldsSettingService) },
             { typeof(INfieldSurveyEmailSettingsService), typeof(NfieldSurveyEmailSettingsService) },
             { typeof(INfieldSurveyInvitationImagesService), typeof(NfieldSurveyInvitationImagesService) },
