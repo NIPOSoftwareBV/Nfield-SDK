@@ -88,7 +88,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(nameof(model));
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
-            using (await ConnectionClient.Client.PutAsJsonAsync(uri, model))
+            using (await ConnectionClient.Client.PutAsJsonAsync(uri, model).ConfigureAwait(false))
             {
             }
         }
@@ -99,15 +99,6 @@ namespace Nfield.Services.Implementation
 
             // note: we need to dispose the response even when we don't use it
             using (await ConnectionClient.Client.DeleteAsync(uri))
-            {
-            }
-        }
-
-        public async Task DeleteAllAsync(bool all)
-        {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers?all={all}");
-            // note: we need to dispose the response even when we don't use it
-            using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(true))
             {
             }
         }
