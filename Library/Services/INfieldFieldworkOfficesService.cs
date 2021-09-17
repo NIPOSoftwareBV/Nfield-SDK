@@ -13,17 +13,16 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nfield.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
+
+
     /// <summary>
-    /// Represents a set of methods to read the fieldwork office data.
+    /// Represents a set of methods to read and manage fieldwork offices.
     /// </summary>
     public interface INfieldFieldworkOfficesService
     {
@@ -32,8 +31,38 @@ namespace Nfield.Services
         /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
         /// The aggregate exception can contain:
-        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
-        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
+        /// <exception cref="Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Exceptions.NfieldHttpResponseException"></exception>   
         Task<IQueryable<FieldworkOffice>> QueryAsync();
+
+        /// <summary>
+        /// Adds a new fieldwork office.
+        /// </summary>
+        /// <param name="office">The fieldwork office to add.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Exceptions.NfieldHttpResponseException"></exception>
+        Task<FieldworkOffice> AddAsync(FieldworkOffice office);
+
+        /// <summary>
+        /// Removes a fieldwork office.
+        /// </summary>
+        /// <param name="office">The fieldwork office to remove.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Exceptions.NfieldHttpResponseException"></exception>       
+        Task RemoveAsync(FieldworkOffice office);
+
+        /// <summary>
+        /// Updates the details of a fieldwork office.
+        /// </summary>
+        /// <param name="office">The fieldwork office to update.</param>
+        /// <exception cref="T:System.AggregateException"></exception> 
+        /// The aggregate exception can contain:
+        /// <exception cref="Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Exceptions.NfieldHttpResponseException"></exception>
+        Task<FieldworkOffice> UpdateAsync(FieldworkOffice office);
     }
 }
