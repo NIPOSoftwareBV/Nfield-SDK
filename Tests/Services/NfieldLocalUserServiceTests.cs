@@ -95,7 +95,7 @@ namespace Nfield.Services
             };
             await _target.ResetAsync(id, changePasswordLocalUser);
 
-            _mockedHttpClient.Verify(client => client.PutAsJsonAsync(It.Is<Uri>(uri => uri.AbsoluteUri.EndsWith(id)), changePasswordLocalUser), Times.Once());
+            _mockedHttpClient.Verify(client => client.PatchAsJsonAsync(It.Is<Uri>(uri => uri.AbsoluteUri.EndsWith("LocalUsers/Password/"+id)), changePasswordLocalUser), Times.Once());
         }
 
         [Fact]

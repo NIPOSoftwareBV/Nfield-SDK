@@ -87,8 +87,8 @@ namespace Nfield.Services.Implementation
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
-            using (await ConnectionClient.Client.PutAsJsonAsync(uri, model).ConfigureAwait(false))
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Password/{identityId}");
+            using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false))
             {
             }
         }
