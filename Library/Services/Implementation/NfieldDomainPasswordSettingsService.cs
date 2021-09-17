@@ -35,7 +35,7 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task<DomainPasswordSettings> PutAsync(DomainPasswordSettings settings)
+        public Task<DomainPasswordSettings> PatchAsync(DomainPasswordSettings settings)
         {
             Ensure.ArgumentNotNull(settings, nameof(settings));
 
