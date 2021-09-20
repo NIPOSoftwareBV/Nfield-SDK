@@ -77,4 +77,15 @@ namespace Nfield.Models
         [JsonProperty]
         public DateTime? LastLogonDate { get; internal set; }
     }
+
+    /// <summary>
+    /// Model representing the settable values in a survey group.
+    /// </summary>
+    public class ChangePasswordLocalUser
+    {
+        /// <summary>
+        /// Password of the user
+        /// </summary>
+        public string Password { get; set; }
+    }
 }
