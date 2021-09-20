@@ -84,7 +84,7 @@ namespace Nfield.Models
     public class ChangePasswordLocalUser
     {
         /// <summary>
-        /// Password of the new user
+        /// Password of the user
         /// </summary>
         public string Password { get; set; }
     }
