@@ -37,7 +37,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithTemplates()
         {
-            const HttpStatusCode httpStatusCode = HttpStatusCode.NotFound;
+            const HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             var expectedTemplates = new Template[]
             {
                 new Template
