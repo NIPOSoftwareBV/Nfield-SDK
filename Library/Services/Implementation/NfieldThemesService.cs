@@ -45,13 +45,12 @@ namespace Nfield.Services.Implementation
             if (!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
-            var uri = GetUploadThemeUri(templateId, themeName);
-
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                var uri = GetUploadThemeUri(templateId, themeName);
                 await Client.PutAsync(uri, byteArrayContent)
-                       .ContinueWith(response => ConnectionClient.GetActivityResultAsync<string>(response.Result.Content.ReadAsStringAsync().Result, "ActivityId"))
+                       .ContinueWith(response => ConnectionClient.GetActivityResultAsync<int>(response.Result.Content.ReadAsStringAsync().Result, "Status"))
                        .Unwrap()
                        .FlattenExceptions()
                        .ConfigureAwait(false);
