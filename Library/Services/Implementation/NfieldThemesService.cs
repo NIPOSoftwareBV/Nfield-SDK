@@ -49,8 +49,10 @@ namespace Nfield.Services.Implementation
             {
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 var uri = GetUploadThemeUri(templateId, themeName);
-                await Client.PutAsync(uri, byteArrayContent)
-                       .ContinueWith(response => ConnectionClient.GetActivityResultAsync<int>(response.Result.Content.ReadAsStringAsync().Result, "Status"))
+                _ = await Client.PutAsync(uri, byteArrayContent)
+                       .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                       .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                       .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "Status"))
                        .Unwrap()
                        .FlattenExceptions()
                        .ConfigureAwait(false);
