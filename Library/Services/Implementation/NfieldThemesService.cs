@@ -13,8 +13,10 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Utilities;
 using System;
 using System.IO;
@@ -48,7 +50,12 @@ namespace Nfield.Services.Implementation
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                await Client.PutAsync(uri, byteArrayContent).FlattenExceptions().ConfigureAwait(false);
+                await Client.PutAsync(uri, byteArrayContent)
+                       .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)                
+                       .ContinueWith(stringResult => ConnectionClient.GetActivityResultAsync<int>(stringResult.Result, "Status"))
+                       .Unwrap()
+                       .FlattenExceptions()
+                       .ConfigureAwait(false);
             }
         }
 
