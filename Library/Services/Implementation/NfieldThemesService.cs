@@ -51,8 +51,7 @@ namespace Nfield.Services.Implementation
             {
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 await Client.PutAsync(uri, byteArrayContent)
-                       .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)                
-                       .ContinueWith(stringResult => ConnectionClient.GetActivityResultAsync<int>(stringResult.Result, "Status"))
+                       .ContinueWith(response => ConnectionClient.GetActivityResultAsync<string>(response.Result.Content.ReadAsStringAsync().Result, "ActivityId"))
                        .Unwrap()
                        .FlattenExceptions()
                        .ConfigureAwait(false);
