@@ -82,7 +82,7 @@ namespace Nfield.Services.Implementation
             }
         }
 
-        public async Task ResetAsync(string identityId, ChangePasswordLocalUser model)
+        public async Task ResetAsync(string identityId, ResetLocalUser model)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));

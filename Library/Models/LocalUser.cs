@@ -81,7 +81,7 @@ namespace Nfield.Models
     /// <summary>
     /// Model representing the settable values in a survey group.
     /// </summary>
-    public class ChangePasswordLocalUser
+    public class ResetLocalUser
     {
         /// <summary>
         /// Password of the user

@@ -89,7 +89,7 @@ namespace Nfield.Services
         {
 
             var id = Guid.NewGuid().ToString();
-            var changePasswordLocalUser = new ChangePasswordLocalUser
+            var changePasswordLocalUser = new ResetLocalUser
             {
                 Password = "NewSecret"
             };

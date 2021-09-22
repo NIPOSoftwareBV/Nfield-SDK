@@ -52,5 +52,10 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="identityId">The id of the user to delete.</param>
         Task DeleteAsync(string identityId);
+
+        /// <summary>
+        /// Reset the specified local user password.
+        /// </summary>
+        Task ResetAsync(string identityId, ResetLocalUser model)
     }
 }
