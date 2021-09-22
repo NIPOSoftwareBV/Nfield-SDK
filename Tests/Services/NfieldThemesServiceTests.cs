@@ -148,7 +148,7 @@ namespace Nfield.Services
                     () =>
                     new HttpResponseMessage(httpStatusCode)
                     {
-                        Content = new StringContent(ActivityId)
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = ActivityId }))
                     })).Verifiable();
 
             mockedHttpClient
