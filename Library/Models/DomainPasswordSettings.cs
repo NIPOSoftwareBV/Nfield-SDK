@@ -6,32 +6,37 @@
     public class DomainPasswordSettings
     {
         /// <summary>
-        /// Name of the password setting that determines age warning threshold for a domain        
+        /// Name of the password setting that determines warn when password expires in x days for a domain
+        /// The valid values for the AgeWarnThreshold from 0 to 10
         /// </summary>
         public int? AgeWarnThreshold { get; set; }
 
         /// <summary>
-        /// Name of the password setting that determines enforce two factor authentication is enabled for a domain
+        /// Name of the password setting that indicates if two-factor authentication is enforced for a domain
         /// </summary>
         public bool? EnforceTwoFactorAuthentication { get; set; }
 
         /// <summary>
-        /// Name of the password setting that determines maximum password age for a domain
+        /// Name of the password setting that determines maximum password age in days for a domain
+        /// The valid values for the maximum password age: 0, 30, 60, 90, 365
         /// </summary>
         public int? MaxPasswordAge { get; set; }
 
         /// <summary>
-        /// Name of the password setting that determines minimum charsets in password for a domain
+        /// Name of the password setting that determines minimum char sets in password for a domain
+        /// The valid values for the minimum char sets in password from 0 to 4
         /// </summary>
         public int? MinCharsetsInPassword { get; set; }
 
         /// <summary>
         /// Name of the password setting that determines minimum password length for a domain
+        /// The valid values for the minimum password length: 0, 6, 8, 12
         /// </summary>
         public int? MinPasswordLength { get; set; }
 
         /// <summary>
-        /// Name of the password setting that determines password history length for a domain
+        /// Name of the password setting that number of passwords kept in password history (new password must be different then these) for a domain
+        /// The valid values for the password history Length from 0 to 10
         /// </summary>
         public int? PasswordHistoryLength { get; set; }
 

@@ -32,11 +32,11 @@ namespace Nfield.Services
         {
             var expected = new DomainPasswordSettings
             {
-                AgeWarnThreshold = 1,
-                MaxPasswordAge = 1,
-                MinCharsetsInPassword = 1,
-                MinPasswordLength = 1,
-                PasswordHistoryLength = 1,
+                AgeWarnThreshold = 0,
+                MaxPasswordAge = 30,
+                MinCharsetsInPassword = 2,
+                MinPasswordLength = 8,
+                PasswordHistoryLength = 0,
                 EnforceTwoFactorAuthentication = false
             };
 
@@ -65,12 +65,12 @@ namespace Nfield.Services
         {
             var expected = new DomainPasswordSettings
             {
-                AgeWarnThreshold = 1,
-                MaxPasswordAge = 1,
-                MinCharsetsInPassword = 1,
-                MinPasswordLength = 1,
-                PasswordHistoryLength = 1,
-                EnforceTwoFactorAuthentication = false
+                AgeWarnThreshold = 2,
+                MaxPasswordAge = 365,
+                MinCharsetsInPassword = 4,
+                MinPasswordLength = 8,
+                PasswordHistoryLength = 10,
+                EnforceTwoFactorAuthentication = true
             };
 
             var target = new NfieldDomainPasswordSettingsService();
