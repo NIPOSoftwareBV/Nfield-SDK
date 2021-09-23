@@ -74,7 +74,7 @@ namespace Nfield.Services
             };
 
             var target = new NfieldDomainPasswordSettingsService();
-            var mockClient = InitMockClientPut(PasswordSettingsUrl(), expected, expected);
+            var mockClient = InitMockClientPatch(PasswordSettingsUrl(), expected, expected);
             target.InitializeNfieldConnection(mockClient);
 
             var actual = target.PatchAsync(expected).Result;
