@@ -41,7 +41,7 @@ namespace Nfield.Services.Implementation
 
             var uri = DomainPasswordSettingsUrl();
 
-            return Client.PutAsJsonAsync(uri, settings)
+            return Client.PatchAsJsonAsync(uri, settings)
                         .ContinueWith(task => JsonConvert.DeserializeObject<DomainPasswordSettings>(
                             task.Result.Content.ReadAsStringAsync().Result))
                         .FlattenExceptions();
