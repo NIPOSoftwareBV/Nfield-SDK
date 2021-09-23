@@ -26,7 +26,6 @@ namespace Nfield.Models
         /// <summary>
         /// Unique ID of the template
         /// </summary>
-        [JsonProperty]
         public string Id { get; set; }
 
         /// <summary>

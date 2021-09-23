@@ -23,16 +23,14 @@ namespace Nfield.Services
     public interface INfieldThemesService
     {
         /// <summary>
-        /// Gets theme file.
+        /// Gets Download URL for the theme file.
         /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
         /// <param name="themeId">The theme id to download</param>
-        /// <param name="filePath">Path where the theme will be saved.</param>
-        /// <param name="overwrite">Overwrite existing file or not.</param>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
-        Task DownloadThemeAsync(string themeId, string filePath, bool overwrite);
+        Task<string> DownloadThemeAsync(string themeId);
 
         /// <summary>
         /// This method upload a theme.

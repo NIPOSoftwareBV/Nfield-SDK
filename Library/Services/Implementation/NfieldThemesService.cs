@@ -60,18 +60,14 @@ namespace Nfield.Services.Implementation
             await Client.DeleteAsync(uri).FlattenExceptions().ConfigureAwait(false);            
         }
 
-        public async Task DownloadThemeAsync(string themeId, string filePath, bool overwrite)
+        public async Task<string> DownloadThemeAsync(string themeId)
         {
             Ensure.ArgumentNotNullOrEmptyString(themeId, nameof(themeId));
-            Ensure.ArgumentNotNullOrEmptyString(filePath, nameof(filePath));
 
             var uri = GetThemesUri(themeId);
 
-            var response =  await Client.GetAsync(uri).FlattenExceptions().ConfigureAwait(false);
-            using (var outputFileStream = new FileStream(filePath, overwrite ? FileMode.Create : FileMode.CreateNew))
-            {
-                await response.Content.CopyToAsync(outputFileStream).ConfigureAwait(false);
-            }
+            var response = await Client.GetAsync(uri).FlattenExceptions().ConfigureAwait(false);
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
 
         #endregion
