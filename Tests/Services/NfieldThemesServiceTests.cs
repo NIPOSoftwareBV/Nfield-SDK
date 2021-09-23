@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Moq;
+using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
@@ -133,6 +134,7 @@ namespace Nfield.Services
         public async void TestUploadThemeAsync_ServerUploadTheme_DoesNotThrow()
         {
             const HttpStatusCode httpStatusCode = HttpStatusCode.OK;
+            const string ActivityId = "ActivityId";
             const string templateId = "template_id";
             const string themeName = "theme_name";
             string inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Theme.zip");
@@ -140,25 +142,37 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PostAsync(new Uri(ServiceAddress, $"{ThemesServiceAddress}{templateId}"), It.IsAny<HttpContent>()))
+                .Setup(client => client.PutAsync(new Uri(ServiceAddress, $"Themes?templateId={templateId}&themeName={themeName}"), It.IsAny<HttpContent>()))
                 .Returns(
                 Task.Factory.StartNew(
                     () =>
                     new HttpResponseMessage(httpStatusCode)
                     {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = ActivityId }))
+                    })).Verifiable();
 
-                    }));
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{ActivityId}")))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(httpStatusCode)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = ActivityId , Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
             mockedNfieldConnection
                 .SetupGet(connection => connection.Client)
-                .Returns(mockedHttpClient.Object);
+                .Returns(mockedHttpClient.Object).Verifiable();
             mockedNfieldConnection
                 .SetupGet(connection => connection.NfieldServerUri)
-                .Returns(base.ServiceAddress);
+                .Returns(base.ServiceAddress).Verifiable();
 
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // assert: no throw
             await _target.UploadThemeAsync(templateId, themeName, inputFilePath);
+            mockedHttpClient.Verify();
+            mockedNfieldConnection.Verify();
         }
 
         [Fact]

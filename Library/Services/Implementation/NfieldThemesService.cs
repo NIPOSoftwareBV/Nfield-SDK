@@ -13,8 +13,10 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Utilities;
 using System;
 using System.IO;
@@ -43,12 +45,17 @@ namespace Nfield.Services.Implementation
             if (!File.Exists(filePath))
                 throw new FileNotFoundException(fileName);
 
-            var uri = GetUploadThemeUri(templateId, themeName);
-
             using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
                 byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                await Client.PutAsync(uri, byteArrayContent).FlattenExceptions().ConfigureAwait(false);
+                var uri = GetUploadThemeUri(templateId, themeName);
+                _ = await Client.PutAsync(uri, byteArrayContent)
+                       .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                       .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                       .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "Status"))
+                       .Unwrap()
+                       .FlattenExceptions()
+                       .ConfigureAwait(false);
             }
         }
 

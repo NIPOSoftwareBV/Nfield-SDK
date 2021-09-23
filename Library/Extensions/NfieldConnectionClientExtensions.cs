@@ -30,19 +30,19 @@ namespace Nfield.Extensions
     {
         private static Uri BackgroundActivityUrl(this INfieldConnectionClient client, string activityId)
         {
-            return new Uri(client.NfieldServerUri, $"BackgroundActivities/{activityId}/");
+            return new Uri(client.NfieldServerUri, $"BackgroundActivities/{activityId}");
         }
 
         /// <summary>
         /// Recursive method that polls the activity status until it completes.
         /// </summary>
-        /// <param name="client">NField Connection Client (this)</param>
+        /// <param name="connectionClient">NField Connection Client (this)</param>
         /// <param name="activityId">The id of the activity to wait for.</param>
         /// <param name="fieldNameResult">The name of the result field</param>
         /// <returns>The <see cref="BackgroundActivityStatus" /> id.</returns>
-        internal static Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient client, string activityId, string fieldNameResult)
+        internal static Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient connectionClient, string activityId, string fieldNameResult)
         {
-            return client.Client.GetAsync(client.BackgroundActivityUrl(activityId))
+            return connectionClient.Client.GetAsync(connectionClient.BackgroundActivityUrl(activityId))
                 .ContinueWith(response => response.Result.Content.ReadAsStringAsync())
                 .Unwrap()
                 .ContinueWith(content =>
@@ -55,7 +55,7 @@ namespace Nfield.Extensions
                         case 0: // pending
                         case 1: // started
                             Thread.Sleep(millisecondsTimeout: 200);
-                            return client.GetActivityResultAsync<T>(activityId, fieldNameResult);
+                            return connectionClient.GetActivityResultAsync<T>(activityId, fieldNameResult);
                         case 2: // succeeded
                             var tcs = new TaskCompletionSource<T>();
                             tcs.SetResult(obj[fieldNameResult].Value<T>());

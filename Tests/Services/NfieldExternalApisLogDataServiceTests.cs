@@ -49,7 +49,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(activity))));
 
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activity.ActivityId}/")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activity.ActivityId}")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new { Status = 2, DownloadDataUrl = ExpectedDownloadUrl }))));
 
             var target = new NfieldExternalApisLogService();
