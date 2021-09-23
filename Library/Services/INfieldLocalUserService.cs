@@ -56,6 +56,6 @@ namespace Nfield.Services
         /// <summary>
         /// Reset the specified local user password.
         /// </summary>
-        Task ResetAsync(string identityId, ResetLocalUser model)
+        Task ResetAsync(string identityId, ResetLocalUser model);
     }
 }
