@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "69c66594-05a1-4882-a99b-1731302a339f",
+		"name": "DomainSettings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Password Settings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const hasOfficeName = (office) => {",
+							"    return office.OfficeName !== undefined;",
+							"}",
+							"",
+							"pm.test(\"All offices should have an OfficeName\", function () {",
+							"    const offices = pm.response.json();",
+							"    pm.expect(offices.every(hasOfficeName)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Offices",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Offices"
+					]
+				},
+				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Patch Password Settings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"AgeWarnThreshold\": \"0\",\r\n  \"EnforceTwoFactorAuthentication\": \"false\",\r\n  \"MaxPasswordAge\": \"0\",\r\n  \"MinCharsetsInPassword\": \"0\",\r\n  \"MinPasswordLength\": \"0\",\r\n  \"PasswordHistoryLength\": \"0\"\r\n }"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/PasswordSettings",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"PasswordSettings"
+					]
+				},
+				"description": "Update a survey with the specified fields."
+			},
+			"response": []
+		}
+	]
+}
