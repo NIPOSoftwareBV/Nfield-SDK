@@ -31,6 +31,6 @@ namespace Nfield.Services
         /// <summary>
         /// Changes the password settings at the domain level 
         /// </summary>
-        Task<DomainPasswordSettings> PatchAsync(DomainPasswordSettings settings);
+        Task<DomainPasswordSettings> UpdateAsync(DomainPasswordSettings settings);
     }
 }

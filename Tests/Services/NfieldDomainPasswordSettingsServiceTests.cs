@@ -53,15 +53,15 @@ namespace Nfield.Services
         #region Patch
 
         [Fact]
-        public void TestPatchAsync_SettingsNull_Throws()
+        public void TestUpdateAsync_SettingsNull_Throws()
         {
             var target = new NfieldDomainPasswordSettingsService();
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(target.PatchAsync(null)));
+                UnwrapAggregateException(target.UpdateAsync(null)));
         }
 
         [Fact]
-        public void TestPatchAsync_ReturnsData()
+        public void TestUpdateAsync_ReturnsData()
         {
             var expected = new DomainPasswordSettings
             {
@@ -77,7 +77,7 @@ namespace Nfield.Services
             var mockClient = InitMockClientPatch(PasswordSettingsUrl(), expected, expected);
             target.InitializeNfieldConnection(mockClient);
 
-            var actual = target.PatchAsync(expected).Result;
+            var actual = target.UpdateAsync(expected).Result;
             AssertOnPasswordSettings(expected, actual);
         }
 
