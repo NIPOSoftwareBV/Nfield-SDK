@@ -18,17 +18,7 @@
 							"",
 							"pm.test(\"Status code name has string\", function () {",
 							"    pm.response.to.have.status(\"OK\");",
-							"});",
-							"",
-							"const hasOfficeName = (office) => {",
-							"    return office.OfficeName !== undefined;",
-							"}",
-							"",
-							"pm.test(\"All offices should have an OfficeName\", function () {",
-							"    const offices = pm.response.json();",
-							"    pm.expect(offices.every(hasOfficeName)).to.be.true;",
-							"});",
-							""
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -47,13 +37,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Offices",
+					"raw": "{{origin}}/v1/PasswordSettings",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"Offices"
+						"PasswordSettings"
 					]
 				},
 				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
@@ -94,7 +84,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"AgeWarnThreshold\": \"0\",\r\n  \"EnforceTwoFactorAuthentication\": \"false\",\r\n  \"MaxPasswordAge\": \"0\",\r\n  \"MinCharsetsInPassword\": \"0\",\r\n  \"MinPasswordLength\": \"0\",\r\n  \"PasswordHistoryLength\": \"0\"\r\n }"
+					"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"MinCharsetsInPassword\": 2,\r\n    \"MinPasswordLength\": 6,\r\n    \"PasswordHistoryLength\": 0\r\n}"
 				},
 				"url": {
 					"raw": "{{origin}}/v1/PasswordSettings",
