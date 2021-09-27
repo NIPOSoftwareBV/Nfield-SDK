@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "ac216a6a-e549-49e9-96f5-68b2e4de1326",
+		"name": "SurveyLanguagesTranslations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Languages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    var languages = pm.response.json();\r",
+							"    var lastIndex = languages.length - 1;\r",
+							"    pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/Translations/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Languages",
+						"Translations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Id\");\r",
+							"    const response = pm.response.json();\r",
+							"    pm.environment.set(\"LanguageId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"InterviewButtonUnavailable\": \"New -Interview button is not available\",\r\n    \"TooFewAnswers\": \"New -Too few answers, minimum is {minimum}\",\r\n    \"TooManyAnswers\": \"New -Too many answers, maximum is {maximum}\",\r\n    \"ItemAnswerRequired\": \"New -Please specify an answer for {item}\",\r\n    \"CategoryAnswerRequired\": \"New -Please specify an answer for {category}\",\r\n    \"AnswerRequired\": \"New -An answer is required\",\r\n    \"NotInRange\": \"New -Answer {answer} is not in the permitted range, permitted range is {range}\",\r\n    \"TooManyDigitsInIntegerPart\": \"New -Answer {answer} has too many digits, maximum is {maximum}\",\r\n    \"LessThanMinimum\": \"New -Answer {answer} is too small, minimum is {minimum}\",\r\n    \"MoreThanMaximum\": \"New -Answer {answer} is too big, maximum is {maximum}\",\r\n    \"MustBeNumeric\": \"New -Answer {answer} must be numeric\",\r\n    \"TooManyDigitsFraction\": \"New -Answer {answer} has too many fractional digits, maximum is {maximumDigits}\",\r\n    \"DoNotUseBrowserButtonToNavigate\": \"New -Do not use browser navigation buttons, use interview buttons instead\",\r\n    \"ExclusiveCategory\": \"New -Category {category} cannot be used together with other categories\",\r\n    \"InvalidCategory\": \"New -The chosen category is not present in the list of available categories.\",\r\n    \"ButtonPause\": \"New -Pause\",\r\n    \"ButtonStart\": \"New -Start\",\r\n    \"ButtonClear\": \"New -Clear\",\r\n    \"ButtonBack\": \"New -Back\",\r\n    \"ButtonNext\": \"New -Next\",\r\n    \"Name\": \"New language\",\r\n    \"AnswerTooLong\": \"New -Answer {anser} is too long, maximum is {numberOfCharacters}\",\r\n    \"DoNotUseButtonWithOtherAnswer\": \"New -The answer \\\"{item}\\\" cannot be used in conjunction with other answers\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/Translations/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Languages",
+						"Translations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Id\");\r",
+							"    const response = pm.response.json();\r",
+							"    pm.environment.set(\"LanguageId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"InterviewButtonUnavailable\": \"Updated -Interview button is not available\",\r\n    \"TooFewAnswers\": \"Updated -Too few answers, minimum is {minimum}\",\r\n    \"TooManyAnswers\": \"Updated -Too many answers, maximum is {maximum}\",\r\n    \"ItemAnswerRequired\": \"Updated -Please specify an answer for {item}\",\r\n    \"CategoryAnswerRequired\": \"Updated -Please specify an answer for {category}\",\r\n    \"AnswerRequired\": \"Updated -An answer is required\",\r\n    \"NotInRange\": \"Updated -Answer {answer} is not in the permitted range, permitted range is {range}\",\r\n    \"TooManyDigitsInIntegerPart\": \"Updated -Answer {answer} has too many digits, maximum is {maximum}\",\r\n    \"LessThanMinimum\": \"Updated -Answer {answer} is too small, minimum is {minimum}\",\r\n    \"MoreThanMaximum\": \"Updated -Answer {answer} is too big, maximum is {maximum}\",\r\n    \"MustBeNumeric\": \"Updated -Answer {answer} must be numeric\",\r\n    \"TooManyDigitsFraction\": \"Updated -Answer {answer} has too many fractional digits, maximum is {maximumDigits}\",\r\n    \"DoNotUseBrowserButtonToNavigate\": \"Updated -Do not use browser navigation buttons, use interview buttons instead\",\r\n    \"ExclusiveCategory\": \"Updated -Category {category} cannot be used together with other categories\",\r\n    \"InvalidCategory\": \"Updated -The chosen category is not present in the list of available categories.\",\r\n    \"ButtonPause\": \"Updated -Pause\",\r\n    \"ButtonStart\": \"Updated -Start\",\r\n    \"ButtonClear\": \"Updated -Clear\",\r\n    \"ButtonBack\": \"Updated -Back\",\r\n    \"ButtonNext\": \"Updated -Next\",\r\n    \"Name\": \"Updated language\",\r\n    \"AnswerTooLong\": \"Updated -Answer {anser} is too long, maximum is {numberOfCharacters}\",\r\n    \"DoNotUseButtonWithOtherAnswer\": \"Updated -The answer \\\"{item}\\\" cannot be used in conjunction with other answers\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/Translations/{{LanguageId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Languages",
+						"Translations",
+						"{{LanguageId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Language",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/Translations/{{LanguageId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Languages",
+						"Translations",
+						"{{LanguageId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
