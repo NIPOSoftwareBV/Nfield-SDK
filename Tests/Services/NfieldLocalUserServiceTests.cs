@@ -85,7 +85,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task CanResetAnUser()
+        public async Task CanResetAUser()
         {
 
             var id = Guid.NewGuid().ToString();
