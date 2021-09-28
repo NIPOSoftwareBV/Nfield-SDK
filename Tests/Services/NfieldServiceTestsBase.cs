@@ -105,5 +105,17 @@ namespace Nfield.Services
             return mockedNfieldConnection.Object;
         }
 
+        internal INfieldConnectionClient InitMockClientPatch<T1, T2>(Uri url, T1 requestContent, T2 responseObjectContent)
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var responseContent = new ObjectContent<T2>(responseObjectContent, new JsonMediaTypeFormatter());
+            mockedHttpClient
+                .Setup(client => client.PatchAsJsonAsync(url, requestContent))
+                .Returns(CreateTask(HttpStatusCode.OK, responseContent));
+
+            return mockedNfieldConnection.Object;
+        }
+
     }
 }
