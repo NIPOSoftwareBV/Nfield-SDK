@@ -13,14 +13,14 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
+using Nfield.Infrastructure;
+using Nfield.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Nfield.Infrastructure;
-using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
@@ -79,6 +79,17 @@ namespace Nfield.Services.Implementation
                 var result = await DeserializeJsonAsync<LocalUser>(response);
 
                 return result;
+            }
+        }
+
+        public async Task ResetAsync(string identityId, ResetLocalUser model)
+        {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Password/{identityId}");
+            using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false))
+            {
             }
         }
 

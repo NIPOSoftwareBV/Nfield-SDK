@@ -85,6 +85,20 @@ namespace Nfield.Services
         }
 
         [Fact]
+        public async Task CanResetAUser()
+        {
+
+            var id = Guid.NewGuid().ToString();
+            var changePasswordLocalUser = new ResetLocalUser
+            {
+                Password = "NewSecret"
+            };
+            await _target.ResetAsync(id, changePasswordLocalUser);
+
+            _mockedHttpClient.Verify(client => client.PatchAsJsonAsync(It.Is<Uri>(uri => uri.AbsoluteUri.EndsWith("LocalUsers/Password/"+id)), changePasswordLocalUser), Times.Once());
+        }
+
+        [Fact]
         public async Task CanCreateModifyAndDeleteUser()
         {
             var createdUser = new LocalUser
