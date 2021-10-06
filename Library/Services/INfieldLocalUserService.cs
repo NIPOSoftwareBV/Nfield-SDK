@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -57,5 +58,10 @@ namespace Nfield.Services
         /// Reset the specified local user password.
         /// </summary>
         Task ResetAsync(string identityId, ResetLocalUser model);
+
+        /// <summary>
+        /// Get download logs link.
+        /// </summary>
+        Task<Uri> LogsAsync(string identityId, string startTime, string endTime, string timeOffset);
     }
 }

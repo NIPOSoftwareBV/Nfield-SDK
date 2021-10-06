@@ -14,8 +14,11 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -102,6 +105,20 @@ namespace Nfield.Services.Implementation
             {
             }
         }
+        public async Task<Uri> LogsAsync(string identityId, string startTime, string endTime, string timeOffset)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(identityId, nameof(identityId));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Logs/{identityId}?startTime={startTime}&endTime={endTime}&timeOffset={timeOffset}");
+
+            var response = await ConnectionClient.Client.GetAsync(uri).FlattenExceptions().ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                       .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                       .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<string>(activityResult.Result, "Link"))
+                       .Unwrap()
+                       .FlattenExceptions()
+                       .ConfigureAwait(false);
+            return new Uri(response);
+        }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
         {
@@ -114,5 +131,7 @@ namespace Nfield.Services.Implementation
                 }
             }
         }
+
+        
     }
 }
