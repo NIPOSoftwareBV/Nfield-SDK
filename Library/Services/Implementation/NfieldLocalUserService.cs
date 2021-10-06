@@ -105,19 +105,32 @@ namespace Nfield.Services.Implementation
             {
             }
         }
-        public async Task<Uri> LogsAsync(string identityId, string startTime, string endTime, string timeOffset)
+
+        public async Task<string> LogsAsync(string identityId, LogQueryModel query)
         {
             Ensure.ArgumentNotNullOrEmptyString(identityId, nameof(identityId));
+            Ensure.ArgumentNotNull(query, nameof(query));
+            Ensure.ArgumentNotNullOrEmptyString(query.StartTime, nameof(query.StartTime));
+            Ensure.ArgumentNotNullOrEmptyString(query.EndTime, nameof(query.EndTime));
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Logs/{identityId}?startTime={startTime}&endTime={endTime}&timeOffset={timeOffset}");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Logs/{identityId}");
 
-            var response = await ConnectionClient.Client.GetAsync(uri).FlattenExceptions().ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                       .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                       .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<string>(activityResult.Result, "Link"))
-                       .Unwrap()
-                       .FlattenExceptions()
-                       .ConfigureAwait(false);
-            return new Uri(response);
+            return await ConnectionClient.Client.PostAsJsonAsync(uri, query)
+                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                          .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
+                          .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
+                          .FlattenExceptions();
+        }
+
+        public async Task<string> LogsAsync(string identityId, string startTime, string endTime)
+        {
+            var query = new LogQueryModel
+            {
+                StartTime = startTime,
+                EndTime = endTime
+            };
+
+            return await LogsAsync(identityId, query);
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
@@ -131,7 +144,5 @@ namespace Nfield.Services.Implementation
                 }
             }
         }
-
-        
     }
 }
