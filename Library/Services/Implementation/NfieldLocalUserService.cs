@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldSurveysService"/>
+    /// Implementation of <see cref="INfieldLocalUserService"/>
     /// </summary>
     internal class NfieldLocalUserService : INfieldLocalUserService, INfieldConnectionClientObject
     {
