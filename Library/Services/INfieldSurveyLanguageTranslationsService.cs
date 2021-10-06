@@ -23,7 +23,7 @@ namespace Nfield.Services
     /// <summary>
     /// Represents a set of methods to read and update survey languages.
     /// </summary>
-    public interface INfieldLanguageTranslationsService
+    public interface INfieldSurveyLanguageTranslationsService
     {
         #region CRUD on Language Translations
 

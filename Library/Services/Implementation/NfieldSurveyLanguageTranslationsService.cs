@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,16 @@ using Nfield.SDK.Models;
 namespace Nfield.Services.Implementation
 
 {
-    class NfieldLanguageTranslationsService : INfieldLanguageTranslationsService, INfieldConnectionClientObject
+    class NfieldSurveyLanguageTranslationsService : INfieldSurveyLanguageTranslationsService, INfieldConnectionClientObject
     {
+        private INfieldHttpClient Client
+        {
+            get { return ConnectionClient.Client; }
+        }
+
+        /// <summary>
+        /// Implementation of <see cref="INfieldSurveyLanguageTranslationsService"/>
+        /// </summary>
 
         #region Implementation of INfieldConnectionClientObject
 
@@ -39,10 +48,7 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
-        private INfieldHttpClient Client
-        {
-            get { return ConnectionClient.Client; }
-        }
+        #region Implementation of INfieldLanguageTranslationsService
 
         public Task<IQueryable<SurveyLanguageTranslations>> QueryAsync(string surveyId)
         {
@@ -53,7 +59,7 @@ namespace Nfield.Services.Implementation
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
                  stringTask =>
-                 JsonConvert.DeserializeObject<IQueryable<SurveyLanguageTranslations>>(stringTask.Result).AsQueryable())
+                 JsonConvert.DeserializeObject<List<SurveyLanguageTranslations>>(stringTask.Result).AsQueryable())
              .FlattenExceptions();
         }
 
@@ -88,6 +94,8 @@ namespace Nfield.Services.Implementation
                 Client.DeleteAsync(LanguageTranslationsApi(surveyId, languageId))
                     .FlattenExceptions();
         }
+
+        #endregion
 
         private static void CheckSurveyId(string surveyId)
         {
