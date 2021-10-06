@@ -76,6 +76,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldExternalApisService), typeof(NfieldExternalApisService) },
             { typeof(INfieldExternalApisLogService), typeof(NfieldExternalApisLogService) },
             { typeof(INfieldLocalUserService), typeof(NfieldLocalUserService) },
+            { typeof(INfieldLocalUserLogsService), typeof(NfieldLocalUserLogsService) },
             { typeof(INfieldCatiInterviewersService), typeof(NfieldCatiInterviewersService) },
             { typeof(INfieldSurveyVersionsService), typeof(NfieldSurveyVersionsService) },
             { typeof(INfieldQuotaService), typeof(NfieldQuotaService) },

@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nfield.SDK.Samples", "Examp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nfield.SDK.Tests", "Tests\Nfield.SDK.Tests.csproj", "{F9E32CCC-E12F-4E7B-AF7D-5A8773963B9E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSdk", "..\LocalProjects\TestSdk\TestSdk.csproj", "{16670752-DE76-48F1-8A49-AAAD3F2534C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{F9E32CCC-E12F-4E7B-AF7D-5A8773963B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9E32CCC-E12F-4E7B-AF7D-5A8773963B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9E32CCC-E12F-4E7B-AF7D-5A8773963B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16670752-DE76-48F1-8A49-AAAD3F2534C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16670752-DE76-48F1-8A49-AAAD3F2534C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16670752-DE76-48F1-8A49-AAAD3F2534C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16670752-DE76-48F1-8A49-AAAD3F2534C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
