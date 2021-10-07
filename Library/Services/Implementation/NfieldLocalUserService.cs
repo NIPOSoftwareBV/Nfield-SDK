@@ -91,9 +91,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(nameof(model));
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Password/{identityId}");
-            using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false))
-            {
-            }
+            using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false));
         }
 
         public async Task DeleteAsync(string identityId)
@@ -101,17 +99,14 @@ namespace Nfield.Services.Implementation
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
 
             // note: we need to dispose the response even when we don't use it
-            using (await ConnectionClient.Client.DeleteAsync(uri))
-            {
-            }
+            using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false));            
         }
 
         public async Task<string> LogsAsync(string identityId, LogQueryModel query)
         {
             Ensure.ArgumentNotNullOrEmptyString(identityId, nameof(identityId));
             Ensure.ArgumentNotNull(query, nameof(query));
-            Ensure.ArgumentNotNullOrEmptyString(query.StartTime, nameof(query.StartTime));
-            Ensure.ArgumentNotNullOrEmptyString(query.EndTime, nameof(query.EndTime));
+           
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Logs/{identityId}");
 
@@ -122,7 +117,7 @@ namespace Nfield.Services.Implementation
                           .FlattenExceptions();
         }
 
-        public async Task<string> LogsAsync(string identityId, string startTime, string endTime)
+        public async Task<string> LogsAsync(string identityId, DateTime startTime, DateTime endTime)
         {
             var query = new LogQueryModel
             {

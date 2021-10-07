@@ -62,7 +62,7 @@ namespace Nfield.Services
         /// <summary>
         /// Get download logs link.
         /// </summary>
-        Task<string> LogsAsync(string identityId, string startTime, string endTime);
+        Task<string> LogsAsync(string identityId, DateTime startTime, DateTime endTime);
 
         /// <summary>
         /// Get download logs link.

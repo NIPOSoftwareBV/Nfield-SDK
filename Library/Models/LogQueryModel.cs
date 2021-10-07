@@ -13,6 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+
 namespace Nfield.Models
 {
     /// <summary>
@@ -20,7 +22,7 @@ namespace Nfield.Models
     /// </summary>
     public class LogQueryModel
     {
-        public string StartTime;
-        public string EndTime;
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }
