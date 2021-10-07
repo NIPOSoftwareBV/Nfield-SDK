@@ -159,7 +159,6 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actual = target.UpdateAsync(SurveyId, languageId, translations).Result;
-            target.UpdateAsync(SurveyId, languageId, translations);
 
             Assert.Equal(translations.ButtonNext, actual.ButtonNext);
             Assert.Equal(translations.ButtonBack, actual.ButtonBack);
