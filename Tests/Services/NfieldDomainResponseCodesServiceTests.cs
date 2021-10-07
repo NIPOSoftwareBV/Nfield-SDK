@@ -136,10 +136,8 @@ namespace Nfield.Services
             var responseCodeToAdd = new DomainResponseCode
             {
                 ResponseCode = 15,
-                Description = "Description",
-                IsDefinite = true,
-                AllowAppointment = false,
-                RelocationUrl = "http://www.google.com"
+                Description = "Description",              
+                Url = "http://www.google.com"
             };
             mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -167,10 +165,8 @@ namespace Nfield.Services
             var responseCodeToAdd = new DomainResponseCode
             {
                 ResponseCode = 15,
-                Description = "Description",
-                IsDefinite = true,
-                AllowAppointment = false,
-                RelocationUrl = "http://www.google.com"
+                Description = "Description",             
+                Url = "http://www.google.com"
             };
             mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -184,10 +180,7 @@ namespace Nfield.Services
             // Assert
             Assert.Equal(responseCodeToAdd.ResponseCode, result.ResponseCode);
             Assert.Equal(responseCodeToAdd.Description, result.Description);
-            Assert.Equal(responseCodeToAdd.IsDefinite, result.IsDefinite);
-            Assert.Equal(responseCodeToAdd.AllowAppointment, result.AllowAppointment);
-            Assert.Equal(responseCodeToAdd.IsSelectable, result.IsSelectable);
-            Assert.Equal(responseCodeToAdd.RelocationUrl, result.RelocationUrl);
+            Assert.Equal(responseCodeToAdd.Url, result.Url);
         }
 
         #endregion
@@ -230,9 +223,7 @@ namespace Nfield.Services
             var responseCodeToUpdate = new DomainResponseCodeData
             {                
                 Description = "Description",
-                IsDefinite = true,
-                AllowAppointment = false,
-                RelocationUrl = "http://www.google.com"
+                Url = "http://www.google.com"
             };
             mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCodeData>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -265,9 +256,7 @@ namespace Nfield.Services
             {
                 ResponseCode = code,
                 Description = "Description",
-                IsDefinite = true,
-                AllowAppointment = false,
-                RelocationUrl = "http://www.google.com"
+                Url = "http://www.google.com"
             };
             mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCodeData>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -281,10 +270,7 @@ namespace Nfield.Services
             // Assert
             Assert.Equal(responseCodeToUpdate.ResponseCode, result.ResponseCode);
             Assert.Equal(responseCodeToUpdate.Description, result.Description);
-            Assert.Equal(responseCodeToUpdate.IsDefinite, result.IsDefinite);
-            Assert.Equal(responseCodeToUpdate.AllowAppointment, result.AllowAppointment);
-            Assert.Equal(responseCodeToUpdate.IsSelectable, result.IsSelectable);
-            Assert.Equal(responseCodeToUpdate.RelocationUrl, result.RelocationUrl);
+            Assert.Equal(responseCodeToUpdate.Url, result.Url);
         }
 
         #endregion

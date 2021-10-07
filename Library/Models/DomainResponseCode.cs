@@ -34,33 +34,17 @@ namespace Nfield.Models
     /// </summary>
     public class DomainResponseCodeData
     {
-
         /// <summary>
         /// User defined description of the response code given
         /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Determines if the Response code is a definitive or not (IsFinal - true or false)
-        /// </summary>
-        public bool? IsDefinite { get; set; }
-
-        /// <summary>
-        /// Determines if response code is selectable by the interviewer
-        /// </summary>
-        public bool? IsSelectable { get; set; }
-
-        /// <summary>
-        /// Determines if the Response code is meant for an appointment or not (IsIntermediate - true or false)
-        /// </summary>
-        public bool? AllowAppointment { get; set; }
+        public string Description { get; set; }        
 
         /// <summary>
         /// Relocation url of the response code
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings",
             Justification = "Entity Framework, out of the box, can't map Uri's to a sql server data type")]
-        public string RelocationUrl { get; set; }
+        public string Url { get; set; }
 
     }
 }
