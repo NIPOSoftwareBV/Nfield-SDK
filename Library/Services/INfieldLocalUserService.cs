@@ -60,13 +60,13 @@ namespace Nfield.Services
         Task ResetAsync(string identityId, ResetLocalUser model);
 
         /// <summary>
-        /// Get download logs link.
+        /// Ask for local users logs and get the link
         /// </summary>
-        Task<string> LogsAsync(string identityId, DateTime startTime, DateTime endTime);
+        Task<string> LogsAsync(DateTime startTime, DateTime endTime);
 
         /// <summary>
-        /// Get download logs link.
+        /// Ask for local users logs and get the link
         /// </summary>
-        Task<string> LogsAsync(string identityId, LogQueryModel query);
+        Task<string> LogsAsync(LogQueryModel query);
     }
 }

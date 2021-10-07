@@ -102,13 +102,11 @@ namespace Nfield.Services.Implementation
             using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false));            
         }
 
-        public async Task<string> LogsAsync(string identityId, LogQueryModel query)
+        public async Task<string> LogsAsync( LogQueryModel query)
         {
-            Ensure.ArgumentNotNullOrEmptyString(identityId, nameof(identityId));
             Ensure.ArgumentNotNull(query, nameof(query));
-           
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Logs/{identityId}");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, "LocalUsersLogs");
 
             return await ConnectionClient.Client.PostAsJsonAsync(uri, query)
                           .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -117,7 +115,7 @@ namespace Nfield.Services.Implementation
                           .FlattenExceptions();
         }
 
-        public async Task<string> LogsAsync(string identityId, DateTime startTime, DateTime endTime)
+        public async Task<string> LogsAsync(DateTime startTime, DateTime endTime)
         {
             var query = new LogQueryModel
             {
@@ -125,7 +123,7 @@ namespace Nfield.Services.Implementation
                 EndTime = endTime
             };
 
-            return await LogsAsync(identityId, query);
+            return await LogsAsync(query);
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
