@@ -236,18 +236,7 @@ namespace Nfield.Services
             // Test it using the model
              var result = await _target.LogsAsync(query);
             _mockedHttpClient.Verify();
-            Assert.Equal(logsLink1, result);
-
-            _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"LocalUsersLogs"), It.Is<LogQueryModel>(
-                    q => q.StartTime == query.StartTime && q.EndTime == query.EndTime)))
-                .Returns(
-                Task.Factory.StartNew(
-                    () =>
-                    new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = activityId }))
-                    })).Verifiable();
+            Assert.Equal(logsLink1, result);    
 
             _mockedHttpClient
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activityId}")))
