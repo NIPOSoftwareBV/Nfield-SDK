@@ -65,7 +65,7 @@ namespace Nfield.Services
         Task<string> LogsAsync(DateTime startTime, DateTime endTime);
 
         /// <summary>
-        /// Ask for local user logs and get the link
+        /// Ask for local users logs and get the link
         /// </summary>
         Task<string> LogsAsync(LogQueryModel query);
     }
