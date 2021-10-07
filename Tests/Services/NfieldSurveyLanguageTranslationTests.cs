@@ -163,27 +163,28 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestUpdateAsync_LanguageExists_DoesNotThrow()
+        public void TestUpdateAsync_SurveyAndLanguageExist_DoesNotThrow()
         {
-            const int LanguageId = 11;
-            Assert.True(false);
-            var language = new Language
+            var translation = new SurveyLanguageTranslations()
             {
-                Id = LanguageId,
-                Name = "XXX"
+                Name = "Changed Language X"
             };
+
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(
-                    new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages"), language))
-                .Returns(CreateTask(HttpStatusCode.OK));
 
-            var target = new NfieldLanguagesService();
+            var content = new StringContent(JsonConvert.SerializeObject(translation));
+            mockedHttpClient
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/Translations/" + languageId), translation))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var target = new NfieldSurveyLanguageTranslationsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            // assert: no throw
-            target.UpdateAsync(SurveyId, language).Wait();
+            var actual = target.UpdateAsync(SurveyId, languageId, translation).Result;
+            target.UpdateAsync(SurveyId, languageId, translation);
+
+            Assert.Equal(translation.Name, actual.Name);
         }
 
         #endregion
@@ -219,22 +220,19 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestRemoveAsync_ServerRemovedInterviewer_DoesNotThrow()
+        public void TestRemoveAsync_SurveyIdAndLanguageIdSpecified_DoesNotThrow()
         {
-            const int LanguageId = 11;
-            Assert.True(false);
-            var language = new Language { Id = LanguageId };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/" + LanguageId.ToString())))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/Translations/" +languageId)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
-            var target = new NfieldLanguagesService();
+            var target = new NfieldSurveyLanguageTranslationsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            // assert: no throw
-            target.RemoveAsync(SurveyId, language).Wait();
+            // Success if test does not throw.
+            target.RemoveAsync(SurveyId, languageId).Wait();
         }
 
         #endregion
