@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.SDK.Models;
 
 namespace Nfield.Services.Implementation
@@ -50,7 +51,7 @@ namespace Nfield.Services.Implementation
 
         #region Implementation of INfieldLanguageTranslationsService
 
-        public Task<IQueryable<SurveyLanguageTranslations>> QueryAsync(string surveyId)
+        public Task<IQueryable<Language>> QueryAsync(string surveyId)
         {
             CheckSurveyId(surveyId);
 
@@ -59,25 +60,23 @@ namespace Nfield.Services.Implementation
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
                  stringTask =>
-                 JsonConvert.DeserializeObject<List<SurveyLanguageTranslations>>(stringTask.Result).AsQueryable())
+                 JsonConvert.DeserializeObject<List<Language>>(stringTask.Result).AsQueryable())
              .FlattenExceptions();
         }
 
-        public Task<SurveyLanguageTranslations> AddAsync(string surveyId, string languageId, SurveyLanguageTranslations translations)
+        public Task<SurveyLanguageTranslations> AddAsync(string surveyId, SurveyLanguageTranslations translations)
         {
             CheckSurveyId(surveyId);
-            CheckLanguageId(languageId);
 
-            return Client.PostAsJsonAsync(LanguageTranslationsApi(surveyId, languageId), translations)
+            return Client.PostAsJsonAsync(LanguageTranslationsApi(surveyId), translations)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<SurveyLanguageTranslations>(task.Result))
                          .FlattenExceptions();
         }
 
-        public Task<SurveyLanguageTranslations> UpdateAsync(string surveyId, string languageId, SurveyLanguageTranslations translations)
+        public Task<SurveyLanguageTranslations> UpdateAsync(string surveyId, int languageId, SurveyLanguageTranslations translations)
         {
             CheckSurveyId(surveyId);
-            CheckLanguageId(languageId);
 
             return Client.PatchAsJsonAsync(LanguageTranslationsApi(surveyId, languageId), translations)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -85,10 +84,9 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task RemoveAsync(string surveyId, string languageId)
+        public Task RemoveAsync(string surveyId, int languageId)
         {
             CheckSurveyId(surveyId);
-            CheckLanguageId(languageId);
 
             return
                 Client.DeleteAsync(LanguageTranslationsApi(surveyId, languageId))
@@ -105,19 +103,11 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentException("surveyId cannot be empty");
         }
 
-        private static void CheckLanguageId(string languageId)
-        {
-            if (languageId == null)
-                throw new ArgumentNullException("languageId");
-            if (languageId.Trim().Length == 0)
-                throw new ArgumentException("LanguageId cannot be empty");
-        }
-
-        private Uri LanguageTranslationsApi(string surveyId, string languageId = null)
+        private Uri LanguageTranslationsApi(string surveyId, int? languageId = null)
         {
             var path = new StringBuilder();
-            path.AppendFormat("Surveys/{0}/Languages/Translations", surveyId);
-            if (!string.IsNullOrEmpty(languageId))
+            path.AppendFormat("Surveys/{0}/LanguageTranslations", surveyId);
+            if (languageId != null)
             {
                 path.AppendFormat("/{0}", languageId);
             }

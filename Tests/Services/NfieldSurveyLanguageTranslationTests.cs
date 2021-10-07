@@ -33,7 +33,7 @@ namespace Nfield.Services
     public class NfieldSurveyLanguageTranslationsServiceTests : NfieldServiceTestsBase
     {
         const string SurveyId = "MySurvey";
-        const string languageId = "MyLanguage";
+        const int languageId = 123;
 
         #region QueryAsync
 
@@ -54,16 +54,16 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithLanguages()
         {
-            var expectedTranslations = new SurveyLanguageTranslations[]
+            var expectedTranslations = new Language[]
             {
-                new SurveyLanguageTranslations{Name = "X"},
-                new SurveyLanguageTranslations{Name = "Y"}
+                new Language{Name = "X", Id = 1},
+                new Language{Name = "Y", Id = 2}
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/Translations")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/LanguageTranslations")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedTranslations))));
 
             var target = new NfieldSurveyLanguageTranslationsService();
@@ -71,7 +71,9 @@ namespace Nfield.Services
 
             var actualTranslations = target.QueryAsync(SurveyId).Result;
             Assert.Equal(expectedTranslations[0].Name, actualTranslations.ToArray()[0].Name);
+            Assert.Equal(expectedTranslations[0].Id, actualTranslations.ToArray()[0].Id);
             Assert.Equal(expectedTranslations[1].Name, actualTranslations.ToArray()[1].Name);
+            Assert.Equal(expectedTranslations[1].Id, actualTranslations.ToArray()[1].Id);
             Assert.Equal(2, actualTranslations.Count());
         }
 
@@ -83,28 +85,14 @@ namespace Nfield.Services
         public void TestAddAsync_SurveyIdIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.AddAsync(null, "somevalue", new SurveyLanguageTranslations())));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.AddAsync(null, new SurveyLanguageTranslations())));
         }
 
         [Fact]
         public void TestAddAsync_SurveyIdIsEmpty_ThrowsArgumentException()
         {
             var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.AddAsync(string.Empty, "somevalue", new SurveyLanguageTranslations())));
-        }
-
-        [Fact]
-        public void TestAddAsync_LanguageIdIsNull_ThrowsArgumentNullException()
-        {
-            var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.AddAsync("somevalue", null, new SurveyLanguageTranslations())));
-        }
-
-        [Fact]
-        public void TestAddAsync_LanguageIdIsEmpty_ThrowsArgumentException()
-        {
-            var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.AddAsync("somevalue", string.Empty, new SurveyLanguageTranslations())));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.AddAsync(string.Empty, new SurveyLanguageTranslations())));
         }
 
         [Fact]
@@ -112,22 +100,24 @@ namespace Nfield.Services
         {
             var translations = new SurveyLanguageTranslations()
             {
-                Name = "Language X"               
+                ButtonNext = "Next",
+                ButtonBack = "Back",
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             var content = new StringContent(JsonConvert.SerializeObject(translations));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/Translations/" + languageId), translations))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/LanguageTranslations"), translations))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyLanguageTranslationsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.AddAsync(SurveyId, languageId, translations).Result;
+            var actual = target.AddAsync(SurveyId, translations).Result;
 
-            Assert.Equal(translations.Name, actual.Name);
+            Assert.Equal(translations.ButtonNext, actual.ButtonNext);
+            Assert.Equal(translations.ButtonBack, actual.ButtonBack);
         }
 
         #endregion
@@ -138,53 +128,42 @@ namespace Nfield.Services
         public void TestUpdateAsync_SurveyIdIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null, "somevalue", new SurveyLanguageTranslations())));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null, languageId, new SurveyLanguageTranslations())));
         }
 
         [Fact]
         public void TestUpdateAsync_SurveyIdIsEmpty_ThrowsArgumentException()
         {
             var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateAsync(string.Empty, "somevalue", new SurveyLanguageTranslations())));
-        }
-
-        [Fact]
-        public void TestUpdateAsync_LanguageIdIsNull_ThrowsArgumentNullException()
-        {
-            var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync("somevalue", null, new SurveyLanguageTranslations())));
-        }
-
-        [Fact]
-        public void TestUpdateAsync_LanguageIdIsEmpty_ThrowsArgumentException()
-        {
-            var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateAsync("somevalue", string.Empty, new SurveyLanguageTranslations())));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateAsync(string.Empty, languageId, new SurveyLanguageTranslations())));
         }
 
         [Fact]
         public void TestUpdateAsync_SurveyAndLanguageExist_DoesNotThrow()
         {
-            var translation = new SurveyLanguageTranslations()
+            var translations = new SurveyLanguageTranslations()
             {
-                Name = "Changed Language X"
+                ButtonNext = "El Nexto",
+                ButtonBack = "El Backo",
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            var content = new StringContent(JsonConvert.SerializeObject(translation));
+            var content = new StringContent(JsonConvert.SerializeObject(translations));
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/Translations/" + languageId), translation))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/LanguageTranslations/{languageId}"), translations))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldSurveyLanguageTranslationsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.UpdateAsync(SurveyId, languageId, translation).Result;
-            target.UpdateAsync(SurveyId, languageId, translation);
+            var actual = target.UpdateAsync(SurveyId, languageId, translations).Result;
+            target.UpdateAsync(SurveyId, languageId, translations);
 
-            Assert.Equal(translation.Name, actual.Name);
+            Assert.Equal(translations.ButtonNext, actual.ButtonNext);
+            Assert.Equal(translations.ButtonBack, actual.ButtonBack);
+
         }
 
         #endregion
@@ -195,28 +174,14 @@ namespace Nfield.Services
         public void TestRemoveAsync_SurveyIdIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null, "somevalue")));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null, languageId)));
         }
 
         [Fact]
         public void TestRemoveAsync_SurveyIdIsEmpty_ThrowsArgumentException()
         {
             var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.RemoveAsync(string.Empty, "somevalue")));
-        }
-
-        [Fact]
-        public void TestRemoveAsync_LanguageIdIsNull_ThrowsArgumentNullException()
-        {
-            var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync("somevalue", null)));
-        }
-
-        [Fact]
-        public void TestRemoveAsync_LanguageIdIsEmpty_ThrowsArgumentException()
-        {
-            var target = new NfieldSurveyLanguageTranslationsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.RemoveAsync("somevalue", string.Empty)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.RemoveAsync(string.Empty, languageId)));
         }
 
         [Fact]
@@ -225,7 +190,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Languages/Translations/" +languageId)))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/LanguagesTranslations/{languageId}")))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveyLanguageTranslationsService();

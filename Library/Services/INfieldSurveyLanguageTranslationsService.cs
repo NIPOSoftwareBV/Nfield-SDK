@@ -28,38 +28,40 @@ namespace Nfield.Services
         #region CRUD on Language Translations
 
         /// <summary>
-        /// Gets all languages and their translations for a survey, as a queryable object.
+        /// Gets all languages a survey, as a queryable object.
         /// </summary>
         /// <param name="surveyId">The survey for which language names and ids are returned</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<IQueryable<SurveyLanguageTranslations>> QueryAsync(string surveyId);
+        /// <returns>A list if language names and their ids.</returns>
+        Task<IQueryable<Language>> QueryAsync(string surveyId);
 
         /// <summary>
         /// Adds a new language and all of its translations.
         /// </summary>
-        /// <param name="surveyId">the survey to add this language to</param>
-        /// <param name="languageId">A new id for the language to add</param>
+        /// <param name="surveyId">the survey to add the language to</param>
         /// <param name="translations">The translations to set</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SurveyLanguageTranslations> AddAsync(string surveyId, string languageId, SurveyLanguageTranslations translations);
+        /// <returns>The new translations for the language</returns>
+        Task<SurveyLanguageTranslations> AddAsync(string surveyId, SurveyLanguageTranslations translations);
 
         /// <summary>
         /// Updates translations of a language.
         /// </summary>
-        /// <param name="surveyId">The survey on which to update this language</param>
+        /// <param name="surveyId">The survey on which to update the language</param>
         /// <param name="languageId">The language to update</param>
         /// /// <param name="translations">The translations to change</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SurveyLanguageTranslations> UpdateAsync(string surveyId, string languageId, SurveyLanguageTranslations translations);
+        /// <returns>The updated translations for the language</returns>
+        Task<SurveyLanguageTranslations> UpdateAsync(string surveyId, int languageId, SurveyLanguageTranslations translations);
 
         /// <summary>
         /// Removes a language and all of its translations.
@@ -70,7 +72,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task RemoveAsync(string surveyId, string languageId);
+        Task RemoveAsync(string surveyId, int languageId);
 
         #endregion
     }
