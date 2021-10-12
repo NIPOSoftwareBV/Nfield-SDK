@@ -2,7 +2,7 @@
 {
     public class SurveyLanguageTranslations
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string InterviewButtonUnavailable { get; set; }
         public string TooFewAnswers { get; set; }
         public string TooManyAnswers { get; set; }
