@@ -25,7 +25,6 @@ using Nfield.Models;
 using Nfield.SDK.Models;
 
 namespace Nfield.Services.Implementation
-
 {
     class NfieldSurveyLanguageTranslationsService : INfieldSurveyLanguageTranslationsService, INfieldConnectionClientObject
     {
