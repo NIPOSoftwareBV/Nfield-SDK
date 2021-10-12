@@ -55,7 +55,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The survey on which to update the language</param>
         /// <param name="languageId">The language to update</param>
-        /// /// <param name="translations">The translations to change</param>
+        /// <param name="translations">The translations to change</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
