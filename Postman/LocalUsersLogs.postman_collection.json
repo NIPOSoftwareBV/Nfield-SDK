@@ -42,7 +42,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n    \"From\" : \"2021-10-01T12:13+2:00\",\r\n    \"To\": \"2021-10-05\"\r\n}\r\n\r\n\r\n",
+					"raw": "{ \r\n    \"From\" : \"2015-03-18Z\",\r\n    \"To\": \"2015-12-10T01:00Z\"\r\n}\r\n\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,14 +50,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/LocalUsersLogs/",
+					"raw": "{{origin}}/v1/LocalUsersLogs",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"LocalUsersLogs",
-						""
+						"LocalUsersLogs"
 					]
 				}
 			},
