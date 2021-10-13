@@ -18,22 +18,16 @@ using System;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Domain response code data and identifier
+    /// Holds the properties of a Domain response code
     /// </summary>
-    public class DomainResponseCode : DomainResponseCodeData
+    public class DomainResponseCode
     {
         /// <summary>
         /// User defined response code for the domain
         /// The code is part of the identity of the Entity so once it's assigned it can not changed
         /// </summary>
         public int ResponseCode { get; set; }
-    }
-
-    /// <summary>
-    /// Holds the properties of a Domain response code
-    /// </summary>
-    public class DomainResponseCodeData
-    {
+   
         /// <summary>
         /// User defined description of the response code given
         /// </summary>

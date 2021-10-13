@@ -42,11 +42,9 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldDomainResponseCodesService.QueryAsync(string)"/>
         /// </summary>
-        public Task<IQueryable<DomainResponseCode>> QueryAsync(string domainId)
+        public Task<IQueryable<DomainResponseCode>> QueryAsync()
         {
-            Ensure.ArgumentNotNullOrEmptyString(domainId, nameof(domainId));
-
-            var uri = DomainResponseCodeUrl(domainId, null);
+            var uri = GetDomainResponseCodeUrl();
 
             return Client.GetAsync(uri)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -58,12 +56,11 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldDomainResponseCodesService.QueryAsync(string, int)"/>
         /// </summary>
-        public Task<DomainResponseCode> QueryAsync(string domainId, int code)
+        public Task<DomainResponseCode> QueryAsync(int code)
         {
-            Ensure.ArgumentNotNullOrEmptyString(domainId, nameof(domainId));
 
             return
-                Client.GetAsync(DomainResponseCodeUrl(domainId, code))
+                Client.GetAsync(GetDomainResponseCodeUrl(code))
                     .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                     .ContinueWith(
                         stringTask => JsonConvert.DeserializeObject<DomainResponseCode>(stringTask.Result))
@@ -73,12 +70,11 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldDomainResponseCodesService.AddAsync"/>
         /// </summary>
-        public Task<DomainResponseCode> AddAsync(string domainId, DomainResponseCode responseCode)
+        public Task<DomainResponseCode> AddAsync(DomainResponseCode responseCode)
         {
-            Ensure.ArgumentNotNullOrEmptyString(domainId, nameof(domainId));
             Ensure.ArgumentNotNull(responseCode, nameof(responseCode));
 
-            var uri = DomainResponseCodeUrl(domainId, null);
+            var uri = GetDomainResponseCodeUrl();
 
             return Client.PostAsJsonAsync(uri, responseCode)
                 .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -89,13 +85,12 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldDomainResponseCodesService.UpdateAsync"/>
         /// </summary>
-        public Task<DomainResponseCode> UpdateAsync(string domainId, int responseCodeId, DomainResponseCodeData responseCodeData)
+        public Task<DomainResponseCode> UpdateAsync(DomainResponseCode responseCode)
         {
-            Ensure.ArgumentNotNullOrEmptyString(domainId, nameof(domainId));
-            Ensure.ArgumentNotNull(responseCodeData, nameof(responseCodeData));          
+            Ensure.ArgumentNotNull(responseCode, nameof(responseCode));          
 
             return
-                Client.PatchAsJsonAsync(DomainResponseCodeUrl(domainId, responseCodeId), responseCodeData)
+                Client.PatchAsJsonAsync(GetDomainResponseCodeUrl(responseCode.ResponseCode), new UpdateDomainResponsecode { Description = responseCode.Description , Url = responseCode.Url})
                     .ContinueWith(
                         responseMessageTask =>
                             responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -108,15 +103,11 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldDomainResponseCodesService.RemoveAsync"/>
         /// </summary>
-        public Task RemoveAsync(string domainId, int code)
+        public Task RemoveAsync(int code)
         {
-            if (string.IsNullOrEmpty(domainId))
-            {
-                throw new ArgumentNullException("domainId");
-            }
 
             return
-                Client.DeleteAsync(DomainResponseCodeUrl(domainId, code))
+                Client.DeleteAsync(GetDomainResponseCodeUrl(code))
                       .FlattenExceptions();
         }
 
@@ -141,10 +132,17 @@ namespace Nfield.Services.Implementation
         /// Constructs and returns the url for domain response code 
         /// based on supplied <paramref name="domainId"/>  and <paramref name="code"/>
         /// </summary>
-        private Uri DomainResponseCodeUrl(string domainId, int? code)
+        private Uri GetDomainResponseCodeUrl(int? code = null)
         {
-            var codeString = code.HasValue ? code.Value.ToString(CultureInfo.InvariantCulture) : string.Empty;
-            return new Uri(ConnectionClient.NfieldServerUri, $"Domains/{domainId}/ResponseCodes/{codeString}");
+            var codeString = code.HasValue ? "/" + code.Value.ToString(CultureInfo.InvariantCulture) : string.Empty;
+            return new Uri(ConnectionClient.NfieldServerUri, $"ResponseCodes{codeString}");
+        }
+
+        internal class UpdateDomainResponsecode
+        {
+            public string Description { get; set; }
+            
+            public string Url { get; set; }
         }
     }   
 }

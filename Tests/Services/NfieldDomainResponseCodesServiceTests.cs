@@ -17,21 +17,7 @@ namespace Nfield.Services
     public class NfieldDomainResponseCodesServiceTests : NfieldServiceTestsBase
     {
 
-        #region Query Async
-
-        [Fact]
-        public void TestQueryAsync_DomainIdIsNull_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.QueryAsync(null)));
-        }
-
-        [Fact]
-        public void TestQueryAsync_DomainIdIsEmptyString_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.QueryAsync(string.Empty)));
-        }
+        #region Query Async 
 
         [Fact]
         public void TestQueryAsync_ValidDomainId_CAllsCorrectUrl()
@@ -48,36 +34,21 @@ namespace Nfield.Services
                     new StringContent(JsonConvert.SerializeObject(new List<DomainResponseCode>()))));
 
             // Act
-            target.QueryAsync(domainId).Wait();
+            target.QueryAsync().Wait();
 
             // Assert
             mockedHttpClient.Verify(
-                hc => hc.GetAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("Domains/" + domainId + "/ResponseCodes/"))), Times.Once());
+                hc => hc.GetAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("ResponseCodes/"))), Times.Once());
         }
 
         #endregion
 
-        #region Query Async based on code
-
-        [Fact]
-        public void TestQueryAsyncBasedOnCode_DomainIdIsNull_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.QueryAsync(null, 20)));
-        }
-
-        [Fact]
-        public void TestQueryAsyncBasedOnCode_DomainIdIsEmptyString_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.QueryAsync(string.Empty, 20)));
-        }
+        #region Query Async based on code      
 
         [Fact]
         public void TestQueryAsyncBasedOnCode_ValidDomainId_CAllsCorrectUrl()
         {
-            // Arrange
-            const string domainId = "domainId";
+            // Arrange       
             const int code = 20;
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -89,47 +60,31 @@ namespace Nfield.Services
                     new StringContent(JsonConvert.SerializeObject(new DomainResponseCode()))));
 
             // Act
-            target.QueryAsync(domainId, code).Wait();
+            target.QueryAsync(code).Wait();
 
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.GetAsync(It.Is<Uri>(url =>
-                    url.AbsolutePath.EndsWith($"Domains/{domainId}/ResponseCodes/{code}"))),
+                    url.AbsolutePath.EndsWith($"ResponseCodes/{code}"))),
                 Times.Once());
         }
 
         #endregion
 
         #region Add Async
-
-        [Fact]
-        public void TestAddAsync_DomainIdIsNull_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentNullException>(
-                () => UnwrapAggregateException(target.AddAsync(null, new DomainResponseCode())));
-        }
-
-        [Fact]
-        public void TestAddAsync_DomainIdIsEmptyString_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentException>(
-                () => UnwrapAggregateException(target.AddAsync(string.Empty, new DomainResponseCode())));
-        }
+       
 
         [Fact]
         public void TestAddAsync_DomainResponseCodeIdIsNull_Throws()
         {
             var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.AddAsync("domainId", null)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.AddAsync(null)));
         }
 
         [Fact]
         public void TestAddAsync_ValidDomainResponseCode_CallsCorrectUrl()
         {
             // Arrange
-            const string domainId = "domainId";
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
@@ -146,11 +101,11 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // Act
-            target.AddAsync(domainId, responseCodeToAdd).Wait();
+            target.AddAsync(responseCodeToAdd).Wait();
 
             // Assert
             mockedHttpClient.Verify(hc =>
-                   hc.PostAsJsonAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("Domains/" + domainId + "/ResponseCodes/")), responseCodeToAdd),
+                   hc.PostAsJsonAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("ResponseCodes/")), responseCodeToAdd),
                     Times.Once());
         }
 
@@ -158,7 +113,6 @@ namespace Nfield.Services
         public void TestAddAsync_ValidDomainResponseCode_ReturnsAddedResponseCode()
         {
             // Arrange
-            const string domainId = "domainId";
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
@@ -175,7 +129,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // Act
-            var result = target.AddAsync(domainId, responseCodeToAdd).Result;
+            var result = target.AddAsync(responseCodeToAdd).Result;
 
             // Assert
             Assert.Equal(responseCodeToAdd.ResponseCode, result.ResponseCode);
@@ -186,29 +140,14 @@ namespace Nfield.Services
         #endregion
 
         #region Update Async
-
-        [Fact]
-        public void TestUpdateAsync_DomainIdIsNull_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentNullException>(
-                () => UnwrapAggregateException(target.UpdateAsync(null, 2, new DomainResponseCodeData())));
-        }
-
-        [Fact]
-        public void TestUpdateAsync_DomainIdIsEmptyString_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentException>(
-                () => UnwrapAggregateException(target.UpdateAsync(string.Empty, 1, new DomainResponseCodeData())));
-        }
+        
 
         [Fact]
         public void TestUpdateAsync_DomainresponseCodeIsNull_Throws()
         {
             var target = new NfieldDomainResponseCodesService();
             Assert.Throws<ArgumentNullException>(
-                () => UnwrapAggregateException(target.UpdateAsync("sruveyId", 2, null)));
+                () => UnwrapAggregateException(target.UpdateAsync(null)));
         }
 
         [Fact]
@@ -220,26 +159,27 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            var responseCodeToUpdate = new DomainResponseCodeData
-            {                
+            var responseCodeToUpdate = new DomainResponseCode
+            {
+                ResponseCode = code,
                 Description = "Description",
                 Url = "http://www.google.com"
             };
-            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCodeData>()))
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(new DomainResponseCode()))));
             var target = new NfieldDomainResponseCodesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // Act
-            target.UpdateAsync(domainId, code, responseCodeToUpdate).Wait();
+            target.UpdateAsync(responseCodeToUpdate).Wait();
 
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.PatchAsJsonAsync(
                     It.Is<Uri>(
                         url => url.AbsolutePath.EndsWith($"Domains/{domainId}/ResponseCodes/{code}")),
-                    It.IsAny<DomainResponseCodeData>()),
+                    It.IsAny<DomainResponseCode>()),
                 Times.Once());
         }
 
@@ -258,14 +198,14 @@ namespace Nfield.Services
                 Description = "Description",
                 Url = "http://www.google.com"
             };
-            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCodeData>()))
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(responseCodeToUpdate))));
             var target = new NfieldDomainResponseCodesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // Act
-            var result = target.UpdateAsync(domainId, code, responseCodeToUpdate).Result;
+            var result = target.UpdateAsync(responseCodeToUpdate).Result;
 
             // Assert
             Assert.Equal(responseCodeToUpdate.ResponseCode, result.ResponseCode);
@@ -276,26 +216,12 @@ namespace Nfield.Services
         #endregion
 
         #region Remove Async
-
-        [Fact]
-        public void TestRemoveAsync_DomainIdIsNull_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null, 10)));
-        }
-
-        [Fact]
-        public void TestRemoveAsync_DomainIdIsEmptyString_Throws()
-        {
-            var target = new NfieldDomainResponseCodesService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(string.Empty, 10)));
-        }
+        
 
         [Fact]
         public void TestRemoveAsync_ValidDomainResponseCode_CallsCorrectUrl()
         {
-            // Arrange
-            const string domainId = "domainId";
+            // Arrange        
             const int code = 10;
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -306,12 +232,12 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // Act
-            target.RemoveAsync(domainId, code).Wait();
+            target.RemoveAsync(code).Wait();
 
             // Assert
             mockedHttpClient.Verify(hc =>
                 hc.DeleteAsync(It.Is<Uri>(
-                        url => url.AbsolutePath.EndsWith($"Domains/{domainId}/ResponseCodes/{code}"))),
+                        url => url.AbsolutePath.EndsWith($"ResponseCodes/{code}"))),
                 Times.Once());
         }
 

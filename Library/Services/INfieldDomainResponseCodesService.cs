@@ -27,21 +27,18 @@ namespace Nfield.Services
     {
 
         /// <summary>
-        /// Gets all the domain response codes for a domain with the supplied <paramref name="domainId"/>.
+        /// Gets all the domain response codes.
         /// </summary>
-        /// <param name="domainId">The domain id for which to return domain specific response codes</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         /// <returns>A list with all domains response codes</returns>
-        Task<IQueryable<DomainResponseCode>> QueryAsync(string domainId);
+        Task<IQueryable<DomainResponseCode>> QueryAsync();
 
         /// <summary>
-        /// Gets the domain response code for a domain with the supplied <paramref name="domainId"/> 
-        /// and has the specified <paramref name="code"/>.
+        /// Gets that has the specified <paramref name="code"/>.
         /// </summary>
-        /// <param name="domainId">The domain id for which to return domain specific response code</param>
         /// <param name="code">The value of the domain response code</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
@@ -49,33 +46,30 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         /// <returns>A <see cref="DomainResponseCode"/> or null if the domain does not exists 
         /// or the domain does not  response code with this code</returns>
-        Task<DomainResponseCode> QueryAsync(string domainId, int code);
+        Task<DomainResponseCode> QueryAsync(int code);
 
         /// <summary>
-        /// Adds the supplied <paramref name="responseCode"/> to the system
+        /// Adds the supplied <paramref name="responseCode"/> to the domain
         /// </summary>
-        /// <param name="domainId">The id of the domain to add the response code to</param>
         /// <param name="responseCode">The <see cref="DomainResponseCode"/> to add</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<DomainResponseCode> AddAsync(string domainId, DomainResponseCode responseCode);
+        Task<DomainResponseCode> AddAsync(DomainResponseCode responseCode);
 
         /// <summary>
         /// Updates the supplied supplied <paramref name="responseCode"/>
         /// </summary>
-        /// <param name="domainId">The id of the domain the response code belongs to</param>
         /// <param name="responseCode">The <see cref="DomainResponseCode"/> to update</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<DomainResponseCode> UpdateAsync(string domainId, int responseCodeId, DomainResponseCodeData responseCodeData);
+        Task<DomainResponseCode> UpdateAsync(DomainResponseCode responseCode);
 
         /// <summary>
         /// Removes the domain response code with the supplied <paramref name="code"/> 
-        /// from the domain with the supplied <paramref name="domainId"/>
         /// </summary>
         /// <param name="domainId">The domain to remove response code from</param>
         /// <param name="code">The code of the response code to remove</param>
@@ -83,6 +77,6 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task RemoveAsync(string domainId, int code);
+        Task RemoveAsync(int code);
     }
 }
