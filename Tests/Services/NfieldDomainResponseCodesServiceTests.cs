@@ -8,6 +8,7 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
+using static Nfield.Services.Implementation.NfieldDomainResponseCodesService;
 
 namespace Nfield.Services
 {
@@ -20,10 +21,9 @@ namespace Nfield.Services
         #region Query Async 
 
         [Fact]
-        public void TestQueryAsync_ValidDomainId_CAllsCorrectUrl()
+        public void TestQueryAsync_ValidDomainId_CallsCorrectUrl()
         {
-            // Arrange
-            const string domainId = "domainId";
+            // Arrange        
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
@@ -38,7 +38,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify(
-                hc => hc.GetAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("ResponseCodes/"))), Times.Once());
+                hc => hc.GetAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("ResponseCodes"))), Times.Once());
         }
 
         #endregion
@@ -105,7 +105,7 @@ namespace Nfield.Services
 
             // Assert
             mockedHttpClient.Verify(hc =>
-                   hc.PostAsJsonAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("ResponseCodes/")), responseCodeToAdd),
+                   hc.PostAsJsonAsync(It.Is<Uri>(url => url.AbsolutePath.EndsWith("ResponseCodes")), responseCodeToAdd),
                     Times.Once());
         }
 
@@ -153,8 +153,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_ValidDomainResponseCode_CallsCorrectUrl()
         {
-            // Arrange
-            const string domainId = "domainId";
+            // Arrange       
             const int code = 10;
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -165,7 +164,7 @@ namespace Nfield.Services
                 Description = "Description",
                 Url = "http://www.google.com"
             };
-            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<UpdateDomainResponsecode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(new DomainResponseCode()))));
             var target = new NfieldDomainResponseCodesService();
@@ -178,16 +177,15 @@ namespace Nfield.Services
             mockedHttpClient.Verify(hc =>
                 hc.PatchAsJsonAsync(
                     It.Is<Uri>(
-                        url => url.AbsolutePath.EndsWith($"Domains/{domainId}/ResponseCodes/{code}")),
-                    It.IsAny<DomainResponseCode>()),
+                        url => url.AbsolutePath.EndsWith($"ResponseCodes/{code}")),
+                    It.IsAny<UpdateDomainResponsecode>()),
                 Times.Once());
         }
 
         [Fact]
         public void TestUpdateAsync_ValidDomainResponseCode_ReturnsModifiedResponseCode()
         {
-            // Arrange
-            const string domainId = "domainId";
+            // Arrange       
             const int code = 10;
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -198,7 +196,7 @@ namespace Nfield.Services
                 Description = "Description",
                 Url = "http://www.google.com"
             };
-            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
+            mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<UpdateDomainResponsecode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(responseCodeToUpdate))));
             var target = new NfieldDomainResponseCodesService();
