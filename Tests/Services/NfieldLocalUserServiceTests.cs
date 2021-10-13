@@ -209,13 +209,13 @@ namespace Nfield.Services
             const string logsLink2 = "logs-link-2";
             var query = new LogQueryModel
             {
-                StartTime = DateTime.Now.Subtract(TimeSpan.FromDays(1)),
-                EndTime = DateTime.Now
+                From = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(1)),
+                To = DateTimeOffset.Now
             };
 
             _mockedHttpClient
                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"LocalUsersLogs"), It.Is<LogQueryModel>(
-                   q => q.StartTime == query.StartTime && q.EndTime == query.EndTime)))
+                   q => q.From == query.From && q.To == query.To)))
                .Returns(
                 Task.Factory.StartNew(
                     () =>
@@ -248,7 +248,7 @@ namespace Nfield.Services
                     })).Verifiable();
 
             // Test ir using two dates
-            result = await _target.LogsAsync(query.StartTime, query.EndTime);
+            result = await _target.LogsAsync(query.From, query.To);
             _mockedHttpClient.Verify();
             Assert.Equal(logsLink2, result);
         }

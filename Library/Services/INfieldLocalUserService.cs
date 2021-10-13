@@ -67,6 +67,11 @@ namespace Nfield.Services
         /// <summary>
         /// Ask for local users logs and get the link
         /// </summary>
+        Task<string> LogsAsync(DateTimeOffset startTime, DateTimeOffset endTime);
+
+        /// <summary>
+        /// Ask for local users logs and get the link
+        /// </summary>
         Task<string> LogsAsync(LogQueryModel query);
     }
 }

@@ -102,7 +102,7 @@ namespace Nfield.Services.Implementation
             using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false));            
         }
 
-        public async Task<string> LogsAsync( LogQueryModel query)
+        public async Task<string> LogsAsync(LogQueryModel query)
         {
             Ensure.ArgumentNotNull(query, nameof(query));
 
@@ -119,11 +119,22 @@ namespace Nfield.Services.Implementation
         {
             var query = new LogQueryModel
             {
-                StartTime = startTime,
-                EndTime = endTime
+                From = new DateTimeOffset(startTime),
+                To = new DateTimeOffset(endTime),
             };
 
-            return await LogsAsync(query);
+            return await LogsAsync(query).ConfigureAwait(true);
+        }
+
+        public async Task<string> LogsAsync(DateTimeOffset startTime, DateTimeOffset endTime)
+        {
+            var query = new LogQueryModel
+            {
+                From = startTime,
+                To = endTime
+            };
+
+            return await LogsAsync(query).ConfigureAwait(true);
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)

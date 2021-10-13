@@ -22,7 +22,7 @@ namespace Nfield.Models
     /// </summary>
     public class LogQueryModel
     {
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTimeOffset From { get; set; }
+        public DateTimeOffset To { get; set; }
     }
 }
