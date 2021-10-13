@@ -209,8 +209,8 @@ namespace Nfield.Services
             const string logsLink2 = "logs-link-2";
             var query = new LogQueryModel
             {
-                From = DateTimeOffset.Now.Subtract(TimeSpan.FromDays(1)),
-                To = DateTimeOffset.Now
+                From = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1)),
+                To = DateTime.UtcNow
             };
 
             _mockedHttpClient
