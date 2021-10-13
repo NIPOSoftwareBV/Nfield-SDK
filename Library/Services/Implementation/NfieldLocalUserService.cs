@@ -119,17 +119,6 @@ namespace Nfield.Services.Implementation
         {
             var query = new LogQueryModel
             {
-                From = new DateTimeOffset(startTime),
-                To = new DateTimeOffset(endTime),
-            };
-
-            return await LogsAsync(query).ConfigureAwait(true);
-        }
-
-        public async Task<string> LogsAsync(DateTimeOffset startTime, DateTimeOffset endTime)
-        {
-            var query = new LogQueryModel
-            {
                 From = startTime,
                 To = endTime
             };
