@@ -43,7 +43,7 @@ namespace Nfield.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Indicates if the FieldworkOffice is Headquerters
+        /// Indicates if the FieldworkOffice is Headquarters
         /// </summary>
         [JsonProperty]
         public bool IsHeadquarters { get; internal set; }
