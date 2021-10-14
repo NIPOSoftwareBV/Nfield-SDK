@@ -70,11 +70,11 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualTranslations = target.QueryAsync(SurveyId).Result;
+            Assert.Equal(2, actualTranslations.Count());
             Assert.Equal(expectedTranslations[0].Name, actualTranslations.ToArray()[0].Name);
             Assert.Equal(expectedTranslations[0].Id, actualTranslations.ToArray()[0].Id);
             Assert.Equal(expectedTranslations[1].Name, actualTranslations.ToArray()[1].Name);
             Assert.Equal(expectedTranslations[1].Id, actualTranslations.ToArray()[1].Id);
-            Assert.Equal(2, actualTranslations.Count());
         }
 
         #endregion
