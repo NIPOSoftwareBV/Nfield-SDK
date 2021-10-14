@@ -62,6 +62,9 @@ namespace Nfield.Services
         /// <summary>
         /// Ask for local users logs and get the link (UTC datetime)
         /// </summary>
+        /// <param name="startTime">Start UTC datetime</param>
+        /// <param name="endTime">End UTC datetime</param>
+        /// <returns></returns>
         Task<string> LogsAsync(DateTime startTime, DateTime endTime);
 
         /// <summary>
