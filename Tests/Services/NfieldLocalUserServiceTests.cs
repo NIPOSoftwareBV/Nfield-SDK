@@ -200,5 +200,57 @@ namespace Nfield.Services
             Assert.Equal("user2", user2.UserName);
             Assert.Null(user2.LastLogonDate);
         }
+
+        [Fact]
+        public async Task DownloadLogs()
+        {
+            const string activityId = "activity-id";
+            const string logsLink1 = "logs-link-1";
+            const string logsLink2 = "logs-link-2";
+            var query = new LogQueryModel
+            {
+                From = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1)),
+                To = DateTime.UtcNow
+            };
+
+            _mockedHttpClient
+               .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"LocalUsersLogs"), It.Is<LogQueryModel>(
+                   q => q.From == query.From && q.To == query.To)))
+               .Returns(
+                Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = activityId }))
+                    })).Verifiable();
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activityId}")))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = logsLink1, ActivityId = activityId, Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
+            // Test it using the model
+             var result = await _target.LogsAsync(query);
+            _mockedHttpClient.Verify();
+            Assert.Equal(logsLink1, result);    
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activityId}")))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = logsLink2, ActivityId = activityId, Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
+            // Test ir using two dates
+            result = await _target.LogsAsync(query.From, query.To);
+            _mockedHttpClient.Verify();
+            Assert.Equal(logsLink2, result);
+        }
     }
 }

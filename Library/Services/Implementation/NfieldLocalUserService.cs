@@ -14,8 +14,11 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +28,7 @@ using System.Threading.Tasks;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldSurveysService"/>
+    /// Implementation of <see cref="INfieldLocalUserService"/>
     /// </summary>
     internal class NfieldLocalUserService : INfieldLocalUserService, INfieldConnectionClientObject
     {
@@ -88,9 +91,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(nameof(model));
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Password/{identityId}");
-            using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false))
-            {
-            }
+            using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false));
         }
 
         public async Task DeleteAsync(string identityId)
@@ -98,9 +99,31 @@ namespace Nfield.Services.Implementation
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
 
             // note: we need to dispose the response even when we don't use it
-            using (await ConnectionClient.Client.DeleteAsync(uri))
+            using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false));            
+        }
+
+        public async Task<string> LogsAsync(LogQueryModel query)
+        {
+            Ensure.ArgumentNotNull(query, nameof(query));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, "LocalUsersLogs");
+
+            return await ConnectionClient.Client.PostAsJsonAsync(uri, query)
+                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                          .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
+                          .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
+                          .FlattenExceptions();
+        }
+
+        public async Task<string> LogsAsync(DateTime startTime, DateTime endTime)
+        {
+            var query = new LogQueryModel
             {
-            }
+                From = startTime,
+                To = endTime
+            };
+
+            return await LogsAsync(query).ConfigureAwait(true);
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
