@@ -28,14 +28,14 @@ namespace Nfield.Services
         #region CRUD on Language Translations
 
         /// <summary>
-        /// Gets all languages a survey, as a queryable object.
+        /// Gets all languages of a survey, as a queryable object.
         /// </summary>
         /// <param name="surveyId">The survey for which language names and ids are returned</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        /// <returns>A list if language names and their ids.</returns>
+        /// <returns>A list of language names and their ids.</returns>
         Task<IQueryable<Language>> QueryAsync(string surveyId);
 
         /// <summary>
