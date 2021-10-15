@@ -14,38 +14,15 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds all properties of an fieldwork office
+    /// Class to query logs
     /// </summary>
-    public class FieldworkOffice
+    public class LogQueryModel
     {
-        /// <summary>
-        /// Unique id of the fieldwork office
-        /// </summary>
-        [JsonProperty]
-        public string OfficeId { get; internal set; }
-
-        /// <summary>
-        /// Fieldwork office name
-        /// </summary>
-        public string OfficeName { get; set; }
-
-        /// <summary>
-        /// Fieldwork office description
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Indicates if the FieldworkOffice is Headquarters
-        /// </summary>
-        [JsonProperty]
-        public bool IsHeadquarters { get; internal set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
     }
 }
