@@ -54,20 +54,6 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// <see cref="INfieldDomainResponseCodesService.QueryAsync(string, int)"/>
-        /// </summary>
-        public Task<DomainResponseCode> QueryAsync(int code)
-        {
-
-            return
-                Client.GetAsync(GetDomainResponseCodeUrl(code))
-                    .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                    .ContinueWith(
-                        stringTask => JsonConvert.DeserializeObject<DomainResponseCode>(stringTask.Result))
-                    .FlattenExceptions();
-        }
-
-        /// <summary>
         /// <see cref="INfieldDomainResponseCodesService.AddAsync"/>
         /// </summary>
         public Task<DomainResponseCode> AddAsync(DomainResponseCode responseCode)

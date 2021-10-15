@@ -43,34 +43,6 @@ namespace Nfield.Services
 
         #endregion
 
-        #region Query Async based on code      
-
-        [Fact]
-        public void TestQueryAsyncBasedOnCode_ValidDomainId_CAllsCorrectUrl()
-        {
-            // Arrange       
-            const int code = 20;
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-
-            var target = new NfieldDomainResponseCodesService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-            mockedHttpClient.Setup(client => client.GetAsync(It.IsAny<Uri>()))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject(new DomainResponseCode()))));
-
-            // Act
-            target.QueryAsync(code).Wait();
-
-            // Assert
-            mockedHttpClient.Verify(hc =>
-                hc.GetAsync(It.Is<Uri>(url =>
-                    url.AbsolutePath.EndsWith($"ResponseCodes/{code}"))),
-                Times.Once());
-        }
-
-        #endregion
-
         #region Add Async
        
 
