@@ -62,7 +62,7 @@ namespace Nfield.Services
 
             var responseCodeToAdd = new DomainResponseCode
             {
-                ResponseCode = 15,
+                Id = 15,
                 Description = "Description",              
                 Url = "http://www.google.com"
             };
@@ -90,7 +90,7 @@ namespace Nfield.Services
 
             var responseCodeToAdd = new DomainResponseCode
             {
-                ResponseCode = 15,
+                Id = 15,
                 Description = "Description",             
                 Url = "http://www.google.com"
             };
@@ -104,7 +104,7 @@ namespace Nfield.Services
             var result = target.AddAsync(responseCodeToAdd).Result;
 
             // Assert
-            Assert.Equal(responseCodeToAdd.ResponseCode, result.ResponseCode);
+            Assert.Equal(responseCodeToAdd.Id, result.Id);
             Assert.Equal(responseCodeToAdd.Description, result.Description);
             Assert.Equal(responseCodeToAdd.Url, result.Url);
         }
@@ -132,7 +132,7 @@ namespace Nfield.Services
 
             var responseCodeToUpdate = new DomainResponseCode
             {
-                ResponseCode = code,
+                Id = code,
                 Description = "Description",
                 Url = "http://www.google.com"
             };
@@ -164,7 +164,7 @@ namespace Nfield.Services
 
             var responseCodeToUpdate = new DomainResponseCode
             {
-                ResponseCode = code,
+                Id = code,
                 Description = "Description",
                 Url = "http://www.google.com"
             };
@@ -178,7 +178,7 @@ namespace Nfield.Services
             var result = target.UpdateAsync(responseCodeToUpdate).Result;
 
             // Assert
-            Assert.Equal(responseCodeToUpdate.ResponseCode, result.ResponseCode);
+            Assert.Equal(responseCodeToUpdate.Id, result.Id);
             Assert.Equal(responseCodeToUpdate.Description, result.Description);
             Assert.Equal(responseCodeToUpdate.Url, result.Url);
         }

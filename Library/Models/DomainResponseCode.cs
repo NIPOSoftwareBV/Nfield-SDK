@@ -26,7 +26,7 @@ namespace Nfield.Models
         /// User defined response code for the domain
         /// The code is part of the identity of the Entity so once it's assigned it can not changed
         /// </summary>
-        public int ResponseCode { get; set; }
+        public int Id { get; set; }
    
         /// <summary>
         /// User defined description of the response code given

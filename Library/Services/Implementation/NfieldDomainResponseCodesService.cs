@@ -76,7 +76,7 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNull(responseCode, nameof(responseCode));          
 
             return
-                Client.PatchAsJsonAsync(GetDomainResponseCodeUrl(responseCode.ResponseCode), new UpdateDomainResponsecode { Description = responseCode.Description , Url = responseCode.Url})
+                Client.PatchAsJsonAsync(GetDomainResponseCodeUrl(responseCode.Id), new UpdateDomainResponsecode { Description = responseCode.Description , Url = responseCode.Url})
                     .ContinueWith(
                         responseMessageTask =>
                             responseMessageTask.Result.Content.ReadAsStringAsync().Result)
