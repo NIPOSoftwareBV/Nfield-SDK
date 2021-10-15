@@ -21,6 +21,8 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.Quota.Helpers;
 
 namespace Nfield.Services.Implementation
 {
@@ -167,6 +169,30 @@ namespace Nfield.Services.Implementation
             var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
 
             return Client.DeleteAsync(uri).FlattenExceptions();
+        }
+
+        public async Task<string> LogsAsync(LogQueryModel query)
+        {
+            Ensure.ArgumentNotNull(query, nameof(query));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, "InterviewersWorklog");
+
+            return await Client.PostAsJsonAsync(uri, query)
+                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                          .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
+                          .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
+                          .FlattenExceptions();
+        }
+
+        public async Task<string> LogsAsync(DateTime startTime, DateTime endTime)
+        {
+            var query = new LogQueryModel
+            {
+                From = startTime,
+                To = endTime
+            };
+
+            return await LogsAsync(query).ConfigureAwait(true);
         }
 
         #endregion
