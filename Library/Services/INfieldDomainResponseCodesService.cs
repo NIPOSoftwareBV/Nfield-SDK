@@ -37,18 +37,6 @@ namespace Nfield.Services
         Task<IQueryable<DomainResponseCode>> QueryAsync();
 
         /// <summary>
-        /// Gets that has the specified <paramref name="code"/>.
-        /// </summary>
-        /// <param name="code">The value of the domain response code</param>
-        /// <exception cref="T:System.AggregateException"></exception>
-        /// The aggregate exception can contain:
-        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
-        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        /// <returns>A <see cref="DomainResponseCode"/> or null if the domain does not exists 
-        /// or the domain does not  response code with this code</returns>
-        Task<DomainResponseCode> QueryAsync(int code);
-
-        /// <summary>
         /// Adds the supplied <paramref name="responseCode"/> to the domain
         /// </summary>
         /// <param name="responseCode">The <see cref="DomainResponseCode"/> to add</param>
