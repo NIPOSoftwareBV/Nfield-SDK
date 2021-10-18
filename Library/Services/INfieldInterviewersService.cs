@@ -114,11 +114,11 @@ namespace Nfield.Services
         /// <param name="startTime">Start UTC datetime</param>
         /// <param name="endTime">End UTC datetime</param>
         /// <returns></returns>
-        Task<string> LogsAsync(DateTime startTime, DateTime endTime);
+        Task<string> QueryLogsAsync(DateTime startTime, DateTime endTime);
 
         /// <summary>
         /// Ask for interviewers work logs and get the link
         /// </summary>
-        Task<string> LogsAsync(LogQueryModel query);
+        Task<string> QueryLogsAsync(LogQueryModel query);
     }
 }

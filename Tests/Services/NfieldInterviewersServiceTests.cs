@@ -316,7 +316,7 @@ namespace Nfield.Services
                     })).Verifiable();
 
             // Test it using the model
-            var result = await target.LogsAsync(query);
+            var result = await target.QueryLogsAsync(query);
             mockedHttpClient.Verify();
             Assert.Equal(logsLink1, result);
 
@@ -330,7 +330,7 @@ namespace Nfield.Services
                     })).Verifiable();
 
             // Test ir using two dates
-            result = await target.LogsAsync(query.From, query.To);
+            result = await target.QueryLogsAsync(query.From, query.To);
             mockedHttpClient.Verify();
             Assert.Equal(logsLink2, result);
         }

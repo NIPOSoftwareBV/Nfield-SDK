@@ -171,7 +171,7 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
-        public async Task<string> LogsAsync(LogQueryModel query)
+        public async Task<string> QueryLogsAsync(LogQueryModel query)
         {
             Ensure.ArgumentNotNull(query, nameof(query));
 
@@ -184,7 +184,7 @@ namespace Nfield.Services.Implementation
                           .FlattenExceptions();
         }
 
-        public async Task<string> LogsAsync(DateTime startTime, DateTime endTime)
+        public async Task<string> QueryLogsAsync(DateTime startTime, DateTime endTime)
         {
             var query = new LogQueryModel
             {
@@ -192,7 +192,7 @@ namespace Nfield.Services.Implementation
                 To = endTime
             };
 
-            return await LogsAsync(query).ConfigureAwait(true);
+            return await QueryLogsAsync(query).ConfigureAwait(true);
         }
 
         #endregion
