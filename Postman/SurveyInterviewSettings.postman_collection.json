@@ -1,12 +1,12 @@
 {
 	"info": {
 		"_postman_id": "88ee5923-bdeb-4840-99cf-c407bd9786d8",
-		"name": "SurveyOtherSettings",
+		"name": "SurveyInterviewSettings",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Survey Other Settings",
+			"name": "Get SurveyInterviewSettings",
 			"event": [
 				{
 					"listen": "test",
@@ -34,12 +34,13 @@
 						"value": "application/octet-stream"
 					},
 					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/OtherSettings",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewSettings",
 					"host": [
 						"{{origin}}"
 					],
@@ -47,7 +48,7 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"OtherSettings"
+						"InterviewSettings"
 					]
 				},
 				"description": "This method returns fieldwork status."
@@ -55,7 +56,7 @@
 			"response": []
 		},
 		{
-			"name": "Update Survey Other Settings",
+			"name": "Update SurveyInterviewSettings",
 			"event": [
 				{
 					"listen": "test",
@@ -90,7 +91,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Owner\": \"owner\",\r\n    \"BackButtonAvailable\": true,\r\n    \"PauseButtonAvailable\": true,\r\n    \"ClearButtonAvailable\": true,\r\n    \"AllowOnlyKnownRespondents\": true\r\n}",
+					"raw": "{\r\n    \"BackButtonAvailable\": true,\r\n    \"PauseButtonAvailable\": true,\r\n    \"ClearButtonAvailable\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -98,7 +99,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/OtherSettings",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewSettings",
 					"host": [
 						"{{origin}}"
 					],
@@ -106,7 +107,7 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"OtherSettings"
+						"InterviewSettings"
 					]
 				}
 			},

@@ -13,24 +13,19 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
+using System;
 using Nfield.Models;
+using Nfield.Services.Implementation;
+using Xunit;
 
 namespace Nfield.Services
 {
     /// <summary>
-    /// Service for getting and changing the other settings for a survey (only at survey level)
+    /// Tests for <see cref="NfieldSurveyInterviewSettingsService"/>
     /// </summary>
-    public interface INfieldSurveyOtherSettingsService
+    public class NfieldSurveyInterviewSettingsServiceTests : NfieldServiceTestsBase
     {
-        /// <summary>
-        /// Gets the other settings for a survey
-        /// </summary>
-        Task<SurveyOtherSettingsResponse> GetAsync(string surveyId);
+        private const string SurveyId = "TestSurveyId";
 
-        /// <summary>
-        /// Changes the other settings for a survey (validation will be enforced on email addresses)
-        /// </summary>
-        Task<SurveyOtherSettingsResponse> UpdateAsync(string surveyId, SurveyOtherSettingsRequest settings);
     }
 }

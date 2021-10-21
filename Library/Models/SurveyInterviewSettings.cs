@@ -15,45 +15,12 @@
 
 namespace Nfield.Models
 {
-    public class SurveyOtherSettingsRequest
+    public class SurveyInterviewSettings
     {
-        public string Owner { get; set; }
-
         public bool? BackButtonAvailable { get; set; }
 
         public bool? PauseButtonAvailable { get; set; }
 
         public bool? ClearButtonAvailable { get; set; }
-
-        public bool? AllowOnlyKnownRespondents { get; set; }
-
-    }
-
-    public class SurveyOtherSettingsResponse
-    {
-        public string SurveyId { get; set; }
-
-        public User Owner { get; set; }
-
-        public string EncryptionKey { get; set; }
-
-        public bool BackButtonAvailable { get; set; }
-
-        public bool PauseButtonAvailable { get; set; }
-
-        public bool ClearButtonAvailable { get; set; }
-
-        public bool AllowOnlyKnownRespondents { get; set; }
-
-    }
-
-    public class User
-    {
-        /// <summary>
-        /// Unique Id of user
-        /// </summary>
-        public string Id { get; set; }
-
-        public string UserName { get; set; }
     }
 }
