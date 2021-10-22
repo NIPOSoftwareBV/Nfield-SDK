@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7b410ec4-37a8-48d0-961d-b5db99ab881a",
+		"_postman_id": "cd0c5a4d-95cf-4583-9f0c-de09e6f9607a",
 		"name": "SurveyLanguagesTranslations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -40,7 +40,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/Translations/",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/",
 					"host": [
 						"{{origin}}"
 					],
@@ -48,8 +48,7 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"Languages",
-						"Translations",
+						"LanguageTranslations",
 						""
 					]
 				}

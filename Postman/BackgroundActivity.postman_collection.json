@@ -1,7 +1,7 @@
 {
 	"info": {
+		"_postman_id": "60f1db65-4d87-4dbe-93d9-9df04dbf168e",
 		"name": "BackgroundActivity",
-		"_postman_id": "dee95ffb-fe79-57c2-7363-a5769b8c6e5d",
 		"description": "A controller for querying background activities",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,8 +12,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -24,7 +22,8 @@
 							"});",
 							"",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -40,19 +39,15 @@
 						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
-				},
 				"url": {
-					"raw": "{{origin}}/v1/BackgroundActivities/{{activityId}}",
+					"raw": "{{origin}}/v1/BackgroundActivities/{{ActivityId}}",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
 						"BackgroundActivities",
-						"{{activityId}}"
+						"{{ActivityId}}"
 					]
 				},
 				"description": "This method retrieve details of a specific background activity."
