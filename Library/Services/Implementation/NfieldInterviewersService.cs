@@ -171,6 +171,9 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
+        /// <summary>
+        /// <see cref="INfieldInterviewersService.QueryLogsAsync"/>
+        /// </summary>
         public async Task<string> QueryLogsAsync(LogQueryModel query)
         {
             Ensure.ArgumentNotNull(query, nameof(query));
@@ -181,18 +184,7 @@ namespace Nfield.Services.Implementation
                           .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                           .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
                           .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
-                          .FlattenExceptions();
-        }
-
-        public async Task<string> QueryLogsAsync(DateTime startTime, DateTime endTime)
-        {
-            var query = new LogQueryModel
-            {
-                From = startTime,
-                To = endTime
-            };
-
-            return await QueryLogsAsync(query).ConfigureAwait(true);
+                          .FlattenExceptions().ConfigureAwait(true);
         }
 
         #endregion

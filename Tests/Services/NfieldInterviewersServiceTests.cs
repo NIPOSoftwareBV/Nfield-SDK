@@ -320,19 +320,6 @@ namespace Nfield.Services
             mockedHttpClient.Verify();
             Assert.Equal(logsLink1, result);
 
-            mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activityId}")))
-                .Returns(Task.Factory.StartNew(
-                    () =>
-                    new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = logsLink2, ActivityId = activityId, Status = 2 /* Succeeded */ }))
-                    })).Verifiable();
-
-            // Test ir using two dates
-            result = await target.QueryLogsAsync(query.From, query.To);
-            mockedHttpClient.Verify();
-            Assert.Equal(logsLink2, result);
         }
 
         #endregion

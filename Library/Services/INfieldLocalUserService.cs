@@ -60,16 +60,10 @@ namespace Nfield.Services
         Task ResetAsync(string identityId, ResetLocalUser model);
 
         /// <summary>
-        /// Ask for local users logs and get the link (UTC datetime)
+        /// Asks for users logs and gets the URL to perform the download (UTC datetime)
         /// </summary>
-        /// <param name="startTime">Start UTC datetime</param>
-        /// <param name="endTime">End UTC datetime</param>
-        /// <returns></returns>
-        Task<string> LogsAsync(DateTime startTime, DateTime endTime);
-
-        /// <summary>
-        /// Ask for local users logs and get the link
-        /// </summary>
+        /// <param name="query">Query model with UTC datetime</param>
+        /// <returns>URL to download the file</returns>
         Task<string> LogsAsync(LogQueryModel query);
     }
 }
