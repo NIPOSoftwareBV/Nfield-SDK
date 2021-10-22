@@ -20,7 +20,7 @@ namespace Nfield.Services
 {
     /// <summary>
     /// Service for managing survey interview settings
-    /// It defines which actions are available during the interviews
+    /// Defines which actions are available during the interviews
     /// </summary>
     public interface INfieldSurveyInterviewSettingsService
     {

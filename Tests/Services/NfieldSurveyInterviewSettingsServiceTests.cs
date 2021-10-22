@@ -98,7 +98,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestUpdateAsync_ServerAcceptsSetting_ReturnsSetting()
+        public void TestUpdateAsync_ServerAcceptsSettings_ReturnsSettings()
         {
             var expectedSettings = new SurveyInterviewSettings
             {
