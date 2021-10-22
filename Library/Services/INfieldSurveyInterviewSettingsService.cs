@@ -19,7 +19,8 @@ using Nfield.Models;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Service for getting and changing the interview settings for a survey
+    /// Service for managing survey interview settings
+    /// It defines which actions are available during the interviews
     /// </summary>
     public interface INfieldSurveyInterviewSettingsService
     {

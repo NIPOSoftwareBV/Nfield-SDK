@@ -15,12 +15,26 @@
 
 namespace Nfield.Models
 {
+    /// <summary>
+    /// Base model for the interview settings (for a survey)
+    /// It defines which actions are available during the interviews
+    /// These settings are only used in the Online channel
+    /// </summary>
     public class SurveyInterviewSettings
     {
+        /// <summary>
+        /// Allow to navigate backwards
+        /// </summary>
         public bool? BackButtonAvailable { get; set; }
 
+        /// <summary>
+        /// Allow identified users to pause the interview
+        /// </summary>
         public bool? PauseButtonAvailable { get; set; }
 
+        /// <summary>
+        /// Allow to clear all answers from the screen
+        /// </summary>
         public bool? ClearButtonAvailable { get; set; }
     }
 }
