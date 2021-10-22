@@ -22,7 +22,13 @@ namespace Nfield.Models
     /// </summary>
     public class LogQueryModel
     {
+        /// <summary>
+        /// DateTime must be UTC
+        /// </summary>
         public DateTime From { get; set; }
+        /// <summary>
+        /// DateTime must be UTC
+        /// </summary>
         public DateTime To { get; set; }
     }
 }

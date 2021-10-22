@@ -35,6 +35,9 @@ namespace Nfield.Services.Implementation
         public INfieldConnectionClient ConnectionClient { get; internal set; }
         public void InitializeNfieldConnection(INfieldConnectionClient connection) => ConnectionClient = connection;
 
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.GetAllAsync"/>
+        /// </summary>
         public async Task<IEnumerable<LocalUser>> GetAllAsync()
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, "LocalUsers");
@@ -45,6 +48,9 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.GetAsync"/>
+        /// </summary>
         public async Task<LocalUser> GetAsync(string identityId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
@@ -55,6 +61,9 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.CreateAsync"/>
+        /// </summary>
         public async Task<LocalUser> CreateAsync(NewLocalUser model)
         {
             if (model == null)
@@ -70,6 +79,9 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.UpdateAsync"/>
+        /// </summary>
         public async Task<LocalUser> UpdateAsync(string identityId, LocalUserValues model)
         {
             if (model == null)
@@ -85,6 +97,9 @@ namespace Nfield.Services.Implementation
             }
         }
 
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.ResetAsync"/>
+        /// </summary>
         public async Task ResetAsync(string identityId, ResetLocalUser model)
         {
             if (model == null)
@@ -94,6 +109,9 @@ namespace Nfield.Services.Implementation
             using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false));
         }
 
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.DeleteAsync"/>
+        /// </summary>
         public async Task DeleteAsync(string identityId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
@@ -102,6 +120,9 @@ namespace Nfield.Services.Implementation
             using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false));            
         }
 
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.LogsAsync"/>
+        /// </summary>
         public async Task<string> LogsAsync(LogQueryModel query)
         {
             Ensure.ArgumentNotNull(query, nameof(query));
@@ -112,20 +133,12 @@ namespace Nfield.Services.Implementation
                           .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                           .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
                           .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
-                          .FlattenExceptions();
+                          .FlattenExceptions().ConfigureAwait(true);
         }
 
-        public async Task<string> LogsAsync(DateTime startTime, DateTime endTime)
-        {
-            var query = new LogQueryModel
-            {
-                From = startTime,
-                To = endTime
-            };
-
-            return await LogsAsync(query).ConfigureAwait(true);
-        }
-
+        /// <summary>
+        /// <see cref="INfieldLocalUserService.DeserializeJsonAsync"/>
+        /// </summary>
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
         {
             using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync()))

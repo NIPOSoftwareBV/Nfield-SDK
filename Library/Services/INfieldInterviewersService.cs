@@ -106,5 +106,12 @@ namespace Nfield.Services
         /// <param name="fieldworkOfficeId"></param>
         /// <returns></returns>
         Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId);
+
+        /// <summary>
+        /// Asks for interviewers work logs and gets the URL to perform the download (UTC datetime)
+        /// </summary>
+        /// <param name="query">Query model with UTC datetime</param>
+        /// <returns>URL to download the file</returns>
+        Task<string> QueryLogsAsync(LogQueryModel query);
     }
 }
