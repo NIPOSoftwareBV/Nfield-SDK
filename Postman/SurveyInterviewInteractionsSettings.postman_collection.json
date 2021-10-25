@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "88ee5923-bdeb-4840-99cf-c407bd9786d8",
-		"name": "SurveyInterviewSettings",
+		"_postman_id": "ad827b80-8912-4a34-b54b-004b435fc829",
+		"name": "SurveyInterviewInteractionsSettings",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get SurveyInterviewSettings",
+			"name": "Get SurveyInterviewInteractionsSettings",
 			"event": [
 				{
 					"listen": "test",
@@ -40,7 +40,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewSettings",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
 					"host": [
 						"{{origin}}"
 					],
@@ -48,7 +48,7 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"InterviewSettings"
+						"InterviewInteractionsSettings"
 					]
 				},
 				"description": "This method returns fieldwork status."
@@ -56,7 +56,7 @@
 			"response": []
 		},
 		{
-			"name": "Update SurveyInterviewSettings",
+			"name": "Update SurveyInterviewInteractionsSettings",
 			"event": [
 				{
 					"listen": "test",
@@ -99,7 +99,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewSettings",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
 					"host": [
 						"{{origin}}"
 					],
@@ -107,7 +107,7 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"InterviewSettings"
+						"InterviewInteractionsSettings"
 					]
 				}
 			},

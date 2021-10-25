@@ -16,11 +16,11 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Base model for the interview settings (for a survey)
+    /// Base model for the interview interactions settings (for a survey)
     /// It defines which actions are available during the interviews
     /// These settings are only used in the Online channel
     /// </summary>
-    public class SurveyInterviewSettings
+    public class SurveyInterviewInteractionsSettings
     {
         /// <summary>
         /// Allow to navigate backwards

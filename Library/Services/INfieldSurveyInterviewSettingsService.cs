@@ -19,19 +19,19 @@ using Nfield.Models;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Service for managing survey interview settings
+    /// Service for managing survey interview interactions settings
     /// Defines which actions are available during the interviews
     /// </summary>
-    public interface INfieldSurveyInterviewSettingsService
+    public interface INfieldSurveyInterviewInteractionsSettingsService
     {
         /// <summary>
-        /// Gets the interview settings for a survey
+        /// Gets the interview interactions settings for a survey
         /// </summary>
-        Task<SurveyInterviewSettings> GetAsync(string surveyId);
+        Task<SurveyInterviewInteractionsSettings> GetAsync(string surveyId);
 
         /// <summary>
-        /// Changes the interview settings for a survey
+        /// Changes the interview interactions settings for a survey
         /// </summary>
-        Task<SurveyInterviewSettings> UpdateAsync(string surveyId, SurveyInterviewSettings settings);
+        Task<SurveyInterviewInteractionsSettings> UpdateAsync(string surveyId, SurveyInterviewInteractionsSettings settings);
     }
 }

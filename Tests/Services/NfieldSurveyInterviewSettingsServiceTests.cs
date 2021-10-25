@@ -26,9 +26,9 @@ using Xunit;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Tests for <see cref="NfieldSurveyInterviewSettingsService"/>
+    /// Tests for <see cref="NfieldSurveyInterviewInteractionsSettingsService"/>
     /// </summary>
-    public class NfieldSurveyInterviewSettingsServiceTests : NfieldServiceTestsBase
+    public class NfieldSurveyInterviewInteractionsSettingsServiceTests : NfieldServiceTestsBase
     {
         private const string SurveyId = "TestSurveyId";
 
@@ -37,21 +37,21 @@ namespace Nfield.Services
         [Fact]
         public void TestGetAsync_SurveyIdIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldSurveyInterviewSettingsService();
+            var target = new NfieldSurveyInterviewInteractionsSettingsService();
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.GetAsync(null)));
         }
 
         [Fact]
         public void TestGetAsync_SurveyIdIsEmpty_ThrowsArgumentException()
         {
-            var target = new NfieldSurveyInterviewSettingsService();
+            var target = new NfieldSurveyInterviewInteractionsSettingsService();
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.GetAsync("")));
         }
 
         [Fact]
         public void TestGetAsync_ServerReturnsQuery_ReturnsListWithSettings()
         {
-            var expectedSettings = new SurveyInterviewSettings
+            var expectedSettings = new SurveyInterviewInteractionsSettings
             {
                 BackButtonAvailable = true,
                 PauseButtonAvailable = false,
@@ -60,10 +60,10 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewSettings")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewInteractionsSettings")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSettings))));
 
-            var target = new NfieldSurveyInterviewSettingsService();
+            var target = new NfieldSurveyInterviewInteractionsSettingsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualSettings = target.GetAsync(SurveyId).Result; ;
@@ -79,28 +79,28 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_SurveyIdIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldSurveyInterviewSettingsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null, new SurveyInterviewSettings())));
+            var target = new NfieldSurveyInterviewInteractionsSettingsService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null, new SurveyInterviewInteractionsSettings())));
         }
 
         [Fact]
         public void TestUpdateAsync_SurveyIdIsEmpty_ThrowsArgumentException()
         {
-            var target = new NfieldSurveyInterviewSettingsService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateAsync("", new SurveyInterviewSettings())));
+            var target = new NfieldSurveyInterviewInteractionsSettingsService();
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateAsync("", new SurveyInterviewInteractionsSettings())));
         }
 
         [Fact]
         public void TestUpdateAsync_SettingsIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldSurveyInterviewSettingsService();
+            var target = new NfieldSurveyInterviewInteractionsSettingsService();
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync("SurveyId", null)));
         }
 
         [Fact]
         public void TestUpdateAsync_ServerAcceptsSettings_ReturnsSettings()
         {
-            var expectedSettings = new SurveyInterviewSettings
+            var expectedSettings = new SurveyInterviewInteractionsSettings
             {
                 BackButtonAvailable = true,
                 PauseButtonAvailable = false,
@@ -111,10 +111,10 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(expectedSettings));
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewSettings"), expectedSettings))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/InterviewInteractionsSettings"), expectedSettings))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
-            var target = new NfieldSurveyInterviewSettingsService();
+            var target = new NfieldSurveyInterviewInteractionsSettingsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualSettings = target.UpdateAsync(SurveyId, expectedSettings).Result;

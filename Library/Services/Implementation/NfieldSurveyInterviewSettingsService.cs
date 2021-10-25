@@ -23,21 +23,21 @@ using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
-    internal class NfieldSurveyInterviewSettingsService : INfieldSurveyInterviewSettingsService, INfieldConnectionClientObject
+    internal class NfieldSurveyInterviewInteractionsSettingsService : INfieldSurveyInterviewInteractionsSettingsService, INfieldConnectionClientObject
     {
-        public Task<SurveyInterviewSettings> GetAsync(string surveyId)
+        public Task<SurveyInterviewInteractionsSettings> GetAsync(string surveyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = SurveyOtherSettingsUrl(surveyId);
 
             return Client.GetAsync(uri)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyInterviewSettings>(
+                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyInterviewInteractionsSettings>(
                             task.Result.Content.ReadAsStringAsync().Result))
                          .FlattenExceptions();
         }
 
-        public Task<SurveyInterviewSettings> UpdateAsync(string surveyId, SurveyInterviewSettings settings)
+        public Task<SurveyInterviewInteractionsSettings> UpdateAsync(string surveyId, SurveyInterviewInteractionsSettings settings)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(settings, nameof(settings));
@@ -45,7 +45,7 @@ namespace Nfield.Services.Implementation
             var uri = SurveyOtherSettingsUrl(surveyId);
 
             return Client.PatchAsJsonAsync(uri, settings)
-                        .ContinueWith(task => JsonConvert.DeserializeObject<SurveyInterviewSettings>(
+                        .ContinueWith(task => JsonConvert.DeserializeObject<SurveyInterviewInteractionsSettings>(
                             task.Result.Content.ReadAsStringAsync().Result))
                         .FlattenExceptions();
         }
@@ -59,7 +59,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyOtherSettingsUrl(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewSettings");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewInteractionsSettings");
         }
     }
 }
