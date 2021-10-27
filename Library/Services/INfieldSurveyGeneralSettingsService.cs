@@ -13,37 +13,37 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Models;
 
 namespace Nfield.Services
 {
-    class INfieldSurveyGeneralSettingsService
+
+    /// <summary>
+    /// Represents a set of methods to get and update  <see cref="SurveyGeneralSetting"/>.
+    /// </summary>
+    public interface INfieldSurveyGeneralSettingsService
     {
 
         /// <summary>
-        /// Represents a set of methods to get and update  <see cref="SurveyGeneralSetting"/>.
+        /// This method returns SurveyGeneralSetting status
         /// </summary>
-        public interface INfieldDomainResponseCodesService
-        {
+        /// <param name="surveyId">The id of the survey to get the SurveyGeneralSetting</param>
+        Task<IQueryable<SurveyGeneralSetting>> QueryAsync(string surveyId);
 
-            /// <summary>
-            /// This method returns SurveyGeneralSetting status
-            /// </summary>
-            /// <param name="surveyId">The id of the survey to get the status</param>
-            Task<SurveyStatus> QueryAsync(string surveyId);
-
-            /// <summary>
-            /// Updates the supplied <paramref name="GeneralSetting"/>
-            /// </summary>
-            /// <param name="GeneralSetting">The <see cref="SurveyGeneralSetting"/> to update</param>
-            /// <exception cref="T:System.AggregateException"></exception>
-            /// The aggregate exception can contain:
-            /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
-            /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-            Task<DomainResponseCode> UpdateAsync(string surveyId, SurveyGeneralSetting GeneralSetting);
-            
-        }
+        /// <summary>
+        /// Updates the supplied <paramref name="GeneralSetting"/>
+        /// </summary>
+        /// <param name="GeneralSetting">The <see cref="SurveyGeneralSetting"/> to update</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task UpdateAsync(string surveyId, IEnumerable<SurveyGeneralSetting> GeneralSetting);
+        
     }
 }
+
 

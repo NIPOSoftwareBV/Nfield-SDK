@@ -28,7 +28,7 @@ namespace Nfield.Services.Implementation
     /// <summary>
     /// Implementation of <see cref="INfieldSurveyGeneralSettingsService"/>
     /// </summary>
-    class NfieldSurveyGeneralSettingsService : INfieldSurveyGeneralSettingsService, INfieldConnectionClientObject
+    internal class NfieldSurveyGeneralSettingsService : INfieldSurveyGeneralSettingsService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldSurveyGeneralSettingsService
 
