@@ -23,7 +23,7 @@ namespace Nfield.Models
         /// <summary>
         /// The  Id of survey general settings        
         /// </summary>
-        public int SurveyId { get; set; }
+        public string SurveyId { get; set; }
 
         /// <summary>
         /// The Description of survey general settings
