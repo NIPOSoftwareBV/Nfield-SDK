@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "b829259a-2a3b-4d11-9322-24a51df11edc",
+		"name": "InterviewerAssignments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Assignments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains AuthenticationToken\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"ActivityId\");\r",
+							"    const response = pm.response.json();\r",
+							"    pm.environment.set(\"ActivityId\", response.ActivityId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"From\" : \"2021-05-01Z\",\r\n    \"To\": \"2021-10-01T01:00Z\"\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/InterviewerAssignments/{{InterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"InterviewerAssignments",
+						"{{InterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
