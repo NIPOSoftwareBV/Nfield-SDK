@@ -35,7 +35,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyGeneralSettingsService.QueryAsync"/>
         /// </summary>
-        public Task<IQueryable<SurveyGeneralSetting>> QueryAsync(string surveyId)
+        public Task<SurveyGeneralSetting> QueryAsync(string surveyId)
         {
             CheckSurveyId(surveyId);
 
@@ -44,7 +44,7 @@ namespace Nfield.Services.Implementation
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<List<SurveyGeneralSetting>>(stringTask.Result).AsQueryable())
+                             JsonConvert.DeserializeObject<SurveyGeneralSetting>(stringTask.Result))
                          .FlattenExceptions();
         }
 

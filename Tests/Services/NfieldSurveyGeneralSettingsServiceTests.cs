@@ -63,23 +63,17 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyGeneralSettings()
         {
-            var expectedSurveyGeneralSettings = new[]
-            { new SurveyGeneralSetting {  Description = "X Type", Client = "client1", Name = "X name" },
-              new SurveyGeneralSetting {  Description = "Y Type", Client = "client2", Name = "Y name" }
-            };
+            var expectedSurveyGeneralSettings = new SurveyGeneralSetting {  Description = "X Type", Client = "client1", Name = "X name" };
+
             _mockedHttpClient
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, "SurveyGeneralSettings/" + SurveyId + "")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveyGeneralSettings))));
 
 
-            var actualSurveyGeneralSettings = _target.QueryAsync(SurveyId).Result.ToArray(); ;
-            Assert.Equal(expectedSurveyGeneralSettings[0].Client, actualSurveyGeneralSettings[0].Client);
-            Assert.Equal(expectedSurveyGeneralSettings[0].Description, actualSurveyGeneralSettings[0].Description);
-            Assert.Equal(expectedSurveyGeneralSettings[0].Name, actualSurveyGeneralSettings[0].Name);
-            Assert.Equal(expectedSurveyGeneralSettings[1].Client, actualSurveyGeneralSettings[1].Client);
-            Assert.Equal(expectedSurveyGeneralSettings[1].Description, actualSurveyGeneralSettings[1].Description);
-            Assert.Equal(expectedSurveyGeneralSettings[1].Name, actualSurveyGeneralSettings[1].Name);
-            Assert.Equal(2, actualSurveyGeneralSettings.Length);
+            var actualSurveyGeneralSettings = _target.QueryAsync(SurveyId).Result;
+            Assert.Equal(expectedSurveyGeneralSettings.Client, actualSurveyGeneralSettings.Client);
+            Assert.Equal(expectedSurveyGeneralSettings.Description, actualSurveyGeneralSettings.Description);
+            Assert.Equal(expectedSurveyGeneralSettings.Name, actualSurveyGeneralSettings.Name);
         }
 
         #endregion
