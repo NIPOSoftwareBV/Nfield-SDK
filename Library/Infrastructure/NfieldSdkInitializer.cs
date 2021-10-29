@@ -53,6 +53,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyInvitationImagesService), typeof(NfieldSurveyInvitationImagesService) },
             { typeof(INfieldSurveyInvitationTemplatesService), typeof(NfieldSurveyInvitationTemplatesService) },
             { typeof(INfieldSurveySettingsService), typeof(NfieldSurveySettingsService) },
+            { typeof(INfieldSurveyInterviewInteractionsSettingsService), typeof(NfieldSurveyInterviewInteractionsSettingsService) },
             { typeof(INfieldSurveyResponseCodesService), typeof(NfieldSurveyResponseCodesService) },
             { typeof(INfieldSurveyRelocationsService), typeof(NfieldSurveyRelocationsService) },
             { typeof(INfieldSurveyPublicIdsService), typeof(NfieldSurveyPublicIdsService) },
