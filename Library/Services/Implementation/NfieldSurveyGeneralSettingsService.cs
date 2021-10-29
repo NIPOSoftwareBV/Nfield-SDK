@@ -51,7 +51,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyGeneralSettingsService.PatchAsync"/>
         /// </summary>
-        public Task UpdateAsync(string surveyId, IEnumerable<SurveyGeneralSetting> models)
+        public Task UpdateAsync(string surveyId, SurveyGeneralSetting models)
         {
             CheckSurveyId(surveyId);
 
