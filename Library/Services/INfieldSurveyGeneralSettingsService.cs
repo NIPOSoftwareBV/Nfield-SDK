@@ -31,7 +31,7 @@ namespace Nfield.Services
         /// This method returns SurveyGeneralSetting status
         /// </summary>
         /// <param name="surveyId">The id of the survey to get the SurveyGeneralSetting</param>
-        Task<IQueryable<SurveyGeneralSetting>> QueryAsync(string surveyId);
+        Task<SurveyGeneralSetting> QueryAsync(string surveyId);
 
         /// <summary>
         /// Updates the supplied <paramref name="GeneralSetting"/>
@@ -41,7 +41,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task UpdateAsync(string surveyId, IEnumerable<SurveyGeneralSetting> GeneralSetting);
+        Task UpdateAsync(string surveyId, SurveyGeneralSetting GeneralSetting);
         
     }
 }
