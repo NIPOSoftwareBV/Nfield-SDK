@@ -52,13 +52,7 @@ namespace Nfield.Services
         public void TestQueryAsync_SurveyGeneralSettingsNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.QueryAsync(null)));
-        }
-
-        [Fact]
-        public void TestQueryAsync_SurveyGeneralSettingsEmpty_Throws()
-        {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.QueryAsync("")));
-        }
+        }     
 
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyGeneralSettings()
