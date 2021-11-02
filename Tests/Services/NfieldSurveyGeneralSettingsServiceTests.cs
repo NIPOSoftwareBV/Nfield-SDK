@@ -63,7 +63,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyGeneralSettings()
         {
-            var expectedSurveyGeneralSettings = new SurveyGeneralSetting {  Description = "X Type", Client = "client1", Name = "X name" };
+            var expectedSurveyGeneralSettings = new SurveyGeneralSettings {  Description = "X Type", Client = "client1", Name = "X name" };
 
             _mockedHttpClient
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, "SurveyGeneralSettings/" + SurveyId + "")))
@@ -82,7 +82,7 @@ namespace Nfield.Services
         [Fact]
         public void TestPatchAsync_SurveyIdIsNull_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UpdateAsync(null, new SurveyGeneralSetting())));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UpdateAsync(null, new SurveyGeneralSettings())));
         }
 
         [Fact]
@@ -91,13 +91,13 @@ namespace Nfield.Services
             var expectedUrl = new Uri(ServiceAddress, $"SurveyGeneralSettings/{SurveyId}");
 
             _mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(expectedUrl, It.IsAny<SurveyGeneralSetting>()))
+                .Setup(client => client.PatchAsJsonAsync(expectedUrl, It.IsAny<SurveyGeneralSettings>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             _target.UpdateAsync(SurveyId, null);
 
             _mockedHttpClient
-                .Verify(client => client.PatchAsJsonAsync(expectedUrl, It.IsAny<SurveyGeneralSetting>()), Times.Once());
+                .Verify(client => client.PatchAsJsonAsync(expectedUrl, It.IsAny<SurveyGeneralSettings>()), Times.Once());
         }
 
         #endregion

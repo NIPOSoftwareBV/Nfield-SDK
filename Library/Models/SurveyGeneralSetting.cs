@@ -18,7 +18,7 @@ namespace Nfield.Models
     /// <summary>
     /// Holds the properties of a survey general setting
     /// </summary>
-    public class SurveyGeneralSetting
+    public class SurveyGeneralSettings
     {
         /// <summary>
         /// The  Id of survey general settings        

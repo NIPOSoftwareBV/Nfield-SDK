@@ -35,7 +35,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyGeneralSettingsService.QueryAsync"/>
         /// </summary>
-        public Task<SurveyGeneralSetting> QueryAsync(string surveyId)
+        public Task<SurveyGeneralSettings> QueryAsync(string surveyId)
         {
             CheckSurveyId(surveyId);
 
@@ -44,18 +44,18 @@ namespace Nfield.Services.Implementation
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<SurveyGeneralSetting>(stringTask.Result))
+                             JsonConvert.DeserializeObject<SurveyGeneralSettings>(stringTask.Result))
                          .FlattenExceptions();
         }
 
         /// <summary>
         /// See <see cref="INfieldSurveyGeneralSettingsService.PatchAsync"/>
         /// </summary>
-        public Task UpdateAsync(string surveyId, SurveyGeneralSetting models)
+        public Task UpdateAsync(string surveyId, SurveyGeneralSettings generalSettings)
         {
             CheckSurveyId(surveyId);
 
-            return Client.PatchAsJsonAsync(SurveyGeneralSettingsApi(surveyId), models)
+            return Client.PatchAsJsonAsync(SurveyGeneralSettingsApi(surveyId), generalSettings)
                 .FlattenExceptions();
         }
 
