@@ -87,7 +87,7 @@ namespace Nfield.Services.Implementation
 
         private static void CheckSurveyId(string surveyId)
         {
-            if (surveyId == null)
+            if (string.IsNullOrEmpty(surveyId))
                 throw new ArgumentNullException(nameof(surveyId));
             if (surveyId.Trim().Length == 0)
                 throw new ArgumentException("surveyId cannot be empty");
