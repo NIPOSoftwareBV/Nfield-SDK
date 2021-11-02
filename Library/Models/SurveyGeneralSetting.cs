@@ -19,24 +19,20 @@ namespace Nfield.Models
     /// Holds the properties of a survey general setting
     /// </summary>
     public class SurveyGeneralSettings
-    {
-        /// <summary>
-        /// The  Id of survey general settings        
-        /// </summary>
-        public string SurveyId { get; set; }
+    {       
 
         /// <summary>
-        /// The Description of survey general settings
+        /// The Description of survey
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// The Client of survey general settings
+        /// The Client of survey
         /// </summary>
         public string Client { get; set; }
 
         /// <summary>
-        /// The Name of survey general settings
+        /// The Name of survey
         /// </summary>
         public string Name { get; set; }
 
