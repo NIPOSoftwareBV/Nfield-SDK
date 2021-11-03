@@ -80,7 +80,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveyGeneralSettingsApi(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"SurveyGeneralSettings/{surveyId}");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/GeneralSettings");
         }
 
         private INfieldHttpClient Client => ConnectionClient.Client;

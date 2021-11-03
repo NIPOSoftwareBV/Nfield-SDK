@@ -20,11 +20,7 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response contains SurveyId\", function () {\r",
-							"    var Surveys = pm.response.json();\r",
-							"    var lastIndex = Surveys.length - 1;\r",
-							"    pm.environment.set(\"SurveyId\", Surveys[lastIndex].Id);\r",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -40,14 +36,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/SurveyGeneralSettings/{{SurveyId}}",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"SurveyGeneralSettings",
-						"{{SurveyId}}"
+						"Surveys",
+						"{{SurveyId}}",
+						"GeneralSettings"
 					]
 				}
 			},
@@ -102,14 +99,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/SurveyGeneralSettings/{{SurveyId}}",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"SurveyGeneralSettings",
-						"{{SurveyId}}"
+						"Surveys",
+						"{{SurveyId}}",
+						"GeneralSettings"
 					]
 				}
 			},

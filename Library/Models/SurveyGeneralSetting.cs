@@ -22,17 +22,17 @@ namespace Nfield.Models
     {       
 
         /// <summary>
-        /// The Description of survey
+        /// The Description of the survey
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// The Client of survey
+        /// The Client of the survey
         /// </summary>
         public string Client { get; set; }
 
         /// <summary>
-        /// The Name of survey
+        /// The Name of the survey
         /// </summary>
         public string Name { get; set; }
 

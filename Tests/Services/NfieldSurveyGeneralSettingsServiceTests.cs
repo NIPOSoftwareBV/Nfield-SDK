@@ -60,7 +60,7 @@ namespace Nfield.Services
             var expectedSurveyGeneralSettings = new SurveyGeneralSettings {  Description = "X Type", Client = "client1", Name = "X name" };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "SurveyGeneralSettings/" + SurveyId + "")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/GeneralSettings")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveyGeneralSettings))));
 
 
@@ -82,7 +82,7 @@ namespace Nfield.Services
         [Fact]
         public void TestPatchAsync_Always_CallsCorrectURI()
         {
-            var expectedUrl = new Uri(ServiceAddress, $"SurveyGeneralSettings/{SurveyId}");
+            var expectedUrl = new Uri(ServiceAddress, $"Surveys/{SurveyId}/GeneralSettings");
 
             _mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(expectedUrl, It.IsAny<SurveyGeneralSettings>()))
