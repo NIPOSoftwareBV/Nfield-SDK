@@ -20,7 +20,7 @@ namespace Nfield.Services
 {
 
     /// <summary>
-    /// Represents a set of methods to get and update  <see cref="SurveyGeneralSetting"/>.
+    /// Represents a set of methods to get and update  <see cref="surveyGeneralSetting"/>.
     /// </summary>
     public interface INfieldSurveyGeneralSettingsService
     {
@@ -31,7 +31,7 @@ namespace Nfield.Services
         Task<SurveyGeneralSettings> QueryAsync(string surveyId);
 
         /// <summary>
-        /// Updates the supplied <paramref name="GeneralSetting"/>
+        /// Updates the supplied <paramref name="generalSetting"/>
         /// </summary>
         /// <param name="generalSetting">The <see cref="surveyGeneralSetting"/> to update</param>
         /// <exception cref="T:System.AggregateException"></exception>
