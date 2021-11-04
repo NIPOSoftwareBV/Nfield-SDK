@@ -13,10 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Nfield.Models;
+using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
@@ -26,9 +24,8 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldSurveyGeneralSettingsService
     {
-
         /// <summary>
-        /// This method returns SurveyGeneralSetting status
+        /// This method returns SurveyGeneralSetting
         /// </summary>
         /// <param name="surveyId">The id of the survey to get the SurveyGeneralSetting</param>
         Task<SurveyGeneralSettings> QueryAsync(string surveyId);
@@ -36,13 +33,12 @@ namespace Nfield.Services
         /// <summary>
         /// Updates the supplied <paramref name="GeneralSetting"/>
         /// </summary>
-        /// <param name="GeneralSetting">The <see cref="SurveyGeneralSetting"/> to update</param>
+        /// <param name="generalSetting">The <see cref="surveyGeneralSetting"/> to update</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task UpdateAsync(string surveyId, SurveyGeneralSettings generalSetting);
-        
+        Task UpdateAsync(string surveyId, SurveyGeneralSettings generalSetting);        
     }
 }
 

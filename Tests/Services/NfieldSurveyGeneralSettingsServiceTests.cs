@@ -13,16 +13,14 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
+using System;
+using System.Net;
+using System.Net.Http;
 using Xunit;
 
 namespace Nfield.Services
@@ -33,7 +31,7 @@ namespace Nfield.Services
     public class NfieldSurveyGeneralSettingsServiceTests : NfieldServiceTestsBase
     {
         private readonly NfieldSurveyGeneralSettingsService _target;
-        readonly Mock<INfieldHttpClient> _mockedHttpClient;
+        private readonly Mock<INfieldHttpClient> _mockedHttpClient;
 
         const string SurveyId = "MySurvey";
 

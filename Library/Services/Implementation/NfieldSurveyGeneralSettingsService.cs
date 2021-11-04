@@ -13,14 +13,12 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 
@@ -49,7 +47,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldSurveyGeneralSettingsService.PatchAsync"/>
+        /// See <see cref="INfieldSurveyGeneralSettingsService.UpdateAsync"/>
         /// </summary>
         public Task UpdateAsync(string surveyId, SurveyGeneralSettings generalSettings)
         {
