@@ -45,7 +45,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n    \"From\" : \"2021-05-01Z\",\r\n    \"To\": \"2021-10-01T01:00Z\"\r\n}\r\n\r\n\r\n",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -53,14 +53,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/InterviewerAssignments/{{InterviewerId}}",
+					"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}/Assignments",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"InterviewerAssignments",
-						"{{InterviewerId}}"
+						"Interviewers",
+						"{{InterviewerId}}",
+						"Assignments"
 					]
 				}
 			},
