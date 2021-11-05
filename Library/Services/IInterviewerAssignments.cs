@@ -14,21 +14,32 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services
 {
-    public interface IInterviewerAssignments
+    public interface INfieldInterviewerAssignments
     {
         /// <summary>
-        /// Assign many interviewers from many sampling points
+        /// Assign an interviewer to a Survey or sampling points in a survey
         /// </summary>
-        /// <param name="surveyId">The id of the survey for which to assign the interviewer.</param>
-        /// <param name="model">The id's of the sampling points and the interviewers to assign</param>
+        /// <param name="interviewerId">The interviewer id.</param>
+        /// <param name="model">Assignment sata</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task UpdateAsync(string surveyId, InterviewerAssignmentModel model);
+        Task UpdateAsync(string interviewerId, InterviewerAssignmentModel model);
+
+        /// <summary>
+        /// Assign an interviewer to a Survey or sampling points in a survey
+        /// </summary>
+        /// <param name="interviewerId">The interviewer id.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task<IQueryable<InterviewerAssignmentDataModel>> GetAsync(string interviewerId);
     }
 }

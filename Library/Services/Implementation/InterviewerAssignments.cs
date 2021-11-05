@@ -13,17 +13,64 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
+using Nfield.Extensions;
+using Nfield.Infrastructure;
 using Nfield.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services.Implementation
 {
-    public class InterviewerAssignments : IInterviewerAssignments
+    internal class NfieldInterviewerAssignments : INfieldInterviewerAssignments, INfieldConnectionClientObject
     {
-        public Task UpdateAsync(string surveyId, InterviewerAssignmentModel model)
+
+        #region Implementation of INfieldInterviewerAssignments
+
+        /// <summary>
+        /// Implements <see cref="INfieldInterviewerAssignments.GetAsync(string)"/> 
+        /// </summary>       
+        public Task<IQueryable<InterviewerAssignmentDataModel>> GetAsync(string interviewerId)
+        {
+            return ConnectionClient.Client.GetAsync(InterviewerAssignmentsApi(interviewerId))
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<List<InterviewerAssignmentDataModel>>(stringTask.Result).AsQueryable())
+                         .FlattenExceptions();
+        }
+        /// <summary>
+        /// Implements <see cref="INfieldInterviewerAssignments.UpdateAsync(string, InterviewerAssignmentModel)"/> 
+        /// </summary>  
+        public Task UpdateAsync(string interviewerId, InterviewerAssignmentModel model)
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Implementation of INfieldConnectionClientObject
+
+        public INfieldConnectionClient ConnectionClient { get; internal set; }
+
+        public void InitializeNfieldConnection(INfieldConnectionClient connection)
+        {
+            ConnectionClient = connection;
+        }
+
+        #endregion
+
+        #region Private methods
+
+
+        private Uri InterviewerAssignmentsApi(string interviewerId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"InterviewerAssignments/{interviewerId}"); 
+        }
+
+        #endregion
     }
 }
