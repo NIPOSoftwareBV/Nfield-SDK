@@ -86,7 +86,7 @@ namespace Nfield.Services.Implementation
         {
             ConnectionClient = connection;
         }
-
+     
         #endregion
     }
 }
