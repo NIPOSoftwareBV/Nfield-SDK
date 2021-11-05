@@ -21,12 +21,27 @@ namespace Nfield.Models
     /// Model for interviewer assignment
     /// </summary>
     public class InterviewerAssignmentModel
-    {        
-
+    {  
         /// <summary>
         /// Assignment description
         /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// Survey Id
+        /// </summary>
+        public string SurveyId { get; set; }
+        /// <summary>
+        /// Target to distributedescription
+        /// </summary>
+        public int TargetToDistribute { get; set; }
+        /// <summary>
+        /// Assignment type
+        /// </summary>
+        public string AssignmentType { get; set; }
+        /// <summary>
+        /// Sampling points filter
+        /// </summary>
+        public IEnumerable<string> SamplingPointsFilter { get; set; }
 
     }
 }
