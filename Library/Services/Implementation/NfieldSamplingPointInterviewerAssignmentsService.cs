@@ -82,12 +82,7 @@ namespace Nfield.Services.Implementation
             var uri = AssignmentsApi(surveyId);
 
             return Client.DeleteAsJsonAsync(uri, model).FlattenExceptions();
-        }
-
-        public Task UpdateAsync(string surveyId, InterviewerAssignmentModel model)
-        {
-            throw new NotImplementedException();
-        }
+        }        
 
         #endregion
 
