@@ -62,6 +62,12 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
 
+        public Task UpdayeAsync(string surveyId, string interviewerId, InterviewerAssignmentModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace Nfield.Services.Implementation
         {
             ConnectionClient = connection;
         }
-
+     
         #endregion
     }
 }

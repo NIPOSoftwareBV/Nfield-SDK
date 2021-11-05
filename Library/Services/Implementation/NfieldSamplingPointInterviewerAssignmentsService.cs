@@ -84,6 +84,11 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsJsonAsync(uri, model).FlattenExceptions();
         }
 
+        public Task UpdateAsync(string surveyId, InterviewerAssignmentModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -147,6 +152,5 @@ namespace Nfield.Services.Implementation
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/SamplingPointsAssignments");
         }
-
     }
 }
