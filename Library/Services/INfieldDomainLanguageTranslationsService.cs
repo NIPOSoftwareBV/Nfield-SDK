@@ -21,14 +21,14 @@ using System.Threading.Tasks;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Represents a set of methods to read and update survey languages.
+    /// Represents a set of methods to read and update domain languages.
     /// </summary>
     public interface INfieldDomainLanguageTranslationsService
     {
         #region CRUD on Language Translations
 
         /// <summary>
-        /// Gets all languages of a survey, as a queryable object.
+        /// Gets all languages of a domain, as a queryable object.
         /// </summary>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
@@ -46,7 +46,7 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         /// <returns>The new translations for the language</returns>
-        Task<SurveyLanguageTranslations> AddAsync(SurveyLanguageTranslations translations);
+        Task<DomainLanguageTranslations> AddAsync(DomainLanguageTranslations translations);
 
         /// <summary>
         /// Updates translations of a language.
@@ -58,7 +58,7 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         /// <returns>The updated translations for the language</returns>
-        Task<SurveyLanguageTranslations> UpdateAsync(int languageId, SurveyLanguageTranslations translations);
+        Task<DomainLanguageTranslations> UpdateAsync(int languageId, DomainLanguageTranslations translations);
 
         /// <summary>
         /// Removes a language and all of its translations.

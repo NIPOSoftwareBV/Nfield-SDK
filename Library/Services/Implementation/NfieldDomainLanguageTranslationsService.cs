@@ -34,7 +34,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// Implementation of <see cref="INfieldSurveyLanguageTranslationsService"/>
+        /// Implementation of <see cref="INfieldDomainLanguageTranslationsService"/>
         /// </summary>
 
         #region Implementation of INfieldConnectionClientObject
@@ -61,19 +61,19 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
-        public Task<SurveyLanguageTranslations> AddAsync(SurveyLanguageTranslations translations)
+        public Task<DomainLanguageTranslations> AddAsync(DomainLanguageTranslations translations)
         {
             return Client.PostAsJsonAsync(LanguageTranslationsApi(), translations)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyLanguageTranslations>(task.Result))
+                         .ContinueWith(task => JsonConvert.DeserializeObject<DomainLanguageTranslations>(task.Result))
                          .FlattenExceptions();
         }
 
-        public Task<SurveyLanguageTranslations> UpdateAsync(int languageId, SurveyLanguageTranslations translations)
+        public Task<DomainLanguageTranslations> UpdateAsync(int languageId, DomainLanguageTranslations translations)
         {
             return Client.PatchAsJsonAsync(LanguageTranslationsApi(languageId), translations)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyLanguageTranslations>(task.Result))
+                         .ContinueWith(task => JsonConvert.DeserializeObject<DomainLanguageTranslations>(task.Result))
                          .FlattenExceptions();
         }
 
