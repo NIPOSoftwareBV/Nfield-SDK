@@ -22,6 +22,7 @@ namespace Nfield.Services
 {
     /// <summary>
     /// Represents a set of methods to read and update domain languages.
+    /// Using LanguageTranslations to keep the same name used for surveys
     /// </summary>
     public interface INfieldDomainLanguageTranslationsService
     {
