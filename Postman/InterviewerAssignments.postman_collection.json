@@ -19,12 +19,6 @@
 							"pm.test(\"Status code name has string\", function () {\r",
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
-							"\r",
-							"pm.test(\"Response contains AuthenticationToken\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"ActivityId\");\r",
-							"    const response = pm.response.json();\r",
-							"    pm.environment.set(\"ActivityId\", response.ActivityId);\r",
-							"});\r",
 							""
 						],
 						"type": "text/javascript"
