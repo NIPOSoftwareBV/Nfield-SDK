@@ -31,6 +31,7 @@ namespace Nfield.Infrastructure
         {
             { typeof(NfieldConnection), typeof(NfieldConnection) },
             { typeof(INfieldInterviewersService), typeof(NfieldInterviewersService) },
+            { typeof(INfieldInterviewerAssignmentsService), typeof(NfieldInterviewerAssignmentsService) },
             { typeof(INfieldInterviewsService), typeof(NfieldInterviewsService) },
             { typeof(INfieldInterviewQualityService), typeof(NfieldInterviewQualityService) },
             { typeof(INfieldSurveysService), typeof(NfieldSurveysService) },

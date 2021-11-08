@@ -23,15 +23,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services.Implementation
+namespace Nfield.Services.Implementation
 {
-    internal class NfieldInterviewerAssignments : INfieldInterviewerAssignments, INfieldConnectionClientObject
+    internal class NfieldInterviewerAssignmentsService : INfieldInterviewerAssignmentsService, INfieldConnectionClientObject
     {
 
         #region Implementation of INfieldInterviewerAssignments
 
         /// <summary>
-        /// Implements <see cref="INfieldInterviewerAssignments.GetAsync(string)"/> 
+        /// Implements <see cref="INfieldInterviewerAssignmentsService.GetAsync(string)"/> 
         /// </summary>       
         public Task<IQueryable<InterviewerAssignmentDataModel>> GetAsync(string interviewerId)
         {
@@ -44,7 +44,7 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
         /// <summary>
-        /// Implements <see cref="INfieldInterviewerAssignments.UpdateAsync(string, InterviewerAssignmentModel)"/> 
+        /// Implements <see cref="INfieldInterviewerAssignmentsService.UpdateAsync(string, InterviewerAssignmentModel)"/> 
         /// </summary>  
         public Task PutAsync(string interviewerId, InterviewerAssignmentModel model)
         {

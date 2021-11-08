@@ -17,9 +17,9 @@ using Nfield.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services
+namespace Nfield.Services
 {
-    public interface INfieldInterviewerAssignments
+    public interface INfieldInterviewerAssignmentsService
     {
         /// <summary>
         /// Assign an interviewer to a Survey or sampling points in a survey
