@@ -33,7 +33,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// Implements <see cref="INfieldInterviewerAssignmentsService.GetAsync(string)"/> 
         /// </summary>       
-        public Task<IQueryable<InterviewerAssignmentDataModel>> GetAsync(string interviewerId)
+        public Task<IQueryable<InterviewerAssignmentDataModel>> QueryAsync(string interviewerId)
         {
             return ConnectionClient.Client.GetAsync(GetInterviewerAssignmentsApiUrl(interviewerId))
                          .ContinueWith(
@@ -73,7 +73,7 @@ namespace Nfield.Services.Implementation
 
         private Uri GetInterviewerAssignmentsApiUrl(string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"InterviewerAssignments/{interviewerId}"); 
+            return new Uri(ConnectionClient.NfieldServerUri, $"interviewers/{interviewerId}/assignments"); 
         }
 
         #endregion
