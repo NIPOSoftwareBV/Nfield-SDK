@@ -37,7 +37,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IQueryable<Language>> QueryAsync()
         {
-            return Client.GetAsync(LanguagesApi(0))
+            return Client.GetAsync(LanguagesApi())
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -56,7 +56,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("language");
             }
 
-            return Client.PostAsJsonAsync(LanguagesApi(0), language)
+            return Client.PostAsJsonAsync(LanguagesApi(), language)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<Language>(task.Result))
                          .FlattenExceptions();
@@ -87,7 +87,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("language");
             }
 
-            return Client.PutAsJsonAsync(LanguagesApi(0),
+            return Client.PutAsJsonAsync(LanguagesApi(),
                 language).FlattenExceptions();
         }
 
@@ -110,11 +110,11 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri LanguagesApi(int id)
+        private Uri LanguagesApi(int? id = null)
         {   
             var path = new StringBuilder();
             path.AppendFormat("Languages");
-            if (id > 0)
+            if (id != null)
             {
                 path.AppendFormat("/{0}", id);
             }
