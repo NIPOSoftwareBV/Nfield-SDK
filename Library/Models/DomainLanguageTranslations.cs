@@ -1,5 +1,5 @@
 ﻿namespace Nfield.SDK.Models
 {
-    public class DomainLanguageTranslations : SurveyLanguageTranslations
+    public class DomainLanguageTranslations : LanguageTranslations
     { }
 }
