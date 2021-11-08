@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Nfield.SDK.Services.Implementation
         /// </summary>       
         public Task<IQueryable<InterviewerAssignmentDataModel>> GetAsync(string interviewerId)
         {
-            return ConnectionClient.Client.GetAsync(InterviewerAssignmentsApi(interviewerId))
+            return ConnectionClient.Client.GetAsync(GetInterviewerAssignmentsApiUrl(interviewerId))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -45,9 +46,13 @@ namespace Nfield.SDK.Services.Implementation
         /// <summary>
         /// Implements <see cref="INfieldInterviewerAssignments.UpdateAsync(string, InterviewerAssignmentModel)"/> 
         /// </summary>  
-        public Task UpdateAsync(string interviewerId, InterviewerAssignmentModel model)
+        public Task PutAsync(string interviewerId, InterviewerAssignmentModel model)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNull(model, nameof(model));
+
+            return
+                ConnectionClient.Client.PutAsJsonAsync(GetInterviewerAssignmentsApiUrl(interviewerId), model)
+                .FlattenExceptions();
         }
 
         #endregion
@@ -66,7 +71,7 @@ namespace Nfield.SDK.Services.Implementation
         #region Private methods
 
 
-        private Uri InterviewerAssignmentsApi(string interviewerId)
+        private Uri GetInterviewerAssignmentsApiUrl(string interviewerId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"InterviewerAssignments/{interviewerId}"); 
         }
