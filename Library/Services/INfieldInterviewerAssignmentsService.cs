@@ -40,6 +40,6 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<IQueryable<InterviewerAssignmentDataModel>> GetAsync(string interviewerId);
+        Task<IQueryable<InterviewerAssignmentDataModel>> QueryAsync(string interviewerId);
     }
 }
