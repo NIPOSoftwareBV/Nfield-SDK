@@ -40,55 +40,14 @@ namespace Nfield.Services
             _target = new NfieldInterviewerAssignmentsService();
         }
 
-        #region PutAsync        
-
-        [Fact]
-        public void TestUpdateAsync_ModelArgumentIsNull_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PutAsync("id", null)));
-        }
-
-        [Fact]
-        public async Task TestUpdateAsync_InterviewerExists_ReturnsInterviewer()
-        {
-            var interviewerAssignmentModel = new InterviewerAssignmentModel
-            {
-                AssignmentType = "AssignmentType",
-                Description = "Description",
-                SamplingPointsFilter = new[] { "samplingPointId" },
-                SurveyId = "SurveyId",
-                TargetToDistribute = 5
-            };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(ApiUri(_interviewerId), It.Is<InterviewerAssignmentModel>
-                (ia =>
-                        ia.AssignmentType == interviewerAssignmentModel.AssignmentType &&
-                        ia.Description == interviewerAssignmentModel.Description &&
-                        ia.SamplingPointsFilter == interviewerAssignmentModel.SamplingPointsFilter &&
-                        ia.SurveyId == interviewerAssignmentModel.SurveyId &&
-                        ia.TargetToDistribute == interviewerAssignmentModel.TargetToDistribute
-                    )))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewerAssignmentModel)))).Verifiable();
-
-            _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            await _target.PutAsync(_interviewerId, interviewerAssignmentModel);
-
-            mockedHttpClient.Verify();
-        }
-
-        #endregion
-
         #region QueryAsync
 
         [Fact]
         public async Task TestQueryAsync_ServerReturnsQuery_ReturnsListWithInterviewersAssignments()
         {
-            var expectedInterviewersAssignments = new InterviewerAssignmentDataModel[]
+            var expectedInterviewersAssignments = new[]
             {
-                new InterviewerAssignmentDataModel
+                new InterviewerAssignmentModel
                 {
                     InterviewerId = _interviewerId,
                     Interviewer = "Interviewer",
@@ -101,7 +60,7 @@ namespace Nfield.Services
                     SurveyId = "SurveyId",
                     SurveyName = "SurveyName"
                 },
-                new InterviewerAssignmentDataModel
+                new InterviewerAssignmentModel
                 {
                     InterviewerId = _interviewerId,
                     AssignedTarget = 2,
@@ -129,7 +88,7 @@ namespace Nfield.Services
             AssertAssignment(expectedInterviewersAssignments[1], actualInterviewersAssignments[1]);
         }
 
-        private static void AssertAssignment(InterviewerAssignmentDataModel expectedInterviewerAssignment, InterviewerAssignmentDataModel actualInterviewerAssignment)
+        private static void AssertAssignment(InterviewerAssignmentModel expectedInterviewerAssignment, InterviewerAssignmentModel actualInterviewerAssignment)
         {
             Assert.Equal(expectedInterviewerAssignment.InterviewerId, actualInterviewerAssignment.InterviewerId);
             Assert.Equal(expectedInterviewerAssignment.Interviewer, actualInterviewerAssignment.Interviewer);

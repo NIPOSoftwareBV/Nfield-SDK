@@ -33,27 +33,16 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// Implements <see cref="INfieldInterviewerAssignmentsService.GetAsync(string)"/> 
         /// </summary>       
-        public Task<IQueryable<InterviewerAssignmentDataModel>> QueryAsync(string interviewerId)
+        public Task<IQueryable<InterviewerAssignmentModel>> QueryAsync(string interviewerId)
         {
             return ConnectionClient.Client.GetAsync(GetInterviewerAssignmentsApiUrl(interviewerId))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<List<InterviewerAssignmentDataModel>>(stringTask.Result).AsQueryable())
+                             JsonConvert.DeserializeObject<List<InterviewerAssignmentModel>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
-        }
-        /// <summary>
-        /// Implements <see cref="INfieldInterviewerAssignmentsService.UpdateAsync(string, InterviewerAssignmentModel)"/> 
-        /// </summary>  
-        public Task PutAsync(string interviewerId, InterviewerAssignmentModel model)
-        {
-            Ensure.ArgumentNotNull(model, nameof(model));
-
-            return
-                ConnectionClient.Client.PutAsJsonAsync(GetInterviewerAssignmentsApiUrl(interviewerId), model)
-                .FlattenExceptions();
-        }
+        }      
 
         #endregion
 

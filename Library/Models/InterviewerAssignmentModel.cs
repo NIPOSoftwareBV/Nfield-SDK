@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 
 namespace Nfield.Models
@@ -21,26 +22,72 @@ namespace Nfield.Models
     /// Model for interviewer assignment
     /// </summary>
     public class InterviewerAssignmentModel
-    {  
+    {
         /// <summary>
-        /// Assignment description
+        /// Survey name
         /// </summary>
-        public string Description { get; set; }
+        public string SurveyName { get; set; }
         /// <summary>
         /// Survey Id
         /// </summary>
         public string SurveyId { get; set; }
         /// <summary>
-        /// Target to distributedescription
+        /// Interviewer user  name
         /// </summary>
-        public int TargetToDistribute { get; set; }
+        public string Interviewer { get; set; }
         /// <summary>
-        /// Assignment type
+        /// Interviewer Id
         /// </summary>
-        public string AssignmentType { get; set; }
+        public string InterviewerId { get; set; }
         /// <summary>
-        /// Sampling points filter
+        /// Discriminator
         /// </summary>
-        public IEnumerable<string> SamplingPointsFilter { get; set; }
+        public string Discriminator { get; set; }
+        /// <summary>
+        /// Assigned or not
+        /// </summary>
+        public bool? Assigned { get; set; }
+        /// <summary>
+        /// Active or not
+        /// </summary>
+        public bool? Active { get; set; }
+        // Is group assignment
+        public bool? IsGroupAssignment { get; set; }
+        /// <summary>
+        /// Assigned target
+        /// </summary>
+        public int? AssignedTarget { get; set; }
+        /// <summary>
+        /// Sampling point target
+        /// </summary>
+        public int? AssignedSamplingPointTarget { get; set; }
+        /// <summary>
+        /// Successful count
+        /// </summary>
+        public int Successful { get; set; }
+        /// <summary>
+        /// Screened out count 
+        /// </summary>
+        public int ScreenedOut { get; set; }
+        /// <summary>
+        /// Dropped out count
+        /// </summary>
+        public int DroppedOut { get; set; }
+        /// <summary>
+        /// Rejected count
+        /// </summary>
+        public int Rejected { get; set; }
+        /// <summary>
+        /// Last sync date
+        /// </summary>
+        public DateTime? LastSyncDate { get; set; }
+        /// <summary>
+        /// Is full synced
+        /// </summary>
+        public bool? IsFullSynced { get; set; }
+        /// <summary>
+        /// Is last sync successful
+        /// </summary>
+        public bool? IsLastSyncSuccessful { get; set; }
     }
 }

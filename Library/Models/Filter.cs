@@ -13,22 +13,17 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Nfield.Models;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
-    public interface INfieldInterviewerAssignmentsService
+    public class Filter
     {
-        /// <summary>
-        /// Assign an interviewer to a Survey or sampling points in a survey
-        /// </summary>
-        /// <param name="interviewerId">The interviewer id.</param>
-        /// <exception cref="T:System.AggregateException"></exception>
-        /// The aggregate exception can contain:
-        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
-        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<IQueryable<InterviewerAssignmentModel>> QueryAsync(string interviewerId);
+        public string Name { get; set; }
+        public string Op { get; set; }
+        public string Value { get; set; }
+        [JsonIgnore]
+        public Func<string, int, string> Formatter { get; }
     }
 }

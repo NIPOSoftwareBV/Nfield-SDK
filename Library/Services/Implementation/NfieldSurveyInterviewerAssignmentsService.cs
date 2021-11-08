@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -62,6 +63,18 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
 
+        /// <summary>
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.PutAsync(string, SurveyInterviewerAssignmentModel)"/> 
+        /// </summary>  
+        public Task PutAsync(string surveyId, string interviewerId, SurveyInterviewerAssignmentModel model)
+        {
+            Ensure.ArgumentNotNull(model, nameof(model));
+
+            return
+                ConnectionClient.Client.PutAsJsonAsync(SurveyInterviewerAssignmentsUrl(surveyId, interviewerId), model)
+                .FlattenExceptions();
+        }
+
         #endregion
 
         /// <summary>
@@ -71,6 +84,15 @@ namespace Nfield.Services.Implementation
         private Uri SurveyInterviewerAssignmentsUrl(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignment/");
+        }
+
+        /// <summary>
+         /// Constructs and returns the url for survey interviewer assignments
+         /// based on supplied parameters
+         /// </summary>
+        private Uri SurveyInterviewerAssignmentsUrl(string surveyId, string interviewerId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/interviewers/{interviewerId}/Assignment");
         }
 
         private INfieldHttpClient Client
