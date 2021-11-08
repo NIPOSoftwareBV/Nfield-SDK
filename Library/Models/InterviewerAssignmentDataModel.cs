@@ -51,7 +51,9 @@ namespace Nfield.Models
         /// Active or not
         /// </summary>
         public bool? Active { get; set; }
-        // Is group assignment
+        /// <summary>
+        /// Is group assignment
+        /// </summary>
         public bool? IsGroupAssignment { get; set; }
         /// <summary>
         /// Assigned target
