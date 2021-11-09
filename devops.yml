@@ -8,7 +8,7 @@ trigger:
 pr:
   autoCancel: true
   branches:
-    include: ['*/ci-*'] 
+    include: ['master', '*/ci-*'] 
 
 jobs:
 - job:
