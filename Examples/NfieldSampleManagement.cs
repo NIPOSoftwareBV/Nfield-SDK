@@ -16,7 +16,7 @@
 using System;
 using Nfield.Services;
 
-namespace Nfield.SDK.Samples
+namespace ConsoleApplication
 {
     public class NfieldSampleManagement
     {

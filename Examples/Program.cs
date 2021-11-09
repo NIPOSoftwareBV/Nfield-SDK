@@ -23,7 +23,7 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services;
 
-namespace Nfield.SDK.Samples
+namespace ConsoleApplication
 {
 
     /// <summary>
