@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace SSO_AAD
+namespace WindowsFormsApplication
 {
     public class Program
     {

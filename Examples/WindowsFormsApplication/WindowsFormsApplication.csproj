@@ -3,7 +3,7 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net5.0-windows</TargetFramework>
-        <RootNamespace>SSO_AAD</RootNamespace>
+        <RootNamespace>WindowsFormsApplication</RootNamespace>
         <UseWindowsForms>true</UseWindowsForms>
         <UserSecretsId>0e0db74c-ddb3-41a3-a672-5882a4179adb</UserSecretsId>
     </PropertyGroup>

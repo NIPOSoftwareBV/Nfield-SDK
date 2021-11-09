@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SSO_AAD
+namespace WindowsFormsApplication
 {
     public class Nfield
     {

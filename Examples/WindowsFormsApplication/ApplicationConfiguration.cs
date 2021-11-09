@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 
-namespace SSO_AAD
+namespace WindowsFormsApplication
 {
     public class ApplicationConfiguration
     {

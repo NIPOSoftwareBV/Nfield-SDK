@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace SSO_AAD
+namespace WindowsFormsApplication
 {
     public partial class MainForm : Form
     {
