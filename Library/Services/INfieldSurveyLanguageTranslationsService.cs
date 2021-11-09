@@ -39,7 +39,7 @@ namespace Nfield.Services
         Task<IQueryable<Language>> QueryAsync(string surveyId);
 
         /// <summary>
-        /// Adds a new language and all of its translations.
+        /// Adds a new survey language and all of its translations.
         /// </summary>
         /// <param name="surveyId">the survey to add the language to</param>
         /// <param name="translations">The translations to set</param>
@@ -51,7 +51,7 @@ namespace Nfield.Services
         Task<SurveyLanguageTranslations> AddAsync(string surveyId, SurveyLanguageTranslations translations);
 
         /// <summary>
-        /// Updates translations of a language.
+        /// Updates translations of a survey language.
         /// </summary>
         /// <param name="surveyId">The survey on which to update the language</param>
         /// <param name="languageId">The language to update</param>
@@ -64,10 +64,10 @@ namespace Nfield.Services
         Task<SurveyLanguageTranslations> UpdateAsync(string surveyId, int languageId, SurveyLanguageTranslations translations);
 
         /// <summary>
-        /// Removes a language and all of its translations.
+        /// Removes a survey language and all of its translations.
         /// </summary>
         /// <param name="surveyId">The survey to remove this language from</param>
-        /// <param name="languageId">The language to remove</param>
+        /// <param name="languageId">The survey language to remove</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>

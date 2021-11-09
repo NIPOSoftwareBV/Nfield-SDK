@@ -39,7 +39,7 @@ namespace Nfield.Services
         Task<IQueryable<Language>> QueryAsync();
 
         /// <summary>
-        /// Adds a new language and all of its translations.
+        /// Adds a new domain language and all of its translations.
         /// </summary>
         /// <param name="translations">The translations to set</param>
         /// <exception cref="T:System.AggregateException"></exception>
@@ -50,7 +50,7 @@ namespace Nfield.Services
         Task<DomainLanguageTranslations> AddAsync(DomainLanguageTranslations translations);
 
         /// <summary>
-        /// Updates translations of a language.
+        /// Updates translations of a domain language.
         /// </summary>
         /// <param name="languageId">The language to update</param>
         /// <param name="translations">The translations to change</param>
@@ -62,9 +62,9 @@ namespace Nfield.Services
         Task<DomainLanguageTranslations> UpdateAsync(int languageId, DomainLanguageTranslations translations);
 
         /// <summary>
-        /// Removes a language and all of its translations.
+        /// Removes a domain language and all of its translations.
         /// </summary>
-        /// <param name="languageId">The language to remove</param>
+        /// <param name="languageId">The domain language to remove</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
