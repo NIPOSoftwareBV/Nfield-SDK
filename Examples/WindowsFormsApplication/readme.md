@@ -18,7 +18,7 @@ To support SSO a new application needs to be added to the tenant that will be us
 
 ### _Take note of the appropriate settings_  
 
-If you now look at the application overview a number of details are shown that will beused  later.
+If you now look at the application overview a number of details are shown that will be used later.
 Store the values of the application ID and the tenant ID.
 
 ![Initial app details](./images/InitialAppDetails.png)
@@ -34,7 +34,7 @@ In order for our app to use this application registration you will have to tell 
 
 ### _Setup `Redirect URIs`_
 
-In order to support the ability to show the browser to select the account to use for logging in to Nfield the following URIs should be configured. The `http://localhost` URI is needed when using .Net core, it will allow the application to capture the result of the login.
+In order to support the ability to show the browser to select the account to use for logging in to Nfield the following URIs should be configured. The `http://localhost` URI is needed when using .Net Core, it will allow the application to capture the result of the login from the browser.
 
 ![Redirect URIs](./images/RedirectUris.png)
 
@@ -59,7 +59,7 @@ Look up the Nfield Public API in the `APIs my organizations uses` and store the 
 
 ![Add all permissions](./images/AddAllNfieldPublicAPIPermissions.png)
 
-Our aplication is good to go and we should have the following information stored to use in the sample application:
+Our application is good to go and we should have the following information stored to use in the sample application:
 - Client ID: this is the ID of the application we just registered
 - Tenant ID: the ID of the tenant that we are signing into
 - Nfield Public API Application ID: The ID of the Nfield Public API
