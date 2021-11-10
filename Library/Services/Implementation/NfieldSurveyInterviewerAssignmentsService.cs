@@ -29,6 +29,9 @@ namespace Nfield.Services.Implementation
     {
         #region Implementation of INfieldSurveyInterviewerAssignmentsService
 
+        /// <summary>
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.AssignAsync(string, string)"/> 
+        /// </summary>     
         public Task AssignAsync(string surveyId, string interviewerId)
         {
             if (string.IsNullOrEmpty(surveyId))
@@ -46,6 +49,9 @@ namespace Nfield.Services.Implementation
             return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
         }
 
+        /// <summary>
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.UnassignAsync(string, string)"/> 
+        /// </summary> 
         public Task UnassignAsync(string surveyId, string interviewerId)
         {
             if (string.IsNullOrEmpty(surveyId))
@@ -64,7 +70,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.PutAsync(string, SurveyInterviewerAssignmentModel)"/> 
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.PutAsync(string, string, SurveyInterviewerAssignmentModel)"/> 
         /// </summary>  
         public Task PutAsync(string surveyId, string interviewerId, SurveyInterviewerAssignmentModel model)
         {
