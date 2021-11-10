@@ -91,6 +91,21 @@ namespace WindowsFormsApplication
             }
         }
 
+        public async Task<AuthenticationResult> TryAuthenticateSilentAsync()
+        {
+            var accounts = await ClientApp.GetAccountsAsync();
+            var account = accounts.FirstOrDefault();
+
+            try
+            {
+                return await ClientApp.AcquireTokenSilent(Scopes, account).ExecuteAsync();
+            }
+            catch (MsalUiRequiredException)
+            {
+                return null;
+            }
+        }
+
         public async Task<AuthenticationResult> AuthenticateAsync(Action<string> statusCallback)
         {
             var accounts = await ClientApp.GetAccountsAsync();
