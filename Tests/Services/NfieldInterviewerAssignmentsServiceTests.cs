@@ -51,8 +51,8 @@ namespace Nfield.Services
                 {
                     InterviewerId = _interviewerId,
                     Interviewer = "Interviewer",
-                    Active = false,
-                    Assigned = true,
+                    IsActive = false,
+                    IsAssigned = true,
                     Discriminator = "Discriminator",
                     IsLastSyncSuccessful = true,
                     LastSyncDate = DateTime.Now,
@@ -66,12 +66,12 @@ namespace Nfield.Services
                     AssignedTarget = 2,
                     IsGroupAssignment = false,
                     AssignedSamplingPointTarget = 8,
-                    Active = true,
-                    Assigned = true,
-                    DroppedOut = 1,
-                    Rejected = 2,
-                    Successful = 3,
-                    ScreenedOut = 4
+                    IsActive = true,
+                    IsAssigned = true,
+                    DroppedOutCount = 1,
+                    RejectedCount = 2,
+                    SuccessfulCount = 3,
+                    ScreenedOutCount = 4
                 }
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -92,19 +92,19 @@ namespace Nfield.Services
         {
             Assert.Equal(expectedInterviewerAssignment.InterviewerId, actualInterviewerAssignment.InterviewerId);
             Assert.Equal(expectedInterviewerAssignment.Interviewer, actualInterviewerAssignment.Interviewer);
-            Assert.Equal(expectedInterviewerAssignment.Active, actualInterviewerAssignment.Active);
-            Assert.Equal(expectedInterviewerAssignment.Assigned, actualInterviewerAssignment.Assigned);
+            Assert.Equal(expectedInterviewerAssignment.IsActive, actualInterviewerAssignment.IsActive);
+            Assert.Equal(expectedInterviewerAssignment.IsAssigned, actualInterviewerAssignment.IsAssigned);
             Assert.Equal(expectedInterviewerAssignment.AssignedSamplingPointTarget, actualInterviewerAssignment.AssignedSamplingPointTarget);
             Assert.Equal(expectedInterviewerAssignment.AssignedTarget, actualInterviewerAssignment.AssignedTarget);
             Assert.Equal(expectedInterviewerAssignment.Discriminator, actualInterviewerAssignment.Discriminator);
-            Assert.Equal(expectedInterviewerAssignment.DroppedOut, actualInterviewerAssignment.DroppedOut);
+            Assert.Equal(expectedInterviewerAssignment.DroppedOutCount, actualInterviewerAssignment.DroppedOutCount);
             Assert.Equal(expectedInterviewerAssignment.IsFullSynced, actualInterviewerAssignment.IsFullSynced);
             Assert.Equal(expectedInterviewerAssignment.IsGroupAssignment, actualInterviewerAssignment.IsGroupAssignment);
             Assert.Equal(expectedInterviewerAssignment.IsLastSyncSuccessful, actualInterviewerAssignment.IsLastSyncSuccessful);
             Assert.Equal(expectedInterviewerAssignment.LastSyncDate, actualInterviewerAssignment.LastSyncDate);
-            Assert.Equal(expectedInterviewerAssignment.Rejected, actualInterviewerAssignment.Rejected);
-            Assert.Equal(expectedInterviewerAssignment.ScreenedOut, actualInterviewerAssignment.ScreenedOut);
-            Assert.Equal(expectedInterviewerAssignment.Successful, actualInterviewerAssignment.Successful);
+            Assert.Equal(expectedInterviewerAssignment.RejectedCount, actualInterviewerAssignment.RejectedCount);
+            Assert.Equal(expectedInterviewerAssignment.ScreenedOutCount, actualInterviewerAssignment.ScreenedOutCount);
+            Assert.Equal(expectedInterviewerAssignment.SuccessfulCount, actualInterviewerAssignment.SuccessfulCount);
             Assert.Equal(expectedInterviewerAssignment.SurveyId, actualInterviewerAssignment.SurveyId);
             Assert.Equal(expectedInterviewerAssignment.SurveyName, actualInterviewerAssignment.SurveyName);
         }

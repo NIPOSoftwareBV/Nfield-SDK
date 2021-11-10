@@ -46,11 +46,11 @@ namespace Nfield.Models
         /// <summary>
         /// Assigned or not
         /// </summary>
-        public bool? Assigned { get; set; }
+        public bool? IsAssigned { get; set; }
         /// <summary>
         /// Active or not
         /// </summary>
-        public bool? Active { get; set; }
+        public bool? IsActive { get; set; }
         // Is group assignment
         public bool? IsGroupAssignment { get; set; }
         /// <summary>
@@ -64,19 +64,23 @@ namespace Nfield.Models
         /// <summary>
         /// Successful count
         /// </summary>
-        public int Successful { get; set; }
+        public int SuccessfulCount { get; set; }
+        /// <summary>
+        /// Unsuccessful count
+        /// </summary>
+        public int UnsuccessfulCount { get; set; }
         /// <summary>
         /// Screened out count 
         /// </summary>
-        public int ScreenedOut { get; set; }
+        public int ScreenedOutCount { get; set; }
         /// <summary>
         /// Dropped out count
         /// </summary>
-        public int DroppedOut { get; set; }
+        public int DroppedOutCount { get; set; }
         /// <summary>
         /// Rejected count
         /// </summary>
-        public int Rejected { get; set; }
+        public int RejectedCount { get; set; }
         /// <summary>
         /// Last sync date
         /// </summary>
