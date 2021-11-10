@@ -92,7 +92,7 @@ namespace Nfield.Services.Implementation
          /// </summary>
         private Uri SurveyInterviewerAssignmentsUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/interviewers/{interviewerId}/Assignment");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments");
         }
 
         private INfieldHttpClient Client
