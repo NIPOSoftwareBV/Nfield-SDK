@@ -1,6 +1,6 @@
 # Windows Forms sample
 
-This sample demonstrates using SSO through in a Windows Forms application.
+This sample demonstrates using SSO through AAD in a Windows Forms application.
 In order to use this sample you will have to perform a number of steps.
 
 ## Setup
