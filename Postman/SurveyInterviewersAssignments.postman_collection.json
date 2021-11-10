@@ -45,7 +45,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assigment",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignment",
 					"host": [
 						"{{origin}}"
 					],
@@ -55,7 +55,7 @@
 						"{{SurveyId}}",
 						"Interviewers",
 						"{{InterviewerId}}",
-						"Assigment"
+						"Assignment"
 					]
 				}
 			},
