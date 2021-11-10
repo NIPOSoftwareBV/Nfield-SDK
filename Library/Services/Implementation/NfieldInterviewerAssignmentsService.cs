@@ -62,7 +62,7 @@ namespace Nfield.Services.Implementation
 
         private Uri GetInterviewerAssignmentsApiUrl(string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"interviewers/{interviewerId}/assignments"); 
+            return new Uri(ConnectionClient.NfieldServerUri, $"Interviewers/{interviewerId}/Assignments"); 
         }
 
         #endregion
