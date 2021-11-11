@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -35,14 +36,17 @@ namespace Nfield.Services.Implementation
         /// </summary>       
         public Task<IQueryable<InterviewerAssignmentModel>> QueryAsync(string interviewerId)
         {
+            var settings = new JsonSerializerSettings();
+            settings.ContractResolver = new InterviewerAssignmentContractResolver();
+
             return ConnectionClient.Client.GetAsync(GetInterviewerAssignmentsApiUrl(interviewerId))
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<List<InterviewerAssignmentModel>>(stringTask.Result).AsQueryable())
+                             JsonConvert.DeserializeObject<List<InterviewerAssignmentModel>>(stringTask.Result, settings).AsQueryable())
                          .FlattenExceptions();
-        }      
+        }
 
         #endregion
 
@@ -59,12 +63,36 @@ namespace Nfield.Services.Implementation
 
         #region Private methods
 
-
         private Uri GetInterviewerAssignmentsApiUrl(string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Interviewers/{interviewerId}/Assignments"); 
+            return new Uri(ConnectionClient.NfieldServerUri, $"Interviewers/{interviewerId}/Assignments");
+        }
+
+        private class InterviewerAssignmentContractResolver : DefaultContractResolver
+        {
+            private Dictionary<string, string> PropertyMappings { get; set; }
+
+            public InterviewerAssignmentContractResolver()
+            {
+                PropertyMappings = new Dictionary<string, string>
+                {
+                    {"IsAssigned", "Assigned"},
+                    {"IsActive", "Active"},
+                    {"SuccessfulCount", "Successful"},
+                    {"ScreenedOutCount", "ScreenedOut"},
+                    {"DroppedOutCount", "DroppedOut"},
+                    {"RejectedCount", "Rejected"}
+                };
+            }
+
+            protected override string ResolvePropertyName(string propertyName)
+            {                
+                return PropertyMappings.TryGetValue(propertyName, out var resolvedName) ? resolvedName : base.ResolvePropertyName(propertyName);
+            }
         }
 
         #endregion
     }
+
+
 }
