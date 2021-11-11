@@ -29,7 +29,7 @@ namespace Nfield.Models
         /// <summary>
         /// Target to distributedescription
         /// </summary>
-        public int TargetToDistribute { get; set; }
+        public int? TargetToDistribute { get; set; }
         /// <summary>
         /// Assignment type
         /// </summary>
