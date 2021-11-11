@@ -146,7 +146,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.Is<Uri>(u => u.ToString().EndsWith($"Surveys/{surveyId}/interviewers/{interviewerId}/Assignment")), It.Is<SurveyInterviewerAssignmentModel>
+                .Setup(client => client.PutAsJsonAsync(It.Is<Uri>(u => u.ToString().EndsWith($"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments")), It.Is<SurveyInterviewerAssignmentModel>
                 (ia =>
                         ia.AssignmentType == interviewerAssignmentModel.AssignmentType &&
                         ia.Description == interviewerAssignmentModel.Description &&
