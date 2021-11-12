@@ -24,7 +24,7 @@ namespace WindowsFormsApplication
             ClientApp = CreateClientApp();
             DomainName = domainName;
 
-            NfieldConnection = NfieldConnectionFactory.Create(ApplicationConfiguration.Current.NfieldApiUri);
+            NfieldConnection = NfieldConnectionFactory.Create(ApplicationConfiguration.Current.NfieldPublicApiEndpoint);
             NfieldConnection.RegisterTokenProvider(domainName, ProvideTokenAsync);
         }
 
@@ -49,7 +49,7 @@ namespace WindowsFormsApplication
             return result.AccessToken;
         }
 
-        private static string CreateScope(string scope) => $"{ApplicationConfiguration.Current.NfieldApiApplicationId}/{scope}";
+        private static string CreateScope(string scope) => $"{ApplicationConfiguration.Current.NfieldPublicApiApplicationId}/{scope}";
 
         internal async Task LogoutAsync()
         {
