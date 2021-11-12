@@ -6,6 +6,6 @@
     <Copyright>Copyright © NIPO 2018</Copyright>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\Nfield.SDK.csproj" />
+    <ProjectReference Include="..\..\Library\Nfield.SDK.csproj" />
   </ItemGroup>
 </Project>
