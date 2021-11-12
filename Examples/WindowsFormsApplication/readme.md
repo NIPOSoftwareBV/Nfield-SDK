@@ -71,24 +71,57 @@ Luckily the Nfield SDK will take care of that for us.
 
 ## Application
 
-Now that we have everything setup for our let's look at what we needed to do to use Azure AD for authentication.
+Now that we have everything setup for our application, let's look at what we needed to do to use Azure AD for authentication.
 The interaction between the application and Nfield is encapsulated in the NField class.
 
 This class uses the MSAL library to interact with Azure AD.
 It can be installed by installing the [Microsoft.Identity.Client](https://www.nuget.org/packages/Microsoft.Identity.Client/) NuGet package.
 
 First we need to initialize a client:
-https://github.com/NIPOSoftware/Nfield-SDK/blob/b57af90ff72d85f2529df873f90099123cafbec5/Examples/WindowsFormsApplication/Nfield.cs#L32-L35
-
+```csharp
+var client = PublicClientApplicationBuilder.Create(ApplicationConfiguration.Current.ClientId)
+    .WithRedirectUri("http://localhost")
+    .WithAuthority(AzureCloudInstance.AzurePublic, ApplicationConfiguration.Current.Tenant)
+    .Build();
+```
 The reference to the redirect URI to `http://localhost` allows the application to retrieve the token that is returned by Azure AD from the browser.
 
 The method `AuthenticateAsync` contains the logix to acquire an access from Azure AD.
-https://github.com/NIPOSoftware/Nfield-SDK/blob/b57af90ff72d85f2529df873f90099123cafbec5/Examples/WindowsFormsApplication/Nfield.cs#L109-L129
+```csharp
+public async Task<AuthenticationResult> AuthenticateAsync(Action<string> statusCallback)
+{
+    var accounts = await ClientApp.GetAccountsAsync();
+    var account = accounts.FirstOrDefault();
 
+    try
+    {
+        return await ClientApp.AcquireTokenSilent(Scopes, account).ExecuteAsync();
+    }
+    catch (MsalUiRequiredException mure)
+    {
+        statusCallback(mure.Message);
+    }
+
+    var authResult = await ClientApp.AcquireTokenInteractive(Scopes)
+        .WithAccount(account)
+        .WithPrompt(Prompt.SelectAccount)
+        .ExecuteAsync();
+
+    return authResult;
+}
+```
 First we try to get a token without user interaction (in case we have a valid refresh token).
 If that fails, the code falls back to a method that will open the system browser and allows the user to select the account they want to use to login.
 
 Please take note of the method that determines the name of the scopes.
-https://github.com/NIPOSoftware/Nfield-SDK/blob/b57af90ff72d85f2529df873f90099123cafbec5/Examples/WindowsFormsApplication/Nfield.cs#L49
-Nfield only supports scope based on the Nield Public API application ID.
+```csharp
+private static string CreateScope(string scope) => $"{ApplicationConfiguration.Current.NfieldApiApplicationId}/{scope}";
+```
+Nfield only supports scopes based on the Nield Public API application ID.
 The name as presented in the permissions UI in the Azure portal cannot not be used.
+
+Now after launching the application and logging in for the first time the user is asked to consent giving access to the application. For the sample application the screen will looks as following.
+
+![Consent](./images/Consent.png)
+
+After giving consent the user should be presented with a screen that shows the surveys in the domain.
