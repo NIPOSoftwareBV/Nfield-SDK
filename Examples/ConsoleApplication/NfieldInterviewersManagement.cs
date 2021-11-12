@@ -20,7 +20,7 @@ using Nfield.Services;
 using Nfield.Extensions;
 using System.Linq;
 
-namespace Nfield.SDK.Samples
+namespace ConsoleApplication
 {
     /// <summary>
     /// Helper class handling <see cref="Interviewer"/>s management.
