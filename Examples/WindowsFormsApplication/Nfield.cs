@@ -6,6 +6,7 @@ using Nfield.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace WindowsFormsApplication
@@ -65,8 +66,10 @@ namespace WindowsFormsApplication
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\NIPO Samples"))
             {
                 var value = key.GetValue("TokenCache");
-                if (value is byte[] state)
-                    return state;
+                if (value is byte[] data)
+                {
+                    return ProtectedData.Unprotect(data, null, DataProtectionScope.CurrentUser);
+                }
             }
 
             return null;
@@ -74,9 +77,10 @@ namespace WindowsFormsApplication
 
         private void SaveTokenCacheInRegistry(byte[] state)
         {
+            var data = ProtectedData.Protect(state, null, DataProtectionScope.CurrentUser);
             using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\NIPO Samples"))
             {
-                key.SetValue("TokenCache", state, RegistryValueKind.Binary);
+                key.SetValue("TokenCache", data, RegistryValueKind.Binary);
             }
         }
 
