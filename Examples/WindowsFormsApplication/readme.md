@@ -34,7 +34,7 @@ In order for our app to use this application registration you will have to tell 
 
 ### _Setup `Redirect URIs`_
 
-In order to support the ability to show the browser to select the account to use for logging in to Nfield the following URIs should be configured. The `http://localhost` URI is needed when using .Net Core, it will allow the application to capture the result of the login from the browser.
+In order to support the ability to show the browser to select the account to use for logging in to Nfield the following URIs should be configured. The `http://localhost` URI is needed when using .Net Core, it will allow the application to capture the result of the login from the browser. For more information on redirect URIs, look [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-desktop-app-registration#redirect-uris)
 
 ![Redirect URIs](./images/RedirectUris.png)
 
@@ -55,7 +55,10 @@ Look up the Nfield Public API in the `APIs my organizations uses` and store the 
 
 ![Select Nfield Public API](./images/SelectNfieldPublicAPI.png)
 
-### _Add all Nfield permissions_
+### _Add all Nfield permissions required by the application_
+Select all the permissions that your application needs.
+Please apply the principle of [least privilege](https://docs.microsoft.com/en-us/azure/active-directory/develop/secure-least-privileged-access) and select only what is strictly needed.
+Note the `user_impersonation` will always be necessary.
 
 ![Add all permissions](./images/AddAllNfieldPublicAPIPermissions.png)
 
@@ -84,7 +87,7 @@ var client = PublicClientApplicationBuilder.Create(ApplicationConfiguration.Curr
     .WithAuthority(AzureCloudInstance.AzurePublic, ApplicationConfiguration.Current.Tenant)
     .Build();
 ```
-The reference to the redirect URI to `http://localhost` allows the application to retrieve the token that is returned by Azure AD from the browser.
+The reference to the redirect URI to `http://localhost` allows the application to retrieve the token that is returned by Azure AD from the [browser](https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-web-browsers).
 
 The method `AuthenticateAsync` contains the logic to acquire an access token from Azure AD.
 ```csharp
@@ -99,7 +102,10 @@ public async Task<AuthenticationResult> AuthenticateAsync(Action<string> statusC
     }
     catch (MsalUiRequiredException mure)
     {
+        // Either we are not logged in or we are required to consent on giving the app permission
         statusCallback(mure.Message);
+
+        // fall through to interactive login
     }
 
     var authResult = await ClientApp.AcquireTokenInteractive(Scopes)
@@ -113,6 +119,8 @@ public async Task<AuthenticationResult> AuthenticateAsync(Action<string> statusC
 First we try to get a token without user interaction (in case we have a valid refresh token).
 If that fails, the code falls back to a method that will open the system browser and allows the user to select the account they want to use to login.
 
+For more information on the various AcquireTokenXx methods, please refer to [this](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-desktop-acquire-token?tabs=dotnet) document.
+
 Please take note of the method that determines the name of the scopes.
 ```csharp
 private static string CreateScope(string scope) => $"{ApplicationConfiguration.Current.NfieldApiApplicationId}/{scope}";
@@ -120,7 +128,7 @@ private static string CreateScope(string scope) => $"{ApplicationConfiguration.C
 Nfield only supports scopes based on the Nield Public API application ID.
 The name as presented in the permissions UI in the Azure portal cannot not be used.
 
-Now after launching the application and logging in for the first time the user is asked to consent giving access to the application. For the sample application the screen will look like this:
+Now after launching the application and logging in for the first time the user is asked to [consent](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent) to giving access to the application. For the sample application the screen will look like this:
 
 ![Consent](./images/Consent.png)
 

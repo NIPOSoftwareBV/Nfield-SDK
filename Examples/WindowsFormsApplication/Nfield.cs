@@ -31,7 +31,7 @@ namespace WindowsFormsApplication
         {
             var client = PublicClientApplicationBuilder.Create(ApplicationConfiguration.Current.ClientId)
                 .WithRedirectUri("http://localhost")
-                .WithAuthority(AzureCloudInstance.AzurePublic, ApplicationConfiguration.Current.Tenant)
+                .WithAuthority(AzureCloudInstance.AzurePublic, ApplicationConfiguration.Current.TenantId)
                 .Build();
 
             client.UserTokenCache.SetBeforeAccess(BeforeAccessNotification);
@@ -42,7 +42,9 @@ namespace WindowsFormsApplication
 
         private async Task<string> ProvideTokenAsync()
         {
-            var result = await AuthenticateAsync((status) => { });
+            Action<string> noop = (status) => { }; // don't report status for each and every API call
+
+            var result = await AuthenticateAsync(noop);
             return result.AccessToken;
         }
 
@@ -102,6 +104,7 @@ namespace WindowsFormsApplication
             }
             catch (MsalUiRequiredException)
             {
+                // In a real app at least log this
                 return null;
             }
         }
@@ -117,7 +120,10 @@ namespace WindowsFormsApplication
             }
             catch (MsalUiRequiredException mure)
             {
+                // Either we are not logged in or we are required to consent on giving the app permission
                 statusCallback(mure.Message);
+
+                // fall through to interactive login
             }
 
             var authResult = await ClientApp.AcquireTokenInteractive(Scopes)

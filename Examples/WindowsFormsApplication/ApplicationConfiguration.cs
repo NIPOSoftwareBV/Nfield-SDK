@@ -6,7 +6,7 @@ namespace WindowsFormsApplication
     public class ApplicationConfiguration
     {
         public string ClientId { get; private set; }
-        public string Tenant { get; private set; }
+        public string TenantId { get; private set; }
         public string NfieldApiApplicationId { get; private set; }
         public Uri NfieldApiUri { get; internal set; }
         public string DomainName { get; internal set; }
@@ -26,8 +26,8 @@ namespace WindowsFormsApplication
 
             return new ApplicationConfiguration
             {
-                ClientId = root["Nfield:ClientId"],
-                Tenant = root["Nfield:Tenant"],
+                ClientId = root["Application:ClientId"],
+                TenantId = root["Application:Tenant"],
                 NfieldApiApplicationId = root["Nfield:ApiApplicationId"],
                 NfieldApiUri = new Uri(root["Nfield:ApiUri"]),
                 DomainName = root["Nfield:DomainName"]
