@@ -65,4 +65,30 @@ Our application is good to go and we should have the following information store
 - Nfield Public API Application ID: The ID of the Nfield Public API
 
 These values will have to be added to `appsettings.json`.
-Besides that the name of the domain should be added to this config as that should be added as a header to each API call. Luckily the Nfield SDK will take care of that for us.
+Besides that the name of the domain should be added to this config.
+It will be added as a header to each API call.
+Luckily the Nfield SDK will take care of that for us.
+
+## Application
+
+Now that we have everything setup for our let's look at what we needed to do to use Azure AD for authentication.
+The interaction between the application and Nfield is encapsulated in the NField class.
+
+This class uses the MSAL library to interact with Azure AD.
+It can be installed by installing the [Microsoft.Identity.Client](https://www.nuget.org/packages/Microsoft.Identity.Client/) NuGet package.
+
+First we need to initialize a client:
+https://github.com/NIPOSoftware/Nfield-SDK/blob/b57af90ff72d85f2529df873f90099123cafbec5/Examples/WindowsFormsApplication/Nfield.cs#L32-L35
+
+The reference to the redirect URI to `http://localhost` allows the application to retrieve the token that is returned by Azure AD from the browser.
+
+The method `AuthenticateAsync` contains the logix to acquire an access from Azure AD.
+https://github.com/NIPOSoftware/Nfield-SDK/blob/b57af90ff72d85f2529df873f90099123cafbec5/Examples/WindowsFormsApplication/Nfield.cs#L109-L129
+
+First we try to get a token without user interaction (in case we have a valid refresh token).
+If that fails, the code falls back to a method that will open the system browser and allows the user to select the account they want to use to login.
+
+Please take note of the method that determines the name of the scopes.
+https://github.com/NIPOSoftware/Nfield-SDK/blob/b57af90ff72d85f2529df873f90099123cafbec5/Examples/WindowsFormsApplication/Nfield.cs#L49
+Nfield only supports scope based on the Nield Public API application ID.
+The name as presented in the permissions UI in the Azure portal cannot not be used.
