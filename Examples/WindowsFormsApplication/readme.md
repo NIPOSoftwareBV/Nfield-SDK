@@ -86,7 +86,7 @@ var client = PublicClientApplicationBuilder.Create(ApplicationConfiguration.Curr
 ```
 The reference to the redirect URI to `http://localhost` allows the application to retrieve the token that is returned by Azure AD from the browser.
 
-The method `AuthenticateAsync` contains the logix to acquire an access from Azure AD.
+The method `AuthenticateAsync` contains the logic to acquire an access token from Azure AD.
 ```csharp
 public async Task<AuthenticationResult> AuthenticateAsync(Action<string> statusCallback)
 {
@@ -120,7 +120,7 @@ private static string CreateScope(string scope) => $"{ApplicationConfiguration.C
 Nfield only supports scopes based on the Nield Public API application ID.
 The name as presented in the permissions UI in the Azure portal cannot not be used.
 
-Now after launching the application and logging in for the first time the user is asked to consent giving access to the application. For the sample application the screen will looks as following.
+Now after launching the application and logging in for the first time the user is asked to consent giving access to the application. For the sample application the screen will look like this:
 
 ![Consent](./images/Consent.png)
 
