@@ -4,7 +4,7 @@ using Nfield.Extensions;
 using Nfield.Models;
 using Nfield.Services;
 
-namespace Nfield.SDK.Samples
+namespace ConsoleApplication
 {
     public class NfieldSamplingPointManagement
     {
