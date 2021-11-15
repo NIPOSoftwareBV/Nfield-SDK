@@ -93,5 +93,70 @@ namespace Nfield.Services
         }
 
         #endregion
+
+        #region GetOwner
+
+        [Fact]
+        public void TestGetOwnerAsync_SurveyIdIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveyGeneralSettingsService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.GetOwnerAsync(null)));
+        }
+
+        [Fact]
+        public void TestGetOwnerAsync_SurveyIdIsEmpty_ThrowsArgumentException()
+        {
+            var target = new NfieldSurveyGeneralSettingsService();
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.GetOwnerAsync("")));
+        }
+
+        [Fact]
+        public void TestGetOwnerAsync_ReturnsOwner()
+        {
+            var expectedOwner = new SurveyGeneralSettingsOwner { Id = "userId", UserName = "userName" };
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/GeneralSettings/Owner")))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedOwner))));
+
+
+            var actualSurveyGeneralSettings = _target.GetOwnerAsync(SurveyId).Result;
+            Assert.Equal(expectedOwner.Id, actualSurveyGeneralSettings.Id);
+            Assert.Equal(expectedOwner.UserName, actualSurveyGeneralSettings.UserName);
+        }
+
+        #endregion
+
+        #region UpdateOwner
+
+        [Fact]
+        public void TestUpdateOwnerAsync_SurveyIdIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveyGeneralSettingsService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateOwnerAsync(null, "newOwnerId")));
+        }
+
+        [Fact]
+        public void TestUpdateOwnerAsync_SurveyIdIsEmpty_ThrowsArgumentException()
+        {
+            var target = new NfieldSurveyGeneralSettingsService();
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateOwnerAsync("", "newOwnerId")));
+        }
+
+        [Fact]
+        public void TestUpdateOwnerAsync_ReturnsOwner()
+        {
+            var expectedOwner = new SurveyGeneralSettingsOwner { Id = "userId", UserName = "userName" };
+
+            _mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/GeneralSettings/Owner"), It.IsAny<object>()))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedOwner))));
+
+            var actualSurveyGeneralSettings = _target.UpdateOwnerAsync(SurveyId, "owner").Result;
+            Assert.Equal(expectedOwner.Id, actualSurveyGeneralSettings.Id);
+            Assert.Equal(expectedOwner.UserName, actualSurveyGeneralSettings.UserName);
+        }
+
+        #endregion
     }
 }
