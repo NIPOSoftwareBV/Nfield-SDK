@@ -82,7 +82,7 @@ namespace Nfield.Services.Implementation
             var uri = AssignmentsApi(surveyId);
 
             return Client.DeleteAsJsonAsync(uri, model).FlattenExceptions();
-        }
+        }        
 
         #endregion
 
@@ -147,6 +147,5 @@ namespace Nfield.Services.Implementation
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/SamplingPointsAssignments");
         }
-
     }
 }

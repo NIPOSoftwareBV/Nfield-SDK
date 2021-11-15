@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Library\Nfield.SDK.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
