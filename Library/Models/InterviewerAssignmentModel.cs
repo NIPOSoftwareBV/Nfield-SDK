@@ -46,11 +46,11 @@ namespace Nfield.Models
         /// <summary>
         /// Assigned or not
         /// </summary>
-        public bool? IsAssigned { get; set; }
+        public bool IsAssigned { get; set; }
         /// <summary>
         /// Active or not
         /// </summary>
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         // Is group assignment
         public bool? IsGroupAssignment { get; set; }
         /// <summary>
