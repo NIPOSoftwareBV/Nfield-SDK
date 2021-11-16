@@ -28,7 +28,7 @@ namespace Nfield.Services.Implementation
     {
         #region Implementation of INfieldSurveyInterviewersService
 
-        public Task<IQueryable<SurveyInterviewerAssignmentModel>> GetAsync(string surveyId)
+        public Task<IQueryable<InterviewerAssignmentModel>> GetAsync(string surveyId)
         {
             if (string.IsNullOrEmpty(surveyId))
             {
@@ -40,7 +40,7 @@ namespace Nfield.Services.Implementation
             return Client.GetAsync(uri)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                 .ContinueWith(
-                    stringTask => JsonConvert.DeserializeObject<List<SurveyInterviewerAssignmentModel>>(stringTask.Result).AsQueryable())
+                    stringTask => JsonConvert.DeserializeObject<List<InterviewerAssignmentModel>>(stringTask.Result).AsQueryable())
                 .FlattenExceptions();
         }
 

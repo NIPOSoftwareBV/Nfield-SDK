@@ -1,4 +1,4 @@
-//    This file is part of Nfield.SDK.
+﻿//    This file is part of Nfield.SDK.
 //
 //    Nfield.SDK is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU Lesser General Public License as published by
@@ -17,26 +17,8 @@ using System.Collections.Generic;
 
 namespace Nfield.Models
 {
-    /// <summary>
-    /// Model for interviewer assignment
-    /// </summary>
-    public class SurveyInterviewerAssignmentModel
-    {  
-        /// <summary>
-        /// Assignment description
-        /// </summary>
-        public string Description { get; set; }        
-        /// <summary>
-        /// Target to distributedescription
-        /// </summary>
-        public int? TargetToDistribute { get; set; }
-        /// <summary>
-        /// Assignment type
-        /// </summary>
-        public string AssignmentType { get; set; }
-        /// <summary>
-        /// Sampling points filter
-        /// </summary>
-        public IEnumerable<FilterWithOr> SamplingPointsFilter { get; set; }
+    public class FilterWithOr : Filter
+    {
+        public IEnumerable<Filter> Or { get; set; }
     }
 }
