@@ -16,9 +16,21 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Model for an Nfield User
+    /// Model to obtain the survey owner.
+    /// In the Nfield Manager UI is part of the General Settings.
     /// </summary>
     public class SurveyGeneralSettingsOwner
+    {
+        /// <summary>
+        /// The user object of the owner of the survey 
+        /// </summary>
+        public User Owner { get; set; }
+    }
+
+    /// <summary>
+    /// Model for an Nfield User
+    /// </summary>
+    public class User
     {
         /// <summary>
         /// Unique Id of user
@@ -29,6 +41,5 @@ namespace Nfield.Models
         /// Name of the user
         /// </summary>
         public string UserName { get; set; }
-
     }
 }

@@ -58,7 +58,7 @@ namespace Nfield.Services
             var expectedSurveyGeneralSettings = new SurveyGeneralSettings {  Description = "X Type", Client = "client1", Name = "X name" };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/GeneralSettings")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/GeneralSettings")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveyGeneralSettings))));
 
 
@@ -113,16 +113,16 @@ namespace Nfield.Services
         [Fact]
         public void TestGetOwnerAsync_ReturnsOwner()
         {
-            var expectedOwner = new SurveyGeneralSettingsOwner { Id = "userId", UserName = "userName" };
+            var expectedOwner = new SurveyGeneralSettingsOwner { Owner = new User { Id = "userId", UserName = "userName" } };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/GeneralSettings/Owner")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/GeneralSettings/Owner")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedOwner))));
 
 
             var actualSurveyGeneralSettings = _target.GetOwnerAsync(SurveyId).Result;
-            Assert.Equal(expectedOwner.Id, actualSurveyGeneralSettings.Id);
-            Assert.Equal(expectedOwner.UserName, actualSurveyGeneralSettings.UserName);
+            Assert.Equal(expectedOwner.Owner.Id, actualSurveyGeneralSettings.Owner.Id);
+            Assert.Equal(expectedOwner.Owner.UserName, actualSurveyGeneralSettings.Owner.UserName);
         }
 
         #endregion
@@ -146,15 +146,15 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateOwnerAsync_ReturnsOwner()
         {
-            var expectedOwner = new SurveyGeneralSettingsOwner { Id = "userId", UserName = "userName" };
+            var expectedOwner = new SurveyGeneralSettingsOwner { Owner = new User { Id = "userId", UserName = "userName" } };
 
             _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/GeneralSettings/Owner"), It.IsAny<object>()))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/GeneralSettings/Owner"), It.IsAny<object>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedOwner))));
 
-            var actualSurveyGeneralSettings = _target.UpdateOwnerAsync(SurveyId, "owner").Result;
-            Assert.Equal(expectedOwner.Id, actualSurveyGeneralSettings.Id);
-            Assert.Equal(expectedOwner.UserName, actualSurveyGeneralSettings.UserName);
+            var actualSurveyGeneralSettings = _target.UpdateOwnerAsync(SurveyId, "userId").Result;
+            Assert.Equal(expectedOwner.Owner.Id, actualSurveyGeneralSettings.Owner.Id);
+            Assert.Equal(expectedOwner.Owner.UserName, actualSurveyGeneralSettings.Owner.UserName);
         }
 
         #endregion
