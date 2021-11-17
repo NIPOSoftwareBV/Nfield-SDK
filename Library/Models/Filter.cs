@@ -13,11 +13,17 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace Nfield.Infrastructure
+using Newtonsoft.Json;
+using System;
+
+namespace Nfield.Models
 {
-    internal interface INfieldConnectionClientObject
+    public class Filter
     {
-        INfieldConnectionClient ConnectionClient { get; }
-        void InitializeNfieldConnection(INfieldConnectionClient connection);
+        public string Name { get; set; }
+        public string Op { get; set; }
+        public string Value { get; set; }
+        [JsonIgnore]
+        public Func<string, int, string> Formatter { get; }
     }
 }

@@ -15,7 +15,10 @@
 
 using System;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Moq;
+using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
@@ -114,6 +117,50 @@ namespace Nfield.Services
                         It.Is<Uri>(url => url.AbsolutePath.EndsWith("Surveys/" + surveyId + "/Assignment/")),
                         It.Is<SurveyInterviewerAssignmentChangeModel>(model => model.InterviewerId == interviewerId && !model.Assign)),
                     Times.Once());
+        }
+
+        #endregion
+
+        #region PutAsync        
+
+        [Fact]
+        public void TestUpdateAsync_ModelArgumentIsNull_ThrowsArgumentNullException()
+        {
+            var target = new NfieldSurveyInterviewerAssignmentsService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.PutAsync("survey", "interviewer", null)));
+        }
+
+        [Fact]
+        public async Task TestPutAsync_CreateAssignment()
+        {
+            var target = new NfieldSurveyInterviewerAssignmentsService();
+            string surveyId = "survey-id";
+            string interviewerId = "interviewer-id";
+            var interviewerAssignmentModel = new SurveyInterviewerAssignmentModel
+            {
+                AssignmentType = "AssignmentType",
+                Description = "Description",
+                SamplingPointsFilter = new[] { new FilterWithOr { Name = "samplingPointId", Value = "id", Op = "eq" } },                
+                TargetToDistribute = 5
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(It.Is<Uri>(u => u.ToString().EndsWith($"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments")), It.Is<SurveyInterviewerAssignmentModel>
+                (ia =>
+                        ia.AssignmentType == interviewerAssignmentModel.AssignmentType &&
+                        ia.Description == interviewerAssignmentModel.Description &&
+                        ia.SamplingPointsFilter == interviewerAssignmentModel.SamplingPointsFilter &&
+                        ia.TargetToDistribute == interviewerAssignmentModel.TargetToDistribute
+                    )))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewerAssignmentModel)))).Verifiable();
+
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+     
+            await target.PutAsync(surveyId, interviewerId, interviewerAssignmentModel);
+
+            mockedHttpClient.Verify();
         }
 
         #endregion

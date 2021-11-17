@@ -19,30 +19,16 @@ using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
-    /// <summary>
-    /// Represents a set of methods to manage assignements of interviewers to surveys.
-    /// </summary>
-    public interface INfieldSurveyInterviewersService
+    public interface INfieldInterviewerAssignmentsService
     {
         /// <summary>
-        /// Get the list of interviewers that are added to a survey.
+        /// Assign an interviewer to a Survey or sampling points in a survey
         /// </summary>
-        /// <param name="surveyId">The id of the survey.</param>
+        /// <param name="interviewerId">The interviewer id.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<IQueryable<InterviewerAssignmentModel>> GetAsync(string surveyId);
-
-        /// <summary>
-        /// Add an interviewer to a survey.
-        /// </summary>
-        /// <param name="surveyId">The id of the survey for which to add the interviewer.</param>
-        /// <param name="interviewerId">The id of the interviewer to add.</param>
-        /// <exception cref="T:System.AggregateException"></exception>
-        /// The aggregate exception can contain:
-        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
-        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task AddAsync(string surveyId, string interviewerId);
+        Task<IQueryable<InterviewerAssignmentModel>> QueryAsync(string interviewerId);
     }
 }

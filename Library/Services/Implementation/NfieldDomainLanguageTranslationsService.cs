@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 namespace Nfield.Services.Implementation
 {
     /// Using LanguageTranslations to keep the same name used for surveys
-    class NfieldDomainLanguageTranslationsService : INfieldDomainLanguageTranslationsService, INfieldConnectionClientObject
+    internal class NfieldDomainLanguageTranslationsService : INfieldDomainLanguageTranslationsService, INfieldConnectionClientObject
     {
         private INfieldHttpClient Client
         {

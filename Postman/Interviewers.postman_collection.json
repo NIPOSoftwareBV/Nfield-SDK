@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "00d8e9e2-0b2c-4988-b60f-45379b62d914",
+		"name": "Interviewers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.environment.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+							"    pm.environment.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Interviewers",
+						"{{InterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Interviewers",
+						"{{InterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.environment.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+							"    pm.environment.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UserName\": \"Capi Postman\",\r\n    \"FirstName\": \"Capi\",\r\n    \"LastName\": \"Tester\",\r\n    \"Password\": \"Password\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": \"+34666555444\",\r\n    \"IsSupervisor\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Interviewers/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Interviewers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.environment.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+							"    pm.environment.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"FirstName\": \"Capi\",\r\n    \"LastName\": \"Tester\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": null,\r\n    \"IsSupervisor\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Interviewers",
+						"{{InterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Password\": \"a12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Interviewers",
+						"{{InterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Interviewer By ClientId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Interviewers/GetByClientId/{{ClientInterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Interviewers",
+						"GetByClientId",
+						"{{ClientInterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Interviewers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"    var interviewers = pm.response.json();\r",
+							"    pm.environment.set(\"InterviewerId\", interviewers[0].InterviewerId);\r",
+							"    pm.environment.set(\"ClientInterviewerId\", interviewers[0].ClientInterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Interviewers/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Interviewers",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
