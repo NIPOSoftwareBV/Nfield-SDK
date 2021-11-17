@@ -47,7 +47,7 @@ namespace Nfield.Services
         /// Update the survey owner
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
-        /// <param name="userId">The user id of the new owner of the survey. It can be set to null to remove the active ownwer</param>
+        /// <param name="userId">The user id of the new owner of the survey. It can be set to null to remove the active Owner</param>
         /// <returns>The new survey owner</returns>
         Task<SurveyGeneralSettingsOwner> UpdateOwnerAsync(string surveyId, string userId);        
     }
