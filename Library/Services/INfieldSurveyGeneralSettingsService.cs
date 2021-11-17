@@ -34,11 +34,22 @@ namespace Nfield.Services
         /// Updates the supplied <paramref name="generalSetting"/>
         /// </summary>
         /// <param name="generalSetting">The <see cref="surveyGeneralSetting"/> to update</param>
-        /// <exception cref="T:System.AggregateException"></exception>
-        /// The aggregate exception can contain:
-        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
-        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task UpdateAsync(string surveyId, SurveyGeneralSettings generalSetting);        
+        Task UpdateAsync(string surveyId, SurveyGeneralSettings generalSetting);
+
+        /// <summary>
+        /// Get the Survey Owner
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <returns>The owner of the survey</returns>
+        Task<SurveyGeneralSettingsOwner> GetOwnerAsync(string surveyId);
+
+        /// <summary>
+        /// Update the survey owner
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="userId">The user id of the new owner of the survey. It can be set to null to remove the active Owner</param>
+        /// <returns>The new survey owner</returns>
+        Task<SurveyGeneralSettingsOwner> UpdateOwnerAsync(string surveyId, string userId);        
     }
 }
 
