@@ -23,20 +23,25 @@ namespace Nfield.Models
     public class FieldworkCounts
     {
 
-        /// <summary>
-        /// Unique ID of the template
-        /// </summary>
         public string Id { get; set; }
+        public int? Target { get; set; }
+        public int Successful { get; set; }
+        public int SuccessfulToday { get; set; }
+        public int ScreenedOut { get; set; }
+        public int DroppedOut { get; set; }
+        public int Rejected { get; set; }
+        public int SuccessfulDeleted { get; set; }
+        public int ScreenedOutDeleted { get; set; }
+        public int DroppedOutDeleted { get; set; }
+        public int RejectedDeleted { get; set; }
+        public int ActiveInterviews { get; set; }
+        public bool HasQuota { get; set; }
+        public IEnumerable<ResponseCodeCount> ScreenedOutOverview { get; set; }
 
-        /// <summary>
-        /// Template Name
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Theme list
-        /// </summary>
-        public IEnumerable<Theme> Themes { get; set; }
-
+        public class ResponseCodeCount
+        {
+            public int ResponseCode { get; set; }
+            public int Count { get; set; }
+        }
     }
 }

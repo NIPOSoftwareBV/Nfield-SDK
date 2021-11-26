@@ -25,7 +25,7 @@ namespace Nfield.Services.Implementation
     /// <summary>
     /// Implementation of <see cref="INfieldFieldworkCountsService"/>
     /// </summary>
-    internal class NfieldFieldworkCounts : INfieldFieldworkCountsService, INfieldConnectionClientObject
+    internal class NfieldFieldworkCountsService : INfieldFieldworkCountsService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldFieldworkCountsService
 
