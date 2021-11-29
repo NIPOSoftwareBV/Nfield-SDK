@@ -18,26 +18,69 @@ using System.Collections.Generic;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Holds all properties of a template
+    /// Holds the survey fieldwork counts.
     /// </summary>
-    public class FieldworkCounts
+    public class SurveyFieldworkCounts
     {
-
-        public string Id { get; set; }
+        /// <summary>
+        /// Survey Identifier
+        /// </summary>
+        public string SurveyId { get; set; }
+        /// <summary>
+        /// Survey target
+        /// </summary>
         public int? Target { get; set; }
+        /// <summary>
+        /// Number of successful interviews
+        /// </summary>
         public int Successful { get; set; }
+        /// <summary>
+        /// Number of today successful interviews 
+        /// </summary>
         public int SuccessfulToday { get; set; }
+        /// <summary>
+        /// Number of screened out  interviews
+        /// </summary>
         public int ScreenedOut { get; set; }
+        /// <summary>
+        /// Number of dropped out interviews
+        /// </summary>
         public int DroppedOut { get; set; }
+        /// <summary>
+        /// Number of successful interviews
+        /// </summary>
         public int Rejected { get; set; }
+        /// <summary>
+        /// Number of successful interviews deleted
+        /// </summary>
         public int SuccessfulDeleted { get; set; }
+        /// <summary>
+        /// Number of screened out interviews deleted
+        /// </summary>
         public int ScreenedOutDeleted { get; set; }
+        /// <summary>
+        /// Number of dropped out interviews deleted
+        /// </summary>
         public int DroppedOutDeleted { get; set; }
+        /// <summary>
+        /// Number of reject interviews deleted
+        /// </summary>
         public int RejectedDeleted { get; set; }
+        /// <summary>
+        /// Number of active interviews
+        /// </summary>
         public int ActiveInterviews { get; set; }
+        /// <summary>
+        /// True if the survey has quota
+        /// </summary>
         public bool HasQuota { get; set; }
+        /// <summary>
+        /// Overview of screen out interviews. Returns counts for each response code.
+        /// </summary>
         public IEnumerable<ResponseCodeCount> ScreenedOutOverview { get; set; }
-
+        /// <summary>
+        /// Class for the screen out interviews overview
+        /// </summary>
         public class ResponseCodeCount
         {
             public int ResponseCode { get; set; }

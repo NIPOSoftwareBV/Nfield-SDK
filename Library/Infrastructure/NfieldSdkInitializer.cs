@@ -88,8 +88,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveySamplingMethodService), typeof(NfieldSurveySamplingMethodService) },
             { typeof(INfieldSurveyPerformanceService), typeof(NfieldSurveyPerformanceService) },
             { typeof(INfieldTemplatesService), typeof(NfieldTemplatesService) },
-            { typeof(INfieldThemesService), typeof(NfieldThemesService) },
-            { typeof(INfieldFieldworkCountsService), typeof(NfieldFieldworkCountsService) }
+            { typeof(INfieldThemesService), typeof(NfieldThemesService) }
         };
 
         /// <summary>
