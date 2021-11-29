@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cc5b5451-f9a8-49b4-81d5-2077c4e1c796",
+		"_postman_id": "9d17cd1a-4d15-4968-870a-6a8126a310c4",
 		"name": "SurveyInterviewersAssignments",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -56,6 +56,71 @@
 						"Interviewers",
 						"{{InterviewerId}}",
 						"Assignments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Assignments QuotaTargets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains LevelId\", function () {\r",
+							"    var levels = pm.response.json();\r",
+							"    pm.environment.set(\"QuotaLevelId\", levels[0].LevelId);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{ClientInterviewerId}}/Assignments/QuotaTargets",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Interviewers",
+						"{{ClientInterviewerId}}",
+						"Assignments",
+						"QuotaTargets"
 					]
 				}
 			},
