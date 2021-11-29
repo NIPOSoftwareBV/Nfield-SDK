@@ -37,7 +37,7 @@ namespace Nfield.Models
         /// <summary>
         /// Number of successful interviews in last 24 hours
         /// </summary>
-        public int SuccessfulToday { get; set; }
+        public int SuccessfulLast24Hours { get; set; }
         /// <summary>
         /// Number of screened out  interviews
         /// </summary>
