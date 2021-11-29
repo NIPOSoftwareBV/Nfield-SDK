@@ -35,7 +35,7 @@ namespace Nfield.Models
         /// </summary>
         public int Successful { get; set; }
         /// <summary>
-        /// Number of today successful interviews 
+        /// Number of successful interviews in last 24 hours
         /// </summary>
         public int SuccessfulToday { get; set; }
         /// <summary>
@@ -47,7 +47,7 @@ namespace Nfield.Models
         /// </summary>
         public int DroppedOut { get; set; }
         /// <summary>
-        /// Number of successful interviews
+        /// Number of rejected interviews
         /// </summary>
         public int Rejected { get; set; }
         /// <summary>
