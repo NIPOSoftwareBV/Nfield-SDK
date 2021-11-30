@@ -20,6 +20,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Quota.Helpers;
 
 namespace Nfield.Services.Implementation
 {
@@ -86,6 +87,8 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<SurveyFieldworkCounts> GetCountsAsync(string surveyId)
         {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+
             var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Counts");
 
             return ConnectionClient.Client.GetAsync(uri)
