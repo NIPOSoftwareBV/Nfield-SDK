@@ -246,7 +246,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestQuotaFrameQueryAsync_ServerReturnsQuery_ReturnsListWithQuotaFrame()
+        public void TestQuotaTargetsQueryAsync_ServerReturnsQuery_ReturnsListWithQuotaFrame()
         {
             const string QuotaFrameId = "quotaId";
             const int TargetCount = 15;
@@ -296,7 +296,7 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualQuotaLevel = target.QuotaFrameQueryAsync(SurveyId).Result;
+            var actualQuotaLevel = target.QuotaTargetsQueryAsync(SurveyId).Result;
             mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
             Assert.Equal(expectedQuotaFrame.Id, actualQuotaLevel.Id);
             Assert.Equal(expectedQuotaFrame.Target, actualQuotaLevel.Target);

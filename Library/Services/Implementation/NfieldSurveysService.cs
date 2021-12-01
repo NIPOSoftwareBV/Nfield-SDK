@@ -183,11 +183,11 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldSurveysService.QuotaFrameQueryAsync"/>
+        /// See <see cref="INfieldSurveysService.QuotaTargetsQueryAsync"/>
         /// </summary>
-        public Task<SDK.Models.QuotaFrame> QuotaFrameQueryAsync(string surveyId)
+        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId)
         {
-            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaFrameControllerName}");
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -516,9 +516,9 @@ namespace Nfield.Services.Implementation
             get { return "Quota"; }
         }
 
-        private static string QuotaFrameControllerName
+        private static string QuotaTargetsQueryAsyncControllerName
         {
-            get { return "QuotaFrame"; }
+            get { return "QuotaTargets"; }
         }
 
         private static string CountsControllerName
