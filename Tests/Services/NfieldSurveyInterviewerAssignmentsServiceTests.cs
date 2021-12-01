@@ -146,7 +146,7 @@ namespace Nfield.Services
         [InlineData("id", null, false)]
         [InlineData("", null, false)]
         [InlineData("", "", false)]
-        public void TTestPutAsync_ThrowsException(string surveyId, string interviewerId, bool modelIsNotNull)
+        public void TestPutAsync_ThrowsArgumentNullException(string surveyId, string interviewerId, bool modelIsNotNull)
         {
             var target = new NfieldSurveyInterviewerAssignmentsService();
             SurveyInterviewerAssignmentModel interviewerAssignmentModel = (modelIsNotNull) ? new SurveyInterviewerAssignmentModel() : null;
@@ -223,7 +223,7 @@ namespace Nfield.Services
         [InlineData("id", null)]
         [InlineData("", null)]
         [InlineData("", "")]
-        public void TestGetAsync_ThrowsException(string surveyId, string clienInterviewerId)
+        public void TestGetAsync_ThrowsArgumentNullException(string surveyId, string clienInterviewerId)
         {
             var target = new NfieldSurveyInterviewerAssignmentsService();
 
