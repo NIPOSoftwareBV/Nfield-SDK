@@ -14,10 +14,13 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.SDK.Models;
 using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
@@ -34,14 +37,8 @@ namespace Nfield.Services.Implementation
         /// </summary>     
         public Task AssignAsync(string surveyId, string interviewerId)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(interviewerId))
-            {
-                throw new ArgumentNullException("interviewerId");
-            }
+            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(interviewerId, nameof(interviewerId));
 
             var uri = SurveyInterviewerAssignmentsUrl(surveyId);
             var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = true };
@@ -54,14 +51,8 @@ namespace Nfield.Services.Implementation
         /// </summary> 
         public Task UnassignAsync(string surveyId, string interviewerId)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(interviewerId))
-            {
-                throw new ArgumentNullException("interviewerId");
-            }
+            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(interviewerId, nameof(interviewerId));
 
             var uri = SurveyInterviewerAssignmentsUrl(surveyId);
             var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = false };
@@ -74,12 +65,36 @@ namespace Nfield.Services.Implementation
         /// </summary>  
         public Task PutAsync(string surveyId, string interviewerId, SurveyInterviewerAssignmentModel model)
         {
+            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(interviewerId, nameof(interviewerId));
             Ensure.ArgumentNotNull(model, nameof(model));
 
             return
                 ConnectionClient.Client.PutAsJsonAsync(SurveyInterviewerAssignmentsUrl(surveyId, interviewerId), model)
                 .FlattenExceptions();
         }
+
+        /// <summary>
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.GetTargetsAsync(string, string)"/> 
+        /// </summary>  
+        public Task<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>> GetTargetsAsync(string surveyId, string clientInterviewerId)
+        {
+            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(clientInterviewerId, nameof(clientInterviewerId));
+
+            var uri = SurveyInterviewerAssignmentsQuotaTargetsUrl(surveyId, clientInterviewerId);
+
+            var response = ConnectionClient.Client.GetAsync(uri)
+             .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>>(
+                task.Result.Content.ReadAsStringAsync().Result))
+             .FlattenExceptions();
+
+            return response;
+
+
+        }
+
+
 
         #endregion
 
@@ -101,6 +116,15 @@ namespace Nfield.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments");
         }
 
+        /// <summary>
+        /// Constructs and returns the url for survey interviewer assignments quota targets
+        /// based on supplied parameters
+        /// </summary>
+        private Uri SurveyInterviewerAssignmentsQuotaTargetsUrl(string surveyId, string interviewerId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments/QuotaTargets");
+        }
+
         private INfieldHttpClient Client
         {
             get { return ConnectionClient.Client; }
@@ -114,7 +138,7 @@ namespace Nfield.Services.Implementation
         {
             ConnectionClient = connection;
         }
-     
+
         #endregion
     }
 }
