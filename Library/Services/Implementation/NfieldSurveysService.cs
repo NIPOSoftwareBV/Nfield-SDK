@@ -182,6 +182,22 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.QuotaFrameQueryAsync"/>
+        /// </summary>
+        public Task<SDK.Models.QuotaFrame> QuotaFrameQueryAsync(string surveyId)
+        {
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaFrameControllerName}");
+
+            return Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SDK.Models.QuotaFrame>(stringTask.Result))
+                         .FlattenExceptions();
+        }
+
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
@@ -498,6 +514,11 @@ namespace Nfield.Services.Implementation
         private static string QuotaControllerName
         {
             get { return "Quota"; }
+        }
+
+        private static string QuotaFrameControllerName
+        {
+            get { return "QuotaFrame"; }
         }
 
         private static string CountsControllerName
