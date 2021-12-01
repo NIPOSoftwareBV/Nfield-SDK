@@ -290,7 +290,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/QuotaFrame")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/QuotaTargets")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedQuotaFrame))));
 
             var target = new NfieldSurveysService();
