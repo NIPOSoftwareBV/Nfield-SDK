@@ -83,7 +83,7 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldFieldworkCountsService.GetAsync(string)"/>
+        /// See <see cref="INfieldSurveyFieldworkService.GetCountsAsync(string)"/>
         /// </summary>
         public Task<SurveyFieldworkCounts> GetCountsAsync(string surveyId)
         {

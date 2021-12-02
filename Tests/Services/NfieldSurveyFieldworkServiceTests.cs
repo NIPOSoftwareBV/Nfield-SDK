@@ -201,7 +201,6 @@ namespace Nfield.Services
                 ActiveInterviews = random.Next(20),
                 DroppedOut = random.Next(20),
                 DroppedOutDeleted = random.Next(20),
-                HasQuota = random.Next(1) == 1,
                 SurveyId = surveyId,
                 Rejected = random.Next(20),
                 RejectedDeleted = random.Next(20),
@@ -210,8 +209,7 @@ namespace Nfield.Services
                 ScreenedOutOverview = new[] { new SurveyFieldworkCounts.ResponseCodeCount { ResponseCode = 201 + random.Next(20), Count = random.Next(20) } },
                 Successful = random.Next(20),
                 SuccessfulDeleted = random.Next(20),
-                SuccessfulLast24Hours = random.Next(20),
-                Target = 50 + random.Next(20)
+                SuccessfulLast24Hours = random.Next(20)
             };
             _mockedHttpClient.Setup(c => c.GetAsync(It.Is<Uri>(u=>u.ToString().EndsWith("Surveys/" + surveyId + "/Fieldwork/Counts"))))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedResult)))).Verifiable();
@@ -224,7 +222,6 @@ namespace Nfield.Services
             Assert.Equal(expectedResult.ActiveInterviews, result.ActiveInterviews);
             Assert.Equal(expectedResult.DroppedOut, result.DroppedOut);
             Assert.Equal(expectedResult.DroppedOutDeleted, result.DroppedOutDeleted);
-            Assert.Equal(expectedResult.HasQuota, result.HasQuota);
             Assert.Equal(expectedResult.SurveyId, result.SurveyId);
             Assert.Equal(expectedResult.Rejected, result.Rejected);
             Assert.Equal(expectedResult.RejectedDeleted, result.RejectedDeleted);
@@ -236,7 +233,6 @@ namespace Nfield.Services
             Assert.Equal(expectedResult.Successful, result.Successful);
             Assert.Equal(expectedResult.SuccessfulDeleted, result.SuccessfulDeleted);
             Assert.Equal(expectedResult.SuccessfulLast24Hours, result.SuccessfulLast24Hours);
-            Assert.Equal(expectedResult.Target, result.Target);
         }
 
         [Fact]
