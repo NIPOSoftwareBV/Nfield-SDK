@@ -25,11 +25,7 @@ namespace Nfield.Models
         /// <summary>
         /// Survey Identifier
         /// </summary>
-        public string SurveyId { get; set; }
-        /// <summary>
-        /// Survey target
-        /// </summary>
-        public int? Target { get; set; }
+        public string SurveyId { get; set; }    
         /// <summary>
         /// Number of successful interviews
         /// </summary>
@@ -69,11 +65,7 @@ namespace Nfield.Models
         /// <summary>
         /// Number of active interviews
         /// </summary>
-        public int ActiveInterviews { get; set; }
-        /// <summary>
-        /// True if the survey has quota
-        /// </summary>
-        public bool HasQuota { get; set; }
+        public int ActiveInterviews { get; set; }       
         /// <summary>
         /// Overview of screen out interviews. Returns counts for each response code.
         /// </summary>
