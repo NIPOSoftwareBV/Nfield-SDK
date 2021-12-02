@@ -196,17 +196,17 @@ namespace Nfield.Services
         {
             var target = new NfieldSurveyInterviewerAssignmentsService();
             string surveyId = "survey-id";
-            string clientInterviewerId = "clientInterviewer-id";
+            string interviewerId = "interviewer-id";
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var targetsList = new List<SurveyInterviewerAssignmentQuotaTargetModel>() { new SurveyInterviewerAssignmentQuotaTargetModel() { LevelId = "1", Successful = 2, SurveySuccessful = 3, Target = 4 } };
             mockedHttpClient
-                .Setup(client => client.GetAsync(It.Is<Uri>(u => u.ToString().EndsWith($"Surveys/{surveyId}/Interviewers/{clientInterviewerId}/Assignments/QuotaTargets"))))
+                .Setup(client => client.GetAsync(It.Is<Uri>(u => u.ToString().EndsWith($"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments/QuotaTargets"))))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(targetsList)))).Verifiable();
 
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var result  = (await target.GetTargetsAsync(surveyId, clientInterviewerId)).ToArray();
+            var result  = (await target.GetTargetsAsync(surveyId, interviewerId)).ToArray();
 
             mockedHttpClient.Verify();
 
