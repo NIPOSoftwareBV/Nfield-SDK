@@ -77,12 +77,12 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.GetTargetsAsync(string, string)"/> 
         /// </summary>  
-        public Task<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>> GetTargetsAsync(string surveyId, string clientInterviewerId)
+        public Task<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>> GetTargetsAsync(string surveyId, string interviewerId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNullOrEmptyString(clientInterviewerId, nameof(clientInterviewerId));
+            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
 
-            var uri = SurveyInterviewerAssignmentsQuotaTargetsUrl(surveyId, clientInterviewerId);
+            var uri = SurveyInterviewerAssignmentsQuotaTargetsUrl(surveyId, interviewerId);
 
             var response = ConnectionClient.Client.GetAsync(uri)
              .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>>(

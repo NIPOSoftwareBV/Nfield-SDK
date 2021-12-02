@@ -63,12 +63,12 @@ namespace Nfield.Services
         /// Gets a list of assigned quota levels for an interviewer
         /// </summary>
         /// <param name="surveyId">The id of the survey from which to unassign the interviewer.</param>        
-        /// <param name="clientInterviewerId">The client interviewer id.</param>
+        /// <param name="interviewerId">The interviewer id.</param>
         /// <returns>list of assigned quota levelIds with interviewer Target, interviewer Successful counts and Survey Successful counts</returns>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>> GetTargetsAsync(string surveyId, string clientInterviewerId);
+        Task<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>> GetTargetsAsync(string surveyId, string interviewerId);
     }
 }

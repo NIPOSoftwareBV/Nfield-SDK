@@ -109,7 +109,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{ClientInterviewerId}}/Assignments/QuotaTargets",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments/QuotaTargets",
 					"host": [
 						"{{origin}}"
 					],
@@ -118,7 +118,7 @@
 						"Surveys",
 						"{{SurveyId}}",
 						"Interviewers",
-						"{{ClientInterviewerId}}",
+						"{{InterviewerId}}",
 						"Assignments",
 						"QuotaTargets"
 					]
