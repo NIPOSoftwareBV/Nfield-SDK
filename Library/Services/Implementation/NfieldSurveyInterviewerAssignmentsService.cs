@@ -37,8 +37,8 @@ namespace Nfield.Services.Implementation
         /// </summary>     
         public Task AssignAsync(string surveyId, string interviewerId)
         {
-            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNull(interviewerId, nameof(interviewerId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
 
             var uri = SurveyInterviewerAssignmentsUrl(surveyId);
             var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = true };
@@ -51,8 +51,8 @@ namespace Nfield.Services.Implementation
         /// </summary> 
         public Task UnassignAsync(string surveyId, string interviewerId)
         {
-            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNull(interviewerId, nameof(interviewerId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
 
             var uri = SurveyInterviewerAssignmentsUrl(surveyId);
             var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = false };
@@ -65,8 +65,8 @@ namespace Nfield.Services.Implementation
         /// </summary>  
         public Task PutAsync(string surveyId, string interviewerId, SurveyInterviewerAssignmentModel model)
         {
-            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNull(interviewerId, nameof(interviewerId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
             Ensure.ArgumentNotNull(model, nameof(model));
 
             return
@@ -79,8 +79,8 @@ namespace Nfield.Services.Implementation
         /// </summary>  
         public Task<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>> GetTargetsAsync(string surveyId, string clientInterviewerId)
         {
-            Ensure.ArgumentNotNull(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNull(clientInterviewerId, nameof(clientInterviewerId));
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(clientInterviewerId, nameof(clientInterviewerId));
 
             var uri = SurveyInterviewerAssignmentsQuotaTargetsUrl(surveyId, clientInterviewerId);
 
