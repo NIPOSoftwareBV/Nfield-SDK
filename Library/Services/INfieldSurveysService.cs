@@ -105,6 +105,11 @@ namespace Nfield.Services
         Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId);
 
         /// <summary>
+        /// Gets quota frame definition for survey, using eTag version
+        /// </summary>
+        Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId, long eTag);
+
+        /// <summary>
         /// Get the quota definition for an online survey
         /// </summary>
         /// <param name="surveyId"></param>
