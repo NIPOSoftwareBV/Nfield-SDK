@@ -189,13 +189,31 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}");
 
-            return Client.GetAsync(uri)
+            var returned = Client.GetAsync(uri)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
                              JsonConvert.DeserializeObject<SDK.Models.QuotaFrame>(stringTask.Result))
                          .FlattenExceptions();
+            return returned;
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.QuotaTargetsQueryAsync"/>
+        /// </summary>
+        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId, long eTag)
+        {
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}/{eTag}");
+
+            var returned = Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SDK.Models.QuotaFrame>(stringTask.Result))
+                         .FlattenExceptions();
+            return returned;
         }
 
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
