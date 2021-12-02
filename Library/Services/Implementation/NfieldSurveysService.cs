@@ -202,7 +202,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveysService.QuotaTargetsQueryAsync"/>
         /// </summary>
-        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId, long eTag)
+        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId, string eTag)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}/{eTag}");
 
