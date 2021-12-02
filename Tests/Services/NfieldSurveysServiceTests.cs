@@ -317,6 +317,79 @@ namespace Nfield.Services
             Assert.Equal(expectedQuotaFrameLevel.Variables.Count(), level.Variables.Count());
         }
 
+        [Fact]
+        public void TestQuotaTargetsQueryAsync_ServerReturnsFromEtagQuery_ReturnsListWithQuotaFrame()
+        {
+            const string QuotaFrameId = "quotaId";
+            const int TargetCount = 15;
+            const int SuccessfulCount = 10;
+
+            const string QuotaFrameVariableName = "variableName";
+
+            const string QuotaFrameLevelName = "levelName";
+            const int SuccessfulLevelCount = 11;
+            const int MaxTargetCount = 12;
+            const int LevelTargetCount = 13;
+            const int LevelMaxOvershoot = 1;
+
+            var expectedQuotaFrameLevel = new SDK.Models.QuotaFrameLevel
+            {
+                Id = Guid.NewGuid(),
+                Name = QuotaFrameLevelName,
+                Successful = SuccessfulLevelCount,
+                MaxTarget = MaxTargetCount,
+                Target = LevelTargetCount,
+                MaxOvershoot = LevelMaxOvershoot,
+                Variables = new SDK.Models.QuotaFrameVariable[0]
+            };
+
+            var expectedQuotaFrameVariable = new SDK.Models.QuotaFrameVariable
+            {
+                Id = Guid.NewGuid(),
+                IsMulti = false,
+                Name = QuotaFrameVariableName,
+                Levels = new[] { expectedQuotaFrameLevel }
+            };
+
+            var expectedQuotaFrame = new SDK.Models.QuotaFrame
+            {
+                Id = QuotaFrameId,
+                Target = TargetCount,
+                Successful = SuccessfulCount,
+                Variables = new[] { expectedQuotaFrameVariable }
+            };
+
+            var eTag = "637740630699778007";
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/QuotaTargets/{eTag}")))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedQuotaFrame))));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualQuotaLevel = target.QuotaTargetsQueryAsync(SurveyId, eTag).Result;
+            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
+            Assert.Equal(expectedQuotaFrame.Id, actualQuotaLevel.Id);
+            Assert.Equal(expectedQuotaFrame.Target, actualQuotaLevel.Target);
+            Assert.Equal(expectedQuotaFrame.Successful, actualQuotaLevel.Successful);
+            Assert.Equal(expectedQuotaFrame.Variables.Count(), actualQuotaLevel.Variables.Count());
+            var variable = actualQuotaLevel.Variables.First();
+            Assert.Equal(expectedQuotaFrameVariable.Id, variable.Id);
+            Assert.Equal(expectedQuotaFrameVariable.Name, variable.Name);
+            Assert.Equal(expectedQuotaFrameVariable.IsMulti, variable.IsMulti);
+            Assert.Equal(expectedQuotaFrameVariable.Levels.Count(), variable.Levels.Count());
+            var level = variable.Levels.First();
+            Assert.Equal(expectedQuotaFrameLevel.Id, level.Id);
+            Assert.Equal(expectedQuotaFrameLevel.Name, level.Name);
+            Assert.Equal(expectedQuotaFrameLevel.Successful, level.Successful);
+            Assert.Equal(expectedQuotaFrameLevel.MaxTarget, level.MaxTarget);
+            Assert.Equal(expectedQuotaFrameLevel.Target, level.Target);
+            Assert.Equal(expectedQuotaFrameLevel.MaxOvershoot, level.MaxOvershoot);
+            Assert.Equal(expectedQuotaFrameLevel.Variables.Count(), level.Variables.Count());
+        }
+
         #endregion
 
         #region OnlineQuotaQueryAsync
