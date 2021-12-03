@@ -188,7 +188,7 @@ namespace Nfield.Services
         }
         #endregion
 
-        #region FinishFieldworkAsync
+        #region GetCountsAsync
 
         [Fact]
         public async void TestGetCountsAsync_ReturnRightValues()
