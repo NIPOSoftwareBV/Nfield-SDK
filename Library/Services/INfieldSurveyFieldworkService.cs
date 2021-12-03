@@ -48,5 +48,14 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The id of the survey to Start</param>
         Task FinishFieldworkAsync(string surveyId);
+
+        /// <summary>
+        /// Gets survey fieldwork counts
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// </summary>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception> 
+        Task<SurveyFieldworkCounts> GetCountsAsync(string surveyId);
     }
 }
