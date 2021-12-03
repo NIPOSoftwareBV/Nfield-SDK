@@ -20,6 +20,7 @@ using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.SDK.Models;
 using Nfield.Utilities;
+using Nfield.Services;
 
 namespace Nfield.SDK.Services.Implementation
 {
