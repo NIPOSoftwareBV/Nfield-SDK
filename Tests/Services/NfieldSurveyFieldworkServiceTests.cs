@@ -244,7 +244,7 @@ namespace Nfield.Services
         [Fact]
         public void TestGetCountsAsync_WhenSurveyIdIsEmptyString_Throws()
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.FinishFieldworkAsync(string.Empty)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.GetCountsAsync(string.Empty)));
         }
 
         #endregion
