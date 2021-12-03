@@ -40,6 +40,9 @@ namespace Nfield.SDK.Services.Implementation
             ConnectionClient = connection;
         }
 
+/// <summary>
+    /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
+    /// </summary>
         public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
