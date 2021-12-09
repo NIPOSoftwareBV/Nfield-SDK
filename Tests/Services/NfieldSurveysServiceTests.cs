@@ -43,6 +43,19 @@ namespace Nfield.Services
         const string SamplingPointId = "samplingPointId";
         const string SamplingPointGroupId = "MyGroupId";
 
+        const string QuotaFrameId = "quotaId";
+        const int GrossTargetCount = 20;
+        const int TargetCount = 15;
+        const int SuccessfulCount = 10;
+
+        const string QuotaFrameVariableName = "variableName";
+
+        const string QuotaFrameLevelName = "levelName";
+        const int SuccessfulLevelCount = 11;
+        const int MaxTargetCount = 12;
+        const int LevelTargetCount = 13;
+        const int LevelMaxOvershoot = 1;
+
         #region QueryAsync
 
         [Fact]
@@ -248,18 +261,6 @@ namespace Nfield.Services
         [Fact]
         public void TestQuotaTargetsQueryAsync_ServerReturnsQuery_ReturnsListWithQuotaFrame()
         {
-            const string QuotaFrameId = "quotaId";
-            const int TargetCount = 15;
-            const int SuccessfulCount = 10;
-
-            const string QuotaFrameVariableName = "variableName";
-
-            const string QuotaFrameLevelName = "levelName";
-            const int SuccessfulLevelCount = 11;
-            const int MaxTargetCount = 12;
-            const int LevelTargetCount = 13;
-            const int LevelMaxOvershoot = 1;
-
             var expectedQuotaFrameLevel = new SDK.Models.QuotaFrameLevel
             {
                 Id = Guid.NewGuid(),
@@ -320,18 +321,6 @@ namespace Nfield.Services
         [Fact]
         public void TestQuotaTargetsQueryAsync_ServerReturnsFromEtagQuery_ReturnsListWithQuotaFrame()
         {
-            const string QuotaFrameId = "quotaId";
-            const int TargetCount = 15;
-            const int SuccessfulCount = 10;
-
-            const string QuotaFrameVariableName = "variableName";
-
-            const string QuotaFrameLevelName = "levelName";
-            const int SuccessfulLevelCount = 11;
-            const int MaxTargetCount = 12;
-            const int LevelTargetCount = 13;
-            const int LevelMaxOvershoot = 1;
-
             var expectedQuotaFrameLevel = new SDK.Models.QuotaFrameLevel
             {
                 Id = Guid.NewGuid(),
@@ -399,7 +388,7 @@ namespace Nfield.Services
         {
             var quotaFrame = new QuotaFrame
             {
-                Target = 10
+                Target = TargetCount
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -414,8 +403,6 @@ namespace Nfield.Services
             mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
 
             Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
-
-
         }
 
         #endregion
@@ -429,7 +416,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<QuotaLevel>()))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent("")));
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -446,8 +433,8 @@ namespace Nfield.Services
         {
             var quota = new QuotaLevel(true)
             {
-                Target = 10,
-                GrossTarget = 15,
+                Target = TargetCount,
+                GrossTarget = GrossTargetCount,
                 Attributes =
                     new Collection<QuotaAttribute>
                     {
@@ -459,7 +446,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<QuotaLevel>()))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent("")));
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
 
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
@@ -476,7 +463,7 @@ namespace Nfield.Services
 
             var quotaFrame = new QuotaFrame
             {
-                Target = 10
+                Target = TargetCount
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -490,8 +477,7 @@ namespace Nfield.Services
 
             var actualQuotaFrame = target.CreateOrUpdateOnlineQuotaAsync(SurveyId, quotaFrame).Result;
 
-            Assert.Equal(10, actualQuotaFrame.Target);
-
+            Assert.Equal(TargetCount, actualQuotaFrame.Target);
         }
 
         #endregion
@@ -538,8 +524,9 @@ namespace Nfield.Services
         public void TestSamplingPointQueryAsync_ServerReturnsQuery_ReturnsListWithSamplingPoint()
         {
             var expectedSamplingPoint = new SamplingPoint[]
-            { new SamplingPoint { SamplingPointId = SamplingPointId },
-              new SamplingPoint { SamplingPointId = "AnotherSamplingPointId" }
+            {
+                new SamplingPoint { SamplingPointId = SamplingPointId },
+                new SamplingPoint { SamplingPointId = "AnotherSamplingPointId" }
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -564,19 +551,18 @@ namespace Nfield.Services
         [Fact]
         public void TestSamplingPointsCountAsync_ServerReturnsCount_ReturnsNumberOfSamplingPointsForTheSurvey()
         {
-            const int samplingPointCount = 5;
             var uri = new Uri(ServiceAddress, $"Surveys/{SurveyId}/SamplingPoints/Count");
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
                 .Setup(client => client.GetAsync(uri))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(samplingPointCount.ToString())));
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(SuccessfulCount.ToString())));
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var result = target.SamplingPointsCountAsync(SurveyId).Result;
 
-            Assert.Equal(samplingPointCount, result);
+            Assert.Equal(SuccessfulCount, result);
         }
 
         #endregion
@@ -642,7 +628,7 @@ namespace Nfield.Services
             var samplingPoint = new SamplingPoint
             {
                 SamplingPointId = SamplingPointId,
-                Name = "Updated",
+                Name = Name,
                 GroupId = SamplingPointGroupId
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
@@ -771,7 +757,7 @@ namespace Nfield.Services
         public void TestSamplingPointQuotaTargetUpdateAsync_SamplingPointQuotaTargetLevelIdIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldSurveysService();
-            var samplingPointQuotaTarget = new SamplingPointQuotaTarget { Target = 4 };
+            var samplingPointQuotaTarget = new SamplingPointQuotaTarget { Target = TargetCount };
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -785,7 +771,7 @@ namespace Nfield.Services
             var samplingPointQuotaTarget = new SamplingPointQuotaTarget
             {
                 LevelId = LevelId,
-                Target = 10
+                Target = TargetCount
             };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
