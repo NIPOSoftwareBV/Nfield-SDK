@@ -60,7 +60,7 @@
 			"response": []
 		},
 		{
-			"name": "Get QuotaTargets Etag",
+			"name": "Get QuotaTargets by Etag",
 			"event": [
 				{
 					"listen": "test",
