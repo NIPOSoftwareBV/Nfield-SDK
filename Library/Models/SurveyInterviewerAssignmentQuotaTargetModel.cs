@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Nfield.SDK.Models
+﻿namespace Nfield.SDK.Models
 {
+    /// <summary>
+    /// Model for interviewers assignments quota targets and Successful counts at survey and interviewer level.
+    /// </summary>
     public class SurveyInterviewerAssignmentQuotaTargetModel
     {
         /// <summary>
