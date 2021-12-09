@@ -182,6 +182,40 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.QuotaTargetsQueryAsync"/>
+        /// </summary>
+        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId)
+        {
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}");
+
+            var returned = Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SDK.Models.QuotaFrame>(stringTask.Result))
+                         .FlattenExceptions();
+            return returned;
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.QuotaTargetsQueryAsync"/>
+        /// </summary>
+        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId, string eTag)
+        {
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}/{eTag}");
+
+            var returned = Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SDK.Models.QuotaFrame>(stringTask.Result))
+                         .FlattenExceptions();
+            return returned;
+        }
+
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
@@ -498,6 +532,11 @@ namespace Nfield.Services.Implementation
         private static string QuotaControllerName
         {
             get { return "Quota"; }
+        }
+
+        private static string QuotaTargetsQueryAsyncControllerName
+        {
+            get { return "QuotaTargets"; }
         }
 
         private static string CountsControllerName
