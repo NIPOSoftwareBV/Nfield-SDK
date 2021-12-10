@@ -59,6 +59,58 @@
 			"response": []
 		},
 		{
+			"name": "Get SurveyFieldwork Counts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Counts",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Counts"
+					]
+				},
+				"description": "This method returns fieldwork counts."
+			},
+			"response": []
+		},
+		{
 			"name": "Start SurveyFieldwork",
 			"event": [
 				{
