@@ -1,1 +1,145 @@
-{"info":{"_postman_id":"e788e1cb-c96d-4983-a2e0-d4c20f9996d1","name":"requests","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},"item":[{"name":"Local users","item":[{"name":"Get Local Users","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"},{"key":"Authorization","value":"Basic {{ _.authentication_token }}"}],"url":{"raw":"{{ _.Api }}/v1/LocalUsers","host":["{{ _","Api }}"],"path":["v1","LocalUsers"]},"auth":{}},"response":[]},{"name":"Post Local Users","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"},{"key":"Authorization","value":"Basic {{ _.authentication_token }}"}],"body":{"mode":"raw","raw":"{\n    \"UserName\": \"user2\",\n    \"FirstName\": \"Test\",\n    \"LastName\": \"User\",\n    \"Email\": \"TestUser@TestSite.com\",\n    \"UserRole\": \"RegularUser\",\n\t  \"password\":\"passowrd\"\n  }"},"url":{"raw":"{{ _.Api }}/v1/LocalUsers","host":["{{ _","Api }}"],"path":["v1","LocalUsers"]},"auth":{}},"response":[]},{"name":"Delete Local Users","request":{"method":"DELETE","header":[{"key":"Authorization","value":"Basic {{ _.authentication_token }}"}],"url":{"raw":"{{ _.Api }}/v1/LocalUsers/497fbbd1-e060-4903-9c01-359b8bab59a1","host":["{{ _","Api }}"],"path":["v1","LocalUsers","497fbbd1-e060-4903-9c01-359b8bab59a1"]},"auth":{}},"response":[]},{"name":"Get Local User","request":{"method":"GET","header":[{"key":"Authorization","value":"Basic {{ _.authentication_token }}"}],"url":{"raw":"{{ _.Api }}/v1/LocalUsers/559568d0-ad0b-490b-a8c3-d8ef8cd0e80c","host":["{{ _","Api }}"],"path":["v1","LocalUsers","559568d0-ad0b-490b-a8c3-d8ef8cd0e80c"]},"auth":{}},"response":[]},{"name":"Patch Local Users","request":{"method":"PATCH","header":[{"key":"Authorization","value":"Basic {{ _.authentication_token }}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n    \"FirstName\": \"changed\",\n    \"LastName\": \"last\"\n  }"},"url":{"raw":"{{ _.Api }}/v1/LocalUsers/559568d0-ad0b-490b-a8c3-d8ef8cd0e80c","host":["{{ _","Api }}"],"path":["v1","LocalUsers","559568d0-ad0b-490b-a8c3-d8ef8cd0e80c"]},"auth":{}},"response":[]},{"name":"Patch Password Local Users","request":{"method":"PATCH","header":[{"key":"Authorization","value":"Basic {{ _.authentication_token }}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n    \"Password\": \"Passw0rd12\"\n  }"},"url":{"raw":"{{ _.Api }}/v1/LocalUsers/Password/559568d0-ad0b-490b-a8c3-d8ef8cd0e80c","host":["{{ _","Api }}"],"path":["v1","LocalUsers","Password","559568d0-ad0b-490b-a8c3-d8ef8cd0e80c"]},"auth":{}},"response":[]}]}]}
+{
+  "info": {
+    "_postman_id": "e788e1cb-c96d-4983-a2e0-d4c20f9996d1",
+    "name": "Local users",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+
+  "item": [
+    {
+      "name": "Get Local Users",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          {
+            "key": "Authorization",
+            "value": "Basic {{ _.authentication_token }}"
+          }
+        ],
+        "url": {
+          "raw": "{{ _.Api }}/v1/LocalUsers",
+          "host": ["{{ _", "Api }}"],
+          "path": ["v1", "LocalUsers"]
+        },
+        "auth": {}
+      },
+      "response": []
+    },
+    {
+      "name": "Post Local Users",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          {
+            "key": "Authorization",
+            "value": "Basic {{ _.authentication_token }}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"UserName\": \"user2\",\n    \"FirstName\": \"Test\",\n    \"LastName\": \"User\",\n    \"Email\": \"TestUser@TestSite.com\",\n    \"UserRole\": \"RegularUser\",\n\t  \"password\":\"passowrd\"\n  }"
+        },
+        "url": {
+          "raw": "{{ _.Api }}/v1/LocalUsers",
+          "host": ["{{ _", "Api }}"],
+          "path": ["v1", "LocalUsers"]
+        },
+        "auth": {}
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Local Users",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic {{ _.authentication_token }}"
+          }
+        ],
+        "url": {
+          "raw": "{{ _.Api }}/v1/LocalUsers/497fbbd1-e060-4903-9c01-359b8bab59a1",
+          "host": ["{{ _", "Api }}"],
+          "path": ["v1", "LocalUsers", "497fbbd1-e060-4903-9c01-359b8bab59a1"]
+        },
+        "auth": {}
+      },
+      "response": []
+    },
+    {
+      "name": "Get Local User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic {{ _.authentication_token }}"
+          }
+        ],
+        "url": {
+          "raw": "{{ _.Api }}/v1/LocalUsers/559568d0-ad0b-490b-a8c3-d8ef8cd0e80c",
+          "host": ["{{ _", "Api }}"],
+          "path": ["v1", "LocalUsers", "559568d0-ad0b-490b-a8c3-d8ef8cd0e80c"]
+        },
+        "auth": {}
+      },
+      "response": []
+    },
+    {
+      "name": "Patch Local Users",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic {{ _.authentication_token }}"
+          },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"FirstName\": \"changed\",\n    \"LastName\": \"last\"\n  }"
+        },
+        "url": {
+          "raw": "{{ _.Api }}/v1/LocalUsers/559568d0-ad0b-490b-a8c3-d8ef8cd0e80c",
+          "host": ["{{ _", "Api }}"],
+          "path": ["v1", "LocalUsers", "559568d0-ad0b-490b-a8c3-d8ef8cd0e80c"]
+        },
+        "auth": {}
+      },
+      "response": []
+    },
+    {
+      "name": "Patch Password Local Users",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic {{ _.authentication_token }}"
+          },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"Password\": \"Passw0rd12\"\n  }"
+        },
+        "url": {
+          "raw": "{{ _.Api }}/v1/LocalUsers/Password/559568d0-ad0b-490b-a8c3-d8ef8cd0e80c",
+          "host": ["{{ _", "Api }}"],
+          "path": [
+            "v1",
+            "LocalUsers",
+            "Password",
+            "559568d0-ad0b-490b-a8c3-d8ef8cd0e80c"
+          ]
+        },
+        "auth": {}
+      },
+      "response": []
+    }
+  ]
+}
