@@ -14,6 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -21,6 +23,7 @@ using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.SDK.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -130,6 +133,30 @@ namespace Nfield.Services
             Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.PutAsync("survey", "interviewer", null)));
         }
 
+        [Theory]
+        [InlineData(null, "id", true)]
+        [InlineData(null, "", true)]
+        [InlineData(null, null, true)]
+        [InlineData("id", null, true)]
+        [InlineData("", null, true)]
+        [InlineData("", "", true)]
+        [InlineData(null, "id", false)]
+        [InlineData(null, "", false)]
+        [InlineData(null, null, false)]
+        [InlineData("id", null, false)]
+        [InlineData("", null, false)]
+        [InlineData("", "", false)]
+        public void TestPutAsync_ThrowsArgumentNullException(string surveyId, string interviewerId, bool modelIsNotNull)
+        {
+            var target = new NfieldSurveyInterviewerAssignmentsService();
+            SurveyInterviewerAssignmentModel interviewerAssignmentModel = (modelIsNotNull) ? new SurveyInterviewerAssignmentModel() : null;
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                await target.PutAsync(surveyId, interviewerId, interviewerAssignmentModel);
+            });
+        }
+
         [Fact]
         public async Task TestPutAsync_CreateAssignment()
         {
@@ -161,6 +188,49 @@ namespace Nfield.Services
             await target.PutAsync(surveyId, interviewerId, interviewerAssignmentModel);
 
             mockedHttpClient.Verify();
+        }
+
+
+        [Fact]
+        public async Task TestGetAsync_GetTargetsAsync()
+        {
+            var target = new NfieldSurveyInterviewerAssignmentsService();
+            string surveyId = "survey-id";
+            string interviewerId = "interviewer-id";
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var targetsList = new List<SurveyInterviewerAssignmentQuotaTargetModel>() { new SurveyInterviewerAssignmentQuotaTargetModel() { LevelId = "1", Successful = 2, SurveySuccessful = 3, Target = 4 } };
+            mockedHttpClient
+                .Setup(client => client.GetAsync(It.Is<Uri>(u => u.ToString().EndsWith($"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments/QuotaTargets"))))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(targetsList)))).Verifiable();
+
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var result  = (await target.GetTargetsAsync(surveyId, interviewerId)).ToArray();
+
+            mockedHttpClient.Verify();
+
+            Assert.Equal("1", result[0].LevelId);
+            Assert.Equal(2, result[0].Successful);
+            Assert.Equal(3, result[0].SurveySuccessful);
+            Assert.Equal(4, result[0].Target);
+        }
+
+        [Theory]
+        [InlineData(null, "id")]
+        [InlineData(null, "")]
+        [InlineData(null, null)]
+        [InlineData("id", null)]
+        [InlineData("", null)]
+        [InlineData("", "")]
+        public void TestGetAsync_ThrowsArgumentNullException(string surveyId, string clienInterviewerId)
+        {
+            var target = new NfieldSurveyInterviewerAssignmentsService();
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                await target.GetTargetsAsync(surveyId, clienInterviewerId);
+            });
         }
 
         #endregion
