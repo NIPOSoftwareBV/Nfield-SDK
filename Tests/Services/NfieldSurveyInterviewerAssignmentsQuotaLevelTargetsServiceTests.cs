@@ -25,15 +25,15 @@ using Xunit;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Tests for <see cref="NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService"/>
+    /// Tests for <see cref="NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService"/>
     /// </summary>
-    public class NfieldSurveyInterviewerAssignmentQuotaLevelTargetsServiceTests : NfieldServiceTestsBase
+    public class NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsServiceTests : NfieldServiceTestsBase
     {
         const string surveyId = "MySurvey";
         const string interviewerId = "InterviewerId";
         private IEnumerable<WorkPackageTarget> _workPackageTargets;
 
-        public NfieldSurveyInterviewerAssignmentQuotaLevelTargetsServiceTests()
+        public NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsServiceTests()
         {
             _workPackageTargets = new List<WorkPackageTarget>()
             {
@@ -55,7 +55,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_SurveyIdIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService();
+            var target = new NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService();
             
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.UpdateAsync(null, interviewerId, _workPackageTargets)));
@@ -64,7 +64,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_SurveyIdIsEmpty_ThrowsArgumentException()
         {
-            var target = new NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService();
+            var target = new NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService();
 
             Assert.Throws<ArgumentException>(() =>
                 UnwrapAggregateException(target.UpdateAsync(string.Empty, interviewerId, _workPackageTargets)));
@@ -73,7 +73,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_InterviewIdIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService();
+            var target = new NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService();
 
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.UpdateAsync(surveyId, null, _workPackageTargets)));
@@ -82,7 +82,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_InterviewIdIsEmpty_ThrowsArgumentException()
         {
-            var target = new NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService();
+            var target = new NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService();
 
             Assert.Throws<ArgumentException>(() =>
                 UnwrapAggregateException(target.UpdateAsync(surveyId, string.Empty, _workPackageTargets)));
@@ -91,7 +91,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_WorkPackageTargetsIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService();
+            var target = new NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService();
 
             Assert.Throws<ArgumentNullException>(() =>
                 UnwrapAggregateException(target.UpdateAsync(surveyId, interviewerId, null)));
@@ -100,7 +100,7 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_WorkPackageTargetsIsEmpty_ThrowsArgumentException()
         {
-            var target = new NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService();
+            var target = new NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService();
 
             Assert.Throws<ArgumentException>(() =>
                 UnwrapAggregateException(target.UpdateAsync(surveyId, string.Empty, new List<WorkPackageTarget>())));
@@ -113,7 +113,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            var target = new NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService();
+            var target = new NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             mockedHttpClient

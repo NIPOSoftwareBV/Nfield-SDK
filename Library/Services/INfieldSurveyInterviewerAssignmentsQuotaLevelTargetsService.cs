@@ -19,7 +19,7 @@ using Nfield.SDK.Models;
 
 namespace Nfield.Services
 {
-    public interface INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService
+    public interface INfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService
     {
         /// <summary>
         /// Update the quota level targets of the assigned interviewer

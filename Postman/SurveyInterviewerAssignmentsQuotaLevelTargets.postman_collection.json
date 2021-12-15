@@ -1,12 +1,12 @@
 {
 	"info": {
 		"_postman_id": "801d1a24-c97d-4d3f-8419-ae511a087757",
-		"name": "SurveyAssignmentsInterviewerQuotaLevelTargets",
+		"name": "SurveyInterviewerAssignmentsQuotaLevelTargets",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Edit Survey Interviewer Work Package Quota Level Targets",
+			"name": "Edit Survey Interviewer Assignments Quota Level Targets",
 			"event": [
 				{
 					"listen": "test",

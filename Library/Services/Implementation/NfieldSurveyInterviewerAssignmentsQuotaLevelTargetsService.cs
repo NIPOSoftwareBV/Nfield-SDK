@@ -24,7 +24,7 @@ using Nfield.Services;
 
 namespace Nfield.SDK.Services.Implementation
 {
-    class NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService : INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService, INfieldConnectionClientObject
+    class NfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService : INfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService, INfieldConnectionClientObject
     {
         private INfieldHttpClient Client
         {
@@ -41,7 +41,7 @@ namespace Nfield.SDK.Services.Implementation
         }
 
 /// <summary>
-    /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
+    /// Implements <see cref="INfieldSurveyInterviewerAssignmentsQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
     /// </summary>
         public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
         {
@@ -49,12 +49,12 @@ namespace Nfield.SDK.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(workPackageTargets, nameof(workPackageTargets));
          
-            return Client.PutAsJsonAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId, interviewerId), workPackageTargets)
+            return Client.PutAsJsonAsync(SurveyInterviewerAssignmentsQuotaLevelTargetsUrl(surveyId, interviewerId), workPackageTargets)
                 .FlattenExceptions();
         }
 
 
-        private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
+        private Uri SurveyInterviewerAssignmentsQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignments/{interviewerId}/QuotaLevelTargets/");
         }
