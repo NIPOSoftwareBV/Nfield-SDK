@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "68181d7b-e9f0-40b6-8585-197203c35305",
+		"name": "Themes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload Theme",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains ActivityId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.environment.set(\"ActivityId\", response.ActivityId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/C:/repo_1/Nfield-SDK/Postman/Domain/QuestionTypesTheme.zip"
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Themes?templateId={{TemplateId}}&themeName={{ThemeTestName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Themes"
+					],
+					"query": [
+						{
+							"key": "templateId",
+							"value": "{{TemplateId}}"
+						},
+						{
+							"key": "themeName",
+							"value": "{{ThemeTestName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download Theme",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Themes",
+						"{{ThemeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Theme",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Themes",
+						"{{ThemeId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

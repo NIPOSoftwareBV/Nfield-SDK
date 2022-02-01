@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "c8514dad-40bf-47f3-9910-16a39556cb5e",
+		"name": "BackgroundTasks",
+		"description": "A controller for querying background activities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response contains TaskId\", function () {",
+							"    var tasks = pm.response.json();",
+							"    var lastIndex = tasks.length - 1;",
+							"    pm.environment.set(\"TaskId\", surveys[lastIndex].TaskId);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/BackgroundTasks",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"BackgroundTasks"
+					]
+				},
+				"description": "This method retrieve details of a specific background activity."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/BackgroundTasks/{{TaskId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"BackgroundTasks",
+						"{{TaskId}}"
+					]
+				},
+				"description": "This method retrieve details of a specific background activity."
+			},
+			"response": []
+		}
+	]
+}
