@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "4fb10b3e-f0de-42cc-a217-18439e1b1b77",
+		"name": "SurveyVarFile",
+		"description": "A controller for querying Surveys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Survey Varfile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"All varfiles should have FileContent and FileName\", function () {",
+							"    const varfile = pm.response.json();",
+							"    pm.expect(varfile.FileContent !== undefined).to.be.true;",
+							"    pm.expect(varfile.FileName !== undefined).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/VarFile",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"VarFile"
+					]
+				},
+				"description": "This method retrieve details of a specific survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Survey Varfile by eTag",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"All varfiles should have FileContent and FileName\", function () {",
+							"    const varfile = pm.response.json();",
+							"    pm.expect(varfile.FileContent !== undefined).to.be.true;",
+							"    pm.expect(varfile.FileName !== undefined).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/VarFile/{{eTag}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"VarFile",
+						"{{eTag}}"
+					]
+				},
+				"description": "This method retrieve details of a specific survey."
+			},
+			"response": []
+		}
+	]
+}
