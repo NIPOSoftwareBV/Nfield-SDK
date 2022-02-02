@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b5aa0cd7-e932-4317-bbae-9c7ccf972cff",
+		"_postman_id": "afd0dfad-136c-41de-a8b8-9f9e3edf2a24",
 		"name": "SurveyQuotaTargets",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,6 +20,11 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
+							"pm.test(\"All QuotaTargets should have Target and Variables\", function () {",
+							"    const quotaTargets = pm.response.json();",
+							"    pm.expect(quotaTargets.Target !== undefined).to.be.true;",
+							"    pm.expect(quotaTargets.Variables !== undefined).to.be.true;",
+							"});",
 							""
 						],
 						"type": "text/javascript"
@@ -74,7 +79,11 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							""
+							"pm.test(\"All QuotaTargets should have Target and Variables\", function () {",
+							"    const quotaTargets = pm.response.json();",
+							"    pm.expect(quotaTargets.Target !== undefined).to.be.true;",
+							"    pm.expect(quotaTargets.Variables !== undefined).to.be.true;",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -98,7 +107,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets/{{ETag}}",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets/{{eTag}}",
 					"host": [
 						"{{origin}}"
 					],
@@ -107,7 +116,7 @@
 						"Surveys",
 						"{{SurveyId}}",
 						"QuotaTargets",
-						"{{ETag}}"
+						"{{eTag}}"
 					]
 				},
 				"description": "This method retrieves the QuotaTargets for a specific ETag version."
