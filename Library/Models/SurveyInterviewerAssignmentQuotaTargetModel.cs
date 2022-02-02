@@ -18,7 +18,7 @@
         /// <summary>
         /// Interviewer total target
         /// </summary>
-        public int Target { get; set; }
+        public int? Target { get; set; }
 
         /// <summary>
         /// Interviewer successful counts
