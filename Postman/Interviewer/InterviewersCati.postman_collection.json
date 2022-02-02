@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "497915dd-edf0-4920-9b73-58a841ccc87c",
+		"name": "InterviewersCati",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Cati Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId\", function () {\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+							"    pm.environment.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						"{{CatiInterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cati Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						"{{CatiInterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cati Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"InterviewerId\");\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+							"    pm.environment.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"UserName\": \"Cati user Postman\",\r\n  \"Password\": \"Password\",\r\n  \"TelephoneNumber\": \"+34666555444\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Cati Interviewer Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId\", function () {\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+							"    pm.environment.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Password\": \"a12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						"{{CatiInterviewerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cati Interviewers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"    var interviewers = pm.response.json();\r",
+							"    pm.expect(interviewers.every(validateProperties)).to.be.true;\r",
+							"    if (interviewers.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = interviewers.length - 1;\r",
+							"        pm.environment.set(\"CatiInterviewerId\", interviewers[lastIndex].InterviewerId);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
