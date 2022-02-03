@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "80ebd36b-5c59-465a-9edc-67a2477bde7a",
+		"_postman_id": "df7d2f40-8426-45de-b72a-de4ac1b65309",
 		"name": "SurveySamplingMethod",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,7 +20,10 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							""
+							"pm.test(\"The response should have SamplingMethod\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.SamplingMethod !== undefined).to.be.true;",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -99,7 +102,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"SamplingMethod\": \"FreeIntercept\"\r\n}"
+					"raw": "{\r\n  \"SamplingMethod\": \"IndividualTargets\"\r\n}"
 				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
