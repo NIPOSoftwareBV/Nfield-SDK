@@ -102,7 +102,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"SamplingMethod\": \"IndividualTargets\"\r\n}"
+					"raw": "{\r\n  \"SamplingMethod\": \"IndividualTargets\" // \"FreeIntercept\"\r\n}"
 				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
