@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "702e1cdc-6493-4912-a276-8fd82fa87a6c",
+		"_postman_id": "84f9c89c-7c8d-48bf-96c8-da5c808ba818",
 		"name": "LocalUsersLogs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,9 +20,9 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response contains AuthenticationToken\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"ActivityId\");\r",
+							"pm.test(\"Response contains ActivityId\", function () {\r",
 							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
 							"    pm.environment.set(\"ActivityId\", response.ActivityId);\r",
 							"});\r",
 							""

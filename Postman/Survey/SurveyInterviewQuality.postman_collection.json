@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9501ea9c-6c1b-4336-8944-ff8e8c1918a0",
+		"_postman_id": "a6dd67b5-5b72-478a-ba9e-4426eee36c2f",
 		"name": "SurveyInterviewQuality",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,7 +29,7 @@
 							"    && item.OfficeId !== undefined;\r",
 							"}\r",
 							"\r",
-							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"pm.test(\"Response contains InterviewId\", function () {\r",
 							"    var interview = pm.response.json();\r",
 							"    pm.expect(validateProperties(interview)).to.be.true;\r",
 							"    pm.environment.set(\"InterviewId\", interview.Id);\r",
@@ -100,7 +100,7 @@
 							"    && item.OfficeId !== undefined;\r",
 							"}\r",
 							"\r",
-							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"pm.test(\"Response contains InterviewId\", function () {\r",
 							"    var interview = pm.response.json();\r",
 							"    pm.expect(validateProperties(interview)).to.be.true;\r",
 							"    pm.expect(interview.InterviewQuality == 2).to.be.true;\r",

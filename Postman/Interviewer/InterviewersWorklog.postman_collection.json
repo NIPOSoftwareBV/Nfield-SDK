@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "074aa9be-0491-4d4a-a1fc-b3a8c4164f6f",
+		"_postman_id": "99fc9a55-d4d6-498b-a611-f1a59a47f897",
 		"name": "InterviewersWorklog",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,9 +20,13 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response contains AuthenticationToken\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"ActivityId\");\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.ActivityId !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains ActivityId\", function () {\r",
 							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
 							"    pm.environment.set(\"ActivityId\", response.ActivityId);\r",
 							"});\r",
 							""
