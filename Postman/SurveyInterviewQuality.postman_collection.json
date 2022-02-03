@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "a6dd67b5-5b72-478a-ba9e-4426eee36c2f",
+		"name": "SurveyInterviewQuality",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Interview Quality",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewQuality !== undefined \r",
+							"    && item.StartDate !== undefined\r",
+							"    && item.InterviewerId !== undefined\r",
+							"    && item.SamplingPointId !== undefined\r",
+							"    && item.OfficeId !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewId\", function () {\r",
+							"    var interview = pm.response.json();\r",
+							"    pm.expect(validateProperties(interview)).to.be.true;\r",
+							"    pm.environment.set(\"InterviewId\", interview.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality/{{InterviewId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"InterviewQuality",
+						"{{InterviewId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Interview Quality",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewQuality !== undefined \r",
+							"    && item.StartDate !== undefined\r",
+							"    && item.InterviewerId !== undefined\r",
+							"    && item.SamplingPointId !== undefined\r",
+							"    && item.OfficeId !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewId\", function () {\r",
+							"    var interview = pm.response.json();\r",
+							"    pm.expect(validateProperties(interview)).to.be.true;\r",
+							"    pm.expect(interview.InterviewQuality == 2).to.be.true;\r",
+							"    pm.environment.set(\"InterviewId\", interview.Id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"InterviewId\": \"{{InterviewId}}\",\r\n  \"NewState\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"InterviewQuality"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Interviews Quality",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewQuality !== undefined \r",
+							"    && item.StartDate !== undefined\r",
+							"    && item.InterviewerId !== undefined\r",
+							"    && item.SamplingPointId !== undefined\r",
+							"    && item.OfficeId !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewId\", function () {\r",
+							"    var interviews = pm.response.json();\r",
+							"    pm.expect(interviews.every(validateProperties)).to.be.true;\r",
+							"    if (interviews.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = interviews.length - 1;\r",
+							"        pm.environment.set(\"InterviewId\", interviews[lastIndex].Id);\r",
+							"    }\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"InterviewQuality"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

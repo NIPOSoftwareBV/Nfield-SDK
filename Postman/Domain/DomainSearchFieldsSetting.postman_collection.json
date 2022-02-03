@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "0f7f4738-dbe2-4d88-afbd-9aaf08f655ff",
+		"name": "DomainSearchFieldsSetting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Search Fields Settings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.Fields !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains Fields\", function () {",
+							"    var response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/SearchFieldsSetting",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SearchFieldsSetting"
+					]
+				},
+				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Create/Update Search Fields Settings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.Fields !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains Fields\", function () {",
+							"    var response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"    pm.expect(response.Fields[0] == \"Postman1\").to.be.true;",
+							"    pm.expect(response.Fields[1] == \"Postman2\").to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Fields\": [\r\n    \"Postman1\",\r\n    \"Postman2\"\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/SearchFieldsSetting",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SearchFieldsSetting"
+					]
+				},
+				"description": "Update a survey with the specified fields."
+			},
+			"response": []
+		}
+	]
+}

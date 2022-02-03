@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3dd78ad9-d1e4-4f9a-8c65-9e8af325eac6",
+		"_postman_id": "d37eb37f-3a25-4a99-9848-9a0ee49257ec",
 		"name": "DomainResponseCodes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -20,10 +20,21 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response contains LanguageId\", function () {\r",
-							"    var languages = pm.response.json();\r",
-							"    var lastIndex = languages.length - 1;\r",
-							"    pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Url !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains ResponseCodeId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+							"    if (response.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = response.length - 1;\r",
+							"        pm.environment.set(\"ResponseCodeId\", response[lastIndex].Id);\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -67,9 +78,15 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Url !== undefined;\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Response contains ResponseCodeId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"Id\");\r",
-							"    const response = pm.response.json();\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
 							"    pm.environment.set(\"ResponseCodeId\", response.Id);\r",
 							"});"
 						],
@@ -93,7 +110,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Id\":\"200\",\r\n    \"Description\":\"response code description\",\r\n    \"Url\":null\r\n}\r\n",
+					"raw": "{\r\n    \"Id\":\"200\",\r\n    \"Description\":\"Postman response code description\",\r\n    \"Url\":null\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -128,9 +145,16 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Url !== undefined;\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Response contains ResponseCodeId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"Id\");\r",
-							"    const response = pm.response.json();\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Description == \"Postman response updated\").to.be.true;\r",
 							"    pm.environment.set(\"ResponseCodeId\", response.Id);\r",
 							"});"
 						],
@@ -154,7 +178,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Description\": \"new response code description\",\r\n    \"Url\": null\r\n}",
+					"raw": "{\r\n    \"Description\":\"Postman response updated\",\r\n    \"Url\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

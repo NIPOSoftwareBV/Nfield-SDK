@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a0bc68c1-8075-40fc-92f0-4f84d4e8abad",
-		"name": "DomainLanguages",
+		"_postman_id": "de689af4-e687-41e4-8b10-c6b61ebdabe8",
+		"name": "DomainLanguagesTranslations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -20,10 +20,42 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewButtonUnavailable !== undefined \r",
+							"    && item.TooFewAnswers !== undefined\r",
+							"    && item.TooManyAnswers !== undefined\r",
+							"    && item.ItemAnswerRequired !== undefined\r",
+							"    && item.CategoryAnswerRequired !== undefined\r",
+							"    && item.AnswerRequired !== undefined\r",
+							"    && item.NotInRange !== undefined\r",
+							"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && item.LessThanMinimum !== undefined\r",
+							"    && item.MoreThanMaximum !== undefined\r",
+							"    && item.MustBeNumeric !== undefined\r",
+							"    && item.TooManyDigitsFraction !== undefined\r",
+							"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && item.ExclusiveCategory !== undefined\r",
+							"    && item.InvalidCategory !== undefined\r",
+							"    && item.ButtonPause !== undefined\r",
+							"    && item.ButtonStart !== undefined\r",
+							"    && item.ButtonClear !== undefined\r",
+							"    && item.ButtonBack !== undefined\r",
+							"    && item.ButtonNext !== undefined\r",
+							"    && item.Name !== undefined\r",
+							"    && item.AnswerTooLong !== undefined\r",
+							"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Response contains LanguageId\", function () {\r",
 							"    var languages = pm.response.json();\r",
-							"    var lastIndex = languages.length - 1;\r",
-							"    pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+							"    pm.expect(languages.every(validateProperties)).to.be.true;\r",
+							"    if (languages.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = languages.length - 1;\r",
+							"        pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+							"    }\r",
+							"\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -40,14 +72,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Languages/",
+					"raw": "{{origin}}/v1/LanguageTranslations",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"Languages",
-						""
+						"LanguageTranslations"
 					]
 				}
 			},
@@ -68,9 +99,36 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewButtonUnavailable !== undefined \r",
+							"    && item.TooFewAnswers !== undefined\r",
+							"    && item.TooManyAnswers !== undefined\r",
+							"    && item.ItemAnswerRequired !== undefined\r",
+							"    && item.CategoryAnswerRequired !== undefined\r",
+							"    && item.AnswerRequired !== undefined\r",
+							"    && item.NotInRange !== undefined\r",
+							"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && item.LessThanMinimum !== undefined\r",
+							"    && item.MoreThanMaximum !== undefined\r",
+							"    && item.MustBeNumeric !== undefined\r",
+							"    && item.TooManyDigitsFraction !== undefined\r",
+							"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && item.ExclusiveCategory !== undefined\r",
+							"    && item.InvalidCategory !== undefined\r",
+							"    && item.ButtonPause !== undefined\r",
+							"    && item.ButtonStart !== undefined\r",
+							"    && item.ButtonClear !== undefined\r",
+							"    && item.ButtonBack !== undefined\r",
+							"    && item.ButtonNext !== undefined\r",
+							"    && item.Name !== undefined\r",
+							"    && item.AnswerTooLong !== undefined\r",
+							"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Response contains LanguageId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"Id\");\r",
 							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
 							"    pm.environment.set(\"LanguageId\", response.Id);\r",
 							"});"
 						],
@@ -94,7 +152,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{          \r\n        \"Name\": \"englishfsdgdgxdzg1\",\r\n        \"ButtonNext\": null,\r\n        \"ButtonBack\": null,\r\n        \"ButtonClear\": null,\r\n        \"ButtonStart\": null,\r\n        \"ButtonPause\": null,\r\n        \"InvalidCategory\": null,\r\n        \"ExclusiveCategory\": null,\r\n        \"TooManyDigitsFraction\": null,\r\n        \"AnswerTooLong\": null,\r\n        \"MustBeNumeric\": null,\r\n        \"MoreThanMaximum\": null,\r\n        \"LessThanMinimum\": null,\r\n        \"TooManyDigitsInIntegerPart\": null,\r\n        \"NotInRange\": null,\r\n        \"AnswerRequired\": null,\r\n        \"CategoryAnswerRequired\": null,\r\n        \"ItemAnswerRequired\": null,\r\n        \"TooManyAnswers\": null,\r\n        \"TooFewAnswers\": null,\r\n        \"InterviewButtonUnavailable\": null,\r\n        \"DoNotUseBrowserButtonToNavigate\": null,\r\n        \"DoNotUseButtonWithOtherAnswer\": null\r\n    }",
+					"raw": "{          \r\n        \"Name\": \"Posman Language\",\r\n        \"ButtonNext\": null,\r\n        \"ButtonBack\": null,\r\n        \"ButtonClear\": null,\r\n        \"ButtonStart\": null,\r\n        \"ButtonPause\": null,\r\n        \"InvalidCategory\": null,\r\n        \"ExclusiveCategory\": null,\r\n        \"TooManyDigitsFraction\": null,\r\n        \"AnswerTooLong\": null,\r\n        \"MustBeNumeric\": null,\r\n        \"MoreThanMaximum\": null,\r\n        \"LessThanMinimum\": null,\r\n        \"TooManyDigitsInIntegerPart\": null,\r\n        \"NotInRange\": null,\r\n        \"AnswerRequired\": null,\r\n        \"CategoryAnswerRequired\": null,\r\n        \"ItemAnswerRequired\": null,\r\n        \"TooManyAnswers\": null,\r\n        \"TooFewAnswers\": null,\r\n        \"InterviewButtonUnavailable\": null,\r\n        \"DoNotUseBrowserButtonToNavigate\": null,\r\n        \"DoNotUseButtonWithOtherAnswer\": null\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -102,14 +160,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Languages/",
+					"raw": "{{origin}}/v1/LanguageTranslations",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"Languages",
-						""
+						"LanguageTranslations"
 					]
 				}
 			},
@@ -130,9 +187,37 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewButtonUnavailable !== undefined \r",
+							"    && item.TooFewAnswers !== undefined\r",
+							"    && item.TooManyAnswers !== undefined\r",
+							"    && item.ItemAnswerRequired !== undefined\r",
+							"    && item.CategoryAnswerRequired !== undefined\r",
+							"    && item.AnswerRequired !== undefined\r",
+							"    && item.NotInRange !== undefined\r",
+							"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && item.LessThanMinimum !== undefined\r",
+							"    && item.MoreThanMaximum !== undefined\r",
+							"    && item.MustBeNumeric !== undefined\r",
+							"    && item.TooManyDigitsFraction !== undefined\r",
+							"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && item.ExclusiveCategory !== undefined\r",
+							"    && item.InvalidCategory !== undefined\r",
+							"    && item.ButtonPause !== undefined\r",
+							"    && item.ButtonStart !== undefined\r",
+							"    && item.ButtonClear !== undefined\r",
+							"    && item.ButtonBack !== undefined\r",
+							"    && item.ButtonNext !== undefined\r",
+							"    && item.Name !== undefined\r",
+							"    && item.AnswerTooLong !== undefined\r",
+							"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
 							"pm.test(\"Response contains LanguageId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"Id\");\r",
 							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Name == \"Postman Updated\").to.be.true;\r",
 							"    pm.environment.set(\"LanguageId\", response.Id);\r",
 							"});"
 						],
@@ -156,7 +241,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{     \r\n        \"Name\": \"unknown\",\r\n        \"ButtonNext\": null,\r\n        \"ButtonBack\": null,\r\n        \"ButtonClear\": null,\r\n        \"ButtonStart\": null,\r\n        \"ButtonPause\": null,\r\n        \"InvalidCategory\": true,\r\n        \"ExclusiveCategory\": null,\r\n        \"TooManyDigitsFraction\": null,\r\n        \"AnswerTooLong\": null,\r\n        \"MustBeNumeric\": null,\r\n        \"MoreThanMaximum\": \"dgfsxdgfh\",\r\n        \"LessThanMinimum\": \"srfgdhdegh\",\r\n        \"TooManyDigitsInIntegerPart\": null,\r\n        \"NotInRange\": null,\r\n        \"AnswerRequired\": null,\r\n        \"CategoryAnswerRequired\": null,\r\n        \"ItemAnswerRequired\": null,\r\n        \"TooManyAnswers\": null,\r\n        \"TooFewAnswers\": null,\r\n        \"InterviewButtonUnavailable\": null,\r\n        \"DoNotUseBrowserButtonToNavigate\": null,\r\n        \"DoNotUseButtonWithOtherAnswer\": null\r\n    }",
+					"raw": "{     \r\n        \"Name\": \"Postman Updated\",\r\n        \"ButtonNext\": \"new text\",\r\n        \"ButtonBack\": \"new text\",\r\n        \"ButtonClear\": \"new text\",\r\n        \"ButtonStart\": \"new text\",\r\n        \"ButtonPause\": \"new text\",\r\n        \"InvalidCategory\": true,\r\n        \"ExclusiveCategory\": \"new text\",\r\n        \"TooManyDigitsFraction\": \"new text\",\r\n        \"AnswerTooLong\": \"new text\",\r\n        \"MustBeNumeric\": \"new text\",\r\n        \"MoreThanMaximum\": \"new text\",\r\n        \"LessThanMinimum\": \"new text\",\r\n        \"TooManyDigitsInIntegerPart\": \"new text\",\r\n        \"NotInRange\": \"new text\",\r\n        \"AnswerRequired\": \"new text\",\r\n        \"CategoryAnswerRequired\": \"new text\",\r\n        \"ItemAnswerRequired\": \"new text\",\r\n        \"TooManyAnswers\": \"new text\",\r\n        \"TooFewAnswers\": \"new text\",\r\n        \"InterviewButtonUnavailable\": \"new text\",\r\n        \"DoNotUseBrowserButtonToNavigate\": \"new text\",\r\n        \"DoNotUseButtonWithOtherAnswer\": \"new text\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -164,13 +249,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Languages/{{LanguageId}}",
+					"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"Languages",
+						"LanguageTranslations",
 						"{{LanguageId}}"
 					]
 				}
@@ -186,6 +271,10 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							""
 						],
@@ -217,14 +306,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/{{LanguageId}}",
+					"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"Surveys",
-						"{{SurveyId}}",
 						"LanguageTranslations",
 						"{{LanguageId}}"
 					]
