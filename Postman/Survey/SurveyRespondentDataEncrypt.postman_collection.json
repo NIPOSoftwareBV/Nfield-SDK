@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "f92b507c-8cf9-4c02-a58e-647bd6848c53",
-		"name": "DomainDeliveryPlans",
+		"_postman_id": "7b6c2f57-12d1-415d-9c85-fc8feada2d4c",
+		"name": "SurveyRespondentDataEncrypt",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Plans",
+			"name": "Get Respondent Data Encrypt",
 			"event": [
 				{
 					"listen": "test",
@@ -25,11 +25,8 @@
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
@@ -39,7 +36,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\r\n  \"IV\": \"F0HQJewlW7rsPm1WVtvCUg==\",\r\n  \"Data\": {\r\n    \"sample string 1\": \"sampleString2\",\r\n    \"sample string 3\": \"sampleString4\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -47,14 +44,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Delivery/Plans",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/RespondentDataEncrypt",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
-						"Delivery",
-						"Plans"
+						"Surveys",
+						"{{SurveyId}}",
+						"RespondentDataEncrypt"
 					]
 				}
 			},

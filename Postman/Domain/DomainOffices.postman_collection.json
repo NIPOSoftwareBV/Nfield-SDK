@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7e4f6b4f-20ca-449c-b0c1-0e36890af967",
+		"_postman_id": "e5a6789e-e8a2-4ef5-896a-6a5d32f44d20",
 		"name": "DomainOffices",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -33,7 +33,7 @@
 							"    if (offices.length > 0)",
 							"    {",
 							"        var lastIndex = offices.length - 1;",
-							"        pm.environment.set(\"OfficeId\", offices[lastIndex].OfficeId);",
+							"        pm.environment.set(\"FieldworkOfficeId\", offices[lastIndex].OfficeId);",
 							"    }",
 							"});",
 							""
@@ -114,14 +114,14 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+					"raw": "{{origin}}/v1/Offices/{{FieldworkOfficeId}}",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
 						"Offices",
-						"{{OfficeId}}"
+						"{{FieldworkOfficeId}}"
 					]
 				},
 				"description": "This method retrieve details of a specific survey."
@@ -149,7 +149,7 @@
 							"pm.test(\"All offices should have an OfficeName\", function () {",
 							"    const office = pm.response.json();",
 							"    pm.expect(validateProperties(office)).to.be.true;",
-							"    pm.environment.set(\"OfficeId\", office.OfficeId);",
+							"    pm.environment.set(\"FieldworkOfficeId\", office.OfficeId);",
 							"});"
 						],
 						"type": "text/javascript"

@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "aea95148-65d3-4317-a6ab-338622839552",
+		"name": "SurveySamplingPointsQuotaTargets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Sampling Point Quota Targets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.LevelId !== undefined \r",
+							"    && item.Target !== undefined \r",
+							"    && item.SuccessfulCount !== undefined\r",
+							"    && item.UnsuccessfulCount !== undefined\r",
+							"    && item.DroppedOutCount !== undefined\r",
+							"    && item.RejectedCount !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains QuotaLevelId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+							"    if (response.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = response.length - 1;\r",
+							"        pm.environment.set(\"QuotaLevelId\", response[lastIndex].LevelId);\r",
+							"    }\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints",
+						"{{SamplingPointId}}",
+						"QuotaTargets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sampling Point Quota Level Target",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.LevelId !== undefined \r",
+							"    && item.Target !== undefined \r",
+							"    && item.SuccessfulCount !== undefined\r",
+							"    && item.UnsuccessfulCount !== undefined\r",
+							"    && item.DroppedOutCount !== undefined\r",
+							"    && item.RejectedCount !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains QuotaLevelId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.environment.set(\"QuotaLevelId\", response[lastIndex].LevelId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints",
+						"{{SamplingPointId}}",
+						"QuotaTargets",
+						"{{QuotaLevelId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Sampling Point Quota Level Target",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.LevelId !== undefined \r",
+							"    && item.Target !== undefined \r",
+							"    && item.SuccessfulCount !== undefined\r",
+							"    && item.UnsuccessfulCount !== undefined\r",
+							"    && item.DroppedOutCount !== undefined\r",
+							"    && item.RejectedCount !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains QuotaLevelId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Target == 100).to.be.true;\r",
+							"    pm.environment.set(\"QuotaLevelId\", response.LevelId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Target\": 100\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints",
+						"{{SamplingPointId}}",
+						"QuotaTargets",
+						"{{QuotaLevelId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
