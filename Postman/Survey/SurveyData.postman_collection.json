@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "ac47007e-04d5-434c-9491-1800a4c1a4fe",
+		"name": "SurveyData",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"Accepted\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.Id !== undefined ",
+							"    && item.IdentityId !== undefined ",
+							"    && item.Parameters !== undefined",
+							"    && item.StartTime !== undefined",
+							"    && item.FinishTime !== undefined",
+							"    && item.ResultUrl !== undefined",
+							"    && item.Status !== undefined",
+							"    && item.TaskType !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains the Properties\", function () {",
+							"    var response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"SurveyId\": \"{{SurveyId}}\",\r\n  \"InterviewId\": {{InterviewId}},\r\n  \"DownloadTestInterviewData\": true,\r\n  \"DownloadSuccessfulLiveInterviewData\": true,\r\n  \"DownloadRejectedLiveInterviewData\": true,\r\n  \"DownloadNotSuccessfulLiveInterviewData\": true,\r\n  \"DownloadSuspendedLiveInterviewData\": true,\r\n  \"DownloadParaData\": true,\r\n  \"DownloadCapturedMedia\": true,\r\n  \"DownloadClosedAnswerData\": true,\r\n  \"DownloadOpenAnswerData\": true,\r\n  \"DownloadFileName\": \"DownloadedFileName\",\r\n  \"StartDate\": \"2015-11-05T15:16:41Z\",\r\n  \"EndDate\": \"2015-11-05T15:16:41Z\"\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Data",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Data"
+					]
+				},
+				"description": "This method retrieves the QuotaTargets from a Survey."
+			},
+			"response": []
+		}
+	]
+}
