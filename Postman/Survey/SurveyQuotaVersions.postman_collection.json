@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "438dda74-ec84-4a9f-adc5-d3bf5cbbc283",
+		"name": "SurveyQuotaVersions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Quota Versions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.ETag !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains ETag\", function () {",
+							"    var versions = pm.response.json();",
+							"    pm.expect(versions.every(validateProperties)).to.be.true;",
+							"    if (versions.length > 0)",
+							"    {",
+							"        var lastIndex = versions.length - 1;",
+							"        pm.environment.set(\"ETag\", versions[lastIndex].ETag);",
+							"    }",
+							"",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"QuotaVersions"
+					]
+				},
+				"description": "This method retrieves the QuotaTargets from a Survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Quota Versions by eTag",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.ETag !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains ETag\", function () {",
+							"    var version = pm.response.json();",
+							"    pm.expect(validateProperties(version)).to.be.true;",
+							"    pm.environment.set(\"ETag\", version.ETag);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "X-Nfield-Domain",
+						"value": "{{Domain}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions/{{ETag}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"QuotaVersions",
+						"{{ETag}}"
+					]
+				},
+				"description": "This method retrieves the QuotaTargets from a Survey."
+			},
+			"response": []
+		}
+	]
+}

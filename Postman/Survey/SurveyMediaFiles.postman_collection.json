@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "d73217c5-ec8b-4997-9bc4-6f9ef99417ab",
+		"name": "SurveyMediaFiles",
+		"description": "A controller for querying Surveys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Media Files",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Response contains an Array\", function () {",
+							"    var response = pm.response.json();",
+							"    if (response.length > 0)",
+							"    {",
+							"        var lastIndex = response.length - 1;",
+							"        pm.environment.set(\"FileName\", response[lastIndex]);",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"MediaFiles"
+					]
+				},
+				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Media File",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"Created\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/bungalow.jpg"
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"MediaFiles",
+						"{{FileName}}"
+					]
+				},
+				"description": "This method creates a new survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Media File",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"All surveys should have a SurveyName\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(survey.SurveyName !== undefined).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"MediaFiles",
+						"{{FileName}}"
+					]
+				},
+				"description": "This method retrieve details of a specific survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Media File",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							"//pm.environment.unset(\"SurveyId\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"MediaFiles",
+						"{{FileName}}"
+					]
+				},
+				"description": "This method deletes a specified survey."
+			},
+			"response": []
+		}
+	]
+}
