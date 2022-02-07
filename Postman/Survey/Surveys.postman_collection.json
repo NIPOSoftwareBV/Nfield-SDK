@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "090e7d5f-6e58-4a0a-be86-73e33746b5ec",
+		"_postman_id": "827b6f32-83b8-4160-bb75-26648e0a7d85",
 		"name": "Surveys",
 		"description": "A controller for querying Surveys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -21,13 +21,20 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							"const hasSurveyName = (survey) => {",
-							"    return survey.SurveyName !== undefined;",
+							"const validateProperties = (survey) => {",
+							"    return survey.SurveyName !== undefined",
+							"    && survey.ClientName !== undefined",
+							"    && survey.SurveyType !== undefined",
+							"    && survey.QuestionnaireMD5 !== undefined",
+							"    && survey.InterviewerInstruction !== undefined",
+							"    && survey.SurveyState !== undefined",
+							"    && survey.SurveyGroupId !== undefined",
+							"    && survey.SurveyId !== undefined;",
 							"}",
 							"",
-							"pm.test(\"All surveys should have a SurveyName\", function () {",
+							"pm.test(\"All surveys Properties\", function () {",
 							"    const surveys = pm.response.json();",
-							"    pm.expect(surveys.every(hasSurveyName)).to.be.true;",
+							"    pm.expect(surveys.every(validateProperties)).to.be.true;",
 							"});",
 							"",
 							"pm.test(\"Response contains SurveyId\", function () {",
@@ -78,8 +85,21 @@
 							"    pm.response.to.have.status(201);",
 							"});",
 							"",
+							"const validateProperties = (survey) => {",
+							"    return survey.SurveyName !== undefined",
+							"    && survey.ClientName !== undefined",
+							"    && survey.SurveyType !== undefined",
+							"    && survey.QuestionnaireMD5 !== undefined",
+							"    && survey.InterviewerInstruction !== undefined",
+							"    && survey.SurveyState !== undefined",
+							"    && survey.SurveyGroupId !== undefined",
+							"    && survey.QuestionnaireMD5 !== undefined",
+							"    && survey.SurveyId !== undefined;",
+							"}",
+							"",
 							"pm.test(\"Response contains SurveyId\", function () {",
 							"    const survey = pm.response.json();",
+							"    pm.expect(validateProperties(survey)).to.be.true;",
 							"    pm.expect(survey.SurveyId.length).to.eql(36);",
 							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
 							"});"
@@ -124,7 +144,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -134,12 +153,24 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
+							"const validateProperties = (survey) => {",
+							"    return survey.SurveyName !== undefined",
+							"    && survey.ClientName !== undefined",
+							"    && survey.SurveyType !== undefined",
+							"    && survey.QuestionnaireMD5 !== undefined",
+							"    && survey.InterviewerInstruction !== undefined",
+							"    && survey.SurveyState !== undefined",
+							"    && survey.SurveyGroupId !== undefined",
+							"    && survey.SurveyId !== undefined;",
+							"}",
+							"",
 							"pm.test(\"All surveys should have a SurveyName\", function () {",
 							"    const survey = pm.response.json();",
-							"    pm.expect(survey.SurveyName !== undefined).to.be.true;",
+							"    pm.expect(validateProperties(survey)).to.be.true;",
 							"});",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -241,15 +272,14 @@
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 204\", function () {",
 							"    pm.response.to.have.status(204);",
 							"});",
 							"",
-							"//pm.environment.unset(\"SurveyId\");",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
