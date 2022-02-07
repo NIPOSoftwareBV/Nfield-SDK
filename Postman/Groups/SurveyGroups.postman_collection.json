@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "3d661d70-11fb-4020-8512-22104219443a",
+		"name": "SurveyGroups",
+		"description": "A controller for querying Surveys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains Properties\", function () {",
+							"    var response = pm.response.json();",
+							"     pm.expect(response.every(validateProperties)).to.be.true;",
+							"    if (response.length > 0)",
+							"    {",
+							"        var lastIndex = response.length - 1;",
+							"        pm.environment.set(\"SurveyGroupId\", response[lastIndex].SurveyGroupId);",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups"
+					]
+				},
+				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains Properties\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(validateProperties(survey)).to.be.true;",
+							"    pm.environment.set(\"SurveyGroupId\", response.SurveyGroupId);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups",
+						"{{SurveyGroupId}}"
+					]
+				},
+				"description": "This method retrieve details of a specific survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response has been updated\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"    pm.environment.set(\"SurveyGroupId\", survey.SurveyGroupId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Name\": \"PostmanGroupName\",\r\n  \"Description\": \"sample string 2\"\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups"
+					]
+				},
+				"description": "This method creates a new survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Surveys Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"pm.test(\"Response contains All Properties\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"    pm.expect(response.Name == \"PostmanGroupNameUpdated\").to.be.true;",
+							"    pm.environment.set(\"SurveyGroupId\", response.SurveyGroupId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Name\": \"PostmanGroupNameUpdated\",\r\n  \"Description\": \"sample string 2\"\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups",
+						"{{SurveyGroupId}}"
+					]
+				},
+				"description": "Update a survey with the specified fields."
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups",
+						"{{SurveyGroupId}}"
+					]
+				},
+				"description": "This method deletes a specified survey."
+			},
+			"response": []
+		}
+	]
+}
