@@ -6,6 +6,83 @@
 	},
 	"item": [
 		{
+			"name": "Get Assignments QuotaTargets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.LevelId !== undefined \r",
+							"    && item.SurveySuccessful !== undefined \r",
+							"    && item.Target !== undefined\r",
+							"    && item.Successful !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains LevelId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+							"    if (response.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = response.length - 1;\r",
+							"        pm.environment.set(\"QuotaLevelId\", response[lastIndex].LevelId);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments/QuotaTargets",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Interviewers",
+						"{{InterviewerId}}",
+						"Assignments",
+						"QuotaTargets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create Assignment",
 			"event": [
 				{
@@ -62,72 +139,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Assignments QuotaTargets",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Status code name has string\", function () {\r",
-							"    pm.response.to.have.status(\"OK\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Response contains LevelId\", function () {\r",
-							"    var levels = pm.response.json();\r",
-							"    pm.environment.set(\"QuotaLevelId\", levels[0].LevelId);\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments/QuotaTargets",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"Surveys",
-						"{{SurveyId}}",
-						"Interviewers",
-						"{{InterviewerId}}",
-						"Assignments",
-						"QuotaTargets"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Assign",
+			"name": "Assign/Unassign",
 			"event": [
 				{
 					"listen": "test",
@@ -158,7 +170,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"InterviewerId\": \"sample string 1\",\r\n  \"Assign\": true\r\n}",
+					"raw": "{\r\n  \"InterviewerId\": \"{{InterviewerId}}\",\r\n  \"Assign\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
