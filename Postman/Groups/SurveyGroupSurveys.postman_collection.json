@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "b47d15fc-d09d-49a9-9858-cbbb4b2f9b8e",
+		"_postman_id": "06b51a5c-d8c1-4b09-bb10-762e191eabea",
 		"name": "SurveyGroupSurveys",
-		"description": "A controller for querying Surveys",
+		"description": "A controller for managing surveys within survey groups",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -72,7 +72,7 @@
 						"Surveys"
 					]
 				},
-				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+				"description": "Returns a list of all surveys in the survey group."
 			},
 			"response": []
 		}

@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "c60cb734-95c7-4530-a10e-47ae16da0aec",
+		"_postman_id": "c564f828-1048-4a8e-a68c-62ed4802b70b",
 		"name": "SurveyGroupAssignments",
-		"description": "A controller for querying Surveys",
+		"description": "The controller is used for surveygroup assignments management",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -67,7 +67,7 @@
 						"LocalAssignments"
 					]
 				},
-				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+				"description": "Get Survey Group local assignments"
 			},
 			"response": []
 		},
@@ -127,7 +127,7 @@
 						"AssignLocal"
 					]
 				},
-				"description": "This method creates a new survey."
+				"description": "Assign native user to survey group"
 			},
 			"response": []
 		},
@@ -172,7 +172,7 @@
 						"UnassignLocal"
 					]
 				},
-				"description": "This method creates a new survey."
+				"description": "Unassign native user from survey group"
 			},
 			"response": []
 		},
@@ -222,7 +222,7 @@
 						"DirectoryAssignments"
 					]
 				},
-				"description": "This method retrieve details of a specific survey."
+				"description": "Get Survey Group directory assignments"
 			},
 			"response": []
 		},
@@ -267,7 +267,7 @@
 						"AssignDirectory"
 					]
 				},
-				"description": "This method creates a new survey."
+				"description": "Assign directory user to survey group"
 			},
 			"response": []
 		},
@@ -312,7 +312,7 @@
 						"UnassignDirectory"
 					]
 				},
-				"description": "This method creates a new survey."
+				"description": "Unassign directory user from survey group"
 			},
 			"response": []
 		}

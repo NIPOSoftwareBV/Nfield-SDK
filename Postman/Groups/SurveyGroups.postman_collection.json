@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "3d661d70-11fb-4020-8512-22104219443a",
+		"_postman_id": "0a88f1fa-28bf-4e0b-8eb1-09973b8d03ac",
 		"name": "SurveyGroups",
-		"description": "A controller for querying Surveys",
+		"description": "A controller for managing Survey Groups Survey groups offer a way to logically organize your surveys into groups. E.g. a survey group to manage 'all surveys for customer X'. The group defined with id '1' is the so-called 'default survey group', it always exists and cannot be deleted. It can be renamed though",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -65,7 +65,7 @@
 						"SurveyGroups"
 					]
 				},
-				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+				"description": "Returns the details of all survey groups in the domain."
 			},
 			"response": []
 		},
@@ -125,7 +125,7 @@
 						"{{SurveyGroupId}}"
 					]
 				},
-				"description": "This method retrieve details of a specific survey."
+				"description": "Retrieve a specific survey group"
 			},
 			"response": []
 		},
@@ -183,7 +183,7 @@
 						"SurveyGroups"
 					]
 				},
-				"description": "This method creates a new survey."
+				"description": "Create a survey group. An id is automatically generated."
 			},
 			"response": []
 		},
@@ -246,7 +246,7 @@
 						"{{SurveyGroupId}}"
 					]
 				},
-				"description": "Update a survey with the specified fields."
+				"description": "Update a survey groupUpdate a survey with the specified fields."
 			},
 			"response": []
 		},
@@ -294,7 +294,7 @@
 						"{{SurveyGroupId}}"
 					]
 				},
-				"description": "This method deletes a specified survey."
+				"description": "Delete a survey group Survey groups have to be 'empty' before they can be deleted. An empty survey group has no surveys associated to it.This method deletes a specified survey."
 			},
 			"response": []
 		}

@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "c1bf8250-d0dc-4b46-b583-a42f71d7f12c",
+		"_postman_id": "31c428b4-ab41-44c1-a79a-74365e918c35",
 		"name": "SurveyInterviewer",
+		"description": "The controller is used to retrieve and to add interviewers to survey. Allowed for non SamplingPoints features (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -67,7 +68,7 @@
 						"Interviewers"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "(Capi) Retrieves list of interviewers for the survey."
 			},
 			"response": []
 		},
@@ -138,7 +139,7 @@
 						"Interviewers"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "(Capi) Adds interviewer to the survey."
 			},
 			"response": []
 		}

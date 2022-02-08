@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "b393f157-d696-4ba7-be90-a77abda1642c",
-		"name": "SurveyInterviewerAssignments",
-		"description": "The controller is used to assign interviewers to survey. (Has survey type usage restrictions)",
+		"_postman_id": "ae1d94e1-0367-48ed-9097-3a0862d34a0b",
+		"name": "SurveyInterviewerInstructions",
+		"description": "Controller handling the upload of Interviewer instruction file (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Assignments QuotaTargets",
+			"name": "Get Interviewer Instructions",
 			"event": [
 				{
 					"listen": "test",
@@ -20,24 +20,6 @@
 							"pm.test(\"Status code name has string\", function () {\r",
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
-							"\r",
-							"const validateProperties = (item) => {\r",
-							"    return item.LevelId !== undefined \r",
-							"    && item.SurveySuccessful !== undefined \r",
-							"    && item.Target !== undefined\r",
-							"    && item.Successful !== undefined;\r",
-							"}\r",
-							"\r",
-							"pm.test(\"Response contains LevelId\", function () {\r",
-							"    var response = pm.response.json();\r",
-							"    pm.expect(response.every(validateProperties)).to.be.true;\r",
-							"    if (response.length > 0)\r",
-							"    {\r",
-							"        var lastIndex = response.length - 1;\r",
-							"        pm.environment.set(\"QuotaLevelId\", response[lastIndex].LevelId);\r",
-							"    }\r",
-							"});\r",
-							"\r",
 							""
 						],
 						"type": "text/javascript"
@@ -66,7 +48,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments/QuotaTargets",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions",
 					"host": [
 						"{{origin}}"
 					],
@@ -74,18 +56,15 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"Interviewers",
-						"{{InterviewerId}}",
-						"Assignments",
-						"QuotaTargets"
+						"InterviewerInstructions"
 					]
 				},
-				"description": "(Capi) Gets a list of levelIds with Target, Successful and SurveySuccessful assigned to an interviewer"
+				"description": "(Capi) Method used to download interviewer instruction file."
 			},
 			"response": []
 		},
 		{
-			"name": "Create Assignment",
+			"name": "Upload Interviewer Instructions",
 			"event": [
 				{
 					"listen": "test",
@@ -106,17 +85,24 @@
 				}
 			],
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
 						"value": "Basic {{AuthenticationToken}}",
 						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/pdf",
+						"type": "default"
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"WorkPackageAssignment\",\r\n    \"TargetToDistribute\": 10,\r\n    \"SamplingPointsFilter\": []\r\n}\r\n/*\r\nMore supported examples\r\n{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"SamplingPointsAssignment\",\r\n    \"SamplingPointsFilter\": [{\r\n           \"Name\": \"Name\",\r\n           \"Op\": \"Eq\",\r\n           \"Value\": \"Sampling Point 1\"\r\n        }]\r\n}\r\n{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"BasicAssignment\",\r\n    \"SamplingPointsFilter\": []\r\n}\r\n{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"GroupAssignment\",\r\n    \"SamplingPointsFilter\": []\r\n}\r\n*/\r\n",
+					"mode": "file",
+					"file": {
+						"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/InterviewerInstructions.pdf"
+					},
 					"options": {
 						"raw": {
 							"language": "json"
@@ -124,7 +110,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions/{{InstructionsFileName}}",
 					"host": [
 						"{{origin}}"
 					],
@@ -132,17 +118,16 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"Interviewers",
-						"{{InterviewerId}}",
-						"Assignments"
+						"InterviewerInstructions",
+						"{{InstructionsFileName}}"
 					]
 				},
-				"description": "(Capi) Assigns/Unassigns the interviewer to the survey.\n\nDepends on SurveyType (Basic, Eurobarometer or Eurobarometer advanced) & QuotaType (Join Targets, Workpackage ...)"
+				"description": "(Capi) Method used to upload interviewer instruction file. The re-upload of a new pdf file for the same survey it will replace the existing one."
 			},
 			"response": []
 		},
 		{
-			"name": "Assign/Unassign",
+			"name": "Delete Interviewer Instructions",
 			"event": [
 				{
 					"listen": "test",
@@ -163,7 +148,7 @@
 				}
 			],
 			"request": {
-				"method": "PUT",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Authorization",
@@ -181,7 +166,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Assignment",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions",
 					"host": [
 						"{{origin}}"
 					],
@@ -189,10 +174,10 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"Assignment"
+						"InterviewerInstructions"
 					]
 				},
-				"description": "(Capi) Assigns/Unassigns the interviewer to the survey."
+				"description": "(Capi) Method used to delete the interviewer instruction file."
 			},
 			"response": []
 		}
