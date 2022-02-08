@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "d3ed9c3b-22c7-4e13-8546-17d6a48e9cd7",
+		"_postman_id": "fe5bc0d7-d61b-4861-9d0f-63ec7a33202e",
 		"name": "InterviewerOffices",
+		"description": "Adding/Removing fieldwork offices to an interviewer",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -66,62 +67,8 @@
 						"{{InterviewerId}}",
 						"Offices"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Interviewer Offices",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Status code name has string\", function () {\r",
-							"    pm.response.to.have.status(\"OK\");\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
 				},
-				"url": {
-					"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices/{{OfficeId}}",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"",
-						"Interviewers",
-						"{{InterviewerId}}",
-						"Offices",
-						"{{OfficeId}}"
-					]
-				}
+				"description": "Returns fieldwork offices assigned to the specified interviewer."
 			},
 			"response": []
 		},
@@ -176,7 +123,64 @@
 						"{{InterviewerId}}",
 						"Offices"
 					]
+				},
+				"description": "Add fieldwork office to an interviewer. If fieldwork office already exist on interviewer it will be ignored."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Interviewer Offices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
 				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices/{{OfficeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"",
+						"Interviewers",
+						"{{InterviewerId}}",
+						"Offices",
+						"{{OfficeId}}"
+					]
+				},
+				"description": "Delete fieldwork office(s) from an interviewer. If fieldwork office doesn't exist on interviewer it will be ignored."
 			},
 			"response": []
 		}

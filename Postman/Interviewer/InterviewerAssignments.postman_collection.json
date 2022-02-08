@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "b829259a-2a3b-4d11-9322-24a51df11edc",
+		"_postman_id": "9ba3b2ef-e0cd-4f6e-9b50-87da7e343e89",
 		"name": "InterviewerAssignments",
+		"description": "The InterviewerAssignmentsController class provides methods to get the interviewers assignments. Gets all assignments types, Survey and Sampling points. (Free intercept, Individual target, Sampling points)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -88,7 +89,8 @@
 						"{{InterviewerId}}",
 						"Assignments"
 					]
-				}
+				},
+				"description": "This method retrieve all assignments with counts from an interviewer"
 			},
 			"response": []
 		}

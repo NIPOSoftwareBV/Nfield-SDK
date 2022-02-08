@@ -1,0 +1,328 @@
+{
+	"info": {
+		"_postman_id": "1b9afc73-03bc-4885-abbd-abbbf058331c",
+		"name": "DomainLanguagesTranslations",
+		"description": "Controller for managing the domain Languages. Using LanguageTranslations to keep the same name used for surveys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Languages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewButtonUnavailable !== undefined \r",
+							"    && item.TooFewAnswers !== undefined\r",
+							"    && item.TooManyAnswers !== undefined\r",
+							"    && item.ItemAnswerRequired !== undefined\r",
+							"    && item.CategoryAnswerRequired !== undefined\r",
+							"    && item.AnswerRequired !== undefined\r",
+							"    && item.NotInRange !== undefined\r",
+							"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && item.LessThanMinimum !== undefined\r",
+							"    && item.MoreThanMaximum !== undefined\r",
+							"    && item.MustBeNumeric !== undefined\r",
+							"    && item.TooManyDigitsFraction !== undefined\r",
+							"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && item.ExclusiveCategory !== undefined\r",
+							"    && item.InvalidCategory !== undefined\r",
+							"    && item.ButtonPause !== undefined\r",
+							"    && item.ButtonStart !== undefined\r",
+							"    && item.ButtonClear !== undefined\r",
+							"    && item.ButtonBack !== undefined\r",
+							"    && item.ButtonNext !== undefined\r",
+							"    && item.Name !== undefined\r",
+							"    && item.AnswerTooLong !== undefined\r",
+							"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    var languages = pm.response.json();\r",
+							"    pm.expect(languages.every(validateProperties)).to.be.true;\r",
+							"    if (languages.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = languages.length - 1;\r",
+							"        pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+							"    }\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/LanguageTranslations",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LanguageTranslations"
+					]
+				},
+				"description": "Gets all domain languages for the domain."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewButtonUnavailable !== undefined \r",
+							"    && item.TooFewAnswers !== undefined\r",
+							"    && item.TooManyAnswers !== undefined\r",
+							"    && item.ItemAnswerRequired !== undefined\r",
+							"    && item.CategoryAnswerRequired !== undefined\r",
+							"    && item.AnswerRequired !== undefined\r",
+							"    && item.NotInRange !== undefined\r",
+							"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && item.LessThanMinimum !== undefined\r",
+							"    && item.MoreThanMaximum !== undefined\r",
+							"    && item.MustBeNumeric !== undefined\r",
+							"    && item.TooManyDigitsFraction !== undefined\r",
+							"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && item.ExclusiveCategory !== undefined\r",
+							"    && item.InvalidCategory !== undefined\r",
+							"    && item.ButtonPause !== undefined\r",
+							"    && item.ButtonStart !== undefined\r",
+							"    && item.ButtonClear !== undefined\r",
+							"    && item.ButtonBack !== undefined\r",
+							"    && item.ButtonNext !== undefined\r",
+							"    && item.Name !== undefined\r",
+							"    && item.AnswerTooLong !== undefined\r",
+							"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.environment.set(\"LanguageId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{          \r\n        \"Name\": \"Posman Language\",\r\n        \"ButtonNext\": null,\r\n        \"ButtonBack\": null,\r\n        \"ButtonClear\": null,\r\n        \"ButtonStart\": null,\r\n        \"ButtonPause\": null,\r\n        \"InvalidCategory\": null,\r\n        \"ExclusiveCategory\": null,\r\n        \"TooManyDigitsFraction\": null,\r\n        \"AnswerTooLong\": null,\r\n        \"MustBeNumeric\": null,\r\n        \"MoreThanMaximum\": null,\r\n        \"LessThanMinimum\": null,\r\n        \"TooManyDigitsInIntegerPart\": null,\r\n        \"NotInRange\": null,\r\n        \"AnswerRequired\": null,\r\n        \"CategoryAnswerRequired\": null,\r\n        \"ItemAnswerRequired\": null,\r\n        \"TooManyAnswers\": null,\r\n        \"TooFewAnswers\": null,\r\n        \"InterviewButtonUnavailable\": null,\r\n        \"DoNotUseBrowserButtonToNavigate\": null,\r\n        \"DoNotUseButtonWithOtherAnswer\": null\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/LanguageTranslations",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LanguageTranslations"
+					]
+				},
+				"description": "Create a new domain language"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.InterviewButtonUnavailable !== undefined \r",
+							"    && item.TooFewAnswers !== undefined\r",
+							"    && item.TooManyAnswers !== undefined\r",
+							"    && item.ItemAnswerRequired !== undefined\r",
+							"    && item.CategoryAnswerRequired !== undefined\r",
+							"    && item.AnswerRequired !== undefined\r",
+							"    && item.NotInRange !== undefined\r",
+							"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && item.LessThanMinimum !== undefined\r",
+							"    && item.MoreThanMaximum !== undefined\r",
+							"    && item.MustBeNumeric !== undefined\r",
+							"    && item.TooManyDigitsFraction !== undefined\r",
+							"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && item.ExclusiveCategory !== undefined\r",
+							"    && item.InvalidCategory !== undefined\r",
+							"    && item.ButtonPause !== undefined\r",
+							"    && item.ButtonStart !== undefined\r",
+							"    && item.ButtonClear !== undefined\r",
+							"    && item.ButtonBack !== undefined\r",
+							"    && item.ButtonNext !== undefined\r",
+							"    && item.Name !== undefined\r",
+							"    && item.AnswerTooLong !== undefined\r",
+							"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Name == \"Postman Updated\").to.be.true;\r",
+							"    pm.environment.set(\"LanguageId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{     \r\n        \"Name\": \"Postman Updated\",\r\n        \"ButtonNext\": \"new text\",\r\n        \"ButtonBack\": \"new text\",\r\n        \"ButtonClear\": \"new text\",\r\n        \"ButtonStart\": \"new text\",\r\n        \"ButtonPause\": \"new text\",\r\n        \"InvalidCategory\": true,\r\n        \"ExclusiveCategory\": \"new text\",\r\n        \"TooManyDigitsFraction\": \"new text\",\r\n        \"AnswerTooLong\": \"new text\",\r\n        \"MustBeNumeric\": \"new text\",\r\n        \"MoreThanMaximum\": \"new text\",\r\n        \"LessThanMinimum\": \"new text\",\r\n        \"TooManyDigitsInIntegerPart\": \"new text\",\r\n        \"NotInRange\": \"new text\",\r\n        \"AnswerRequired\": \"new text\",\r\n        \"CategoryAnswerRequired\": \"new text\",\r\n        \"ItemAnswerRequired\": \"new text\",\r\n        \"TooManyAnswers\": \"new text\",\r\n        \"TooFewAnswers\": \"new text\",\r\n        \"InterviewButtonUnavailable\": \"new text\",\r\n        \"DoNotUseBrowserButtonToNavigate\": \"new text\",\r\n        \"DoNotUseButtonWithOtherAnswer\": \"new text\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LanguageTranslations",
+						"{{LanguageId}}"
+					]
+				},
+				"description": "Patch the domain's language."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LanguageTranslations",
+						"{{LanguageId}}"
+					]
+				},
+				"description": "Delete the domain's language by id."
+			},
+			"response": []
+		}
+	]
+}

@@ -1,10 +1,40 @@
 {
 	"info": {
-		"_postman_id": "6da282d8-a5ea-4630-ac03-1775ee288be1",
+		"_postman_id": "358bd071-2568-445f-9ed3-2570a27e865a",
 		"name": "DomainThemes",
+		"description": "A controller for querying themes",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Download Theme",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Themes",
+						"{{ThemeId}}"
+					]
+				},
+				"description": "Gets the Download Url for the theme file. Using the Theme Id to find it."
+			},
+			"response": []
+		},
 		{
 			"name": "Upload Theme",
 			"event": [
@@ -66,35 +96,8 @@
 							"value": "{{ThemeTestName}}"
 						}
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Download Theme",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-zip-compressed"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}"
-					}
-				],
-				"url": {
-					"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"Themes",
-						"{{ThemeId}}"
-					]
-				}
+				},
+				"description": "Creates or updates the theme file using the Template Id and Theme name."
 			},
 			"response": []
 		},
@@ -122,7 +125,8 @@
 						"Themes",
 						"{{ThemeId}}"
 					]
-				}
+				},
+				"description": "Deletes the theme's files using the ThemeId."
 			},
 			"response": []
 		}

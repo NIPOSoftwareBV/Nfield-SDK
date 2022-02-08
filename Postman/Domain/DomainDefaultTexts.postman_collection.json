@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "98e7121d-6497-449b-a19a-16fe976fa0b9",
+		"_postman_id": "f448ef31-1984-4cf2-8964-29ca53e83ee3",
 		"name": "DomainDefaultTexts",
+		"description": "Allows retrieving of default texts for translatable items",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -69,7 +70,8 @@
 						"v1",
 						"DefaultTexts"
 					]
-				}
+				},
+				"description": "Gets all default texts for the domain."
 			},
 			"response": []
 		},
@@ -134,7 +136,8 @@
 						"DefaultTexts",
 						"{{TranslationKey}}"
 					]
-				}
+				},
+				"description": "Gets the specified default text for the domain."
 			},
 			"response": []
 		}

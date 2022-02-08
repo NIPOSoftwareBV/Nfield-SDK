@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "743163a2-094f-4579-b69b-6e73c7e03023",
+		"_postman_id": "93894dfe-87cc-477a-bf4b-e510c51c0cce",
 		"name": "DomainTemplates",
+		"description": "A controller for querying templates",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -53,7 +54,8 @@
 						"v1",
 						"Templates"
 					]
-				}
+				},
+				"description": "Gets a list of templates, including a list of themes per template."
 			},
 			"response": []
 		}

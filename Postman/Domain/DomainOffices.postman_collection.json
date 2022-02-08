@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "e5a6789e-e8a2-4ef5-896a-6a5d32f44d20",
+		"_postman_id": "0f44ffff-1641-47ab-aa76-406786a6d837",
 		"name": "DomainOffices",
+		"description": "A controller for querying fieldwork offices Supervisor should only have access to the Get methods",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -64,12 +65,12 @@
 						"Offices"
 					]
 				},
-				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+				"description": "Retrieve a list of Fieldwork Offices. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
 		{
-			"name": "Get Office by Id",
+			"name": "Get Office",
 			"event": [
 				{
 					"listen": "test",
@@ -124,7 +125,7 @@
 						"{{FieldworkOfficeId}}"
 					]
 				},
-				"description": "This method retrieve details of a specific survey."
+				"description": "Retrieve details of a specific fieldwork office."
 			},
 			"response": []
 		},
@@ -182,7 +183,7 @@
 						"Offices"
 					]
 				},
-				"description": "This method creates a new survey."
+				"description": "Create a new fieldwork office."
 			},
 			"response": []
 		},
@@ -247,7 +248,7 @@
 						"{{OfficeId}}"
 					]
 				},
-				"description": "Update a survey with the specified fields."
+				"description": "Update a fieldwork office."
 			},
 			"response": []
 		},
@@ -293,7 +294,7 @@
 						"{{OfficeId}}"
 					]
 				},
-				"description": "This method deletes a specified survey."
+				"description": "Delete a fieldwork office NOTE: the headquarters office cannot be deleted."
 			},
 			"response": []
 		}
