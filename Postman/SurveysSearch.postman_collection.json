@@ -2,12 +2,12 @@
 	"info": {
 		"_postman_id": "320f3179-43fe-4255-bacf-96fe7d9d9f14",
 		"name": "SurveysSearch",
-		"description": "A controller for querying Surveys",
+		"description": "A controller for searching respondent surveys",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Respondent Surveys",
+			"name": "Search Respondent",
 			"event": [
 				{
 					"listen": "test",
@@ -63,7 +63,7 @@
 						}
 					]
 				},
-				"description": "This method retrieve details of a specific survey."
+				"description": "Search respondent across surveys"
 			},
 			"response": []
 		}

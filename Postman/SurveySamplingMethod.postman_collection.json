@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "df7d2f40-8426-45de-b72a-de4ac1b65309",
 		"name": "SurveySamplingMethod",
+		"description": "Controller for setting the SamplingMethod for CAPI surveys (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

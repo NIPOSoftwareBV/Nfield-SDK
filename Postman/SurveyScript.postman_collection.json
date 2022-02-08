@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "160e700f-313f-4d7b-8a00-fe09eca7d245",
+		"_postman_id": "b92bb7b7-b5f4-4725-ba4f-286cefe62740",
 		"name": "SurveyScript",
-		"description": "A controller for querying Surveys",
+		"description": "A controller for querying ODIN scripts in a Survey",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -56,6 +56,60 @@
 					]
 				},
 				"description": "This method retrieves the ODIN script of a specific survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Get SurveyScript Version",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"The response should have a FileName and a Script text\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.Script !== undefined).to.be.true;",
+							"    pm.expect(response.FileName !== undefined).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script/{{eTag}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Script",
+						"{{eTag}}"
+					]
+				},
+				"description": "This method retrieves the specific version of ODIN script for the specified survey."
 			},
 			"response": []
 		},

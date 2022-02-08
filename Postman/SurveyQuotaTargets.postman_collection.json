@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "afd0dfad-136c-41de-a8b8-9f9e3edf2a24",
 		"name": "SurveyQuotaTargets",
+		"description": "A controller for querying Full QuotaFrame structure based on survey",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

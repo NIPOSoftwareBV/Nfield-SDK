@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "4fb10b3e-f0de-42cc-a217-18439e1b1b77",
 		"name": "SurveyVarFile",
-		"description": "A controller for querying Surveys",
+		"description": "A controller for querying varfiles for a specific survey.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -56,7 +56,7 @@
 						"VarFile"
 					]
 				},
-				"description": "This method retrieve details of a specific survey."
+				"description": "This method retrieves the varfile of a specific survey"
 			},
 			"response": []
 		},
@@ -110,7 +110,7 @@
 						"{{eTag}}"
 					]
 				},
-				"description": "This method retrieve details of a specific survey."
+				"description": "This method retrieves the specific version of the varfile for the specified survey."
 			},
 			"response": []
 		}

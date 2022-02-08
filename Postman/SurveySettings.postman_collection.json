@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "7fd55e30-a30f-4318-9d80-8cbbaa5a1664",
 		"name": "SurveySettings",
-		"description": "A controller for querying Surveys",
+		"description": "A controller for querying Survey Settings",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -59,7 +59,7 @@
 						"Settings"
 					]
 				},
-				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+				"description": "This method retrieves a list of survey Settings. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
@@ -116,7 +116,7 @@
 						"Settings"
 					]
 				},
-				"description": "This method creates a new survey."
+				"description": "This method creates a new survey Setting."
 			},
 			"response": []
 		}
