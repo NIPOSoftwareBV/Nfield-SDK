@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "8a48441a-f497-4ac9-890f-aa8169c49d1d",
+		"_postman_id": "9d43e07f-1d64-4d8e-971d-bac6a0169a07",
 		"name": "SurveySamplingPoints",
+		"description": "The SamplingPointsController class provides methods to query and manage sampling points for a survey. (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -51,12 +52,13 @@
 						"{{SurveyId}}",
 						"SamplingPoints"
 					]
-				}
+				},
+				"description": "(Capi) This method retrieves a list of Sampling Points based on survey. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
 		{
-			"name": "Get SamplingPoint Details",
+			"name": "Get SamplingPoint",
 			"event": [
 				{
 					"listen": "test",
@@ -102,7 +104,8 @@
 						"SamplingPoints",
 						"{{SamplingPointId}}"
 					]
-				}
+				},
+				"description": "(Capi) This method retrieve details of a specific sampling point with fieldwork offices."
 			},
 			"response": []
 		},
@@ -165,7 +168,8 @@
 						"{{SurveyId}}",
 						"SamplingPoints"
 					]
-				}
+				},
+				"description": "(Capi) This method creates a new sampling point."
 			},
 			"response": []
 		},
@@ -233,7 +237,8 @@
 						"SamplingPoints",
 						"{{SamplingPointId}}"
 					]
-				}
+				},
+				"description": "(Capi) Update a sampling point with the specified fields"
 			},
 			"response": []
 		},
@@ -287,7 +292,8 @@
 						"SamplingPoints",
 						"{{SamplingPointId}}"
 					]
-				}
+				},
+				"description": "(Capi) This method deletes a specified sampling point."
 			},
 			"response": []
 		}

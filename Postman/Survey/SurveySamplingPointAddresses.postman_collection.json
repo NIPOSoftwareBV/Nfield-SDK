@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "c8f182f8-2069-44b4-b28e-0bdc79fa448f",
+		"_postman_id": "7bd28096-e4f8-4ab2-88ec-875a5d79b6e2",
 		"name": "SurveySamplingPointAddresses",
+		"description": "A controller for querying addresses (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -52,12 +53,13 @@
 						"{{SamplingPointId}}",
 						"Addresses"
 					]
-				}
+				},
+				"description": "(Capi) This method retrieves a list of Addresses. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
 		{
-			"name": "Get Address Details",
+			"name": "Get Address",
 			"event": [
 				{
 					"listen": "test",
@@ -99,7 +101,8 @@
 						"Addresses",
 						"{{AddressId}}"
 					]
-				}
+				},
+				"description": "(Capi) Retrieve the details of a single address."
 			},
 			"response": []
 		},
@@ -164,7 +167,8 @@
 						"{{SamplingPointId}}",
 						"Addresses"
 					]
-				}
+				},
+				"description": "(Capi) Add a new address to the specified sampling point."
 			},
 			"response": []
 		},
@@ -220,7 +224,8 @@
 						"Addresses",
 						"{{AddressId}}"
 					]
-				}
+				},
+				"description": "(Capi) This method deletes a specific address."
 			},
 			"response": []
 		}

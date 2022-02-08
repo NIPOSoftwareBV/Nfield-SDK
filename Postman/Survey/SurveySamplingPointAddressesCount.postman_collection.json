@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "b17cb122-3628-42cd-b782-8e49d2a33c87",
+		"_postman_id": "2ad2fa89-f7e0-40a3-8f80-a620a8cbf778",
 		"name": "SurveySamplingPointAddressesCount",
+		"description": "Gets the number of addresses at a sampling point in a survey (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -49,7 +50,8 @@
 						"Addresses",
 						"Count"
 					]
-				}
+				},
+				"description": "(Capi) Returns the number of addresses at the sampling point."
 			},
 			"response": []
 		}

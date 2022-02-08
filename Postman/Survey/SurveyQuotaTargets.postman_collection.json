@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "b5aa0cd7-e932-4317-bbae-9c7ccf972cff",
+		"_postman_id": "530236f8-1843-45c8-9ccc-62d40d450688",
 		"name": "SurveyQuotaTargets",
+		"description": "The SurveysQuotaTargetsController class provides methods to query and manage quota targets for a survey.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -55,7 +56,7 @@
 						"QuotaTargets"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "This method retrieves a Full QuotaFrame structure based on survey The successful counts are not retrieved"
 			},
 			"response": []
 		},
@@ -110,7 +111,7 @@
 						"{{ETag}}"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets for a specific ETag version."
+				"description": "This method retrieves a Full QuotaFrame structure based on survey. The successful counts are also retrieved by Etag"
 			},
 			"response": []
 		}

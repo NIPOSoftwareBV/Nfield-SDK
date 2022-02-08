@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "6add115a-f16f-485f-ae5b-9916b91bd235",
+		"_postman_id": "b1e60cac-11e3-4713-b81f-dbf6cad4f342",
 		"name": "SurveyCounts",
+		"description": "Provides the following interview counts for a survey: Successful count Screened-out count Dropped out count Rejected count Quota level counts",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -86,7 +87,7 @@
 						"Counts"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "Returns the counts for the specified survey. For all surveys it will return the topline counts. For surveys with Quota, it will also include detailed counts per quota level"
 			},
 			"response": []
 		}

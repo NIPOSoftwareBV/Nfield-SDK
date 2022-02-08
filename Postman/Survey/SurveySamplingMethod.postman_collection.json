@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "80ebd36b-5c59-465a-9edc-67a2477bde7a",
+		"_postman_id": "e8ca2295-963b-4017-944c-6520f951307f",
 		"name": "SurveySamplingMethod",
+		"description": "Controller for setting the SamplingMethod for CAPI surveys (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -55,7 +56,7 @@
 						"SamplingMethod"
 					]
 				},
-				"description": "This method returns the sampling method of a capi survey"
+				"description": "(Capi) Method for retrieving current SamplingMethod"
 			},
 			"response": []
 		},
@@ -113,7 +114,7 @@
 						"SamplingMethod"
 					]
 				},
-				"description": "This method updates the sampling method of a capi survey. The methods have restrictions based on quota, sampling points, etc."
+				"description": "(Capi) Method for saving the SamplingMethod\nThis method updates the sampling method of a capi survey. The methods have restrictions based on quota, sampling points, etc."
 			},
 			"response": []
 		}

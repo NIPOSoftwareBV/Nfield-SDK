@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "ad827b80-8912-4a34-b54b-004b435fc829",
+		"_postman_id": "96e2851f-fe55-4817-a79d-c67dca2c154d",
 		"name": "SurveyInterviewInteractionsSettings",
+		"description": "Controller for managing survey interview interactions settings It defines which actions are available during the interviews (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -51,7 +52,7 @@
 						"InterviewInteractionsSettings"
 					]
 				},
-				"description": "This method returns fieldwork status."
+				"description": "(Online) Get interview interactions settings for the survey."
 			},
 			"response": []
 		},
@@ -109,7 +110,8 @@
 						"{{SurveyId}}",
 						"InterviewInteractionsSettings"
 					]
-				}
+				},
+				"description": "(Online) Update interview interactions settings for the survey."
 			},
 			"response": []
 		}

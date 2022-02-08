@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "d3b62563-edac-4a28-a971-40a224bb0ca5",
+		"_postman_id": "c451eb09-6798-4fa7-bd2b-c8a68383a668",
 		"name": "SurveySamplingPointsCount",
+		"description": "The SamplingPointsCountController class provides method to get the count of sampling points for a survey. (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -46,7 +47,8 @@
 						"SamplingPoints",
 						"Count "
 					]
-				}
+				},
+				"description": "(Capi) Returns the number of samplingPoints of the survey."
 			},
 			"response": []
 		}

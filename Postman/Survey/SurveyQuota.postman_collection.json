@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "ab2ca5b3-7faf-4dec-a274-67707ce34da2",
+		"_postman_id": "07a1bfb7-74a7-4ae2-a379-3d32e238ddc1",
 		"name": "SurveyQuota",
+		"description": "Allows creating and retrieving quota definitions for a survey",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -57,7 +58,7 @@
 						"Quota"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "Retrieve either CAPI quota definition or Online quota definition depending on the survey environment. The structure of quota definitions differs from one survey to other as the quotas created in new Manager are different from that created in classic manager. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's."
 			},
 			"response": []
 		},
@@ -115,7 +116,7 @@
 						"Quota"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "This method creates or updates an Online quota frame or Capi quota frame depending on the survey environment. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are the same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's. NB: All the strings will be trimmed during the upload."
 			},
 			"response": []
 		},
@@ -170,7 +171,7 @@
 						"{{ETag}}"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets for a specific ETag version."
+				"description": "Updates the survey quota targets for the specified quota frame version"
 			},
 			"response": []
 		}

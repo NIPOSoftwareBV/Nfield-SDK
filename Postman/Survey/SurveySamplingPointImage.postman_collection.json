@@ -1,10 +1,43 @@
 {
 	"info": {
-		"_postman_id": "513bc2d8-5fe9-4d20-b140-2e05de618b40",
+		"_postman_id": "f8ff9c30-5bb4-4e95-9fc1-da11addd80b7",
 		"name": "SurveySamplingPointImage",
+		"description": "Controller handling the upload of an image file for the sampling point (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Download Sampling Point Image",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoint",
+						"{{SamplingPointId}}",
+						"Image"
+					]
+				},
+				"description": "(Capi) Method used to download sampling point image."
+			},
+			"response": []
+		},
 		{
 			"name": "Upload Sampling Point Image",
 			"event": [
@@ -61,38 +94,8 @@
 						"Image",
 						"{{FileName}}"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Download Sampling Point Image",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-zip-compressed"
-					},
-					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}"
-					}
-				],
-				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"Surveys",
-						"{{SurveyId}}",
-						"SamplingPoint",
-						"{{SamplingPointId}}",
-						"Image"
-					]
-				}
+				},
+				"description": "(Capi) Method used to upload an image file associated with a sampling point (e.g. a map). The upload of a new image file for an existing sampling point will update the old image."
 			},
 			"response": []
 		},
@@ -134,7 +137,8 @@
 						"{{SamplingPointId}}",
 						"Image "
 					]
-				}
+				},
+				"description": "(Capi) Method used to delete the sampling point image."
 			},
 			"response": []
 		}

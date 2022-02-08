@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "438dda74-ec84-4a9f-adc5-d3bf5cbbc283",
+		"_postman_id": "62cf286b-a508-4634-b867-7879dc038915",
 		"name": "SurveyQuotaVersions",
+		"description": "A controller for querying survey quota versions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -70,7 +71,7 @@
 						"QuotaVersions"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "This method retrieves a list of quota frame versions for the specified survey."
 			},
 			"response": []
 		},
@@ -135,7 +136,7 @@
 						"{{ETag}}"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "This method retrieves quota frame for the specified version by Etag"
 			},
 			"response": []
 		}

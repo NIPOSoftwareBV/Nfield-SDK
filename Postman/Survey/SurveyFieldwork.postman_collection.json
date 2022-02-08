@@ -1,8 +1,8 @@
 {
 	"info": {
+		"_postman_id": "9c291bb5-1b71-4a4d-9f3a-308d7cbd12d2",
 		"name": "SurveyFieldwork",
-		"_postman_id": "535bce8d-8e05-ca58-aa0c-4d5cc6a298f0",
-		"description": "",
+		"description": "The fieldwork management controller. Allows to start and stop the fieldwork.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -12,7 +12,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -40,7 +39,6 @@
 						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
-				"body": {},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Status",
 					"host": [
@@ -64,7 +62,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -92,7 +89,6 @@
 						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
-				"body": {},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Counts",
 					"host": [
@@ -116,7 +112,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -144,7 +139,6 @@
 						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
-				"body": {},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Start",
 					"host": [
@@ -168,7 +162,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",

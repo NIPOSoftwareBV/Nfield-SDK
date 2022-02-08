@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "04e4b795-6482-4db4-bd2a-3dc8aefda9f8",
+		"_postman_id": "404e854a-71f5-4ade-aa84-f8df6f47fd40",
 		"name": "SurveyInterviews",
+		"description": "The InterviewController class provides methods to query and manage interviews.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -64,7 +65,8 @@
 						"Interviews",
 						"{{InterviewId}}"
 					]
-				}
+				},
+				"description": "Delete all data for a specified interview of a specified survey."
 			},
 			"response": []
 		}

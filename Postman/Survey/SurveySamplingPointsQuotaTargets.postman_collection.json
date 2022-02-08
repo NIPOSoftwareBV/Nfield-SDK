@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "aea95148-65d3-4317-a6ab-338622839552",
+		"_postman_id": "6ed04209-706e-4d69-bcc4-9ef59b4a14a5",
 		"name": "SurveySamplingPointsQuotaTargets",
+		"description": "The SamplingPointsQuotaController class provides methods to query and manage sampling points quota targets for a survey. (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -66,7 +67,8 @@
 						"{{SamplingPointId}}",
 						"QuotaTargets"
 					]
-				}
+				},
+				"description": "(Capi) This method retrieves a list of quota level targets based on survey and sampling point."
 			},
 			"response": []
 		},
@@ -128,7 +130,8 @@
 						"QuotaTargets",
 						"{{QuotaLevelId}}"
 					]
-				}
+				},
+				"description": "(Capi) This method retrieves detail of quota level targets based on survey and sampling point."
 			},
 			"response": []
 		},
@@ -200,7 +203,8 @@
 						"QuotaTargets",
 						"{{QuotaLevelId}}"
 					]
-				}
+				},
+				"description": "(Capi) Update an sampling point's quota level with the specified fields."
 			},
 			"response": []
 		}
