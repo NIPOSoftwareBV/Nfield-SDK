@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "0f7f4738-dbe2-4d88-afbd-9aaf08f655ff",
+		"_postman_id": "b743852f-28ca-4524-907b-40f24576f273",
 		"name": "DomainSearchFieldsSetting",
+		"description": "Controller for managing the domain setting to set a set of fields in order to search respondent data inside them",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -55,7 +56,7 @@
 						"SearchFieldsSetting"
 					]
 				},
-				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+				"description": "Gets the domain's search fields."
 			},
 			"response": []
 		},
@@ -115,7 +116,7 @@
 						"SearchFieldsSetting"
 					]
 				},
-				"description": "Update a survey with the specified fields."
+				"description": "Update the domain's search fields."
 			},
 			"response": []
 		}

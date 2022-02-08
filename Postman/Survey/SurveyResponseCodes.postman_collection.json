@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "4d5e8250-4165-40e5-82e1-577db3455d91",
+		"_postman_id": "54740661-2db2-442d-8ebc-ec8e2419fc20",
 		"name": "SurveyResponseCodes",
+		"description": "SurveyResponseCodesController class provides methods to query and manage survey specific response codes.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -50,12 +51,13 @@
 						"{{SurveyId}}",
 						"ResponseCodes"
 					]
-				}
+				},
+				"description": "This method retrieves a list of response codes based on a survey. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
 		{
-			"name": "Get Response Code Details",
+			"name": "Get Response Code",
 			"event": [
 				{
 					"listen": "test",
@@ -85,7 +87,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
 					"host": [
 						"{{origin}}"
 					],
@@ -93,9 +95,11 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"ResponseCodes"
+						"ResponseCodes",
+						"{{ResponseCode}}"
 					]
-				}
+				},
+				"description": "This method retrieve details of a specific response code for a specific survey."
 			},
 			"response": []
 		},
@@ -158,7 +162,8 @@
 						"{{SurveyId}}",
 						"ResponseCodes"
 					]
-				}
+				},
+				"description": "This method creates a new response code."
 			},
 			"response": []
 		},
@@ -222,7 +227,8 @@
 						"ResponseCodes",
 						"{{ResponseCode}}"
 					]
-				}
+				},
+				"description": "Update a response code with the specified fields."
 			},
 			"response": []
 		},
@@ -277,7 +283,8 @@
 						"ResponseCodes",
 						"{{ResponseCode}}"
 					]
-				}
+				},
+				"description": "This method deletes a specified response code."
 			},
 			"response": []
 		}

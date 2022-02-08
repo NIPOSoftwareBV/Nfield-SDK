@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "603a17d7-c288-45b1-80ff-f1affd6d91c5",
+		"_postman_id": "251e86c4-1693-4f46-b3e8-e1f259eda487",
 		"name": "DomainEmailSettings",
-		"description": "The Publish Survey controller. Allows to publish Survey into Survey package.",
+		"description": "Controller for managing the domain's email settings",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -63,7 +63,7 @@
 						"EmailSettings"
 					]
 				},
-				"description": "Gets the publish state of the survey in the context."
+				"description": "Gets the domain's email settings."
 			},
 			"response": []
 		},
@@ -127,7 +127,7 @@
 						"EmailSettings"
 					]
 				},
-				"description": "Publishes the survey to the survey package."
+				"description": "Update the domain's email settings."
 			},
 			"response": []
 		}

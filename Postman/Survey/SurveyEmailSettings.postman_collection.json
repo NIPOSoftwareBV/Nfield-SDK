@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "ca6a82b9-eb81-41dd-b288-0baf38ce62e5",
+		"_postman_id": "8e91ba48-9b7e-44ab-8953-8f5042aa8d07",
 		"name": "SurveyEmailSettings",
-		"description": "The Publish Survey controller. Allows to publish Survey into Survey package.",
+		"description": "Controller for managing survey email settings (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -82,7 +82,7 @@
 						"EmailSettings"
 					]
 				},
-				"description": "Gets the publish state of the survey in the context."
+				"description": "(Online) Get email settings for the survey."
 			},
 			"response": []
 		},
@@ -149,7 +149,7 @@
 						"EmailSettings"
 					]
 				},
-				"description": "Publishes the survey to the survey package."
+				"description": "(Online) Update email settings for the survey."
 			},
 			"response": []
 		}

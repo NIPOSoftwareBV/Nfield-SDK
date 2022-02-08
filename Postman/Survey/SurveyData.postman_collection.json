@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "ac47007e-04d5-434c-9491-1800a4c1a4fe",
+		"_postman_id": "704766bf-0f8d-42fa-a02c-436fce8b070f",
 		"name": "SurveyData",
+		"description": "Manages data collected for a survey",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -71,7 +72,7 @@
 						"Data"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "Post a request for a data download. The surveyDownloadDataRequest contains all the information needed to be able to create a download with just the information that is needed for this request."
 			},
 			"response": []
 		}

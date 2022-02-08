@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "7fb0c34e-07fb-4869-803d-3d59369ea8db",
+		"_postman_id": "1d5bd9fc-dd46-4312-9382-1e3903548293",
 		"name": "LocalUsers",
+		"description": "A controller for querying local users",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -66,7 +67,66 @@
 						"v1",
 						"LocalUsers"
 					]
+				},
+				"description": "Returns a list of all local users."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Local User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.UserName !== undefined \r",
+							"    && item.LastLogonDate !== undefined\r",
+							"    && item.FirstName !== undefined\r",
+							"    && item.LastName !== undefined\r",
+							"    && item.Email !== undefined\r",
+							"    && item.UserRole !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains IdentityId\", function () {\r",
+							"    var user = pm.response.json();\r",
+							"    pm.expect(validateProperties(user)).to.be.true;\r",
+							"    pm.environment.set(\"IdentityId\", user.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers",
+						"{{IdentityId}}"
+					]
+				},
+				"description": "Returns details for a local user."
 			},
 			"response": []
 		},
@@ -130,88 +190,8 @@
 						"v1",
 						"LocalUsers"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Local Users",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}"
-					}
-				],
-				"url": {
-					"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"LocalUsers",
-						"{{IdentityId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Local User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Status code name has string\", function () {\r",
-							"    pm.response.to.have.status(\"OK\");\r",
-							"});\r",
-							"\r",
-							"const validateProperties = (item) => {\r",
-							"    return item.Id !== undefined \r",
-							"    && item.UserName !== undefined \r",
-							"    && item.LastLogonDate !== undefined\r",
-							"    && item.FirstName !== undefined\r",
-							"    && item.LastName !== undefined\r",
-							"    && item.Email !== undefined\r",
-							"    && item.UserRole !== undefined;\r",
-							"}\r",
-							"\r",
-							"pm.test(\"Response contains IdentityId\", function () {\r",
-							"    var user = pm.response.json();\r",
-							"    pm.expect(validateProperties(user)).to.be.true;\r",
-							"    pm.environment.set(\"IdentityId\", user.Id);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}"
-					}
-				],
-				"url": {
-					"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"LocalUsers",
-						"{{IdentityId}}"
-					]
-				}
+				},
+				"description": "Creates a new user."
 			},
 			"response": []
 		},
@@ -278,7 +258,8 @@
 						"LocalUsers",
 						"{{IdentityId}}"
 					]
-				}
+				},
+				"description": "Edits properties of a local user."
 			},
 			"response": []
 		},
@@ -328,7 +309,33 @@
 						"Password",
 						"{{IdentityId}}"
 					]
-				}
+				},
+				"description": "Edits local user password."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Local Users",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers",
+						"{{IdentityId}}"
+					]
+				},
+				"description": "Deletes a user"
 			},
 			"response": []
 		}

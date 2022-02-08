@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "84b64b73-0bbe-4066-bda6-3f6f8bd89e31",
+		"_postman_id": "19d8549d-b777-4792-be56-57a0943336c3",
 		"name": "SurveyInterviewerAssignments",
+		"description": "The controller is used to assign interviewers to survey. (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -78,7 +79,8 @@
 						"Assignments",
 						"QuotaTargets"
 					]
-				}
+				},
+				"description": "(Capi) This method creates an interviewer assignment.\nDepends on SurveyType (Basic, Eurobarometer or Eurobarometer advanced) & QuotaType (Join Targets, Workpackage ...)"
 			},
 			"response": []
 		},
@@ -134,7 +136,8 @@
 						"{{InterviewerId}}",
 						"Assignments"
 					]
-				}
+				},
+				"description": "(Capi) Gets a list of levelIds with Target, Successful and SurveySuccessful assigned to an interviewer"
 			},
 			"response": []
 		},
@@ -188,7 +191,8 @@
 						"{{SurveyId}}",
 						"Assignment"
 					]
-				}
+				},
+				"description": "(Capi) Assigns/Unassigns the interviewer to the survey."
 			},
 			"response": []
 		}

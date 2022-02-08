@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "6ef7a85a-4878-4587-869e-b4bc89876c9a",
+		"_postman_id": "3d6108a2-3fe3-4b12-8ef3-3004042506a0",
 		"name": "SurveyMediaFilesCount",
-		"description": "A controller for querying Surveys",
+		"description": "The controller to get the count of media files in a survey",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -50,7 +50,7 @@
 						"Count"
 					]
 				},
-				"description": "This method retrieves a list of surveys. This list can be filtered and sorted using standard OData syntax."
+				"description": "Gets the number of media files in a survey."
 			},
 			"response": []
 		}

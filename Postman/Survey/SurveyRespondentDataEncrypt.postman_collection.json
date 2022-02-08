@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "7b6c2f57-12d1-415d-9c85-fc8feada2d4c",
+		"_postman_id": "94daeeb1-c4f3-450e-810a-446d0763cbdd",
 		"name": "SurveyRespondentDataEncrypt",
+		"description": "Manages data collected for a survey (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -54,7 +55,8 @@
 						"{{SurveyId}}",
 						"RespondentDataEncrypt"
 					]
-				}
+				},
+				"description": "(Online) Gets asynchronously the decrypted data to encrypt it"
 			},
 			"response": []
 		}

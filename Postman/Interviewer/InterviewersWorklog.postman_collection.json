@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "99fc9a55-d4d6-498b-a611-f1a59a47f897",
+		"_postman_id": "5cf74739-0491-499f-8c1d-47e0ef5e3562",
 		"name": "InterviewersWorklog",
+		"description": "A controller for preparing a local user log download",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -62,7 +63,8 @@
 						"v1",
 						"InterviewersWorklog"
 					]
-				}
+				},
+				"description": "Sends a request to prepare the Interviewers worklog download file"
 			},
 			"response": []
 		}

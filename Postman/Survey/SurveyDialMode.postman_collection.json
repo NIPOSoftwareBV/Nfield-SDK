@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "470c71ec-f632-4289-9c86-914145f2f938",
+		"_postman_id": "b29026e7-9e5c-4afa-a138-d7aa5f6e855a",
 		"name": "SurveyDialMode",
+		"description": "Manages get/update dial mode for cati surveys (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -55,7 +56,8 @@
 						"{{SurveyId}}",
 						"DialMode"
 					]
-				}
+				},
+				"description": "(Cati) Get the dial mode for the survey"
 			},
 			"response": []
 		},
@@ -106,7 +108,8 @@
 						"{{SurveyId}}",
 						"DialMode"
 					]
-				}
+				},
+				"description": "(Cati) Update the dial mode for the survey"
 			},
 			"response": []
 		}

@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "c8514dad-40bf-47f3-9910-16a39556cb5e",
+		"_postman_id": "7204ee9b-9079-40c9-afaf-68fe19056eb5",
 		"name": "BackgroundTasks",
-		"description": "A controller for querying background activities",
+		"description": "A controller for querying BackgroundTasks",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -55,7 +55,7 @@
 						"BackgroundTasks"
 					]
 				},
-				"description": "This method retrieve details of a specific background activity."
+				"description": "This method retrieves a list of Background Task. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
@@ -103,7 +103,7 @@
 						"{{TaskId}}"
 					]
 				},
-				"description": "This method retrieve details of a specific background activity."
+				"description": "This method retrieve details of a specific background task."
 			},
 			"response": []
 		}

@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "f579b1f8-8923-4796-94a8-a849587933ef",
+		"_postman_id": "5f76a97c-8bf8-437e-8462-f02270955d3e",
 		"name": "LocalUsersMe",
+		"description": "A controller for querying information about the logged in user.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -56,7 +57,8 @@
 						"Me",
 						"Role"
 					]
-				}
+				},
+				"description": "Returns the user role for the currently authenticated user."
 			},
 			"response": []
 		}
