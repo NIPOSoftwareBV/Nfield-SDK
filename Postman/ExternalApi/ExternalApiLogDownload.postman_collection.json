@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "6a59d24c-f338-4e38-b03e-8c9ad461ca5d",
+		"_postman_id": "c0495d6f-d5d2-4bce-863c-b13bce91d41e",
 		"name": "ExternalApiLogDownload",
+		"description": "Manages logs collected for External API usage",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -62,7 +63,8 @@
 						"v1",
 						"ExternalApiLogDownload"
 					]
-				}
+				},
+				"description": "Create a request for the external api logs"
 			},
 			"response": []
 		}

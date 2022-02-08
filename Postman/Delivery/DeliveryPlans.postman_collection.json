@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "36afac6b-d7d9-4034-85bb-27bd4916f240",
+		"_postman_id": "03ebc0c3-cb9a-4338-bb97-ff04de7474a5",
 		"name": "DeliveryPlans",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -56,7 +56,8 @@
 						"Delivery",
 						"Plans"
 					]
-				}
+				},
+				"description": "Gets a list of repository plans."
 			},
 			"response": []
 		}

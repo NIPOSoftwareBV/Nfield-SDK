@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "e2f350f1-0a19-437d-8af8-202e7821340f",
+		"_postman_id": "05989cb4-4fb0-423f-8c98-725d3601b455",
 		"name": "DeliveryRepositories",
+		"description": "A controller for querying repositories.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -56,7 +57,8 @@
 						"Delivery",
 						"Repositories"
 					]
-				}
+				},
+				"description": "Gets a list of repositories for the domain."
 			},
 			"response": []
 		},
@@ -112,7 +114,8 @@
 						"Repositories",
 						"Statuses"
 					]
-				}
+				},
+				"description": "Gets a list of repository statuses."
 			},
 			"response": []
 		}
