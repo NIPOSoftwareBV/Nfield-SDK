@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "fb273585-0471-4ad2-aac1-eab8f55ae2e2",
 		"name": "SurveyLanguages",
-		"description": "Manage languages defined for a survey's questionnaire",
+		"description": "Manage languages defined for a survey's questionnaire (obsolete)(This endpoint is deprecated. Please use SurveyLanguageTranslations instead)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -52,7 +52,8 @@
 						"Languages",
 						""
 					]
-				}
+				},
+				"description": "This method retrieves a list of languages defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax"
 			},
 			"response": []
 		},
@@ -102,7 +103,8 @@
 						"Languages",
 						"{{LanguageId}}"
 					]
-				}
+				},
+				"description": "This method retrieves the language with the specified languageId defined for the survey with the specified surveyId."
 			},
 			"response": []
 		},
@@ -167,7 +169,64 @@
 						"Languages",
 						""
 					]
+				},
+				"description": "Add a language to the survey with the specified surveyId."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
 				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/{{LanguageId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Languages",
+						"{{LanguageId}}"
+					]
+				},
+				"description": "Removes the language with languageId from the survey with the specified surveyId."
 			},
 			"response": []
 		},
@@ -230,62 +289,8 @@
 						"{{SurveyId}}",
 						"Languages"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Language",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 204\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
 				},
-				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/{{LanguageId}}",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"Surveys",
-						"{{SurveyId}}",
-						"Languages",
-						"{{LanguageId}}"
-					]
-				}
+				"description": "Update the name of an existing language."
 			},
 			"response": []
 		}

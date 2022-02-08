@@ -62,7 +62,7 @@
 						}
 					]
 				},
-				"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
+				"description": "Get the specified type of package for the specified survey."
 			},
 			"response": []
 		}

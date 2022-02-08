@@ -60,7 +60,7 @@
 						"Live"
 					]
 				},
-				"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
+				"description": "Get the survey performance metrics for live interviews"
 			},
 			"response": []
 		},
@@ -105,7 +105,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Live",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Test",
 					"host": [
 						"{{origin}}"
 					],
@@ -115,10 +115,10 @@
 						"{{SurveyId}}",
 						"Performance",
 						"Metrics",
-						"Live"
+						"Test"
 					]
 				},
-				"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
+				"description": "Get the survey performance metrics for test interviews"
 			},
 			"response": []
 		}
