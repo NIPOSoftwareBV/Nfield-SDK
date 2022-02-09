@@ -55,7 +55,7 @@
 						"InviteRespondents"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method invites respondents to a survey."
 			},
 			"response": []
 		},
@@ -112,7 +112,7 @@
 						"SurveysInvitationStatus"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method gets invitation status."
 			},
 			"response": []
 		},
@@ -169,7 +169,7 @@
 						"SurveyBatchesStatus"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method gets invitation batches status."
 			},
 			"response": []
 		},
@@ -227,7 +227,7 @@
 						"{{BatchName}}"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method gets an invitation batch status."
 			},
 			"response": []
 		}

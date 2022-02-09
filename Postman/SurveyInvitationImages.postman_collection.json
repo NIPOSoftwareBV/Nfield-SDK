@@ -52,7 +52,7 @@
 						"{{FileName}}"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method post an invitation image."
 			},
 			"response": []
 		}

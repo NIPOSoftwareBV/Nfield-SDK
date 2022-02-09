@@ -39,6 +39,10 @@
 						"value": "{{Domain}}"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"name\",\r\n  \"Subject\": \"subject\",\r\n  \"Body\": \"body\"\r\n}"
+				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/{{InvitationTemplateId}}",
 					"host": [
@@ -52,7 +56,7 @@
 						"{{InvitationTemplateId}}"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method create an invitation template."
 			},
 			"response": []
 		},
@@ -102,7 +106,7 @@
 						"{{InvitationTemplateId}}"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method get an invitation template."
 			},
 			"response": []
 		},
@@ -139,6 +143,10 @@
 						"value": "{{Domain}}"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"name\",\r\n  \"Subject\": \"subject\",\r\n  \"Body\": \"body\"\r\n}"
+				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/{{InvitationTemplateId}}",
 					"host": [
@@ -202,7 +210,7 @@
 						"{{InvitationTemplateId}}"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method deletes an invitation template."
 			},
 			"response": []
 		}
