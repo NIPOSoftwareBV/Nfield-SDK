@@ -130,7 +130,7 @@
 						"SurveysInvitationStatus"
 					]
 				},
-				"description": "This method gets invitation status."
+				"description": "This method gets an invitation status."
 			},
 			"response": []
 		},
