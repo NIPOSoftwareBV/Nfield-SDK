@@ -53,7 +53,7 @@
 						""
 					]
 				},
-				"description": "This method retrieves a list of languages defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax"
+				"description": "This method retrieves a list of languages defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
