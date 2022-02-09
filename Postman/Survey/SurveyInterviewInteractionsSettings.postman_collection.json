@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "56adb24e-e3d4-495f-a5fd-c09fbe8551be",
+		"name": "SurveyInterviewInteractionsSettings",
+		"description": "Controller for managing survey interview interactions settings It defines which actions are available during the interviews (Has survey type usage restrictions)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Interview Interactions Settings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.BackButtonAvailable !== undefined",
+							"    && item.PauseButtonAvailable !== undefined",
+							"    && item.ClearButtonAvailable !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Validates the properties\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"InterviewInteractionsSettings"
+					]
+				},
+				"description": "(Online) Get interview interactions settings for the survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Interview Interactions Settings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.BackButtonAvailable !== undefined\r",
+							"    && item.PauseButtonAvailable !== undefined\r",
+							"    && item.ClearButtonAvailable !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validates the properties\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.ClearButtonAvailable).to.be.false;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"BackButtonAvailable\": true,\r\n    \"PauseButtonAvailable\": true,\r\n    \"ClearButtonAvailable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"InterviewInteractionsSettings"
+					]
+				},
+				"description": "(Online) Update interview interactions settings for the survey."
+			},
+			"response": []
+		}
+	]
+}

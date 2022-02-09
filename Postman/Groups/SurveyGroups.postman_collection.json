@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "0a88f1fa-28bf-4e0b-8eb1-09973b8d03ac",
+		"name": "SurveyGroups",
+		"description": "A controller for managing Survey Groups Survey groups offer a way to logically organize your surveys into groups. E.g. a survey group to manage 'all surveys for customer X'. The group defined with id '1' is the so-called 'default survey group', it always exists and cannot be deleted. It can be renamed though",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Groups",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains Properties\", function () {",
+							"    var response = pm.response.json();",
+							"     pm.expect(response.every(validateProperties)).to.be.true;",
+							"    if (response.length > 0)",
+							"    {",
+							"        var lastIndex = response.length - 1;",
+							"        pm.environment.set(\"SurveyGroupId\", response[lastIndex].SurveyGroupId);",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups"
+					]
+				},
+				"description": "Returns the details of all survey groups in the domain."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains Properties\", function () {",
+							"    const survey = pm.response.json();",
+							"    pm.expect(validateProperties(survey)).to.be.true;",
+							"    pm.environment.set(\"SurveyGroupId\", response.SurveyGroupId);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups",
+						"{{SurveyGroupId}}"
+					]
+				},
+				"description": "Retrieve a specific survey group"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response has been updated\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"    pm.environment.set(\"SurveyGroupId\", survey.SurveyGroupId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Name\": \"PostmanGroupName\",\r\n  \"Description\": \"sample string 2\"\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups"
+					]
+				},
+				"description": "Create a survey group. An id is automatically generated."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Surveys Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyGroupId !== undefined",
+							"    && item.Name !== undefined",
+							"    && item.Description !== undefined",
+							"    && item.CreationDate !== undefined;",
+							"}",
+							"pm.test(\"Response contains All Properties\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"    pm.expect(response.Name == \"PostmanGroupNameUpdated\").to.be.true;",
+							"    pm.environment.set(\"SurveyGroupId\", response.SurveyGroupId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Name\": \"PostmanGroupNameUpdated\",\r\n  \"Description\": \"sample string 2\"\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups",
+						"{{SurveyGroupId}}"
+					]
+				},
+				"description": "Update a survey groupUpdate a survey with the specified fields."
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Group",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"SurveyGroups",
+						"{{SurveyGroupId}}"
+					]
+				},
+				"description": "Delete a survey group Survey groups have to be 'empty' before they can be deleted. An empty survey group has no surveys associated to it.This method deletes a specified survey."
+			},
+			"response": []
+		}
+	]
+}

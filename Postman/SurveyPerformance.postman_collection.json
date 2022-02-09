@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "3d80f54e-8cd8-4574-a223-b32fd2fa7ee9",
+		"name": "SurveyPerformance",
+		"description": "SurvePerformanceController class provides methods to query Live or Test Survey Performances for the specified survey id (survey links)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Survey Performance Live",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"The survey performance should have a several fields\", function () {",
+							"    const performance = pm.response.json();",
+							"    pm.expect(performance.Id !== undefined).to.be.true;",
+							"    pm.expect(performance.PublishedCount !== undefined).to.be.true;",
+							"    pm.expect(performance.TotalCount !== undefined).to.be.true;",
+							"    pm.expect(performance.Counts !== undefined).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Live",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Performance",
+						"Metrics",
+						"Live"
+					]
+				},
+				"description": "Get the survey performance metrics for live interviews."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Survey Performance Test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"The survey performance should have a several fields\", function () {",
+							"    const performance = pm.response.json();",
+							"    pm.expect(performance.Id !== undefined).to.be.true;",
+							"    pm.expect(performance.PublishedCount !== undefined).to.be.true;",
+							"    pm.expect(performance.TotalCount !== undefined).to.be.true;",
+							"    pm.expect(performance.Counts !== undefined).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Test",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Performance",
+						"Metrics",
+						"Test"
+					]
+				},
+				"description": "Get the survey performance metrics for test interviews."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

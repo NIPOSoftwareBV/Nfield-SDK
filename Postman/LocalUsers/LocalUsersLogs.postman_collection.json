@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "d020488f-2520-4ac5-8adb-f384872973fa",
+		"name": "LocalUsersLogs",
+		"description": "A controller for preparing a local user log download",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Prepare Download Logs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains ActivityId\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.environment.set(\"ActivityId\", response.ActivityId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"From\" : \"2015-03-18Z\",\r\n    \"To\": \"2015-12-10T01:00Z\"\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsersLogs",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsersLogs"
+					]
+				},
+				"description": "Sends a request to prepare the logs download file"
+			},
+			"response": []
+		}
+	]
+}

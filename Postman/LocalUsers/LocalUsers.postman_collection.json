@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "1d5bd9fc-dd46-4312-9382-1e3903548293",
+		"name": "LocalUsers",
+		"description": "A controller for querying local users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Local Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.UserName !== undefined \r",
+							"    && item.LastLogonDate !== undefined\r",
+							"    && item.FirstName !== undefined\r",
+							"    && item.LastName !== undefined\r",
+							"    && item.Email !== undefined\r",
+							"    && item.UserRole !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains IdentityId\", function () {\r",
+							"    var users = pm.response.json();\r",
+							"    pm.expect(users.every(validateProperties)).to.be.true;\r",
+							"    if (users.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = users.length - 1;\r",
+							"        pm.environment.set(\"IdentityId\", users[lastIndex].Id);\r",
+							"    }\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers"
+					]
+				},
+				"description": "Returns a list of all local users."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Local User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.UserName !== undefined \r",
+							"    && item.LastLogonDate !== undefined\r",
+							"    && item.FirstName !== undefined\r",
+							"    && item.LastName !== undefined\r",
+							"    && item.Email !== undefined\r",
+							"    && item.UserRole !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains IdentityId\", function () {\r",
+							"    var user = pm.response.json();\r",
+							"    pm.expect(validateProperties(user)).to.be.true;\r",
+							"    pm.environment.set(\"IdentityId\", user.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers",
+						"{{IdentityId}}"
+					]
+				},
+				"description": "Returns details for a local user."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Local User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.UserName !== undefined \r",
+							"    && item.LastLogonDate !== undefined\r",
+							"    && item.FirstName !== undefined\r",
+							"    && item.LastName !== undefined\r",
+							"    && item.Email !== undefined\r",
+							"    && item.UserRole !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains IdentityId\", function () {\r",
+							"    var user = pm.response.json();\r",
+							"    pm.expect(validateProperties(user)).to.be.true;\r",
+							"    pm.environment.set(\"IdentityId\", user.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"UserName\": \"Postman User\",\n    \"FirstName\": \"Postman 1\",\n    \"LastName\": \"Postman 2\",\n    \"Email\": \"TestUser@TestSite.com\",\n    \"UserRole\": \"RegularUser\",\n\t\"password\":\"passowrd\"\n}\n"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers"
+					]
+				},
+				"description": "Creates a new user."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Local User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.UserName !== undefined \r",
+							"    && item.LastLogonDate !== undefined\r",
+							"    && item.FirstName !== undefined\r",
+							"    && item.LastName !== undefined\r",
+							"    && item.Email !== undefined\r",
+							"    && item.UserRole !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains IdentityId\", function () {\r",
+							"    var user = pm.response.json();\r",
+							"    pm.expect(validateProperties(user)).to.be.true;\r",
+							"    pm.expect(user.FirstName == \"Postman updated 1\").to.be.true;\r",
+							"    pm.expect(user.LastName == \"Postman updated 2\").to.be.true;\r",
+							"    pm.environment.set(\"IdentityId\", user.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"FirstName\": \"Postman updated 1\",\n  \"LastName\": \"Postman updated 2\",\n  \"Email\": \"TestUser@TestSite.com\",\n  \"UserRole\": \"RegularUser\"\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers",
+						"{{IdentityId}}"
+					]
+				},
+				"description": "Edits properties of a local user."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password Local User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Password\": \"Passw0rd12\"\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers/Password/{{IdentityId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers",
+						"Password",
+						"{{IdentityId}}"
+					]
+				},
+				"description": "Edits local user password."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Local Users",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"LocalUsers",
+						"{{IdentityId}}"
+					]
+				},
+				"description": "Deletes a user"
+			},
+			"response": []
+		}
+	]
+}

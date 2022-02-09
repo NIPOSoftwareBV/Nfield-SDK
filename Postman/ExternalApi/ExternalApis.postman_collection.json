@@ -1,0 +1,373 @@
+{
+	"info": {
+		"_postman_id": "acd089ff-b5f2-4502-b9e4-0eb3a485a1b8",
+		"name": "ExternalApis",
+		"description": "A controller for querying external api configuration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get External Apis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Name !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Uri !== undefined\r",
+							"    && item.HelpUri !== undefined\r",
+							"    && item.Headers !== undefined\r",
+							"    && item.Headers.every(validateSubProperties);\r",
+							"}\r",
+							"\r",
+							"const validateSubProperties = (item) => {\r",
+							"    return item.HeaderId !== undefined \r",
+							"    && item.Name !== undefined \r",
+							"    && item.Value !== undefined\r",
+							"    && item.IsObfuscated !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains ApiName\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+							"    if (response.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = response.length - 1;\r",
+							"        pm.environment.set(\"ApiName\", response[lastIndex].Name);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ExternalApis",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ExternalApis"
+					]
+				},
+				"description": "List all api's"
+			},
+			"response": []
+		},
+		{
+			"name": "Get External Api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Name !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Uri !== undefined\r",
+							"    && item.HelpUri !== undefined\r",
+							"    && item.Headers !== undefined\r",
+							"    && item.Headers.every(validateSubProperties);\r",
+							"}\r",
+							"\r",
+							"const validateSubProperties = (item) => {\r",
+							"    return item.HeaderId !== undefined \r",
+							"    && item.Name !== undefined \r",
+							"    && item.Value !== undefined\r",
+							"    && item.IsObfuscated !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response ApiName\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Name == \"PostmanApi\").to.be.true;\r",
+							"    pm.environment.set(\"ApiName\", response.Name);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ExternalApis",
+						"{{ApiName}}"
+					]
+				},
+				"description": "Get api configuration by name"
+			},
+			"response": []
+		},
+		{
+			"name": "Create External Api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Name !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Uri !== undefined\r",
+							"    && item.HelpUri !== undefined\r",
+							"    && item.Headers !== undefined\r",
+							"    && item.Headers.every(validateSubProperties);\r",
+							"}\r",
+							"\r",
+							"const validateSubProperties = (item) => {\r",
+							"    return item.HeaderId !== undefined \r",
+							"    && item.Name !== undefined \r",
+							"    && item.Value !== undefined\r",
+							"    && item.IsObfuscated !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response ApiName\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Name == \"PostmanApi\").to.be.true;\r",
+							"    pm.environment.set(\"ApiName\", response.Name);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Name\": \"PostmanApi\",\r\n  \"Description\": \"Postman string 2\",\r\n  \"Uri\": \"https://api.niposoftware-dev.com/v1\",\r\n  \"HelpUri\": \"https://api.niposoftware-dev.com/help\",\r\n  \"Headers\": [\r\n    {\r\n      \"HeaderId\": 1,\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\",\r\n      \"IsObfuscated\": true\r\n    },\r\n    {\r\n      \"HeaderId\": 2,\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\",\r\n      \"IsObfuscated\": false\r\n    }\r\n  ]\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ExternalApis",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ExternalApis"
+					]
+				},
+				"description": "Create a new external api configuration"
+			},
+			"response": []
+		},
+		{
+			"name": "Update External Api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Name !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Uri !== undefined\r",
+							"    && item.HelpUri !== undefined\r",
+							"    && item.Headers !== undefined\r",
+							"    && item.Headers.every(validateSubProperties);\r",
+							"}\r",
+							"\r",
+							"const validateSubProperties = (item) => {\r",
+							"    return item.HeaderId !== undefined \r",
+							"    && item.Name !== undefined \r",
+							"    && item.Value !== undefined\r",
+							"    && item.IsObfuscated !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response ApiName\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Description == \"Postman updated\").to.be.true;\r",
+							"    pm.environment.set(\"ApiName\", response.Name);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Name\": \"PostmanApi\",\r\n  \"Description\": \"Postman updated\",\r\n  \"Uri\": \"https://api.niposoftware-dev.com/v1\",\r\n  \"HelpUri\": \"https://api.niposoftware-dev.com/help\",\r\n  \"Headers\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ExternalApis",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ExternalApis"
+					]
+				},
+				"description": "Update existing external api configuration"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete ExternalApis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ExternalApis",
+						"{{ApiName}}"
+					]
+				},
+				"description": "Delete external api configuration"
+			},
+			"response": []
+		}
+	]
+}
