@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b393f157-d696-4ba7-be90-a77abda1642c",
+		"_postman_id": "551b1b53-3f72-49b8-8b53-64687caf5563",
 		"name": "SurveyInterviewerAssignments",
 		"description": "The controller is used to assign interviewers to survey. (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"

@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "9c291bb5-1b71-4a4d-9f3a-308d7cbd12d2",
+		"_postman_id": "d9ce3f98-c5d6-4ef2-a02c-729539ecabe0",
 		"name": "SurveyFieldwork",
 		"description": "The fieldwork management controller. Allows to start and stop the fieldwork.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get SurveyFieldwork Status",
+			"name": "Get Fieldwork Status",
 			"event": [
 				{
 					"listen": "test",
@@ -57,12 +57,11 @@
 			"response": []
 		},
 		{
-			"name": "Get SurveyFieldwork Counts",
+			"name": "Get Fieldwork Counts",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -72,8 +71,30 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyId !== undefined",
+							"    && item.Successful !== undefined",
+							"    && item.SuccessfulLast24Hours !== undefined",
+							"    && item.ScreenedOut !== undefined",
+							"    && item.DroppedOut !== undefined",
+							"    && item.Rejected !== undefined",
+							"    && item.SuccessfulDeleted !== undefined",
+							"    && item.ScreenedOutDeleted !== undefined",
+							"    && item.DroppedOutDeleted !== undefined",
+							"    && item.RejectedDeleted !== undefined",
+							"    && item.ActiveInterviews !== undefined",
+							"    && item.ScreenedOutOverview !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Validates the properties\", function () {",
+							"    const reponse = pm.response.json();",
+							"    pm.expect(validateProperties(reponse)).to.be.true;",
+							"});",
+							"",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -107,7 +128,7 @@
 			"response": []
 		},
 		{
-			"name": "Start SurveyFieldwork",
+			"name": "Start Fieldwork",
 			"event": [
 				{
 					"listen": "test",
@@ -157,7 +178,7 @@
 			"response": []
 		},
 		{
-			"name": "Stop SurveyFieldwork",
+			"name": "Stop Fieldwork",
 			"event": [
 				{
 					"listen": "test",

@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "e2042cd7-bae8-4cb6-8859-ce9ef93364af",
-		"name": "SurveyPublicIds",
-		"description": "Provides methods to query and manage survey specific public ids (survey links)",
+		"_postman_id": "db7d2c7d-5d8b-4625-a0a2-83132b1dac2e",
+		"name": "SurveyRelocations",
+		"description": "Provides methods to query and manage survey specific relocations (OBSOLETE)\nThis endpoint is deprecated. Please use SurveyResponseCodes instead",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Public Ids",
+			"name": "Get Relocations",
 			"event": [
 				{
 					"listen": "test",
@@ -22,19 +22,17 @@
 							"});",
 							"",
 							"const validateProperties = (item) => {",
-							"    return item.Id !== undefined",
-							"    && item.LinkType !== undefined",
-							"    && item.Active !== undefined",
+							"    return item.Reason !== undefined ",
 							"    && item.Url !== undefined;",
 							"}",
 							"",
-							"pm.test(\"Response contains Properties\", function () {",
+							"pm.test(\"Response contains the Properties\", function () {",
 							"    var response = pm.response.json();",
-							"     pm.expect(response.every(validateProperties)).to.be.true;",
+							"    pm.expect(response.every(validateProperties)).to.be.true;",
 							"    if (response.length > 0)",
 							"    {",
 							"        var lastIndex = response.length - 1;",
-							"        pm.environment.set(\"LinkPublicId\", response[lastIndex].Id);",
+							"        pm.environment.set(\"RelocationReasonId\", response[lastIndex].Reason);",
 							"    }",
 							"});"
 						],
@@ -55,7 +53,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
 					"host": [
 						"{{origin}}"
 					],
@@ -63,15 +61,15 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"PublicIds"
+						"Relocations"
 					]
 				},
-				"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
+				"description": "This method retrieves a list of relocations based on a survey. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
 		{
-			"name": "Update Public Ids",
+			"name": "Update Relocation",
 			"event": [
 				{
 					"listen": "test",
@@ -85,7 +83,11 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							""
+							"pm.test(\"The response should have a FileName\", function () {",
+							"    const response = pm.response.json();",
+							"    var myfilename = pm.environment.get(\"OdinFileName\");",
+							"    pm.expect(response.FileName == myfilename).to.be.true;",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -105,10 +107,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://test.url/zzzzzzzzzzz\"\r\n  }\r\n]"
+					"raw": "{\r\n  \"Reason\": \"{{RelocationReasonId}}\",\r\n  \"Url\": \"http://test.url\"\r\n}"
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
 					"host": [
 						"{{origin}}"
 					],
@@ -116,10 +118,10 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"PublicIds"
+						"Relocations"
 					]
 				},
-				"description": "Update the survey public ids"
+				"description": "Update the relocations with the specified values."
 			},
 			"response": []
 		}

@@ -1,19 +1,17 @@
 {
 	"info": {
+		"_postman_id": "4eb187f8-89ce-416f-8f78-9553ca7632cb",
 		"name": "SurveyPublish",
-		"_postman_id": "e57b9a01-f24f-790f-a96e-e7d61c4ce6ae",
 		"description": "The Publish Survey controller. Allows to publish Survey into Survey package.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get SurveyPublish",
+			"name": "Get State",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -23,8 +21,19 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
+							"const validateProperties = (item) => {",
+							"    return item.Live !== undefined",
+							"    && item.Test !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Validates the properties\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"});",
+							"",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -40,7 +49,6 @@
 						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
-				"body": {},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
 					"host": [
@@ -58,13 +66,11 @@
 			"response": []
 		},
 		{
-			"name": "Put SurveyPublish",
+			"name": "Publish",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "978e4eb1-cfaa-4d22-9fe6-8e4d95c89030",
-						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -75,7 +81,8 @@
 							"});",
 							"",
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -93,7 +100,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"PackageType\": 0,\r\n  \"ForceUpgrade\": 0\r\n}"
+					"raw": "{\r\n  \"PackageType\": 1,\r\n  \"ForceUpgrade\": 0\r\n}"
 				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
@@ -116,7 +123,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "e92aaaa9-82fe-4d24-9621-cd954ee7f29f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -126,7 +132,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "d275c190-3c33-4151-abca-293fdae6728c",
 				"type": "text/javascript",
 				"exec": [
 					""
