@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8556c294-9948-47e5-bb8e-4b30957a4db7",
+		"_postman_id": "db7d2c7d-5d8b-4625-a0a2-83132b1dac2e",
 		"name": "SurveyRelocations",
 		"description": "Provides methods to query and manage survey specific relocations (OBSOLETE)\nThis endpoint is deprecated. Please use SurveyResponseCodes instead",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -83,7 +83,7 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							"pm.test(\"The response should have a FileName and a Script text\", function () {",
+							"pm.test(\"The response should have a FileName\", function () {",
 							"    const response = pm.response.json();",
 							"    var myfilename = pm.environment.get(\"OdinFileName\");",
 							"    pm.expect(response.FileName == myfilename).to.be.true;",

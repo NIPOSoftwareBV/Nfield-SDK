@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "9bca65f1-919b-4404-9869-166493a4db17",
+		"_postman_id": "18bbfdf3-7ab3-4fc7-82cd-384658d1b698",
 		"name": "DomainSurveysResources",
 		"description": "A controller for querying Survey Resources",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Surveys Resources",
+			"name": "Get Surveys' Resources",
 			"event": [
 				{
 					"listen": "test",
