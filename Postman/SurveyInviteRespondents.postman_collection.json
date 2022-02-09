@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "27b5b87e-c0bd-4ce9-8ef1-1cc3210d24bf",
 		"name": "SurveyInviteRespondents",
-		"description": "A controller for invite respondents and get invitation status.",
+		"description": "A controller for inviting respondents and getting invitation statuses.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
