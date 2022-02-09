@@ -199,7 +199,7 @@
 						"{{InvitationTemplateId}}"
 					]
 				},
-				"description": "This method updates the ODIN script of a specific survey."
+				"description": "This method updates an invitation template."
 			},
 			"response": []
 		},
