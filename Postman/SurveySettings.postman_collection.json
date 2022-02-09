@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "afd0dfad-136c-41de-a8b8-9f9e3edf2a24",
-		"name": "SurveyQuotaTargets",
-		"description": "A controller for querying Full QuotaFrame structure based on survey",
+		"_postman_id": "7fd55e30-a30f-4318-9d80-8cbbaa5a1664",
+		"name": "SurveySettings",
+		"description": "A controller for querying Survey Settings",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get QuotaTargets",
+			"name": "Get Survey Settings",
 			"event": [
 				{
 					"listen": "test",
@@ -21,10 +21,13 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							"pm.test(\"All QuotaTargets should have Target and Variables\", function () {",
-							"    const quotaTargets = pm.response.json();",
-							"    pm.expect(quotaTargets.Target !== undefined).to.be.true;",
-							"    pm.expect(quotaTargets.Variables !== undefined).to.be.true;",
+							"const hasNameAndValue = (setting) => {",
+							"    return setting.Name !== undefined && setting.Value !== undefined;",
+							"}",
+							"",
+							"pm.test(\"All survey settings should have name and value\", function () {",
+							"    const settings = pm.response.json();",
+							"    pm.expect(settings.every(hasNameAndValue)).to.be.true;",
 							"});",
 							""
 						],
@@ -40,17 +43,12 @@
 						"value": "application/octet-stream"
 					},
 					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
-					},
-					{
 						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}",
-						"type": "text"
+						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Settings",
 					"host": [
 						"{{origin}}"
 					],
@@ -58,15 +56,15 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"QuotaTargets"
+						"Settings"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets from a Survey."
+				"description": "This method retrieves a list of survey Settings. This list can be filtered and sorted using standard OData syntax."
 			},
 			"response": []
 		},
 		{
-			"name": "Get QuotaTargets by Etag",
+			"name": "Add Survey Settings",
 			"event": [
 				{
 					"listen": "test",
@@ -80,10 +78,10 @@
 							"    pm.response.to.have.status(\"OK\");",
 							"});",
 							"",
-							"pm.test(\"All QuotaTargets should have Target and Variables\", function () {",
-							"    const quotaTargets = pm.response.json();",
-							"    pm.expect(quotaTargets.Target !== undefined).to.be.true;",
-							"    pm.expect(quotaTargets.Variables !== undefined).to.be.true;",
+							"pm.test(\"Response contains the correct Name and Value\", function () {",
+							"    const settings = pm.response.json();",
+							"    pm.expect(settings.Name).to.eql(\"LocationCaptureGps\");",
+							"    pm.expect(settings.Value).to.eql(\"True\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -91,24 +89,23 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/octet-stream"
-					},
-					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
+						"value": "application/json"
 					},
 					{
 						"key": "Authorization",
-						"value": "Basic {{AuthenticationToken}}",
-						"type": "text"
+						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"LocationCaptureGps\",\r\n    \"Value\": \"True\"\r\n}"
+				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets/{{eTag}}",
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Settings",
 					"host": [
 						"{{origin}}"
 					],
@@ -116,11 +113,10 @@
 						"v1",
 						"Surveys",
 						"{{SurveyId}}",
-						"QuotaTargets",
-						"{{eTag}}"
+						"Settings"
 					]
 				},
-				"description": "This method retrieves the QuotaTargets for a specific ETag version."
+				"description": "This method creates a new survey Setting."
 			},
 			"response": []
 		}
