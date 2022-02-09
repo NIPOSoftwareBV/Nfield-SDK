@@ -13,15 +13,24 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Response contains SurveyId\", function () {",
-							"    const survey = pm.response.json();",
-							"    pm.expect(survey.SurveyId.length).to.eql(36);",
-							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
+							"pm.test(\"Response contains link\", function () {",
+							"    const content = pm.response.json();",
+							"    pm.expect(content.Link).contains(\"https://\");",
 							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"FileName\",\"Postman.Png\")\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -31,14 +40,21 @@
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json"
+						"key": "Authorization",
+						"value": "Body {{AuthenticationToken}}"
 					},
 					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
+						"key": "Content-Type",
+						"value": "application/octet-stream",
+						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/C:/SC/Nfield-SDK/Postman/Postman.png"
+					}
+				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationImages/{{FileName}}",
 					"host": [
@@ -75,13 +91,6 @@
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"key": "FileName",
-			"value": "",
-			"type": "default"
 		}
 	]
 }

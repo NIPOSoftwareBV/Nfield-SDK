@@ -35,13 +35,13 @@
 						"value": "application/json"
 					},
 					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"Name\": \"name\",\r\n  \"EmailColumnName\": \"email\",\r\n  \"ScheduledFor\": \"destination\",\r\n  \"InvitationTemplateId\": \"{{InvitationTemplateId}}\",\r\n  \"Filters\": \r\n  [\r\n      {\r\n           \"Name\": \"email\",\r\n           \"Op\": \"eq\",\r\n           \"Value\": \"mail@mail.com\"\r\n      }\r\n  ]\r\n}"
+					"raw": "{\r\n  \"Name\": \"name\",\r\n  \"EmailColumnName\": \"mail\",\r\n  \"ScheduledFor\": \"2050-06-22T12:02:00\",\r\n  \"InvitationTemplateId\": \"{{InvitationTemplateId}}\",\r\n  \"Filters\": \r\n  [\r\n      {\r\n           \"Name\": \"mail\",\r\n           \"Op\": \"eq\",\r\n           \"Value\": \"mail@mail.com\"\r\n      }\r\n  ]\r\n}"
 				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents",
@@ -66,14 +66,32 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Response contains SurveyId\", function () {",
-							"    const survey = pm.response.json();",
-							"    pm.expect(survey.SurveyId.length).to.eql(36);",
-							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyId !== undefined ",
+							"    && item.SurveyName !== undefined ",
+							"    && item.InvitationsBlocked !== undefined",
+							"    && item.LastActivity !== undefined",
+							"    && item.TotalCount !== undefined    ",
+							"    && item.ScheduledCount !== undefined",
+							"    && item.PendingCount !== undefined",
+							"    && item.NotSentCount !== undefined",
+							"    && item.ErrorCount !== undefined",
+							"    && item.SentCount !== undefined",
+							"    && item.OpenedCount !== undefined",
+							"    && item.ClickedCount !== undefined",
+							"    && item.UnsubscribedCount !== undefined",
+							"    && item.AbuseReportCount !== undefined",
+							"    && item.UnknownCount !== undefined",
+							"    ;",
+							"}",
+							"",
+							"pm.test(\"Response contains all fields\", function () {",
+							"    var invitations = pm.response.json();",
+							"    pm.expect(invitations.every(validateProperties)).to.be.true;    ",
 							"});"
 						],
 						"type": "text/javascript"
@@ -91,8 +109,9 @@
 						"value": "application/json"
 					},
 					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "default"
 					}
 				],
 				"body": {
@@ -100,14 +119,13 @@
 					"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 				},
 				"url": {
-					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents/SurveysInvitationStatus",
+					"raw": "{{origin}}/v1/Surveys/InviteRespondents/SurveysInvitationStatus",
 					"host": [
 						"{{origin}}"
 					],
 					"path": [
 						"v1",
 						"Surveys",
-						"{{SurveyId}}",
 						"InviteRespondents",
 						"SurveysInvitationStatus"
 					]
@@ -123,14 +141,38 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Response contains SurveyId\", function () {",
-							"    const survey = pm.response.json();",
-							"    pm.expect(survey.SurveyId.length).to.eql(36);",
-							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
+							"const validateProperties = (item) => {",
+							"    return item.SurveyId !== undefined ",
+							"    && item.BatchName !== undefined ",
+							"    && item.ScheduledFor !== undefined",
+							"    && item.Status !== undefined",
+							"    && item.TotalCount !== undefined    ",
+							"    && item.ScheduledCount !== undefined",
+							"    && item.PendingCount !== undefined",
+							"    && item.NotSentCount !== undefined",
+							"    && item.ErrorCount !== undefined",
+							"    && item.SentCount !== undefined",
+							"    && item.OpenedCount !== undefined",
+							"    && item.ClickedCount !== undefined",
+							"    && item.UnsubscribedCount !== undefined",
+							"    && item.AbuseReportCount !== undefined",
+							"    && item.UnknownCount !== undefined",
+							"    ;",
+							"}",
+							"",
+							"pm.test(\"Response contains all fields\", function () {",
+							"    var invitations = pm.response.json();",
+							"    pm.expect(invitations.every(validateProperties)).to.be.true;  ",
+							"",
+							"    if (invitations.length > 0)",
+							"    {",
+							"        var lastIndex = invitations.length - 1;",
+							"        pm.environment.set(\"BatchName\", invitations[lastIndex].BatchName);",
+							"    }  ",
 							"});"
 						],
 						"type": "text/javascript"
@@ -148,8 +190,8 @@
 						"value": "application/json"
 					},
 					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
 				"body": {
@@ -180,14 +222,18 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
 							"});",
-							"",
-							"pm.test(\"Response contains SurveyId\", function () {",
-							"    const survey = pm.response.json();",
-							"    pm.expect(survey.SurveyId.length).to.eql(36);",
-							"    pm.environment.set(\"SurveyId\", survey.SurveyId);",
+							"const validateProperties = (item) => {",
+							"    pm.expect(item.RespondentKey).not.to.be.undefined;  ",
+							"    pm.expect(item.Status).not.to.be.undefined;",
+							"    return true;",
+							"}",
+							"pm.test(\"Response contains all fields\", function () {",
+							"    var invitation = pm.response.json();",
+							"     pm.expect(invitation.every(validateProperties)).to.be.true; ",
+							"      ",
 							"});"
 						],
 						"type": "text/javascript"
@@ -205,8 +251,8 @@
 						"value": "application/json"
 					},
 					{
-						"key": "X-Nfield-Domain",
-						"value": "{{Domain}}"
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
 					}
 				],
 				"body": {
