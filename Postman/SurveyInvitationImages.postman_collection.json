@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "1d514de5-3764-4032-8188-6292aacd902c",
 		"name": "SurveyInvitationImages",
-		"description": "A controller for posting invitation images",
+		"description": "A controller for posting invitation images.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
