@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "ca2d2f17-85f3-4928-8d07-69bc27439e98",
+		"name": "SurveySampleData",
+		"description": "Starts a task to get the sample record data",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Sample Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"Accepted\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.Id !== undefined",
+							"    && item.IdentityId !== undefined",
+							"    && item.Parameters !== undefined",
+							"    && item.StartTime !== undefined",
+							"    && item.FinishTime !== undefined",
+							"    && item.ResultUrl !== undefined",
+							"    && item.Status !== undefined",
+							"    && item.TaskType !== undefined;",
+							"}",
+							"",
+							"const validateBgTask = (item) => {",
+							"    return item.SurveyId !== undefined",
+							"    && item.BackgroundTaskId !== undefined",
+							"    && item.DownloadFileName !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Validate Properties\", function () {",
+							"    var response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
+							"    var parameters = JSON.parse(response.Parameters);",
+							"    pm.expect(validateBgTask(parameters)).to.be.true;",
+							"    pm.environment.set(\"TaskId\", parameters.BackgroundTaskId);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SampleData/{{SampleDataFileName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SampleData",
+						"{{SampleDataFileName}}"
+					]
+				},
+				"description": "Create a request for a sample data download."
+			},
+			"response": []
+		}
+	]
+}

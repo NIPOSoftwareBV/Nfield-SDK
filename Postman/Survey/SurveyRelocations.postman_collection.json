@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "8556c294-9948-47e5-bb8e-4b30957a4db7",
+		"name": "SurveyRelocations",
+		"description": "Provides methods to query and manage survey specific relocations (OBSOLETE)\nThis endpoint is deprecated. Please use SurveyResponseCodes instead",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Relocations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.Reason !== undefined ",
+							"    && item.Url !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Response contains the Properties\", function () {",
+							"    var response = pm.response.json();",
+							"    pm.expect(response.every(validateProperties)).to.be.true;",
+							"    if (response.length > 0)",
+							"    {",
+							"        var lastIndex = response.length - 1;",
+							"        pm.environment.set(\"RelocationReasonId\", response[lastIndex].Reason);",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Relocations"
+					]
+				},
+				"description": "This method retrieves a list of relocations based on a survey. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Relocation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"The response should have a FileName and a Script text\", function () {",
+							"    const response = pm.response.json();",
+							"    var myfilename = pm.environment.get(\"OdinFileName\");",
+							"    pm.expect(response.FileName == myfilename).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Reason\": \"{{RelocationReasonId}}\",\r\n  \"Url\": \"http://test.url\"\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Relocations"
+					]
+				},
+				"description": "Update the relocations with the specified values."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
