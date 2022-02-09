@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ba14370f-a458-4743-97f8-e388cec4e619",
+		"_postman_id": "e2042cd7-bae8-4cb6-8859-ce9ef93364af",
 		"name": "SurveyPublicIds",
 		"description": "Provides methods to query and manage survey specific public ids (survey links)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -105,7 +105,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://yellow-interviewing.niposoftware-dev.com/Interviews/CoReV/L6YjSMOwTBPzYUwMNggr\"\r\n  }\r\n]"
+					"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://test.url/zzzzzzzzzzz\"\r\n  }\r\n]"
 				},
 				"url": {
 					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
