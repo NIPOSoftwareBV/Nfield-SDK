@@ -52,7 +52,7 @@
 				"body": {
 					"mode": "file",
 					"file": {
-						"src": "/C:/SC/Nfield-SDK/Postman/Postman.png"
+						"src": "./Postman.png"
 					}
 				},
 				"url": {
