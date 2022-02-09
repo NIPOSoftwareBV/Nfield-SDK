@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "411031ca-e7aa-4aa6-ac31-3391cbc3117a",
 		"name": "SurveyInvitationTemplates",
-		"description": "A controller for manage invitation templates.",
+		"description": "A controller for managing invitation templates.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
