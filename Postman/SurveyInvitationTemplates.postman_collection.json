@@ -133,7 +133,7 @@
 						""
 					]
 				},
-				"description": "This method get an invitation template."
+				"description": "This method gets an invitation template."
 			},
 			"response": []
 		},
