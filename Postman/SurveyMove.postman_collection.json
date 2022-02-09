@@ -60,7 +60,7 @@
 						"SurveyGroup"
 					]
 				},
-				"description": "Move a survey to another survey group"
+				"description": "Move a survey to another survey group."
 			},
 			"response": []
 		}
