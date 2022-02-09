@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "9d43e07f-1d64-4d8e-971d-bac6a0169a07",
+		"name": "SurveySamplingPoints",
+		"description": "The SamplingPointsController class provides methods to query and manage sampling points for a survey. (Has survey type usage restrictions)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get SamplingPoints",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains SamplingPointId & FieldworkOfficeId\", function () {\r",
+							"    var samplingPoints = pm.response.json();\r",
+							"    var lastIndex = samplingPoints.length - 1;\r",
+							"    pm.environment.set(\"SamplingPointId\", samplingPoints[lastIndex].SamplingPointId);\r",
+							"    pm.environment.set(\"FieldworkOfficeId\", samplingPoints[lastIndex].FieldworkOfficeId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints"
+					]
+				},
+				"description": "(Capi) This method retrieves a list of Sampling Points based on survey. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Get SamplingPoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains FieldworkOfficeId\", function () {\r",
+							"    var samplingPoint = pm.response.json();\r",
+							"    pm.environment.set(\"FieldworkOfficeId\", samplingPoint.SamplingPointId);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints",
+						"{{SamplingPointId}}"
+					]
+				},
+				"description": "(Capi) This method retrieve details of a specific sampling point with fieldwork offices."
+			},
+			"response": []
+		},
+		{
+			"name": "Create SamplingPoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains SamplingPointId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"SamplingPointId\");\r",
+							"    const response = pm.response.json();\r",
+							"    pm.environment.set(\"SamplingPointId\", response.SamplingPointId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"SamplingPointId\": \"zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz\",\r\n  \"Name\": \"Postman Sampling Point\",\r\n  \"Description\": \"Postman sample string 3\",\r\n  \"Instruction\": \"Postman sample string 4\",\r\n  \"FieldworkOfficeId\": \"Postman sample string 5\",\r\n  \"GroupId\": \"Postman sample string 6\",\r\n  \"Stratum\": \"Postman sample string 7\",\r\n  \"Kind\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints"
+					]
+				},
+				"description": "(Capi) This method creates a new sampling point."
+			},
+			"response": []
+		},
+		{
+			"name": "Update SamplingPoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Updated name\", function () {\r",
+							"    const samplingPoint = pm.response.json();\r",
+							"    pm.expect(samplingPoint.Name).to.eql(\"Postman Sampling Point Updated\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Updated description\", function () {\r",
+							"    const samplingPoint = pm.response.json();\r",
+							"    pm.expect(samplingPoint.Description).to.eql(\"Postman sample string 3 Updated\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"Postman Sampling Point Updated\",\r\n    \"Description\": \"Postman sample string 3 Updated\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints",
+						"{{SamplingPointId}}"
+					]
+				},
+				"description": "(Capi) Update a sampling point with the specified fields"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete SamplingPoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+					"host": [
+						"{{origin}}v1"
+					],
+					"path": [
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoints",
+						"{{SamplingPointId}}"
+					]
+				},
+				"description": "(Capi) This method deletes a specified sampling point."
+			},
+			"response": []
+		}
+	]
+}

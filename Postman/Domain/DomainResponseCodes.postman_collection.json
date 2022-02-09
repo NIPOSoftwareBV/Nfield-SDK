@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "1a5dddfa-9042-471e-a218-6c89fb0b849d",
+		"name": "DomainResponseCodes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Response Codes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Url !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains ResponseCodeId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+							"    if (response.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = response.length - 1;\r",
+							"        pm.environment.set(\"ResponseCodeId\", response[lastIndex].Id);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/ResponseCodes",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ResponseCodes"
+					]
+				},
+				"description": "Gets all domain response codes for the domain."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Response Code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Url !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains ResponseCodeId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.environment.set(\"ResponseCodeId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\":\"200\",\r\n    \"Description\":\"Postman response code description\",\r\n    \"Url\":null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ResponseCodes",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ResponseCodes"
+					]
+				},
+				"description": "Create a new domain response code"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Response Code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Id !== undefined \r",
+							"    && item.Description !== undefined \r",
+							"    && item.Url !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains ResponseCodeId\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Description == \"Postman response updated\").to.be.true;\r",
+							"    pm.environment.set(\"ResponseCodeId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Description\":\"Postman response updated\",\r\n    \"Url\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ResponseCodes/{{ResponseCodeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ResponseCodes",
+						"{{ResponseCodeId}}"
+					]
+				},
+				"description": "Patch the domain's response codes."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Response Code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/ResponseCodes/{{ResponseCodeId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"ResponseCodes",
+						"{{ResponseCodeId}}"
+					]
+				},
+				"description": "Delete the domain's response code by id."
+			},
+			"response": []
+		}
+	]
+}

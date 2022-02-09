@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "f8ff9c30-5bb4-4e95-9fc1-da11addd80b7",
+		"name": "SurveySamplingPointImage",
+		"description": "Controller handling the upload of an image file for the sampling point (Has survey type usage restrictions)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Download Sampling Point Image",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoint",
+						"{{SamplingPointId}}",
+						"Image"
+					]
+				},
+				"description": "(Capi) Method used to download sampling point image."
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Sampling Point Image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains image name\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.environment.set(\"FileName\", response);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/bungalow.jpg"
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image/{{FileName}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoint",
+						"{{SamplingPointId}}",
+						"Image",
+						"{{FileName}}"
+					]
+				},
+				"description": "(Capi) Method used to upload an image file associated with a sampling point (e.g. a map). The upload of a new image file for an existing sampling point will update the old image."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Sampling Point Image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-zip-compressed"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image ",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"SamplingPoint",
+						"{{SamplingPointId}}",
+						"Image "
+					]
+				},
+				"description": "(Capi) Method used to delete the sampling point image."
+			},
+			"response": []
+		}
+	]
+}

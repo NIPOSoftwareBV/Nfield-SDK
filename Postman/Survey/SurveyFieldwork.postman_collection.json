@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "9c291bb5-1b71-4a4d-9f3a-308d7cbd12d2",
+		"name": "SurveyFieldwork",
+		"description": "The fieldwork management controller. Allows to start and stop the fieldwork.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get SurveyFieldwork Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Status",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Status"
+					]
+				},
+				"description": "This method returns fieldwork status."
+			},
+			"response": []
+		},
+		{
+			"name": "Get SurveyFieldwork Counts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Counts",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Counts"
+					]
+				},
+				"description": "This method returns fieldwork counts."
+			},
+			"response": []
+		},
+		{
+			"name": "Start SurveyFieldwork",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Start",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Start"
+					]
+				},
+				"description": "This method starts the fieldwork of the survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Stop SurveyFieldwork",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"TerminateRunningInterviews\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Stop",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Fieldwork",
+						"Stop"
+					]
+				},
+				"description": "This method stops the fieldwork of the survey."
+			},
+			"response": []
+		}
+	]
+}

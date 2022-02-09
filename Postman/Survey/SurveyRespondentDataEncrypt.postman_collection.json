@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "94daeeb1-c4f3-450e-810a-446d0763cbdd",
+		"name": "SurveyRespondentDataEncrypt",
+		"description": "Manages data collected for a survey (Has survey type usage restrictions)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Respondent Data Encrypt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"IV\": \"F0HQJewlW7rsPm1WVtvCUg==\",\r\n  \"Data\": {\r\n    \"sample string 1\": \"sampleString2\",\r\n    \"sample string 3\": \"sampleString4\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/RespondentDataEncrypt",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"RespondentDataEncrypt"
+					]
+				},
+				"description": "(Online) Gets asynchronously the decrypted data to encrypt it"
+			},
+			"response": []
+		}
+	]
+}
