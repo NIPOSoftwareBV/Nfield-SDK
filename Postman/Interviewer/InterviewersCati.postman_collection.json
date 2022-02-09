@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "11bd2d37-a057-4aad-bbb0-3c231a7fbc5a",
+		"name": "InterviewersCati",
+		"description": "The InterviewersController class provides methods to query and manage interviewers for Nfield Cati. (Has survey type usage restrictions)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Cati Interviewers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+							"    var interviewers = pm.response.json();\r",
+							"    pm.expect(interviewers.every(validateProperties)).to.be.true;\r",
+							"    if (interviewers.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = interviewers.length - 1;\r",
+							"        pm.environment.set(\"CatiInterviewerId\", interviewers[lastIndex].InterviewerId);\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						""
+					]
+				},
+				"description": "(Cati) This method retrieve a list of interviewers. This list can be filtered and sorted using standard OData syntax."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cati Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId\", function () {\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+							"    pm.environment.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						"{{CatiInterviewerId}}"
+					]
+				},
+				"description": "(Cati) This method retrieve details of a specific interviewer using the interviewerId."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cati Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"InterviewerId\");\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+							"    pm.environment.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"UserName\": \"Cati user Postman\",\r\n  \"Password\": \"Password\",\r\n  \"TelephoneNumber\": \"+34666555444\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						""
+					]
+				},
+				"description": "(Cati) This method creates a new interviewer."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Cati Interviewer Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains InterviewerId\", function () {\r",
+							"    var interviewer = pm.response.json();\r",
+							"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+							"    pm.environment.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Password\": \"a12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						"{{CatiInterviewerId}}"
+					]
+				},
+				"description": "(Cati) This method is used to reset an interviewer's password."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cati Interviewer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"CatiInterviewers",
+						"{{CatiInterviewerId}}"
+					]
+				},
+				"description": "(Cati) This method deletes a specified interviewer."
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "71089e62-7430-41c2-bfeb-c90de0c9f6b7",
+		"name": "SurveyLanguageTranslations",
+		"description": "Manages translations for Interview UI elements",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Languages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (survey) => {\r",
+							"    return survey.Id !== undefined\r",
+							"    && survey.InterviewButtonUnavailable !== undefined\r",
+							"    && survey.TooFewAnswers !== undefined\r",
+							"    && survey.TooManyAnswers !== undefined\r",
+							"    && survey.ItemAnswerRequired !== undefined\r",
+							"    && survey.CategoryAnswerRequired !== undefined\r",
+							"    && survey.AnswerRequired !== undefined\r",
+							"    && survey.NotInRange !== undefined\r",
+							"    && survey.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && survey.LessThanMinimum !== undefined\r",
+							"    && survey.MoreThanMaximum !== undefined\r",
+							"    && survey.MustBeNumeric !== undefined\r",
+							"    && survey.TooManyDigitsFraction !== undefined\r",
+							"    && survey.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && survey.ExclusiveCategory !== undefined\r",
+							"    && survey.InvalidCategory !== undefined\r",
+							"    && survey.ButtonPause !== undefined\r",
+							"    && survey.ButtonStart !== undefined\r",
+							"    && survey.ButtonClear !== undefined\r",
+							"    && survey.ButtonBack !== undefined\r",
+							"    && survey.ButtonNext !== undefined\r",
+							"    && survey.Name !== undefined\r",
+							"    && survey.AnswerTooLong !== undefined\r",
+							"    && survey.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains Properties\", function () {\r",
+							"     var languages = pm.response.json();\r",
+							"     pm.expect(languages.every(validateProperties)).to.be.true;\r",
+							"    if (languages.length > 0)\r",
+							"    {\r",
+							"        var lastIndex = languages.length - 1;\r",
+							"        pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"LanguageTranslations",
+						""
+					]
+				},
+				"description": "Get the list of language translations of the specified survey. Translation entries with \"null\" values will take the default System value, when a survey request for these translations"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (survey) => {\r",
+							"    return survey.Id !== undefined\r",
+							"    && survey.InterviewButtonUnavailable !== undefined\r",
+							"    && survey.TooFewAnswers !== undefined\r",
+							"    && survey.TooManyAnswers !== undefined\r",
+							"    && survey.ItemAnswerRequired !== undefined\r",
+							"    && survey.CategoryAnswerRequired !== undefined\r",
+							"    && survey.AnswerRequired !== undefined\r",
+							"    && survey.NotInRange !== undefined\r",
+							"    && survey.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && survey.LessThanMinimum !== undefined\r",
+							"    && survey.MoreThanMaximum !== undefined\r",
+							"    && survey.MustBeNumeric !== undefined\r",
+							"    && survey.TooManyDigitsFraction !== undefined\r",
+							"    && survey.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && survey.ExclusiveCategory !== undefined\r",
+							"    && survey.InvalidCategory !== undefined\r",
+							"    && survey.ButtonPause !== undefined\r",
+							"    && survey.ButtonStart !== undefined\r",
+							"    && survey.ButtonClear !== undefined\r",
+							"    && survey.ButtonBack !== undefined\r",
+							"    && survey.ButtonNext !== undefined\r",
+							"    && survey.Name !== undefined\r",
+							"    && survey.AnswerTooLong !== undefined\r",
+							"    && survey.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.environment.set(\"LanguageId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"InterviewButtonUnavailable\": \"Interview button is not available\",\r\n    \"TooFewAnswers\": \"Too few answers, minimum is {minimum}\",\r\n    \"TooManyAnswers\": \"Too many answers, maximum is {maximum}\",\r\n    \"ItemAnswerRequired\": \"Please specify an answer for {item}\",\r\n    \"CategoryAnswerRequired\": \"Please specify an answer for {category}\",\r\n    \"AnswerRequired\": \"An answer is required\",\r\n    \"NotInRange\": \"Answer {answer} is not in the permitted range, permitted range is {range}\",\r\n    \"TooManyDigitsInIntegerPart\": \"Answer {answer} has too many digits, maximum is {maximum}\",\r\n    \"LessThanMinimum\": \"Answer {answer} is too small, minimum is {minimum}\",\r\n    \"MoreThanMaximum\": \"Answer {answer} is too big, maximum is {maximum}\",\r\n    \"MustBeNumeric\": \"Answer {answer} must be numeric\",\r\n    \"TooManyDigitsFraction\": \"Answer {answer} has too many fractional digits, maximum is {maximumDigits}\",\r\n    \"DoNotUseBrowserButtonToNavigate\": \"Do not use browser navigation buttons, use interview buttons instead\",\r\n    \"ExclusiveCategory\": \"Category {category} cannot be used together with other categories\",\r\n    \"InvalidCategory\": \"The chosen category is not present in the list of available categories.\",\r\n    \"ButtonPause\": \"Pause\",\r\n    \"ButtonStart\": \"Start\",\r\n    \"ButtonClear\": \"Clear\",\r\n    \"ButtonBack\": \"Back\",\r\n    \"ButtonNext\": \"Next\",\r\n    \"Name\": \"{{LanguageTestName}}\",\r\n    \"AnswerTooLong\": \"Answer {anser} is too long, maximum is {numberOfCharacters}\",\r\n    \"DoNotUseButtonWithOtherAnswer\": \"The answer \\\"{item}\\\" cannot be used in conjunction with other answers\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"LanguageTranslations",
+						""
+					]
+				},
+				"description": "Adds a new language to the specified survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (survey) => {\r",
+							"    return survey.Id !== undefined\r",
+							"    && survey.InterviewButtonUnavailable !== undefined\r",
+							"    && survey.TooFewAnswers !== undefined\r",
+							"    && survey.TooManyAnswers !== undefined\r",
+							"    && survey.ItemAnswerRequired !== undefined\r",
+							"    && survey.CategoryAnswerRequired !== undefined\r",
+							"    && survey.AnswerRequired !== undefined\r",
+							"    && survey.NotInRange !== undefined\r",
+							"    && survey.TooManyDigitsInIntegerPart !== undefined\r",
+							"    && survey.LessThanMinimum !== undefined\r",
+							"    && survey.MoreThanMaximum !== undefined\r",
+							"    && survey.MustBeNumeric !== undefined\r",
+							"    && survey.TooManyDigitsFraction !== undefined\r",
+							"    && survey.DoNotUseBrowserButtonToNavigate !== undefined\r",
+							"    && survey.ExclusiveCategory !== undefined\r",
+							"    && survey.InvalidCategory !== undefined\r",
+							"    && survey.ButtonPause !== undefined\r",
+							"    && survey.ButtonStart !== undefined\r",
+							"    && survey.ButtonClear !== undefined\r",
+							"    && survey.ButtonBack !== undefined\r",
+							"    && survey.ButtonNext !== undefined\r",
+							"    && survey.Name !== undefined\r",
+							"    && survey.AnswerTooLong !== undefined\r",
+							"    && survey.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Response contains LanguageId\", function () {\r",
+							"    \r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.Name == \"languageUpdated\").to.be.true;\r",
+							"    pm.environment.set(\"LanguageId\", response.Id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"InterviewButtonUnavailable\": \"Interview button is not available\",\r\n    \"TooFewAnswers\": \"Too few answers, minimum is {minimum}\",\r\n    \"TooManyAnswers\": \"Too many answers, maximum is {maximum}\",\r\n    \"ItemAnswerRequired\": \"Please specify an answer for {item}\",\r\n    \"CategoryAnswerRequired\": \"Please specify an answer for {category}\",\r\n    \"AnswerRequired\": \"An answer is required\",\r\n    \"NotInRange\": \"Answer {answer} is not in the permitted range, permitted range is {range}\",\r\n    \"TooManyDigitsInIntegerPart\": \"Answer {answer} has too many digits, maximum is {maximum}\",\r\n    \"LessThanMinimum\": \"Answer {answer} is too small, minimum is {minimum}\",\r\n    \"MoreThanMaximum\": \"Answer {answer} is too big, maximum is {maximum}\",\r\n    \"MustBeNumeric\": \"Answer {answer} must be numeric\",\r\n    \"TooManyDigitsFraction\": \"Answer {answer} has too many fractional digits, maximum is {maximumDigits}\",\r\n    \"DoNotUseBrowserButtonToNavigate\": \"Do not use browser navigation buttons, use interview buttons instead\",\r\n    \"ExclusiveCategory\": \"Category {category} cannot be used together with other categories\",\r\n    \"InvalidCategory\": \"The chosen category is not present in the list of available categories.\",\r\n    \"ButtonPause\": \"Pause\",\r\n    \"ButtonStart\": \"Start\",\r\n    \"ButtonClear\": \"Clear\",\r\n    \"ButtonBack\": \"Back\",\r\n    \"ButtonNext\": \"Next\",\r\n    \"Name\": \"languageUpdated\",\r\n    \"AnswerTooLong\": \"Answer {anser} is too long, maximum is {numberOfCharacters}\",\r\n    \"DoNotUseButtonWithOtherAnswer\": \"The answer \\\"{item}\\\" cannot be used in conjunction with other answers\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/{{LanguageId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"LanguageTranslations",
+						"{{LanguageId}}"
+					]
+				},
+				"description": "Updates a language of the specified survey."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Language",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/{{LanguageId}}",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"LanguageTranslations",
+						"{{LanguageId}}"
+					]
+				},
+				"description": "Removes a language of the specified survey."
+			},
+			"response": []
+		}
+	]
+}

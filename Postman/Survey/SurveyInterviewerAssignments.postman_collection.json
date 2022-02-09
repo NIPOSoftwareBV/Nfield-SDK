@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "19d8549d-b777-4792-be56-57a0943336c3",
+		"name": "SurveyInterviewerAssignments",
+		"description": "The controller is used to assign interviewers to survey. (Has survey type usage restrictions)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Assignment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"WorkPackageAssignment\",\r\n    \"TargetToDistribute\": 10,\r\n    \"SamplingPointsFilter\": []\r\n}\r\n/*\r\nMore supported examples\r\n{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"SamplingPointsAssignment\",\r\n    \"SamplingPointsFilter\": [{\r\n           \"Name\": \"Name\",\r\n           \"Op\": \"Eq\",\r\n           \"Value\": \"Sampling Point 1\"\r\n        }]\r\n}\r\n{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"BasicAssignment\",\r\n    \"SamplingPointsFilter\": []\r\n}\r\n{ \r\n    \"Description\": \"Interviewer Instructions\",\r\n    \"AssignmentType\": \"GroupAssignment\",\r\n    \"SamplingPointsFilter\": []\r\n}\r\n*/\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Interviewers",
+						"{{InterviewerId}}",
+						"Assignments"
+					]
+				},
+				"description": "(Capi) This method creates an interviewer assignment.\nDepends on SurveyType (Basic, Eurobarometer or Eurobarometer advanced) & QuotaType (Join Targets, Workpackage ...)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Assignments QuotaTargets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains LevelId\", function () {\r",
+							"    var levels = pm.response.json();\r",
+							"    pm.environment.set(\"QuotaLevelId\", levels[0].LevelId);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments/QuotaTargets",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Interviewers",
+						"{{InterviewerId}}",
+						"Assignments",
+						"QuotaTargets"
+					]
+				},
+				"description": "(Capi) Gets a list of levelIds with Target, Successful and SurveySuccessful assigned to an interviewer"
+			},
+			"response": []
+		},
+		{
+			"name": "Assign/Unassign",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic {{AuthenticationToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"InterviewerId\": \"sample string 1\",\r\n  \"Assign\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Assignment",
+					"host": [
+						"{{origin}}"
+					],
+					"path": [
+						"v1",
+						"Surveys",
+						"{{SurveyId}}",
+						"Assignment"
+					]
+				},
+				"description": "(Capi) Assigns/Unassigns the interviewer to the survey."
+			},
+			"response": []
+		}
+	]
+}
