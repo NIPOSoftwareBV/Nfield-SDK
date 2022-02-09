@@ -118,7 +118,7 @@
 						"Test"
 					]
 				},
-				"description": "Get the survey performance metrics for test interviews"
+				"description": "Get the survey performance metrics for test interviews."
 			},
 			"response": []
 		}
