@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "75dd4c8f-1a41-413c-b00d-c3f3a1e2ad3e",
+		"_postman_id": "898cb989-d325-46b8-88b9-d2535282bc02",
 		"name": "SurveyGeneralSettings",
 		"description": "A controller for querying survey general settings Supervisor should only have access to the Get methods",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Survey General Settings",
+			"name": "Get General Settings",
 			"event": [
 				{
 					"listen": "test",
@@ -19,6 +19,17 @@
 							"\r",
 							"pm.test(\"Status code name has string\", function () {\r",
 							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Description !== undefined\r",
+							"    && item.Client !== undefined\r",
+							"    && item.Name !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validates the properties\", function () {\r",
+							"    const reponse = pm.response.json();\r",
+							"    pm.expect(validateProperties(reponse)).to.be.true;\r",
 							"});\r",
 							"\r",
 							""
@@ -53,7 +64,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Survey Owner",
+			"name": "Get Owner",
 			"event": [
 				{
 					"listen": "test",
@@ -67,6 +78,18 @@
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
 							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Owner !== undefined\r",
+							"    && item.Owner.Id !== undefined\r",
+							"    && item.Owner.UserName !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validates the properties\", function () {\r",
+							"    const reponse = pm.response.json();\r",
+							"    pm.expect(validateProperties(reponse)).to.be.true;\r",
+							"    pm.environment.set(\"LocalUserId\", reponse.Owner.Id );\r",
+							"\r",
+							"});\r",
 							""
 						],
 						"type": "text/javascript"
@@ -100,7 +123,7 @@
 			"response": []
 		},
 		{
-			"name": "Set Survey Owner",
+			"name": "Set Owner",
 			"event": [
 				{
 					"listen": "test",
@@ -112,6 +135,19 @@
 							"\r",
 							"pm.test(\"Status code name has string\", function () {\r",
 							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.Owner !== undefined\r",
+							"    && item.Owner.Id !== undefined\r",
+							"    && item.Owner.UserName !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validates the properties\", function () {\r",
+							"    const reponse = pm.response.json();\r",
+							"    pm.expect(validateProperties(reponse)).to.be.true;\r",
+							"    pm.environment.set(\"LocalUserId\", reponse.Owner.Id );\r",
+							"\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -134,7 +170,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"Owner\": \"<user id>\"\r\n}",
+					"raw": "{\r\n  \"Owner\": \"{{LocalUserId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

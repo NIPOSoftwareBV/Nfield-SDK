@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "96e2851f-fe55-4817-a79d-c67dca2c154d",
+		"_postman_id": "56adb24e-e3d4-495f-a5fd-c09fbe8551be",
 		"name": "SurveyInterviewInteractionsSettings",
 		"description": "Controller for managing survey interview interactions settings It defines which actions are available during the interviews (Has survey type usage restrictions)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get SurveyInterviewInteractionsSettings",
+			"name": "Get Interview Interactions Settings",
 			"event": [
 				{
 					"listen": "test",
@@ -19,6 +19,17 @@
 							"",
 							"pm.test(\"Status code name has string\", function () {",
 							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"const validateProperties = (item) => {",
+							"    return item.BackButtonAvailable !== undefined",
+							"    && item.PauseButtonAvailable !== undefined",
+							"    && item.ClearButtonAvailable !== undefined;",
+							"}",
+							"",
+							"pm.test(\"Validates the properties\", function () {",
+							"    const response = pm.response.json();",
+							"    pm.expect(validateProperties(response)).to.be.true;",
 							"});",
 							"",
 							""
@@ -57,7 +68,7 @@
 			"response": []
 		},
 		{
-			"name": "Update SurveyInterviewInteractionsSettings",
+			"name": "Update Interview Interactions Settings",
 			"event": [
 				{
 					"listen": "test",
@@ -70,7 +81,18 @@
 							"pm.test(\"Status code name has string\", function () {\r",
 							"    pm.response.to.have.status(\"OK\");\r",
 							"});\r",
-							""
+							"\r",
+							"const validateProperties = (item) => {\r",
+							"    return item.BackButtonAvailable !== undefined\r",
+							"    && item.PauseButtonAvailable !== undefined\r",
+							"    && item.ClearButtonAvailable !== undefined;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validates the properties\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(validateProperties(response)).to.be.true;\r",
+							"    pm.expect(response.ClearButtonAvailable).to.be.false;\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -92,7 +114,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"BackButtonAvailable\": true,\r\n    \"PauseButtonAvailable\": true,\r\n    \"ClearButtonAvailable\": true\r\n}",
+					"raw": "{\r\n    \"BackButtonAvailable\": true,\r\n    \"PauseButtonAvailable\": true,\r\n    \"ClearButtonAvailable\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
