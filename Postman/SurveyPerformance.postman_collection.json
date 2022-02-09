@@ -60,7 +60,7 @@
 						"Live"
 					]
 				},
-				"description": "Get the survey performance metrics for live interviews"
+				"description": "Get the survey performance metrics for live interviews."
 			},
 			"response": []
 		},
