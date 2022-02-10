@@ -1007,6 +1007,377 @@
 							"description": "A controller for preparing a local user log download"
 						},
 						{
+							"name": "Interviewer",
+							"item": [
+								{
+									"name": "Get Interviewer",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.EmailAddress !== undefined\r",
+													"    && item.TelephoneNumber !== undefined\r",
+													"    && item.ClientInterviewerId !== undefined\r",
+													"    && item.SuccessfulCount !== undefined\r",
+													"    && item.UnsuccessfulCount !== undefined\r",
+													"    && item.DroppedOutCount !== undefined\r",
+													"    && item.RejectedCount !== undefined\r",
+													"    && item.LastSyncDate !== undefined\r",
+													"    && item.IsFullSynced !== undefined\r",
+													"    && item.IsLastSyncSuccessful !== undefined\r",
+													"    && item.IsSupervisor !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+													"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Interviewers",
+												"{{InterviewerId}}"
+											]
+										},
+										"description": "This method retrieve details of a specific interviewer using the interviewerId."
+									},
+									"response": []
+								},
+								{
+									"name": "Get Interviewer By ClientId",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.EmailAddress !== undefined\r",
+													"    && item.TelephoneNumber !== undefined\r",
+													"    && item.ClientInterviewerId !== undefined\r",
+													"    && item.SuccessfulCount !== undefined\r",
+													"    && item.UnsuccessfulCount !== undefined\r",
+													"    && item.DroppedOutCount !== undefined\r",
+													"    && item.RejectedCount !== undefined\r",
+													"    && item.LastSyncDate !== undefined\r",
+													"    && item.IsFullSynced !== undefined\r",
+													"    && item.IsLastSyncSuccessful !== undefined\r",
+													"    && item.IsSupervisor !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+													"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Interviewers/GetByClientId/{{ClientInterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Interviewers",
+												"GetByClientId",
+												"{{ClientInterviewerId}}"
+											]
+										},
+										"description": "This method retrieve the details of a specific interviewer using the clientInterviewerId."
+									},
+									"response": []
+								},
+								{
+									"name": "Create Interviewer",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.EmailAddress !== undefined\r",
+													"    && item.TelephoneNumber !== undefined\r",
+													"    && item.ClientInterviewerId !== undefined\r",
+													"    && item.SuccessfulCount !== undefined\r",
+													"    && item.UnsuccessfulCount !== undefined\r",
+													"    && item.DroppedOutCount !== undefined\r",
+													"    && item.RejectedCount !== undefined\r",
+													"    && item.LastSyncDate !== undefined\r",
+													"    && item.IsFullSynced !== undefined\r",
+													"    && item.IsLastSyncSuccessful !== undefined\r",
+													"    && item.IsSupervisor !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.expect(interviewer.UserName == \"Capi Postman\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+													"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"UserName\": \"Capi Postman2\",\r\n    \"FirstName\": \"Capi\",\r\n    \"LastName\": \"Tester\",\r\n    \"Password\": \"Password\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": \"+34666555444\",\r\n    \"IsSupervisor\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Interviewers/",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Interviewers",
+												""
+											]
+										},
+										"description": "This method creates a new interviewer."
+									},
+									"response": []
+								},
+								{
+									"name": "Update Password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.EmailAddress !== undefined\r",
+													"    && item.TelephoneNumber !== undefined\r",
+													"    && item.ClientInterviewerId !== undefined\r",
+													"    && item.LastSyncDate !== undefined\r",
+													"    && item.IsFullSynced !== undefined\r",
+													"    && item.IsLastSyncSuccessful !== undefined\r",
+													"    && item.IsSupervisor !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+													"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Password\": \"a12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Interviewers",
+												"{{InterviewerId}}"
+											]
+										},
+										"description": "This method is used to reset an interviewer's password."
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Interviewer",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"No Content\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Interviewers",
+												"{{InterviewerId}}"
+											]
+										},
+										"description": "This method deletes a specified interviewer."
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "Get Interviewers",
 							"event": [
 								{
@@ -1092,372 +1463,6 @@
 							"response": []
 						},
 						{
-							"name": "Get Interviewer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined \r",
-											"    && item.UserName !== undefined \r",
-											"    && item.FirstName !== undefined\r",
-											"    && item.LastName !== undefined\r",
-											"    && item.EmailAddress !== undefined\r",
-											"    && item.TelephoneNumber !== undefined\r",
-											"    && item.ClientInterviewerId !== undefined\r",
-											"    && item.SuccessfulCount !== undefined\r",
-											"    && item.UnsuccessfulCount !== undefined\r",
-											"    && item.DroppedOutCount !== undefined\r",
-											"    && item.RejectedCount !== undefined\r",
-											"    && item.LastSyncDate !== undefined\r",
-											"    && item.IsFullSynced !== undefined\r",
-											"    && item.IsLastSyncSuccessful !== undefined\r",
-											"    && item.IsSupervisor !== undefined;\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
-											"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"Interviewers",
-										"{{InterviewerId}}"
-									]
-								},
-								"description": "This method retrieve details of a specific interviewer using the interviewerId."
-							},
-							"response": []
-						},
-						{
-							"name": "Get Interviewer By ClientId",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined \r",
-											"    && item.UserName !== undefined \r",
-											"    && item.FirstName !== undefined\r",
-											"    && item.LastName !== undefined\r",
-											"    && item.EmailAddress !== undefined\r",
-											"    && item.TelephoneNumber !== undefined\r",
-											"    && item.ClientInterviewerId !== undefined\r",
-											"    && item.SuccessfulCount !== undefined\r",
-											"    && item.UnsuccessfulCount !== undefined\r",
-											"    && item.DroppedOutCount !== undefined\r",
-											"    && item.RejectedCount !== undefined\r",
-											"    && item.LastSyncDate !== undefined\r",
-											"    && item.IsFullSynced !== undefined\r",
-											"    && item.IsLastSyncSuccessful !== undefined\r",
-											"    && item.IsSupervisor !== undefined;\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
-											"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/Interviewers/GetByClientId/{{ClientInterviewerId}}",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"Interviewers",
-										"GetByClientId",
-										"{{ClientInterviewerId}}"
-									]
-								},
-								"description": "This method retrieve the details of a specific interviewer using the clientInterviewerId."
-							},
-							"response": []
-						},
-						{
-							"name": "Create Interviewer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined \r",
-											"    && item.UserName !== undefined \r",
-											"    && item.FirstName !== undefined\r",
-											"    && item.LastName !== undefined\r",
-											"    && item.EmailAddress !== undefined\r",
-											"    && item.TelephoneNumber !== undefined\r",
-											"    && item.ClientInterviewerId !== undefined\r",
-											"    && item.SuccessfulCount !== undefined\r",
-											"    && item.UnsuccessfulCount !== undefined\r",
-											"    && item.DroppedOutCount !== undefined\r",
-											"    && item.RejectedCount !== undefined\r",
-											"    && item.LastSyncDate !== undefined\r",
-											"    && item.IsFullSynced !== undefined\r",
-											"    && item.IsLastSyncSuccessful !== undefined\r",
-											"    && item.IsSupervisor !== undefined;\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.expect(interviewer.UserName == \"Capi Postman\").to.be.true;\r",
-											"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
-											"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"UserName\": \"Capi Postman2\",\r\n    \"FirstName\": \"Capi\",\r\n    \"LastName\": \"Tester\",\r\n    \"Password\": \"Password\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": \"+34666555444\",\r\n    \"IsSupervisor\": false\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/Interviewers/",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"Interviewers",
-										""
-									]
-								},
-								"description": "This method creates a new interviewer."
-							},
-							"response": []
-						},
-						{
-							"name": "Update Password",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined \r",
-											"    && item.UserName !== undefined \r",
-											"    && item.FirstName !== undefined\r",
-											"    && item.LastName !== undefined\r",
-											"    && item.EmailAddress !== undefined\r",
-											"    && item.TelephoneNumber !== undefined\r",
-											"    && item.ClientInterviewerId !== undefined\r",
-											"    && item.LastSyncDate !== undefined\r",
-											"    && item.IsFullSynced !== undefined\r",
-											"    && item.IsLastSyncSuccessful !== undefined\r",
-											"    && item.IsSupervisor !== undefined;\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
-											"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"Password\": \"a12345\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"Interviewers",
-										"{{InterviewerId}}"
-									]
-								},
-								"description": "This method is used to reset an interviewer's password."
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Interviewer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 204\", function () {\r",
-											"    pm.response.to.have.status(204);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"No Content\");\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"Interviewers",
-										"{{InterviewerId}}"
-									]
-								},
-								"description": "This method deletes a specified interviewer."
-							},
-							"response": []
-						},
-						{
 							"name": "Update Interviewer",
 							"event": [
 								{
@@ -1538,6 +1543,255 @@
 					"name": "Cati",
 					"item": [
 						{
+							"name": "Interviewer",
+							"item": [
+								{
+									"name": "Get Interviewer",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId\", function () {\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"CatiInterviewers",
+												"{{CatiInterviewerId}}"
+											]
+										},
+										"description": "(Cati) This method retrieve details of a specific interviewer using the interviewerId."
+									},
+									"response": []
+								},
+								{
+									"name": "Create Interviewer",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"InterviewerId\");\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"UserName\": \"Cati user Postman\",\r\n  \"Password\": \"Password\",\r\n  \"TelephoneNumber\": \"+34666555444\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/CatiInterviewers/",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"CatiInterviewers",
+												""
+											]
+										},
+										"description": "(Cati) This method creates a new interviewer."
+									},
+									"response": []
+								},
+								{
+									"name": "Update Interviewer Password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId\", function () {\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Password\": \"a12345\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"CatiInterviewers",
+												"{{CatiInterviewerId}}"
+											]
+										},
+										"description": "(Cati) This method is used to reset an interviewer's password."
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Interviewer",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"No Content\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"CatiInterviewers",
+												"{{CatiInterviewerId}}"
+											]
+										},
+										"description": "(Cati) This method deletes a specified interviewer."
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "Get Interviewers",
 							"event": [
 								{
@@ -1603,250 +1857,6 @@
 									]
 								},
 								"description": "(Cati) This method retrieve a list of interviewers. This list can be filtered and sorted using standard OData syntax."
-							},
-							"response": []
-						},
-						{
-							"name": "Get Interviewer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined;\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Response contains InterviewerId\", function () {\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"CatiInterviewers",
-										"{{CatiInterviewerId}}"
-									]
-								},
-								"description": "(Cati) This method retrieve details of a specific interviewer using the interviewerId."
-							},
-							"response": []
-						},
-						{
-							"name": "Create Interviewer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Response contains InterviewerId\", function () {\r",
-											"    pm.expect(pm.response.text()).to.include(\"InterviewerId\");\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"UserName\": \"Cati user Postman\",\r\n  \"Password\": \"Password\",\r\n  \"TelephoneNumber\": \"+34666555444\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/CatiInterviewers/",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"CatiInterviewers",
-										""
-									]
-								},
-								"description": "(Cati) This method creates a new interviewer."
-							},
-							"response": []
-						},
-						{
-							"name": "Update Interviewer Password",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {\r",
-											"    pm.response.to.have.status(200);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined && item.UserName !== undefined && item.LastPasswordChangeTime !== undefined && item.TelephoneNumber !== undefined;\r",
-											"}\r",
-											"\r",
-											"pm.test(\"Response contains InterviewerId\", function () {\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"CatiInterviewerId\", interviewer.InterviewerId);\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"Password\": \"a12345\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"CatiInterviewers",
-										"{{CatiInterviewerId}}"
-									]
-								},
-								"description": "(Cati) This method is used to reset an interviewer's password."
-							},
-							"response": []
-						},
-						{
-							"name": "Delete Interviewer",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 204\", function () {\r",
-											"    pm.response.to.have.status(204);\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Status code name has string\", function () {\r",
-											"    pm.response.to.have.status(\"No Content\");\r",
-											"});\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"CatiInterviewers",
-										"{{CatiInterviewerId}}"
-									]
-								},
-								"description": "(Cati) This method deletes a specified interviewer."
 							},
 							"response": []
 						}
@@ -3896,6 +3906,835 @@
 							"name": "Fieldwork",
 							"item": [
 								{
+									"name": "Package",
+									"item": [
+										{
+											"name": "Get Survey Package",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															"pm.test(\"The package survey should have a SurveyId and SurveyName\", function () {",
+															"    const survey = pm.response.json();",
+															"    pm.expect(survey.SurveyName !== undefined).to.be.true;",
+															"    pm.expect(survey.ETag !== undefined).to.be.true;",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/octet-stream"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Package?type=1",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Package"
+													],
+													"query": [
+														{
+															"key": "type",
+															"value": "1"
+														}
+													]
+												},
+												"description": "Get the specified type of package for the specified survey."
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Public Ids",
+									"item": [
+										{
+											"name": "Get Public Ids",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															"const validateProperties = (item) => {",
+															"    return item.Id !== undefined",
+															"    && item.LinkType !== undefined",
+															"    && item.Active !== undefined",
+															"    && item.Url !== undefined;",
+															"}",
+															"",
+															"pm.test(\"Response contains Properties\", function () {",
+															"    var response = pm.response.json();",
+															"     pm.expect(response.every(validateProperties)).to.be.true;",
+															"    if (response.length > 0)",
+															"    {",
+															"        var lastIndex = response.length - 1;",
+															"        pm.collectionVariables.set(\"LinkPublicId\", response[lastIndex].Id);",
+															"    }",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/octet-stream"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"PublicIds"
+													]
+												},
+												"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
+											},
+											"response": []
+										},
+										{
+											"name": "Update Public Ids",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://test.url/zzzzzzzzzzz\"\r\n  }\r\n]"
+												},
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"PublicIds"
+													]
+												},
+												"description": "Update the survey public ids"
+											},
+											"response": []
+										}
+									],
+									"description": "Provides methods to query and manage survey specific public ids (survey links)"
+								},
+								{
+									"name": "Publish",
+									"item": [
+										{
+											"name": "Get State",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															"const validateProperties = (item) => {",
+															"    return item.Live !== undefined",
+															"    && item.Test !== undefined;",
+															"}",
+															"",
+															"pm.test(\"Validates the properties\", function () {",
+															"    const response = pm.response.json();",
+															"    pm.expect(validateProperties(response)).to.be.true;",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/octet-stream"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Publish"
+													]
+												},
+												"description": "Gets the publish state of the survey in the context."
+											},
+											"response": []
+										},
+										{
+											"name": "Publish",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n  \"PackageType\": 1,\r\n  \"ForceUpgrade\": 0\r\n}"
+												},
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Publish"
+													]
+												},
+												"description": "Publishes the survey to the survey package."
+											},
+											"response": []
+										},
+										{
+											"name": "Start Publishing Process",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															"pm.test(\"Response contains ActivityId\", function () {",
+															"    const activity = pm.response.json();",
+															"    pm.expect(activity.ActivityId.length).to.eql(36);",
+															"    pm.collectionVariables.set(\"ActivityId\", activity.ActivityId);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
+												},
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish/Start",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Publish",
+														"Start"
+													]
+												},
+												"description": "The Publish Survey Start controller. Allows to start publishing an Online (Glu) Survey into Survey package. (Has survey type usage restrictions)\n\n(Online) Creates an activity that starts the publishing process. Use the activity id to wait for the publish result."
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Relocations (Deprecated)",
+									"item": [
+										{
+											"name": "Get Relocations",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															"const validateProperties = (item) => {",
+															"    return item.Reason !== undefined ",
+															"    && item.Url !== undefined;",
+															"}",
+															"",
+															"pm.test(\"Response contains the Properties\", function () {",
+															"    var response = pm.response.json();",
+															"    pm.expect(response.every(validateProperties)).to.be.true;",
+															"    if (response.length > 0)",
+															"    {",
+															"        var lastIndex = response.length - 1;",
+															"        pm.collectionVariables.set(\"RelocationReasonId\", response[lastIndex].Reason);",
+															"    }",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/octet-stream"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Relocations"
+													]
+												},
+												"description": "This method retrieves a list of relocations based on a survey. This list can be filtered and sorted using standard OData syntax."
+											},
+											"response": []
+										},
+										{
+											"name": "Update Relocation",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															"pm.test(\"The response should have a FileName\", function () {",
+															"    const response = pm.response.json();",
+															"    var myfilename = pm.environment.get(\"OdinFileName\");",
+															"    pm.expect(response.FileName == myfilename).to.be.true;",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n  \"Reason\": \"{{RelocationReasonId}}\",\r\n  \"Url\": \"http://test.url\"\r\n}"
+												},
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Relocations"
+													]
+												},
+												"description": "Update the relocations with the specified values."
+											},
+											"response": []
+										}
+									],
+									"description": "Provides methods to query and manage survey specific relocations (OBSOLETE)\nThis endpoint is deprecated. Please use SurveyResponseCodes instead"
+								},
+								{
+									"name": "Response Codes",
+									"item": [
+										{
+											"name": "Response Code",
+											"item": [
+												{
+													"name": "Get Response Code",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"\r",
+																	"const validateProperties = (item) => {\r",
+																	"    return item.ResponseCode !== undefined\r",
+																	"    && item.Description !== undefined\r",
+																	"    && item.IsDefinite !== undefined\r",
+																	"    && item.IsSelectable !== undefined\r",
+																	"    && item.AllowAppointment !== undefined\r",
+																	"    && item.RelocationUrl !== undefined;\r",
+																	"}\r",
+																	"\r",
+																	"pm.test(\"Response contains ResponseCode\", function () {\r",
+																	"    const response = pm.response.json();\r",
+																	"    pm.expect(validateProperties(response)).to.be.true;\r",
+																	"    pm.collectionVariables.set(\"ResponseCode\", response.ResponseCode);\r",
+																	"});\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															}
+														],
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"ResponseCodes",
+																"{{ResponseCode}}"
+															]
+														},
+														"description": "This method retrieve details of a specific response code for a specific survey."
+													},
+													"response": []
+												},
+												{
+													"name": "Create Response Code",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"\r",
+																	"const validateProperties = (item) => {\r",
+																	"    return item.ResponseCode !== undefined\r",
+																	"    && item.Description !== undefined\r",
+																	"    && item.IsDefinite !== undefined\r",
+																	"    && item.IsSelectable !== undefined\r",
+																	"    && item.AllowAppointment !== undefined\r",
+																	"    && item.RelocationUrl !== undefined;\r",
+																	"}\r",
+																	"\r",
+																	"pm.test(\"Response contains ResponseCode\", function () {\r",
+																	"    const response = pm.response.json();\r",
+																	"    pm.expect(validateProperties(response)).to.be.true;\r",
+																	"    pm.collectionVariables.set(\"ResponseCode\", response.ResponseCode);\r",
+																	"});\r",
+																	"\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n    \"ResponseCode\": 7006,\r\n    \"Description\": \"Don't disturb\",\r\n    \"IsDefinite\": false,\r\n    \"IsSelectable\": true,\r\n    \"AllowAppointment\": false,\r\n    \"RelocationUrl\": null\r\n}\r\n",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"ResponseCodes"
+															]
+														},
+														"description": "This method creates a new response code."
+													},
+													"response": []
+												},
+												{
+													"name": "Update Response Code",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"\r",
+																	"const validateProperties = (item) => {\r",
+																	"    return item.ResponseCode !== undefined\r",
+																	"    && item.Description !== undefined\r",
+																	"    && item.IsDefinite !== undefined\r",
+																	"    && item.IsSelectable !== undefined\r",
+																	"    && item.AllowAppointment !== undefined\r",
+																	"    && item.RelocationUrl !== undefined;\r",
+																	"}\r",
+																	"\r",
+																	"pm.test(\"Response contains ResponseCode\", function () {\r",
+																	"    const response = pm.response.json();\r",
+																	"    pm.expect(validateProperties(response)).to.be.true;\r",
+																	"    pm.expect(response.Description == \"During Interview Appoinment UPDATE\").to.be.true;\r",
+																	"    pm.collectionVariables.set(\"ResponseCode\", response.ResponseCode);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n    \"Description\": \"During Interview Appoinment UPDATE\",\r\n    \"IsDefinite\": false,\r\n    \"IsSelectable\": false,\r\n    \"AllowAppointment\": true,\r\n    \"RelocationUrl\": null\r\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"ResponseCodes",
+																"{{ResponseCode}}"
+															]
+														},
+														"description": "Update a response code with the specified fields."
+													},
+													"response": []
+												},
+												{
+													"name": "Delete Response Code",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 204\", function () {\r",
+																	"    pm.response.to.have.status(204);\r",
+																	"});\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"ResponseCodes",
+																"{{ResponseCode}}"
+															]
+														},
+														"description": "This method deletes a specified response code."
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Get Response Codes",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															"\r",
+															"const validateProperties = (item) => {\r",
+															"    return item.ResponseCode !== undefined\r",
+															"    && item.Description !== undefined\r",
+															"    && item.IsDefinite !== undefined\r",
+															"    && item.IsSelectable !== undefined\r",
+															"    && item.AllowAppointment !== undefined\r",
+															"    && item.RelocationUrl !== undefined;\r",
+															"}\r",
+															"\r",
+															"pm.test(\"Validates the Properties\", function () {\r",
+															"    var response = pm.response.json();\r",
+															"     pm.expect(response.every(validateProperties)).to.be.true;\r",
+															"    if (response.length > 0)\r",
+															"    {\r",
+															"        var lastIndex = response.length - 1;\r",
+															"        pm.collectionVariables.set(\"ResponseCode\", response[lastIndex].ResponseCode);\r",
+															"    }\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"ResponseCodes"
+													]
+												},
+												"description": "This method retrieves a list of response codes based on a survey. This list can be filtered and sorted using standard OData syntax."
+											},
+											"response": []
+										}
+									],
+									"description": "SurveyResponseCodesController class provides methods to query and manage survey specific response codes."
+								},
+								{
 									"name": "Get Status",
 									"event": [
 										{
@@ -4121,7 +4960,7 @@
 									"response": []
 								}
 							],
-							"description": "The fieldwork management controller. Allows to start and stop the fieldwork."
+							"description": "The fieldwork management controller."
 						},
 						{
 							"name": "Interviews",
@@ -5455,6 +6294,638 @@
 							]
 						},
 						{
+							"name": "Monitoring",
+							"item": [
+								{
+									"name": "Get Counts",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"const validateProperties = (item) => {",
+													"    return item.SurveyId !== undefined ",
+													"    && item.SuccessfulCount !== undefined ",
+													"    && item.ScreenedOutCount !== undefined",
+													"    && item.DroppedOutCount !== undefined",
+													"    && item.RejectedCount !== undefined",
+													"    && item.ActiveLiveCount !== undefined",
+													"    && item.ActiveTestCount !== undefined",
+													"    && item.QuotaCounts !== undefined",
+													"    && validateQuota(item.QuotaCounts);",
+													"}",
+													"",
+													"const validateQuota = (item) => {",
+													"    return item.id !== undefined ",
+													"    && item.name !== undefined ",
+													"    && item.attributes !== undefined",
+													"    && item.target !== undefined",
+													"    && item.maxTarget !== undefined",
+													"    && item.grossTarget !== undefined",
+													"    && item.successfulCount !== undefined",
+													"    && item.unsuccessfulCount !== undefined",
+													"    && item.droppedOutCount !== undefined",
+													"    && item.rejectedCount !== undefined;",
+													"}",
+													"",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {",
+													"    var response = pm.response.json();",
+													"    pm.expect(validateProperties(response)).to.be.true;",
+													"    pm.collectionVariables.set(\"SurveyId\", response.SurveyId);",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Counts",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Counts"
+											]
+										},
+										"description": "Returns the counts for the specified survey. For all surveys it will return the topline counts. For surveys with Quota, it will also include detailed counts per quota level"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Performance Live",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"pm.test(\"The survey performance should have a several fields\", function () {",
+													"    const performance = pm.response.json();",
+													"    pm.expect(performance.Id !== undefined).to.be.true;",
+													"    pm.expect(performance.PublishedCount !== undefined).to.be.true;",
+													"    pm.expect(performance.TotalCount !== undefined).to.be.true;",
+													"    pm.expect(performance.Counts !== undefined).to.be.true;",
+													"});",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Live",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Performance",
+												"Metrics",
+												"Live"
+											]
+										},
+										"description": "Get the survey performance metrics for live interviews.(survey links)"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Performance Test",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"pm.test(\"The survey performance should have a several fields\", function () {",
+													"    const performance = pm.response.json();",
+													"    pm.expect(performance.Id !== undefined).to.be.true;",
+													"    pm.expect(performance.PublishedCount !== undefined).to.be.true;",
+													"    pm.expect(performance.TotalCount !== undefined).to.be.true;",
+													"    pm.expect(performance.Counts !== undefined).to.be.true;",
+													"});",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Test",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Performance",
+												"Metrics",
+												"Test"
+											]
+										},
+										"description": "Get the survey performance metrics for test interviews. (survey links)"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Group",
+							"item": [
+								{
+									"name": "Move Survey",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"SurveyGroupId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SurveyGroup",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"SurveyGroup"
+											]
+										},
+										"description": "Move a survey to another survey group."
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Quota",
+							"item": [
+								{
+									"name": "Get Quota",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Quota",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Quota"
+											]
+										},
+										"description": "Retrieve either CAPI quota definition or Online quota definition depending on the survey environment. The structure of quota definitions differs from one survey to other as the quotas created in new Manager are different from that created in classic manager. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's."
+									},
+									"response": []
+								},
+								{
+									"name": "Create Quota",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Target\": 10000,\r\n    \"VariableDefinitions\": [\r\n        {\r\n            \"Id\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"OdinVariableName\": \"age\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"OdinVariableName\": \"gender\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\"\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"FrameVariables\": [\r\n        {\r\n            \"Id\": \"367de803-5e86-4281-f612-186640befb7d\",\r\n            \"DefinitionId\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"eb2bf2b9-ef2e-41b4-4205-721fe8205002\",\r\n                    \"DefinitionId\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"98a65741-b7e0-4da0-72ed-fd2eb2f6b705\",\r\n            \"DefinitionId\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"07300f7e-f2ad-450c-ff98-8fa603dd4d51\",\r\n                    \"DefinitionId\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Quota",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Quota"
+											]
+										},
+										"description": "This method creates or updates an Online quota frame or Capi quota frame depending on the survey environment. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are the same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's. NB: All the strings will be trimmed during the upload."
+									},
+									"response": []
+								},
+								{
+									"name": "Get Versions",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"const validateProperties = (item) => {",
+													"    return item.ETag !== undefined;",
+													"}",
+													"",
+													"pm.test(\"Response contains ETag\", function () {",
+													"    var versions = pm.response.json();",
+													"    pm.expect(versions.every(validateProperties)).to.be.true;",
+													"    if (versions.length > 0)",
+													"    {",
+													"        var lastIndex = versions.length - 1;",
+													"        pm.collectionVariables.set(\"ETag\", versions[lastIndex].ETag);",
+													"    }",
+													"",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"QuotaVersions"
+											]
+										},
+										"description": "This method retrieves a list of quota frame versions for the specified survey."
+									},
+									"response": []
+								},
+								{
+									"name": "Get Targets",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"QuotaTargets"
+											]
+										},
+										"description": "This method retrieves a Full QuotaFrame structure based on survey The successful counts are not retrieved"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Versions by eTag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"const validateProperties = (item) => {",
+													"    return item.ETag !== undefined;",
+													"}",
+													"",
+													"pm.test(\"Response contains ETag\", function () {",
+													"    var version = pm.response.json();",
+													"    pm.expect(validateProperties(version)).to.be.true;",
+													"    pm.environment.set(\"ETag\", version.ETag);",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions/{{ETag}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"QuotaVersions",
+												"{{ETag}}"
+											]
+										},
+										"description": "This method retrieves quota frame for the specified version by Etag"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Targets by eTag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets/{{ETag}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"QuotaTargets",
+												"{{ETag}}"
+											]
+										},
+										"description": "This method retrieves a Full QuotaFrame structure based on survey. The successful counts are also retrieved by Etag"
+									},
+									"response": []
+								}
+							],
+							"description": "Allows manage quota definitions for a survey"
+						},
+						{
 							"name": "Get Survey",
 							"event": [
 								{
@@ -5519,87 +6990,66 @@
 							"response": []
 						},
 						{
-							"name": "Get Counts",
+							"name": "Create Survey",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
 											"});",
 											"",
-											"pm.test(\"Status code name has string\", function () {",
-											"    pm.response.to.have.status(\"OK\");",
-											"});",
-											"",
-											"const validateProperties = (item) => {",
-											"    return item.SurveyId !== undefined ",
-											"    && item.SuccessfulCount !== undefined ",
-											"    && item.ScreenedOutCount !== undefined",
-											"    && item.DroppedOutCount !== undefined",
-											"    && item.RejectedCount !== undefined",
-											"    && item.ActiveLiveCount !== undefined",
-											"    && item.ActiveTestCount !== undefined",
-											"    && item.QuotaCounts !== undefined",
-											"    && validateQuota(item.QuotaCounts);",
+											"const validateProperties = (survey) => {",
+											"    return survey.SurveyName !== undefined",
+											"    && survey.ClientName !== undefined",
+											"    && survey.SurveyType !== undefined",
+											"    && survey.QuestionnaireMD5 !== undefined",
+											"    && survey.InterviewerInstruction !== undefined",
+											"    && survey.SurveyState !== undefined",
+											"    && survey.SurveyGroupId !== undefined",
+											"    && survey.QuestionnaireMD5 !== undefined",
+											"    && survey.SurveyId !== undefined;",
 											"}",
 											"",
-											"const validateQuota = (item) => {",
-											"    return item.id !== undefined ",
-											"    && item.name !== undefined ",
-											"    && item.attributes !== undefined",
-											"    && item.target !== undefined",
-											"    && item.maxTarget !== undefined",
-											"    && item.grossTarget !== undefined",
-											"    && item.successfulCount !== undefined",
-											"    && item.unsuccessfulCount !== undefined",
-											"    && item.droppedOutCount !== undefined",
-											"    && item.rejectedCount !== undefined;",
-											"}",
-											"",
-											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {",
-											"    var response = pm.response.json();",
-											"    pm.expect(validateProperties(response)).to.be.true;",
-											"    pm.collectionVariables.set(\"SurveyId\", response.SurveyId);",
-											"});",
-											"",
-											""
+											"pm.test(\"Response contains All Properties\", function () {",
+											"    const survey = pm.response.json();",
+											"    pm.expect(validateProperties(survey)).to.be.true;",
+											"    pm.expect(survey.SurveyId.length).to.eql(36);",
+											"    pm.collectionVariables.set(\"SurveyId\", survey.SurveyId);",
+											"});"
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/octet-stream"
-									},
-									{
-										"key": "X-Nfield-Domain",
-										"value": "{{Domain}}"
+										"value": "application/json"
 									},
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"SurveyId\": \"\",\r\n  \"SurveyName\": \"Postman Survey\",\r\n  \"ClientName\": \"KLM\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
+								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Counts",
+									"raw": "{{origin}}/v1/Surveys",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
-										"Surveys",
-										"{{SurveyId}}",
-										"Counts"
+										"Surveys"
 									]
 								},
-								"description": "Returns the counts for the specified survey. For all surveys it will return the topline counts. For surveys with Quota, it will also include detailed counts per quota level"
+								"description": "This method creates a new survey."
 							},
 							"response": []
 						},
@@ -5674,34 +7124,20 @@
 							"response": []
 						},
 						{
-							"name": "Create Survey",
+							"name": "Get Respondent Data Encrypt",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 201\", function () {",
-											"    pm.response.to.have.status(201);",
-											"});",
-											"",
-											"const validateProperties = (survey) => {",
-											"    return survey.SurveyName !== undefined",
-											"    && survey.ClientName !== undefined",
-											"    && survey.SurveyType !== undefined",
-											"    && survey.QuestionnaireMD5 !== undefined",
-											"    && survey.InterviewerInstruction !== undefined",
-											"    && survey.SurveyState !== undefined",
-											"    && survey.SurveyGroupId !== undefined",
-											"    && survey.QuestionnaireMD5 !== undefined",
-											"    && survey.SurveyId !== undefined;",
-											"}",
-											"",
-											"pm.test(\"Response contains All Properties\", function () {",
-											"    const survey = pm.response.json();",
-											"    pm.expect(validateProperties(survey)).to.be.true;",
-											"    pm.expect(survey.SurveyId.length).to.eql(36);",
-											"    pm.collectionVariables.set(\"SurveyId\", survey.SurveyId);",
-											"});"
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -5711,29 +7147,33 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}"
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"SurveyId\": \"\",\r\n  \"SurveyName\": \"Postman Survey\",\r\n  \"ClientName\": \"KLM\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
+									"raw": "{\r\n  \"IV\": \"F0HQJewlW7rsPm1WVtvCUg==\",\r\n  \"Data\": {\r\n    \"sample string 1\": \"sampleString2\",\r\n    \"sample string 3\": \"sampleString4\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys",
+									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/RespondentDataEncrypt",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
-										"Surveys"
+										"Surveys",
+										"{{SurveyId}}",
+										"RespondentDataEncrypt"
 									]
 								},
-								"description": "This method creates a new survey."
+								"description": "Manages data collected for a survey (Has survey type usage restrictions)\n(Online) Gets asynchronously the decrypted data to encrypt it"
 							},
 							"response": []
 						},
@@ -7085,6 +8525,11 @@
 		{
 			"key": "FileName",
 			"value": "MediaFileName",
+			"type": "default"
+		},
+		{
+			"key": "ETag",
+			"value": "",
 			"type": "default"
 		}
 	]
