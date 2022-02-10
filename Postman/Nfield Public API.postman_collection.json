@@ -1997,6 +1997,528 @@
 						}
 					],
 					"description": "Controller to handle domain configuration (password settings and email settings)"
+				},
+				{
+					"name": "Local Users",
+					"item": [
+						{
+							"name": "Local User",
+							"item": [
+								{
+									"name": "Get Local User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Id !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.LastLogonDate !== undefined\r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.Email !== undefined\r",
+													"    && item.UserRole !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains IdentityId\", function () {\r",
+													"    var user = pm.response.json();\r",
+													"    pm.expect(validateProperties(user)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"IdentityId\", user.Id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"LocalUsers",
+												"{{IdentityId}}"
+											]
+										},
+										"description": "Returns details for a local user."
+									},
+									"response": []
+								},
+								{
+									"name": "Create Local User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Id !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.LastLogonDate !== undefined\r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.Email !== undefined\r",
+													"    && item.UserRole !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains IdentityId\", function () {\r",
+													"    var user = pm.response.json();\r",
+													"    pm.expect(validateProperties(user)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"IdentityId\", user.Id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"UserName\": \"Postman User\",\n    \"FirstName\": \"Postman 1\",\n    \"LastName\": \"Postman 2\",\n    \"Email\": \"TestUser@TestSite.com\",\n    \"UserRole\": \"RegularUser\",\n\t\"password\":\"passowrd\"\n}\n"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/LocalUsers",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"LocalUsers"
+											]
+										},
+										"description": "Creates a new user."
+									},
+									"response": []
+								},
+								{
+									"name": "Update Local User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Id !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.LastLogonDate !== undefined\r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.Email !== undefined\r",
+													"    && item.UserRole !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains IdentityId\", function () {\r",
+													"    var user = pm.response.json();\r",
+													"    pm.expect(validateProperties(user)).to.be.true;\r",
+													"    pm.expect(user.FirstName == \"Postman updated 1\").to.be.true;\r",
+													"    pm.expect(user.LastName == \"Postman updated 2\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"IdentityId\", user.Id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"FirstName\": \"Postman updated 1\",\n  \"LastName\": \"Postman updated 2\",\n  \"Email\": \"TestUser@TestSite.com\",\n  \"UserRole\": \"RegularUser\"\n}"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"LocalUsers",
+												"{{IdentityId}}"
+											]
+										},
+										"description": "Edits properties of a local user."
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Local Users",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"LocalUsers",
+												"{{IdentityId}}"
+											]
+										},
+										"description": "Deletes a user"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Password Local User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"Password\": \"Passw0rd12\"\n}"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/LocalUsers/Password/{{IdentityId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"LocalUsers",
+												"Password",
+												"{{IdentityId}}"
+											]
+										},
+										"description": "Edits local user password."
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get Local Users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (item) => {\r",
+											"    return item.Id !== undefined \r",
+											"    && item.UserName !== undefined \r",
+											"    && item.LastLogonDate !== undefined\r",
+											"    && item.FirstName !== undefined\r",
+											"    && item.LastName !== undefined\r",
+											"    && item.Email !== undefined\r",
+											"    && item.UserRole !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Response contains IdentityId\", function () {\r",
+											"    var users = pm.response.json();\r",
+											"    pm.expect(users.every(validateProperties)).to.be.true;\r",
+											"    if (users.length > 0)\r",
+											"    {\r",
+											"        var lastIndex = users.length - 1;\r",
+											"        pm.collectionVariables.set(\"IdentityId\", users[lastIndex].Id);\r",
+											"    }\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin}}/v1/LocalUsers",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"LocalUsers"
+									]
+								},
+								"description": "Returns a list of all local users."
+							},
+							"response": []
+						},
+						{
+							"name": "Prepare Download Logs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response contains ActivityId\", function () {\r",
+											"    const response = pm.response.json();\r",
+											"    pm.expect(validateProperties(response)).to.be.true;\r",
+											"    pm.collectionVariables.set(\"ActivityId\", response.ActivityId);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \r\n    \"From\" : \"2015-03-18Z\",\r\n    \"To\": \"2015-12-10T01:00Z\"\r\n}\r\n\r\n\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/v1/LocalUsersLogs",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"LocalUsersLogs"
+									]
+								},
+								"description": "Sends a request to prepare the logs download file"
+							},
+							"response": []
+						}
+					],
+					"description": "A controller for querying local users"
+				},
+				{
+					"name": "Sign In",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"pm.test(\"Response contains AuthenticationToken\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"AuthenticationToken\");",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('AuthenticationToken', response.AuthenticationToken);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Domain\": \"{{DomainTestName}}\",\n  \"Username\": \"{{DomainTestUserName}}\",\n  \"Password\": \"{{DomainTestUserPassword}}\"\n}"
+						},
+						"url": {
+							"raw": "{{origin}}/v1/SignIn",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"SignIn"
+							]
+						},
+						"description": "This is used to sign in to the api asynchronously using the specified credentials."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (item) => {\r",
+									"    return item.UserRoles !== undefined \r",
+									"    && item.Permissions !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response contains Me info\", function () {\r",
+									"    var me = pm.response.json();\r",
+									"    pm.expect(validateProperties(me)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{origin}}/v1/Me/Role",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Me",
+								"Role"
+							]
+						},
+						"description": "Returns the user role for the currently authenticated user."
+					},
+					"response": []
 				}
 			]
 		},
@@ -2264,6 +2786,379 @@
 						}
 					],
 					"description": "A controller for querying Survey Resources"
+				},
+				{
+					"name": "External Apis",
+					"item": [
+						{
+							"name": "External Api",
+							"item": [
+								{
+									"name": "Get External Api",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Name !== undefined \r",
+													"    && item.Description !== undefined \r",
+													"    && item.Uri !== undefined\r",
+													"    && item.HelpUri !== undefined\r",
+													"    && item.Headers !== undefined\r",
+													"    && item.Headers.every(validateSubProperties);\r",
+													"}\r",
+													"\r",
+													"const validateSubProperties = (item) => {\r",
+													"    return item.HeaderId !== undefined \r",
+													"    && item.Name !== undefined \r",
+													"    && item.Value !== undefined\r",
+													"    && item.IsObfuscated !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response ApiName\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.expect(response.Name == \"PostmanApi\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"ApiName\", response.Name);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"ExternalApis",
+												"{{ApiName}}"
+											]
+										},
+										"description": "Get api configuration by name"
+									},
+									"response": []
+								},
+								{
+									"name": "Create External Api",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Name !== undefined \r",
+													"    && item.Description !== undefined \r",
+													"    && item.Uri !== undefined\r",
+													"    && item.HelpUri !== undefined\r",
+													"    && item.Headers !== undefined\r",
+													"    && item.Headers.every(validateSubProperties);\r",
+													"}\r",
+													"\r",
+													"const validateSubProperties = (item) => {\r",
+													"    return item.HeaderId !== undefined \r",
+													"    && item.Name !== undefined \r",
+													"    && item.Value !== undefined\r",
+													"    && item.IsObfuscated !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response ApiName\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.expect(response.Name == \"PostmanApi\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"ApiName\", response.Name);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"Name\": \"PostmanApi\",\r\n  \"Description\": \"Postman string 2\",\r\n  \"Uri\": \"https://api.niposoftware-dev.com/v1\",\r\n  \"HelpUri\": \"https://api.niposoftware-dev.com/help\",\r\n  \"Headers\": [\r\n    {\r\n      \"HeaderId\": 1,\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\",\r\n      \"IsObfuscated\": true\r\n    },\r\n    {\r\n      \"HeaderId\": 2,\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\",\r\n      \"IsObfuscated\": false\r\n    }\r\n  ]\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/ExternalApis",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"ExternalApis"
+											]
+										},
+										"description": "Create a new external api configuration"
+									},
+									"response": []
+								},
+								{
+									"name": "Update External Api",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Name !== undefined \r",
+													"    && item.Description !== undefined \r",
+													"    && item.Uri !== undefined\r",
+													"    && item.HelpUri !== undefined\r",
+													"    && item.Headers !== undefined\r",
+													"    && item.Headers.every(validateSubProperties);\r",
+													"}\r",
+													"\r",
+													"const validateSubProperties = (item) => {\r",
+													"    return item.HeaderId !== undefined \r",
+													"    && item.Name !== undefined \r",
+													"    && item.Value !== undefined\r",
+													"    && item.IsObfuscated !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response ApiName\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.expect(response.Description == \"Postman updated\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"ApiName\", response.Name);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"Name\": \"PostmanApi\",\r\n  \"Description\": \"Postman updated\",\r\n  \"Uri\": \"https://api.niposoftware-dev.com/v1\",\r\n  \"HelpUri\": \"https://api.niposoftware-dev.com/help\",\r\n  \"Headers\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/ExternalApis",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"ExternalApis"
+											]
+										},
+										"description": "Update existing external api configuration"
+									},
+									"response": []
+								},
+								{
+									"name": "Delete ExternalApis",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"ExternalApis",
+												"{{ApiName}}"
+											]
+										},
+										"description": "Delete external api configuration"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get External Apis",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (item) => {\r",
+											"    return item.Name !== undefined \r",
+											"    && item.Description !== undefined \r",
+											"    && item.Uri !== undefined\r",
+											"    && item.HelpUri !== undefined\r",
+											"    && item.Headers !== undefined\r",
+											"    && item.Headers.every(validateSubProperties);\r",
+											"}\r",
+											"\r",
+											"const validateSubProperties = (item) => {\r",
+											"    return item.HeaderId !== undefined \r",
+											"    && item.Name !== undefined \r",
+											"    && item.Value !== undefined\r",
+											"    && item.IsObfuscated !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Response contains ApiName\", function () {\r",
+											"    var response = pm.response.json();\r",
+											"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+											"    if (response.length > 0)\r",
+											"    {\r",
+											"        var lastIndex = response.length - 1;\r",
+											"        pm.collectionVariables.set(\"ApiName\", response[lastIndex].Name);\r",
+											"    }\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/v1/ExternalApis",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"ExternalApis"
+									]
+								},
+								"description": "List all api's"
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -3022,6 +3917,1445 @@
 										}
 									],
 									"description": "The controller is used to retrieve and to add & assign interviewers to survey. Allowed for non SamplingPoints features (Has survey type usage restrictions)"
+								},
+								{
+									"name": "Sampling Points",
+									"item": [
+										{
+											"name": "Sampling Point",
+											"item": [
+												{
+													"name": "Quota Targets",
+													"item": [
+														{
+															"name": "Quota Target",
+															"item": [
+																{
+																	"name": "Get Quota Level Target",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {\r",
+																					"    pm.response.to.have.status(200);\r",
+																					"});\r",
+																					"\r",
+																					"pm.test(\"Status code name has string\", function () {\r",
+																					"    pm.response.to.have.status(\"OK\");\r",
+																					"});\r",
+																					"\r",
+																					"const validateProperties = (item) => {\r",
+																					"    return item.LevelId !== undefined \r",
+																					"    && item.Target !== undefined \r",
+																					"    && item.SuccessfulCount !== undefined\r",
+																					"    && item.UnsuccessfulCount !== undefined\r",
+																					"    && item.DroppedOutCount !== undefined\r",
+																					"    && item.RejectedCount !== undefined;\r",
+																					"}\r",
+																					"\r",
+																					"pm.test(\"Response contains QuotaLevelId\", function () {\r",
+																					"    var response = pm.response.json();\r",
+																					"    pm.expect(validateProperties(response)).to.be.true;\r",
+																					"    pm.collectionVariables.set(\"QuotaLevelId\", response[lastIndex].LevelId);\r",
+																					"});\r",
+																					""
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "GET",
+																		"header": [
+																			{
+																				"key": "Authorization",
+																				"value": "Basic {{AuthenticationToken}}",
+																				"type": "text"
+																			}
+																		],
+																		"url": {
+																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+																			"host": [
+																				"{{origin}}"
+																			],
+																			"path": [
+																				"v1",
+																				"Surveys",
+																				"{{SurveyId}}",
+																				"SamplingPoints",
+																				"{{SamplingPointId}}",
+																				"QuotaTargets",
+																				"{{QuotaLevelId}}"
+																			]
+																		},
+																		"description": "(Capi) This method retrieves detail of quota level targets based on survey and sampling point."
+																	},
+																	"response": []
+																},
+																{
+																	"name": "Update Quota Level Target",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {\r",
+																					"    pm.response.to.have.status(200);\r",
+																					"});\r",
+																					"\r",
+																					"pm.test(\"Status code name has string\", function () {\r",
+																					"    pm.response.to.have.status(\"OK\");\r",
+																					"});\r",
+																					"\r",
+																					"const validateProperties = (item) => {\r",
+																					"    return item.LevelId !== undefined \r",
+																					"    && item.Target !== undefined \r",
+																					"    && item.SuccessfulCount !== undefined\r",
+																					"    && item.UnsuccessfulCount !== undefined\r",
+																					"    && item.DroppedOutCount !== undefined\r",
+																					"    && item.RejectedCount !== undefined;\r",
+																					"}\r",
+																					"\r",
+																					"pm.test(\"Response contains QuotaLevelId\", function () {\r",
+																					"    var response = pm.response.json();\r",
+																					"    pm.expect(validateProperties(response)).to.be.true;\r",
+																					"    pm.expect(response.Target == 100).to.be.true;\r",
+																					"    pm.collectionVariables.set(\"QuotaLevelId\", response.LevelId);\r",
+																					"});\r",
+																					""
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "PATCH",
+																		"header": [
+																			{
+																				"key": "Authorization",
+																				"value": "Basic {{AuthenticationToken}}",
+																				"type": "text"
+																			},
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json",
+																				"type": "default"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\r\n  \"Target\": 100\r\n}"
+																		},
+																		"url": {
+																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+																			"host": [
+																				"{{origin}}"
+																			],
+																			"path": [
+																				"v1",
+																				"Surveys",
+																				"{{SurveyId}}",
+																				"SamplingPoints",
+																				"{{SamplingPointId}}",
+																				"QuotaTargets",
+																				"{{QuotaLevelId}}"
+																			]
+																		},
+																		"description": "(Capi) Update an sampling point's quota level with the specified fields."
+																	},
+																	"response": []
+																}
+															]
+														},
+														{
+															"name": "Get Quota Targets",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 200\", function () {\r",
+																			"    pm.response.to.have.status(200);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Status code name has string\", function () {\r",
+																			"    pm.response.to.have.status(\"OK\");\r",
+																			"});\r",
+																			"\r",
+																			"const validateProperties = (item) => {\r",
+																			"    return item.LevelId !== undefined \r",
+																			"    && item.Target !== undefined \r",
+																			"    && item.SuccessfulCount !== undefined\r",
+																			"    && item.UnsuccessfulCount !== undefined\r",
+																			"    && item.DroppedOutCount !== undefined\r",
+																			"    && item.RejectedCount !== undefined;\r",
+																			"}\r",
+																			"\r",
+																			"pm.test(\"Response contains QuotaLevelId\", function () {\r",
+																			"    var response = pm.response.json();\r",
+																			"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+																			"    if (response.length > 0)\r",
+																			"    {\r",
+																			"        var lastIndex = response.length - 1;\r",
+																			"        pm.collectionVariables.set(\"QuotaLevelId\", response[lastIndex].LevelId);\r",
+																			"    }\r",
+																			"\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Basic {{AuthenticationToken}}",
+																		"type": "text"
+																	}
+																],
+																"url": {
+																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets",
+																	"host": [
+																		"{{origin}}"
+																	],
+																	"path": [
+																		"v1",
+																		"Surveys",
+																		"{{SurveyId}}",
+																		"SamplingPoints",
+																		"{{SamplingPointId}}",
+																		"QuotaTargets"
+																	]
+																},
+																"description": "(Capi) This method retrieves a list of quota level targets based on survey and sampling point."
+															},
+															"response": []
+														}
+													]
+												},
+												{
+													"name": "Interviewers' Assignments",
+													"item": [
+														{
+															"name": "Interviewer Assignments",
+															"item": [
+																{
+																	"name": "Assign Interviewer",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {\r",
+																					"    pm.response.to.have.status(200);\r",
+																					"});\r",
+																					"\r",
+																					"pm.test(\"Status code name has string\", function () {\r",
+																					"    pm.response.to.have.status(\"OK\");\r",
+																					"});\r",
+																					"\r",
+																					"const validateProperties = (item) => {\r",
+																					"    return item.SamplingPointIds !== undefined \r",
+																					"    && item.InterviewerIds !== undefined;\r",
+																					"}\r",
+																					"\r",
+																					"pm.test(\"Response contains SamplingPointIds & InterviewerIds\", function () {\r",
+																					"    const response = pm.response.json();\r",
+																					"    pm.expect(validateProperties(response)).to.be.true;\r",
+																					"    if (response.SamplingPointIds.length > 0)\r",
+																					"    {\r",
+																					"        var lastIndex = response.SamplingPointIds.length - 1;\r",
+																					"        pm.collectionVariables.set(\"SamplingPointId\", response.SamplingPointIds[lastIndex]);\r",
+																					"    }\r",
+																					"    if (response.InterviewerIds.length > 0)\r",
+																					"    {\r",
+																					"        var lastIndex = response.InterviewerIds.length - 1;\r",
+																					"        pm.collectionVariables.set(\"InterviewerId\", response.InterviewerIds[lastIndex]);\r",
+																					"    }\r",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Authorization",
+																				"value": "Basic {{AuthenticationToken}}",
+																				"type": "text"
+																			},
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments/{{InterviewerId}}",
+																			"host": [
+																				"{{origin}}"
+																			],
+																			"path": [
+																				"v1",
+																				"Surveys",
+																				"{{SurveyId}}",
+																				"SamplingPoints",
+																				"{{SamplingPointId}}",
+																				"Assignments",
+																				"{{InterviewerId}}"
+																			]
+																		},
+																		"description": "(Capi) Assign an interviewer to a sampling point."
+																	},
+																	"response": []
+																},
+																{
+																	"name": "Unassign Interviewer",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"\r",
+																					""
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "DELETE",
+																		"header": [
+																			{
+																				"key": "Authorization",
+																				"value": "Basic {{AuthenticationToken}}",
+																				"type": "text"
+																			},
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments/{{InterviewerId}}",
+																			"host": [
+																				"{{origin}}"
+																			],
+																			"path": [
+																				"v1",
+																				"Surveys",
+																				"{{SurveyId}}",
+																				"SamplingPoints",
+																				"{{SamplingPointId}}",
+																				"Assignments",
+																				"{{InterviewerId}}"
+																			]
+																		},
+																		"description": "(Capi) Unassign an interviewer from a sampling point."
+																	},
+																	"response": []
+																}
+															]
+														},
+														{
+															"name": "Get Interviewers' Assignments",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 200\", function () {\r",
+																			"    pm.response.to.have.status(200);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Status code name has string\", function () {\r",
+																			"    pm.response.to.have.status(\"OK\");\r",
+																			"});\r",
+																			"\r",
+																			"const validateProperties = (item) => {\r",
+																			"    return item.InterviewerId !== undefined \r",
+																			"    && item.UserName !== undefined \r",
+																			"    && item.FirstName !== undefined\r",
+																			"    && item.LastName !== undefined\r",
+																			"    && item.Assigned !== undefined\r",
+																			"    && item.Active !== undefined;\r",
+																			"}\r",
+																			"\r",
+																			"pm.test(\"Response contains InterviewerId\", function () {\r",
+																			"    var result = pm.response.json();\r",
+																			"    pm.expect(result.every(validateProperties)).to.be.true;\r",
+																			"    if (result.length > 0)\r",
+																			"    {\r",
+																			"        var lastIndex = result.length - 1;\r",
+																			"        pm.collectionVariables.set(\"InterviewerId\", result[lastIndex].InterviewerId);\r",
+																			"    }\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Basic {{AuthenticationToken}}",
+																		"type": "text"
+																	}
+																],
+																"url": {
+																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments",
+																	"host": [
+																		"{{origin}}"
+																	],
+																	"path": [
+																		"v1",
+																		"Surveys",
+																		"{{SurveyId}}",
+																		"SamplingPoints",
+																		"{{SamplingPointId}}",
+																		"Assignments"
+																	]
+																},
+																"description": "(Capi) Get the interviewers assigned to a sampling point."
+															},
+															"response": []
+														}
+													],
+													"description": "Controller for managing assignment of interviewers to sampling points (Has survey type usage restrictions)"
+												},
+												{
+													"name": "Addresses",
+													"item": [
+														{
+															"name": "Address",
+															"item": [
+																{
+																	"name": "Get Address",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {\r",
+																					"    pm.response.to.have.status(200);\r",
+																					"});\r",
+																					"\r",
+																					"pm.test(\"Status code name has string\", function () {\r",
+																					"    pm.response.to.have.status(\"OK\");\r",
+																					"});\r",
+																					"\r",
+																					""
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "GET",
+																		"header": [
+																			{
+																				"key": "Authorization",
+																				"value": "Basic {{AuthenticationToken}}",
+																				"type": "text"
+																			}
+																		],
+																		"url": {
+																			"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"host": [
+																				"{{origin}}v1"
+																			],
+																			"path": [
+																				"Surveys",
+																				"{{SurveyId}}",
+																				"SamplingPoints",
+																				"{{SamplingPointId}}",
+																				"Addresses",
+																				"{{AddressId}}"
+																			]
+																		},
+																		"description": "(Capi) Retrieve the details of a single address."
+																	},
+																	"response": []
+																},
+																{
+																	"name": "Create Address",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {\r",
+																					"    pm.response.to.have.status(200);\r",
+																					"});\r",
+																					"\r",
+																					"pm.test(\"Status code name has string\", function () {\r",
+																					"    pm.response.to.have.status(\"OK\");\r",
+																					"});\r",
+																					"\r",
+																					"pm.test(\"Response contains AddressId\", function () {\r",
+																					"    pm.expect(pm.response.text()).to.include(\"AddressId\");\r",
+																					"    const response = pm.response.json();\r",
+																					"    pm.collectionVariables.set(\"AddressId\", response.AddressId);\r",
+																					"});"
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Authorization",
+																				"value": "Basic {{AuthenticationToken}}",
+																				"type": "text"
+																			},
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\r\n  \"AddressId\": \"Postman sample 1\",\r\n  \"Details\": \"Postman sample 2\",\r\n  \"AppointmentDate\": \"2022-02-01T13:35:52.9716747+00:00\",\r\n  \"SampleData\": [\r\n    {\r\n      \"Name\": \"PostmanSample1\",\r\n      \"Value\": \"PostmanValue1\"\r\n    },\r\n    {\r\n      \"Name\": \"PostmanSample2\",\r\n      \"Value\": \"PostmanValue2\"\r\n    }\r\n  ]\r\n}\r\n",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses",
+																			"host": [
+																				"{{origin}}"
+																			],
+																			"path": [
+																				"v1",
+																				"Surveys",
+																				"{{SurveyId}}",
+																				"SamplingPoints",
+																				"{{SamplingPointId}}",
+																				"Addresses"
+																			]
+																		},
+																		"description": "(Capi) Add a new address to the specified sampling point."
+																	},
+																	"response": []
+																},
+																{
+																	"name": "Delete Address",
+																	"event": [
+																		{
+																			"listen": "test",
+																			"script": {
+																				"exec": [
+																					"pm.test(\"Status code is 200\", function () {\r",
+																					"    pm.response.to.have.status(200);\r",
+																					"});\r",
+																					""
+																				],
+																				"type": "text/javascript"
+																			}
+																		}
+																	],
+																	"request": {
+																		"method": "DELETE",
+																		"header": [
+																			{
+																				"key": "Authorization",
+																				"value": "Basic {{AuthenticationToken}}",
+																				"type": "text"
+																			},
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json",
+																				"type": "text"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "",
+																			"options": {
+																				"raw": {
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"host": [
+																				"{{origin}}v1"
+																			],
+																			"path": [
+																				"Surveys",
+																				"{{SurveyId}}",
+																				"SamplingPoints",
+																				"{{SamplingPointId}}",
+																				"Addresses",
+																				"{{AddressId}}"
+																			]
+																		},
+																		"description": "(Capi) This method deletes a specific address."
+																	},
+																	"response": []
+																}
+															]
+														},
+														{
+															"name": "Get Addresses",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 200\", function () {\r",
+																			"    pm.response.to.have.status(200);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Status code name has string\", function () {\r",
+																			"    pm.response.to.have.status(\"OK\");\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Response contains AddressId\", function () {\r",
+																			"    var addresses = pm.response.json();\r",
+																			"    var lastIndex = addresses.length - 1;\r",
+																			"    pm.collectionVariables.set(\"AddressId\", addresses[lastIndex].AddressId);\r",
+																			"});"
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Basic {{AuthenticationToken}}",
+																		"type": "text"
+																	}
+																],
+																"url": {
+																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses",
+																	"host": [
+																		"{{origin}}"
+																	],
+																	"path": [
+																		"v1",
+																		"Surveys",
+																		"{{SurveyId}}",
+																		"SamplingPoints",
+																		"{{SamplingPointId}}",
+																		"Addresses"
+																	]
+																},
+																"description": "(Capi) This method retrieves a list of Addresses. This list can be filtered and sorted using standard OData syntax."
+															},
+															"response": []
+														},
+														{
+															"name": "Get Addresses Count",
+															"event": [
+																{
+																	"listen": "test",
+																	"script": {
+																		"exec": [
+																			"pm.test(\"Status code is 200\", function () {\r",
+																			"    pm.response.to.have.status(200);\r",
+																			"});\r",
+																			"\r",
+																			"pm.test(\"Status code name has string\", function () {\r",
+																			"    pm.response.to.have.status(\"OK\");\r",
+																			"});\r",
+																			"\r",
+																			""
+																		],
+																		"type": "text/javascript"
+																	}
+																}
+															],
+															"request": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Basic {{AuthenticationToken}}",
+																		"type": "text"
+																	}
+																],
+																"url": {
+																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/Count",
+																	"host": [
+																		"{{origin}}"
+																	],
+																	"path": [
+																		"v1",
+																		"Surveys",
+																		"{{SurveyId}}",
+																		"SamplingPoints",
+																		"{{SamplingPointId}}",
+																		"Addresses",
+																		"Count"
+																	]
+																},
+																"description": "(Capi) Returns the number of addresses at the sampling point."
+															},
+															"response": []
+														}
+													],
+													"description": "A controller for querying addresses (Has survey type usage restrictions)"
+												},
+												{
+													"name": "Get Sampling Point",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Response contains FieldworkOfficeId\", function () {\r",
+																	"    var samplingPoint = pm.response.json();\r",
+																	"    pm.collectionVariables.set(\"FieldworkOfficeId\", samplingPoint.SamplingPointId);\r",
+																	"});\r",
+																	"\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															}
+														],
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPoints",
+																"{{SamplingPointId}}"
+															]
+														},
+														"description": "(Capi) This method retrieve details of a specific sampling point with fieldwork offices."
+													},
+													"response": []
+												},
+												{
+													"name": "Create Sampling Point",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Response contains SamplingPointId\", function () {\r",
+																	"    pm.expect(pm.response.text()).to.include(\"SamplingPointId\");\r",
+																	"    const response = pm.response.json();\r",
+																	"    pm.collectionVariables.set(\"SamplingPointId\", response.SamplingPointId);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n  \"SamplingPointId\": \"zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz\",\r\n  \"Name\": \"Postman Sampling Point\",\r\n  \"Description\": \"Postman sample string 3\",\r\n  \"Instruction\": \"Postman sample string 4\",\r\n  \"FieldworkOfficeId\": \"Postman sample string 5\",\r\n  \"GroupId\": \"Postman sample string 6\",\r\n  \"Stratum\": \"Postman sample string 7\",\r\n  \"Kind\": 0\r\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPoints"
+															]
+														},
+														"description": "(Capi) This method creates a new sampling point."
+													},
+													"response": []
+												},
+												{
+													"name": "Update Sampling Point",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Updated name\", function () {\r",
+																	"    const samplingPoint = pm.response.json();\r",
+																	"    pm.expect(samplingPoint.Name).to.eql(\"Postman Sampling Point Updated\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Updated description\", function () {\r",
+																	"    const samplingPoint = pm.response.json();\r",
+																	"    pm.expect(samplingPoint.Description).to.eql(\"Postman sample string 3 Updated\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n    \"Name\": \"Postman Sampling Point Updated\",\r\n    \"Description\": \"Postman sample string 3 Updated\"\r\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPoints",
+																"{{SamplingPointId}}"
+															]
+														},
+														"description": "(Capi) Update a sampling point with the specified fields"
+													},
+													"response": []
+												},
+												{
+													"name": "Delete Sampling Point",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"host": [
+																"{{origin}}v1"
+															],
+															"path": [
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPoints",
+																"{{SamplingPointId}}"
+															]
+														},
+														"description": "(Capi) This method deletes a specified sampling point."
+													},
+													"response": []
+												},
+												{
+													"name": "Download Image",
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/x-zip-compressed"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}"
+															}
+														],
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPoint",
+																"{{SamplingPointId}}",
+																"Image"
+															]
+														},
+														"description": "(Capi) Method used to download sampling point image."
+													},
+													"response": []
+												},
+												{
+													"name": "Upload Image",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Response contains image name\", function () {\r",
+																	"    var response = pm.response.json();\r",
+																	"    pm.collectionVariables.set(\"FileName\", response);\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/x-zip-compressed"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}"
+															}
+														],
+														"body": {
+															"mode": "file",
+															"file": {
+																"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/bungalow.jpg"
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image/{{FileName}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPoint",
+																"{{SamplingPointId}}",
+																"Image",
+																"{{FileName}}"
+															]
+														},
+														"description": "(Capi) Method used to upload an image file associated with a sampling point (e.g. a map). The upload of a new image file for an existing sampling point will update the old image."
+													},
+													"response": []
+												},
+												{
+													"name": "Delete Image",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/x-zip-compressed"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}"
+															}
+														],
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image ",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPoint",
+																"{{SamplingPointId}}",
+																"Image "
+															]
+														},
+														"description": "(Capi) Method used to delete the sampling point image."
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Interviewers' Assignments",
+											"item": [
+												{
+													"name": "Assign Interviewers",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	"const validateProperties = (item) => {\r",
+																	"    return item.SamplingPointIds !== undefined \r",
+																	"    && item.InterviewerIds !== undefined;\r",
+																	"}\r",
+																	"\r",
+																	"pm.test(\"Response contains SamplingPointIds & InterviewerIds\", function () {\r",
+																	"    const response = pm.response.json();\r",
+																	"    pm.expect(validateProperties(response)).to.be.true;\r",
+																	"    if (response.SamplingPointIds.length > 0)\r",
+																	"    {\r",
+																	"        var lastIndex = response.SamplingPointIds.length - 1;\r",
+																	"        pm.collectionVariables.set(\"SamplingPointId\", response.SamplingPointIds[lastIndex]);\r",
+																	"    }\r",
+																	"    if (response.InterviewerIds.length > 0)\r",
+																	"    {\r",
+																	"        var lastIndex = response.InterviewerIds.length - 1;\r",
+																	"        pm.collectionVariables.set(\"InterviewerId\", response.InterviewerIds[lastIndex]);\r",
+																	"    }\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n  \"SamplingPointIds\": [\r\n    \"{{SamplingPointId}}\"\r\n  ],\r\n  \"InterviewerIds\": [\r\n    \"{{InterviewerId}}\"\r\n  ]\r\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPointsAssignments",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPointsAssignments"
+															]
+														},
+														"description": "(Capi) Assign many interviewers to many sampling points."
+													},
+													"response": []
+												},
+												{
+													"name": "Unassign Interviewers",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n  \"SamplingPointIds\": [\r\n    \"{{SamplingPointId}}\"\r\n  ],\r\n  \"InterviewerIds\": [\r\n    \"{{InterviewerId}}\"\r\n  ]\r\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPointsAssignments",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"SamplingPointsAssignments"
+															]
+														},
+														"description": "(Capi) Unassign many interviewers from many sampling points."
+													},
+													"response": []
+												}
+											],
+											"description": "Multi Sampling points Interviewers' Assignments"
+										},
+										{
+											"name": "Get Sampling Method",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/octet-stream"
+													},
+													{
+														"key": "X-Nfield-Domain",
+														"value": "{{Domain}}"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"SamplingMethod"
+													]
+												},
+												"description": "(Capi) Method for retrieving current SamplingMethod"
+											},
+											"response": []
+										},
+										{
+											"name": "Update SamplingMethod",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "X-Nfield-Domain",
+														"value": "{{Domain}}"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n  \"SamplingMethod\": \"FreeIntercept\"\r\n}"
+												},
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"SamplingMethod"
+													]
+												},
+												"description": "(Capi) Method for saving the SamplingMethod\nThis method updates the sampling method of a capi survey. The methods have restrictions based on quota, sampling points, etc."
+											},
+											"response": []
+										},
+										{
+											"name": "Get Sampling Points",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Response contains SamplingPointId & FieldworkOfficeId\", function () {\r",
+															"    var samplingPoints = pm.response.json();\r",
+															"    var lastIndex = samplingPoints.length - 1;\r",
+															"    pm.collectionVariables.set(\"SamplingPointId\", samplingPoints[lastIndex].SamplingPointId);\r",
+															"    pm.collectionVariables.set(\"FieldworkOfficeId\", samplingPoints[lastIndex].FieldworkOfficeId);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"SamplingPoints"
+													]
+												},
+												"description": "(Capi) This method retrieves a list of Sampling Points based on survey. This list can be filtered and sorted using standard OData syntax."
+											},
+											"response": []
+										},
+										{
+											"name": "Get Sampling Points Count",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/Count ",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"SamplingPoints",
+														"Count "
+													]
+												},
+												"description": "(Capi) Returns the number of samplingPoints of the survey."
+											},
+											"response": []
+										}
+									],
+									"description": "Controller for setting the SamplingMethod for CAPI surveys and provides methods to query and manage sampling points for a survey. (Has survey type usage restrictions)"
 								}
 							]
 						},
@@ -5406,7 +7740,7 @@
 													"pm.test(\"Response contains LanguageId\", function () {\r",
 													"    var languages = pm.response.json();\r",
 													"    var lastIndex = languages.length - 1;\r",
-													"    pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+													"    pm.collectionVariables.set(\"LanguageId\", languages[lastIndex].Id);\r",
 													"});"
 												],
 												"type": "text/javascript"
@@ -5509,7 +7843,7 @@
 													"    var language = pm.response.json();\r",
 													"    pm.expect(language.Id !== undefined).to.be.true;\r",
 													"    pm.expect(language.Name !== undefined).to.be.true;\r",
-													"    pm.environment.set(\"LanguageId\", language.Id);\r",
+													"    pm.collectionVariables.set(\"LanguageId\", language.Id);\r",
 													"});"
 												],
 												"type": "text/javascript"
@@ -5974,7 +8308,7 @@
 													"    if (languages.length > 0)\r",
 													"    {\r",
 													"        var lastIndex = languages.length - 1;\r",
-													"        pm.environment.set(\"LanguageId\", languages[lastIndex].Id);\r",
+													"        pm.collectionVariables.set(\"LanguageId\", languages[lastIndex].Id);\r",
 													"    }\r",
 													"});\r",
 													""
@@ -6286,6 +8620,346 @@
 													]
 												},
 												"description": "Gets the number of media files in a survey."
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Script",
+									"item": [
+										{
+											"name": "Create SurveyScript",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});",
+															"",
+															"pm.test(\"Response contains SurveyId\", function () {",
+															"    const survey = pm.response.json();",
+															"    pm.expect(survey.SurveyId.length).to.eql(36);",
+															"    pm.collectionVariables.set(\"SurveyId\", survey.SurveyId);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n  \"Script\": \"*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
+												},
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Script"
+													]
+												},
+												"description": "This method updates the ODIN script of a specific survey."
+											},
+											"response": []
+										},
+										{
+											"name": "Get SurveyScript",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"type": "text/javascript",
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															""
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/octet-stream"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Script"
+													]
+												},
+												"description": "This method retrieves the ODIN script of a specific survey."
+											},
+											"response": []
+										},
+										{
+											"name": "Get SurveyScript by Etag",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/octet-stream"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script/{{eTag}}",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"Script",
+														"{{eTag}}"
+													]
+												},
+												"description": "This method retrieves the specific version of ODIN script for the specified survey."
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Fragments",
+									"item": [
+										{
+											"name": "Fragment",
+											"item": [
+												{
+													"name": "Create Script Fragment",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 204\", function () {",
+																	"    pm.response.to.have.status(204);",
+																	"});",
+																	"",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "*LIST destination\r\n1:Amsterdam\r\n2:Buenos Aires\r\n3:Madrid\r\n4:Hong Kong"
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"ScriptFragments",
+																"{{FragmentName}}"
+															]
+														},
+														"description": "Add or update the wanted survey script fragment with the content specified as body of the request"
+													},
+													"response": []
+												},
+												{
+													"name": "Get Script Fragment",
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}"
+															}
+														],
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"ScriptFragments",
+																"{{FragmentName}}"
+															]
+														},
+														"description": "Gets the specified script fragment for the survey"
+													},
+													"response": []
+												},
+												{
+													"name": "Remove Script Fragment",
+													"request": {
+														"method": "DELETE",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": ""
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																"{{SurveyId}}",
+																"ScriptFragments",
+																"{{FragmentName}}"
+															]
+														},
+														"description": "Delete the specified survey script fragment."
+													},
+													"response": []
+												}
+											]
+										},
+										{
+											"name": "Get Script Fragments",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Status code name has string\", function () {",
+															"    pm.response.to.have.status(\"OK\");",
+															"});",
+															"",
+															"pm.test(\"Response contains Fragments\", function () {",
+															"    var response = pm.response.json();",
+															"    if (response.length > 0)",
+															"    {",
+															"        var lastIndex = response.length - 1;",
+															"        pm.collectionVariables.set(\"FragmentName\", response[lastIndex]);",
+															"    }",
+															"});",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}"
+													}
+												],
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														"{{SurveyId}}",
+														"ScriptFragments"
+													]
+												},
+												"description": "Gets a list of all script fragment names for a survey."
 											},
 											"response": []
 										}
@@ -6924,6 +9598,436 @@
 								}
 							],
 							"description": "Allows manage quota definitions for a survey"
+						},
+						{
+							"name": "Sample",
+							"item": [
+								{
+									"name": "Get Sample",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Sample"
+											]
+										},
+										"description": "(Online) (Cati) Retrieves the sample data for the specified survey."
+									},
+									"response": []
+								},
+								{
+									"name": "Upload Sample",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"const validateProperties = (item) => {",
+													"    return item.ProcessingStatus !== undefined",
+													"    && item.TotalRecordCount !== undefined",
+													"    && item.InsertedCount !== undefined",
+													"    && item.UpdatedCount !== undefined",
+													"    && item.DuplicateKeyCount !== undefined",
+													"    && item.EmptyKeyCount !== undefined",
+													"    && item.InvalidKeyCount !== undefined",
+													"    && item.InvalidDataCount !== undefined",
+													"    && item.SkippedCount !== undefined",
+													"    && item.HeaderInvalid !== undefined",
+													"    && item.HeaderInvalidColumnsCount !== undefined",
+													"    && item.HeaderDataMismatch !== undefined",
+													"    && item.ErrorMessages !== undefined;",
+													"}",
+													"",
+													"pm.test(\"Response contains All Properties\", function () {",
+													"    const response = pm.response.json();",
+													"    pm.expect(validateProperties(response)).to.be.true;",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "file",
+											"file": {
+												"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/SampleData.csv"
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Sample"
+											]
+										},
+										"description": "(Online) (Cati) Uploads the sample data for the specified survey. Pass the sample data as a CSV formatted string in the body of the request."
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Sample",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {",
+													"    pm.response.to.have.status(204);",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Sample"
+											]
+										},
+										"description": "(Online) (Cati) Deletes the specified survey's SampleData."
+									},
+									"response": []
+								},
+								{
+									"name": "Block Sample Data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Block",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Sample",
+												"Block"
+											]
+										},
+										"description": "(Online) Blocks sample data for a survey based on the survey id and a filter."
+									},
+									"response": []
+								},
+								{
+									"name": "Reset Sample Data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Reset",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Sample",
+												"Reset"
+											]
+										},
+										"description": "(Online) Resets sample data for a survey based on the survey id and a filter."
+									},
+									"response": []
+								},
+								{
+									"name": "Clear Sample Data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"Filters\": [\r\n    {\r\n        \"Name\": \"TelephoneNumber\",\r\n        \"Op\": \"Eq\",\r\n        \"Value\": \"empty\"\r\n    }\r\n  ],\r\n  \"Columns\": [\r\n    \"TelephoneNumber\"\r\n  ]\r\n}"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Clear",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Sample",
+												"Clear"
+											]
+										},
+										"description": "Clears the specified columns in sample data for a survey based on the survey id and a filter."
+									},
+									"response": []
+								},
+								{
+									"name": "Update Sample Data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"SampleRecordId\": 1,\r\n  \"ColumnUpdates\": [\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    },\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    }\r\n  ]\r\n}"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Update",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"Sample",
+												"Update"
+											]
+										},
+										"description": "Updates Sample Record"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Sample Data",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 202\", function () {",
+													"    pm.response.to.have.status(202);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"Accepted\");",
+													"});",
+													"",
+													"const validateProperties = (item) => {",
+													"    return item.Id !== undefined",
+													"    && item.IdentityId !== undefined",
+													"    && item.Parameters !== undefined",
+													"    && item.StartTime !== undefined",
+													"    && item.FinishTime !== undefined",
+													"    && item.ResultUrl !== undefined",
+													"    && item.Status !== undefined",
+													"    && item.TaskType !== undefined;",
+													"}",
+													"",
+													"const validateBgTask = (item) => {",
+													"    return item.SurveyId !== undefined",
+													"    && item.BackgroundTaskId !== undefined",
+													"    && item.DownloadFileName !== undefined;",
+													"}",
+													"",
+													"pm.test(\"Validate Properties\", function () {",
+													"    var response = pm.response.json();",
+													"    pm.expect(validateProperties(response)).to.be.true;",
+													"    var parameters = JSON.parse(response.Parameters);",
+													"    pm.expect(validateBgTask(parameters)).to.be.true;",
+													"    pm.environment.set(\"TaskId\", parameters.BackgroundTaskId);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SampleData/{{SampleDataFileName}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"SampleData",
+												"{{SampleDataFileName}}"
+											]
+										},
+										"description": "Create a request for a sample data download."
+									},
+									"response": []
+								}
+							],
+							"description": "Controller for CRUD operations on sample data (Has survey type usage restrictions) Starts a task to get the sample record data"
 						},
 						{
 							"name": "Get Survey",
@@ -8351,68 +11455,9 @@
 			]
 		},
 		{
-			"name": "Sign In",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"Status code name has string\", function () {",
-							"    pm.response.to.have.status(\"OK\");",
-							"});",
-							"",
-							"pm.test(\"Response contains AuthenticationToken\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"AuthenticationToken\");",
-							"    const response = pm.response.json();",
-							"    pm.collectionVariables.set('AuthenticationToken', response.AuthenticationToken);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"Domain\": \"{{DomainTestName}}\",\n  \"Username\": \"{{DomainTestUserName}}\",\n  \"Password\": \"{{DomainTestUserPassword}}\"\n}"
-				},
-				"url": {
-					"raw": "{{origin}}/v1/SignIn",
-					"host": [
-						"{{origin}}"
-					],
-					"path": [
-						"v1",
-						"SignIn"
-					]
-				},
-				"description": "This is used to sign in to the api asynchronously using the specified credentials."
-			},
-			"response": []
+			"name": "Domain Assignments (ADD)",
+			"item": [],
+			"description": "Controller for writing domain assignments for AAD users"
 		}
 	],
 	"event": [
@@ -8531,6 +11576,31 @@
 			"key": "ETag",
 			"value": "",
 			"type": "default"
+		},
+		{
+			"key": "SamplingPointId",
+			"value": ""
+		},
+		{
+			"key": "FieldworkOfficeId",
+			"value": ""
+		},
+		{
+			"key": "AddressId",
+			"value": ""
+		},
+		{
+			"key": "FragmentName",
+			"value": "SurveyScriptFragment",
+			"type": "default"
+		},
+		{
+			"key": "IdentityId",
+			"value": ""
+		},
+		{
+			"key": "ApiName",
+			"value": ""
 		}
 	]
 }
