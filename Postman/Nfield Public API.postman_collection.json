@@ -648,7 +648,7 @@
 			"name": "Interviewers",
 			"item": [
 				{
-					"name": "Capi",
+					"name": "Capi (P)",
 					"item": [
 						{
 							"name": "Offices",
@@ -826,166 +826,10 @@
 							"description": "Adding/Removing fieldwork offices to an interviewer"
 						},
 						{
-							"name": "Assignments",
+							"name": "Interviewer (P)",
 							"item": [
 								{
-									"name": "Get Assignments",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"const validateProperties = (item) => {\r",
-													"    return item.SurveyName !== undefined \r",
-													"    && item.SurveyId !== undefined \r",
-													"    && item.Interviewer !== undefined\r",
-													"    && item.InterviewerId !== undefined\r",
-													"    && item.Discriminator !== undefined\r",
-													"    && item.Assigned !== undefined\r",
-													"    && item.Active !== undefined\r",
-													"    && item.IsGroupAssignment !== undefined\r",
-													"    && item.AssignedTarget !== undefined\r",
-													"    && item.AssignedSamplingPointTarget !== undefined\r",
-													"    && item.Successful !== undefined\r",
-													"    && item.ScreenedOut !== undefined\r",
-													"    && item.DroppedOut !== undefined\r",
-													"    && item.Rejected !== undefined\r",
-													"    && item.LastSyncDate !== undefined\r",
-													"    && item.IsFullSynced !== undefined\r",
-													"    && item.IsLastSyncSuccessful !== undefined;\r",
-													"}\r",
-													"\r",
-													"pm.test(\"Response contains InterviewerId\", function () {\r",
-													"    var response = pm.response.json();\r",
-													"    pm.expect(response.every(validateProperties)).to.be.true;\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}/Assignments",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Interviewers",
-												"{{InterviewerId}}",
-												"Assignments"
-											]
-										},
-										"description": "This method retrieve all assignments with counts from an interviewer"
-									},
-									"response": []
-								}
-							],
-							"description": "The InterviewerAssignmentsController class provides methods to get the interviewers assignments. Gets all assignments types, Survey and Sampling points. (Free intercept, Individual target, Sampling points)"
-						},
-						{
-							"name": "Worklog",
-							"item": [
-								{
-									"name": "Prepare Download",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"const validateProperties = (item) => {\r",
-													"    return item.ActivityId !== undefined;\r",
-													"}\r",
-													"\r",
-													"pm.test(\"Response contains ActivityId\", function () {\r",
-													"    const response = pm.response.json();\r",
-													"    pm.expect(validateProperties(response)).to.be.true;\r",
-													"    pm.collectionVariables.set(\"ActivityId\", response.ActivityId);\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{ \r\n    \"From\" : \"2021-03-18Z\",\r\n    \"To\": \"2021-04-10T01:00Z\"\r\n}\r\n\r\n\r\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/InterviewersWorklog",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"InterviewersWorklog"
-											]
-										},
-										"description": "Sends a request to prepare the Interviewers worklog download file"
-									},
-									"response": []
-								}
-							],
-							"description": "A controller for preparing a local user log download"
-						},
-						{
-							"name": "Interviewer",
-							"item": [
-								{
-									"name": "Get Interviewer",
+									"name": "Get Interviewer (P)",
 									"event": [
 										{
 											"listen": "test",
@@ -1065,7 +909,7 @@
 									"response": []
 								},
 								{
-									"name": "Get Interviewer By ClientId",
+									"name": "Get Interviewer By ClientId (P)",
 									"event": [
 										{
 											"listen": "test",
@@ -1146,7 +990,7 @@
 									"response": []
 								},
 								{
-									"name": "Create Interviewer",
+									"name": "Create Interviewer (P)",
 									"event": [
 										{
 											"listen": "test",
@@ -1224,7 +1068,7 @@
 									"response": []
 								},
 								{
-									"name": "Update Password",
+									"name": "Update Password (P)",
 									"event": [
 										{
 											"listen": "test",
@@ -1298,7 +1142,7 @@
 									"response": []
 								},
 								{
-									"name": "Delete Interviewer",
+									"name": "Delete Interviewer (P)",
 									"event": [
 										{
 											"listen": "test",
@@ -1349,11 +1193,167 @@
 										"description": "This method deletes a specified interviewer."
 									},
 									"response": []
+								},
+								{
+									"name": "Update Interviewer (P)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.InterviewerId !== undefined \r",
+													"    && item.UserName !== undefined \r",
+													"    && item.FirstName !== undefined\r",
+													"    && item.LastName !== undefined\r",
+													"    && item.EmailAddress !== undefined\r",
+													"    && item.TelephoneNumber !== undefined\r",
+													"    && item.ClientInterviewerId !== undefined\r",
+													"    && item.LastSyncDate !== undefined\r",
+													"    && item.IsFullSynced !== undefined\r",
+													"    && item.IsLastSyncSuccessful !== undefined\r",
+													"    && item.IsSupervisor !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
+													"    var interviewer = pm.response.json();\r",
+													"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
+													"    pm.expect(interviewer.FirstName == \"Updated\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
+													"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"Updated\",\r\n    \"LastName\": \"Tester\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": null,\r\n    \"IsSupervisor\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Interviewers",
+												"{{InterviewerId}}"
+											]
+										},
+										"description": "Update an interviewer with the specified specified fields"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Assignments (P)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.SurveyName !== undefined \r",
+													"    && item.SurveyId !== undefined \r",
+													"    && item.Interviewer !== undefined\r",
+													"    && item.InterviewerId !== undefined\r",
+													"    && item.Discriminator !== undefined\r",
+													"    && item.Assigned !== undefined\r",
+													"    && item.Active !== undefined\r",
+													"    && item.IsGroupAssignment !== undefined\r",
+													"    && item.AssignedTarget !== undefined\r",
+													"    && item.AssignedSamplingPointTarget !== undefined\r",
+													"    && item.Successful !== undefined\r",
+													"    && item.ScreenedOut !== undefined\r",
+													"    && item.DroppedOut !== undefined\r",
+													"    && item.Rejected !== undefined\r",
+													"    && item.LastSyncDate !== undefined\r",
+													"    && item.IsFullSynced !== undefined\r",
+													"    && item.IsLastSyncSuccessful !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains InterviewerId\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}/Assignments",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Interviewers",
+												"{{InterviewerId}}",
+												"Assignments"
+											]
+										},
+										"description": "This method retrieve all assignments with counts from an interviewer"
+									},
+									"response": []
 								}
 							]
 						},
 						{
-							"name": "Get Interviewers",
+							"name": "Get Interviewers (P)",
 							"event": [
 								{
 									"listen": "test",
@@ -1438,7 +1438,7 @@
 							"response": []
 						},
 						{
-							"name": "Update Interviewer",
+							"name": "Prepare Worklog Download (P)",
 							"event": [
 								{
 									"listen": "test",
@@ -1453,33 +1453,22 @@
 											"});\r",
 											"\r",
 											"const validateProperties = (item) => {\r",
-											"    return item.InterviewerId !== undefined \r",
-											"    && item.UserName !== undefined \r",
-											"    && item.FirstName !== undefined\r",
-											"    && item.LastName !== undefined\r",
-											"    && item.EmailAddress !== undefined\r",
-											"    && item.TelephoneNumber !== undefined\r",
-											"    && item.ClientInterviewerId !== undefined\r",
-											"    && item.LastSyncDate !== undefined\r",
-											"    && item.IsFullSynced !== undefined\r",
-											"    && item.IsLastSyncSuccessful !== undefined\r",
-											"    && item.IsSupervisor !== undefined;\r",
+											"    return item.ActivityId !== undefined;\r",
 											"}\r",
 											"\r",
-											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
-											"    var interviewer = pm.response.json();\r",
-											"    pm.expect(validateProperties(interviewer)).to.be.true;\r",
-											"    pm.expect(interviewer.FirstName == \"Updated\").to.be.true;\r",
-											"    pm.collectionVariables.set(\"InterviewerId\", interviewer.InterviewerId);\r",
-											"    pm.collectionVariables.set(\"ClientInterviewerId\", interviewer.ClientInterviewerId);\r",
-											"});"
+											"pm.test(\"Response contains ActivityId\", function () {\r",
+											"    const response = pm.response.json();\r",
+											"    pm.expect(validateProperties(response)).to.be.true;\r",
+											"    pm.collectionVariables.set(\"ActivityId\", response.ActivityId);\r",
+											"});\r",
+											""
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
 							"request": {
-								"method": "PATCH",
+								"method": "POST",
 								"header": [
 									{
 										"key": "Authorization",
@@ -1489,7 +1478,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"FirstName\": \"Updated\",\r\n    \"LastName\": \"Tester\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": null,\r\n    \"IsSupervisor\": false\r\n}",
+									"raw": "{ \r\n    \"From\" : \"2021-03-18Z\",\r\n    \"To\": \"2021-04-10T01:00Z\"\r\n}\r\n\r\n\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1497,17 +1486,16 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+									"raw": "{{origin}}/v1/InterviewersWorklog",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
-										"Interviewers",
-										"{{InterviewerId}}"
+										"InterviewersWorklog"
 									]
 								},
-								"description": "Update an interviewer with the specified specified fields"
+								"description": "Sends a request to prepare the Interviewers worklog download file"
 							},
 							"response": []
 						}
@@ -1515,13 +1503,13 @@
 					"description": "The InterviewersController class provides methods to query and manage interviewers."
 				},
 				{
-					"name": "Cati",
+					"name": "Cati (T)",
 					"item": [
 						{
-							"name": "Interviewer",
+							"name": "Interviewer (T)",
 							"item": [
 								{
-									"name": "Get Interviewer",
+									"name": "Get Interviewer (T)",
 									"event": [
 										{
 											"listen": "test",
@@ -1586,7 +1574,7 @@
 									"response": []
 								},
 								{
-									"name": "Create Interviewer",
+									"name": "Create Interviewer (T)",
 									"event": [
 										{
 											"listen": "test",
@@ -1649,7 +1637,7 @@
 									"response": []
 								},
 								{
-									"name": "Update Interviewer Password",
+									"name": "Update Password (T)",
 									"event": [
 										{
 											"listen": "test",
@@ -1712,7 +1700,7 @@
 									"response": []
 								},
 								{
-									"name": "Delete Interviewer",
+									"name": "Delete Interviewer (T)",
 									"event": [
 										{
 											"listen": "test",
@@ -1767,7 +1755,7 @@
 							]
 						},
 						{
-							"name": "Get Interviewers",
+							"name": "Get Interviewers (T)",
 							"event": [
 								{
 									"listen": "test",
@@ -2620,10 +2608,10 @@
 					]
 				},
 				{
-					"name": "Templates",
+					"name": "Templates (D)",
 					"item": [
 						{
-							"name": "Get Templates",
+							"name": "Get Templates (D)",
 							"event": [
 								{
 									"listen": "test",
@@ -3385,16 +3373,16 @@
 							"description": "A controller for querying survey general settings Supervisor should only have access to the Get methods"
 						},
 						{
-							"name": "Capi",
+							"name": "Capi (SP)",
 							"item": [
 								{
-									"name": "Interviewers",
+									"name": "Interviewers (SP)",
 									"item": [
 										{
-											"name": "Interviewer Assignment",
+											"name": "Interviewer Assignment (SP)",
 											"item": [
 												{
-													"name": "Get Assignments QuotaTargets",
+													"name": "Get Assignments QuotaTargets (SP)",
 													"event": [
 														{
 															"listen": "test",
@@ -3467,7 +3455,7 @@
 													"response": []
 												},
 												{
-													"name": "Create Assignment",
+													"name": "Create Assignment (SP)",
 													"event": [
 														{
 															"listen": "test",
@@ -3524,7 +3512,7 @@
 													"response": []
 												},
 												{
-													"name": "Assign/Unassign",
+													"name": "Assign/Unassign (SP)",
 													"event": [
 														{
 															"listen": "test",
@@ -3581,7 +3569,7 @@
 											]
 										},
 										{
-											"name": "Get Interviewers",
+											"name": "Get Interviewers (SP)",
 											"event": [
 												{
 													"listen": "test",
@@ -3608,11 +3596,6 @@
 															"pm.test(\"Response contains the Properties\", function () {",
 															"    var response = pm.response.json();",
 															"    pm.expect(response.every(validateProperties)).to.be.true;",
-															"    if (response.length > 0)",
-															"    {",
-															"        var lastIndex = response.length - 1;",
-															"        pm.collectionVariables.set(\"InterviewerId\", response[lastIndex].InterviewerId);",
-															"    }",
 															"});",
 															"",
 															""
@@ -3647,7 +3630,7 @@
 											"response": []
 										},
 										{
-											"name": "Add Interviewer",
+											"name": "Add Interviewer (SP)",
 											"event": [
 												{
 													"listen": "test",
@@ -3703,7 +3686,7 @@
 											"response": []
 										},
 										{
-											"name": "Distribute Target",
+											"name": "Distribute Target (SP)",
 											"event": [
 												{
 													"listen": "test",
@@ -3758,7 +3741,7 @@
 											"response": []
 										},
 										{
-											"name": "Get Instructions",
+											"name": "Get Instructions (SP)",
 											"event": [
 												{
 													"listen": "test",
@@ -3815,7 +3798,7 @@
 											"response": []
 										},
 										{
-											"name": "Upload Instructions",
+											"name": "Upload Instructions (SP)",
 											"event": [
 												{
 													"listen": "test",
@@ -3878,7 +3861,7 @@
 											"response": []
 										},
 										{
-											"name": "Delete Instructions",
+											"name": "Delete Instructions (SP)",
 											"event": [
 												{
 													"listen": "test",
@@ -5364,13 +5347,13 @@
 							]
 						},
 						{
-							"name": "Cati",
+							"name": "Cati (T)",
 							"item": [
 								{
-									"name": "Dial Mode",
+									"name": "Dial Mode (T)",
 									"item": [
 										{
-											"name": "Get Dial Mode",
+											"name": "Get Dial Mode (T)",
 											"event": [
 												{
 													"listen": "test",
@@ -5425,7 +5408,7 @@
 											"response": []
 										},
 										{
-											"name": "Update Dial Mode",
+											"name": "Update Dial Mode (T)",
 											"event": [
 												{
 													"listen": "test",
@@ -5482,13 +5465,13 @@
 							]
 						},
 						{
-							"name": "Online",
+							"name": "Online (W)",
 							"item": [
 								{
-									"name": "Email Settings",
+									"name": "Email Settings (W)",
 									"item": [
 										{
-											"name": "Get Settings",
+											"name": "Get Email Settings (W)",
 											"event": [
 												{
 													"listen": "test",
@@ -5568,7 +5551,7 @@
 											"response": []
 										},
 										{
-											"name": "Put Settings",
+											"name": "Update Email Settings (W)",
 											"event": [
 												{
 													"listen": "test",
@@ -5638,13 +5621,13 @@
 									"description": "Controller for managing survey email settings (Has survey type usage restrictions)"
 								},
 								{
-									"name": "Invitation",
+									"name": "Invitation (W)",
 									"item": [
 										{
-											"name": "Template",
+											"name": "Template (W)",
 											"item": [
 												{
-													"name": "Create Template",
+													"name": "Create Template (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -5708,7 +5691,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Templates",
+													"name": "Get Templates (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -5775,7 +5758,7 @@
 													"response": []
 												},
 												{
-													"name": "Update Template",
+													"name": "Update Template (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -5841,7 +5824,7 @@
 													"response": []
 												},
 												{
-													"name": "Delete Template",
+													"name": "Delete Template (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -5894,10 +5877,10 @@
 											"description": "A controller for managing invitation templates."
 										},
 										{
-											"name": "Respondent",
+											"name": "Respondent (W)",
 											"item": [
 												{
-													"name": "Invite",
+													"name": "Invite (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -5950,7 +5933,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Invitation status",
+													"name": "Get Invitation status (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -6025,7 +6008,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Invitation Batches status",
+													"name": "Get Invitation Batches status (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -6106,7 +6089,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Invitation batch status",
+													"name": "Get Invitation batch status (W)",
 													"event": [
 														{
 															"listen": "test",
@@ -6171,7 +6154,7 @@
 											"description": "A controller for inviting respondents and getting invitation statuses."
 										},
 										{
-											"name": "Upload Image",
+											"name": "Upload Image (W)",
 											"event": [
 												{
 													"listen": "test",
@@ -6723,13 +6706,13 @@
 									"description": "Provides methods to query and manage survey specific relocations (OBSOLETE)\nThis endpoint is deprecated. Please use SurveyResponseCodes instead"
 								},
 								{
-									"name": "Response Codes",
+									"name": "Response Codes (S)",
 									"item": [
 										{
-											"name": "Response Code",
+											"name": "Response Code (S)",
 											"item": [
 												{
-													"name": "Get Response Code",
+													"name": "Get Response Code (S)",
 													"event": [
 														{
 															"listen": "test",
@@ -6790,7 +6773,7 @@
 													"response": []
 												},
 												{
-													"name": "Create Response Code",
+													"name": "Create Response Code (S)",
 													"event": [
 														{
 															"listen": "test",
@@ -6865,7 +6848,7 @@
 													"response": []
 												},
 												{
-													"name": "Update Response Code",
+													"name": "Update Response Code (S)",
 													"event": [
 														{
 															"listen": "test",
@@ -6940,7 +6923,7 @@
 													"response": []
 												},
 												{
-													"name": "Delete Response Code",
+													"name": "Delete Response Code (S)",
 													"event": [
 														{
 															"listen": "test",
@@ -6998,7 +6981,7 @@
 											]
 										},
 										{
-											"name": "Get Response Codes",
+											"name": "Get Response Codes (S)",
 											"event": [
 												{
 													"listen": "test",
@@ -8002,13 +7985,13 @@
 							"description": "Manage languages defined for a survey's questionnaire (obsolete)(This endpoint is deprecated. Please use SurveyLanguageTranslations instead)"
 						},
 						{
-							"name": "Translations",
+							"name": "Languages (S)",
 							"item": [
 								{
-									"name": "Translation",
+									"name": "Language (S)",
 									"item": [
 										{
-											"name": "Create Language",
+											"name": "Create Language (S)",
 											"event": [
 												{
 													"listen": "test",
@@ -8099,7 +8082,7 @@
 											"response": []
 										},
 										{
-											"name": "Update Language",
+											"name": "Update Language (S)",
 											"event": [
 												{
 													"listen": "test",
@@ -8192,7 +8175,7 @@
 											"response": []
 										},
 										{
-											"name": "Delete Language",
+											"name": "Delete Language (S)",
 											"event": [
 												{
 													"listen": "test",
@@ -8249,7 +8232,7 @@
 									]
 								},
 								{
-									"name": "Get Languages",
+									"name": "Get Languages (S)",
 									"event": [
 										{
 											"listen": "test",
@@ -8519,11 +8502,6 @@
 															"",
 															"pm.test(\"Response contains an Array\", function () {",
 															"    var response = pm.response.json();",
-															"    if (response.length > 0)",
-															"    {",
-															"        var lastIndex = response.length - 1;",
-															"        pm.collectionVariables.set(\"FileName\", response[lastIndex]);",
-															"    }",
 															"});",
 															""
 														],
@@ -9147,69 +9125,6 @@
 											]
 										},
 										"description": "Get the survey performance metrics for test interviews. (survey links)"
-									},
-									"response": []
-								}
-							]
-						},
-						{
-							"name": "Group",
-							"item": [
-								{
-									"name": "Move Survey",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n  \"SurveyGroupId\": 1\r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SurveyGroup",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												"{{SurveyId}}",
-												"SurveyGroup"
-											]
-										},
-										"description": "Move a survey to another survey group."
 									},
 									"response": []
 								}
@@ -10513,13 +10428,253 @@
 					"description": "Controller for managing the domain setting to set a set of fields in order to search respondent data inside them"
 				},
 				{
-					"name": "Defaults",
+					"name": "Defaults (D)",
 					"item": [
 						{
-							"name": "Languages' Translations",
+							"name": "Languages (D)",
 							"item": [
 								{
-									"name": "Get Languages",
+									"name": "Language (D)",
+									"item": [
+										{
+											"name": "Create Language (D)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															"\r",
+															"const validateProperties = (item) => {\r",
+															"    return item.Id !== undefined \r",
+															"    && item.InterviewButtonUnavailable !== undefined \r",
+															"    && item.TooFewAnswers !== undefined\r",
+															"    && item.TooManyAnswers !== undefined\r",
+															"    && item.ItemAnswerRequired !== undefined\r",
+															"    && item.CategoryAnswerRequired !== undefined\r",
+															"    && item.AnswerRequired !== undefined\r",
+															"    && item.NotInRange !== undefined\r",
+															"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+															"    && item.LessThanMinimum !== undefined\r",
+															"    && item.MoreThanMaximum !== undefined\r",
+															"    && item.MustBeNumeric !== undefined\r",
+															"    && item.TooManyDigitsFraction !== undefined\r",
+															"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+															"    && item.ExclusiveCategory !== undefined\r",
+															"    && item.InvalidCategory !== undefined\r",
+															"    && item.ButtonPause !== undefined\r",
+															"    && item.ButtonStart !== undefined\r",
+															"    && item.ButtonClear !== undefined\r",
+															"    && item.ButtonBack !== undefined\r",
+															"    && item.ButtonNext !== undefined\r",
+															"    && item.Name !== undefined\r",
+															"    && item.AnswerTooLong !== undefined\r",
+															"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+															"}\r",
+															"\r",
+															"pm.test(\"Response contains LanguageId\", function () {\r",
+															"    const response = pm.response.json();\r",
+															"    pm.expect(validateProperties(response)).to.be.true;\r",
+															"    pm.collectionVariables.set(\"LanguageId\", response.Id);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{          \r\n        \"Name\": \"Posman Language\",\r\n        \"ButtonNext\": null,\r\n        \"ButtonBack\": null,\r\n        \"ButtonClear\": null,\r\n        \"ButtonStart\": null,\r\n        \"ButtonPause\": null,\r\n        \"InvalidCategory\": null,\r\n        \"ExclusiveCategory\": null,\r\n        \"TooManyDigitsFraction\": null,\r\n        \"AnswerTooLong\": null,\r\n        \"MustBeNumeric\": null,\r\n        \"MoreThanMaximum\": null,\r\n        \"LessThanMinimum\": null,\r\n        \"TooManyDigitsInIntegerPart\": null,\r\n        \"NotInRange\": null,\r\n        \"AnswerRequired\": null,\r\n        \"CategoryAnswerRequired\": null,\r\n        \"ItemAnswerRequired\": null,\r\n        \"TooManyAnswers\": null,\r\n        \"TooFewAnswers\": null,\r\n        \"InterviewButtonUnavailable\": null,\r\n        \"DoNotUseBrowserButtonToNavigate\": null,\r\n        \"DoNotUseButtonWithOtherAnswer\": null\r\n    }",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin}}/v1/LanguageTranslations",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"LanguageTranslations"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Update Language (D)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															"\r",
+															"const validateProperties = (item) => {\r",
+															"    return item.Id !== undefined \r",
+															"    && item.InterviewButtonUnavailable !== undefined \r",
+															"    && item.TooFewAnswers !== undefined\r",
+															"    && item.TooManyAnswers !== undefined\r",
+															"    && item.ItemAnswerRequired !== undefined\r",
+															"    && item.CategoryAnswerRequired !== undefined\r",
+															"    && item.AnswerRequired !== undefined\r",
+															"    && item.NotInRange !== undefined\r",
+															"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+															"    && item.LessThanMinimum !== undefined\r",
+															"    && item.MoreThanMaximum !== undefined\r",
+															"    && item.MustBeNumeric !== undefined\r",
+															"    && item.TooManyDigitsFraction !== undefined\r",
+															"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+															"    && item.ExclusiveCategory !== undefined\r",
+															"    && item.InvalidCategory !== undefined\r",
+															"    && item.ButtonPause !== undefined\r",
+															"    && item.ButtonStart !== undefined\r",
+															"    && item.ButtonClear !== undefined\r",
+															"    && item.ButtonBack !== undefined\r",
+															"    && item.ButtonNext !== undefined\r",
+															"    && item.Name !== undefined\r",
+															"    && item.AnswerTooLong !== undefined\r",
+															"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+															"}\r",
+															"\r",
+															"pm.test(\"Response contains LanguageId\", function () {\r",
+															"    const response = pm.response.json();\r",
+															"    pm.expect(validateProperties(response)).to.be.true;\r",
+															"    pm.expect(response.Name == \"Postman Updated\").to.be.true;\r",
+															"    pm.collectionVariables.set(\"LanguageId\", response.Id);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{     \r\n        \"Name\": \"Postman Updated\",\r\n        \"ButtonNext\": \"new text\",\r\n        \"ButtonBack\": \"new text\",\r\n        \"ButtonClear\": \"new text\",\r\n        \"ButtonStart\": \"new text\",\r\n        \"ButtonPause\": \"new text\",\r\n        \"InvalidCategory\": true,\r\n        \"ExclusiveCategory\": \"new text\",\r\n        \"TooManyDigitsFraction\": \"new text\",\r\n        \"AnswerTooLong\": \"new text\",\r\n        \"MustBeNumeric\": \"new text\",\r\n        \"MoreThanMaximum\": \"new text\",\r\n        \"LessThanMinimum\": \"new text\",\r\n        \"TooManyDigitsInIntegerPart\": \"new text\",\r\n        \"NotInRange\": \"new text\",\r\n        \"AnswerRequired\": \"new text\",\r\n        \"CategoryAnswerRequired\": \"new text\",\r\n        \"ItemAnswerRequired\": \"new text\",\r\n        \"TooManyAnswers\": \"new text\",\r\n        \"TooFewAnswers\": \"new text\",\r\n        \"InterviewButtonUnavailable\": \"new text\",\r\n        \"DoNotUseBrowserButtonToNavigate\": \"new text\",\r\n        \"DoNotUseButtonWithOtherAnswer\": \"new text\"\r\n    }",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"LanguageTranslations",
+														"{{LanguageId}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Language (D)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"LanguageTranslations",
+														"{{LanguageId}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Get Languages (D)",
 									"event": [
 										{
 											"listen": "test",
@@ -10595,250 +10750,15 @@
 										}
 									},
 									"response": []
-								},
-								{
-									"name": "Create Language",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"const validateProperties = (item) => {\r",
-													"    return item.Id !== undefined \r",
-													"    && item.InterviewButtonUnavailable !== undefined \r",
-													"    && item.TooFewAnswers !== undefined\r",
-													"    && item.TooManyAnswers !== undefined\r",
-													"    && item.ItemAnswerRequired !== undefined\r",
-													"    && item.CategoryAnswerRequired !== undefined\r",
-													"    && item.AnswerRequired !== undefined\r",
-													"    && item.NotInRange !== undefined\r",
-													"    && item.TooManyDigitsInIntegerPart !== undefined\r",
-													"    && item.LessThanMinimum !== undefined\r",
-													"    && item.MoreThanMaximum !== undefined\r",
-													"    && item.MustBeNumeric !== undefined\r",
-													"    && item.TooManyDigitsFraction !== undefined\r",
-													"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
-													"    && item.ExclusiveCategory !== undefined\r",
-													"    && item.InvalidCategory !== undefined\r",
-													"    && item.ButtonPause !== undefined\r",
-													"    && item.ButtonStart !== undefined\r",
-													"    && item.ButtonClear !== undefined\r",
-													"    && item.ButtonBack !== undefined\r",
-													"    && item.ButtonNext !== undefined\r",
-													"    && item.Name !== undefined\r",
-													"    && item.AnswerTooLong !== undefined\r",
-													"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
-													"}\r",
-													"\r",
-													"pm.test(\"Response contains LanguageId\", function () {\r",
-													"    const response = pm.response.json();\r",
-													"    pm.expect(validateProperties(response)).to.be.true;\r",
-													"    pm.collectionVariables.set(\"LanguageId\", response.Id);\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{          \r\n        \"Name\": \"Posman Language\",\r\n        \"ButtonNext\": null,\r\n        \"ButtonBack\": null,\r\n        \"ButtonClear\": null,\r\n        \"ButtonStart\": null,\r\n        \"ButtonPause\": null,\r\n        \"InvalidCategory\": null,\r\n        \"ExclusiveCategory\": null,\r\n        \"TooManyDigitsFraction\": null,\r\n        \"AnswerTooLong\": null,\r\n        \"MustBeNumeric\": null,\r\n        \"MoreThanMaximum\": null,\r\n        \"LessThanMinimum\": null,\r\n        \"TooManyDigitsInIntegerPart\": null,\r\n        \"NotInRange\": null,\r\n        \"AnswerRequired\": null,\r\n        \"CategoryAnswerRequired\": null,\r\n        \"ItemAnswerRequired\": null,\r\n        \"TooManyAnswers\": null,\r\n        \"TooFewAnswers\": null,\r\n        \"InterviewButtonUnavailable\": null,\r\n        \"DoNotUseBrowserButtonToNavigate\": null,\r\n        \"DoNotUseButtonWithOtherAnswer\": null\r\n    }",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/LanguageTranslations",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"LanguageTranslations"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Update Language",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"const validateProperties = (item) => {\r",
-													"    return item.Id !== undefined \r",
-													"    && item.InterviewButtonUnavailable !== undefined \r",
-													"    && item.TooFewAnswers !== undefined\r",
-													"    && item.TooManyAnswers !== undefined\r",
-													"    && item.ItemAnswerRequired !== undefined\r",
-													"    && item.CategoryAnswerRequired !== undefined\r",
-													"    && item.AnswerRequired !== undefined\r",
-													"    && item.NotInRange !== undefined\r",
-													"    && item.TooManyDigitsInIntegerPart !== undefined\r",
-													"    && item.LessThanMinimum !== undefined\r",
-													"    && item.MoreThanMaximum !== undefined\r",
-													"    && item.MustBeNumeric !== undefined\r",
-													"    && item.TooManyDigitsFraction !== undefined\r",
-													"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
-													"    && item.ExclusiveCategory !== undefined\r",
-													"    && item.InvalidCategory !== undefined\r",
-													"    && item.ButtonPause !== undefined\r",
-													"    && item.ButtonStart !== undefined\r",
-													"    && item.ButtonClear !== undefined\r",
-													"    && item.ButtonBack !== undefined\r",
-													"    && item.ButtonNext !== undefined\r",
-													"    && item.Name !== undefined\r",
-													"    && item.AnswerTooLong !== undefined\r",
-													"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
-													"}\r",
-													"\r",
-													"pm.test(\"Response contains LanguageId\", function () {\r",
-													"    const response = pm.response.json();\r",
-													"    pm.expect(validateProperties(response)).to.be.true;\r",
-													"    pm.expect(response.Name == \"Postman Updated\").to.be.true;\r",
-													"    pm.collectionVariables.set(\"LanguageId\", response.Id);\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "PATCH",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{     \r\n        \"Name\": \"Postman Updated\",\r\n        \"ButtonNext\": \"new text\",\r\n        \"ButtonBack\": \"new text\",\r\n        \"ButtonClear\": \"new text\",\r\n        \"ButtonStart\": \"new text\",\r\n        \"ButtonPause\": \"new text\",\r\n        \"InvalidCategory\": true,\r\n        \"ExclusiveCategory\": \"new text\",\r\n        \"TooManyDigitsFraction\": \"new text\",\r\n        \"AnswerTooLong\": \"new text\",\r\n        \"MustBeNumeric\": \"new text\",\r\n        \"MoreThanMaximum\": \"new text\",\r\n        \"LessThanMinimum\": \"new text\",\r\n        \"TooManyDigitsInIntegerPart\": \"new text\",\r\n        \"NotInRange\": \"new text\",\r\n        \"AnswerRequired\": \"new text\",\r\n        \"CategoryAnswerRequired\": \"new text\",\r\n        \"ItemAnswerRequired\": \"new text\",\r\n        \"TooManyAnswers\": \"new text\",\r\n        \"TooFewAnswers\": \"new text\",\r\n        \"InterviewButtonUnavailable\": \"new text\",\r\n        \"DoNotUseBrowserButtonToNavigate\": \"new text\",\r\n        \"DoNotUseButtonWithOtherAnswer\": \"new text\"\r\n    }",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"LanguageTranslations",
-												"{{LanguageId}}"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Language",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"LanguageTranslations",
-												"{{LanguageId}}"
-											]
-										}
-									},
-									"response": []
 								}
 							],
 							"description": "Controller for managing the domain Languages. Using LanguageTranslations to keep the same name used for surveys"
 						},
 						{
-							"name": "Response Codes",
+							"name": "Response Codes (D)",
 							"item": [
 								{
-									"name": "Get Response Codes",
+									"name": "Get Response Codes (D)",
 									"event": [
 										{
 											"listen": "test",
@@ -10897,7 +10817,7 @@
 									"response": []
 								},
 								{
-									"name": "Create Response Code",
+									"name": "Create Response Code (D)",
 									"event": [
 										{
 											"listen": "test",
@@ -10965,7 +10885,7 @@
 									"response": []
 								},
 								{
-									"name": "Update Response Code",
+									"name": "Update Response Code (D)",
 									"event": [
 										{
 											"listen": "test",
@@ -11035,7 +10955,7 @@
 									"response": []
 								},
 								{
-									"name": "Delete Response Code",
+									"name": "Delete Response Code (D)",
 									"event": [
 										{
 											"listen": "test",
@@ -11091,10 +11011,10 @@
 							]
 						},
 						{
-							"name": "Email Settings",
+							"name": "Email Settings (D)",
 							"item": [
 								{
-									"name": "Get Email Settings",
+									"name": "Get Email Settings (D)",
 									"event": [
 										{
 											"listen": "test",
@@ -11155,7 +11075,7 @@
 									"response": []
 								},
 								{
-									"name": "Put Email Settings",
+									"name": "Put Email Settings (D)",
 									"event": [
 										{
 											"listen": "test",
@@ -11915,6 +11835,64 @@
 											]
 										},
 										"description": "Delete a survey group Survey groups have to be 'empty' before they can be deleted. An empty survey group has no surveys associated to it.This method deletes a specified survey."
+									},
+									"response": []
+								},
+								{
+									"name": "Move Survey",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"SurveyGroupId\": 1\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SurveyGroup",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"SurveyGroup"
+											]
+										},
+										"description": "Move a survey to another survey group."
 									},
 									"response": []
 								}
