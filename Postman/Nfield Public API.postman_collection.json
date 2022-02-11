@@ -340,6 +340,240 @@
 			"name": "Offices",
 			"item": [
 				{
+					"name": "Office",
+					"item": [
+						{
+							"name": "Get Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (office) => {",
+											"    return office.OfficeId !== undefined",
+											"    && office.IsHeadquarters !== undefined",
+											"    && office.OfficeName !== undefined",
+											"    && office.Description !== undefined;",
+											"}",
+											"",
+											"pm.test(\"All offices should have an OfficeName\", function () {",
+											"    const office = pm.response.json();",
+											"    pm.expect(validateProperties(office)).to.be.true;",
+											"    pm.collectionVariables.set(\"FieldworkOfficeId\", office.OfficeId);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Offices",
+										"{{OfficeId}}"
+									]
+								},
+								"description": "Retrieve details of a specific fieldwork office."
+							},
+							"response": []
+						},
+						{
+							"name": "Create Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"const validateProperties = (office) => {",
+											"    return office.OfficeId !== undefined",
+											"    && office.IsHeadquarters !== undefined",
+											"    && office.OfficeName !== undefined",
+											"    && office.Description !== undefined;",
+											"}",
+											"",
+											"pm.test(\"All offices should have an OfficeName\", function () {",
+											"    const office = pm.response.json();",
+											"    pm.expect(validateProperties(office)).to.be.true;",
+											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OfficeName\": \"Postman office\",\r\n  \"Description\": \"Postman description\"\r\n}"
+								},
+								"url": {
+									"raw": "{{origin}}/v1/Offices",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Offices"
+									]
+								},
+								"description": "Create a new fieldwork office."
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Offices",
+										"{{OfficeId}}"
+									]
+								},
+								"description": "Delete a fieldwork office NOTE: the headquarters office cannot be deleted."
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (office) => {",
+											"    return office.OfficeId !== undefined",
+											"    && office.IsHeadquarters !== undefined",
+											"    && office.OfficeName !== undefined",
+											"    && office.Description !== undefined;",
+											"}",
+											"",
+											"pm.test(\"All offices should have an OfficeId and the data has been updated\", function () {",
+											"    const office = pm.response.json();",
+											"    pm.expect(validateProperties(office)).to.be.true;",
+											"    pm.expect(office.OfficeName).to.eql(\"Postman office updated\");",
+											"    pm.expect(office.Description).to.eql(\"Postman description updated\");",
+											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OfficeName\": \"Postman office updated\",\r\n  \"Description\": \"Postman description updated\"\r\n}"
+								},
+								"url": {
+									"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Offices",
+										"{{OfficeId}}"
+									]
+								},
+								"description": "Update a fieldwork office."
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get Offices",
 					"event": [
 						{
@@ -399,235 +633,6 @@
 							]
 						},
 						"description": "Retrieve a list of Fieldwork Offices. This list can be filtered and sorted using standard OData syntax."
-					},
-					"response": []
-				},
-				{
-					"name": "Get Office",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Status code name has string\", function () {",
-									"    pm.response.to.have.status(\"OK\");",
-									"});",
-									"",
-									"const validateProperties = (office) => {",
-									"    return office.OfficeId !== undefined",
-									"    && office.IsHeadquarters !== undefined",
-									"    && office.OfficeName !== undefined",
-									"    && office.Description !== undefined;",
-									"}",
-									"",
-									"pm.test(\"All offices should have an OfficeName\", function () {",
-									"    const office = pm.response.json();",
-									"    pm.expect(validateProperties(office)).to.be.true;",
-									"    pm.collectionVariables.set(\"FieldworkOfficeId\", office.OfficeId);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}"
-							}
-						],
-						"url": {
-							"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
-							"host": [
-								"{{origin}}"
-							],
-							"path": [
-								"v1",
-								"Offices",
-								"{{OfficeId}}"
-							]
-						},
-						"description": "Retrieve details of a specific fieldwork office."
-					},
-					"response": []
-				},
-				{
-					"name": "Create Office",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"const validateProperties = (office) => {",
-									"    return office.OfficeId !== undefined",
-									"    && office.IsHeadquarters !== undefined",
-									"    && office.OfficeName !== undefined",
-									"    && office.Description !== undefined;",
-									"}",
-									"",
-									"pm.test(\"All offices should have an OfficeName\", function () {",
-									"    const office = pm.response.json();",
-									"    pm.expect(validateProperties(office)).to.be.true;",
-									"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"OfficeName\": \"Postman office\",\r\n  \"Description\": \"Postman description\"\r\n}"
-						},
-						"url": {
-							"raw": "{{origin}}/v1/Offices",
-							"host": [
-								"{{origin}}"
-							],
-							"path": [
-								"v1",
-								"Offices"
-							]
-						},
-						"description": "Create a new fieldwork office."
-					},
-					"response": []
-				},
-				{
-					"name": "Patch Office",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"Status code name has string\", function () {",
-									"    pm.response.to.have.status(\"OK\");",
-									"});",
-									"",
-									"const validateProperties = (office) => {",
-									"    return office.OfficeId !== undefined",
-									"    && office.IsHeadquarters !== undefined",
-									"    && office.OfficeName !== undefined",
-									"    && office.Description !== undefined;",
-									"}",
-									"",
-									"pm.test(\"All offices should have an OfficeId and the data has been updated\", function () {",
-									"    const office = pm.response.json();",
-									"    pm.expect(validateProperties(office)).to.be.true;",
-									"    pm.expect(office.OfficeName).to.eql(\"Postman office updated\");",
-									"    pm.expect(office.Description).to.eql(\"Postman description updated\");",
-									"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"OfficeName\": \"Postman office updated\",\r\n  \"Description\": \"Postman description updated\"\r\n}"
-						},
-						"url": {
-							"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
-							"host": [
-								"{{origin}}"
-							],
-							"path": [
-								"v1",
-								"Offices",
-								"{{OfficeId}}"
-							]
-						},
-						"description": "Update a fieldwork office."
-					},
-					"response": []
-				},
-				{
-					"name": "Remove Office",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
-							"host": [
-								"{{origin}}"
-							],
-							"path": [
-								"v1",
-								"Offices",
-								"{{OfficeId}}"
-							]
-						},
-						"description": "Delete a fieldwork office NOTE: the headquarters office cannot be deleted."
 					},
 					"response": []
 				}
@@ -12153,30 +12158,82 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"    var urlSignIn = pm.environment.get(\"origin\")+\"v1/SignIn\";",
-					"    var domain = pm.environment.get(\"DomainTestName\");",
-					"    var user = pm.environment.get(\"DomainTestUserName\");",
-					"    var password = pm.environment.get(\"DomainTestUserPassword\");",
-					"    var signInParams = '{\"Domain\": \"'+ domain+'\",\"Username\": \"'+user+'\",\"Password\": \"'+password+'\"}';",
-					"    console.log(\"SignIn params: \" + signInParams);",
-					"    pm.sendRequest(",
-					"        {",
-					"        url: urlSignIn,",
-					"        method: \"POST\",",
-					"        header: {",
-					"            \"content-type\": \"application/json\",",
-					"            \"accept\": \"*/*\",",
-					"        },",
-					"        body:  {",
-					"            mode: 'raw',",
-					"            raw: signInParams",
-					"        }",
+					"const SelectedSurveyName = pm.environment.get('SurveyTestName');",
+					"const CurrentSurveyName = pm.collectionVariables.get('CurrentSurveyTestName');",
 					"",
-					"        }, function (err, response) {",
-					"            var resp = response.json();",
-					"            console.log(\"Token: \"+ resp.AuthenticationToken)",
-					"            pm.collectionVariables.set('AuthenticationToken', resp.AuthenticationToken);",
-					"        });"
+					"if (pm.collectionVariables.get('AuthenticationToken') == '' )",
+					"{",
+					"    getAuthenticationToken();",
+					"}",
+					"else",
+					"{",
+					"    console.log(\"Using current Token: \"+ pm.collectionVariables.get('AuthenticationToken'))",
+					"}",
+					"//selectDefaultSurvey();",
+					"",
+					"const getAuthenticationToken = () => {",
+					"        console.log(\"SignIn to gat a new AuthenticationToken\");",
+					"        var urlSignIn = pm.environment.get(\"origin\")+\"v1/SignIn\";",
+					"        var domain = pm.environment.get(\"DomainTestName\");",
+					"        var user = pm.environment.get(\"DomainTestUserName\");",
+					"        var password = pm.environment.get(\"DomainTestUserPassword\");",
+					"        var signInParams = '{\"Domain\": \"'+ domain+'\",\"Username\": \"'+user+'\",\"Password\": \"'+password+'\"}';",
+					"        console.log(\"SignIn params: \" + signInParams);",
+					"        pm.sendRequest(",
+					"            {",
+					"            url: urlSignIn,",
+					"            method: \"POST\",",
+					"            header: {",
+					"                \"content-type\": \"application/json\",",
+					"                \"accept\": \"*/*\",",
+					"            },",
+					"            body:  {",
+					"                mode: 'raw',",
+					"                raw: signInParams",
+					"            }",
+					"",
+					"            }, function (err, response) {",
+					"                var resp = response.json();",
+					"                console.log(\"New Token: \"+ resp.AuthenticationToken)",
+					"                pm.collectionVariables.set('AuthenticationToken', resp.AuthenticationToken);",
+					"            });",
+					"}",
+					"",
+					"const selectDefaultSurvey = () => {",
+					"    ",
+					"    if (SelectedSurveyName == '' && SelectedSurveyName != CurrentSurveyName)",
+					"    {",
+					"        console.log(\"Selecting default Survey Id to test. Survey Name: \" + surveyName);",
+					"        var urlSignIn = pm.environment.get(\"origin\")+\"v1/Surveys\";",
+					"        pm.sendRequest(",
+					"            {",
+					"            url: urlSignIn,",
+					"            method: \"GET\",",
+					"            header: {",
+					"                \"content-type\": \"application/json\",",
+					"                \"accept\": \"*/*\",",
+					"            }",
+					"",
+					"            }, function (err, response) {",
+					"                var resp = response.json();",
+					"                resp.every(getSurveyId);",
+					"                console.log(\"Using SurveyId: \"+ pm.collectionVariables.get('SurveyId'));",
+					"            });",
+					"    }",
+					"    else",
+					"    {",
+					"        console.log(\"No default Survey Selected\");",
+					"    }",
+					"}",
+					"",
+					"const getSurveyId = (survey) => {",
+					"    ",
+					"    if (survey == survey.surveyName)",
+					"    {",
+					"        console.log(\"No default Survey Selected\");",
+					"        pm.collectionVariables.set('SurveyId', survey.SurveyId);",
+					"    }",
+					"}"
 				]
 			}
 		},
@@ -12185,6 +12242,13 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
+					"pm.test(\"Invalidate AuthenticationToken on 401 Unauthorized\", function () {",
+					"    if (pm.response.status == 401)",
+					"    {",
+					"        console.log(\"401 Unauthorized: Invalidating AuthenticationToken\");",
+					"        pm.collectionVariables.set(\"AuthenticationToken\", '' );",
+					"    }",
+					"});",
 					""
 				]
 			}
