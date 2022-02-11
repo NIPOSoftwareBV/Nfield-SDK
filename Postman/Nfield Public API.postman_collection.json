@@ -70,16 +70,6 @@
 									"pm.test(\"Status code name has string\", function () {",
 									"    pm.response.to.have.status(\"OK\");",
 									"});",
-									"",
-									"pm.test(\"Response contains TaskId\", function () {",
-									"    var tasks = pm.response.json();",
-									"    if (tasks.length > 0)",
-									"    {",
-									"        var lastIndex = tasks.length - 1;",
-									"        pm.collectionVariables.set('TaskId', tasks[lastIndex].Id);",
-									"    }",
-									"});",
-									"",
 									""
 								],
 								"type": "text/javascript"
@@ -598,11 +588,6 @@
 									"pm.test(\"All offices should have an OfficeId\", function () {",
 									"    const offices = pm.response.json();",
 									"    pm.expect(offices.every(validateProperties)).to.be.true;",
-									"    if (offices.length > 0)",
-									"    {",
-									"        var lastIndex = offices.length - 1;",
-									"        pm.collectionVariables.set(\"OfficeId\", offices[lastIndex].OfficeId);",
-									"    }",
 									"});",
 									""
 								],
@@ -681,15 +666,6 @@
 													"\r",
 													"pm.test(\"Status code name has string\", function () {\r",
 													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response contains OfficeId\", function () {\r",
-													"    var officesIds = pm.response.json();\r",
-													"    if (officesIds.length > 0)\r",
-													"    {\r",
-													"        var lastIndex = officesIds.length - 1;\r",
-													"        pm.collectionVariables.set(\"OfficeId\", officesIds[lastIndex]);\r",
-													"    }\r",
 													"});"
 												],
 												"type": "text/javascript"
@@ -890,12 +866,6 @@
 													"pm.test(\"Response contains InterviewerId\", function () {\r",
 													"    var response = pm.response.json();\r",
 													"    pm.expect(response.every(validateProperties)).to.be.true;\r",
-													"    if (response.length > 0)\r",
-													"    {\r",
-													"        var lastIndex = response.length - 1;\r",
-													"        pm.collectionVariables.set(\"InterviewerId\", response[lastIndex].InterviewerId);\r",
-													"    }\r",
-													"\r",
 													"});\r",
 													""
 												],
@@ -1818,11 +1788,6 @@
 											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {\r",
 											"    var interviewers = pm.response.json();\r",
 											"    pm.expect(interviewers.every(validateProperties)).to.be.true;\r",
-											"    if (interviewers.length > 0)\r",
-											"    {\r",
-											"        var lastIndex = interviewers.length - 1;\r",
-											"        pm.collectionVariables.set(\"CatiInterviewerId\", interviewers[lastIndex].InterviewerId);\r",
-											"    }\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -2306,11 +2271,6 @@
 											"pm.test(\"Response contains IdentityId\", function () {\r",
 											"    var users = pm.response.json();\r",
 											"    pm.expect(users.every(validateProperties)).to.be.true;\r",
-											"    if (users.length > 0)\r",
-											"    {\r",
-											"        var lastIndex = users.length - 1;\r",
-											"        pm.collectionVariables.set(\"IdentityId\", users[lastIndex].Id);\r",
-											"    }\r",
 											"\r",
 											"});"
 										],
@@ -2675,14 +2635,6 @@
 											"\r",
 											"pm.test(\"Status code name has string\", function () {\r",
 											"    pm.response.to.have.status(\"OK\");\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Response contains TemplateId & TemplateName\", function () {\r",
-											"    var templates = pm.response.json();\r",
-											"    var lastIndex = templates.length - 1;\r",
-											"    pm.collectionVariables.set(\"TemplateId\", templates[lastIndex].Id);\r",
-											"    var lastThemeIndex = templates[lastIndex].Themes.length - 1;\r",
-											"    pm.collectionVariables.set(\"ThemeId\", templates[lastIndex].Themes[lastThemeIndex].Id);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -2752,11 +2704,6 @@
 											"pm.test(\"Response contains the Properties\", function () {",
 											"    var response = pm.response.json();",
 											"    pm.expect(response.every(validateProperties)).to.be.true;",
-											"    if (response.length > 0)",
-											"    {",
-											"        var lastIndex = response.length - 1;",
-											"        pm.collectionVariables.set(\"SurveyId\", response[lastIndex].SurveyId);",
-											"    }",
 											"});"
 										],
 										"type": "text/javascript"
@@ -3115,11 +3062,6 @@
 											"pm.test(\"Response contains ApiName\", function () {\r",
 											"    var response = pm.response.json();\r",
 											"    pm.expect(response.every(validateProperties)).to.be.true;\r",
-											"    if (response.length > 0)\r",
-											"    {\r",
-											"        var lastIndex = response.length - 1;\r",
-											"        pm.collectionVariables.set(\"ApiName\", response[lastIndex].Name);\r",
-											"    }\r",
 											"});\r",
 											"\r",
 											""
@@ -3230,6 +3172,81 @@
 											]
 										},
 										"description": "Retrieve details of a specific survey general settings."
+									},
+									"response": []
+								},
+								{
+									"name": "Update General Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Description !== undefined\r",
+													"    && item.Client !== undefined\r",
+													"    && item.Name !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Validates the properties\", function () {\r",
+													"    const reponse = pm.response.json();\r",
+													"    pm.expect(validateProperties(reponse)).to.be.true;\r",
+													"    pm.expect(reponse.Description == \"Description (Basic) Updated\").to.be.true;\r",
+													"    pm.expect(reponse.Client == \"ClientName(Basic) Updated\").to.be.true;\r",
+													"    \r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "default"
+											},
+											{
+												"key": "",
+												"value": "",
+												"type": "default",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Description\": \"Description (Basic) Updated\",\r\n    \"Client\": \"ClientName(Basic) Updated\",\r\n    \"Name\": \"Basic\"\r\n}"
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												"{{SurveyId}}",
+												"GeneralSettings"
+											]
+										},
+										"description": "Update a survey general settings."
 									},
 									"response": []
 								},
@@ -3401,11 +3418,6 @@
 																	"pm.test(\"Response contains LevelId\", function () {\r",
 																	"    var response = pm.response.json();\r",
 																	"    pm.expect(response.every(validateProperties)).to.be.true;\r",
-																	"    if (response.length > 0)\r",
-																	"    {\r",
-																	"        var lastIndex = response.length - 1;\r",
-																	"        pm.collectionVariables.set(\"QuotaLevelId\", response[lastIndex].LevelId);\r",
-																	"    }\r",
 																	"});\r",
 																	"\r",
 																	""
@@ -5040,16 +5052,6 @@
 																	"pm.test(\"Response contains SamplingPointIds & InterviewerIds\", function () {\r",
 																	"    const response = pm.response.json();\r",
 																	"    pm.expect(validateProperties(response)).to.be.true;\r",
-																	"    if (response.SamplingPointIds.length > 0)\r",
-																	"    {\r",
-																	"        var lastIndex = response.SamplingPointIds.length - 1;\r",
-																	"        pm.collectionVariables.set(\"SamplingPointId\", response.SamplingPointIds[lastIndex]);\r",
-																	"    }\r",
-																	"    if (response.InterviewerIds.length > 0)\r",
-																	"    {\r",
-																	"        var lastIndex = response.InterviewerIds.length - 1;\r",
-																	"        pm.collectionVariables.set(\"InterviewerId\", response.InterviewerIds[lastIndex]);\r",
-																	"    }\r",
 																	"});"
 																],
 																"type": "text/javascript"
@@ -5279,9 +5281,6 @@
 															"\r",
 															"pm.test(\"Response contains SamplingPointId & FieldworkOfficeId\", function () {\r",
 															"    var samplingPoints = pm.response.json();\r",
-															"    var lastIndex = samplingPoints.length - 1;\r",
-															"    pm.collectionVariables.set(\"SamplingPointId\", samplingPoints[lastIndex].SamplingPointId);\r",
-															"    pm.collectionVariables.set(\"FieldworkOfficeId\", samplingPoints[lastIndex].FieldworkOfficeId);\r",
 															"});"
 														],
 														"type": "text/javascript"
@@ -5531,7 +5530,7 @@
 															"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {",
 															"    var response = pm.response.json();",
 															"    pm.expect(validateProperties(response)).to.be.true;",
-															"    pm.environment.set(\"EmailSettingsId\", response.SurveyEmailSettings.Id);",
+															"    pm.collectionVariables.set(\"EmailSettingsId\", response.SurveyEmailSettings.Id);",
 															"});",
 															"",
 															""
@@ -6337,11 +6336,6 @@
 															"pm.test(\"Response contains Properties\", function () {",
 															"    var response = pm.response.json();",
 															"     pm.expect(response.every(validateProperties)).to.be.true;",
-															"    if (response.length > 0)",
-															"    {",
-															"        var lastIndex = response.length - 1;",
-															"        pm.collectionVariables.set(\"LinkPublicId\", response[lastIndex].Id);",
-															"    }",
 															"});"
 														],
 														"type": "text/javascript"
@@ -6633,11 +6627,7 @@
 															"pm.test(\"Response contains the Properties\", function () {",
 															"    var response = pm.response.json();",
 															"    pm.expect(response.every(validateProperties)).to.be.true;",
-															"    if (response.length > 0)",
-															"    {",
-															"        var lastIndex = response.length - 1;",
-															"        pm.collectionVariables.set(\"RelocationReasonId\", response[lastIndex].Reason);",
-															"    }",
+															"",
 															"});"
 														],
 														"type": "text/javascript"
@@ -7034,11 +7024,6 @@
 															"pm.test(\"Validates the Properties\", function () {\r",
 															"    var response = pm.response.json();\r",
 															"     pm.expect(response.every(validateProperties)).to.be.true;\r",
-															"    if (response.length > 0)\r",
-															"    {\r",
-															"        var lastIndex = response.length - 1;\r",
-															"        pm.collectionVariables.set(\"ResponseCode\", response[lastIndex].ResponseCode);\r",
-															"    }\r",
 															"});"
 														],
 														"type": "text/javascript"
@@ -7744,8 +7729,6 @@
 													"\r",
 													"pm.test(\"Response contains LanguageId\", function () {\r",
 													"    var languages = pm.response.json();\r",
-													"    var lastIndex = languages.length - 1;\r",
-													"    pm.collectionVariables.set(\"LanguageId\", languages[lastIndex].Id);\r",
 													"});"
 												],
 												"type": "text/javascript"
@@ -8310,11 +8293,7 @@
 													"pm.test(\"Response contains Properties\", function () {\r",
 													"     var languages = pm.response.json();\r",
 													"     pm.expect(languages.every(validateProperties)).to.be.true;\r",
-													"    if (languages.length > 0)\r",
-													"    {\r",
-													"        var lastIndex = languages.length - 1;\r",
-													"        pm.collectionVariables.set(\"LanguageId\", languages[lastIndex].Id);\r",
-													"    }\r",
+													"\r",
 													"});\r",
 													""
 												],
@@ -8928,11 +8907,6 @@
 															"",
 															"pm.test(\"Response contains Fragments\", function () {",
 															"    var response = pm.response.json();",
-															"    if (response.length > 0)",
-															"    {",
-															"        var lastIndex = response.length - 1;",
-															"        pm.collectionVariables.set(\"FragmentName\", response[lastIndex]);",
-															"    }",
 															"});",
 															""
 														],
@@ -12041,11 +12015,7 @@
 									"pm.test(\"Response contains Properties\", function () {",
 									"    var surveys = pm.response.json();",
 									"     pm.expect(surveys.every(validateProperties)).to.be.true;",
-									"    if (surveys.length > 0)",
-									"    {",
-									"        var lastIndex = surveys.length - 1;",
-									"        pm.collectionVariables.set(\"SurveyId\", surveys[lastIndex].SurveyId);",
-									"    }",
+									"",
 									"});",
 									""
 								],
@@ -12109,11 +12079,7 @@
 									"pm.test(\"Response contains Properties\", function () {",
 									"    var response = pm.response.json();",
 									"     pm.expect(response.every(validateProperties)).to.be.true;",
-									"    if (response.length > 0)",
-									"    {",
-									"        var lastIndex = response.length - 1;",
-									"        pm.environment.set(\"SurveyId\", response[lastIndex].SurveyId);",
-									"    }",
+									"",
 									"});",
 									""
 								],
