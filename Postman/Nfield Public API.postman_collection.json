@@ -11869,7 +11869,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n  \"SurveyGroupId\": 1\r\n}",
+											"raw": "{\r\n  \"SurveyGroupId\": {{SurveyGroupId}}\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
