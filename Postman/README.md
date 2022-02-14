@@ -19,7 +19,7 @@ After installing the Postman app, you can import the `Nfield Public API` collect
 
 ### Setup Environment
 
-The environment Template file can be imported via the manage environment section in the upper right corner of Postman (you have to download them first from this GitHub folder). 
+The [Environment Template file](./Environment/DefaultTemplate.postman_environment.json) can be imported via the manage environment section in the upper right corner of Postman (you have to download them first from this GitHub folder). 
 
 To create your own environment, make sure to add a key-value pair for:
 
