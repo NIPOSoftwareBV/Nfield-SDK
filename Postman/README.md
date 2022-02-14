@@ -61,7 +61,7 @@ Used for request's parameters that aren't Ids, have valid default values, but co
 ### Internal Variables
 Used internally to define the defaults selected __(do not alter these variable)__.
 
-![Environment Variables](./media/files.jpg)
+![Environment Variables](./media/variables.jpg)
 *Figure 2. Colection variables*
 
 ---
