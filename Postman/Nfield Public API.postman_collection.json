@@ -1,7 +1,8 @@
 {
 	"info": {
-		"_postman_id": "689959e4-54e3-4461-adcb-08100cbdc8f3",
+		"_postman_id": "1e917b58-1663-43dd-8910-d5eebf555707",
 		"name": "Nfield Public API",
+		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -651,183 +652,183 @@
 					"name": "Capi (P)",
 					"item": [
 						{
-							"name": "Offices",
-							"item": [
-								{
-									"name": "Get Interviewer Offices",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"protocolProfileBehavior": {
-										"disableBodyPruning": true
-									},
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"",
-												"Interviewers",
-												"{{InterviewerId}}",
-												"Offices"
-											]
-										},
-										"description": "Returns fieldwork offices assigned to the specified interviewer."
-									},
-									"response": []
-								},
-								{
-									"name": "Create Interviewer Offices",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 201\", function () {\r",
-													"    pm.response.to.have.status(201);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"Created\");\r",
-													"});\r",
-													"\r",
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n  \"OfficeId\": \"{{OfficeId}}\"\r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"",
-												"Interviewers",
-												"{{InterviewerId}}",
-												"Offices"
-											]
-										},
-										"description": "Add fieldwork office to an interviewer. If fieldwork office already exist on interviewer it will be ignored."
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Interviewer Offices",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices/{{OfficeId}}",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"",
-												"Interviewers",
-												"{{InterviewerId}}",
-												"Offices",
-												"{{OfficeId}}"
-											]
-										},
-										"description": "Delete fieldwork office(s) from an interviewer. If fieldwork office doesn't exist on interviewer it will be ignored."
-									},
-									"response": []
-								}
-							],
-							"description": "Adding/Removing fieldwork offices to an interviewer"
-						},
-						{
 							"name": "Interviewer (P)",
 							"item": [
+								{
+									"name": "Offices (P)",
+									"item": [
+										{
+											"name": "Get Interviewer Offices (P)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"",
+														"Interviewers",
+														"{{InterviewerId}}",
+														"Offices"
+													]
+												},
+												"description": "Returns fieldwork offices assigned to the specified interviewer."
+											},
+											"response": []
+										},
+										{
+											"name": "Assign Office (P)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"Created\");\r",
+															"});\r",
+															"\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n  \"OfficeId\": \"{{OfficeId}}\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"",
+														"Interviewers",
+														"{{InterviewerId}}",
+														"Offices"
+													]
+												},
+												"description": "Add fieldwork office to an interviewer. If fieldwork office already exist on interviewer it will be ignored."
+											},
+											"response": []
+										},
+										{
+											"name": "Unassign Office (P)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices/{{OfficeId}}",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"",
+														"Interviewers",
+														"{{InterviewerId}}",
+														"Offices",
+														"{{OfficeId}}"
+													]
+												},
+												"description": "Delete fieldwork office(s) from an interviewer. If fieldwork office doesn't exist on interviewer it will be ignored."
+											},
+											"response": []
+										}
+									],
+									"description": "Adding/Removing fieldwork offices to an interviewer"
+								},
 								{
 									"name": "Get Interviewer (P)",
 									"event": [
@@ -1045,7 +1046,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"UserName\": \"Capi Postman2\",\r\n    \"FirstName\": \"Capi\",\r\n    \"LastName\": \"Tester\",\r\n    \"Password\": \"Password\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": \"+34666555444\",\r\n    \"IsSupervisor\": false\r\n}",
+											"raw": "{\r\n    \"UserName\": \"Capi Postman\",\r\n    \"FirstName\": \"Capi\",\r\n    \"LastName\": \"Tester\",\r\n    \"Password\": \"Password\",\r\n    \"EmailAddress\": \"capi@test.com\",\r\n    \"TelephoneNumber\": \"+34666555444\",\r\n    \"IsSupervisor\": false\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -3836,11 +3837,6 @@
 													"mode": "file",
 													"file": {
 														"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/InterviewerInstructions.pdf"
-													},
-													"options": {
-														"raw": {
-															"language": "json"
-														}
 													}
 												},
 												"url": {
@@ -5347,13 +5343,13 @@
 							]
 						},
 						{
-							"name": "Cati (T)",
+							"name": "Cati (ST)",
 							"item": [
 								{
-									"name": "Dial Mode (T)",
+									"name": "Dial Mode (ST)",
 									"item": [
 										{
-											"name": "Get Dial Mode (T)",
+											"name": "Get Dial Mode (ST)",
 											"event": [
 												{
 													"listen": "test",
@@ -5408,7 +5404,7 @@
 											"response": []
 										},
 										{
-											"name": "Update Dial Mode (T)",
+											"name": "Update Dial Mode (ST)",
 											"event": [
 												{
 													"listen": "test",
@@ -5465,13 +5461,13 @@
 							]
 						},
 						{
-							"name": "Online (W)",
+							"name": "Online (SW)",
 							"item": [
 								{
-									"name": "Email Settings (W)",
+									"name": "Email Settings (SW)",
 									"item": [
 										{
-											"name": "Get Email Settings (W)",
+											"name": "Get Email Settings (SW)",
 											"event": [
 												{
 													"listen": "test",
@@ -5551,7 +5547,7 @@
 											"response": []
 										},
 										{
-											"name": "Update Email Settings (W)",
+											"name": "Update Email Settings (SW)",
 											"event": [
 												{
 													"listen": "test",
@@ -5621,13 +5617,13 @@
 									"description": "Controller for managing survey email settings (Has survey type usage restrictions)"
 								},
 								{
-									"name": "Invitation (W)",
+									"name": "Invitation (SW)",
 									"item": [
 										{
-											"name": "Template (W)",
+											"name": "Template (SW)",
 											"item": [
 												{
-													"name": "Create Template (W)",
+													"name": "Create Template (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -5691,7 +5687,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Templates (W)",
+													"name": "Get Templates (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -5758,7 +5754,7 @@
 													"response": []
 												},
 												{
-													"name": "Update Template (W)",
+													"name": "Update Template (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -5824,7 +5820,7 @@
 													"response": []
 												},
 												{
-													"name": "Delete Template (W)",
+													"name": "Delete Template (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -5877,10 +5873,10 @@
 											"description": "A controller for managing invitation templates."
 										},
 										{
-											"name": "Respondent (W)",
+											"name": "Respondent (SW)",
 											"item": [
 												{
-													"name": "Invite (W)",
+													"name": "Invite (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -5933,7 +5929,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Invitation status (W)",
+													"name": "Get Invitation status (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -6008,7 +6004,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Invitation Batches status (W)",
+													"name": "Get Invitation Batches status (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -6089,7 +6085,7 @@
 													"response": []
 												},
 												{
-													"name": "Get Invitation batch status (W)",
+													"name": "Get Invitation batch status (SW)",
 													"event": [
 														{
 															"listen": "test",
@@ -6154,7 +6150,7 @@
 											"description": "A controller for inviting respondents and getting invitation statuses."
 										},
 										{
-											"name": "Upload Image (W)",
+											"name": "Upload Image (SW)",
 											"event": [
 												{
 													"listen": "test",
@@ -9190,7 +9186,7 @@
 									"response": []
 								},
 								{
-									"name": "Create Quota",
+									"name": "Set Quota",
 									"event": [
 										{
 											"listen": "test",
