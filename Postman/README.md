@@ -31,7 +31,7 @@ To create your own environment, make sure to add a key-value pair for:
 - DomainTestName: `SignIn` Domain name
 - DomainTestUserName: `SignIn` User name
 - DomainTestUserPassword: `SignIn` User password
-- SurveyTestName (Optional): Name of a known domain survey. Used to fill automatically the Survey Is collection variable, in order to target your survey requests with respect to a specific survey.
+- SurveyTestName (Optional): Name of a known domain survey. Used to fill automatically the SurveyId collection variable, in order to target your survey requests with respect to a specific survey.
 
 ![Environment Variables](./media/environment.jpg)
 *Figure 1. Postman environment*
@@ -57,7 +57,7 @@ Alternatively, you can use [AAD (Office 365) authentication](Aad/Aad-authenticat
 ### IDs Variables
 Usually the `Set, Create, Update` or `Add` tests will set the Id variables when you perform them to be able to use them in other requests. Moreover, you can define them manually obtaining the identifiers of the listing calls.
 ### Custom Variables
-Used for request's parameters that aren't Ids, have valid default values, but could be customized.
+Used for request's parameters that aren't Ids, have valid default values, but can be customized.
 ### Internal Variables
 Used internally to define the defaults selected __(do not alter these variable)__.
 

@@ -3,7 +3,7 @@
 We recently added support for AAD (Office 365) authentication to the Nfield API. To
 use this from within NIPO, you can follow these steps.
 
-If you would like to use both methods of authentication (Classic And ADD) in your local Postman, then you can create a separate workspace for each method.
+If you want to use both authentication methods (Classic And ADD) in your local Postman, then you can create a separate workspace for each method.
 ![Workspaces for each authentication method](Workspaces.png)
 *Figure 1. Postman with workspaces for each authentication method*
 
