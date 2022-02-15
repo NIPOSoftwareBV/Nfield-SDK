@@ -61,7 +61,7 @@ Used for request's parameters that aren't Ids, have valid default values, but ca
 ### Internal Variables
 Used internally to define the defaults selected __(do not alter these variable)__.
 
-![Environment Variables](./media/variables.jpg)
+![Collection Variables](./media/variables.jpg)
 *Figure 2. Colection variables*
 
 ---
@@ -70,5 +70,5 @@ Used internally to define the defaults selected __(do not alter these variable)_
 Some Calls need a binary body, in the `Postman/ExampleFiles` folder there are example files that can be used. 
 Postman collection stores the local file path so is necessary to re-select the file to set your local file path properly.
 
-![Environment Variables](./media/files.jpg)
+![Upload Files](./media/files.jpg)
 *Figure 3. Postman binary file example*
