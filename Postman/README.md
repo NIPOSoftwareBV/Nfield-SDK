@@ -31,7 +31,7 @@ To create your own environment, make sure to add a key-value pair for:
 - DomainTestName: `SignIn` Domain name
 - DomainTestUserName: `SignIn` User name
 - DomainTestUserPassword: `SignIn` User password
-- SurveyTestName (Optional): Name of a known domain survey. Used to fill automatically the SurveyId collection variable, in order to target your survey requests with respect to a specific survey.
+- SurveyTestName (Optional): Name of a known domain survey. Used to fill automatically the SurveyId collection variable, in order to target your survey requests respect to a specific survey.
 
 ![Environment Variables](./media/environment.jpg)
 *Figure 1. Postman environment*
