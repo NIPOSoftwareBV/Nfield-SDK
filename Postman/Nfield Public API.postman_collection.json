@@ -53,7 +53,7 @@
 								"{{ActivityId}}"
 							]
 						},
-						"description": "This method retrieve details of a specific background activity."
+						"description": "This method retrieves details of a specific background activity."
 					},
 					"response": []
 				},
@@ -147,7 +147,7 @@
 								"{{TaskId}}"
 							]
 						},
-						"description": "This method retrieve details of a specific background task."
+						"description": "This method retrieves details of a specific background task."
 					},
 					"response": []
 				}
@@ -389,7 +389,7 @@
 										"{{OfficeId}}"
 									]
 								},
-								"description": "Retrieve details of a specific fieldwork office."
+								"description": "retrieves details of a specific fieldwork office."
 							},
 							"response": []
 						},
@@ -618,7 +618,7 @@
 								"Offices"
 							]
 						},
-						"description": "Retrieve a list of Fieldwork Offices. This list can be filtered and sorted using standard OData syntax."
+						"description": "retrieves a list of Fieldwork Offices. This list can be filtered and sorted using standard OData syntax."
 					},
 					"response": []
 				}
@@ -905,7 +905,7 @@
 												"{{InterviewerId}}"
 											]
 										},
-										"description": "This method retrieve details of a specific interviewer using the interviewerId."
+										"description": "This method retrieves details of a specific interviewer using the interviewerId."
 									},
 									"response": []
 								},
@@ -986,7 +986,7 @@
 												"{{ClientInterviewerId}}"
 											]
 										},
-										"description": "This method retrieve the details of a specific interviewer using the clientInterviewerId."
+										"description": "This method retrieves the details of a specific interviewer using the clientInterviewerId."
 									},
 									"response": []
 								},
@@ -1347,7 +1347,7 @@
 												"Assignments"
 											]
 										},
-										"description": "This method retrieve all assignments with counts from an interviewer"
+										"description": "This method retrieves all assignments with counts from an interviewer"
 									},
 									"response": []
 								}
@@ -1434,7 +1434,7 @@
 										""
 									]
 								},
-								"description": "This method retrieve a list of interviewers. This list can be filtered and sorted using standard OData syntax."
+								"description": "This method retrieves a list of interviewers. This list can be filtered and sorted using standard OData syntax."
 							},
 							"response": []
 						},
@@ -1570,7 +1570,7 @@
 												"{{CatiInterviewerId}}"
 											]
 										},
-										"description": "(Cati) This method retrieve details of a specific interviewer using the interviewerId."
+										"description": "(Cati) This method retrieves details of a specific interviewer using the interviewerId."
 									},
 									"response": []
 								},
@@ -1815,7 +1815,7 @@
 										""
 									]
 								},
-								"description": "(Cati) This method retrieve a list of interviewers. This list can be filtered and sorted using standard OData syntax."
+								"description": "(Cati) This method retrieves a list of interviewers. This list can be filtered and sorted using standard OData syntax."
 							},
 							"response": []
 						}
@@ -3160,7 +3160,7 @@
 												"GeneralSettings"
 											]
 										},
-										"description": "Retrieve details of a specific survey general settings."
+										"description": "Retrieves details of a specific survey general settings."
 									},
 									"response": []
 								},
@@ -3912,7 +3912,7 @@
 											"response": []
 										}
 									],
-									"description": "The controller is used to retrieve and to add & assign interviewers to survey. Allowed for non SamplingPoints features (Has survey type usage restrictions)"
+									"description": "The controller is used to retrieves and to add & assign interviewers to survey. Allowed for non SamplingPoints features (Has survey type usage restrictions)"
 								},
 								{
 									"name": "Sampling Points",
@@ -4395,7 +4395,7 @@
 																				"{{AddressId}}"
 																			]
 																		},
-																		"description": "(Capi) Retrieve the details of a single address."
+																		"description": "(Capi) Retrieves the details of a single address."
 																	},
 																	"response": []
 																},
@@ -4676,7 +4676,7 @@
 																"{{SamplingPointId}}"
 															]
 														},
-														"description": "(Capi) This method retrieve details of a specific sampling point with fieldwork offices."
+														"description": "(Capi) This method retrieves details of a specific sampling point with fieldwork offices."
 													},
 													"response": []
 												},
@@ -6764,7 +6764,7 @@
 																"{{ResponseCode}}"
 															]
 														},
-														"description": "This method retrieve details of a specific response code for a specific survey."
+														"description": "This method retrieves details of a specific response code for a specific survey."
 													},
 													"response": []
 												},
@@ -7551,7 +7551,7 @@
 												"InterviewQuality"
 											]
 										},
-										"description": "This method retrieves the interview details list defined for the survey with the specified surveyId surveyId. This list can be filtered and sorted using standard OData syntax."
+										"description": "This method retrieves the interview details list defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax."
 									},
 									"response": []
 								},
@@ -9181,7 +9181,7 @@
 												"Quota"
 											]
 										},
-										"description": "Retrieve either CAPI quota definition or Online quota definition depending on the survey environment. The structure of quota definitions differs from one survey to other as the quotas created in new Manager are different from that created in classic manager. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's."
+										"description": "Retrieves either CAPI quota definition or Online quota definition depending on the survey environment. The structure of quota definitions differs from one survey to other as the quotas created in new Manager are different from that created in classic manager. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's."
 									},
 									"response": []
 								},
@@ -9979,7 +9979,7 @@
 										"{{SurveyId}}"
 									]
 								},
-								"description": "This method retrieve details of a specific survey."
+								"description": "This method retrieves details of a specific survey."
 							},
 							"response": []
 						},
@@ -11661,7 +11661,7 @@
 												"{{SurveyGroupId}}"
 											]
 										},
-										"description": "Retrieve a specific survey group"
+										"description": "Retrieves a specific survey group"
 									},
 									"response": []
 								},
