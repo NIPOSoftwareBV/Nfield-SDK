@@ -3149,15 +3149,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Retrieves details of a specific survey general settings."
@@ -3224,15 +3230,21 @@
 											"raw": "{\r\n    \"Description\": \"Description (Basic) Updated\",\r\n    \"Client\": \"ClientName(Basic) Updated\",\r\n    \"Name\": \"Basic\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Update a survey general settings."
@@ -3282,16 +3294,22 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings/Owner",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings",
 												"Owner"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Get the survey owner"
@@ -3354,16 +3372,22 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings/Owner",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings",
 												"Owner"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Update the survey owner"
@@ -3437,18 +3461,28 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments/QuotaTargets",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments/QuotaTargets",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"Interviewers",
-																"{{InterviewerId}}",
+																":InterviewerId",
 																"Assignments",
 																"QuotaTargets"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InterviewerId",
+																	"value": "{{InterviewerId}}"
+																}
 															]
 														},
 														"description": "(Capi) Gets a list of levelIds with Target, Successful and SurveySuccessful assigned to an interviewer"
@@ -3495,17 +3529,27 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"Interviewers",
-																"{{InterviewerId}}",
+																":InterviewerId",
 																"Assignments"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InterviewerId",
+																	"value": "{{InterviewerId}}"
+																}
 															]
 														},
 														"description": "(Capi) Assigns/Unassigns the interviewer to the survey.\n\nDepends on SurveyType (Basic, Eurobarometer or Eurobarometer advanced) & QuotaType (Join Targets, Workpackage ...)"
@@ -3552,15 +3596,21 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Assignment",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/Assignment",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"Assignment"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) Assigns/Unassigns the interviewer to the survey."
@@ -3615,15 +3665,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Interviewers"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Retrieves list of interviewers for the survey."
@@ -3671,15 +3727,21 @@
 													"raw": "{\r\n  \"InterviewerId\": \"{{InterviewerId}}\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Interviewers"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Adds interviewer to the survey."
@@ -3726,15 +3788,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Distribute ",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Distribute ",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Distribute "
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Interviewer workpackage distribution controller (Has survey type usage restrictions)\n(Capi) Distributes workpackage for survey."
@@ -3783,15 +3851,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewerInstructions"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method used to download interviewer instruction file."
@@ -3840,16 +3914,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions/{{InstructionsFileName}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions/:InstructionsFileName",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewerInstructions",
-														"{{InstructionsFileName}}"
+														":InstructionsFileName"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "InstructionsFileName",
+															"value": "{{InstructionsFileName}}"
+														}
 													]
 												},
 												"description": "(Capi) Method used to upload interviewer instruction file. The re-upload of a new pdf file for the same survey it will replace the existing one."
@@ -3896,15 +3980,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewerInstructions"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method used to delete the interviewer instruction file."
@@ -3971,18 +4061,32 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"QuotaTargets",
-																				"{{QuotaLevelId}}"
+																				":QuotaLevelId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "QuotaLevelId",
+																					"value": "{{QuotaLevelId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) This method retrieves detail of quota level targets based on survey and sampling point."
@@ -4044,19 +4148,32 @@
 																			"raw": "{\r\n  \"Target\": 100\r\n}"
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"QuotaTargets",
-																				"{{QuotaLevelId}}"
-																			]
+																				":QuotaLevelId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "QuotaLevelId",
+																					"value": "{{QuotaLevelId}}"
+																				}
 																		},
 																		"description": "(Capi) Update an sampling point's quota level with the specified fields."
 																	},
@@ -4113,17 +4230,27 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		"SamplingPointId",
 																		"QuotaTargets"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) This method retrieves a list of quota level targets based on survey and sampling point."
@@ -4201,18 +4328,32 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments/{{InterviewerId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Assignments",
-																				"{{InterviewerId}}"
+																				":InterviewerId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "InterviewerId",
+																					"value": "{{InterviewerId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Assign an interviewer to a sampling point."
@@ -4257,18 +4398,32 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments/{{InterviewerId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Assignments",
-																				"{{InterviewerId}}"
+																				":InterviewerId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "InterviewerId",
+																					"value": "{{InterviewerId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Unassign an interviewer from a sampling point."
@@ -4325,14 +4480,14 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Assignments",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
 																		"{{SamplingPointId}}",
 																		"Assignments"
@@ -4382,13 +4537,13 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
 																			"host": [
 																				"{{origin}}v1"
 																			],
 																			"path": [
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
 																				"{{SamplingPointId}}",
 																				"Addresses",
@@ -4448,14 +4603,14 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
 																				"{{SamplingPointId}}",
 																				"Addresses"
@@ -4505,13 +4660,13 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
 																			"host": [
 																				"{{origin}}v1"
 																			],
 																			"path": [
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
 																				"{{SamplingPointId}}",
 																				"Addresses",
@@ -4559,14 +4714,14 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
 																		"{{SamplingPointId}}",
 																		"Addresses"
@@ -4607,14 +4762,14 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/Count",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses/Count",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
 																		"{{SamplingPointId}}",
 																		"Addresses",
@@ -4664,14 +4819,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints",
 																"{{SamplingPointId}}"
 															]
@@ -4729,14 +4884,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints"
 															]
 														},
@@ -4797,14 +4952,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints",
 																"{{SamplingPointId}}"
 															]
@@ -4853,13 +5008,13 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}",
 															"host": [
 																"{{origin}}v1"
 															],
 															"path": [
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints",
 																"{{SamplingPointId}}"
 															]
@@ -4883,14 +5038,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/{{SamplingPointId}}/Image",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoint",
 																"{{SamplingPointId}}",
 																"Image"
@@ -4943,14 +5098,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/{{SamplingPointId}}/Image/{{FileName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoint",
 																"{{SamplingPointId}}",
 																"Image",
@@ -4987,14 +5142,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image ",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/{{SamplingPointId}}/Image ",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoint",
 																"{{SamplingPointId}}",
 																"Image "
@@ -5061,14 +5216,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPointsAssignments",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPointsAssignments"
 															]
 														},
@@ -5113,14 +5268,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPointsAssignments",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPointsAssignments"
 															]
 														},
@@ -5170,14 +5325,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingMethod"
 													]
 												},
@@ -5228,14 +5383,14 @@
 													"raw": "{\r\n  \"SamplingMethod\": \"FreeIntercept\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingMethod"
 													]
 												},
@@ -5276,14 +5431,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingPoints"
 													]
 												},
@@ -5321,14 +5476,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/Count ",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Count ",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingPoints",
 														"Count "
 													]
@@ -5388,14 +5543,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/DialMode",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"DialMode"
 													]
 												},
@@ -5440,14 +5595,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/DialMode",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"DialMode"
 													]
 												},
@@ -5531,14 +5686,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/EmailSettings",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"EmailSettings"
 													]
 												},
@@ -5598,14 +5753,14 @@
 													"raw": "{\r\n  \"Id\": \"{{EmailSettingsId}}\",\r\n  \"FromAddress\": \"updated@yellow.niposoftware-dev.com\",\r\n  \"FromName\": \"updatedstring 1\",\r\n  \"ReplyToAddress\": \"updatedReplyTo@yellow.niposoftware-dev.com\",\r\n  \"PostalAddress\": \"updatedstring3\",\r\n  \"EmailColumn\": null\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/EmailSettings",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"EmailSettings"
 													]
 												},
@@ -5671,14 +5826,14 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"name\",\r\n  \"Subject\": \"subject\",\r\n  \"Body\": \"{unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates"
 															]
 														},
@@ -5737,14 +5892,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates",
 																""
 															]
@@ -5803,14 +5958,14 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"other name\",\r\n  \"Subject\": \"other subject\",\r\n  \"Body\": \"other body with {unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/{{InvitationTemplateId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/{{InvitationTemplateId}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates",
 																"{{InvitationTemplateId}}"
 															]
@@ -5853,14 +6008,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/{{InvitationTemplateId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/{{InvitationTemplateId}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates",
 																"{{InvitationTemplateId}}"
 															]
@@ -5913,14 +6068,14 @@
 															"raw": "{\r\n  \"Name\": \"name\",\r\n  \"EmailColumnName\": \"mail\",\r\n  \"ScheduledFor\": \"2050-06-22T12:02:00\",\r\n  \"InvitationTemplateId\": \"{{InvitationTemplateId}}\",\r\n  \"Filters\": \r\n  [\r\n      {\r\n           \"Name\": \"mail\",\r\n           \"Op\": \"eq\",\r\n           \"Value\": \"mail@mail.com\"\r\n      }\r\n  ]\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InviteRespondents"
 															]
 														},
@@ -6068,14 +6223,14 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents/SurveyBatchesStatus",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/SurveyBatchesStatus",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InviteRespondents",
 																"SurveyBatchesStatus"
 															]
@@ -6129,14 +6284,14 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents/InvitationStatus/{{BatchName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/{{BatchName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InviteRespondents",
 																"InvitationStatus",
 																"{{BatchName}}"
@@ -6199,14 +6354,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationImages/{{FileName}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationImages/{{FileName}}",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InvitationImages",
 														"{{FileName}}"
 													]
@@ -6264,14 +6419,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Package?type=1",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Package?type=1",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Package"
 													],
 													"query": [
@@ -6334,14 +6489,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"PublicIds"
 													]
 												},
@@ -6387,14 +6542,14 @@
 													"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://test.url/zzzzzzzzzzz\"\r\n  }\r\n]"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"PublicIds"
 													]
 												},
@@ -6452,14 +6607,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Publish"
 													]
 												},
@@ -6505,14 +6660,14 @@
 													"raw": "{\r\n  \"PackageType\": 1,\r\n  \"ForceUpgrade\": 0\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Publish"
 													]
 												},
@@ -6562,14 +6717,14 @@
 													"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish/Start",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish/Start",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Publish",
 														"Start"
 													]
@@ -6626,14 +6781,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Relocations",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Relocations"
 													]
 												},
@@ -6683,14 +6838,14 @@
 													"raw": "{\r\n  \"Reason\": \"{{RelocationReasonId}}\",\r\n  \"Url\": \"http://test.url\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Relocations",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Relocations"
 													]
 												},
@@ -6752,14 +6907,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/{{ResponseCode}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes",
 																"{{ResponseCode}}"
 															]
@@ -6828,14 +6983,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes"
 															]
 														},
@@ -6902,14 +7057,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/{{ResponseCode}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes",
 																"{{ResponseCode}}"
 															]
@@ -6958,14 +7113,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/{{ResponseCode}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes",
 																"{{ResponseCode}}"
 															]
@@ -7019,14 +7174,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"ResponseCodes"
 													]
 												},
@@ -7071,14 +7226,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Status",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Status",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Status"
 											]
@@ -7142,14 +7297,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Counts",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Counts",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Counts"
 											]
@@ -7192,14 +7347,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Start",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Start",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Start"
 											]
@@ -7246,14 +7401,14 @@
 											"raw": "{\r\n  \"TerminateRunningInterviews\": true\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Stop",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Stop",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Stop"
 											]
@@ -7327,14 +7482,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality/{{InterviewId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality/{{InterviewId}}",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewQuality",
 														"{{InterviewId}}"
 													]
@@ -7398,14 +7553,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewQuality"
 													]
 												},
@@ -7461,14 +7616,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviews/{{InterviewId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviews/{{InterviewId}}",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Interviews",
 														"{{InterviewId}}"
 													]
@@ -7540,14 +7695,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"InterviewQuality"
 											]
 										},
@@ -7601,14 +7756,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"InterviewInteractionsSettings"
 											]
 										},
@@ -7671,14 +7826,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"InterviewInteractionsSettings"
 											]
 										},
@@ -7724,14 +7879,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
 												""
 											]
@@ -7775,14 +7930,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/{{LanguageId}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/{{LanguageId}}",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
 												"{{LanguageId}}"
 											]
@@ -7841,14 +7996,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
 												""
 											]
@@ -7897,14 +8052,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/{{LanguageId}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/{{LanguageId}}",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
 												"{{LanguageId}}"
 											]
@@ -7962,14 +8117,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages"
 											]
 										},
@@ -8062,14 +8217,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"LanguageTranslations",
 														""
 													]
@@ -8155,14 +8310,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/{{LanguageId}}",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"LanguageTranslations",
 														"{{LanguageId}}"
 													]
@@ -8210,14 +8365,14 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/{{LanguageId}}",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"LanguageTranslations",
 														"{{LanguageId}}"
 													]
@@ -8290,14 +8445,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"LanguageTranslations",
 												""
 											]
@@ -8354,14 +8509,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/{{FileName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"MediaFiles",
 																"{{FileName}}"
 															]
@@ -8413,14 +8568,14 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/{{FileName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"MediaFiles",
 																"{{FileName}}"
 															]
@@ -8463,14 +8618,14 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/{{FileName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"MediaFiles",
 																"{{FileName}}"
 															]
@@ -8518,14 +8673,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"MediaFiles"
 													]
 												},
@@ -8565,14 +8720,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/Count",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/Count",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"MediaFiles",
 														"Count"
 													]
@@ -8624,14 +8779,14 @@
 													"raw": "{\r\n  \"Script\": \"*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Script"
 													]
 												},
@@ -8673,14 +8828,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Script"
 													]
 												},
@@ -8722,14 +8877,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script/{{eTag}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script/{{eTag}}",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Script",
 														"{{eTag}}"
 													]
@@ -8780,14 +8935,14 @@
 															"raw": "*LIST destination\r\n1:Amsterdam\r\n2:Buenos Aires\r\n3:Madrid\r\n4:Hong Kong"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/{{FragmentName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ScriptFragments",
 																"{{FragmentName}}"
 															]
@@ -8811,14 +8966,14 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/{{FragmentName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ScriptFragments",
 																"{{FragmentName}}"
 															]
@@ -8846,14 +9001,14 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/{{FragmentName}}",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ScriptFragments",
 																"{{FragmentName}}"
 															]
@@ -8901,14 +9056,14 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"ScriptFragments"
 													]
 												},
@@ -8993,14 +9148,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Counts",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Counts",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Counts"
 											]
 										},
@@ -9049,14 +9204,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Live",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Live",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Performance",
 												"Metrics",
 												"Live"
@@ -9107,14 +9262,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Test",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Test",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Performance",
 												"Metrics",
 												"Test"
@@ -9170,14 +9325,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Quota",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Quota"
 											]
 										},
@@ -9228,14 +9383,14 @@
 											"raw": "{\r\n    \"Target\": 10000,\r\n    \"VariableDefinitions\": [\r\n        {\r\n            \"Id\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"OdinVariableName\": \"age\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"OdinVariableName\": \"gender\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\"\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"FrameVariables\": [\r\n        {\r\n            \"Id\": \"367de803-5e86-4281-f612-186640befb7d\",\r\n            \"DefinitionId\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"eb2bf2b9-ef2e-41b4-4205-721fe8205002\",\r\n                    \"DefinitionId\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"98a65741-b7e0-4da0-72ed-fd2eb2f6b705\",\r\n            \"DefinitionId\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"07300f7e-f2ad-450c-ff98-8fa603dd4d51\",\r\n                    \"DefinitionId\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Quota",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Quota"
 											]
 										},
@@ -9297,14 +9452,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaVersions"
 											]
 										},
@@ -9351,14 +9506,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaTargets"
 											]
 										},
@@ -9415,14 +9570,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions/{{ETag}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions/{{ETag}}",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaVersions",
 												"{{ETag}}"
 											]
@@ -9470,14 +9625,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets/{{ETag}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets/{{ETag}}",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaTargets",
 												"{{ETag}}"
 											]
@@ -9524,14 +9679,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample"
 											]
 										},
@@ -9594,14 +9749,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample"
 											]
 										},
@@ -9643,14 +9798,14 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample"
 											]
 										},
@@ -9688,14 +9843,14 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Block",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Block",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Block"
 											]
@@ -9735,14 +9890,14 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Reset",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Reset",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Reset"
 											]
@@ -9781,14 +9936,14 @@
 											"raw": "{\r\n  \"Filters\": [\r\n    {\r\n        \"Name\": \"TelephoneNumber\",\r\n        \"Op\": \"Eq\",\r\n        \"Value\": \"empty\"\r\n    }\r\n  ],\r\n  \"Columns\": [\r\n    \"TelephoneNumber\"\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Clear",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Clear",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Clear"
 											]
@@ -9827,14 +9982,14 @@
 											"raw": "{\r\n  \"SampleRecordId\": 1,\r\n  \"ColumnUpdates\": [\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    },\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    }\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Update",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Update",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Update"
 											]
@@ -9900,14 +10055,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SampleData/{{SampleDataFileName}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleData/{{SampleDataFileName}}",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"SampleData",
 												"{{SampleDataFileName}}"
 											]
@@ -9969,7 +10124,7 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId",
 									"host": [
 										"{{origin}}"
 									],
@@ -10102,14 +10257,14 @@
 									"raw": "{\r\n  \"SurveyId\": \"{{SurveyId}}\",\r\n  \"InterviewId\": {{InterviewId}},\r\n  \"DownloadTestInterviewData\": true,\r\n  \"DownloadSuccessfulLiveInterviewData\": true,\r\n  \"DownloadRejectedLiveInterviewData\": true,\r\n  \"DownloadNotSuccessfulLiveInterviewData\": true,\r\n  \"DownloadSuspendedLiveInterviewData\": true,\r\n  \"DownloadParaData\": true,\r\n  \"DownloadCapturedMedia\": true,\r\n  \"DownloadClosedAnswerData\": true,\r\n  \"DownloadOpenAnswerData\": true,\r\n  \"DownloadFileName\": \"DownloadedFileName\",\r\n  \"StartDate\": \"2015-11-05T15:16:41Z\",\r\n  \"EndDate\": \"2015-11-05T15:16:41Z\"\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Data",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId/Data",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}",
+										":SurveyId",
 										"Data"
 									]
 								},
@@ -10156,14 +10311,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/RespondentDataEncrypt",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId/RespondentDataEncrypt",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}",
+										":SurveyId",
 										"RespondentDataEncrypt"
 									]
 								},
@@ -10239,7 +10394,7 @@
 									"raw": "{\r\n  \"Description\": \"This survey is updated via Postman\",\r\n  \"ClientName\": \"White\",\r\n  \"SurveyName\": \"Postman Survey updated\"\r\n }"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId",
 									"host": [
 										"{{origin}}"
 									],
@@ -10287,7 +10442,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId",
 									"host": [
 										"{{origin}}"
 									],
@@ -11877,14 +12032,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SurveyGroup",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/SurveyGroup",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"SurveyGroup"
 											]
 										},
