@@ -4174,6 +4174,7 @@
 																					"key": "QuotaLevelId",
 																					"value": "{{QuotaLevelId}}"
 																				}
+																			]
 																		},
 																		"description": "(Capi) Update an sampling point's quota level with the specified fields."
 																	},
