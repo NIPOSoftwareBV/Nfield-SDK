@@ -5307,6 +5307,16 @@
 																"SamplingPoint",
 																":SamplingPointId",
 																"Image"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) Method used to download sampling point image."
@@ -8509,7 +8519,7 @@
 												"Surveys",
 												":SurveyId",
 												"Languages",
-												"{{LanguageId}}"
+												":LanguageId"
 											],
 											"variable": [
 												{
@@ -8647,7 +8657,7 @@
 												"Surveys",
 												":SurveyId",
 												"Languages",
-												"{{LanguageId}}"
+												":LanguageId"
 											],
 											"variable": [
 												{
@@ -8927,7 +8937,7 @@
 														"Surveys",
 														":SurveyId",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
 													],
 													"variable": [
 														{
@@ -8992,7 +9002,7 @@
 														"Surveys",
 														":SurveyId",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
 													],
 													"variable": [
 														{
@@ -11637,7 +11647,7 @@
 													"path": [
 														"v1",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
 													],
 													"variable": [
 														{
@@ -11700,7 +11710,7 @@
 													"path": [
 														"v1",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
 													],
 													"variable": [
 														{
