@@ -851,7 +851,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Offices/{{OfficeId}}",
+													"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Offices/:OfficeId",
 													"host": [
 														"{{origin}}"
 													],
@@ -860,12 +860,16 @@
 														"Interviewers",
 														":InterviewerId",
 														"Offices",
-														"{{OfficeId}}"
+														":OfficeId"
 													],
 													"variable": [
 														{
 															"key": "InterviewerId",
 															"value": "{{InterviewerId}}"
+														},
+														{
+															"key": "OfficeId",
+															"value": "{{OfficeId}}"
 														}
 													]
 												},
@@ -1028,7 +1032,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/GetByClientId/{{ClientInterviewerId}}",
+											"raw": "{{origin}}/v1/Interviewers/GetByClientId/:ClientInterviewerId",
 											"host": [
 												"{{origin}}"
 											],
@@ -1036,7 +1040,13 @@
 												"v1",
 												"Interviewers",
 												"GetByClientId",
-												"{{ClientInterviewerId}}"
+												":ClientInterviewerId"
+											],
+											"variable": [
+												{
+													"key": "ClientInterviewerId",
+													"value": "{{ClientInterviewerId}}"
+												}
 											]
 										},
 										"description": "This method retrieves the details of a specific interviewer using the clientInterviewerId."
@@ -2930,14 +2940,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ExternalApis",
-												"{{ApiName}}"
+												":ApiName"
+											],
+											"variable": [
+												{
+													"key": "ApiName",
+													"value": "{{ApiName}}"
+												}
 											]
 										},
 										"description": "Get api configuration by name"
@@ -3132,14 +3148,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ExternalApis",
-												"{{ApiName}}"
+												":ApiName"
+											],
+											"variable": [
+												{
+													"key": "ApiName",
+													"value": "{{ApiName}}"
+												}
 											]
 										},
 										"description": "Delete external api configuration"
@@ -6648,7 +6670,7 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/{{BatchName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/:BatchName",
 															"host": [
 																"{{origin}}"
 															],
@@ -6658,12 +6680,16 @@
 																":SurveyId",
 																"InviteRespondents",
 																"InvitationStatus",
-																"{{BatchName}}"
+																":BatchName"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "BatchName",
+																	"value": "{{BatchName}}"
 																}
 															]
 														},
@@ -6724,7 +6750,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationImages/{{FileName}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationImages/:FileName",
 													"host": [
 														"{{origin}}"
 													],
@@ -6733,12 +6759,16 @@
 														"Surveys",
 														":SurveyId",
 														"InvitationImages",
-														"{{FileName}}"
+														":FileName"
 													],
 													"variable": [
 														{
 															"key": "SurveyId",
 															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "FileName",
+															"value": "{{FileName}}"
 														}
 													]
 												},
@@ -7972,7 +8002,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality/{{InterviewId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality/:InterviewId",
 													"host": [
 														"{{origin}}"
 													],
@@ -7981,12 +8011,16 @@
 														"Surveys",
 														":SurveyId",
 														"InterviewQuality",
-														"{{InterviewId}}"
+														":InterviewId"
 													],
 													"variable": [
 														{
 															"key": "SurveyId",
 															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "InterviewId",
+															"value": "{{InterviewId}}"
 														}
 													]
 												},
@@ -8118,7 +8152,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviews/{{InterviewId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviews/:InterviewId",
 													"host": [
 														"{{origin}}"
 													],
@@ -8127,12 +8161,16 @@
 														"Surveys",
 														":SurveyId",
 														"Interviews",
-														"{{InterviewId}}"
+														":InterviewId"
 													],
 													"variable": [
 														{
 															"key": "SurveyId",
 															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "InterviewId",
+															"value": "{{InterviewId}}"
 														}
 													]
 												},
@@ -9105,7 +9143,7 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
 																"{{origin}}"
 															],
@@ -9114,12 +9152,16 @@
 																"Surveys",
 																":SurveyId",
 																"MediaFiles",
-																"{{FileName}}"
+																":FileName"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
 																}
 															]
 														},
@@ -9170,7 +9212,7 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
 																"{{origin}}"
 															],
@@ -9179,12 +9221,16 @@
 																"Surveys",
 																":SurveyId",
 																"MediaFiles",
-																"{{FileName}}"
+																":FileName"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
 																}
 															]
 														},
@@ -9226,7 +9272,7 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
 																"{{origin}}"
 															],
@@ -9235,12 +9281,16 @@
 																"Surveys",
 																":SurveyId",
 																"MediaFiles",
-																"{{FileName}}"
+																":FileName"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
 																}
 															]
 														},
@@ -9515,7 +9565,7 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script/{{eTag}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script/:eTag",
 													"host": [
 														"{{origin}}"
 													],
@@ -9524,12 +9574,16 @@
 														"Surveys",
 														":SurveyId",
 														"Script",
-														"{{eTag}}"
+														":eTag"
 													],
 													"variable": [
 														{
 															"key": "SurveyId",
 															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "eTag",
+															"value": "{{eTag}}"
 														}
 													]
 												},
@@ -9579,7 +9633,7 @@
 															"raw": "*LIST destination\r\n1:Amsterdam\r\n2:Buenos Aires\r\n3:Madrid\r\n4:Hong Kong"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
 																"{{origin}}"
 															],
@@ -9588,12 +9642,16 @@
 																"Surveys",
 																":SurveyId",
 																"ScriptFragments",
-																"{{FragmentName}}"
+																":FragmentName"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FragmentName",
+																	"value": "{{FragmentName}}"
 																}
 															]
 														},
@@ -9616,7 +9674,7 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
 																"{{origin}}"
 															],
@@ -9625,12 +9683,16 @@
 																"Surveys",
 																":SurveyId",
 																"ScriptFragments",
-																"{{FragmentName}}"
+																":FragmentName"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FragmentName",
+																	"value": "{{FragmentName}}"
 																}
 															]
 														},
@@ -9657,7 +9719,7 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
 																"{{origin}}"
 															],
@@ -9666,12 +9728,16 @@
 																"Surveys",
 																":SurveyId",
 																"ScriptFragments",
-																"{{FragmentName}}"
+																":FragmentName"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FragmentName",
+																	"value": "{{FragmentName}}"
 																}
 															]
 														},
@@ -10280,7 +10346,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions/{{ETag}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions/:eTag",
 											"host": [
 												"{{origin}}"
 											],
@@ -10289,12 +10355,16 @@
 												"Surveys",
 												":SurveyId",
 												"QuotaVersions",
-												"{{ETag}}"
+												":eTag"
 											],
 											"variable": [
 												{
 													"key": "SurveyId",
 													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "eTag",
+													"value": "{{eTag}}"
 												}
 											]
 										},
@@ -10341,7 +10411,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets/{{ETag}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets/:eTag",
 											"host": [
 												"{{origin}}"
 											],
@@ -10350,12 +10420,16 @@
 												"Surveys",
 												":SurveyId",
 												"QuotaTargets",
-												"{{ETag}}"
+												":eTag"
 											],
 											"variable": [
 												{
 													"key": "SurveyId",
 													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "eTag",
+													"value": "{{eTag}}"
 												}
 											]
 										},
@@ -10819,7 +10893,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleData/{{SampleDataFileName}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleData/:SampleDataFileName",
 											"host": [
 												"{{origin}}"
 											],
@@ -10828,12 +10902,16 @@
 												"Surveys",
 												":SurveyId",
 												"SampleData",
-												"{{SampleDataFileName}}"
+												":SampleDataFileName"
 											],
 											"variable": [
 												{
 													"key": "SurveyId",
 													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "SampleDataFileName",
+													"value": "{{SampleDataFileName}}"
 												}
 											]
 										},
@@ -11903,14 +11981,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/{{ResponseCodeId}}",
+											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ResponseCodes",
-												"{{ResponseCodeId}}"
+												":ResponseCodeId"
+											],
+											"variable": [
+												{
+													"key": "ResponseCodeId",
+													"value": "{{ResponseCodeId}}"
+												}
 											]
 										},
 										"description": "Patch the domain's response codes."
@@ -11957,14 +12041,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/{{ResponseCodeId}}",
+											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ResponseCodes",
-												"{{ResponseCodeId}}"
+												":ResponseCodeId"
+											],
+											"variable": [
+												{
+													"key": "ResponseCodeId",
+													"value": "{{ResponseCodeId}}"
+												}
 											]
 										},
 										"description": "Delete the domain's response code by id."
@@ -12228,14 +12318,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/DefaultTexts/{{TranslationKey}}",
+											"raw": "{{origin}}/v1/DefaultTexts/:TranslationKey",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"DefaultTexts",
-												"{{TranslationKey}}"
+												":TranslationKey"
+											],
+											"variable": [
+												{
+													"key": "TranslationKey",
+													"value": "{{TranslationKey}}"
+												}
 											]
 										},
 										"description": "Gets the specified default text for the domain."
@@ -12303,15 +12399,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/LocalAssignments",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/LocalAssignments",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"LocalAssignments"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Get Survey Group local assignments"
@@ -12363,15 +12465,21 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/AssignLocal",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignLocal",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"AssignLocal"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Assign native user to survey group"
@@ -12411,15 +12519,21 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/UnassignLocal",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignLocal",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"UnassignLocal"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Unassign native user from survey group"
@@ -12461,15 +12575,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/DirectoryAssignments",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/DirectoryAssignments",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"DirectoryAssignments"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Get Survey Group directory assignments"
@@ -12506,15 +12626,21 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\",\r\n  \"ObjectType\": 0\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/AssignDirectory",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignDirectory",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"AssignDirectory"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Assign directory user to survey group"
@@ -12551,15 +12677,21 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/UnassignDirectory",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignDirectory",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"UnassignDirectory"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Unassign directory user from survey group"
@@ -12618,14 +12750,20 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}"
+												":SurveyGroupId"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Retrieves a specific survey group"
@@ -12739,14 +12877,20 @@
 											"raw": "{\r\n  \"Name\": \"PostmanGroupNameUpdated\",\r\n  \"Description\": \"sample string 2\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}"
+												":SurveyGroupId"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Update a survey groupUpdate a survey with the specified fields."
@@ -12787,14 +12931,20 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}"
+												":SurveyGroupId"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Delete a survey group Survey groups have to be 'empty' before they can be deleted. An empty survey group has no surveys associated to it.This method deletes a specified survey."
