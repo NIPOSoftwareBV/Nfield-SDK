@@ -50,7 +50,7 @@
 							"path": [
 								"v1",
 								"BackgroundActivities",
-								"ActivityId"
+								":ActivityId"
 							],
 							"variable": [
 								{
@@ -13350,8 +13350,7 @@
 		},
 		{
 			"key": "TaskId",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "OfficeId",
@@ -13375,8 +13374,7 @@
 		},
 		{
 			"key": "ThemeTestName",
-			"value": "QuestionTypesTheme",
-			"type": "default"
+			"value": "QuestionTypesTheme"			
 		},
 		{
 			"key": "ActivityId",
@@ -13396,8 +13394,7 @@
 		},
 		{
 			"key": "InstructionsFileName",
-			"value": "Instructions",
-			"type": "default"
+			"value": "Instructions"			
 		},
 		{
 			"key": "InterviewId",
@@ -13405,13 +13402,11 @@
 		},
 		{
 			"key": "FileName",
-			"value": "MediaFileName",
-			"type": "default"
+			"value": "MediaFileName"			
 		},
 		{
 			"key": "ETag",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "SamplingPointId",
@@ -13427,8 +13422,7 @@
 		},
 		{
 			"key": "FragmentName",
-			"value": "SurveyScriptFragment",
-			"type": "default"
+			"value": "SurveyScriptFragment"			
 		},
 		{
 			"key": "IdentityId",
@@ -13444,18 +13438,15 @@
 		},
 		{
 			"key": "UserDirectoryTenantId",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "UserDirectoryObjectId",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "InternalVariable",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		}
 	]
 }
