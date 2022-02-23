@@ -2616,14 +2616,20 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
+									"raw": "{{origin}}/v1/Themes/:ThemeId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Themes",
-										"{{ThemeId}}"
+										":ThemeId"
+									],
+									"variable": [
+										{
+											"key": "ThemeId",
+											"value": "{{ThemeId}}"
+										}
 									]
 								},
 								"description": "Gets the Download Url for the theme file. Using the Theme Id to find it."
@@ -2711,14 +2717,20 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
+									"raw": "{{origin}}/v1/Themes/:ThemeId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Themes",
-										"{{ThemeId}}"
+										":ThemeId"
+									],
+									"variable": [
+										{
+											"key": "ThemeId",
+											"value": "{{ThemeId}}"
+										}
 									]
 								},
 								"description": "Deletes the theme's files using the ThemeId."
@@ -7319,7 +7331,7 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
 																"{{origin}}"
 															],
@@ -7328,12 +7340,16 @@
 																"Surveys",
 																":SurveyId",
 																"ResponseCodes",
-																"{{ResponseCode}}"
+																":ResponseCode"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "ResponseCode",
+																	"value": "{{ResponseCode}}"
 																}
 															]
 														},
@@ -7481,7 +7497,7 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
 																"{{origin}}"
 															],
@@ -7490,12 +7506,16 @@
 																"Surveys",
 																":SurveyId",
 																"ResponseCodes",
-																"{{ResponseCode}}"
+																":ResponseCode"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "ResponseCode",
+																	"value": "{{ResponseCode}}"
 																}
 															]
 														},
@@ -7543,7 +7563,7 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
 																"{{origin}}"
 															],
@@ -7552,12 +7572,16 @@
 																"Surveys",
 																":SurveyId",
 																"ResponseCodes",
-																"{{ResponseCode}}"
+																":ResponseCode"
 															],
 															"variable": [
 																{
 																	"key": "SurveyId",
 																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "ResponseCode",
+																	"value": "{{ResponseCode}}"
 																}
 															]
 														},
@@ -8438,7 +8462,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/{{LanguageId}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/:LanguageId",
 											"host": [
 												"{{origin}}"
 											],
@@ -8453,6 +8477,10 @@
 												{
 													"key": "SurveyId",
 													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "LanguageId",
+													"value": "{{LanguageId}}"
 												}
 											]
 										},
@@ -8572,7 +8600,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/{{LanguageId}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/:LanguageId",
 											"host": [
 												"{{origin}}"
 											],
@@ -8587,6 +8615,10 @@
 												{
 													"key": "SurveyId",
 													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "LanguageId",
+													"value": "{{LanguageId}}"
 												}
 											]
 										},
@@ -8848,7 +8880,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
@@ -8863,6 +8895,10 @@
 														{
 															"key": "SurveyId",
 															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
 														}
 													]
 												}
@@ -8909,7 +8945,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
@@ -8924,6 +8960,10 @@
 														{
 															"key": "SurveyId",
 															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
 														}
 													]
 												}
@@ -11512,7 +11552,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
@@ -11520,6 +11560,12 @@
 														"v1",
 														"LanguageTranslations",
 														"{{LanguageId}}"
+													],
+													"variable": [
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
 													]
 												}
 											},
@@ -11569,7 +11615,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
@@ -11577,6 +11623,12 @@
 														"v1",
 														"LanguageTranslations",
 														"{{LanguageId}}"
+													],
+													"variable": [
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
 													]
 												}
 											},
