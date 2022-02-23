@@ -4481,7 +4481,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Assignments",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments",
 																	"host": [
 																		"{{origin}}"
 																	],
@@ -4490,8 +4490,18 @@
 																		"Surveys",
 																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		":SamplingPointId",
 																		"Assignments"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) Get the interviewers assigned to a sampling point."
@@ -4538,7 +4548,7 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
 																				"{{origin}}v1"
 																			],
@@ -4546,9 +4556,23 @@
 																				"Surveys",
 																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Addresses",
-																				"{{AddressId}}"
+																				":AddressId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "AddressId",
+																					"value": "{{AddressId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Retrieves the details of a single address."
@@ -4604,7 +4628,7 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																			"host": [
 																				"{{origin}}"
 																			],
@@ -4613,8 +4637,18 @@
 																				"Surveys",
 																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Addresses"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Add a new address to the specified sampling point."
@@ -4661,7 +4695,7 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
 																				"{{origin}}v1"
 																			],
@@ -4669,9 +4703,23 @@
 																				"Surveys",
 																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				"SamplingPointId",
 																				"Addresses",
-																				"{{AddressId}}"
+																				"AddressId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "AddressId",
+																					"value": "{{AddressId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) This method deletes a specific address."
@@ -4715,7 +4763,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																	"host": [
 																		"{{origin}}"
 																	],
@@ -4724,8 +4772,18 @@
 																		"Surveys",
 																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		":SamplingPointId",
 																		"Addresses"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) This method retrieves a list of Addresses. This list can be filtered and sorted using standard OData syntax."
@@ -4763,7 +4821,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}/Addresses/Count",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/Count",
 																	"host": [
 																		"{{origin}}"
 																	],
@@ -4772,9 +4830,19 @@
 																		"Surveys",
 																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		":SamplingPointId",
 																		"Addresses",
 																		"Count"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) Returns the number of addresses at the sampling point."
@@ -4820,7 +4888,7 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
 																"{{origin}}"
 															],
@@ -4829,7 +4897,17 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPoints",
-																"{{SamplingPointId}}"
+																":SamplingPointId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) This method retrieves details of a specific sampling point with fieldwork offices."
@@ -4894,6 +4972,12 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPoints"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) This method creates a new sampling point."
@@ -4953,7 +5037,7 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
 																"{{origin}}"
 															],
@@ -4962,7 +5046,17 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPoints",
-																"{{SamplingPointId}}"
+																":SamplingPointId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) Update a sampling point with the specified fields"
@@ -5009,7 +5103,7 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
 																"{{origin}}v1"
 															],
@@ -5017,7 +5111,17 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPoints",
-																"{{SamplingPointId}}"
+																":SamplingPointId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) This method deletes a specified sampling point."
@@ -5039,7 +5143,7 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/{{SamplingPointId}}/Image",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image",
 															"host": [
 																"{{origin}}"
 															],
@@ -5048,7 +5152,7 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPoint",
-																"{{SamplingPointId}}",
+																":SamplingPointId",
 																"Image"
 															]
 														},
@@ -5099,7 +5203,7 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/{{SamplingPointId}}/Image/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image/:FileName",
 															"host": [
 																"{{origin}}"
 															],
@@ -5108,9 +5212,23 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPoint",
-																"{{SamplingPointId}}",
+																":SamplingPointId",
 																"Image",
-																"{{FileName}}"
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
 															]
 														},
 														"description": "(Capi) Method used to upload an image file associated with a sampling point (e.g. a map). The upload of a new image file for an existing sampling point will update the old image."
@@ -5143,7 +5261,7 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/{{SamplingPointId}}/Image ",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image ",
 															"host": [
 																"{{origin}}"
 															],
@@ -5152,8 +5270,18 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPoint",
-																"{{SamplingPointId}}",
+																":SamplingPointId",
 																"Image "
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) Method used to delete the sampling point image."
@@ -5226,6 +5354,12 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPointsAssignments"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) Assign many interviewers to many sampling points."
