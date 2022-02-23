@@ -5412,6 +5412,12 @@
 																"Surveys",
 																":SurveyId",
 																"SamplingPointsAssignments"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) Unassign many interviewers from many sampling points."
@@ -5469,6 +5475,12 @@
 														"Surveys",
 														":SurveyId",
 														"SamplingMethod"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method for retrieving current SamplingMethod"
@@ -5527,6 +5539,12 @@
 														"Surveys",
 														":SurveyId",
 														"SamplingMethod"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method for saving the SamplingMethod\nThis method updates the sampling method of a capi survey. The methods have restrictions based on quota, sampling points, etc."
@@ -5575,6 +5593,12 @@
 														"Surveys",
 														":SurveyId",
 														"SamplingPoints"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) This method retrieves a list of Sampling Points based on survey. This list can be filtered and sorted using standard OData syntax."
@@ -5621,6 +5645,12 @@
 														":SurveyId",
 														"SamplingPoints",
 														"Count "
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Returns the number of samplingPoints of the survey."
@@ -5687,6 +5717,12 @@
 														"Surveys",
 														":SurveyId",
 														"DialMode"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Cati) Get the dial mode for the survey"
@@ -5739,6 +5775,12 @@
 														"Surveys",
 														":SurveyId",
 														"DialMode"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Cati) Update the dial mode for the survey"
@@ -5830,6 +5872,12 @@
 														"Surveys",
 														":SurveyId",
 														"EmailSettings"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Online) Get email settings for the survey."
@@ -5897,6 +5945,12 @@
 														"Surveys",
 														":SurveyId",
 														"EmailSettings"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Online) Update email settings for the survey."
@@ -5970,6 +6024,12 @@
 																"Surveys",
 																":SurveyId",
 																"InvitationTemplates"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method create an invitation template."
@@ -6037,6 +6097,12 @@
 																":SurveyId",
 																"InvitationTemplates",
 																""
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method gets an invitation template."
@@ -6093,7 +6159,7 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"other name\",\r\n  \"Subject\": \"other subject\",\r\n  \"Body\": \"other body with {unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/{{InvitationTemplateId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
 																"{{origin}}"
 															],
@@ -6102,7 +6168,17 @@
 																"Surveys",
 																":SurveyId",
 																"InvitationTemplates",
-																"{{InvitationTemplateId}}"
+																":InvitationTemplateId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InvitationTemplateId",
+																	"value": "{{InvitationTemplateId}}"
+																}
 															]
 														},
 														"description": "This method updates an invitation template."
@@ -6143,7 +6219,7 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/{{InvitationTemplateId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
 																"{{origin}}"
 															],
@@ -6152,7 +6228,17 @@
 																"Surveys",
 																":SurveyId",
 																"InvitationTemplates",
-																"{{InvitationTemplateId}}"
+																":InvitationTemplateId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InvitationTemplateId",
+																	"value": "{{InvitationTemplateId}}"
+																}
 															]
 														},
 														"description": "This method deletes an invitation template."
@@ -6212,6 +6298,12 @@
 																"Surveys",
 																":SurveyId",
 																"InviteRespondents"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method invites respondents to a survey."
@@ -6368,6 +6460,12 @@
 																":SurveyId",
 																"InviteRespondents",
 																"SurveyBatchesStatus"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method gets invitation batches status."
@@ -6430,6 +6528,12 @@
 																"InviteRespondents",
 																"InvitationStatus",
 																"{{BatchName}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method gets an invitation batch status."
@@ -6499,6 +6603,12 @@
 														":SurveyId",
 														"InvitationImages",
 														"{{FileName}}"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method upload an invitation image."
@@ -6569,6 +6679,12 @@
 															"key": "type",
 															"value": "1"
 														}
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Get the specified type of package for the specified survey."
@@ -6633,6 +6749,12 @@
 														"Surveys",
 														":SurveyId",
 														"PublicIds"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
@@ -6686,6 +6808,12 @@
 														"Surveys",
 														":SurveyId",
 														"PublicIds"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Update the survey public ids"
@@ -6751,6 +6879,12 @@
 														"Surveys",
 														":SurveyId",
 														"Publish"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets the publish state of the survey in the context."
@@ -6804,6 +6938,12 @@
 														"Surveys",
 														":SurveyId",
 														"Publish"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Publishes the survey to the survey package."
@@ -6862,6 +7002,12 @@
 														":SurveyId",
 														"Publish",
 														"Start"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "The Publish Survey Start controller. Allows to start publishing an Online (Glu) Survey into Survey package. (Has survey type usage restrictions)\n\n(Online) Creates an activity that starts the publishing process. Use the activity id to wait for the publish result."
@@ -6925,6 +7071,12 @@
 														"Surveys",
 														":SurveyId",
 														"Relocations"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves a list of relocations based on a survey. This list can be filtered and sorted using standard OData syntax."
@@ -6982,6 +7134,12 @@
 														"Surveys",
 														":SurveyId",
 														"Relocations"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Update the relocations with the specified values."
@@ -7052,6 +7210,12 @@
 																":SurveyId",
 																"ResponseCodes",
 																"{{ResponseCode}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method retrieves details of a specific response code for a specific survey."
@@ -7127,6 +7291,12 @@
 																"Surveys",
 																":SurveyId",
 																"ResponseCodes"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method creates a new response code."
@@ -7202,6 +7372,12 @@
 																":SurveyId",
 																"ResponseCodes",
 																"{{ResponseCode}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "Update a response code with the specified fields."
@@ -7258,6 +7434,12 @@
 																":SurveyId",
 																"ResponseCodes",
 																"{{ResponseCode}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method deletes a specified response code."
@@ -7318,6 +7500,12 @@
 														"Surveys",
 														":SurveyId",
 														"ResponseCodes"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves a list of response codes based on a survey. This list can be filtered and sorted using standard OData syntax."
@@ -7371,6 +7559,12 @@
 												":SurveyId",
 												"Fieldwork",
 												"Status"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method returns fieldwork status."
@@ -7442,6 +7636,12 @@
 												":SurveyId",
 												"Fieldwork",
 												"Counts"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method returns fieldwork counts."
@@ -7492,6 +7692,12 @@
 												":SurveyId",
 												"Fieldwork",
 												"Start"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method starts the fieldwork of the survey."
@@ -7546,6 +7752,12 @@
 												":SurveyId",
 												"Fieldwork",
 												"Stop"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method stops the fieldwork of the survey."
@@ -7627,6 +7839,12 @@
 														":SurveyId",
 														"InterviewQuality",
 														"{{InterviewId}}"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves a specific interview detail defined for the survey with the specified surveyId and interviewId."
@@ -7697,6 +7915,12 @@
 														"Surveys",
 														":SurveyId",
 														"InterviewQuality"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Update the quality state of an existing interview."
@@ -7761,6 +7985,12 @@
 														":SurveyId",
 														"Interviews",
 														"{{InterviewId}}"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Delete all data for a specified interview of a specified survey."
@@ -7839,6 +8069,12 @@
 												"Surveys",
 												":SurveyId",
 												"InterviewQuality"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves the interview details list defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax."
@@ -7900,6 +8136,12 @@
 												"Surveys",
 												":SurveyId",
 												"InterviewInteractionsSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Get interview interactions settings for the survey."
@@ -7970,6 +8212,12 @@
 												"Surveys",
 												":SurveyId",
 												"InterviewInteractionsSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Update interview interactions settings for the survey."
@@ -8024,6 +8272,12 @@
 												":SurveyId",
 												"Languages",
 												""
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves a list of languages defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax."
@@ -8075,6 +8329,12 @@
 												":SurveyId",
 												"Languages",
 												"{{LanguageId}}"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves the language with the specified languageId defined for the survey with the specified surveyId."
@@ -8141,6 +8401,12 @@
 												":SurveyId",
 												"Languages",
 												""
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Add a language to the survey with the specified surveyId."
@@ -8197,6 +8463,12 @@
 												":SurveyId",
 												"Languages",
 												"{{LanguageId}}"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Removes the language with languageId from the survey with the specified surveyId."
@@ -8261,6 +8533,12 @@
 												"Surveys",
 												":SurveyId",
 												"Languages"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Update the name of an existing language."
@@ -8362,6 +8640,12 @@
 														":SurveyId",
 														"LanguageTranslations",
 														""
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												}
 											},
@@ -8455,6 +8739,12 @@
 														":SurveyId",
 														"LanguageTranslations",
 														"{{LanguageId}}"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												}
 											},
@@ -8510,6 +8800,12 @@
 														":SurveyId",
 														"LanguageTranslations",
 														"{{LanguageId}}"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												}
 											},
@@ -8590,6 +8886,12 @@
 												":SurveyId",
 												"LanguageTranslations",
 												""
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										}
 									},
@@ -8654,6 +8956,12 @@
 																":SurveyId",
 																"MediaFiles",
 																"{{FileName}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "Streams the needed media file."
@@ -8713,6 +9021,12 @@
 																":SurveyId",
 																"MediaFiles",
 																"{{FileName}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "Creates or update the survey media file."
@@ -8763,6 +9077,12 @@
 																":SurveyId",
 																"MediaFiles",
 																"{{FileName}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "Deletes the survey media file."
@@ -8817,6 +9137,12 @@
 														"Surveys",
 														":SurveyId",
 														"MediaFiles"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets a list of all media file names for a survey."
@@ -8865,6 +9191,12 @@
 														":SurveyId",
 														"MediaFiles",
 														"Count"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets the number of media files in a survey."
@@ -8923,6 +9255,12 @@
 														"Surveys",
 														":SurveyId",
 														"Script"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method updates the ODIN script of a specific survey."
@@ -8972,6 +9310,12 @@
 														"Surveys",
 														":SurveyId",
 														"Script"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves the ODIN script of a specific survey."
@@ -9022,6 +9366,12 @@
 														":SurveyId",
 														"Script",
 														"{{eTag}}"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves the specific version of ODIN script for the specified survey."
@@ -9080,6 +9430,12 @@
 																":SurveyId",
 																"ScriptFragments",
 																"{{FragmentName}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "Add or update the wanted survey script fragment with the content specified as body of the request"
@@ -9111,6 +9467,12 @@
 																":SurveyId",
 																"ScriptFragments",
 																"{{FragmentName}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "Gets the specified script fragment for the survey"
@@ -9146,6 +9508,12 @@
 																":SurveyId",
 																"ScriptFragments",
 																"{{FragmentName}}"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "Delete the specified survey script fragment."
@@ -9200,6 +9568,12 @@
 														"Surveys",
 														":SurveyId",
 														"ScriptFragments"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets a list of all script fragment names for a survey."
@@ -9292,6 +9666,12 @@
 												"Surveys",
 												":SurveyId",
 												"Counts"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Returns the counts for the specified survey. For all surveys it will return the topline counts. For surveys with Quota, it will also include detailed counts per quota level"
@@ -9350,6 +9730,12 @@
 												"Performance",
 												"Metrics",
 												"Live"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Get the survey performance metrics for live interviews.(survey links)"
@@ -9408,6 +9794,12 @@
 												"Performance",
 												"Metrics",
 												"Test"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Get the survey performance metrics for test interviews. (survey links)"
@@ -9469,6 +9861,12 @@
 												"Surveys",
 												":SurveyId",
 												"Quota"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Retrieves either CAPI quota definition or Online quota definition depending on the survey environment. The structure of quota definitions differs from one survey to other as the quotas created in new Manager are different from that created in classic manager. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's."
@@ -9527,6 +9925,12 @@
 												"Surveys",
 												":SurveyId",
 												"Quota"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method creates or updates an Online quota frame or Capi quota frame depending on the survey environment. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are the same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's. NB: All the strings will be trimmed during the upload."
@@ -9596,6 +10000,12 @@
 												"Surveys",
 												":SurveyId",
 												"QuotaVersions"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves a list of quota frame versions for the specified survey."
@@ -9650,6 +10060,12 @@
 												"Surveys",
 												":SurveyId",
 												"QuotaTargets"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves a Full QuotaFrame structure based on survey The successful counts are not retrieved"
@@ -9715,6 +10131,12 @@
 												":SurveyId",
 												"QuotaVersions",
 												"{{ETag}}"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves quota frame for the specified version by Etag"
@@ -9770,6 +10192,12 @@
 												":SurveyId",
 												"QuotaTargets",
 												"{{ETag}}"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves a Full QuotaFrame structure based on survey. The successful counts are also retrieved by Etag"
@@ -9823,6 +10251,12 @@
 												"Surveys",
 												":SurveyId",
 												"Sample"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) (Cati) Retrieves the sample data for the specified survey."
@@ -9893,6 +10327,12 @@
 												"Surveys",
 												":SurveyId",
 												"Sample"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) (Cati) Uploads the sample data for the specified survey. Pass the sample data as a CSV formatted string in the body of the request."
@@ -9942,6 +10382,12 @@
 												"Surveys",
 												":SurveyId",
 												"Sample"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) (Cati) Deletes the specified survey's SampleData."
@@ -9988,6 +10434,12 @@
 												":SurveyId",
 												"Sample",
 												"Block"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Blocks sample data for a survey based on the survey id and a filter."
@@ -10035,6 +10487,12 @@
 												":SurveyId",
 												"Sample",
 												"Reset"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Resets sample data for a survey based on the survey id and a filter."
@@ -10081,6 +10539,12 @@
 												":SurveyId",
 												"Sample",
 												"Clear"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Clears the specified columns in sample data for a survey based on the survey id and a filter."
@@ -10127,6 +10591,12 @@
 												":SurveyId",
 												"Sample",
 												"Update"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Updates Sample Record"
@@ -10200,6 +10670,12 @@
 												":SurveyId",
 												"SampleData",
 												"{{SampleDataFileName}}"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Create a request for a sample data download."
@@ -10266,7 +10742,13 @@
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}"
+										":SurveyId"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "This method retrieves details of a specific survey."
@@ -10401,6 +10883,12 @@
 										"Surveys",
 										":SurveyId",
 										"Data"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "Post a request for a data download. The surveyDownloadDataRequest contains all the information needed to be able to create a download with just the information that is needed for this request."
@@ -10455,6 +10943,12 @@
 										"Surveys",
 										":SurveyId",
 										"RespondentDataEncrypt"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "Manages data collected for a survey (Has survey type usage restrictions)\n(Online) Gets asynchronously the decrypted data to encrypt it"
@@ -10536,7 +11030,13 @@
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}"
+										":SurveyId"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "Update a survey with the specified fields."
@@ -10584,7 +11084,13 @@
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}"
+										":SurveyId"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "This method deletes a specified survey."
@@ -12176,6 +12682,12 @@
 												"Surveys",
 												":SurveyId",
 												"SurveyGroup"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Move a survey to another survey group."
