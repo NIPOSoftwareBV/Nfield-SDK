@@ -43,14 +43,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundActivities/{{ActivityId}}",
+							"raw": "{{origin}}/v1/BackgroundActivities/:ActivityId",
 							"host": [
 								"{{origin}}"
 							],
 							"path": [
 								"v1",
 								"BackgroundActivities",
-								"{{ActivityId}}"
+								":ActivityId"
+							],
+							"variable": [
+								{
+									"key": "ActivityId",
+									"value": "{{ActivityId}}"
+								}
 							]
 						},
 						"description": "This method retrieves details of a specific background activity."
@@ -137,14 +143,20 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundTasks/{{TaskId}}",
+							"raw": "{{origin}}/v1/BackgroundTasks/:TaskId",
 							"host": [
 								"{{origin}}"
 							],
 							"path": [
 								"v1",
 								"BackgroundTasks",
-								"{{TaskId}}"
+								":TaskId"
+							],
+							"variable": [
+								{
+									"key": "TaskId",
+									"value": "{{TaskId}}"
+								}
 							]
 						},
 						"description": "This method retrieves details of a specific background task."
@@ -379,14 +391,20 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+									"raw": "{{origin}}/v1/Offices/:OfficeId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Offices",
-										"{{OfficeId}}"
+										":OfficeId"
+									],
+									"variable": [
+										{
+											"key": "OfficeId",
+											"value": "{{OfficeId}}"
+										}
 									]
 								},
 								"description": "retrieves details of a specific fieldwork office."
@@ -483,14 +501,20 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+									"raw": "{{origin}}/v1/Offices/:OfficeId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Offices",
-										"{{OfficeId}}"
+										":OfficeId"
+									],
+									"variable": [
+										{
+											"key": "OfficeId",
+											"value": "{{OfficeId}}"
+										}
 									]
 								},
 								"description": "Delete a fieldwork office NOTE: the headquarters office cannot be deleted."
@@ -548,14 +572,20 @@
 									"raw": "{\r\n  \"OfficeName\": \"Postman office updated\",\r\n  \"Description\": \"Postman description updated\"\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices/{{OfficeId}}",
+									"raw": "{{origin}}/v1/Offices/:OfficeId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Offices",
-										"{{OfficeId}}"
+										":OfficeId"
+									],
+									"variable": [
+										{
+											"key": "OfficeId",
+											"value": "{{OfficeId}}"
+										}
 									]
 								},
 								"description": "Update a fieldwork office."
@@ -698,7 +728,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices",
+													"raw": "{{origin}}/v1//Interviewers/:InterviewerId/Offices",
 													"host": [
 														"{{origin}}"
 													],
@@ -706,8 +736,14 @@
 														"v1",
 														"",
 														"Interviewers",
-														"{{InterviewerId}}",
+														":InterviewerId",
 														"Offices"
+													],
+													"variable": [
+														{
+															"key": "InterviewerId",
+															"value": "{{InterviewerId}}"
+														}
 													]
 												},
 												"description": "Returns fieldwork offices assigned to the specified interviewer."
@@ -754,7 +790,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices",
+													"raw": "{{origin}}/v1//Interviewers/:InterviewerId/Offices",
 													"host": [
 														"{{origin}}"
 													],
@@ -762,8 +798,14 @@
 														"v1",
 														"",
 														"Interviewers",
-														"{{InterviewerId}}",
+														":InterviewerId",
 														"Offices"
+													],
+													"variable": [
+														{
+															"key": "InterviewerId",
+															"value": "{{InterviewerId}}"
+														}
 													]
 												},
 												"description": "Add fieldwork office to an interviewer. If fieldwork office already exist on interviewer it will be ignored."
@@ -809,17 +851,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1//Interviewers/{{InterviewerId}}/Offices/{{OfficeId}}",
+													"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Offices/:OfficeId",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
-														"v1",
-														"",
+														"v1",														
 														"Interviewers",
-														"{{InterviewerId}}",
+														":InterviewerId",
 														"Offices",
-														"{{OfficeId}}"
+														":OfficeId"
+													],
+													"variable": [
+														{
+															"key": "InterviewerId",
+															"value": "{{InterviewerId}}"
+														},
+														{
+															"key": "OfficeId",
+															"value": "{{OfficeId}}"
+														}
 													]
 												},
 												"description": "Delete fieldwork office(s) from an interviewer. If fieldwork office doesn't exist on interviewer it will be ignored."
@@ -895,14 +946,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Interviewers",
-												"{{InterviewerId}}"
+												":InterviewerId"
+											],
+											"variable": [
+												{
+													"key": "InterviewerId",
+													"value": "{{InterviewerId}}"
+												}
 											]
 										},
 										"description": "This method retrieves details of a specific interviewer using the interviewerId."
@@ -975,7 +1032,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/GetByClientId/{{ClientInterviewerId}}",
+											"raw": "{{origin}}/v1/Interviewers/GetByClientId/:ClientInterviewerId",
 											"host": [
 												"{{origin}}"
 											],
@@ -983,7 +1040,13 @@
 												"v1",
 												"Interviewers",
 												"GetByClientId",
-												"{{ClientInterviewerId}}"
+												":ClientInterviewerId"
+											],
+											"variable": [
+												{
+													"key": "ClientInterviewerId",
+													"value": "{{ClientInterviewerId}}"
+												}
 											]
 										},
 										"description": "This method retrieves the details of a specific interviewer using the clientInterviewerId."
@@ -1128,14 +1191,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Interviewers",
-												"{{InterviewerId}}"
+												":InterviewerId"
+											],
+											"variable": [
+												{
+													"key": "InterviewerId",
+													"value": "{{InterviewerId}}"
+												}
 											]
 										},
 										"description": "This method is used to reset an interviewer's password."
@@ -1181,14 +1250,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Interviewers",
-												"{{InterviewerId}}"
+												":InterviewerId"
+											],
+											"variable": [
+												{
+													"key": "InterviewerId",
+													"value": "{{InterviewerId}}"
+												}
 											]
 										},
 										"description": "This method deletes a specified interviewer."
@@ -1255,14 +1330,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}",
+											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Interviewers",
-												"{{InterviewerId}}"
+												":InterviewerId"
+											],
+											"variable": [
+												{
+													"key": "InterviewerId",
+													"value": "{{InterviewerId}}"
+												}
 											]
 										},
 										"description": "Update an interviewer with the specified specified fields"
@@ -1336,15 +1417,21 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/{{InterviewerId}}/Assignments",
+											"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Assignments",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Interviewers",
-												"{{InterviewerId}}",
+												":InterviewerId",
 												"Assignments"
+											],
+											"variable": [
+												{
+													"key": "InterviewerId",
+													"value": "{{InterviewerId}}"
+												}
 											]
 										},
 										"description": "This method retrieves all assignments with counts from an interviewer"
@@ -1560,14 +1647,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"CatiInterviewers",
-												"{{CatiInterviewerId}}"
+												":CatiInterviewerId"
+											],
+											"variable": [
+												{
+													"key": "CatiInterviewerId",
+													"value": "{{CatiInterviewerId}}"
+												}
 											]
 										},
 										"description": "(Cati) This method retrieves details of a specific interviewer using the interviewerId."
@@ -1686,14 +1779,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"CatiInterviewers",
-												"{{CatiInterviewerId}}"
+												":CatiInterviewerId"
+											],
+											"variable": [
+												{
+													"key": "CatiInterviewerId",
+													"value": "{{CatiInterviewerId}}"
+												}
 											]
 										},
 										"description": "(Cati) This method is used to reset an interviewer's password."
@@ -1739,14 +1838,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/{{CatiInterviewerId}}",
+											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"CatiInterviewers",
-												"{{CatiInterviewerId}}"
+												":CatiInterviewerId"
+											],
+											"variable": [
+												{
+													"key": "CatiInterviewerId",
+													"value": "{{CatiInterviewerId}}"
+												}
 											]
 										},
 										"description": "(Cati) This method deletes a specified interviewer."
@@ -2007,14 +2112,20 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"LocalUsers",
-												"{{IdentityId}}"
+												":IdentityId"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
 											]
 										},
 										"description": "Returns details for a local user."
@@ -2140,14 +2251,20 @@
 											"raw": "{\n  \"FirstName\": \"Postman updated 1\",\n  \"LastName\": \"Postman updated 2\",\n  \"Email\": \"TestUser@TestSite.com\",\n  \"UserRole\": \"DomainAdministrator\"\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"LocalUsers",
-												"{{IdentityId}}"
+												":IdentityId"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
 											]
 										},
 										"description": "Edits properties of a local user."
@@ -2165,14 +2282,20 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/{{IdentityId}}",
+											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"LocalUsers",
-												"{{IdentityId}}"
+												":IdentityId"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
 											]
 										},
 										"description": "Deletes a user"
@@ -2215,7 +2338,7 @@
 											"raw": "{\n    \"Password\": \"Passw0rd12\"\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/Password/{{IdentityId}}",
+											"raw": "{{origin}}/v1/LocalUsers/Password/:IdentityId",
 											"host": [
 												"{{origin}}"
 											],
@@ -2223,7 +2346,13 @@
 												"v1",
 												"LocalUsers",
 												"Password",
-												"{{IdentityId}}"
+												":IdentityId"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
 											]
 										},
 										"description": "Edits local user password."
@@ -2497,14 +2626,20 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
+									"raw": "{{origin}}/v1/Themes/:ThemeId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Themes",
-										"{{ThemeId}}"
+										":ThemeId"
+									],
+									"variable": [
+										{
+											"key": "ThemeId",
+											"value": "{{ThemeId}}"
+										}
 									]
 								},
 								"description": "Gets the Download Url for the theme file. Using the Theme Id to find it."
@@ -2592,14 +2727,20 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/{{ThemeId}}",
+									"raw": "{{origin}}/v1/Themes/:ThemeId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Themes",
-										"{{ThemeId}}"
+										":ThemeId"
+									],
+									"variable": [
+										{
+											"key": "ThemeId",
+											"value": "{{ThemeId}}"
+										}
 									]
 								},
 								"description": "Deletes the theme's files using the ThemeId."
@@ -2799,14 +2940,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ExternalApis",
-												"{{ApiName}}"
+												":ApiName"
+											],
+											"variable": [
+												{
+													"key": "ApiName",
+													"value": "{{ApiName}}"
+												}
 											]
 										},
 										"description": "Get api configuration by name"
@@ -3001,14 +3148,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/{{ApiName}}",
+											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ExternalApis",
-												"{{ApiName}}"
+												":ApiName"
+											],
+											"variable": [
+												{
+													"key": "ApiName",
+													"value": "{{ApiName}}"
+												}
 											]
 										},
 										"description": "Delete external api configuration"
@@ -3149,15 +3302,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Retrieves details of a specific survey general settings."
@@ -3224,15 +3383,21 @@
 											"raw": "{\r\n    \"Description\": \"Description (Basic) Updated\",\r\n    \"Client\": \"ClientName(Basic) Updated\",\r\n    \"Name\": \"Basic\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Update a survey general settings."
@@ -3282,16 +3447,22 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings/Owner",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings",
 												"Owner"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Get the survey owner"
@@ -3354,16 +3525,22 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/GeneralSettings/Owner",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"GeneralSettings",
 												"Owner"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Update the survey owner"
@@ -3437,18 +3614,28 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments/QuotaTargets",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments/QuotaTargets",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"Interviewers",
-																"{{InterviewerId}}",
+																":InterviewerId",
 																"Assignments",
 																"QuotaTargets"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InterviewerId",
+																	"value": "{{InterviewerId}}"
+																}
 															]
 														},
 														"description": "(Capi) Gets a list of levelIds with Target, Successful and SurveySuccessful assigned to an interviewer"
@@ -3495,17 +3682,27 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers/{{InterviewerId}}/Assignments",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"Interviewers",
-																"{{InterviewerId}}",
+																":InterviewerId",
 																"Assignments"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InterviewerId",
+																	"value": "{{InterviewerId}}"
+																}
 															]
 														},
 														"description": "(Capi) Assigns/Unassigns the interviewer to the survey.\n\nDepends on SurveyType (Basic, Eurobarometer or Eurobarometer advanced) & QuotaType (Join Targets, Workpackage ...)"
@@ -3552,15 +3749,21 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Assignment",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/Assignment",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"Assignment"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) Assigns/Unassigns the interviewer to the survey."
@@ -3615,15 +3818,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Interviewers"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Retrieves list of interviewers for the survey."
@@ -3671,15 +3880,21 @@
 													"raw": "{\r\n  \"InterviewerId\": \"{{InterviewerId}}\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviewers",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Interviewers"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Adds interviewer to the survey."
@@ -3726,15 +3941,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Distribute ",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Distribute ",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Distribute "
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Interviewer workpackage distribution controller (Has survey type usage restrictions)\n(Capi) Distributes workpackage for survey."
@@ -3783,15 +4004,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewerInstructions"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method used to download interviewer instruction file."
@@ -3840,16 +4067,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions/{{InstructionsFileName}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions/:InstructionsFileName",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewerInstructions",
-														"{{InstructionsFileName}}"
+														":InstructionsFileName"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "InstructionsFileName",
+															"value": "{{InstructionsFileName}}"
+														}
 													]
 												},
 												"description": "(Capi) Method used to upload interviewer instruction file. The re-upload of a new pdf file for the same survey it will replace the existing one."
@@ -3896,15 +4133,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewerInstructions",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewerInstructions"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method used to delete the interviewer instruction file."
@@ -3971,18 +4214,32 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"QuotaTargets",
-																				"{{QuotaLevelId}}"
+																				":QuotaLevelId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "QuotaLevelId",
+																					"value": "{{QuotaLevelId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) This method retrieves detail of quota level targets based on survey and sampling point."
@@ -4044,18 +4301,32 @@
 																			"raw": "{\r\n  \"Target\": 100\r\n}"
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets/{{QuotaLevelId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"QuotaTargets",
-																				"{{QuotaLevelId}}"
+																				":QuotaLevelId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "QuotaLevelId",
+																					"value": "{{QuotaLevelId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Update an sampling point's quota level with the specified fields."
@@ -4113,17 +4384,27 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/QuotaTargets",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		"SamplingPointId",
 																		"QuotaTargets"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) This method retrieves a list of quota level targets based on survey and sampling point."
@@ -4201,18 +4482,32 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments/{{InterviewerId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Assignments",
-																				"{{InterviewerId}}"
+																				":InterviewerId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "InterviewerId",
+																					"value": "{{InterviewerId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Assign an interviewer to a sampling point."
@@ -4257,18 +4552,32 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments/{{InterviewerId}}",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Assignments",
-																				"{{InterviewerId}}"
+																				":InterviewerId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "InterviewerId",
+																					"value": "{{InterviewerId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Unassign an interviewer from a sampling point."
@@ -4325,17 +4634,27 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Assignments",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		":SamplingPointId",
 																		"Assignments"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) Get the interviewers assigned to a sampling point."
@@ -4382,17 +4701,31 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
 																				"{{origin}}v1"
 																			],
 																			"path": [
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Addresses",
-																				"{{AddressId}}"
+																				":AddressId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "AddressId",
+																					"value": "{{AddressId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Retrieves the details of a single address."
@@ -4448,17 +4781,27 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses",
+																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																			"host": [
 																				"{{origin}}"
 																			],
 																			"path": [
 																				"v1",
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				":SamplingPointId",
 																				"Addresses"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) Add a new address to the specified sampling point."
@@ -4505,17 +4848,31 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/{{AddressId}}",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
 																				"{{origin}}v1"
 																			],
 																			"path": [
 																				"Surveys",
-																				"{{SurveyId}}",
+																				":SurveyId",
 																				"SamplingPoints",
-																				"{{SamplingPointId}}",
+																				"SamplingPointId",
 																				"Addresses",
-																				"{{AddressId}}"
+																				"AddressId"
+																			],
+																			"variable": [
+																				{
+																					"key": "SurveyId",
+																					"value": "{{SurveyId}}"
+																				},
+																				{
+																					"key": "SamplingPointId",
+																					"value": "{{SamplingPointId}}"
+																				},
+																				{
+																					"key": "AddressId",
+																					"value": "{{AddressId}}"
+																				}
 																			]
 																		},
 																		"description": "(Capi) This method deletes a specific address."
@@ -4559,17 +4916,27 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		":SamplingPointId",
 																		"Addresses"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) This method retrieves a list of Addresses. This list can be filtered and sorted using standard OData syntax."
@@ -4607,18 +4974,28 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}/Addresses/Count",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/Count",
 																	"host": [
 																		"{{origin}}"
 																	],
 																	"path": [
 																		"v1",
 																		"Surveys",
-																		"{{SurveyId}}",
+																		":SurveyId",
 																		"SamplingPoints",
-																		"{{SamplingPointId}}",
+																		":SamplingPointId",
 																		"Addresses",
 																		"Count"
+																	],
+																	"variable": [
+																		{
+																			"key": "SurveyId",
+																			"value": "{{SurveyId}}"
+																		},
+																		{
+																			"key": "SamplingPointId",
+																			"value": "{{SamplingPointId}}"
+																		}
 																	]
 																},
 																"description": "(Capi) Returns the number of addresses at the sampling point."
@@ -4664,16 +5041,26 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints",
-																"{{SamplingPointId}}"
+																":SamplingPointId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) This method retrieves details of a specific sampling point with fieldwork offices."
@@ -4729,15 +5116,21 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) This method creates a new sampling point."
@@ -4797,16 +5190,26 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints",
-																"{{SamplingPointId}}"
+																":SamplingPointId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) Update a sampling point with the specified fields"
@@ -4853,15 +5256,25 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}v1/Surveys/{{SurveyId}}/SamplingPoints/{{SamplingPointId}}",
+															"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
 																"{{origin}}v1"
 															],
 															"path": [
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoints",
-																"{{SamplingPointId}}"
+																":SamplingPointId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) This method deletes a specified sampling point."
@@ -4883,17 +5296,27 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoint",
-																"{{SamplingPointId}}",
+																":SamplingPointId",
 																"Image"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) Method used to download sampling point image."
@@ -4943,18 +5366,32 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image/:FileName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoint",
-																"{{SamplingPointId}}",
+																":SamplingPointId",
 																"Image",
-																"{{FileName}}"
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
 															]
 														},
 														"description": "(Capi) Method used to upload an image file associated with a sampling point (e.g. a map). The upload of a new image file for an existing sampling point will update the old image."
@@ -4987,17 +5424,27 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoint/{{SamplingPointId}}/Image ",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image ",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPoint",
-																"{{SamplingPointId}}",
+																":SamplingPointId",
 																"Image "
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
 															]
 														},
 														"description": "(Capi) Method used to delete the sampling point image."
@@ -5061,15 +5508,21 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPointsAssignments",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPointsAssignments"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) Assign many interviewers to many sampling points."
@@ -5113,15 +5566,21 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPointsAssignments",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"SamplingPointsAssignments"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "(Capi) Unassign many interviewers from many sampling points."
@@ -5170,15 +5629,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingMethod"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method for retrieving current SamplingMethod"
@@ -5228,15 +5693,21 @@
 													"raw": "{\r\n  \"SamplingMethod\": \"FreeIntercept\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingMethod",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingMethod"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Method for saving the SamplingMethod\nThis method updates the sampling method of a capi survey. The methods have restrictions based on quota, sampling points, etc."
@@ -5276,15 +5747,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingPoints"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) This method retrieves a list of Sampling Points based on survey. This list can be filtered and sorted using standard OData syntax."
@@ -5321,16 +5798,22 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SamplingPoints/Count ",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Count ",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"SamplingPoints",
 														"Count "
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Capi) Returns the number of samplingPoints of the survey."
@@ -5388,15 +5871,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/DialMode",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"DialMode"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Cati) Get the dial mode for the survey"
@@ -5440,15 +5929,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/DialMode",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"DialMode"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Cati) Update the dial mode for the survey"
@@ -5531,15 +6026,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/EmailSettings",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"EmailSettings"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Online) Get email settings for the survey."
@@ -5598,15 +6099,21 @@
 													"raw": "{\r\n  \"Id\": \"{{EmailSettingsId}}\",\r\n  \"FromAddress\": \"updated@yellow.niposoftware-dev.com\",\r\n  \"FromName\": \"updatedstring 1\",\r\n  \"ReplyToAddress\": \"updatedReplyTo@yellow.niposoftware-dev.com\",\r\n  \"PostalAddress\": \"updatedstring3\",\r\n  \"EmailColumn\": null\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/EmailSettings",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"EmailSettings"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "(Online) Update email settings for the survey."
@@ -5671,15 +6178,21 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"name\",\r\n  \"Subject\": \"subject\",\r\n  \"Body\": \"{unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method create an invitation template."
@@ -5737,16 +6250,22 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates",
 																""
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method gets an invitation template."
@@ -5803,16 +6322,26 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"other name\",\r\n  \"Subject\": \"other subject\",\r\n  \"Body\": \"other body with {unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/{{InvitationTemplateId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates",
-																"{{InvitationTemplateId}}"
+																":InvitationTemplateId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InvitationTemplateId",
+																	"value": "{{InvitationTemplateId}}"
+																}
 															]
 														},
 														"description": "This method updates an invitation template."
@@ -5853,16 +6382,26 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationTemplates/{{InvitationTemplateId}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InvitationTemplates",
-																"{{InvitationTemplateId}}"
+																":InvitationTemplateId"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "InvitationTemplateId",
+																	"value": "{{InvitationTemplateId}}"
+																}
 															]
 														},
 														"description": "This method deletes an invitation template."
@@ -5913,15 +6452,21 @@
 															"raw": "{\r\n  \"Name\": \"name\",\r\n  \"EmailColumnName\": \"mail\",\r\n  \"ScheduledFor\": \"2050-06-22T12:02:00\",\r\n  \"InvitationTemplateId\": \"{{InvitationTemplateId}}\",\r\n  \"Filters\": \r\n  [\r\n      {\r\n           \"Name\": \"mail\",\r\n           \"Op\": \"eq\",\r\n           \"Value\": \"mail@mail.com\"\r\n      }\r\n  ]\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InviteRespondents"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method invites respondents to a survey."
@@ -6068,16 +6613,22 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents/SurveyBatchesStatus",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/SurveyBatchesStatus",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InviteRespondents",
 																"SurveyBatchesStatus"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method gets invitation batches status."
@@ -6129,17 +6680,27 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InviteRespondents/InvitationStatus/{{BatchName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/:BatchName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"InviteRespondents",
 																"InvitationStatus",
-																"{{BatchName}}"
+																":BatchName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "BatchName",
+																	"value": "{{BatchName}}"
+																}
 															]
 														},
 														"description": "This method gets an invitation batch status."
@@ -6199,16 +6760,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InvitationImages/{{FileName}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationImages/:FileName",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InvitationImages",
-														"{{FileName}}"
+														":FileName"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "FileName",
+															"value": "{{FileName}}"
+														}
 													]
 												},
 												"description": "This method upload an invitation image."
@@ -6264,20 +6835,26 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Package?type=1",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Package?type=1",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Package"
 													],
 													"query": [
 														{
 															"key": "type",
 															"value": "1"
+														}
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
 														}
 													]
 												},
@@ -6334,15 +6911,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"PublicIds"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves the list of public ids (internal test, external test and live) based on a survey. This list can be filtered and sorted using standard OData syntax."
@@ -6387,15 +6970,21 @@
 													"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://test.url/zzzzzzzzzzz\"\r\n  }\r\n]"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/PublicIds",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"PublicIds"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Update the survey public ids"
@@ -6452,15 +7041,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Publish"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets the publish state of the survey in the context."
@@ -6505,15 +7100,21 @@
 													"raw": "{\r\n  \"PackageType\": 1,\r\n  \"ForceUpgrade\": 0\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Publish"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Publishes the survey to the survey package."
@@ -6562,16 +7163,22 @@
 													"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Publish/Start",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish/Start",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Publish",
 														"Start"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "The Publish Survey Start controller. Allows to start publishing an Online (Glu) Survey into Survey package. (Has survey type usage restrictions)\n\n(Online) Creates an activity that starts the publishing process. Use the activity id to wait for the publish result."
@@ -6626,15 +7233,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Relocations",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Relocations"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves a list of relocations based on a survey. This list can be filtered and sorted using standard OData syntax."
@@ -6683,15 +7296,21 @@
 													"raw": "{\r\n  \"Reason\": \"{{RelocationReasonId}}\",\r\n  \"Url\": \"http://test.url\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Relocations",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Relocations",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Relocations"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Update the relocations with the specified values."
@@ -6752,16 +7371,26 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes",
-																"{{ResponseCode}}"
+																":ResponseCode"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "ResponseCode",
+																	"value": "{{ResponseCode}}"
+																}
 															]
 														},
 														"description": "This method retrieves details of a specific response code for a specific survey."
@@ -6828,15 +7457,21 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																}
 															]
 														},
 														"description": "This method creates a new response code."
@@ -6902,16 +7537,26 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes",
-																"{{ResponseCode}}"
+																":ResponseCode"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "ResponseCode",
+																	"value": "{{ResponseCode}}"
+																}
 															]
 														},
 														"description": "Update a response code with the specified fields."
@@ -6958,16 +7603,26 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes/{{ResponseCode}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ResponseCodes",
-																"{{ResponseCode}}"
+																":ResponseCode"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "ResponseCode",
+																	"value": "{{ResponseCode}}"
+																}
 															]
 														},
 														"description": "This method deletes a specified response code."
@@ -7019,15 +7674,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ResponseCodes",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"ResponseCodes"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves a list of response codes based on a survey. This list can be filtered and sorted using standard OData syntax."
@@ -7071,16 +7732,22 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Status",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Status",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Status"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method returns fieldwork status."
@@ -7142,16 +7809,22 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Counts",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Counts",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Counts"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method returns fieldwork counts."
@@ -7192,16 +7865,22 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Start",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Start",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Start"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method starts the fieldwork of the survey."
@@ -7246,16 +7925,22 @@
 											"raw": "{\r\n  \"TerminateRunningInterviews\": true\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Fieldwork/Stop",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Stop",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Fieldwork",
 												"Stop"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method stops the fieldwork of the survey."
@@ -7327,16 +8012,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality/{{InterviewId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality/:InterviewId",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewQuality",
-														"{{InterviewId}}"
+														":InterviewId"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "InterviewId",
+															"value": "{{InterviewId}}"
+														}
 													]
 												},
 												"description": "This method retrieves a specific interview detail defined for the survey with the specified surveyId and interviewId."
@@ -7398,15 +8093,21 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"InterviewQuality"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Update the quality state of an existing interview."
@@ -7461,16 +8162,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Interviews/{{InterviewId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviews/:InterviewId",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Interviews",
-														"{{InterviewId}}"
+														":InterviewId"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "InterviewId",
+															"value": "{{InterviewId}}"
+														}
 													]
 												},
 												"description": "Delete all data for a specified interview of a specified survey."
@@ -7540,15 +8251,21 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewQuality",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"InterviewQuality"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves the interview details list defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax."
@@ -7601,15 +8318,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"InterviewInteractionsSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Get interview interactions settings for the survey."
@@ -7671,15 +8394,21 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/InterviewInteractionsSettings",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"InterviewInteractionsSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Update interview interactions settings for the survey."
@@ -7724,16 +8453,22 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
 												""
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves a list of languages defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax."
@@ -7775,16 +8510,26 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/{{LanguageId}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/:LanguageId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
-												"{{LanguageId}}"
+												":LanguageId"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "LanguageId",
+													"value": "{{LanguageId}}"
+												}
 											]
 										},
 										"description": "This method retrieves the language with the specified languageId defined for the survey with the specified surveyId."
@@ -7841,16 +8586,22 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
 												""
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Add a language to the survey with the specified surveyId."
@@ -7897,16 +8648,26 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages/{{LanguageId}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/:LanguageId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages",
-												"{{LanguageId}}"
+												":LanguageId"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "LanguageId",
+													"value": "{{LanguageId}}"
+												}
 											]
 										},
 										"description": "Removes the language with languageId from the survey with the specified surveyId."
@@ -7962,15 +8723,21 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Languages",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Languages"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Update the name of an existing language."
@@ -8062,16 +8829,22 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"LanguageTranslations",
 														""
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												}
 											},
@@ -8155,16 +8928,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
 													]
 												}
 											},
@@ -8210,16 +8993,26 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
 													]
 												}
 											},
@@ -8290,16 +9083,22 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/LanguageTranslations/",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"LanguageTranslations",
 												""
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										}
 									},
@@ -8354,16 +9153,26 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"MediaFiles",
-																"{{FileName}}"
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
 															]
 														},
 														"description": "Streams the needed media file."
@@ -8413,16 +9222,26 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"MediaFiles",
-																"{{FileName}}"
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
 															]
 														},
 														"description": "Creates or update the survey media file."
@@ -8463,16 +9282,26 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/{{FileName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"MediaFiles",
-																"{{FileName}}"
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
 															]
 														},
 														"description": "Deletes the survey media file."
@@ -8518,15 +9347,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"MediaFiles"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets a list of all media file names for a survey."
@@ -8565,16 +9400,22 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/MediaFiles/Count",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/Count",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"MediaFiles",
 														"Count"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets the number of media files in a survey."
@@ -8624,15 +9465,21 @@
 													"raw": "{\r\n  \"Script\": \"*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Script"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method updates the ODIN script of a specific survey."
@@ -8673,15 +9520,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Script"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "This method retrieves the ODIN script of a specific survey."
@@ -8722,16 +9575,26 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Script/{{eTag}}",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script/:eTag",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"Script",
-														"{{eTag}}"
+														":eTag"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														},
+														{
+															"key": "eTag",
+															"value": "{{eTag}}"
+														}
 													]
 												},
 												"description": "This method retrieves the specific version of ODIN script for the specified survey."
@@ -8780,16 +9643,26 @@
 															"raw": "*LIST destination\r\n1:Amsterdam\r\n2:Buenos Aires\r\n3:Madrid\r\n4:Hong Kong"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ScriptFragments",
-																"{{FragmentName}}"
+																":FragmentName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FragmentName",
+																	"value": "{{FragmentName}}"
+																}
 															]
 														},
 														"description": "Add or update the wanted survey script fragment with the content specified as body of the request"
@@ -8811,16 +9684,26 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ScriptFragments",
-																"{{FragmentName}}"
+																":FragmentName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FragmentName",
+																	"value": "{{FragmentName}}"
+																}
 															]
 														},
 														"description": "Gets the specified script fragment for the survey"
@@ -8846,16 +9729,26 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments/{{FragmentName}}",
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
 																"{{origin}}"
 															],
 															"path": [
 																"v1",
 																"Surveys",
-																"{{SurveyId}}",
+																":SurveyId",
 																"ScriptFragments",
-																"{{FragmentName}}"
+																":FragmentName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FragmentName",
+																	"value": "{{FragmentName}}"
+																}
 															]
 														},
 														"description": "Delete the specified survey script fragment."
@@ -8901,15 +9794,21 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/ScriptFragments",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"Surveys",
-														"{{SurveyId}}",
+														":SurveyId",
 														"ScriptFragments"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
 													]
 												},
 												"description": "Gets a list of all script fragment names for a survey."
@@ -8993,15 +9892,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Counts",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Counts",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Counts"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Returns the counts for the specified survey. For all surveys it will return the topline counts. For surveys with Quota, it will also include detailed counts per quota level"
@@ -9049,17 +9954,23 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Live",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Live",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Performance",
 												"Metrics",
 												"Live"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Get the survey performance metrics for live interviews.(survey links)"
@@ -9107,17 +10018,23 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Performance/Metrics/Test",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Test",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Performance",
 												"Metrics",
 												"Test"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Get the survey performance metrics for test interviews. (survey links)"
@@ -9170,15 +10087,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Quota",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Quota"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Retrieves either CAPI quota definition or Online quota definition depending on the survey environment. The structure of quota definitions differs from one survey to other as the quotas created in new Manager are different from that created in classic manager. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's."
@@ -9228,15 +10151,21 @@
 											"raw": "{\r\n    \"Target\": 10000,\r\n    \"VariableDefinitions\": [\r\n        {\r\n            \"Id\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"OdinVariableName\": \"age\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"OdinVariableName\": \"gender\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\"\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"FrameVariables\": [\r\n        {\r\n            \"Id\": \"367de803-5e86-4281-f612-186640befb7d\",\r\n            \"DefinitionId\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"eb2bf2b9-ef2e-41b4-4205-721fe8205002\",\r\n                    \"DefinitionId\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"98a65741-b7e0-4da0-72ed-fd2eb2f6b705\",\r\n            \"DefinitionId\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"07300f7e-f2ad-450c-ff98-8fa603dd4d51\",\r\n                    \"DefinitionId\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Quota",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Quota"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method creates or updates an Online quota frame or Capi quota frame depending on the survey environment. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are the same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's. NB: All the strings will be trimmed during the upload."
@@ -9297,15 +10226,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaVersions"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves a list of quota frame versions for the specified survey."
@@ -9351,15 +10286,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaTargets"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "This method retrieves a Full QuotaFrame structure based on survey The successful counts are not retrieved"
@@ -9415,16 +10356,26 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaVersions/{{ETag}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions/:eTag",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaVersions",
-												"{{ETag}}"
+												":eTag"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "eTag",
+													"value": "{{eTag}}"
+												}
 											]
 										},
 										"description": "This method retrieves quota frame for the specified version by Etag"
@@ -9470,16 +10421,26 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/QuotaTargets/{{ETag}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets/:eTag",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"QuotaTargets",
-												"{{ETag}}"
+												":eTag"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "eTag",
+													"value": "{{eTag}}"
+												}
 											]
 										},
 										"description": "This method retrieves a Full QuotaFrame structure based on survey. The successful counts are also retrieved by Etag"
@@ -9524,15 +10485,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) (Cati) Retrieves the sample data for the specified survey."
@@ -9594,15 +10561,21 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) (Cati) Uploads the sample data for the specified survey. Pass the sample data as a CSV formatted string in the body of the request."
@@ -9643,15 +10616,21 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) (Cati) Deletes the specified survey's SampleData."
@@ -9688,16 +10667,22 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Block",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Block",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Block"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Blocks sample data for a survey based on the survey id and a filter."
@@ -9735,16 +10720,22 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Reset",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Reset",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Reset"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "(Online) Resets sample data for a survey based on the survey id and a filter."
@@ -9781,16 +10772,22 @@
 											"raw": "{\r\n  \"Filters\": [\r\n    {\r\n        \"Name\": \"TelephoneNumber\",\r\n        \"Op\": \"Eq\",\r\n        \"Value\": \"empty\"\r\n    }\r\n  ],\r\n  \"Columns\": [\r\n    \"TelephoneNumber\"\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Clear",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Clear",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Clear"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Clears the specified columns in sample data for a survey based on the survey id and a filter."
@@ -9827,16 +10824,22 @@
 											"raw": "{\r\n  \"SampleRecordId\": 1,\r\n  \"ColumnUpdates\": [\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    },\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    }\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Sample/Update",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Update",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"Sample",
 												"Update"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Updates Sample Record"
@@ -9900,16 +10903,26 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SampleData/{{SampleDataFileName}}",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleData/:SampleDataFileName",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"SampleData",
-												"{{SampleDataFileName}}"
+												":SampleDataFileName"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "SampleDataFileName",
+													"value": "{{SampleDataFileName}}"
+												}
 											]
 										},
 										"description": "Create a request for a sample data download."
@@ -9969,14 +10982,20 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}"
+										":SurveyId"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "This method retrieves details of a specific survey."
@@ -10102,15 +11121,21 @@
 									"raw": "{\r\n  \"SurveyId\": \"{{SurveyId}}\",\r\n  \"InterviewId\": {{InterviewId}},\r\n  \"DownloadTestInterviewData\": true,\r\n  \"DownloadSuccessfulLiveInterviewData\": true,\r\n  \"DownloadRejectedLiveInterviewData\": true,\r\n  \"DownloadNotSuccessfulLiveInterviewData\": true,\r\n  \"DownloadSuspendedLiveInterviewData\": true,\r\n  \"DownloadParaData\": true,\r\n  \"DownloadCapturedMedia\": true,\r\n  \"DownloadClosedAnswerData\": true,\r\n  \"DownloadOpenAnswerData\": true,\r\n  \"DownloadFileName\": \"DownloadedFileName\",\r\n  \"StartDate\": \"2015-11-05T15:16:41Z\",\r\n  \"EndDate\": \"2015-11-05T15:16:41Z\"\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/Data",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId/Data",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}",
+										":SurveyId",
 										"Data"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "Post a request for a data download. The surveyDownloadDataRequest contains all the information needed to be able to create a download with just the information that is needed for this request."
@@ -10156,15 +11181,21 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/RespondentDataEncrypt",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId/RespondentDataEncrypt",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}",
+										":SurveyId",
 										"RespondentDataEncrypt"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "Manages data collected for a survey (Has survey type usage restrictions)\n(Online) Gets asynchronously the decrypted data to encrypt it"
@@ -10239,14 +11270,20 @@
 									"raw": "{\r\n  \"Description\": \"This survey is updated via Postman\",\r\n  \"ClientName\": \"White\",\r\n  \"SurveyName\": \"Postman Survey updated\"\r\n }"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}"
+										":SurveyId"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "Update a survey with the specified fields."
@@ -10287,14 +11324,20 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/{{SurveyId}}",
+									"raw": "{{origin}}/v1/Surveys/:SurveyId",
 									"host": [
 										"{{origin}}"
 									],
 									"path": [
 										"v1",
 										"Surveys",
-										"{{SurveyId}}"
+										":SurveyId"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
 									]
 								},
 								"description": "This method deletes a specified survey."
@@ -10597,14 +11640,20 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
+													],
+													"variable": [
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
 													]
 												}
 											},
@@ -10654,14 +11703,20 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/{{LanguageId}}",
+													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
 														"{{origin}}"
 													],
 													"path": [
 														"v1",
 														"LanguageTranslations",
-														"{{LanguageId}}"
+														":LanguageId"
+													],
+													"variable": [
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
 													]
 												}
 											},
@@ -10936,14 +11991,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/{{ResponseCodeId}}",
+											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ResponseCodes",
-												"{{ResponseCodeId}}"
+												":ResponseCodeId"
+											],
+											"variable": [
+												{
+													"key": "ResponseCodeId",
+													"value": "{{ResponseCodeId}}"
+												}
 											]
 										},
 										"description": "Patch the domain's response codes."
@@ -10990,14 +12051,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/{{ResponseCodeId}}",
+											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"ResponseCodes",
-												"{{ResponseCodeId}}"
+												":ResponseCodeId"
+											],
+											"variable": [
+												{
+													"key": "ResponseCodeId",
+													"value": "{{ResponseCodeId}}"
+												}
 											]
 										},
 										"description": "Delete the domain's response code by id."
@@ -11261,14 +12328,20 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/DefaultTexts/{{TranslationKey}}",
+											"raw": "{{origin}}/v1/DefaultTexts/:TranslationKey",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"DefaultTexts",
-												"{{TranslationKey}}"
+												":TranslationKey"
+											],
+											"variable": [
+												{
+													"key": "TranslationKey",
+													"value": "{{TranslationKey}}"
+												}
 											]
 										},
 										"description": "Gets the specified default text for the domain."
@@ -11336,15 +12409,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/LocalAssignments",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/LocalAssignments",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"LocalAssignments"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Get Survey Group local assignments"
@@ -11396,15 +12475,21 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/AssignLocal",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignLocal",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"AssignLocal"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Assign native user to survey group"
@@ -11444,15 +12529,21 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/UnassignLocal",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignLocal",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"UnassignLocal"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Unassign native user from survey group"
@@ -11494,15 +12585,21 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/DirectoryAssignments",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/DirectoryAssignments",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"DirectoryAssignments"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Get Survey Group directory assignments"
@@ -11539,15 +12636,21 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\",\r\n  \"ObjectType\": 0\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/AssignDirectory",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignDirectory",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"AssignDirectory"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Assign directory user to survey group"
@@ -11584,15 +12687,21 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/UnassignDirectory",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignDirectory",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}",
+												":SurveyGroupId",
 												"UnassignDirectory"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Unassign directory user from survey group"
@@ -11651,14 +12760,20 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}"
+												":SurveyGroupId"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Retrieves a specific survey group"
@@ -11772,14 +12887,20 @@
 											"raw": "{\r\n  \"Name\": \"PostmanGroupNameUpdated\",\r\n  \"Description\": \"sample string 2\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}"
+												":SurveyGroupId"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Update a survey groupUpdate a survey with the specified fields."
@@ -11820,14 +12941,20 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}",
+											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"SurveyGroups",
-												"{{SurveyGroupId}}"
+												":SurveyGroupId"
+											],
+											"variable": [
+												{
+													"key": "SurveyGroupId",
+													"value": "{{SurveyGroupId}}"
+												}
 											]
 										},
 										"description": "Delete a survey group Survey groups have to be 'empty' before they can be deleted. An empty survey group has no surveys associated to it.This method deletes a specified survey."
@@ -11877,15 +13004,21 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/{{SurveyId}}/SurveyGroup",
+											"raw": "{{origin}}/v1/Surveys/:SurveyId/SurveyGroup",
 											"host": [
 												"{{origin}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
-												"{{SurveyId}}",
+												":SurveyId",
 												"SurveyGroup"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
 											]
 										},
 										"description": "Move a survey to another survey group."
@@ -12074,15 +13207,21 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/SurveyGroups/{{SurveyGroupId}}/Surveys",
+							"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/Surveys",
 							"host": [
 								"{{origin}}"
 							],
 							"path": [
 								"v1",
 								"SurveyGroups",
-								"{{SurveyGroupId}}",
+								":SurveyGroupId",
 								"Surveys"
+							],
+							"variable": [
+								{
+									"key": "SurveyGroupId",
+									"value": "{{SurveyGroupId}}"
+								}
 							]
 						},
 						"description": "Returns a list of all surveys in the survey group."
@@ -12221,8 +13360,7 @@
 		},
 		{
 			"key": "TaskId",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "OfficeId",
@@ -12246,8 +13384,7 @@
 		},
 		{
 			"key": "ThemeTestName",
-			"value": "QuestionTypesTheme",
-			"type": "default"
+			"value": "QuestionTypesTheme"			
 		},
 		{
 			"key": "ActivityId",
@@ -12267,8 +13404,7 @@
 		},
 		{
 			"key": "InstructionsFileName",
-			"value": "Instructions",
-			"type": "default"
+			"value": "Instructions"			
 		},
 		{
 			"key": "InterviewId",
@@ -12276,13 +13412,11 @@
 		},
 		{
 			"key": "FileName",
-			"value": "MediaFileName",
-			"type": "default"
+			"value": "MediaFileName"			
 		},
 		{
 			"key": "ETag",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "SamplingPointId",
@@ -12298,8 +13432,7 @@
 		},
 		{
 			"key": "FragmentName",
-			"value": "SurveyScriptFragment",
-			"type": "default"
+			"value": "SurveyScriptFragment"			
 		},
 		{
 			"key": "IdentityId",
@@ -12315,18 +13448,15 @@
 		},
 		{
 			"key": "UserDirectoryTenantId",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "UserDirectoryObjectId",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		},
 		{
 			"key": "InternalVariable",
-			"value": "",
-			"type": "default"
+			"value": ""			
 		}
 	]
 }
