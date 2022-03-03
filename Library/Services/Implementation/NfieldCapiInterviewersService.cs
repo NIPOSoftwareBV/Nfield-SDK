@@ -27,30 +27,27 @@ using Nfield.Quota.Helpers;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldInterviewersService"/>
+    /// Implementation of <see cref="INfieldCapiInterviewersService"/>
     /// </summary>
 
-    internal class NfieldInterviewersService : INfieldInterviewersService, INfieldConnectionClientObject
+    internal class NfieldCapiInterviewersService : INfieldCapiInterviewersService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldInterviewersService
+        #region Implementation of INfieldCapiInterviewersService
 
-        const string serviceObsoleteMessage = "NfieldInterviewersService is obsolete, please use NfieldCapiInterviewersService instead.";
         /// <summary>
-        /// See <see cref="INfieldInterviewersService.AddAsync"/>
+        /// See <see cref="INfieldCapiInterviewersService.AddAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
-        public Task<Interviewer> AddAsync(Interviewer interviewer)
+        public Task<InterviewerChanged> AddAsync(Interviewer interviewer)
         {
-            return Client.PostAsJsonAsync(InterviewersApi, interviewer)
+            return Client.PostAsJsonAsync(CapiInterviewersApi, interviewer)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<Interviewer>(task.Result))
+                         .ContinueWith(task => JsonConvert.DeserializeObject<InterviewerChanged>(task.Result))
                          .FlattenExceptions();
         }
 
         /// <summary>
-        /// See <see cref="INfieldInterviewersService.RemoveAsync"/>
+        /// See <see cref="INfieldCapiInterviewersService.RemoveAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task RemoveAsync(Interviewer interviewer)
         {
             if (interviewer == null)
@@ -59,22 +56,21 @@ namespace Nfield.Services.Implementation
             }
 
             return
-                Client.DeleteAsync(new Uri(InterviewersApi, interviewer.InterviewerId))
+                Client.DeleteAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId))
                       .FlattenExceptions();
         }
 
         /// <summary>
-        /// See <see cref="INfieldInterviewersService.UpdateAsync"/>
+        /// See <see cref="INfieldCapiInterviewersService.UpdateAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
-        public Task<Interviewer> UpdateAsync(Interviewer interviewer)
+        public Task<InterviewerChanged> UpdateAsync(Interviewer interviewer)
         {
             if (interviewer == null)
             {
                 throw new ArgumentNullException("interviewer");
             }
 
-            var updatedInterviewer = new UpdateInterviewer
+            var updatedInterviewer = new UpdateCapiInterviewer
             {
                 EmailAddress = interviewer.EmailAddress,
                 FirstName = interviewer.FirstName,
@@ -83,21 +79,20 @@ namespace Nfield.Services.Implementation
                 IsSupervisor = interviewer.IsSupervisor
             };
 
-            return Client.PatchAsJsonAsync(new Uri(InterviewersApi, interviewer.InterviewerId), updatedInterviewer)
+            return Client.PatchAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), updatedInterviewer)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObject<Interviewer>(stringTask.Result))
+                             stringTask => JsonConvert.DeserializeObject<InterviewerChanged>(stringTask.Result))
                          .FlattenExceptions();
         }
 
         /// <summary>
-        /// See <see cref="INfieldInterviewersService.QueryAsync"/>
+        /// See <see cref="INfieldCapiInterviewersService.QueryAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<IQueryable<Interviewer>> QueryAsync()
         {
-            return Client.GetAsync(InterviewersApi)
+            return Client.GetAsync(CapiInterviewersApi)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -107,13 +102,12 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldInterviewersService.InterviewerByClientIdAsync"/>
+        /// See <see cref="INfieldCapiInterviewersService.InterviewerByClientIdAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
-            var uri = new Uri(InterviewersApi, $"GetByClientId/{clientInterviewerId}");
+            var uri = new Uri(CapiInterviewersApi, $"GetByClientId/{clientInterviewerId}");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -125,31 +119,29 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldInterviewersService.ChangePasswordAsync"/>
+        /// See <see cref="INfieldCapiInterviewersService.ChangePasswordAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
-        public Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password)
+        public Task<InterviewerChanged> ChangePasswordAsync(Interviewer interviewer, string password)
         {
             if (interviewer == null)
             {
                 throw new ArgumentNullException("interviewer");
             }
 
-            return Client.PutAsJsonAsync(new Uri(InterviewersApi, interviewer.InterviewerId), (object)new { Password = password })
+            return Client.PutAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), (object)new { Password = password })
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObject<Interviewer>(stringTask.Result))
+                             stringTask => JsonConvert.DeserializeObject<InterviewerChanged>(stringTask.Result))
                          .FlattenExceptions();
         }
 
         /// <summary>
-        /// <see cref="INfieldInterviewersService.QueryOfficesOfInterviewerAsync"/>
+        /// <see cref="INfieldCapiInterviewersService.QueryOfficesOfInterviewerAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId)
         {
-            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
+            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -161,31 +153,28 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// <see cref="INfieldInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
+        /// <see cref="INfieldCapiInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
         {
-            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
+            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices");
 
             return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel { OfficeId = officeId }).FlattenExceptions();
         }
 
         /// <summary>
-        /// <see cref="INfieldInterviewersService.RemoveInterviewerFromFieldworkOfficesAsync"/>
+        /// <see cref="INfieldCapiInterviewersService.RemoveInterviewerFromFieldworkOfficesAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
-            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
+            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
         /// <summary>
-        /// <see cref="INfieldInterviewersService.QueryLogsAsync"/>
+        /// <see cref="INfieldCapiInterviewersService.QueryLogsAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public async Task<string> QueryLogsAsync(LogQueryModel query)
         {
             Ensure.ArgumentNotNull(query, nameof(query));
@@ -217,13 +206,13 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri InterviewersApi
+        private Uri CapiInterviewersApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "interviewers/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "CapiInterviewers/"); }
         }
     }
 
-    internal class UpdateInterviewer
+    internal class UpdateCapiInterviewer
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

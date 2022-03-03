@@ -89,7 +89,8 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyPerformanceService), typeof(NfieldSurveyPerformanceService) },
             { typeof(INfieldTemplatesService), typeof(NfieldTemplatesService) },
             { typeof(INfieldThemesService), typeof(NfieldThemesService) },
-            { typeof(INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService), typeof(NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService) }
+            { typeof(INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService), typeof(NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService) },
+            { typeof(INfieldCapiInterviewersService), typeof(NfieldCapiInterviewersService) },
         };
 
         /// <summary>
