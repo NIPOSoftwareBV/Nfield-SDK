@@ -21,9 +21,9 @@ using System.Threading.Tasks;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Represents a set of methods to read and update the interviewer data.
+    /// Represents a set of methods to read and update the CAPI interviewer data.
     /// </summary>
-    public interface INfieldInterviewersService
+    public interface INfieldCapiInterviewersService
     {
         /// <summary>
         /// Adds a new interviewer.
@@ -33,7 +33,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<Interviewer> AddAsync(Interviewer interviewer);
+        Task<InterviewerChanged> AddAsync(Interviewer interviewer);
 
         /// <summary>
         /// Removes the interviewer.
@@ -53,7 +53,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<Interviewer> UpdateAsync(Interviewer interviewer);
+        Task<InterviewerChanged> UpdateAsync(Interviewer interviewer);
 
         /// <summary>
         /// Gets interviewer queryable object.
@@ -80,7 +80,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
-        Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password);
+        Task<InterviewerChanged> ChangePasswordAsync(Interviewer interviewer, string password);
 
         /// <summary>
         /// Returns a list of fieldwork offices ids that the interviewer belongs to

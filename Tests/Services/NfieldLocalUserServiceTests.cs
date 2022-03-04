@@ -19,7 +19,6 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -206,7 +205,7 @@ namespace Nfield.Services
         {
             const string activityId = "activity-id";
             const string logsLink1 = "logs-link-1";
-            const string logsLink2 = "logs-link-2";
+
             var query = new LogQueryModel
             {
                 From = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1)),
