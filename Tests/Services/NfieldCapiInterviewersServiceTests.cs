@@ -13,17 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using Nfield.Infrastructure;
-using Nfield.Services.Implementation;
-using Xunit;
-using Nfield.Models;
 using Moq;
-using System.Net.Http;
-using System.Net;
 using Newtonsoft.Json;
+using Nfield.Infrastructure;
+using Nfield.Models;
+using Nfield.Services.Implementation;
+using System;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Xunit;
+using static Nfield.Services.Implementation.NfieldCapiInterviewersService;
 
 namespace Nfield.Services
 {
@@ -32,27 +33,53 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldCapiInterviewersServiceTests : NfieldServiceTestsBase
     {
-        const string CapiInterviewersEndpoint = "CapiInterviewers/";
+        private const string CapiInterviewersEndpoint = "CapiInterviewers/";
+        private const string InterviewerId = "Interviewer X";
+        private const string Password = "password";
+        private const string FieldworkOfficeId = "Barcelona";
+        private const string ActivityId = "activity-id";
+        private const string LogsLink1 = "logs-link-1";
+
+        private readonly Uri _capiInterviewersApi;
+        private readonly Interviewer _interviewer;
+        private readonly CapiInterviewer _capiInterviewer;
+        private readonly NfieldCapiInterviewersService _target;
+        private readonly Mock<INfieldHttpClient> _mockedHttpClient;
+        private readonly Mock<INfieldConnectionClient> _mockedNfieldConnection;
+
+        public NfieldCapiInterviewersServiceTests()
+        {
+            _mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            _mockedHttpClient = CreateHttpClientMock(_mockedNfieldConnection);
+
+            _target = new NfieldCapiInterviewersService();
+            _target.InitializeNfieldConnection(_mockedNfieldConnection.Object);
+            _capiInterviewersApi = new Uri(ServiceAddress, CapiInterviewersEndpoint);
+
+            _interviewer = new Interviewer { InterviewerId = InterviewerId, UserName = "User X" };
+            _capiInterviewer = new CapiInterviewer {
+                InterviewerId = _interviewer.InterviewerId,
+                UserName = _interviewer.UserName
+            };
+        }
 
         #region AddAsync
 
         [Fact]
-        public void TestAddAsync_ServerAcceptsInterviewer_ReturnsInterviewer()
+        public async Task TestAddAsync_ServerAcceptsInterviewer_ReturnsInterviewerAsync()
         {
-            var interviewer = new Interviewer { UserName = "User X" };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var content = new StringContent(JsonConvert.SerializeObject(interviewer));
-            mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, CapiInterviewersEndpoint), interviewer))
-                .Returns(CreateTask(HttpStatusCode.OK, content));
+            // Arrange
+            _mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(_capiInterviewersApi,
+                            It.Is<NewCapiInterviewer>(nci => nci.UserName == _interviewer.UserName)))
+                .Returns(CreateTask(HttpStatusCode.OK, SerializedCapiInterviewer()));
 
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            // Act
+            var actual = await _target.AddAsync(_interviewer);
 
-            var actual = target.AddAsync(interviewer).Result;
-
-            Assert.Equal(interviewer.UserName, actual.UserName);
+            // Assert
+            Assert.Equal(_interviewer.UserName, actual.UserName);
+            Assert.Equal(_capiInterviewer.InterviewerId, actual.InterviewerId);
         }
 
         #endregion
@@ -62,26 +89,27 @@ namespace Nfield.Services
         [Fact]
         public void TestRemoveAsync_InterviewerIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldCapiInterviewersService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null)));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.RemoveAsync(null)));
         }
 
         [Fact]
-        public void TestRemoveAsync_ServerRemovedInterviewer_DoesNotThrow()
+        public async Task TestRemoveAsync_ServerRemovedInterviewer_CallsDeleteAsync()
         {
-            const string InterviewerId = "Interviewer X";
-            var interviewer = new Interviewer { InterviewerId = InterviewerId };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}")))
+            // Arrange
+            var expectedUrl = new Uri(_capiInterviewersApi, InterviewerId);
+            _mockedHttpClient
+                .Setup(client => client.DeleteAsync(expectedUrl))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            // Act & Assert
+            await _target.RemoveAsync(_interviewer);
 
-            // assert: no throw
-            target.RemoveAsync(interviewer).Wait();
+            // Assert
+            _mockedHttpClient.Verify(
+                h =>
+                    h.DeleteAsync(expectedUrl),
+                Times.Once());
         }
 
         #endregion
@@ -91,38 +119,25 @@ namespace Nfield.Services
         [Fact]
         public void TestUpdateAsync_InterviewerArgumentIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldCapiInterviewersService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null)));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UpdateAsync(null)));
         }
 
         [Fact]
-        public void TestUpdateAsync_InterviewerExists_ReturnsInterviewer()
+        public async Task TestUpdateAsync_InterviewerExists_ReturnsInterviewerAsync()
         {
-            const string InterviewerId = "Interviewer X";
+            // Arrange
+            _mockedHttpClient
+                .Setup(client => client.PatchAsJsonAsync(new Uri(_capiInterviewersApi, InterviewerId),
+                                        It.Is<EditCapiInterviewer>(uci => uci.FirstName == _interviewer.FirstName)))
+                .Returns(CreateTask(HttpStatusCode.OK, SerializedCapiInterviewer()));
 
-            var interviewerIn = new Interviewer
-            {
-                InterviewerId = InterviewerId,
-                UserName = "XXX"
-            };
+            // Act
+            var actual = await _target.UpdateAsync(_interviewer);
 
-            var interviewerOut = new InterviewerChanged
-            {
-                InterviewerId = InterviewerId
-            };
-
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}"), It.IsAny<UpdateCapiInterviewer>()))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewerOut))));
-
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actual = target.UpdateAsync(interviewerIn).Result;
-
-            Assert.Equal(interviewerIn.InterviewerId, actual.InterviewerId);
+            // Assert
+            Assert.Equal(_interviewer.InterviewerId, actual.InterviewerId);
+            Assert.Equal(_interviewer.FirstName, actual.FirstName);
         }
 
         #endregion
@@ -130,25 +145,25 @@ namespace Nfield.Services
         #region QueryAsync
 
         [Fact]
-        public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithInterviewers()
+        public async Task TestQueryAsync_ServerReturnsQuery_ReturnsListWithInterviewersAsync()
         {
+            // Arrange
             var expectedInterviewers = new Interviewer[]
-            { new Interviewer{InterviewerId = "TestInterviewer"},
-              new Interviewer{InterviewerId = "AnotherTestInterviewer"}
+            {
+                new Interviewer { InterviewerId = "TestInterviewer" },
+                new Interviewer { InterviewerId = "AnotherTestInterviewer" }
             };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, CapiInterviewersEndpoint)))
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(_capiInterviewersApi))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedInterviewers))));
 
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            // Act
+            var actualInterviewers = await _target.QueryAsync();
 
-            var actualInterviewers = target.QueryAsync().Result;
+            // Assert
+            Assert.Equal(2, actualInterviewers.Count());
             Assert.Equal(expectedInterviewers[0].InterviewerId, actualInterviewers.ToArray()[0].InterviewerId);
             Assert.Equal(expectedInterviewers[1].InterviewerId, actualInterviewers.ToArray()[1].InterviewerId);
-            Assert.Equal(2, actualInterviewers.Count());
         }
 
         #endregion
@@ -158,28 +173,28 @@ namespace Nfield.Services
         [Fact]
         public void TestChangePasswordAsync_InterviewerIsNull_ThrowsArgumentNullException()
         {
-            var target = new NfieldCapiInterviewersService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.ChangePasswordAsync(null, string.Empty)));
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.ChangePasswordAsync(null, string.Empty)));
         }
 
         [Fact]
-        public void TestChangePasswordAsync_ServerChangesPassword_ReturnsInterviewer()
+        public async Task TestChangePasswordAsync_ServerChangesPassword_ReturnsInterviewerAsync()
         {
-            const string Password = "Password";
-            const string InterviewerId = "Interviewer X";
-            var interviewer = new Interviewer { InterviewerId = InterviewerId };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}"), It.IsAny<object>()))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewer))));
+            // Arrange
+            var expectedUrl = new Uri(_capiInterviewersApi, InterviewerId);
+            _mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<object>()))
+                .Returns(CreateTask(HttpStatusCode.OK, SerializedCapiInterviewer()));
 
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            // Act
+            var actual = await _target.ChangePasswordAsync(_interviewer, Password);
 
-            var actual = target.ChangePasswordAsync(interviewer, Password).Result;
-
-            Assert.Equal(interviewer.InterviewerId, actual.InterviewerId);
+            // Assert
+            Assert.Equal(_interviewer.InterviewerId, actual.InterviewerId);
+            _mockedHttpClient.Verify(
+                h =>
+                    h.PutAsJsonAsync(expectedUrl, It.Is<ResetPasswordModel>(o => o.Password  == Password )),
+                Times.Once());
         }
 
         #endregion
@@ -187,10 +202,9 @@ namespace Nfield.Services
         #region QueryOfficesOfInterviewerAsync
 
         [Fact]
-        public void TestQueryOfficesOfInterviewerAsync_ServerReturnsQuery_ReturnsListWithFieldworkOffices()
+        public async Task TestQueryOfficesOfInterviewerAsync_ServerReturnsQuery_ReturnsListWithFieldworkOfficesAsync()
         {
-            const string interviewerId = "interviewerId";
-
+            // Arrange
             var expectedFieldworkOffices = new[]
             {
                 "Amsterdam",
@@ -198,19 +212,15 @@ namespace Nfield.Services
                 "Headquarters"
             };
 
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.GetAsync(
-                    new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{interviewerId}/Offices"))
-                )
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(_capiInterviewersApi, $"{InterviewerId}/Offices")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(expectedFieldworkOffices))));
 
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+            // Act
+            var actualFieldworkOffices = await _target.QueryOfficesOfInterviewerAsync(InterviewerId);
 
-            var actualFieldworkOffices = target.QueryOfficesOfInterviewerAsync(interviewerId).Result;
+            // Assert
             var fieldworkOffices = actualFieldworkOffices as string[] ?? actualFieldworkOffices.ToArray();
             Assert.Equal(expectedFieldworkOffices[0], fieldworkOffices[0]);
             Assert.Equal(expectedFieldworkOffices[1], fieldworkOffices[1]);
@@ -223,29 +233,20 @@ namespace Nfield.Services
         #region AddInterviewerToFieldworkOfficesAsync
 
         [Fact]
-        public void TestAddInterviewerToFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgs()
+        public async Task TestAddInterviewerToFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgsAsync()
         {
-            const string interviewerId = "interviewerId";
-            const string fieldworkOfficeId = "Barcelona";
-
-            var expectedUrl = new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{interviewerId}/Offices");
-
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-
-            mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<InterviewerFieldworkOfficeModel>()))
+            // Arrange
+            var expectedUrl = new Uri(_capiInterviewersApi, $"{InterviewerId}/Offices");
+            _mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(expectedUrl, It.Is<InterviewerFieldworkOfficeModel>(f => f.OfficeId == FieldworkOfficeId)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
+            // Act
+            await _target.AddInterviewerToFieldworkOfficesAsync(InterviewerId, FieldworkOfficeId);
 
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            target.AddInterviewerToFieldworkOfficesAsync(interviewerId, fieldworkOfficeId);
-
-            mockedHttpClient.Verify(
+            _mockedHttpClient.Verify(
                 h =>
-                    h.PostAsJsonAsync(expectedUrl, It.Is<InterviewerFieldworkOfficeModel>(f => f.OfficeId == fieldworkOfficeId)),
+                    h.PostAsJsonAsync(expectedUrl, It.Is<InterviewerFieldworkOfficeModel>(f => f.OfficeId == FieldworkOfficeId)),
                 Times.Once());
         }
 
@@ -254,31 +255,22 @@ namespace Nfield.Services
         #region RemoveInterviewerFromFieldworkOfficesAsync
 
         [Fact]
-        public void TestRemoveInterviewerFromFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgs()
+        public async Task TestRemoveInterviewerFromFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgsAsync()
         {
-            const string interviewerId = "interviewerId";
-            const string fieldworkOfficeId = "Barcelona";
+            // Arrange
+            var expectedUrl = new Uri(_capiInterviewersApi, $"{InterviewerId}/Offices/{FieldworkOfficeId}");
 
-            var expectedUrl = $"{CapiInterviewersEndpoint}{interviewerId}/Offices/{fieldworkOfficeId}";
-
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-
-            mockedHttpClient
-                .Setup(client => client.DeleteAsync(It.IsAny<Uri>()))
+            _mockedHttpClient
+                .Setup(client => client.DeleteAsync(expectedUrl))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
+            // Act
+            await _target.RemoveInterviewerFromFieldworkOfficesAsync(InterviewerId, FieldworkOfficeId);
 
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            target.RemoveInterviewerFromFieldworkOfficesAsync(interviewerId, fieldworkOfficeId).Wait();
-
-
-
-            mockedHttpClient.Verify(
+            // Assert
+            _mockedHttpClient.Verify(
                 h =>
-                    h.DeleteAsync(new Uri(ServiceAddress, expectedUrl)),
+                    h.DeleteAsync(expectedUrl),
                 Times.Once());
         }
 
@@ -287,50 +279,55 @@ namespace Nfield.Services
         #region GetInterviewersWorklogDownloadLinkAsync
 
         [Fact]
-        public async Task DownloadLogs()
+        public async Task TestQueryLogsAsync_ReturnsCorrectLogsLink()
         {
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-
-            var target = new NfieldCapiInterviewersService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            const string activityId = "activity-id";
-            const string logsLink1 = "logs-link-1";
+            // Arrange
             var query = new LogQueryModel
             {
                 From = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1)),
                 To = DateTime.UtcNow
             };
 
-            mockedHttpClient
-               .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"InterviewersWorklog"), It.Is<LogQueryModel>(
+            _mockedHttpClient
+               .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "InterviewersWorklog"), It.Is<LogQueryModel>(
                    q => q.From == query.From && q.To == query.To)))
                .Returns(
                 Task.Factory.StartNew(
                     () =>
                     new HttpResponseMessage(HttpStatusCode.OK)
                     {
-                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = activityId }))
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = ActivityId }))
                     })).Verifiable();
 
-            mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activityId}")))
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{ActivityId}")))
                 .Returns(Task.Factory.StartNew(
                     () =>
                     new HttpResponseMessage(HttpStatusCode.OK)
                     {
-                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = logsLink1, ActivityId = activityId, Status = 2 /* Succeeded */ }))
+                        Content = new StringContent(JsonConvert.SerializeObject(new {
+                            DownloadDataUrl = LogsLink1,
+                            ActivityId = ActivityId,
+                            Status = 2 /* Succeeded */ }))
                     })).Verifiable();
 
+            // Act
             // Test it using the model
-            var result = await target.QueryLogsAsync(query);
-            mockedHttpClient.Verify();
-            Assert.Equal(logsLink1, result);
+            var result = await _target.QueryLogsAsync(query);
+
+            // Assert
+            _mockedHttpClient.Verify();
+            Assert.Equal(LogsLink1, result);
 
         }
 
         #endregion
 
+        #region private methods
+        private StringContent SerializedCapiInterviewer()
+        {
+            return new StringContent(JsonConvert.SerializeObject(_capiInterviewer));
+        }
+        #endregion
     }
 }

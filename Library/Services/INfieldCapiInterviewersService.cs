@@ -13,8 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using Nfield.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,7 +33,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<InterviewerChanged> AddAsync(Interviewer interviewer);
+        Task<CapiInterviewer> AddAsync(Interviewer interviewer);
 
         /// <summary>
         /// Removes the interviewer.
@@ -53,7 +53,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<InterviewerChanged> UpdateAsync(Interviewer interviewer);
+        Task<CapiInterviewer> UpdateAsync(Interviewer interviewer);
 
         /// <summary>
         /// Gets interviewer queryable object.
@@ -80,7 +80,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
-        Task<InterviewerChanged> ChangePasswordAsync(Interviewer interviewer, string password);
+        Task<CapiInterviewer> ChangePasswordAsync(Interviewer interviewer, string password);
 
         /// <summary>
         /// Returns a list of fieldwork offices ids that the interviewer belongs to
