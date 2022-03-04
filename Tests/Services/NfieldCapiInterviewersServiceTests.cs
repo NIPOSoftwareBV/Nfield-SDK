@@ -108,14 +108,13 @@ namespace Nfield.Services
 
             var interviewerOut = new InterviewerChanged
             {
-                InterviewerId = InterviewerId,
-                UserName = "XXX"
+                InterviewerId = InterviewerId
             };
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}"), It.IsAny<UpdateInterviewer>()))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}"), It.IsAny<UpdateCapiInterviewer>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewerOut))));
 
             var target = new NfieldCapiInterviewersService();
