@@ -74,7 +74,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, CapiInterviewersEndpoint + InterviewerId)))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}")))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldCapiInterviewersService();
@@ -115,7 +115,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, CapiInterviewersEndpoint + InterviewerId), It.IsAny<UpdateInterviewer>()))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}"), It.IsAny<UpdateInterviewer>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewerOut))));
 
             var target = new NfieldCapiInterviewersService();
@@ -172,7 +172,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, CapiInterviewersEndpoint + InterviewerId), It.IsAny<object>()))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"{CapiInterviewersEndpoint}{InterviewerId}"), It.IsAny<object>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(interviewer))));
 
             var target = new NfieldCapiInterviewersService();

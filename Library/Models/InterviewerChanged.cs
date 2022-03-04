@@ -31,6 +31,7 @@ namespace Nfield.Models
 
         /// <summary>
         /// User name interviewer uses to sign in
+        [JsonProperty]
         /// </summary>
         public string UserName { get; set; }
     }
