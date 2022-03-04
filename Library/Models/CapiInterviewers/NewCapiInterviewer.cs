@@ -13,26 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using Newtonsoft.Json;
-
 namespace Nfield.Models
 {
-    /// <summary>
-    /// Holds key properties of the created interviewer
-    /// </summary>
-    public class InterviewerChanged
+    public class NewCapiInterviewer : EditCapiInterviewer
     {
         /// <summary>
-        /// Unique id of the interviewer
-        /// </summary>
-        [JsonProperty]
-        public string InterviewerId { get; internal set; }
-
-        /// <summary>
-        /// User name interviewer uses to sign in
-        [JsonProperty]
+        /// The interviewer's username
         /// </summary>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// The initial password for the interviewer.
+        /// </summary>
+        public string Password { get; set; }
     }
 }

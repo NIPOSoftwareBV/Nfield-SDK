@@ -13,16 +13,16 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Quota.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
@@ -37,11 +37,27 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.AddAsync"/>
         /// </summary>
-        public Task<InterviewerChanged> AddAsync(Interviewer interviewer)
+        public Task<CapiInterviewer> AddAsync(Interviewer interviewer)
         {
-            return Client.PostAsJsonAsync(CapiInterviewersApi, interviewer)
+            if (interviewer == null)
+            {
+                throw new ArgumentNullException(nameof(interviewer));
+            }
+
+            var newCapiInterviewer = new NewCapiInterviewer
+            {
+                UserName = interviewer.UserName,
+                Password = interviewer.Password,
+                EmailAddress = interviewer.EmailAddress,
+                FirstName = interviewer.FirstName,
+                LastName = interviewer.LastName,
+                TelephoneNumber = interviewer.TelephoneNumber,
+                IsSupervisor = interviewer.IsSupervisor
+            };
+
+            return Client.PostAsJsonAsync(CapiInterviewersApi, newCapiInterviewer)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<InterviewerChanged>(task.Result))
+                         .ContinueWith(task => JsonConvert.DeserializeObject<CapiInterviewer>(task.Result))
                          .FlattenExceptions();
         }
 
@@ -52,7 +68,7 @@ namespace Nfield.Services.Implementation
         {
             if (interviewer == null)
             {
-                throw new ArgumentNullException("interviewer");
+                throw new ArgumentNullException(nameof(interviewer));
             }
 
             return
@@ -63,14 +79,14 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.UpdateAsync"/>
         /// </summary>
-        public Task<InterviewerChanged> UpdateAsync(Interviewer interviewer)
+        public Task<CapiInterviewer> UpdateAsync(Interviewer interviewer)
         {
             if (interviewer == null)
             {
-                throw new ArgumentNullException("interviewer");
+                throw new ArgumentNullException(nameof(interviewer));
             }
 
-            var updatedInterviewer = new UpdateCapiInterviewer
+            var updatedInterviewer = new EditCapiInterviewer
             {
                 EmailAddress = interviewer.EmailAddress,
                 FirstName = interviewer.FirstName,
@@ -83,7 +99,7 @@ namespace Nfield.Services.Implementation
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObject<InterviewerChanged>(stringTask.Result))
+                             stringTask => JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
                          .FlattenExceptions();
         }
 
@@ -121,18 +137,18 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.ChangePasswordAsync"/>
         /// </summary>
-        public Task<InterviewerChanged> ChangePasswordAsync(Interviewer interviewer, string password)
+        public Task<CapiInterviewer> ChangePasswordAsync(Interviewer interviewer, string password)
         {
             if (interviewer == null)
             {
-                throw new ArgumentNullException("interviewer");
+                throw new ArgumentNullException(nameof(interviewer));
             }
 
-            return Client.PutAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), (object)new { Password = password })
+            return Client.PutAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), new ResetPasswordModel { Password = password })
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObject<InterviewerChanged>(stringTask.Result))
+                             stringTask => JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
                          .FlattenExceptions();
         }
 
@@ -201,6 +217,7 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
+        #region private methods
         private INfieldHttpClient Client
         {
             get { return ConnectionClient.Client; }
@@ -210,14 +227,16 @@ namespace Nfield.Services.Implementation
         {
             get { return new Uri(ConnectionClient.NfieldServerUri, "CapiInterviewers/"); }
         }
-    }
+        #endregion
 
-    internal class UpdateCapiInterviewer
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public string TelephoneNumber { get; set; }
-        public bool IsSupervisor { get; set; }
+        internal class ResetPasswordModel
+        {
+
+            /// <summary>
+            /// The new password specified for the interviewer
+            /// </summary>
+            public string Password { get; set; }
+
+        }
     }
 }
