@@ -13,16 +13,16 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Quota.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
@@ -30,6 +30,7 @@ namespace Nfield.Services.Implementation
     /// Implementation of <see cref="INfieldInterviewersService"/>
     /// </summary>
 
+    [Obsolete(serviceObsoleteMessage)]
     internal class NfieldInterviewersService : INfieldInterviewersService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldInterviewersService
@@ -38,7 +39,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.AddAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> AddAsync(Interviewer interviewer)
         {
             return Client.PostAsJsonAsync(InterviewersApi, interviewer)
@@ -50,7 +50,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.RemoveAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task RemoveAsync(Interviewer interviewer)
         {
             if (interviewer == null)
@@ -66,7 +65,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.UpdateAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> UpdateAsync(Interviewer interviewer)
         {
             if (interviewer == null)
@@ -94,7 +92,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.QueryAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<IQueryable<Interviewer>> QueryAsync()
         {
             return Client.GetAsync(InterviewersApi)
@@ -109,7 +106,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.InterviewerByClientIdAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
@@ -127,7 +123,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.ChangePasswordAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password)
         {
             if (interviewer == null)
@@ -146,7 +141,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldInterviewersService.QueryOfficesOfInterviewerAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId)
         {
             var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
@@ -163,7 +157,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
         {
             var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
@@ -174,7 +167,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldInterviewersService.RemoveInterviewerFromFieldworkOfficesAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
             var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
@@ -185,7 +177,6 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldInterviewersService.QueryLogsAsync"/>
         /// </summary>
-        [Obsolete(serviceObsoleteMessage)]
         public async Task<string> QueryLogsAsync(LogQueryModel query)
         {
             Ensure.ArgumentNotNull(query, nameof(query));

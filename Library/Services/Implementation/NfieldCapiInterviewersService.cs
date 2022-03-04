@@ -229,6 +229,7 @@ namespace Nfield.Services.Implementation
         }
         #endregion
 
+        #region internal classes
         internal class ResetPasswordModel
         {
 
@@ -236,7 +237,20 @@ namespace Nfield.Services.Implementation
             /// The new password specified for the interviewer
             /// </summary>
             public string Password { get; set; }
-
         }
+
+        internal class NewCapiInterviewer : EditCapiInterviewer
+        {
+            /// <summary>
+            /// The interviewer's username
+            /// </summary>
+            public string UserName { get; set; }
+
+            /// <summary>
+            /// The initial password for the interviewer.
+            /// </summary>
+            public string Password { get; set; }
+        }
+        #endregion
     }
 }
