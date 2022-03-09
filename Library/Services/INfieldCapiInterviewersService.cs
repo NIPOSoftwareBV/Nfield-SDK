@@ -33,7 +33,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<CapiInterviewer> AddAsync(Interviewer interviewer);
+        Task<CapiInterviewer> AddAsync(CapiInterviewer interviewer);
 
         /// <summary>
         /// Removes the interviewer.
@@ -43,7 +43,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
-        Task RemoveAsync(Interviewer interviewer);
+        Task RemoveAsync(CapiInterviewer interviewer);
 
         /// <summary>
         /// Updates interviewers data.
@@ -53,7 +53,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<CapiInterviewer> UpdateAsync(Interviewer interviewer);
+        Task<CapiInterviewer> UpdateAsync(CapiInterviewer interviewer);
 
         /// <summary>
         /// Gets interviewer queryable object.
@@ -62,14 +62,14 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
-        Task<IQueryable<Interviewer>> QueryAsync();
+        Task<IQueryable<CapiInterviewer>> QueryAsync();
 
         /// <summary>
         /// Gets the interviewer by clientId
         /// </summary>
         /// <param name="clientInterviewerId"></param>
         /// <returns></returns>
-        Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId);
+        Task<CapiInterviewer> InterviewerByClientIdAsync(string clientInterviewerId);
 
         /// <summary>
         /// Change the password of an interviewer
@@ -80,7 +80,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
-        Task<CapiInterviewer> ChangePasswordAsync(Interviewer interviewer, string password);
+        Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password);
 
         /// <summary>
         /// Returns a list of fieldwork offices ids that the interviewer belongs to

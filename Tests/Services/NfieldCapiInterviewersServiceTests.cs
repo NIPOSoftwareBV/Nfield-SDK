@@ -41,7 +41,7 @@ namespace Nfield.Services
         private const string LogsLink1 = "logs-link-1";
 
         private readonly Uri _capiInterviewersApi;
-        private readonly Interviewer _interviewer;
+        private readonly CapiInterviewer _interviewer;
         private readonly CapiInterviewer _capiInterviewer;
         private readonly NfieldCapiInterviewersService _target;
         private readonly Mock<INfieldHttpClient> _mockedHttpClient;
@@ -56,7 +56,7 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(_mockedNfieldConnection.Object);
             _capiInterviewersApi = new Uri(ServiceAddress, CapiInterviewersEndpoint);
 
-            _interviewer = new Interviewer { InterviewerId = InterviewerId, UserName = "User X" };
+            _interviewer = new CapiInterviewer { InterviewerId = InterviewerId, UserName = "User X" };
             _capiInterviewer = new CapiInterviewer {
                 InterviewerId = _interviewer.InterviewerId,
                 UserName = _interviewer.UserName
