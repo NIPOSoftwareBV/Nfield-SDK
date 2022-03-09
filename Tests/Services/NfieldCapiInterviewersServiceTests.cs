@@ -41,7 +41,7 @@ namespace Nfield.Services
         private const string LogsLink1 = "logs-link-1";
 
         private readonly Uri _capiInterviewersApi;
-        private readonly CapiInterviewer _interviewer;
+        private readonly EditCapiInterviewer _editCapiInterviewer;
         private readonly CapiInterviewer _capiInterviewer;
         private readonly NfieldCapiInterviewersService _target;
         private readonly Mock<INfieldHttpClient> _mockedHttpClient;
@@ -56,10 +56,10 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(_mockedNfieldConnection.Object);
             _capiInterviewersApi = new Uri(ServiceAddress, CapiInterviewersEndpoint);
 
-            _interviewer = new CapiInterviewer { InterviewerId = InterviewerId, UserName = "User X" };
+            _editCapiInterviewer = new EditCapiInterviewer { InterviewerId = InterviewerId, UserName = "User X" };
             _capiInterviewer = new CapiInterviewer {
-                InterviewerId = _interviewer.InterviewerId,
-                UserName = _interviewer.UserName
+                InterviewerId = _editCapiInterviewer.InterviewerId,
+                UserName = _editCapiInterviewer.UserName
             };
         }
 
@@ -71,14 +71,14 @@ namespace Nfield.Services
             // Arrange
             _mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(_capiInterviewersApi,
-                            It.Is<NewCapiInterviewer>(nci => nci.UserName == _interviewer.UserName)))
+                            It.Is<EditCapiInterviewer>(nci => nci.UserName == _editCapiInterviewer.UserName)))
                 .Returns(CreateTask(HttpStatusCode.OK, SerializedCapiInterviewer()));
 
             // Act
-            var actual = await _target.AddAsync(_interviewer);
+            var actual = await _target.AddAsync(_editCapiInterviewer);
 
             // Assert
-            Assert.Equal(_interviewer.UserName, actual.UserName);
+            Assert.Equal(_editCapiInterviewer.UserName, actual.UserName);
             Assert.Equal(_capiInterviewer.InterviewerId, actual.InterviewerId);
         }
 
@@ -103,7 +103,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             // Act & Assert
-            await _target.RemoveAsync(_interviewer);
+            await _target.RemoveAsync(_editCapiInterviewer);
 
             // Assert
             _mockedHttpClient.Verify(
@@ -129,15 +129,15 @@ namespace Nfield.Services
             // Arrange
             _mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(new Uri(_capiInterviewersApi, InterviewerId),
-                                        It.Is<EditCapiInterviewer>(uci => uci.FirstName == _interviewer.FirstName)))
+                                        It.Is<EditCapiInterviewer>(uci => uci.FirstName == _editCapiInterviewer.FirstName)))
                 .Returns(CreateTask(HttpStatusCode.OK, SerializedCapiInterviewer()));
 
             // Act
-            var actual = await _target.UpdateAsync(_interviewer);
+            var actual = await _target.UpdateAsync(_editCapiInterviewer);
 
             // Assert
-            Assert.Equal(_interviewer.InterviewerId, actual.InterviewerId);
-            Assert.Equal(_interviewer.FirstName, actual.FirstName);
+            Assert.Equal(_editCapiInterviewer.InterviewerId, actual.InterviewerId);
+            Assert.Equal(_editCapiInterviewer.FirstName, actual.FirstName);
         }
 
         #endregion
@@ -168,37 +168,7 @@ namespace Nfield.Services
 
         #endregion
 
-        #region ChangePasswordAsync
-
-        [Fact]
-        public void TestChangePasswordAsync_InterviewerIsNull_ThrowsArgumentNullException()
-        {
-            // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.ChangePasswordAsync(null, string.Empty)));
-        }
-
-        [Fact]
-        public async Task TestChangePasswordAsync_ServerChangesPassword_ReturnsInterviewerAsync()
-        {
-            // Arrange
-            var expectedUrl = new Uri(_capiInterviewersApi, InterviewerId);
-            _mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(expectedUrl, It.IsAny<object>()))
-                .Returns(CreateTask(HttpStatusCode.OK, SerializedCapiInterviewer()));
-
-            // Act
-            var actual = await _target.ChangePasswordAsync(_interviewer, Password);
-
-            // Assert
-            Assert.Equal(_interviewer.InterviewerId, actual.InterviewerId);
-            _mockedHttpClient.Verify(
-                h =>
-                    h.PutAsJsonAsync(expectedUrl, It.Is<ResetPasswordModel>(o => o.Password  == Password )),
-                Times.Once());
-        }
-
-        #endregion
-
+       
         #region QueryOfficesOfInterviewerAsync
 
         [Fact]

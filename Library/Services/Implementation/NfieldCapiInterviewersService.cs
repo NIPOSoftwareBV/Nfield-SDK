@@ -37,24 +37,14 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.AddAsync"/>
         /// </summary>
-        public Task<CapiInterviewer> AddAsync(CapiInterviewer interviewer)
+        public Task<CapiInterviewer> AddAsync(EditCapiInterviewer interviewer)
         {
             if (interviewer == null)
             {
                 throw new ArgumentNullException(nameof(interviewer));
             }
 
-            var newCapiInterviewer = new NewCapiInterviewer
-            {
-                UserName = interviewer.UserName,
-                EmailAddress = interviewer.EmailAddress,
-                FirstName = interviewer.FirstName,
-                LastName = interviewer.LastName,
-                TelephoneNumber = interviewer.TelephoneNumber,
-                IsSupervisor = interviewer.IsSupervisor
-            };
-
-            return Client.PostAsJsonAsync(CapiInterviewersApi, newCapiInterviewer)
+            return Client.PostAsJsonAsync(CapiInterviewersApi, interviewer)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<CapiInterviewer>(task.Result))
                          .FlattenExceptions();
@@ -78,23 +68,14 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.UpdateAsync"/>
         /// </summary>
-        public Task<CapiInterviewer> UpdateAsync(CapiInterviewer interviewer)
+        public Task<CapiInterviewer> UpdateAsync(EditCapiInterviewer interviewer)
         {
             if (interviewer == null)
             {
                 throw new ArgumentNullException(nameof(interviewer));
             }
 
-            var updatedInterviewer = new EditCapiInterviewer
-            {
-                EmailAddress = interviewer.EmailAddress,
-                FirstName = interviewer.FirstName,
-                LastName = interviewer.LastName,
-                TelephoneNumber = interviewer.TelephoneNumber,
-                IsSupervisor = interviewer.IsSupervisor
-            };
-
-            return Client.PatchAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), updatedInterviewer)
+            return Client.PatchAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), interviewer)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
@@ -130,24 +111,6 @@ namespace Nfield.Services.Implementation
                          .ContinueWith(
                              stringTask =>
                              JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
-                         .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// See <see cref="INfieldCapiInterviewersService.ChangePasswordAsync"/>
-        /// </summary>
-        public Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password)
-        {
-            if (interviewer == null)
-            {
-                throw new ArgumentNullException(nameof(interviewer));
-            }
-
-            return Client.PutAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), new ResetPasswordModel { Password = password })
-                         .ContinueWith(
-                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(
-                             stringTask => JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
                          .FlattenExceptions();
         }
 
@@ -238,18 +201,6 @@ namespace Nfield.Services.Implementation
             public string Password { get; set; }
         }
 
-        internal class NewCapiInterviewer : EditCapiInterviewer
-        {
-            /// <summary>
-            /// The interviewer's username
-            /// </summary>
-            public string UserName { get; set; }
-
-            /// <summary>
-            /// The initial password for the interviewer.
-            /// </summary>
-            public string Password { get; set; }
-        }
         #endregion
     }
 }

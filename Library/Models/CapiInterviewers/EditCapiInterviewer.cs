@@ -15,33 +15,11 @@
 
 namespace Nfield.Models
 {
-    public class EditCapiInterviewer
+    public class EditCapiInterviewer: CapiInterviewer
     {
         /// <summary>
-        /// First name of the interviewer
+        /// Password of the interviewer (separate so it can only be set)
         /// </summary>
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// Last name of the interviewer
-        /// </summary>
-        public string LastName { get; set; }
-
-        /// <summary>
-        /// Email Address of the interviewer
-        /// </summary>
-        public string EmailAddress { get; set; }
-
-        /// <summary>
-        /// TelephoneNumber of the interviewer
-        /// </summary>
-        public string TelephoneNumber { get; set; }
-
-        /// <summary>
-        /// Property indicating weather the interviewer is a supervisor or not.  
-        /// Supervisors have special powers e.g. they can enter and modify the 
-        /// device ID in the CAPI client application in the Settings page.
-        /// </summary>
-        public bool IsSupervisor { get; set; }
+        public string Password { get;  set; }
     }
 }
