@@ -37,7 +37,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.AddAsync"/>
         /// </summary>
-        public Task<CapiInterviewer> AddAsync(Interviewer interviewer)
+        public Task<CapiInterviewer> AddAsync(CapiInterviewer interviewer)
         {
             if (interviewer == null)
             {
@@ -47,7 +47,6 @@ namespace Nfield.Services.Implementation
             var newCapiInterviewer = new NewCapiInterviewer
             {
                 UserName = interviewer.UserName,
-                Password = interviewer.Password,
                 EmailAddress = interviewer.EmailAddress,
                 FirstName = interviewer.FirstName,
                 LastName = interviewer.LastName,
@@ -64,7 +63,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.RemoveAsync"/>
         /// </summary>
-        public Task RemoveAsync(Interviewer interviewer)
+        public Task RemoveAsync(CapiInterviewer interviewer)
         {
             if (interviewer == null)
             {
@@ -79,7 +78,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.UpdateAsync"/>
         /// </summary>
-        public Task<CapiInterviewer> UpdateAsync(Interviewer interviewer)
+        public Task<CapiInterviewer> UpdateAsync(CapiInterviewer interviewer)
         {
             if (interviewer == null)
             {
@@ -106,21 +105,21 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.QueryAsync"/>
         /// </summary>
-        public Task<IQueryable<Interviewer>> QueryAsync()
+        public Task<IQueryable<CapiInterviewer>> QueryAsync()
         {
             return Client.GetAsync(CapiInterviewersApi)
                          .ContinueWith(
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<List<Interviewer>>(stringTask.Result).AsQueryable())
+                             JsonConvert.DeserializeObject<List<CapiInterviewer>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
         }
 
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.InterviewerByClientIdAsync"/>
         /// </summary>
-        public Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
+        public Task<CapiInterviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
             var uri = new Uri(CapiInterviewersApi, $"GetByClientId/{clientInterviewerId}");
@@ -130,14 +129,14 @@ namespace Nfield.Services.Implementation
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<Interviewer>(stringTask.Result))
+                             JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
                          .FlattenExceptions();
         }
 
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.ChangePasswordAsync"/>
         /// </summary>
-        public Task<CapiInterviewer> ChangePasswordAsync(Interviewer interviewer, string password)
+        public Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password)
         {
             if (interviewer == null)
             {
