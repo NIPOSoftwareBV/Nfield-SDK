@@ -26,19 +26,19 @@ namespace Nfield.Services
     public interface INfieldCapiInterviewersService
     {
         /// <summary>
-        /// Adds a new interviewer.
+        /// Adds a new CAPI interviewer.
         /// </summary>
-        /// <param name="interviewer">The interviewer to add.</param>
+        /// <param name="interviewer">The CAPI interviewer to add.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<CapiInterviewer> AddAsync(EditCapiInterviewer interviewer);
+        Task<CapiInterviewer> AddAsync(CreateCapiInterviewer interviewer);
 
         /// <summary>
-        /// Removes the interviewer.
+        /// Removes the CAPI interviewer.
         /// </summary>
-        /// <param name="interviewer">The interviewer to remove.</param>
+        /// <param name="interviewer">The CAPI interviewer to remove.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
@@ -46,17 +46,17 @@ namespace Nfield.Services
         Task RemoveAsync(CapiInterviewer interviewer);
 
         /// <summary>
-        /// Updates interviewers data.
+        /// Updates a CAPI interviewer's data.
         /// </summary>
-        /// <param name="interviewer">The interviewer to update.</param>
+        /// <param name="interviewer">The CAPI interviewer to update.</param>
         /// <exception cref="T:System.AggregateException"></exception> 
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<CapiInterviewer> UpdateAsync(EditCapiInterviewer interviewer);
+        Task<CapiInterviewer> UpdateAsync(CapiInterviewer interviewer);
 
         /// <summary>
-        /// Gets interviewer queryable object.
+        /// Gets CAPI interviewer queryable object.
         /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
         /// The aggregate exception can contain:
@@ -65,21 +65,33 @@ namespace Nfield.Services
         Task<IQueryable<CapiInterviewer>> QueryAsync();
 
         /// <summary>
-        /// Gets the interviewer by clientId
+        /// Gets the CAPI interviewer by clientId
         /// </summary>
         /// <param name="clientInterviewerId"></param>
         /// <returns></returns>
         Task<CapiInterviewer> InterviewerByClientIdAsync(string clientInterviewerId);
 
         /// <summary>
-        /// Returns a list of fieldwork offices ids that the interviewer belongs to
+        /// Change the password of a CAPI interviewer
+        /// </summary>
+        /// <param name="interviewer">CAPI interviewer whose password to change</param>
+        /// <param name="password">the new password</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
+        Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password);
+
+
+        /// <summary>
+        /// Returns a list of fieldwork offices ids that the CAPI interviewer belongs to
         /// </summary>
         /// <param name="interviewerId"></param>
         /// <returns></returns>
         Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId);
 
         /// <summary>
-        /// Assigns an interviewer to a fieldwork office
+        /// Assigns an CAPI interviewer to a fieldwork office
         /// </summary>
         /// <param name="interviewerId"></param>
         /// <param name="officeId"></param>
@@ -87,7 +99,7 @@ namespace Nfield.Services
         Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
 
         /// <summary>
-        /// Unassigns an interviewer from a fieldwork office
+        /// Unassigns a CAPI interviewer from a fieldwork office
         /// </summary>
         /// <param name="interviewerId"></param>
         /// <param name="fieldworkOfficeId"></param>
@@ -95,7 +107,7 @@ namespace Nfield.Services
         Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId);
 
         /// <summary>
-        /// Asks for interviewers work logs and gets the URL to perform the download (UTC datetime)
+        /// Asks for CAPI interviewer's work logs and gets the URL to perform the download (UTC datetime)
         /// </summary>
         /// <param name="query">Query model with UTC datetime</param>
         /// <returns>URL to download the file</returns>

@@ -15,10 +15,10 @@
 
 namespace Nfield.Models
 {
-    public class EditCapiInterviewer: CapiInterviewer
+    public class CreateCapiInterviewer: CapiInterviewer
     {
         /// <summary>
-        /// Password of the interviewer (separate so it can only be set)
+        /// Password of the interviewer (separate so it can only be set at create time, but not when updating)
         /// </summary>
         public string Password { get;  set; }
     }

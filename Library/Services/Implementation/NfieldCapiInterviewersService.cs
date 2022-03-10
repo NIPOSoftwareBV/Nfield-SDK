@@ -37,7 +37,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.AddAsync"/>
         /// </summary>
-        public Task<CapiInterviewer> AddAsync(EditCapiInterviewer interviewer)
+        public Task<CapiInterviewer> AddAsync(CreateCapiInterviewer interviewer)
         {
             if (interviewer == null)
             {
@@ -68,7 +68,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldCapiInterviewersService.UpdateAsync"/>
         /// </summary>
-        public Task<CapiInterviewer> UpdateAsync(EditCapiInterviewer interviewer)
+        public Task<CapiInterviewer> UpdateAsync(CapiInterviewer interviewer)
         {
             if (interviewer == null)
             {
@@ -166,7 +166,26 @@ namespace Nfield.Services.Implementation
                           .FlattenExceptions().ConfigureAwait(true);
         }
 
+        /// <summary>
+        /// See <see cref="INfieldInterviewersService.ChangePasswordAsync"/>
+        /// </summary>
+        public Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password)
+        {
+            if (interviewer == null)
+            {
+                throw new ArgumentNullException("interviewer");
+            }
+
+            return Client.PutAsJsonAsync(new Uri(CapiInterviewersApi, interviewer.InterviewerId), (object)new { Password = password })
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask => JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
+                         .FlattenExceptions();
+        }
+
         #endregion
+
 
         #region Implementation of INfieldConnectionClientObject
 
