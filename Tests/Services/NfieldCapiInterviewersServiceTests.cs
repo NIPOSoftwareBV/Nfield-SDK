@@ -33,12 +33,14 @@ namespace Nfield.Services
     public class NfieldCapiInterviewersServiceTests : NfieldServiceTestsBase
     {
         private const string CapiInterviewersEndpoint = "CapiInterviewers/";
+        private const string InterviewersEndpoint = "Interviewers/";
         private const string InterviewerId = "Interviewer X";
         private const string FieldworkOfficeId = "Barcelona";
         private const string ActivityId = "activity-id";
         private const string LogsLink1 = "logs-link-1";
 
         private readonly Uri _capiInterviewersApi;
+        private readonly Uri _interviewersApi;
         private readonly CreateCapiInterviewer _createCapiInterviewer;
         private readonly CapiInterviewer _capiInterviewer;
         private readonly NfieldCapiInterviewersService _target;
@@ -53,6 +55,7 @@ namespace Nfield.Services
             _target = new NfieldCapiInterviewersService();
             _target.InitializeNfieldConnection(_mockedNfieldConnection.Object);
             _capiInterviewersApi = new Uri(ServiceAddress, CapiInterviewersEndpoint);
+            _interviewersApi = new Uri(ServiceAddress, InterviewersEndpoint);
 
             _createCapiInterviewer = new CreateCapiInterviewer { InterviewerId = InterviewerId, UserName = "User X" };
             _capiInterviewer = new CapiInterviewer {
@@ -181,7 +184,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(_capiInterviewersApi, $"{InterviewerId}/Offices")))
+                .Setup(client => client.GetAsync(new Uri(_interviewersApi, $"{InterviewerId}/Offices")))
                 .Returns(CreateTask(HttpStatusCode.OK,
                     new StringContent(JsonConvert.SerializeObject(expectedFieldworkOffices))));
 
@@ -204,7 +207,7 @@ namespace Nfield.Services
         public async Task TestAddInterviewerToFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgsAsync()
         {
             // Arrange
-            var expectedUrl = new Uri(_capiInterviewersApi, $"{InterviewerId}/Offices");
+            var expectedUrl = new Uri(_interviewersApi, $"{InterviewerId}/Offices");
             _mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(expectedUrl, It.Is<InterviewerFieldworkOfficeModel>(f => f.OfficeId == FieldworkOfficeId)))
                 .Returns(CreateTask(HttpStatusCode.OK));
@@ -226,7 +229,7 @@ namespace Nfield.Services
         public async Task TestRemoveInterviewerFromFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgsAsync()
         {
             // Arrange
-            var expectedUrl = new Uri(_capiInterviewersApi, $"{InterviewerId}/Offices/{FieldworkOfficeId}");
+            var expectedUrl = new Uri(_interviewersApi, $"{InterviewerId}/Offices/{FieldworkOfficeId}");
 
             _mockedHttpClient
                 .Setup(client => client.DeleteAsync(expectedUrl))

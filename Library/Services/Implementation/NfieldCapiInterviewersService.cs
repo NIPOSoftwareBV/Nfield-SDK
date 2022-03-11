@@ -119,7 +119,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId)
         {
-            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices");
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
 
             return Client.GetAsync(uri)
                          .ContinueWith(
@@ -135,7 +135,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
         {
-            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices");
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
 
             return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel { OfficeId = officeId }).FlattenExceptions();
         }
@@ -145,7 +145,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
         {
-            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
+            var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
 
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
@@ -209,6 +209,12 @@ namespace Nfield.Services.Implementation
             get { return new Uri(ConnectionClient.NfieldServerUri, "CapiInterviewers/"); }
         }
         #endregion
+
+        // Required for interviewer offices operations
+        private Uri InterviewersApi
+        {
+            get { return new Uri(ConnectionClient.NfieldServerUri, "Interviewers/"); }
+        }
 
         #region internal classes
         internal class ResetPasswordModel
