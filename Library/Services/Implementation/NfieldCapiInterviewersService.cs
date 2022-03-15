@@ -156,12 +156,6 @@ namespace Nfield.Services.Implementation
         }
         #endregion
 
-        // Required for interviewer offices operations
-        private Uri InterviewersApi
-        {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "Interviewers/"); }
-        }
-
         #region internal classes
         internal class ResetPasswordModel
         {
