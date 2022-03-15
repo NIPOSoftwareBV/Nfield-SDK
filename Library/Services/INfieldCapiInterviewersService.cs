@@ -81,36 +81,5 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
         Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password);
-
-
-        /// <summary>
-        /// Returns a list of fieldwork offices ids that the CAPI interviewer belongs to
-        /// </summary>
-        /// <param name="interviewerId"></param>
-        /// <returns></returns>
-        Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId);
-
-        /// <summary>
-        /// Assigns an CAPI interviewer to a fieldwork office
-        /// </summary>
-        /// <param name="interviewerId"></param>
-        /// <param name="officeId"></param>
-        /// <returns></returns>
-        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
-
-        /// <summary>
-        /// Unassigns a CAPI interviewer from a fieldwork office
-        /// </summary>
-        /// <param name="interviewerId"></param>
-        /// <param name="fieldworkOfficeId"></param>
-        /// <returns></returns>
-        Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId);
-
-        /// <summary>
-        /// Asks for CAPI interviewer's work logs and gets the URL to perform the download (UTC datetime)
-        /// </summary>
-        /// <param name="query">Query model with UTC datetime</param>
-        /// <returns>URL to download the file</returns>
-        Task<string> QueryLogsAsync(LogQueryModel query);
     }
 }

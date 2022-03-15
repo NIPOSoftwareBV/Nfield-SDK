@@ -17,8 +17,6 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
-using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
-using Nfield.Quota.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,58 +110,6 @@ namespace Nfield.Services.Implementation
                              stringTask =>
                              JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
                          .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// <see cref="INfieldCapiInterviewersService.QueryOfficesOfInterviewerAsync"/>
-        /// </summary>
-        public Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId)
-        {
-            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices");
-
-            return Client.GetAsync(uri)
-                         .ContinueWith(
-                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(
-                             stringTask =>
-                             JsonConvert.DeserializeObject<IEnumerable<string>>(stringTask.Result))
-                         .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// <see cref="INfieldCapiInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
-        /// </summary>
-        public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
-        {
-            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices");
-
-            return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel { OfficeId = officeId }).FlattenExceptions();
-        }
-
-        /// <summary>
-        /// <see cref="INfieldCapiInterviewersService.RemoveInterviewerFromFieldworkOfficesAsync"/>
-        /// </summary>
-        public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId)
-        {
-            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices/{fieldworkOfficeId}");
-
-            return Client.DeleteAsync(uri).FlattenExceptions();
-        }
-
-        /// <summary>
-        /// <see cref="INfieldCapiInterviewersService.QueryLogsAsync"/>
-        /// </summary>
-        public async Task<string> QueryLogsAsync(LogQueryModel query)
-        {
-            Ensure.ArgumentNotNull(query, nameof(query));
-
-            var uri = new Uri(ConnectionClient.NfieldServerUri, "InterviewersWorklog");
-
-            return await Client.PostAsJsonAsync(uri, query)
-                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                          .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
-                          .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
-                          .FlattenExceptions().ConfigureAwait(true);
         }
 
         /// <summary>

@@ -30,7 +30,6 @@ namespace Nfield.Services.Implementation
     /// Implementation of <see cref="INfieldInterviewersService"/>
     /// </summary>
 
-    [Obsolete(serviceObsoleteMessage)]
     internal class NfieldInterviewersService : INfieldInterviewersService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldInterviewersService
@@ -50,6 +49,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.RemoveAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task RemoveAsync(Interviewer interviewer)
         {
             if (interviewer == null)
@@ -65,6 +65,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.UpdateAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> UpdateAsync(Interviewer interviewer)
         {
             if (interviewer == null)
@@ -92,6 +93,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.QueryAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<IQueryable<Interviewer>> QueryAsync()
         {
             return Client.GetAsync(InterviewersApi)
@@ -106,6 +108,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.InterviewerByClientIdAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
@@ -123,6 +126,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.ChangePasswordAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password)
         {
             if (interviewer == null)
