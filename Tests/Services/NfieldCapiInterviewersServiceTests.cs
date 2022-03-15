@@ -33,14 +33,9 @@ namespace Nfield.Services
     public class NfieldCapiInterviewersServiceTests : NfieldServiceTestsBase
     {
         private const string CapiInterviewersEndpoint = "CapiInterviewers/";
-        private const string InterviewersEndpoint = "Interviewers/";
         private const string InterviewerId = "Interviewer X";
-        private const string FieldworkOfficeId = "Barcelona";
-        private const string ActivityId = "activity-id";
-        private const string LogsLink1 = "logs-link-1";
 
         private readonly Uri _capiInterviewersApi;
-        private readonly Uri _interviewersApi;
         private readonly CreateCapiInterviewer _createCapiInterviewer;
         private readonly CapiInterviewer _capiInterviewer;
         private readonly NfieldCapiInterviewersService _target;
@@ -55,7 +50,6 @@ namespace Nfield.Services
             _target = new NfieldCapiInterviewersService();
             _target.InitializeNfieldConnection(_mockedNfieldConnection.Object);
             _capiInterviewersApi = new Uri(ServiceAddress, CapiInterviewersEndpoint);
-            _interviewersApi = new Uri(ServiceAddress, InterviewersEndpoint);
 
             _createCapiInterviewer = new CreateCapiInterviewer { InterviewerId = InterviewerId, UserName = "User X" };
             _capiInterviewer = new CapiInterviewer {
@@ -165,131 +159,6 @@ namespace Nfield.Services
             Assert.Equal(2, actualInterviewers.Count());
             Assert.Equal(expectedInterviewers[0].InterviewerId, actualInterviewers.ToArray()[0].InterviewerId);
             Assert.Equal(expectedInterviewers[1].InterviewerId, actualInterviewers.ToArray()[1].InterviewerId);
-        }
-
-        #endregion
-
-       
-        #region QueryOfficesOfInterviewerAsync
-
-        [Fact]
-        public async Task TestQueryOfficesOfInterviewerAsync_ServerReturnsQuery_ReturnsListWithFieldworkOfficesAsync()
-        {
-            // Arrange
-            var expectedFieldworkOffices = new[]
-            {
-                "Amsterdam",
-                "Barcelona",
-                "Headquarters"
-            };
-
-            _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(_interviewersApi, $"{InterviewerId}/Offices")))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject(expectedFieldworkOffices))));
-
-            // Act
-            var actualFieldworkOffices = await _target.QueryOfficesOfInterviewerAsync(InterviewerId);
-
-            // Assert
-            var fieldworkOffices = actualFieldworkOffices as string[] ?? actualFieldworkOffices.ToArray();
-            Assert.Equal(expectedFieldworkOffices[0], fieldworkOffices[0]);
-            Assert.Equal(expectedFieldworkOffices[1], fieldworkOffices[1]);
-            Assert.Equal(expectedFieldworkOffices[2], fieldworkOffices[2]);
-            Assert.Equal(3, fieldworkOffices.Count());
-        }
-
-        #endregion
-
-        #region AddInterviewerToFieldworkOfficesAsync
-
-        [Fact]
-        public async Task TestAddInterviewerToFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgsAsync()
-        {
-            // Arrange
-            var expectedUrl = new Uri(_interviewersApi, $"{InterviewerId}/Offices");
-            _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(expectedUrl, It.Is<InterviewerFieldworkOfficeModel>(f => f.OfficeId == FieldworkOfficeId)))
-                .Returns(CreateTask(HttpStatusCode.OK));
-
-            // Act
-            await _target.AddInterviewerToFieldworkOfficesAsync(InterviewerId, FieldworkOfficeId);
-
-            _mockedHttpClient.Verify(
-                h =>
-                    h.PostAsJsonAsync(expectedUrl, It.Is<InterviewerFieldworkOfficeModel>(f => f.OfficeId == FieldworkOfficeId)),
-                Times.Once());
-        }
-
-        #endregion
-
-        #region RemoveInterviewerFromFieldworkOfficesAsync
-
-        [Fact]
-        public async Task TestRemoveInterviewerFromFieldworkOfficesAsync_WhenExecuted_CallsClientPostAsJsonAsyncWithCorrectArgsAsync()
-        {
-            // Arrange
-            var expectedUrl = new Uri(_interviewersApi, $"{InterviewerId}/Offices/{FieldworkOfficeId}");
-
-            _mockedHttpClient
-                .Setup(client => client.DeleteAsync(expectedUrl))
-                .Returns(CreateTask(HttpStatusCode.OK));
-
-            // Act
-            await _target.RemoveInterviewerFromFieldworkOfficesAsync(InterviewerId, FieldworkOfficeId);
-
-            // Assert
-            _mockedHttpClient.Verify(
-                h =>
-                    h.DeleteAsync(expectedUrl),
-                Times.Once());
-        }
-
-        #endregion
-
-        #region GetInterviewersWorklogDownloadLinkAsync
-
-        [Fact]
-        public async Task TestQueryLogsAsync_ReturnsCorrectLogsLink()
-        {
-            // Arrange
-            var query = new LogQueryModel
-            {
-                From = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1)),
-                To = DateTime.UtcNow
-            };
-
-            _mockedHttpClient
-               .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "InterviewersWorklog"), It.Is<LogQueryModel>(
-                   q => q.From == query.From && q.To == query.To)))
-               .Returns(
-                Task.Factory.StartNew(
-                    () =>
-                    new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = ActivityId }))
-                    })).Verifiable();
-
-            _mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{ActivityId}")))
-                .Returns(Task.Factory.StartNew(
-                    () =>
-                    new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(JsonConvert.SerializeObject(new {
-                            DownloadDataUrl = LogsLink1,
-                            ActivityId = ActivityId,
-                            Status = 2 /* Succeeded */ }))
-                    })).Verifiable();
-
-            // Act
-            // Test it using the model
-            var result = await _target.QueryLogsAsync(query);
-
-            // Assert
-            _mockedHttpClient.Verify();
-            Assert.Equal(LogsLink1, result);
-
         }
 
         #endregion
