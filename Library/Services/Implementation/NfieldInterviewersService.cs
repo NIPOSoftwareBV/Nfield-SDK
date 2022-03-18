@@ -13,26 +13,28 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Quota.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
     /// <summary>
     /// Implementation of <see cref="INfieldInterviewersService"/>
     /// </summary>
+
     internal class NfieldInterviewersService : INfieldInterviewersService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldInterviewersService
 
+        const string serviceObsoleteMessage = "NfieldInterviewersService is obsolete, please use NfieldCapiInterviewersService instead.";
         /// <summary>
         /// See <see cref="INfieldInterviewersService.AddAsync"/>
         /// </summary>
@@ -47,6 +49,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.RemoveAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task RemoveAsync(Interviewer interviewer)
         {
             if (interviewer == null)
@@ -62,6 +65,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.UpdateAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> UpdateAsync(Interviewer interviewer)
         {
             if (interviewer == null)
@@ -89,6 +93,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.QueryAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<IQueryable<Interviewer>> QueryAsync()
         {
             return Client.GetAsync(InterviewersApi)
@@ -103,6 +108,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.InterviewerByClientIdAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId)
         {
 
@@ -120,6 +126,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldInterviewersService.ChangePasswordAsync"/>
         /// </summary>
+        [Obsolete(serviceObsoleteMessage)]
         public Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password)
         {
             if (interviewer == null)

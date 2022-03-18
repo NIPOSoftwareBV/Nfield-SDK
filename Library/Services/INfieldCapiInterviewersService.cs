@@ -13,103 +13,73 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using Nfield.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
     /// <summary>
-    /// Represents a set of methods to read and update the interviewer data.
+    /// Represents a set of methods to read and update the CAPI interviewer data.
     /// </summary>
-    public interface INfieldInterviewersService
+    public interface INfieldCapiInterviewersService
     {
         /// <summary>
-        /// Adds a new interviewer.
+        /// Adds a new CAPI interviewer.
         /// </summary>
-        /// <param name="interviewer">The interviewer to add.</param>
+        /// <param name="interviewer">The CAPI interviewer to add.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<Interviewer> AddAsync(Interviewer interviewer);
+        Task<CapiInterviewer> AddAsync(CreateCapiInterviewer interviewer);
 
         /// <summary>
-        /// Removes the interviewer.
+        /// Removes the CAPI interviewer.
         /// </summary>
-        /// <param name="interviewer">The interviewer to remove.</param>
+        /// <param name="interviewer">The CAPI interviewer to remove.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
-        Task RemoveAsync(Interviewer interviewer);
+        Task RemoveAsync(CapiInterviewer interviewer);
 
         /// <summary>
-        /// Updates interviewers data.
+        /// Updates a CAPI interviewer's data.
         /// </summary>
-        /// <param name="interviewer">The interviewer to update.</param>
+        /// <param name="interviewer">The CAPI interviewer to update.</param>
         /// <exception cref="T:System.AggregateException"></exception> 
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<Interviewer> UpdateAsync(Interviewer interviewer);
+        Task<CapiInterviewer> UpdateAsync(CapiInterviewer interviewer);
 
         /// <summary>
-        /// Gets interviewer queryable object.
+        /// Gets CAPI interviewer queryable object.
         /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
-        Task<IQueryable<Interviewer>> QueryAsync();
+        Task<IQueryable<CapiInterviewer>> QueryAsync();
 
         /// <summary>
-        /// Gets the interviewer by clientId
+        /// Gets the CAPI interviewer by clientId
         /// </summary>
         /// <param name="clientInterviewerId"></param>
         /// <returns></returns>
-        Task<Interviewer> InterviewerByClientIdAsync(string clientInterviewerId);
+        Task<CapiInterviewer> InterviewerByClientIdAsync(string clientInterviewerId);
 
         /// <summary>
-        /// Change the password of an interviewer
+        /// Change the password of a CAPI interviewer
         /// </summary>
-        /// <param name="interviewer">interviewer whose password to change</param>
+        /// <param name="interviewer">CAPI interviewer whose password to change</param>
         /// <param name="password">the new password</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
-        Task<Interviewer> ChangePasswordAsync(Interviewer interviewer, string password);
-
-        /// <summary>
-        /// Returns a list of fieldwork offices ids that the interviewer belongs to
-        /// </summary>
-        /// <param name="interviewerId"></param>
-        /// <returns></returns>
-        Task<IEnumerable<string>> QueryOfficesOfInterviewerAsync(string interviewerId);
-
-        /// <summary>
-        /// Assigns an interviewer to a fieldwork office
-        /// </summary>
-        /// <param name="interviewerId"></param>
-        /// <param name="officeId"></param>
-        /// <returns></returns>
-        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
-
-        /// <summary>
-        /// Unassigns an interviewer from a fieldwork office
-        /// </summary>
-        /// <param name="interviewerId"></param>
-        /// <param name="fieldworkOfficeId"></param>
-        /// <returns></returns>
-        Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId);
-
-        /// <summary>
-        /// Asks for interviewers work logs and gets the URL to perform the download (UTC datetime)
-        /// </summary>
-        /// <param name="query">Query model with UTC datetime</param>
-        /// <returns>URL to download the file</returns>
-        Task<string> QueryLogsAsync(LogQueryModel query);
+        Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password);
     }
 }
