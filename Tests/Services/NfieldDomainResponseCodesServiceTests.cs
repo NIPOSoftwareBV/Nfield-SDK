@@ -64,7 +64,13 @@ namespace Nfield.Services
             {
                 Id = 15,
                 Description = "Description",              
-                Url = "http://www.google.com"
+                Url = "http://www.google.com",
+                IsDefinite = true,
+                IsSelectable = true,
+                AllowAppointment = true,
+                ChannelCapi = true,
+                ChannelCati = true,
+                ChannelOnline = true
             };
             mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -92,7 +98,13 @@ namespace Nfield.Services
             {
                 Id = 15,
                 Description = "Description",             
-                Url = "http://www.google.com"
+                Url = "http://www.google.com",
+                IsDefinite = true,
+                IsSelectable = true,
+                AllowAppointment = true,
+                ChannelCapi = true,
+                ChannelCati = true,
+                ChannelOnline = true
             };
             mockedHttpClient.Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<DomainResponseCode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -107,6 +119,12 @@ namespace Nfield.Services
             Assert.Equal(responseCodeToAdd.Id, result.Id);
             Assert.Equal(responseCodeToAdd.Description, result.Description);
             Assert.Equal(responseCodeToAdd.Url, result.Url);
+            Assert.Equal(responseCodeToAdd.IsDefinite, result.IsDefinite);
+            Assert.Equal(responseCodeToAdd.IsSelectable, result.IsSelectable);
+            Assert.Equal(responseCodeToAdd.AllowAppointment, result.AllowAppointment);
+            Assert.Equal(responseCodeToAdd.ChannelCapi, result.ChannelCapi);
+            Assert.Equal(responseCodeToAdd.ChannelCati, result.ChannelCati);
+            Assert.Equal(responseCodeToAdd.ChannelOnline, result.ChannelOnline);
         }
 
         #endregion
@@ -134,7 +152,13 @@ namespace Nfield.Services
             {
                 Id = code,
                 Description = "Description",
-                Url = "http://www.google.com"
+                Url = "http://www.google.com",
+                IsDefinite = true,
+                IsSelectable = true,
+                AllowAppointment = true,
+                ChannelCapi = true,
+                ChannelCati = true,
+                ChannelOnline = true
             };
             mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<UpdateDomainResponsecode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -166,7 +190,13 @@ namespace Nfield.Services
             {
                 Id = code,
                 Description = "Description",
-                Url = "http://www.google.com"
+                Url = "http://www.google.com",
+                IsDefinite = true,
+                IsSelectable = true,
+                AllowAppointment = true,
+                ChannelCapi = true,
+                ChannelCati = true,
+                ChannelOnline = true
             };
             mockedHttpClient.Setup(client => client.PatchAsJsonAsync(It.IsAny<Uri>(), It.IsAny<UpdateDomainResponsecode>()))
                 .Returns(CreateTask(HttpStatusCode.OK,
@@ -181,6 +211,12 @@ namespace Nfield.Services
             Assert.Equal(responseCodeToUpdate.Id, result.Id);
             Assert.Equal(responseCodeToUpdate.Description, result.Description);
             Assert.Equal(responseCodeToUpdate.Url, result.Url);
+            Assert.Equal(responseCodeToUpdate.IsDefinite, result.IsDefinite);
+            Assert.Equal(responseCodeToUpdate.IsSelectable, result.IsSelectable);
+            Assert.Equal(responseCodeToUpdate.AllowAppointment, result.AllowAppointment);
+            Assert.Equal(responseCodeToUpdate.ChannelCapi, result.ChannelCapi);
+            Assert.Equal(responseCodeToUpdate.ChannelCati, result.ChannelCati);
+            Assert.Equal(responseCodeToUpdate.ChannelOnline, result.ChannelOnline);
         }
 
         #endregion
