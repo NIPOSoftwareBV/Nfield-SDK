@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1e917b58-1663-43dd-8910-d5eebf555707",
 		"name": "Nfield Public API",
+		"_postman_id": "af56a668-a8db-4daa-98a6-c7c4ffbf7bbd",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9960585"
 	},
 	"item": [
 		{
@@ -856,7 +857,7 @@
 														"{{origin}}"
 													],
 													"path": [
-														"v1",														
+														"v1",
 														"Interviewers",
 														":InterviewerId",
 														"Offices",
@@ -4384,7 +4385,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/SamplingPointId/QuotaTargets",
 																	"host": [
 																		"{{origin}}"
 																	],
@@ -4848,7 +4849,7 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/SamplingPointId/Addresses/AddressId",
 																			"host": [
 																				"{{origin}}v1"
 																			],
@@ -11914,7 +11915,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"Id\":\"200\",\r\n    \"Description\":\"Postman response code description\",\r\n    \"Url\":null\r\n}\r\n",
+											"raw": "{\r\n    \"Description\":\"Postman response code description\",\r\n    \"Url\":null,\r\n    \"IsDefinite\": null,\r\n    \"IsSelectable\": null,\r\n    \"AllowAppointment\": null,\r\n    \"ChannelCapi\": null,\r\n    \"ChannelCati\": null,\r\n    \"ChannelOnline\": null\r\n}\r\n",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -11983,7 +11984,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"Description\":\"Postman response updated\",\r\n    \"Url\": null\r\n}",
+											"raw": "{\r\n    \"Description\":\"Postman response updated\",\r\n    \"Url\": null,\r\n    \"IsDefinite\": null,\r\n    \"IsSelectable\": null,\r\n    \"AllowAppointment\": null,\r\n    \"ChannelCapi\": null,\r\n    \"ChannelCati\": null,\r\n    \"ChannelOnline\": null\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -13360,7 +13361,7 @@
 		},
 		{
 			"key": "TaskId",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "OfficeId",
@@ -13384,7 +13385,7 @@
 		},
 		{
 			"key": "ThemeTestName",
-			"value": "QuestionTypesTheme"			
+			"value": "QuestionTypesTheme"
 		},
 		{
 			"key": "ActivityId",
@@ -13404,7 +13405,7 @@
 		},
 		{
 			"key": "InstructionsFileName",
-			"value": "Instructions"			
+			"value": "Instructions"
 		},
 		{
 			"key": "InterviewId",
@@ -13412,11 +13413,11 @@
 		},
 		{
 			"key": "FileName",
-			"value": "MediaFileName"			
+			"value": "MediaFileName"
 		},
 		{
 			"key": "ETag",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "SamplingPointId",
@@ -13432,7 +13433,7 @@
 		},
 		{
 			"key": "FragmentName",
-			"value": "SurveyScriptFragment"			
+			"value": "SurveyScriptFragment"
 		},
 		{
 			"key": "IdentityId",
@@ -13448,15 +13449,15 @@
 		},
 		{
 			"key": "UserDirectoryTenantId",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "UserDirectoryObjectId",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "InternalVariable",
-			"value": ""			
+			"value": ""
 		}
 	]
 }
