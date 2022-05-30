@@ -65,7 +65,7 @@ namespace Nfield.Models
         public bool? AllowAppointment { get; set; }
 
         /// <summary>
-        /// Indicates if the response code is avaliable for Capi surveys
+        /// Indicates if the response code is available for Capi surveys
         /// Default value:
         ///     - system response code (below code 200): it depends of the response code
         ///     - custom response code (above code 200): TRUE
@@ -73,7 +73,7 @@ namespace Nfield.Models
         public bool? ChannelCapi { get; set; }
 
         /// <summary>
-        /// Indicates if the response code is avaliable for Cati surveys
+        /// Indicates if the response code is available for Cati surveys
         /// Default value:
         ///     - system response code (below code 200): it depends of the response code
         ///     - custom response code (above code 200): TRUE
@@ -81,7 +81,7 @@ namespace Nfield.Models
         public bool? ChannelCati { get; set; }
 
         /// <summary>
-        /// Indicates if the response code is avaliable for Online surveys
+        /// Indicates if the response code is available for Online surveys
         /// Default value:
         ///     - system response code (below code 200): it depends of the response code
         ///     - custom response code (above code 200): TRUE
