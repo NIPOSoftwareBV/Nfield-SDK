@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1e917b58-1663-43dd-8910-d5eebf555707",
+		"_postman_id": "7c11c0f7-b20a-442b-85bb-6674562de920",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -856,7 +856,7 @@
 														"{{origin}}"
 													],
 													"path": [
-														"v1",														
+														"v1",
 														"Interviewers",
 														":InterviewerId",
 														"Offices",
@@ -4393,7 +4393,7 @@
 																		"Surveys",
 																		":SurveyId",
 																		"SamplingPoints",
-																		"SamplingPointId",
+																		":SamplingPointId",
 																		"QuotaTargets"
 																	],
 																	"variable": [
@@ -4856,9 +4856,9 @@
 																				"Surveys",
 																				":SurveyId",
 																				"SamplingPoints",
-																				"SamplingPointId",
+																				":SamplingPointId",
 																				"Addresses",
-																				"AddressId"
+																				":AddressId"
 																			],
 																			"variable": [
 																				{
@@ -7188,139 +7188,6 @@
 									]
 								},
 								{
-									"name": "Relocations (Deprecated)",
-									"item": [
-										{
-											"name": "Get Relocations",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Status code is 200\", function () {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Status code name has string\", function () {",
-															"    pm.response.to.have.status(\"OK\");",
-															"});",
-															"",
-															"const validateProperties = (item) => {",
-															"    return item.Reason !== undefined ",
-															"    && item.Url !== undefined;",
-															"}",
-															"",
-															"pm.test(\"Response contains the Properties\", function () {",
-															"    var response = pm.response.json();",
-															"    pm.expect(response.every(validateProperties)).to.be.true;",
-															"",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/octet-stream"
-													},
-													{
-														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}"
-													}
-												],
-												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Relocations",
-													"host": [
-														"{{origin}}"
-													],
-													"path": [
-														"v1",
-														"Surveys",
-														":SurveyId",
-														"Relocations"
-													],
-													"variable": [
-														{
-															"key": "SurveyId",
-															"value": "{{SurveyId}}"
-														}
-													]
-												},
-												"description": "This method retrieves a list of relocations based on a survey. This list can be filtered and sorted using standard OData syntax."
-											},
-											"response": []
-										},
-										{
-											"name": "Update Relocation",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Status code is 200\", function () {",
-															"    pm.response.to.have.status(200);",
-															"});",
-															"",
-															"pm.test(\"Status code name has string\", function () {",
-															"    pm.response.to.have.status(\"OK\");",
-															"});",
-															"",
-															"pm.test(\"The response should have a FileName\", function () {",
-															"    const response = pm.response.json();",
-															"    var myfilename = pm.environment.get(\"OdinFileName\");",
-															"    pm.expect(response.FileName == myfilename).to.be.true;",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\r\n  \"Reason\": \"{{RelocationReasonId}}\",\r\n  \"Url\": \"http://test.url\"\r\n}"
-												},
-												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Relocations",
-													"host": [
-														"{{origin}}"
-													],
-													"path": [
-														"v1",
-														"Surveys",
-														":SurveyId",
-														"Relocations"
-													],
-													"variable": [
-														{
-															"key": "SurveyId",
-															"value": "{{SurveyId}}"
-														}
-													]
-												},
-												"description": "Update the relocations with the specified values."
-											},
-											"response": []
-										}
-									],
-									"description": "Provides methods to query and manage survey specific relocations (OBSOLETE)\nThis endpoint is deprecated. Please use SurveyResponseCodes instead"
-								},
-								{
 									"name": "Response Codes (S)",
 									"item": [
 										{
@@ -8416,336 +8283,6 @@
 									"response": []
 								}
 							]
-						},
-						{
-							"name": "Languages (Deprecated)",
-							"item": [
-								{
-									"name": "Get Languages",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response contains LanguageId\", function () {\r",
-													"    var languages = pm.response.json();\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												":SurveyId",
-												"Languages",
-												""
-											],
-											"variable": [
-												{
-													"key": "SurveyId",
-													"value": "{{SurveyId}}"
-												}
-											]
-										},
-										"description": "This method retrieves a list of languages defined for the survey with the specified surveyId. This list can be filtered and sorted using standard OData syntax."
-									},
-									"response": []
-								},
-								{
-									"name": "Get Language",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response contains Id and Name\", function () {\r",
-													"    var language = pm.response.json();\r",
-													"    pm.expect(language.Id !== undefined).to.be.true;\r",
-													"    pm.expect(language.Name !== undefined).to.be.true;\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/:LanguageId",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												":SurveyId",
-												"Languages",
-												":LanguageId"
-											],
-											"variable": [
-												{
-													"key": "SurveyId",
-													"value": "{{SurveyId}}"
-												},
-												{
-													"key": "LanguageId",
-													"value": "{{LanguageId}}"
-												}
-											]
-										},
-										"description": "This method retrieves the language with the specified languageId defined for the survey with the specified surveyId."
-									},
-									"response": []
-								},
-								{
-									"name": "Create Language",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 201\", function () {\r",
-													"    pm.response.to.have.status(201);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"Created\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response contains LanguageId\", function () {\r",
-													"    var language = pm.response.json();\r",
-													"    pm.expect(language.Id !== undefined).to.be.true;\r",
-													"    pm.expect(language.Name !== undefined).to.be.true;\r",
-													"    pm.collectionVariables.set(\"LanguageId\", language.Id);\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n    \"InterviewButtonUnavailable\": \"Interview button is not available\",\r\n    \"TooFewAnswers\": \"Too few answers, minimum is {minimum}\",\r\n    \"TooManyAnswers\": \"Too many answers, maximum is {maximum}\",\r\n    \"ItemAnswerRequired\": \"Please specify an answer for {item}\",\r\n    \"CategoryAnswerRequired\": \"Please specify an answer for {category}\",\r\n    \"AnswerRequired\": \"An answer is required\",\r\n    \"NotInRange\": \"Answer {answer} is not in the permitted range, permitted range is {range}\",\r\n    \"TooManyDigitsInIntegerPart\": \"Answer {answer} has too many digits, maximum is {maximum}\",\r\n    \"LessThanMinimum\": \"Answer {answer} is too small, minimum is {minimum}\",\r\n    \"MoreThanMaximum\": \"Answer {answer} is too big, maximum is {maximum}\",\r\n    \"MustBeNumeric\": \"Answer {answer} must be numeric\",\r\n    \"TooManyDigitsFraction\": \"Answer {answer} has too many fractional digits, maximum is {maximumDigits}\",\r\n    \"DoNotUseBrowserButtonToNavigate\": \"Do not use browser navigation buttons, use interview buttons instead\",\r\n    \"ExclusiveCategory\": \"Category {category} cannot be used together with other categories\",\r\n    \"InvalidCategory\": \"The chosen category is not present in the list of available categories.\",\r\n    \"ButtonPause\": \"Pause\",\r\n    \"ButtonStart\": \"Start\",\r\n    \"ButtonClear\": \"Clear\",\r\n    \"ButtonBack\": \"Back\",\r\n    \"ButtonNext\": \"Next\",\r\n    \"Name\": \"<language name>\",\r\n    \"AnswerTooLong\": \"Answer {anser} is too long, maximum is {numberOfCharacters}\",\r\n    \"DoNotUseButtonWithOtherAnswer\": \"The answer \\\"{item}\\\" cannot be used in conjunction with other answers\"\r\n}\r\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												":SurveyId",
-												"Languages",
-												""
-											],
-											"variable": [
-												{
-													"key": "SurveyId",
-													"value": "{{SurveyId}}"
-												}
-											]
-										},
-										"description": "Add a language to the survey with the specified surveyId."
-									},
-									"response": []
-								},
-								{
-									"name": "Delete Language",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 204\", function () {\r",
-													"    pm.response.to.have.status(204);\r",
-													"});\r",
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "DELETE",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages/:LanguageId",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												":SurveyId",
-												"Languages",
-												":LanguageId"
-											],
-											"variable": [
-												{
-													"key": "SurveyId",
-													"value": "{{SurveyId}}"
-												},
-												{
-													"key": "LanguageId",
-													"value": "{{LanguageId}}"
-												}
-											]
-										},
-										"description": "Removes the language with languageId from the survey with the specified surveyId."
-									},
-									"response": []
-								},
-								{
-									"name": "Update Language name",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Response contains Id and Name\", function () {\r",
-													"    var language = pm.response.json();\r",
-													"    pm.expect(language.Id !== undefined).to.be.true;\r",
-													"    pm.expect(language.Name !== undefined).to.be.true;\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "PUT",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n  \"Id\": {{LanguageId}},\r\n  \"Name\": \"SampleName\"\r\n}",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Languages",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												":SurveyId",
-												"Languages"
-											],
-											"variable": [
-												{
-													"key": "SurveyId",
-													"value": "{{SurveyId}}"
-												}
-											]
-										},
-										"description": "Update the name of an existing language."
-									},
-									"response": []
-								}
-							],
-							"description": "Manage languages defined for a survey's questionnaire (obsolete)(This endpoint is deprecated. Please use SurveyLanguageTranslations instead)"
 						},
 						{
 							"name": "Languages (S)",
@@ -13360,7 +12897,7 @@
 		},
 		{
 			"key": "TaskId",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "OfficeId",
@@ -13384,7 +12921,7 @@
 		},
 		{
 			"key": "ThemeTestName",
-			"value": "QuestionTypesTheme"			
+			"value": "QuestionTypesTheme"
 		},
 		{
 			"key": "ActivityId",
@@ -13404,7 +12941,7 @@
 		},
 		{
 			"key": "InstructionsFileName",
-			"value": "Instructions"			
+			"value": "Instructions"
 		},
 		{
 			"key": "InterviewId",
@@ -13412,11 +12949,11 @@
 		},
 		{
 			"key": "FileName",
-			"value": "MediaFileName"			
+			"value": "MediaFileName"
 		},
 		{
 			"key": "ETag",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "SamplingPointId",
@@ -13432,7 +12969,7 @@
 		},
 		{
 			"key": "FragmentName",
-			"value": "SurveyScriptFragment"			
+			"value": "SurveyScriptFragment"
 		},
 		{
 			"key": "IdentityId",
@@ -13448,15 +12985,15 @@
 		},
 		{
 			"key": "UserDirectoryTenantId",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "UserDirectoryObjectId",
-			"value": ""			
+			"value": ""
 		},
 		{
 			"key": "InternalVariable",
-			"value": ""			
+			"value": ""
 		}
 	]
 }

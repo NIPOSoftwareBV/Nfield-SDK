@@ -196,49 +196,6 @@ namespace ConsoleApplication
                 var status = mybackgroundTask.Status;
             }
 
-            // Example of creating a new translation
-            const string surveyName = "Language";
-            const string languageName = "Dutch";
-            const string translationName = "ButtonNext";
-            const string translationText = "Volgende";
-            // First create the survey if it does not exist
-            var languageSurvey = surveysService.QueryAsync().Result
-                    .SingleOrDefault(s => s.SurveyName == surveyName);
-            if (languageSurvey == null)
-                languageSurvey = surveysService.AddAsync(
-                    new Survey(SurveyType.Basic)
-                    {
-                        SurveyName = surveyName
-                    }).Result;
-            // Then find the language we wish to change a translation for
-            var languageService = connection.GetService<INfieldLanguagesService>();
-            var language = languageService.QueryAsync(languageSurvey.SurveyId)
-                .Result.SingleOrDefault(l => l.Name == languageName);
-            if (language == null)
-            {
-                language = languageService.AddAsync(languageSurvey.SurveyId,
-                        new Language { Name = languageName }).Result;
-            }
-            // Now add or update a translation
-            var translationsService = connection.GetService<INfieldTranslationsService>();
-            var translation = translationsService.QueryAsync(languageSurvey.SurveyId,
-                    language.Id).Result.SingleOrDefault(t => t.Name == translationName);
-            if (translation == null)
-            {
-                translationsService.AddAsync(languageSurvey.SurveyId,
-                    language.Id, new Translation
-                    {
-                        Name = translationName,
-                        Text = translationText
-                    }).Wait();
-            }
-            else
-            {
-                translation.Text = translationText;
-                translationsService.UpdateAsync(languageSurvey.SurveyId,
-                    language.Id, translation).Wait();
-            }
-
             //
             // sample management
             //

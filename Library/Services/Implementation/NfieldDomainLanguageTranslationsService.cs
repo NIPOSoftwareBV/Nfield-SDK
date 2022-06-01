@@ -51,14 +51,14 @@ namespace Nfield.Services.Implementation
 
         #region Implementation of INfieldLanguageTranslationsService
 
-        public Task<IQueryable<Language>> QueryAsync()
+        public Task<IQueryable<DomainLanguageTranslations>> QueryAsync()
         {
             return Client.GetAsync(LanguageTranslationsApi())
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
                  stringTask =>
-                 JsonConvert.DeserializeObject<List<Language>>(stringTask.Result).AsQueryable())
+                 JsonConvert.DeserializeObject<List<DomainLanguageTranslations>>(stringTask.Result).AsQueryable())
              .FlattenExceptions();
         }
 
