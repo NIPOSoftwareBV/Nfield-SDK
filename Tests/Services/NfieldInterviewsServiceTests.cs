@@ -69,9 +69,9 @@ namespace Nfield.Services
             _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1")))
                  .Returns(CreateTask(HttpStatusCode.OK,
                      new StringContent(
-                         JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
+                         JsonConvert.SerializeObject(new { Status = 2 }))));
 
-            var expected = 1;
+            var expected = 2;
             var actual = _target.DeleteAsync(_surveyId, _interviewId).Result;
             Assert.Equal(expected, actual);
         }
