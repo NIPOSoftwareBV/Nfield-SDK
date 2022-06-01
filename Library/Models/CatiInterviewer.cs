@@ -32,6 +32,26 @@ namespace Nfield.Models
         public string UserName { get; set; }
 
         /// <summary>
+        /// First name of the interviewer
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// Last name of the interviewer
+        /// </summary>
+        public string LastName { get; set; }
+
+        /// <summary>
+        /// Email address of the interviewer
+        /// </summary>
+        public string EmailAddress { get; set; }
+
+        /// <summary>
+        /// Telephone number of the interviewer
+        /// </summary>
+        public string TelephoneNumber { get; set; }
+
+        /// <summary>
         /// Password of cati interviewer, only used when creating a cati interviewer
         /// </summary>
         public string Password { get; set; }
@@ -41,10 +61,5 @@ namespace Nfield.Models
         /// </summary>
         [JsonProperty]
         public DateTime? LastPasswordChangeTime { get; internal set; }
-
-        /// <summary>
-        /// The telephone number of the cati interviewer
-        /// </summary>
-        public string TelephoneNumber { get; set; }
     }
 }
