@@ -67,7 +67,7 @@ namespace Nfield.Services
                 Url = "http://www.google.com",
                 IsDefinite = true,
                 IsSelectable = true,
-                AllowAppointment = true,
+                AllowAppointment = false,
                 ChannelCapi = true,
                 ChannelCati = true,
                 ChannelOnline = true
@@ -101,7 +101,7 @@ namespace Nfield.Services
                 Url = "http://www.google.com",
                 IsDefinite = true,
                 IsSelectable = true,
-                AllowAppointment = true,
+                AllowAppointment = false,
                 ChannelCapi = true,
                 ChannelCati = true,
                 ChannelOnline = true
@@ -155,7 +155,7 @@ namespace Nfield.Services
                 Url = "http://www.google.com",
                 IsDefinite = true,
                 IsSelectable = true,
-                AllowAppointment = true,
+                AllowAppointment = false,
                 ChannelCapi = true,
                 ChannelCati = true,
                 ChannelOnline = true
@@ -193,7 +193,7 @@ namespace Nfield.Services
                 Url = "http://www.google.com",
                 IsDefinite = true,
                 IsSelectable = true,
-                AllowAppointment = true,
+                AllowAppointment = false,
                 ChannelCapi = true,
                 ChannelCati = true,
                 ChannelOnline = true
