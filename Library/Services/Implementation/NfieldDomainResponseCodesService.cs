@@ -76,7 +76,17 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNull(responseCode, nameof(responseCode));          
 
             return
-                Client.PatchAsJsonAsync(GetDomainResponseCodeUrl(responseCode.Id), new UpdateDomainResponsecode { Description = responseCode.Description , Url = responseCode.Url})
+                Client.PatchAsJsonAsync(GetDomainResponseCodeUrl(responseCode.Id),
+                new UpdateDomainResponsecode {
+                    Description = responseCode.Description,
+                    Url = responseCode.Url,
+                    IsDefinite = responseCode.IsDefinite,
+                    IsSelectable = responseCode.IsSelectable,
+                    AllowAppointment = responseCode.AllowAppointment,
+                    ChannelCapi = responseCode.ChannelCapi,
+                    ChannelCati = responseCode.ChannelCati,
+                    ChannelOnline = responseCode.ChannelOnline
+                })
                     .ContinueWith(
                         responseMessageTask =>
                             responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -129,6 +139,18 @@ namespace Nfield.Services.Implementation
             public string Description { get; set; }
             
             public string Url { get; set; }
+           
+            public bool? IsDefinite { get; set; }
+            
+            public bool? IsSelectable { get; set; }
+           
+            public bool? AllowAppointment { get; set; }
+            
+            public bool? ChannelCapi { get; set; }
+            
+            public bool? ChannelCati { get; set; }
+            
+            public bool? ChannelOnline { get; set; }
         }
     }   
 }

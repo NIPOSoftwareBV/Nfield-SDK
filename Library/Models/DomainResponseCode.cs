@@ -40,5 +40,53 @@ namespace Nfield.Models
             Justification = "Entity Framework, out of the box, can't map Uri's to a sql server data type")]
         public string Url { get; set; }
 
+        /// <summary>
+        /// Used only by capi surveys
+        /// Default value:
+        ///     - system response code (below code 200): NULL
+        ///     - custom response code (above code 200): FALSE
+        /// </summary>
+        public bool? IsDefinite { get; set; }
+
+        /// <summary>
+        /// Used only by capi surveys
+        /// Default value:
+        ///     - system response code (below code 200): FALSE
+        ///     - custom response code (above code 200): TRUE
+        /// </summary>
+        public bool? IsSelectable { get; set; }
+
+        /// <summary>
+        /// Used only by capi surveys
+        /// Default value:
+        ///     - system response code (below code 200): NULL
+        ///     - custom response code (above code 200): NULL
+        /// </summary>
+        public bool? AllowAppointment { get; set; }
+
+        /// <summary>
+        /// Indicates if the response code is available for Capi surveys
+        /// Default value:
+        ///     - system response code (below code 200): it depends of the response code
+        ///     - custom response code (above code 200): TRUE
+        /// </summary>
+        public bool? ChannelCapi { get; set; }
+
+        /// <summary>
+        /// Indicates if the response code is available for Cati surveys
+        /// Default value:
+        ///     - system response code (below code 200): it depends of the response code
+        ///     - custom response code (above code 200): TRUE
+        /// </summary>
+        public bool? ChannelCati { get; set; }
+
+        /// <summary>
+        /// Indicates if the response code is available for Online surveys
+        /// Default value:
+        ///     - system response code (below code 200): it depends of the response code
+        ///     - custom response code (above code 200): TRUE
+        /// </summary>
+        public bool? ChannelOnline { get; set; }
+
     }
 }
