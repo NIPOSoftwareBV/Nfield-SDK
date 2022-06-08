@@ -27,7 +27,7 @@ namespace Nfield.Services.Implementation
 {
     internal class NfieldSamplingPointsService : INfieldSamplingPointsService, INfieldConnectionClientObject
     {
-        #region INfieldTranslationsService Members
+        #region INfieldSamplingPointsService Members
 
         /// <summary>
         /// See <see cref="INfieldTranslationsService.QueryAsync"/>
@@ -43,76 +43,7 @@ namespace Nfield.Services.Implementation
                              stringTask =>
                              JsonConvert.DeserializeObject<List<SamplingPoint>>(stringTask.Result).AsQueryable())
                          .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// See <see cref="INfieldTranslationsService.AddAsync"/>
-        /// </summary>
-        public Task<Translation> AddAsync(string surveyId, int languageId, Translation translation)
-        {
-            CheckSurveyId(surveyId);
-
-            if (translation == null)
-            {
-                throw new ArgumentNullException("translation");
-            }
-
-            return Client.PostAsJsonAsync(TranslationsApi(surveyId, languageId, null), translation)
-                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<Translation>(task.Result))
-                         .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// See <see cref="INfieldTranslationsService.RemoveAsync"/>
-        /// </summary>
-        public Task RemoveAsync(string surveyId, int languageId, Translation translation)
-        {
-            CheckSurveyId(surveyId);
-
-            if (translation == null)
-            {
-                throw new ArgumentNullException("translation");
-            }
-
-            return
-                Client.DeleteAsync(TranslationsApi(surveyId, languageId, translation.Name))
-                      .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// See <see cref="INfieldTranslationsService.UpdateAsync"/>
-        /// </summary>
-        public Task UpdateAsync(string surveyId, int languageId, Translation translation)
-        {
-            CheckSurveyId(surveyId);
-
-            if (translation == null)
-            {
-                throw new ArgumentNullException("translation");
-            }
-
-            return Client.PutAsJsonAsync(TranslationsApi(surveyId, languageId, null),
-                translation).FlattenExceptions();
-        }
-
-
-        /// <summary>
-        /// See <see cref="INfieldTranslationsService.DefaultTextsAsync"/>
-        /// </summary>
-        public Task<IQueryable<Translation>> DefaultTextsAsync
-        {
-            get
-            {
-                return Client.GetAsync(new Uri(ConnectionClient.NfieldServerUri, "DefaultTexts"))
-                             .ContinueWith(
-                                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                             .ContinueWith(
-                                 stringTask =>
-                                 JsonConvert.DeserializeObject<List<Translation>>(stringTask.Result).AsQueryable())
-                             .FlattenExceptions();
-            }
-        }
+        }   
 
         #endregion
 
