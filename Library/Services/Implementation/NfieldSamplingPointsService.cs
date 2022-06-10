@@ -169,7 +169,7 @@ namespace Nfield.Services.Implementation
                     path.AppendFormat("/{0}", samplingPointId);
                 if (activate)
                     path.Append("/Activate");
-                if (replace)
+                else if (replace)
                     path.Append("/Replace");
             }
 
