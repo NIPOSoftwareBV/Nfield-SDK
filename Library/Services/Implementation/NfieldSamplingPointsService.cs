@@ -113,10 +113,11 @@ namespace Nfield.Services.Implementation
             .FlattenExceptions();
         }
 
-        public Task ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds)
+        public Task<bool> ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds)
         {
             return Client.PostAsJsonAsync(SamplingPointsApi(surveyId, activate:true), new { SamplingPointIds = samplingPointIds.ToArray() })     
-            .FlattenExceptions();
+            .FlattenExceptions()
+            .ContinueWith(t => t.Result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
         public Task<SamplingPoint> ReplaceAsync(string surveyId, string samplingPointId, string newSamplingPointId, int? target)

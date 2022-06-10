@@ -100,7 +100,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds);
+        Task<bool> ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds);
 
         /// <summary>
         /// Replace a sampling point 
