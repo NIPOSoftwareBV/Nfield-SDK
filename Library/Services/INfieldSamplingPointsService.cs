@@ -55,7 +55,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task RemoveAsync(string surveyId, string samplingPointId);
+        Task<bool> RemoveAsync(string surveyId, string samplingPointId);
 
 
         /// <summary>

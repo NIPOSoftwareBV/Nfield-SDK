@@ -60,10 +60,11 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSamplingPointsService.RemoveAsync(string, string)"/>
         /// </summary>
-        public Task RemoveAsync(string surveyId, string SamplingPointId)
+        public Task<bool> RemoveAsync(string surveyId, string SamplingPointId)
         {
             return Client.DeleteAsync(SamplingPointsApi(surveyId, SamplingPointId))                         
-                         .FlattenExceptions();
+                                       .FlattenExceptions()
+                                       .ContinueWith(t => t.Result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
         /// <summary>
