@@ -30,7 +30,19 @@ namespace Nfield.Models
         /// <summary>
         /// A spare sampling point that can be selected as spare to another sampling point
         /// </summary>
-        Spare = 1
+        Spare = 1,
+
+        /// <summary>
+        /// A spare sampling point that selected as a spare for another sampling point (either add or replace).
+        /// Indicates that the sampling point can be selected for assignment
+        /// </summary>
+        SpareActive = 2,
+
+        /// <summary>
+        /// Indicates that the sampling point was replaced by another one. It is a final state
+        /// and the sampling point can not be used for assignment any more.
+        /// </summary>
+        Replaced = 3
 
     }
 }

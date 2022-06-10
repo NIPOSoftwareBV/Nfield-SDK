@@ -102,9 +102,9 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
-        public Task<SamplingPoint> ActivateAsync(string surveyId, string samplingPointId)
+        public Task<SamplingPoint> ActivateAsync(string surveyId, string samplingPointId, int? target)
         {
-            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, activate:true), samplingPointId)
+            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, activate:true), new { Target = target})
             .ContinueWith(
                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
             .ContinueWith(
@@ -114,13 +114,13 @@ namespace Nfield.Services.Implementation
 
         public Task ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds)
         {
-            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, activate:true), samplingPointIds)     
+            return Client.PostAsJsonAsync(SamplingPointsApi(surveyId, activate:true), new { SamplingPointIds = samplingPointIds.ToArray() })     
             .FlattenExceptions();
         }
 
-        public Task<SamplingPoint> ReplaceAsync(string surveyId, string samplingPointId, SamplingPoint samplingPoint)
+        public Task<SamplingPoint> ReplaceAsync(string surveyId, string samplingPointId, string newSamplingPointId, int? target)
         {
-            return Client.PutAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, replace:true), samplingPointId)
+            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, replace:true), new { SpareSamplingPointId = newSamplingPointId, Target = target })
            .ContinueWith(
                responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
            .ContinueWith(
@@ -157,14 +157,21 @@ namespace Nfield.Services.Implementation
         private Uri SamplingPointsApi(string surveyId, string samplingPointId = null, bool activate = false, bool replace = false)
         {
             var path = new StringBuilder();
-            path.AppendFormat("Surveys/{0}/SamplingPoints",
-                    surveyId, samplingPointId);
-            if (!string.IsNullOrEmpty(samplingPointId))
-                path.AppendFormat("/{0}", samplingPointId);
-            if (!activate)
-                path.AppendFormat("/Activate");
-            if (!replace)
-                path.AppendFormat("/Replace");
+            path.AppendFormat("Surveys/{0}", surveyId);
+            if (activate && samplingPointId == null)
+            {
+                path.Append("/ActivateSamplingPoints");
+            }
+            else
+            {
+                path.Append("/SamplingPoints");
+                if (!string.IsNullOrEmpty(samplingPointId))
+                    path.AppendFormat("/{0}", samplingPointId);
+                if (activate)
+                    path.Append("/Activate");
+                if (replace)
+                    path.Append("/Replace");
+            }
 
             return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
