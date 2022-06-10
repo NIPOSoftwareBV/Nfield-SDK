@@ -40,6 +40,7 @@ namespace Nfield.Services
         private readonly Mock<INfieldConnectionClient> _mockedNfieldConnection;
         private readonly Mock<INfieldHttpClient> _mockedHttpClient;
         private readonly SamplingPoint _samplingPoint;
+        private readonly SamplingPoint _samplingPoint2;
 
         // Constructor acts as setup
         public NfieldSamplingPointsServiceTests()
@@ -53,11 +54,22 @@ namespace Nfield.Services
                 Name = "New SP",
                 Kind = SamplingPointKind.Spare,
                 Description = "desc",
-                Instruction = "instrction",
+                Instruction = "instruction",
                 FieldworkOfficeId = "office-id",
                 SamplingPointId = "sp-id",
                 Stratum = "stratum",
                 GroupId = "group-id"
+            };
+            _samplingPoint2 = new SamplingPoint()
+            {
+                Name = "New SP2",
+                Kind = SamplingPointKind.Spare,
+                Description = "desc2",
+                Instruction = "instruction2",
+                FieldworkOfficeId = "office-id-2",
+                SamplingPointId = "sp-id-2",
+                Stratum = "stratum2",
+                GroupId = "group-id-2"
             };
         }
 
@@ -217,7 +229,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(new[] { _samplingPoint }));
             _mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, UriActivateSPs),
-                It.Is<object>(e => (GetPrivateProperty(e, "SamplingPointIds") as IEnumerable<String>).First() == _samplingPoint.SamplingPointId)))
+                It.Is<object>(e => (GetPropertyValue(e, "SamplingPointIds") as IEnumerable<String>).First() == _samplingPoint.SamplingPointId)))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             Assert.True(await _target.ActivateAsync(SurveyId, new[] { _samplingPoint.SamplingPointId }));
@@ -226,18 +238,19 @@ namespace Nfield.Services
         [Fact]
         public async Task TestActivateAsync_OneSP_targetNull_ReturnsSP()
         {
-            var samplingPoint = _samplingPoint;
-            samplingPoint.Kind = SamplingPointKind.SpareActive;
-            var content = new StringContent(JsonConvert.SerializeObject(new[] { _samplingPoint }));
+            _samplingPoint.Kind = SamplingPointKind.SpareActive;
+            var content = new StringContent(JsonConvert.SerializeObject( _samplingPoint ));
+            _samplingPoint.Kind = SamplingPointKind.Spare;
             _mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Activate"), samplingPoint))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Activate"), 
+                It.Is<object>(o => GetPropertyValue(o, "Target") == null)))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
             var actual = await _target.ActivateAsync(SurveyId, _samplingPoint.SamplingPointId, null);
 
             Assert.Equal(_samplingPoint.Name, actual.Name);
-            Assert.Equal(_samplingPoint.Kind, actual.Kind);
+            Assert.Equal(SamplingPointKind.SpareActive, actual.Kind);
             Assert.Equal(_samplingPoint.SamplingPointId, actual.SamplingPointId);
             Assert.Equal(_samplingPoint.FieldworkOfficeId, actual.FieldworkOfficeId);
             Assert.Equal(_samplingPoint.GroupId, actual.GroupId);
@@ -248,15 +261,17 @@ namespace Nfield.Services
         [Fact]
         public async Task TestActivateAsync_OneSP_targetNotNull_ReturnsSP()
         {
-            var samplingPoint = _samplingPoint;
-            samplingPoint.Kind = SamplingPointKind.SpareActive;
-            var content = new StringContent(JsonConvert.SerializeObject(new[] { _samplingPoint }));
+            int target = 2;
+            _samplingPoint.Kind = SamplingPointKind.SpareActive;
+            var content = new StringContent(JsonConvert.SerializeObject(_samplingPoint));
+            _samplingPoint.Kind = SamplingPointKind.Spare;
             _mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Activate"), samplingPoint))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Activate"),
+                It.Is<object>(o => (int)GetPropertyValue(o, "Target") == target)))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
-            var actual = await _target.ActivateAsync(SurveyId, _samplingPoint.SamplingPointId, 2);
+            var actual = await _target.ActivateAsync(SurveyId, _samplingPoint.SamplingPointId, target);
 
             Assert.Equal(_samplingPoint.Name, actual.Name);
             Assert.Equal(SamplingPointKind.SpareActive, actual.Kind);
@@ -272,59 +287,60 @@ namespace Nfield.Services
         #endregion
 
         #region ReplaceAsync
-               
+
 
         [Fact]
         public async Task TestReplaceAsync_OneSP_targetNull_ReturnsSP()
-        {
-            var samplingPoint = _samplingPoint;
-            samplingPoint.SamplingPointId = "sp-is-2";
-            var content = new StringContent(JsonConvert.SerializeObject(new[] { _samplingPoint }));
+        {          
+            var content = new StringContent(JsonConvert.SerializeObject(_samplingPoint2));
             _mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/Replace"), samplingPoint))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Replace"),
+                It.Is<object>(o => GetPropertyValue(o, "Target") == null &&
+                GetPropertyValue(o, "SpareSamplingPointId").ToString() == _samplingPoint2.SamplingPointId)))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
-            var actual = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, samplingPoint.SamplingPointId, null);
+            var actual = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, _samplingPoint2.SamplingPointId, null);
 
-            Assert.Equal(_samplingPoint.Name, actual.Name);
-            Assert.Equal(_samplingPoint.Kind, actual.Kind);
-            Assert.Equal(_samplingPoint.SamplingPointId, actual.SamplingPointId);
-            Assert.Equal(_samplingPoint.FieldworkOfficeId, actual.FieldworkOfficeId);
-            Assert.Equal(_samplingPoint.GroupId, actual.GroupId);
-            Assert.Equal(_samplingPoint.Instruction, actual.Instruction);
-            Assert.Equal(_samplingPoint.Stratum, actual.Stratum);
-            Assert.Equal(_samplingPoint.Description, actual.Description);
+            Assert.Equal(_samplingPoint2.Name, actual.Name);
+            Assert.Equal(_samplingPoint2.Kind, actual.Kind);
+            Assert.Equal(_samplingPoint2.SamplingPointId, actual.SamplingPointId);
+            Assert.Equal(_samplingPoint2.FieldworkOfficeId, actual.FieldworkOfficeId);
+            Assert.Equal(_samplingPoint2.GroupId, actual.GroupId);
+            Assert.Equal(_samplingPoint2.Instruction, actual.Instruction);
+            Assert.Equal(_samplingPoint2.Stratum, actual.Stratum);
+            Assert.Equal(_samplingPoint2.Description, actual.Description);
         }
         [Fact]
         public async Task TestReplaceAsync_OneSP_targetNotNull_ReturnsSP()
-        {
-            var samplingPoint = _samplingPoint;
-            samplingPoint.SamplingPointId = "sp-is-2";
-            var content = new StringContent(JsonConvert.SerializeObject(new[] { _samplingPoint }));
+        {           
+            int target = 2;
+            var content = new StringContent(JsonConvert.SerializeObject(_samplingPoint2));
             _mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/Replace"), samplingPoint))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Replace"),
+                It.Is<object>(o => (int)GetPropertyValue(o, "Target") == target &&
+                GetPropertyValue(o, "SpareSamplingPointId").ToString() == _samplingPoint2.SamplingPointId)))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
-            var actual = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, samplingPoint.SamplingPointId,  2);
+            var actual = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, _samplingPoint2.SamplingPointId, target);
 
-            Assert.Equal(_samplingPoint.Name, actual.Name);
-            Assert.Equal(SamplingPointKind.SpareActive, actual.Kind);
-            Assert.Equal(_samplingPoint.SamplingPointId, actual.SamplingPointId);
-            Assert.Equal(_samplingPoint.FieldworkOfficeId, actual.FieldworkOfficeId);
-            Assert.Equal(_samplingPoint.GroupId, actual.GroupId);
-            Assert.Equal(_samplingPoint.Instruction, actual.Instruction);
-            Assert.Equal(_samplingPoint.Stratum, actual.Stratum);
-            Assert.Equal(_samplingPoint.Description, actual.Description);
+            Assert.Equal(_samplingPoint2.Name, actual.Name);
+            Assert.Equal(_samplingPoint2.Kind, actual.Kind);
+            Assert.Equal(_samplingPoint2.SamplingPointId, actual.SamplingPointId);
+            Assert.Equal(_samplingPoint2.FieldworkOfficeId, actual.FieldworkOfficeId);
+            Assert.Equal(_samplingPoint2.GroupId, actual.GroupId);
+            Assert.Equal(_samplingPoint2.Instruction, actual.Instruction);
+            Assert.Equal(_samplingPoint2.Stratum, actual.Stratum);
+            Assert.Equal(_samplingPoint2.Description, actual.Description);
         }
 
 
         #endregion
 
-        private object GetPrivateProperty(object e, string propertyname)
+        private object GetPropertyValue(object e, string propertyname)
         {
-            var val = e.GetType().GetProperties().FirstOrDefault(p => p.Name == propertyname)?.GetValue(e);
+            var val = e.GetType().GetProperties().First(p => p.Name == propertyname).GetValue(e);
             return val;
         }
 

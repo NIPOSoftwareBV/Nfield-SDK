@@ -115,14 +115,16 @@ namespace Nfield.Services.Implementation
 
         public Task<bool> ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds)
         {
-            return Client.PostAsJsonAsync(SamplingPointsApi(surveyId, activate:true), new { SamplingPointIds = samplingPointIds.ToArray() })     
+            return Client.PostAsJsonAsync(SamplingPointsApi(surveyId, activate:true),
+                new { SamplingPointIds = samplingPointIds.ToArray() })     
             .FlattenExceptions()
             .ContinueWith(t => t.Result.StatusCode == System.Net.HttpStatusCode.OK);
         }
 
         public Task<SamplingPoint> ReplaceAsync(string surveyId, string samplingPointId, string newSamplingPointId, int? target)
         {
-            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, replace:true), new { SpareSamplingPointId = newSamplingPointId, Target = target })
+            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, replace:true),
+                new { SpareSamplingPointId = newSamplingPointId, Target = target })
            .ContinueWith(
                responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
            .ContinueWith(
