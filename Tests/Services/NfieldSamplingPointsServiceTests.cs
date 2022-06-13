@@ -138,7 +138,8 @@ namespace Nfield.Services
 
             var content = new StringContent(JsonConvert.SerializeObject(_samplingPoint));
             _mockedHttpClient
-                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}"), _samplingPoint))
+                .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}"),
+                It.Is<UpdateSamplingPoint>(s => s.Name == _samplingPoint.Name)))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
