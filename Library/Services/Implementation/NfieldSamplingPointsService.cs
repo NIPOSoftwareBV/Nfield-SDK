@@ -76,9 +76,18 @@ namespace Nfield.Services.Implementation
             if (samplingPoint?.SamplingPointId == null)
             {
                 throw new ArgumentNullException("samplingPoint");
-            }           
+            }
 
-            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPoint.SamplingPointId), samplingPoint)
+            var updatedSamplingPoint = new UpdateSamplingPoint
+            {
+                Name = samplingPoint.Name,
+                Description = samplingPoint.Description,
+                FieldworkOfficeId = samplingPoint.FieldworkOfficeId,
+                GroupId = samplingPoint.GroupId,
+                Stratum = samplingPoint.Stratum
+            };
+
+            return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPoint.SamplingPointId), updatedSamplingPoint)
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
