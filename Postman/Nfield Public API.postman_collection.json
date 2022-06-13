@@ -4385,7 +4385,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/SamplingPointId/QuotaTargets",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
 																	"host": [
 																		"{{origin}}"
 																	],
@@ -4849,7 +4849,7 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/SamplingPointId/Addresses/AddressId",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
 																				"{{origin}}v1"
 																			],
