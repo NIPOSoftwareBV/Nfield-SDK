@@ -5950,7 +5950,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Activate",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/ActivateSamplingPoints",
 													"host": [
 														"{{origin}}"
 													],
