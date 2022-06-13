@@ -50,7 +50,7 @@ namespace Nfield.Services.Implementation
 
         #region Implementation of INfieldLanguageTranslationsService
 
-        public Task<IQueryable<Language>> QueryAsync(string surveyId)
+        public Task<IQueryable<SurveyLanguageTranslations>> QueryAsync(string surveyId)
         {
             CheckSurveyId(surveyId);
 
@@ -59,7 +59,7 @@ namespace Nfield.Services.Implementation
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
                  stringTask =>
-                 JsonConvert.DeserializeObject<List<Language>>(stringTask.Result).AsQueryable())
+                 JsonConvert.DeserializeObject<List<SurveyLanguageTranslations>>(stringTask.Result).AsQueryable())
              .FlattenExceptions();
         }
 

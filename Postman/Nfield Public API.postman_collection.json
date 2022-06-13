@@ -11655,7 +11655,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"Id\":\"200\",\r\n    \"Description\":\"Postman response code description\",\r\n    \"Url\":null\r\n}\r\n",
+											"raw": "{\r\n    \"Id\":\"200\",\r\n    \"Description\":\"Postman response code description\",\r\n    \"Url\":null,\r\n    \"IsDefinite\": null,\r\n    \"IsSelectable\": null,\r\n    \"AllowAppointment\": null,\r\n    \"ChannelCapi\": null,\r\n    \"ChannelCati\": null,\r\n    \"ChannelOnline\": null\r\n}\r\n",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -11724,7 +11724,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"Description\":\"Postman response updated\",\r\n    \"Url\": null\r\n}",
+											"raw": "{\r\n    \"Description\":\"Postman response updated\",\r\n    \"Url\": null,\r\n    \"IsDefinite\": null,\r\n    \"IsSelectable\": null,\r\n    \"AllowAppointment\": null,\r\n    \"ChannelCapi\": null,\r\n    \"ChannelCati\": null,\r\n    \"ChannelOnline\": null\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
