@@ -17,6 +17,7 @@ using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.SDK.Models;
 using Nfield.Services.Implementation;
 using System;
 using System.Collections.Generic;
@@ -225,8 +226,7 @@ namespace Nfield.Services
         [Fact]
         public async Task TestActivateAsync_SPList_ReturnsTrue()
         {
-
-            var content = new StringContent(JsonConvert.SerializeObject(new[] { _samplingPoint }));
+            var content = new StringContent(JsonConvert.SerializeObject(new ActivateSpareSamplingPointsResponseModel { IsActivated = true }));
             _mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, UriActivateSPs),
                 It.Is<object>(e => (GetPropertyValue(e, "SamplingPointIds") as IEnumerable<String>).First() == _samplingPoint.SamplingPointId)))
@@ -239,7 +239,7 @@ namespace Nfield.Services
         public async Task TestActivateAsync_OneSP_targetNull_ReturnsSP()
         {
             _samplingPoint.Kind = SamplingPointKind.SpareActive;
-            var content = new StringContent(JsonConvert.SerializeObject( _samplingPoint ));
+            var content = new StringContent(JsonConvert.SerializeObject( new ActivateSpareSamplingPointsResponseModel { IsActivated = true } ));
             _samplingPoint.Kind = SamplingPointKind.Spare;
             _mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Activate"), 
@@ -247,23 +247,16 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
-            var actual = await _target.ActivateAsync(SurveyId, _samplingPoint.SamplingPointId, null);
+            var res = await _target.ActivateAsync(SurveyId, _samplingPoint.SamplingPointId, null);
 
-            Assert.Equal(_samplingPoint.Name, actual.Name);
-            Assert.Equal(SamplingPointKind.SpareActive, actual.Kind);
-            Assert.Equal(_samplingPoint.SamplingPointId, actual.SamplingPointId);
-            Assert.Equal(_samplingPoint.FieldworkOfficeId, actual.FieldworkOfficeId);
-            Assert.Equal(_samplingPoint.GroupId, actual.GroupId);
-            Assert.Equal(_samplingPoint.Instruction, actual.Instruction);
-            Assert.Equal(_samplingPoint.Stratum, actual.Stratum);
-            Assert.Equal(_samplingPoint.Description, actual.Description);
+            Assert.True( res);           
         }
         [Fact]
         public async Task TestActivateAsync_OneSP_targetNotNull_ReturnsSP()
         {
             int target = 2;
             _samplingPoint.Kind = SamplingPointKind.SpareActive;
-            var content = new StringContent(JsonConvert.SerializeObject(_samplingPoint));
+            var content = new StringContent(JsonConvert.SerializeObject(new ActivateSpareSamplingPointsResponseModel { IsActivated = true }));
             _samplingPoint.Kind = SamplingPointKind.Spare;
             _mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Activate"),
@@ -271,16 +264,9 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
-            var actual = await _target.ActivateAsync(SurveyId, _samplingPoint.SamplingPointId, target);
+            var res = await _target.ActivateAsync(SurveyId, _samplingPoint.SamplingPointId, target);
 
-            Assert.Equal(_samplingPoint.Name, actual.Name);
-            Assert.Equal(SamplingPointKind.SpareActive, actual.Kind);
-            Assert.Equal(_samplingPoint.SamplingPointId, actual.SamplingPointId);
-            Assert.Equal(_samplingPoint.FieldworkOfficeId, actual.FieldworkOfficeId);
-            Assert.Equal(_samplingPoint.GroupId, actual.GroupId);
-            Assert.Equal(_samplingPoint.Instruction, actual.Instruction);
-            Assert.Equal(_samplingPoint.Stratum, actual.Stratum);
-            Assert.Equal(_samplingPoint.Description, actual.Description);
+            Assert.True(res);            
         }
 
 
@@ -291,8 +277,8 @@ namespace Nfield.Services
 
         [Fact]
         public async Task TestReplaceAsync_OneSP_targetNull_ReturnsSP()
-        {          
-            var content = new StringContent(JsonConvert.SerializeObject(_samplingPoint2));
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(new ReplaceSamplingPointWithSpareResponseModel { Success = true }));
             _mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Replace"),
                 It.Is<object>(o => GetPropertyValue(o, "Target") == null &&
@@ -300,22 +286,15 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
-            var actual = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, _samplingPoint2.SamplingPointId, null);
+            var res = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, _samplingPoint2.SamplingPointId, null);
 
-            Assert.Equal(_samplingPoint2.Name, actual.Name);
-            Assert.Equal(_samplingPoint2.Kind, actual.Kind);
-            Assert.Equal(_samplingPoint2.SamplingPointId, actual.SamplingPointId);
-            Assert.Equal(_samplingPoint2.FieldworkOfficeId, actual.FieldworkOfficeId);
-            Assert.Equal(_samplingPoint2.GroupId, actual.GroupId);
-            Assert.Equal(_samplingPoint2.Instruction, actual.Instruction);
-            Assert.Equal(_samplingPoint2.Stratum, actual.Stratum);
-            Assert.Equal(_samplingPoint2.Description, actual.Description);
+            Assert.True(res);     
         }
         [Fact]
         public async Task TestReplaceAsync_OneSP_targetNotNull_ReturnsSP()
         {           
             int target = 2;
-            var content = new StringContent(JsonConvert.SerializeObject(_samplingPoint2));
+            var content = new StringContent(JsonConvert.SerializeObject(new ReplaceSamplingPointWithSpareResponseModel { Success = true }));
             _mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(new Uri(ServiceAddress, $"{UriSP}/{_samplingPoint.SamplingPointId}/Replace"),
                 It.Is<object>(o => (int)GetPropertyValue(o, "Target") == target &&
@@ -323,16 +302,9 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
 
-            var actual = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, _samplingPoint2.SamplingPointId, target);
+            var res = await _target.ReplaceAsync(SurveyId, _samplingPoint.SamplingPointId, _samplingPoint2.SamplingPointId, target);
 
-            Assert.Equal(_samplingPoint2.Name, actual.Name);
-            Assert.Equal(_samplingPoint2.Kind, actual.Kind);
-            Assert.Equal(_samplingPoint2.SamplingPointId, actual.SamplingPointId);
-            Assert.Equal(_samplingPoint2.FieldworkOfficeId, actual.FieldworkOfficeId);
-            Assert.Equal(_samplingPoint2.GroupId, actual.GroupId);
-            Assert.Equal(_samplingPoint2.Instruction, actual.Instruction);
-            Assert.Equal(_samplingPoint2.Stratum, actual.Stratum);
-            Assert.Equal(_samplingPoint2.Description, actual.Description);
+            Assert.True(res);
         }
 
 

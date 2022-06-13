@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using SDKModels = Nfield.SDK.Models;
 
 namespace Nfield.Services.Implementation
 {
@@ -103,32 +104,36 @@ namespace Nfield.Services.Implementation
              .FlattenExceptions();
         }
 
-        public Task<SamplingPoint> ActivateAsync(string surveyId, string samplingPointId, int? target)
+        public Task<bool> ActivateAsync(string surveyId, string samplingPointId, int? target)
         {
             return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, activate:true), new { Target = target})
             .ContinueWith(
                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
             .ContinueWith(
-                stringTask => JsonConvert.DeserializeObject<SamplingPoint>(stringTask.Result))
+                stringTask => JsonConvert.DeserializeObject<SDKModels.ActivateSpareSamplingPointsResponseModel>(stringTask.Result))
+            .ContinueWith(t => t.Result.IsActivated)
             .FlattenExceptions();
         }
 
         public Task<bool> ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds)
         {
-            return Client.PostAsJsonAsync(SamplingPointsApi(surveyId, activate:true),
-                new { SamplingPointIds = samplingPointIds.ToArray() })     
-            .FlattenExceptions()
-            .ContinueWith(t => t.Result.StatusCode == System.Net.HttpStatusCode.OK);
+            return Client.PostAsJsonAsync(SamplingPointsApi(surveyId, activate:true), new { SamplingPointIds = samplingPointIds.ToArray() })
+                .ContinueWith(
+                responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<SDKModels.ActivateSpareSamplingPointsResponseModel>(stringTask.Result))
+                .ContinueWith(t => t.Result.IsActivated)
+            .FlattenExceptions();
         }
 
-        public Task<SamplingPoint> ReplaceAsync(string surveyId, string samplingPointId, string newSamplingPointId, int? target)
+        public Task<bool> ReplaceAsync(string surveyId, string samplingPointId, string newSamplingPointId, int? target)
         {
             return Client.PatchAsJsonAsync(SamplingPointsApi(surveyId, samplingPointId, replace:true),
                 new { SpareSamplingPointId = newSamplingPointId, Target = target })
            .ContinueWith(
                responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
            .ContinueWith(
-               stringTask => JsonConvert.DeserializeObject<SamplingPoint>(stringTask.Result))
+               stringTask => JsonConvert.DeserializeObject<SDKModels.ReplaceSamplingPointWithSpareResponseModel>(stringTask.Result))
+           .ContinueWith(t => t.Result.Success)
            .FlattenExceptions();
         }
 
