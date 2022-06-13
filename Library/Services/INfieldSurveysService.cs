@@ -149,6 +149,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId"></param>
         /// <returns></returns>
+        [Obsolete]
         Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId);
 
         /// <summary>
@@ -156,6 +157,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId"></param>
         /// <returns></returns>
+        [Obsolete]
         Task<int> SamplingPointsCountAsync(string surveyId);
 
         /// <summary>
@@ -164,6 +166,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPointId"></param>
         /// <returns></returns>
+        [Obsolete]
         Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId);
 
         /// <summary>
@@ -172,6 +175,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
+        [Obsolete]
         Task<SamplingPoint> SamplingPointUpdateAsync(string surveyId, SamplingPoint samplingPoint);
 
         /// <summary>
@@ -180,6 +184,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
+        [Obsolete]
         Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint);
 
         /// <summary>
@@ -188,6 +193,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
+        [Obsolete]
         Task SamplingPointDeleteAsync(string surveyId, SamplingPoint samplingPoint);
 
         /// <summary>
