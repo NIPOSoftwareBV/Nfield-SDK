@@ -5238,7 +5238,7 @@
 														}
 													],
 													"request": {
-														"method": "PUT",
+														"method": "PATCH",
 														"header": [
 															{
 																"key": "Authorization",
@@ -5309,7 +5309,7 @@
 														}
 													],
 													"request": {
-														"method": "PUT",
+														"method": "PATCH",
 														"header": [
 															{
 																"key": "Authorization",
@@ -5932,7 +5932,7 @@
 												}
 											],
 											"request": {
-												"method": "PUT",
+												"method": "POST",
 												"header": [
 													{
 														"key": "Authorization",
@@ -5950,7 +5950,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Activate",
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/ActivateSamplingPoints",
 													"host": [
 														"{{origin}}"
 													],

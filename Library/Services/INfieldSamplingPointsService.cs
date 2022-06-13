@@ -55,7 +55,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task RemoveAsync(string surveyId, string samplingPointId);
+        Task<bool> RemoveAsync(string surveyId, string samplingPointId);
 
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SamplingPoint> ActivateAsync(string surveyId, string samplingPointId, int? target);
+        Task<bool> ActivateAsync(string surveyId, string samplingPointId, int? target);
 
         /// <summary>
         /// Activate sampling points 
@@ -100,7 +100,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds);
+        Task<bool> ActivateAsync(string surveyId, IEnumerable<string> samplingPointIds);
 
         /// <summary>
         /// Replace a sampling point 
@@ -112,7 +112,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SamplingPoint> ReplaceAsync(string surveyId, string samplingPointId, string newSamplingPoint, int? target);
+        Task<bool> ReplaceAsync(string surveyId, string samplingPointId, string newSamplingPoint, int? target);
 
 
     }
