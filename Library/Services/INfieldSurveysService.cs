@@ -149,7 +149,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Use INfieldSamplingPointsService QueryAsync")]
         Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId);
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Use INfieldSamplingPointsService QueryAsync")]
         Task<int> SamplingPointsCountAsync(string surveyId);
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPointId"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Use INfieldSamplingPointsService GetAsync")]
         Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId);
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Use INfieldSamplingPointsService UpdateAsync")]
         Task<SamplingPoint> SamplingPointUpdateAsync(string surveyId, SamplingPoint samplingPoint);
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Use INfieldSamplingPointsService CreateAsync")]
         Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint);
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Nfield.Services
         /// <param name="surveyId"></param>
         /// <param name="samplingPoint"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("Use INfieldSamplingPointsService RemoveAsync")]
         Task SamplingPointDeleteAsync(string surveyId, SamplingPoint samplingPoint);
 
         /// <summary>
