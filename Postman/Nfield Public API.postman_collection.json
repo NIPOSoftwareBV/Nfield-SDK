@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "413b16d9-c87e-442e-9ac3-9c8c663cacf5",
+		"_postman_id": "7c11c0f7-b20a-442b-85bb-6674562de920",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9960585"
+		"_exporter_id": "6882687"
 	},
 	"item": [
 		{
@@ -4385,7 +4385,7 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/SamplingPointId/QuotaTargets",
+																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
 																	"host": [
 																		"{{origin}}"
 																	],
@@ -4849,7 +4849,7 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/SamplingPointId/Addresses/AddressId",
+																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
 																				"{{origin}}v1"
 																			],
@@ -5023,7 +5023,7 @@
 																	"\r",
 																	"pm.test(\"Response contains FieldworkOfficeId\", function () {\r",
 																	"    var samplingPoint = pm.response.json();\r",
-																	"    pm.collectionVariables.set(\"FieldworkOfficeId\", samplingPoint.SamplingPointId);\r",
+																	"    pm.collectionVariables.set(\"FieldworkOfficeId\", samplingPoint.FieldworkOfficeId);\r",
 																	"});\r",
 																	"\r",
 																	""
@@ -5214,6 +5214,148 @@
 															]
 														},
 														"description": "(Capi) Update a sampling point with the specified fields"
+													},
+													"response": []
+												},
+												{
+													"name": "Activate Sampling Point",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n    \"SamplingPointId\": \"1b76c054-7d53-4c61-b12d-ad7de7969ef1\",\r\n    \"Target\": 0\r\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Activate",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																":SurveyId",
+																"SamplingPoints",
+																":SamplingPointId",
+																"Activate"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
+															]
+														},
+														"description": "(Capi) Activate a spare sampling point. Optional to set a target in the process"
+													},
+													"response": []
+												},
+												{
+													"name": "Replace Sampling Point",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"OK\");\r",
+																	"});\r",
+																	""
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "PATCH",
+														"header": [
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															},
+															{
+																"key": "Content-Type",
+																"value": "application/json",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\r\n    \"SamplingPointId\": \"1b76c054-7d53-4c61-b12d-ad7de7969ef1\",\r\n    \"Target\": 0\r\n}",
+															"options": {
+																"raw": {
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Replace",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																":SurveyId",
+																"SamplingPoints",
+																":SamplingPointId",
+																"Replace"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "SamplingPointId",
+																	"value": "{{SamplingPointId}}"
+																}
+															]
+														},
+														"description": "(Capi) Replace a sampling point with a spare one. Optional to set a target in the process\n\nEndFragment"
 													},
 													"response": []
 												},
@@ -5766,6 +5908,67 @@
 													]
 												},
 												"description": "(Capi) This method retrieves a list of Sampling Points based on survey. This list can be filtered and sorted using standard OData syntax."
+											},
+											"response": []
+										},
+										{
+											"name": "Activate Sampling Points",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n  \"SamplingPointIds\": [ \"zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz\" ]\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin}}/v1/Surveys/:SurveyId/ActivateSamplingPoints",
+													"host": [
+														"{{origin}}"
+													],
+													"path": [
+														"v1",
+														"Surveys",
+														":SurveyId",
+														"SamplingPoints",
+														"Activate"
+													],
+													"variable": [
+														{
+															"key": "SurveyId",
+															"value": "{{SurveyId}}"
+														}
+													]
+												},
+												"description": "(Capi) Activate a list of spare sampling points"
 											},
 											"response": []
 										},
