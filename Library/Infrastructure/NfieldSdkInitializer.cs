@@ -43,8 +43,6 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyScriptFragmentService), typeof(NfieldSurveyScriptFragmentService) },
             { typeof(INfieldFieldworkOfficesService), typeof(NfieldFieldworkOfficesService) },
             { typeof(INfieldMediaFilesService), typeof(NfieldMediaFilesService) },
-            { typeof(INfieldLanguagesService), typeof(NfieldLanguagesService) },
-            { typeof(INfieldTranslationsService), typeof(NfieldTranslationsService) },
             { typeof(INfieldSurveyLanguageTranslationsService), typeof(NfieldSurveyLanguageTranslationsService) },
             { typeof(INfieldDomainLanguageTranslationsService), typeof(NfieldDomainLanguageTranslationsService) },
             { typeof(INfieldDomainEmailSettingsService), typeof(NfieldDomainEmailSettingsService) },
@@ -57,7 +55,6 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveySettingsService), typeof(NfieldSurveySettingsService) },
             { typeof(INfieldSurveyInterviewInteractionsSettingsService), typeof(NfieldSurveyInterviewInteractionsSettingsService) },
             { typeof(INfieldSurveyResponseCodesService), typeof(NfieldSurveyResponseCodesService) },
-            { typeof(INfieldSurveyRelocationsService), typeof(NfieldSurveyRelocationsService) },
             { typeof(INfieldSurveyPublicIdsService), typeof(NfieldSurveyPublicIdsService) },
             { typeof(INfieldSurveyInterviewersService), typeof(NfieldSurveyInterviewersService) },
             { typeof(INfieldSamplingPointInterviewerAssignmentsService), typeof(NfieldSamplingPointInterviewerAssignmentsService) },
@@ -91,6 +88,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldThemesService), typeof(NfieldThemesService) },
             { typeof(INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService), typeof(NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService) },
             { typeof(INfieldCapiInterviewersService), typeof(NfieldCapiInterviewersService) },
+            { typeof(INfieldSamplingPointsService), typeof(NfieldSamplingPointsService) }
         };
 
         /// <summary>

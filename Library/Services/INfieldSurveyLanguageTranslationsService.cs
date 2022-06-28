@@ -35,8 +35,8 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        /// <returns>A list of language names and their ids.</returns>
-        Task<IQueryable<Language>> QueryAsync(string surveyId);
+        /// <returns>A list of languages with their translations</returns>
+        Task<IQueryable<SurveyLanguageTranslations>> QueryAsync(string surveyId);
 
         /// <summary>
         /// Adds a new survey language and all of its translations.
