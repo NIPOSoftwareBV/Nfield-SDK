@@ -16,6 +16,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
@@ -57,10 +58,12 @@ namespace Nfield.Services
         {
             const string surveyId = "SurveyId";
 
+            var task = new BackgroundTask { Id = "TaskId" };
+            var content = new StringContent(JsonConvert.SerializeObject(task));
+
             _mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyDownloadDataRequest>()))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject(It.IsAny<SurveyDownloadDataRequest>()))));
+                .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var data = new SurveyDownloadDataRequest
             {
@@ -72,7 +75,7 @@ namespace Nfield.Services
             _mockedHttpClient
                 .Verify(
                     client =>
-                        client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/data"), It.IsAny<SurveyDownloadDataRequest>()),
+                        client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/data"), It.IsAny<SurveyDownloadDataRequest>()),
                     Times.Once());
         }
 
@@ -102,17 +105,31 @@ namespace Nfield.Services
         public void TestPrepareDownload_CallsCorrectURI()
         {
             const string surveyId = "SurveyId";
+
             _mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyDataRequest>()))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject(It.IsAny<SurveyDataRequest>()))));
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = "activityId" }))
+                    })).Verifiable();
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = "link", ActivityId = "activityId", Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
 
             _target.PrepareDownload(surveyId, new SurveyDataRequest()).Wait();
 
             _mockedHttpClient
                 .Verify(
                     client =>
-                        client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/DataDownload"), It.IsAny<SurveyDataRequest>()),
+                        client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/DataDownload"), It.IsAny<SurveyDataRequest>()),
                     Times.Once());
         }
 
@@ -123,19 +140,19 @@ namespace Nfield.Services
         [Fact]
         public void TestPrepareInterviewDownload_WhenSurveyIdIsNull_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PrepareInterviewDownload(null, 1)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PrepareInterviewDownload(null, 1, It.IsAny<SurveyDataInterviewRequest>())));
         }
 
         [Fact]
         public void TestPrepareInterviewDownload_WhenSurveyIdIsEmptyString_Throws()
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PrepareInterviewDownload(string.Empty, 1)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PrepareInterviewDownload(string.Empty, 1, It.IsAny<SurveyDataInterviewRequest>())));
         }
 
         [Fact]
         public void TestPrepareInterviewDownload_WhenSurveyIdIsWhiteSpace_Throws()
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PrepareInterviewDownload(" ", 1)));
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.PrepareInterviewDownload(" ", 1, It.IsAny<SurveyDataInterviewRequest>())));
         }
 
         [Fact]
@@ -145,16 +162,29 @@ namespace Nfield.Services
             const int interviewId = 1;
 
             _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyPublishTypeUpgradeModel>()))
-                .Returns(CreateTask(HttpStatusCode.OK,
-                    new StringContent(JsonConvert.SerializeObject(It.IsAny<SurveyPublishTypeUpgradeModel>()))));
+                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyDataInterviewRequest>()))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = "activityId" }))
+                    })).Verifiable();
 
-            _target.PrepareInterviewDownload(surveyId, interviewId).Wait();
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = "link", ActivityId = "activityId", Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
+            _target.PrepareInterviewDownload(surveyId, interviewId, new SurveyDataInterviewRequest()).Wait();
 
             _mockedHttpClient
                 .Verify(
                     client =>
-                        client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/DataDownload/{interviewId}"), It.IsAny<object>()),
+                        client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/DataDownload/{interviewId}"), It.IsAny<SurveyDataInterviewRequest>()),
                     Times.Once());
         }
 

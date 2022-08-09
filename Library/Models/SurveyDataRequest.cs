@@ -18,12 +18,12 @@ using System;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Fields required to create a survey data download request on nfield manager surveys
+    /// Fields required to create a survey data download request
     /// </summary>
     public class SurveyDataRequest
     {
         /// <summary>
-        /// Name of the file
+        /// Optional. Name of the file. The default is the surveyName
         /// </summary>
         public string FileName { get; set; }
 

@@ -23,7 +23,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(nameof(surveyDownloadDataRequest));
             }
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyDownloadDataRequest.SurveyId}/data");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyDownloadDataRequest.SurveyId}/data");
 
             return Client.PostAsJsonAsync(uri, surveyDownloadDataRequest)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -38,7 +38,7 @@ namespace Nfield.Services.Implementation
         {
             CheckSurveyId(surveyId);
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/DataDownload");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/DataDownload");
 
             return await Client.PostAsJsonAsync(uri, surveyDataRequest)
                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
@@ -50,13 +50,13 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyDataService.PrepareInterviewDownload"/>
         /// </summary>
-        public async Task<string> PrepareInterviewDownload(string surveyId, int interviewId)
+        public async Task<string> PrepareInterviewDownload(string surveyId, int interviewId, SurveyDataInterviewRequest surveyDataInterviewRequest)
         {
             CheckSurveyId(surveyId);
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/DataDownload/{interviewId}");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/DataDownload/{interviewId}");
 
-            return await Client.PostAsJsonAsync(uri, new object())
+            return await Client.PostAsJsonAsync(uri, surveyDataInterviewRequest)
                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                         .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
                         .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
@@ -77,7 +77,7 @@ namespace Nfield.Services.Implementation
         private static void CheckSurveyId(string surveyId)
         {
             if (surveyId == null)
-                throw new ArgumentNullException("surveyId");
+                throw new ArgumentNullException(nameof(surveyId));
             if (surveyId.Trim().Length == 0)
                 throw new ArgumentException("surveyId cannot be empty");
         }

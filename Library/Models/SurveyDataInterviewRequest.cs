@@ -13,30 +13,19 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
-using Nfield.Models;
+using System;
 
-namespace Nfield.Services
+namespace Nfield.Models
 {
     /// <summary>
-    /// Service for making a download data request.
+    /// Fields required to create a survey data download request for a single interview
     /// </summary>
-    public interface INfieldSurveyDataService
+    public class SurveyDataInterviewRequest
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Optional. Name of the file. The default is the surveyName_interviewId
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
-
-        /// <summary>
-        /// Gets the data url of a survey download request (for nfield manager surveys)
-        /// </summary>
-        Task<string> PrepareDownload(string surveyId, SurveyDataRequest surveyDataRequest);
-
-        /// <summary>
-        /// Gets the data url of a single interview download request (for nfield manager surveys)
-        /// </summary>
-        Task<string> PrepareInterviewDownload(string surveyId, int interviewId, SurveyDataInterviewRequest surveyDataInterviewRequest);
+        public string FileName { get; set; }
 
     }
 }
