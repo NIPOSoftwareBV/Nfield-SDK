@@ -29,12 +29,12 @@ namespace Nfield.Services
         Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
 
         /// <summary>
-        /// Gets the download data url.
+        /// Gets the data url of a survey download request (for nfield manager surveys)
         /// </summary>
-        Task<string> PrepareDownload(string surveyId, SurveyDownloadDataRequest surveyDownloadDataRequest);
+        Task<string> PrepareDownload(string surveyId, SurveyDataRequest surveyDataRequest);
 
         /// <summary>
-        /// Gets the download data url.
+        /// Gets the data url of a single interview download request (for nfield manager surveys)
         /// </summary>
         Task<string> PrepareInterviewDownload(string surveyId, int interviewId);
 
