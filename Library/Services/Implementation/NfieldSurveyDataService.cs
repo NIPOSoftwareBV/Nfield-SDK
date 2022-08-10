@@ -82,10 +82,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentException("surveyId cannot be empty");
         }
 
-        private INfieldHttpClient Client
-        {
-            get { return ConnectionClient.Client; }
-        }
+        private INfieldHttpClient Client => ConnectionClient.Client;
 
     }
 }
