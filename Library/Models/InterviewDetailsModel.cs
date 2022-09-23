@@ -34,6 +34,7 @@ namespace Nfield.Models
         /// <summary>
         /// Date and Time the interview was started
         /// </summary>
+        [Obsolete("not supported on new nfield surveys")]
         public DateTime StartDate { get; set; }
 
         /// <summary>
