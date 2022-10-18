@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
+    /// <summary>
+    /// A service to manage request configuration
+    /// </summary>
     public interface INfieldRequestsService
     {
 
@@ -41,8 +44,8 @@ namespace Nfield.Services
         /// Updates the request.
         /// 
         /// All properties are updated.
-        /// Existing headers not present in 'externalApi' are deleted (matched on ExternalApiHeader.HeaderId)
-        /// Existing headers present in 'externalApi' with ExternalApiHeader.IsObfuscated set to false
+        /// Existing headers not present in 'request' are deleted (matched on RequestHeader.Id)
+        /// Existing headers present in 'request' with RequestHeader.IsObfuscated set to false
         /// have there value updated.
         /// Headers in 'request' where RequestHeader.Id is 0 are added.
         /// </summary>
