@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "191baaa8-f343-4ef1-91d2-fad19449967e",
+		"_postman_id": "62e44b20-abae-4ef0-b79a-0b84563edaa4",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "631405"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -165,6 +164,80 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Blacklist",
+			"item": [
+				{
+					"name": "Blacklist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const validateProperties = (item) => {",
+									"    return item.ProcessingStatus !== undefined",
+									"    && item.TotalRecordCount !== undefined",
+									"    && item.InsertedCount !== undefined",
+									"    && item.UpdatedCount !== undefined",
+									"    && item.DuplicateKeyCount !== undefined",
+									"    && item.EmptyKeyCount !== undefined",
+									"    && item.InvalidKeyCount !== undefined",
+									"    && item.InvalidDataCount !== undefined",
+									"    && item.SkippedCount !== undefined",
+									"    && item.HeaderInvalid !== undefined",
+									"    && item.HeaderInvalidColumnsCount !== undefined",
+									"    && item.HeaderDataMismatch !== undefined",
+									"    && item.ErrorMessages !== undefined;",
+									"}",
+									"",
+									"pm.test(\"Response contains All Properties\", function () {",
+									"    const response = pm.response.json();",
+									"    pm.expect(validateProperties(response)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/C:/Development/Nfield-SDK/Postman/ExampleFiles/blacklist.csv"
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Blacklist",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Blacklist"
+							]
+						},
+						"description": "Uploads the blacklist for the specified domain. Pass the sample data as a CSV formatted string in the body of the request."
+					},
+					"response": []
+				}
+			],
+			"description": "Manages the blacklist of the domain"
 		},
 		{
 			"name": "Delivery",
