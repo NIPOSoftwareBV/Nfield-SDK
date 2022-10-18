@@ -30,7 +30,6 @@ namespace Nfield.Models
         /// <summary>
         /// Name of the request used in the *REQUEST command
         /// </summary>
-        /// <returns></returns>
         public string Name { get; set; }
 
         /// <summary>
