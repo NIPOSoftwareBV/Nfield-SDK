@@ -166,80 +166,6 @@
 			]
 		},
 		{
-			"name": "Blacklist",
-			"item": [
-				{
-					"name": "Blacklist",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"const validateProperties = (item) => {",
-									"    return item.ProcessingStatus !== undefined",
-									"    && item.TotalRecordCount !== undefined",
-									"    && item.InsertedCount !== undefined",
-									"    && item.UpdatedCount !== undefined",
-									"    && item.DuplicateKeyCount !== undefined",
-									"    && item.EmptyKeyCount !== undefined",
-									"    && item.InvalidKeyCount !== undefined",
-									"    && item.InvalidDataCount !== undefined",
-									"    && item.SkippedCount !== undefined",
-									"    && item.HeaderInvalid !== undefined",
-									"    && item.HeaderInvalidColumnsCount !== undefined",
-									"    && item.HeaderDataMismatch !== undefined",
-									"    && item.ErrorMessages !== undefined;",
-									"}",
-									"",
-									"pm.test(\"Response contains All Properties\", function () {",
-									"    const response = pm.response.json();",
-									"    pm.expect(validateProperties(response)).to.be.true;",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}"
-							}
-						],
-						"body": {
-							"mode": "file",
-							"file": {
-								"src": "/C:/Development/Nfield-SDK/Postman/ExampleFiles/blacklist.csv"
-							}
-						},
-						"url": {
-							"raw": "{{origin}}/v1/Blacklist",
-							"host": [
-								"{{origin}}"
-							],
-							"path": [
-								"v1",
-								"Blacklist"
-							]
-						},
-						"description": "Uploads the blacklist for the specified domain. Pass the sample data as a CSV formatted string in the body of the request."
-					},
-					"response": []
-				}
-			],
-			"description": "Manages the blacklist of the domain"
-		},
-		{
 			"name": "Delivery",
 			"item": [
 				{
@@ -3322,6 +3248,80 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Blacklist",
+					"item": [
+						{
+							"name": "Upload Blacklist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"const validateProperties = (item) => {",
+											"    return item.ProcessingStatus !== undefined",
+											"    && item.TotalRecordCount !== undefined",
+											"    && item.InsertedCount !== undefined",
+											"    && item.UpdatedCount !== undefined",
+											"    && item.DuplicateKeyCount !== undefined",
+											"    && item.EmptyKeyCount !== undefined",
+											"    && item.InvalidKeyCount !== undefined",
+											"    && item.InvalidDataCount !== undefined",
+											"    && item.SkippedCount !== undefined",
+											"    && item.HeaderInvalid !== undefined",
+											"    && item.HeaderInvalidColumnsCount !== undefined",
+											"    && item.HeaderDataMismatch !== undefined",
+											"    && item.ErrorMessages !== undefined;",
+											"}",
+											"",
+											"pm.test(\"Response contains All Properties\", function () {",
+											"    const response = pm.response.json();",
+											"    pm.expect(validateProperties(response)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {
+										"src": "/C:/Development/Nfield-SDK/Postman/ExampleFiles/blacklist.csv"
+									}
+								},
+								"url": {
+									"raw": "{{origin}}/v1/Blacklist",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Blacklist"
+									]
+								},
+								"description": "Uploads the blacklist for the specified domain. Pass the sample data as a CSV formatted string in the body of the request."
+							},
+							"response": []
+						}
+					],
+					"description": "Manages the blacklist of the domain"
 				}
 			]
 		},
