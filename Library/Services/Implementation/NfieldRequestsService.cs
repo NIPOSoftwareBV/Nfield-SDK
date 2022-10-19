@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
-using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using System;
@@ -27,56 +26,37 @@ namespace Nfield.Services.Implementation
     internal class NfieldRequestsService : INfieldRequestsService, INfieldConnectionClientObject
     {
         /// <inheritdoc/>
-        public Task<IQueryable<Request>> QueryAsync()
+        public async Task<IQueryable<Request>> QueryAsync()
         {
-            return Client
-                .GetAsync(RequestsApi)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().GetAwaiter().GetResult())
-                .ContinueWith(stringTask => JsonConvert.DeserializeObject<List<Request>>(stringTask.GetAwaiter().GetResult()).AsQueryable())
-                .FlattenExceptions();
+            using (var response = await Client.GetAsync(RequestsApi))
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Request>>(result).AsQueryable();
+            }
         }
 
         /// <inheritdoc/>
-        public Task<Request> AddAsync(Request request)
+        public async Task<Request> AddAsync(Request request)
         {
-            if (request == null)
+            using (var response = await Client.PostAsJsonAsync(RequestsApi, request ?? throw new ArgumentNullException(nameof(request))))
             {
-                throw new ArgumentNullException(nameof(request));
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Request>(result);
             }
-
-            return Client
-                .PostAsJsonAsync(RequestsApi, request)
-                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().GetAwaiter().GetResult())
-                .ContinueWith(task => JsonConvert.DeserializeObject<Request>(task.GetAwaiter().GetResult()))
-                .FlattenExceptions();
         }
 
         /// <inheritdoc/>
-        public Task RemoveAsync(Request request)
-        {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            return Client
-                .DeleteAsync(new Uri(RequestsApi, request.Id.ToString()))
-                .FlattenExceptions();
-        }
+        public async Task RemoveAsync(Request request)
+            => await Client.DeleteAsync(new Uri(RequestsApi, request?.Id.ToString() ?? throw new ArgumentNullException(nameof(request))));
 
         /// <inheritdoc/>
-        public Task<Request> UpdateAsync(Request request)
+        public async Task<Request> UpdateAsync(Request request)
         {
-            if (request == null)
+            using (var response = await Client.PutAsJsonAsync(RequestsApi, request ?? throw new ArgumentNullException(nameof(request))))
             {
-                throw new ArgumentNullException(nameof(request));
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Request>(result);
             }
-
-            return Client
-                .PutAsJsonAsync(RequestsApi, request)
-                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().GetAwaiter().GetResult())
-                .ContinueWith(task => JsonConvert.DeserializeObject<Request>(task.GetAwaiter().GetResult()))
-                .FlattenExceptions();
         }
 
         #region Implementation of INfieldConnectionClientObject
@@ -88,8 +68,10 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
-        private INfieldHttpClient Client => ConnectionClient.Client;
+        private INfieldHttpClient Client
+            => ConnectionClient.Client;
 
-        private Uri RequestsApi => new Uri(ConnectionClient.NfieldServerUri, "requests/");
+        private Uri RequestsApi
+            => new Uri(ConnectionClient.NfieldServerUri, "requests/");
     }
 }

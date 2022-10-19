@@ -107,7 +107,7 @@ namespace Nfield.Services
         public void TestAddAsync_RequestIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldRequestsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null)));
+            Assert.ThrowsAsync<ArgumentNullException>(() => target.RemoveAsync(null));
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace Nfield.Services
         public void TestRemoveAsync_RequestIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldRequestsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null)));
+            Assert.ThrowsAsync<ArgumentNullException>(() => target.RemoveAsync(null));
         }
 
         [Fact]
@@ -191,7 +191,7 @@ namespace Nfield.Services
         public void TestUpdateAsync_RequestArgumentIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldRequestsService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null)));
+            Assert.ThrowsAsync<ArgumentNullException>(() => target.UpdateAsync(null));
         }
 
         [Fact]
