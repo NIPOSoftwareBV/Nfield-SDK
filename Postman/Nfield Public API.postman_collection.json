@@ -3253,6 +3253,51 @@
 					"name": "Blacklist",
 					"item": [
 						{
+							"name": "Download Blacklist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/octet-stream"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin}}/v1/Blacklist",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Blacklist"
+									]
+								},
+								"description": "Downloads the blacklist for the specified domain."
+							},
+							"response": []
+						},
+						{
 							"name": "Upload Blacklist",
 							"event": [
 								{
