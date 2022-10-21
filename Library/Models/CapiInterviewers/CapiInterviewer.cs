@@ -53,5 +53,10 @@ namespace Nfield.Models
         /// device ID in the CAPI client application in the Settings page.
         /// </summary>
         public bool IsSupervisor { get; set; }
+
+        /// <summary>
+        /// The InterviewerId as it is used on the client
+        /// </summary>
+        public string ClientInterviewerId { get; set; }
     }
 }
