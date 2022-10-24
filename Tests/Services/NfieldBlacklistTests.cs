@@ -42,6 +42,24 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
         }
 
+        #region GetAsync
+
+        [Fact]
+        public void TestGetAsync_SurveyHasSample_ReturnsSample()
+        {
+            const string sample = "a sample";
+            var content = new StringContent(sample);
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Blacklist/")))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var actual = _target.GetAsync().Result;
+
+            Assert.Equal(sample, actual);
+        }
+
+        #endregion
+
         #region PostAsync
 
         [Fact]
