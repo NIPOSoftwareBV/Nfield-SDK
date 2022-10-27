@@ -3794,6 +3794,477 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Requests",
+					"item": [
+						{
+							"name": "Request",
+							"item": [
+								{
+									"name": "Get Request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Name !== undefined \r",
+													"    && item.Description !== undefined \r",
+													"    && item.PayloadTemplate !== undefined \r",
+													"    && item.RequestHttpMethod !== undefined \r",
+													"    && item.Uri !== undefined\r",
+													"    && item.HelpUri !== undefined\r",
+													"    && item.Headers !== undefined\r",
+													"    && item.Headers.every(validateSubProperties);\r",
+													"}\r",
+													"\r",
+													"const validateSubProperties = (item) => {\r",
+													"    return item.Id !== undefined \r",
+													"    && item.Name !== undefined \r",
+													"    && item.Value !== undefined\r",
+													"    && item.IsObfuscated !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.expect(response.Name == \"PostmanApi\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"RequestName\", response.Name);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Requests/:RequestId",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Requests",
+												":RequestId"
+											],
+											"variable": [
+												{
+													"key": "RequestId",
+													"value": "{{RequestId}}"
+												}
+											]
+										},
+										"description": "Get api configuration by name"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Request (by name)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Name !== undefined \r",
+													"    && item.Description !== undefined \r",
+													"    && item.PayloadTemplate !== undefined \r",
+													"    && item.RequestHttpMethod !== undefined \r",
+													"    && item.Uri !== undefined\r",
+													"    && item.HelpUri !== undefined\r",
+													"    && item.Headers !== undefined\r",
+													"    && item.Headers.every(validateSubProperties);\r",
+													"}\r",
+													"\r",
+													"const validateSubProperties = (item) => {\r",
+													"    return item.Id !== undefined \r",
+													"    && item.Name !== undefined \r",
+													"    && item.Value !== undefined\r",
+													"    && item.IsObfuscated !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response ApiName\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"RequestName\", response.Name);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Requests?name={{RequestName}}",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Requests"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "{{RequestName}}"
+												}
+											]
+										},
+										"description": "Get api configuration by name"
+									},
+									"response": []
+								},
+								{
+									"name": "Create Request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Created\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Name !== undefined \r",
+													"    && item.Description !== undefined \r",
+													"    && item.PayloadTemplate !== undefined \r",
+													"    && item.RequestHttpMethod !== undefined \r",
+													"    && item.Uri !== undefined\r",
+													"    && item.HelpUri !== undefined\r",
+													"    && item.Headers !== undefined\r",
+													"    && item.Headers.every(validateSubProperties);\r",
+													"}\r",
+													"\r",
+													"const validateSubProperties = (item) => {\r",
+													"    return item.Id !== undefined \r",
+													"    && item.Name !== undefined \r",
+													"    && item.Value !== undefined\r",
+													"    && item.IsObfuscated !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.expect(response.Name == \"PostmanApi\").to.be.true;\r",
+													"    pm.expect(response.Headers.length).to.equal(2);\r",
+													"    pm.collectionVariables.set(\"RequestId\", response.Id);\r",
+													"    pm.collectionVariables.set(\"RequestName\", response.Name);\r",
+													"    pm.collectionVariables.set(\"RequestHeaderId\", response.Headers[0].Id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"Name\": \"PostmanApi\",\r\n  \"Description\": \"Postman string 2\",\r\n  \"PayloadTemplate\": \"Postman string 3\",\r\n  \"RequestHttpMethod\": 1,\r\n  \"Uri\": \"https://api.niposoftware-dev.com/v1\",\r\n  \"HelpUri\": \"https://api.niposoftware-dev.com/help\",\r\n  \"Headers\": [\r\n    {\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\"\r\n    },\r\n    {\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\"\r\n    }\r\n  ]\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Requests",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Requests"
+											]
+										},
+										"description": "Create a new external api configuration"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.Name !== undefined \r",
+													"    && item.Description !== undefined \r",
+													"    && item.PayloadTemplate !== undefined \r",
+													"    && item.RequestHttpMethod !== undefined \r",
+													"    && item.Uri !== undefined\r",
+													"    && item.HelpUri !== undefined\r",
+													"    && item.Headers !== undefined\r",
+													"    && item.Headers.every(validateSubProperties);\r",
+													"}\r",
+													"\r",
+													"const validateSubProperties = (item) => {\r",
+													"    return item.Id !== undefined \r",
+													"    && item.Name !== undefined \r",
+													"    && item.Value !== undefined\r",
+													"    && item.IsObfuscated !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.expect(response.Name == \"Postman updated\").to.be.true;\r",
+													"    pm.expect(response.Description == \"Postman updated\").to.be.true;\r",
+													"    pm.expect(response.PayloadTemplate == \"Postman updated\").to.be.true;\r",
+													"    pm.expect(response.RequestHttpMethod == 5).to.be.true;\r",
+													"    pm.expect(response.Headers.length).to.equal(1);\r",
+													"    pm.expect(response.Headers[0].Name == \"Postman string 2 updated\").to.be.true;\r",
+													"    pm.expect(response.Headers[0].Value == \"*******************dated\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"RequestName\", response.Name);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"Id\": {{RequestId}},\r\n  \"Name\": \"Postman updated\",\r\n  \"Description\": \"Postman updated\",\r\n  \"PayloadTemplate\": \"Postman updated\",\r\n  \"RequestHttpMethod\": 5,\r\n  \"Uri\": \"https://api.niposoftware-dev.com/v1\",\r\n  \"HelpUri\": \"https://api.niposoftware-dev.com/help\",\r\n  \"Headers\": [\r\n        {\r\n            \"Id\": {{RequestHeaderId}},\r\n            \"IsObfuscated\": false,\r\n            \"Name\": \"Postman string 2 updated\",\r\n            \"Value\": \"Postman string 3 updated\"\r\n        }\r\n  ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Requests",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Requests"
+											]
+										},
+										"description": "Update existing external api configuration"
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"No Content\");\r",
+													"\r",
+													"    pm.collectionVariables.set(\"RequestId\", null);\r",
+													"    pm.collectionVariables.set(\"RequestName\", null);\r",
+													"    pm.collectionVariables.set(\"RequestHeaderId\", null);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin}}/v1/Requests/:RequestId",
+											"host": [
+												"{{origin}}"
+											],
+											"path": [
+												"v1",
+												"Requests",
+												":RequestId"
+											],
+											"variable": [
+												{
+													"key": "RequestId",
+													"value": "{{RequestId}}"
+												}
+											]
+										},
+										"description": "Delete external api configuration"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get Requests",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (item) => {\r",
+											"    return item.Name !== undefined \r",
+											"    && item.Description !== undefined \r",
+											"    && item.PayloadTemplate !== undefined \r",
+											"    && item.RequestHttpMethod !== undefined \r",
+											"    && item.Uri !== undefined\r",
+											"    && item.HelpUri !== undefined\r",
+											"    && item.Headers !== undefined\r",
+											"    && item.Headers.every(validateSubProperties);\r",
+											"}\r",
+											"\r",
+											"const validateSubProperties = (item) => {\r",
+											"    return item.Id !== undefined \r",
+											"    && item.Name !== undefined \r",
+											"    && item.Value !== undefined\r",
+											"    && item.IsObfuscated !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Response contains properties\", function () {\r",
+											"    var response = pm.response.json();\r",
+											"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{origin}}/v1/Requests",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Requests"
+									]
+								},
+								"description": "List all api's"
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -13899,6 +14370,18 @@
 		},
 		{
 			"key": "InternalVariable",
+			"value": ""
+		},
+		{
+			"key": "RequestId",
+			"value": ""
+		},
+		{
+			"key": "RequestName",
+			"value": ""
+		},
+		{
+			"key": "RequestHeaderId",
 			"value": ""
 		}
 	]
