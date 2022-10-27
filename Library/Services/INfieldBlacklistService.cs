@@ -36,7 +36,6 @@ namespace Nfield.Services
         /// <summary>
         /// Downloads the blacklist as a tab delimited string, that can be stored as csv file.
         /// </summary>
-        /// <returns></returns>
         Task<string> GetAsync();
     }
 }

@@ -21,6 +21,7 @@ using Nfield.Services.Implementation;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Nfield.Services
@@ -45,7 +46,7 @@ namespace Nfield.Services
         #region GetAsync
 
         [Fact]
-        public void TestGetAsync_SurveyHasSample_ReturnsSample()
+        public async Task TestGetAsync_SurveyHasSample_ReturnsSample()
         {
             const string sample = "a sample";
             var content = new StringContent(sample);
@@ -53,7 +54,7 @@ namespace Nfield.Services
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Blacklist/")))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
-            var actual = _target.GetAsync().Result;
+            var actual = await _target.GetAsync();
 
             Assert.Equal(sample, actual);
         }
