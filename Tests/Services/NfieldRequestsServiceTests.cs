@@ -23,16 +23,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Nfield.Services
 {
-    public class NfieldRequestsServiceTests : NfieldServiceTestsBase 
+    public class NfieldRequestsServiceTests : NfieldServiceTestsBase
     {
         #region  QueryAsync
 
         [Fact]
-        public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithRequests()
+        public async Task TestQueryAsync_ServerReturnsQuery_ReturnsListWithRequests()
         {
             var header1 = new RequestHeader
             {
@@ -80,7 +81,7 @@ namespace Nfield.Services
             var target = new NfieldRequestsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualRequests = target.QueryAsync().Result.ToArray();
+            var actualRequests = (await target.QueryAsync()).ToArray();
 
             Assert.Equal(expectedRequests[0].Name, actualRequests[0].Name);
             Assert.Equal(expectedRequests[0].Description, actualRequests[0].Description);
@@ -104,14 +105,16 @@ namespace Nfield.Services
         #region AddAsync
 
         [Fact]
-        public void TestAddAsync_RequestIsNull_ThrowsArgumentNullException()
+        public async Task TestAddAsync_RequestIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldRequestsService();
-            Assert.ThrowsAsync<ArgumentNullException>(() => target.RemoveAsync(null));
+            target.InitializeNfieldConnection(new Mock<INfieldConnectionClient>().Object);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => target.RemoveAsync(null));
         }
 
         [Fact]
-        public void TestAddAsync_ServerAccepts_ReturnsRequest()
+        public async Task TestAddAsync_ServerAccepts_ReturnsRequest()
         {
             var header = new RequestHeader
             {
@@ -139,7 +142,7 @@ namespace Nfield.Services
             var target = new NfieldRequestsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.AddAsync(request).Result;
+            var actual = await target.AddAsync(request);
 
             Assert.Equal(request.Name, actual.Name);
             Assert.Equal(request.Description, actual.Description);
@@ -154,14 +157,16 @@ namespace Nfield.Services
         #region RemoveAsync
 
         [Fact]
-        public void TestRemoveAsync_RequestIsNull_ThrowsArgumentNullException()
+        public async Task TestRemoveAsync_RequestIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldRequestsService();
-            Assert.ThrowsAsync<ArgumentNullException>(() => target.RemoveAsync(null));
+            target.InitializeNfieldConnection(new Mock<INfieldConnectionClient>().Object);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => target.RemoveAsync(null));
         }
 
         [Fact]
-        public void TestRemoveAsync_ServerRemovedRequest_DoesNotThrow()
+        public async Task TestRemoveAsync_ServerRemovedRequest_DoesNotThrow()
         {
             var request = new Request
             {
@@ -180,7 +185,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // assert: no throw
-            target.RemoveAsync(request).Wait();
+            await target.RemoveAsync(request);
         }
 
         #endregion
@@ -188,14 +193,16 @@ namespace Nfield.Services
         #region UpdateAsync
 
         [Fact]
-        public void TestUpdateAsync_RequestArgumentIsNull_ThrowsArgumentNullException()
+        public async Task TestUpdateAsync_RequestArgumentIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldRequestsService();
-            Assert.ThrowsAsync<ArgumentNullException>(() => target.UpdateAsync(null));
+            target.InitializeNfieldConnection(new Mock<INfieldConnectionClient>().Object);
+
+            await Assert.ThrowsAsync<ArgumentNullException>(() => target.UpdateAsync(null));
         }
 
         [Fact]
-        public void TestUpdateAsync_RequestExists_ReturnsRequest()
+        public async Task TestUpdateAsync_RequestExists_ReturnsRequest()
         {
             const string RequestName = "ApiToUpdate";
             var request = new Request
@@ -214,7 +221,7 @@ namespace Nfield.Services
             var target = new NfieldRequestsService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.UpdateAsync(request).Result;
+            var actual = await target.UpdateAsync(request);
 
             Assert.Equal(request.Description, actual.Description);
             Assert.Equal(request.PayloadTemplate, actual.PayloadTemplate);
