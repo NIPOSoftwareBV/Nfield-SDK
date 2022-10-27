@@ -32,5 +32,10 @@ namespace Nfield.Services
         /// <exception cref="ArgumentException"></exception>
         /// <returns><see cref="BlacklistUploadStatus"/></returns>
         Task<BlacklistUploadStatus> PostAsync(string blacklist);
+
+        /// <summary>
+        /// Downloads the blacklist as a tab delimited string, that can be stored as csv file.
+        /// </summary>
+        Task<string> GetAsync();
     }
 }

@@ -21,6 +21,7 @@ using Nfield.Services.Implementation;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Nfield.Services
@@ -42,6 +43,23 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
         }
 
+        #region GetAsync
+
+        [Fact]
+        public async Task TestGetAsync_SurveyHasSample_ReturnsSample()
+        {
+            const string sample = "a sample";
+            var content = new StringContent(sample);
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Blacklist/")))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var actual = await _target.GetAsync();
+
+            Assert.Equal(sample, actual);
+        }
+
+        #endregion
         #region PostAsync
 
         [Fact]
