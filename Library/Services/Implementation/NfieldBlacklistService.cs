@@ -29,25 +29,28 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldBlacklistService : INfieldBlacklistService, INfieldConnectionClientObject
     {
-        public Task<string> GetAsync()
+        public async Task<string> GetAsync()
         {
             var uri = BlacklistUrl();
 
-            return Client.GetAsync(uri)
-                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                .FlattenExceptions();
+            using (var response = await Client.GetAsync(uri))
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
         }
 
-        public Task<BlacklistUploadStatus> PostAsync(string blacklist)
+        public async Task<BlacklistUploadStatus> PostAsync(string blacklist)
         {
             Ensure.ArgumentNotNullOrEmptyString(blacklist, nameof(blacklist));
 
             var uri = BlacklistUrl();
             var blacklistContent = new StringContent(blacklist);
-            return Client.PostAsync(uri, blacklistContent)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BlacklistUploadStatus>(stringResult.Result))
-                .FlattenExceptions();
+
+            using (var response = await Client.PostAsync(uri, blacklistContent))
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<BlacklistUploadStatus>(result);
+            }
         }
 
         #region Implementation of INfieldConnectionClientObject
