@@ -13,50 +13,53 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
+
 namespace Nfield.Models
 {
-    public class CapiInterviewer
+    /// <summary>
+    /// Configuration for a request
+    /// </summary>
+    public class Request
     {
         /// <summary>
-        /// Unique Id of Interviewer
+        /// The id of the request
         /// </summary>
-        public string InterviewerId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
-        /// The interviewer's username
+        /// Name of the request used in the *REQUEST command
         /// </summary>
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// First name of the interviewer
+        /// Endpoint (URI) of the request
         /// </summary>
-        public string FirstName { get; set; }
+        public string Uri { get; set; }
 
         /// <summary>
-        /// Last name of the interviewer
+        /// The template of the payload
         /// </summary>
-        public string LastName { get; set; }
+        public string PayloadTemplate { get; set; }
 
         /// <summary>
-        /// Email Address of the interviewer
+        /// The method of the request
         /// </summary>
-        public string EmailAddress { get; set; }
+        public RequestHttpMethod RequestHttpMethod { get; set; }
 
         /// <summary>
-        /// TelephoneNumber of the interviewer
+        /// Optional description of the request
         /// </summary>
-        public string TelephoneNumber { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
-        /// Property indicating weather the interviewer is a supervisor or not.  
-        /// Supervisors have special powers e.g. they can enter and modify the 
-        /// device ID in the CAPI client application in the Settings page.
+        /// Optional help URI towards extensive documentation for the request
         /// </summary>
-        public bool IsSupervisor { get; set; }
+        public string HelpUri { get; set; }
 
         /// <summary>
-        /// The InterviewerId as it is used on the client
+        /// Collection of headers used when posting the request
         /// </summary>
-        public string ClientInterviewerId { get; set; }
+        public ICollection<RequestHeader> Headers { get; set; }
     }
 }
