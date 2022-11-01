@@ -16,10 +16,12 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -77,5 +79,51 @@ namespace Nfield.Services
             Assert.Equal(task.Id, actual.Id);
         }
 
+        [Fact]
+        public void TestPrepareDownloadSampleDataAsync_SurveyIdIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleDataService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.PrepareDownloadSampleDataAsync(null, FileName)));
+        }
+
+        [Fact]
+        public void TestPrepareDownloadSampleDataAsync_SurveyIdIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleDataService();
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.PrepareDownloadSampleDataAsync("", FileName)));
+        }
+
+        [Fact]
+        public void TestPrepareDownloadSampleDataAsync_FileNameIsNull_Throws()
+        {
+            var target = new NfieldSurveySampleDataService();
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.PrepareDownloadSampleDataAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestPrepareDownloadSampleDataAsync_FileNameIsEmpty_Throws()
+        {
+            var target = new NfieldSurveySampleDataService();
+            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.PrepareDownloadSampleDataAsync(SurveyId, "")));
+        }
+
+        [Fact]
+        public async Task TestPrepareDownloadSampleDataAsync_ServerAcceptsSetting_ReturnsSetting()
+        {
+            var task = new BackgroundActivityStatus { ActivityId = "ActivityId" };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var content = new StringContent(JsonConvert.SerializeObject(task));
+            mockedHttpClient
+                .Setup(client => client.PostAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/SampleDataDownload/" + FileName), null))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var target = new NfieldSurveySampleDataService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = await target.PrepareDownloadSampleDataAsync(SurveyId, FileName);
+
+            Assert.Equal(task.ActivityId, actual.ActivityId);
+        }
     }
 }
