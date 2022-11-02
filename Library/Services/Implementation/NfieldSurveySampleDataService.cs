@@ -46,18 +46,18 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public async Task<BackgroundActivityStatus> PrepareDownloadSampleDataAsync(string surveyId, string fileName)
+        public async Task<string> PrepareDownloadSampleDataAsync(string surveyId, string fileName)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
 
             var uri = SurveySampleDataDownloadUrl(surveyId, fileName);
 
-            using (var response = await Client.PostAsync(uri, null))
-            {
-                var result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<BackgroundActivityStatus>(result);
-            }
+            return await Client.PostAsync(uri, null)
+                        .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                        .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
+                        .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
+                        .FlattenExceptions().ConfigureAwait(false);
         }
 
         #region Implementation of INfieldConnectionClientObject
