@@ -110,20 +110,29 @@ namespace Nfield.Services
         [Fact]
         public async Task TestPrepareDownloadSampleDataAsync_ServerAcceptsSetting_ReturnsSetting()
         {
-            var task = new BackgroundActivityStatus { ActivityId = "ActivityId" };
+            var expectedDownloadUrl = "DownloadLink";
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var content = new StringContent(JsonConvert.SerializeObject(task));
+            var content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = "activityId" }));
             mockedHttpClient
                 .Setup(client => client.PostAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/SampleDataDownload/" + FileName), null))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
+            mockedHttpClient
+                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = expectedDownloadUrl, ActivityId = "activityId", Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
             var target = new NfieldSurveySampleDataService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = await target.PrepareDownloadSampleDataAsync(SurveyId, FileName);
+            var result = await target.PrepareDownloadSampleDataAsync(SurveyId, FileName);
 
-            Assert.Equal(task.ActivityId, actual.ActivityId);
+            Assert.Equal(expectedDownloadUrl, result);
         }
     }
 }
