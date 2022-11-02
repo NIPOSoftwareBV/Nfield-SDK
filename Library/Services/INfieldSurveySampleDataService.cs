@@ -27,5 +27,10 @@ namespace Nfield.Services
         /// Start a new download sample data task, gets the task
         /// </summary>
         Task<BackgroundTask> GetAsync(string surveyId, string fileName);
+
+        /// <summary>
+        /// Start a new download sample data activity, gets the activity
+        /// </summary>
+        Task<string> PrepareDownloadSampleDataAsync(string surveyId, string fileName);
     }
 }
