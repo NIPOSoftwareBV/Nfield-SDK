@@ -53,11 +53,10 @@ namespace Nfield.Services.Implementation
 
             var uri = SurveySampleDataDownloadUrl(surveyId, fileName);
 
-            return await Client.PostAsync(uri, null)
-                        .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                        .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
-                        .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
-                        .FlattenExceptions().ConfigureAwait(false);
+            var response = await Client.PostAsync(uri, null);
+            var result = await response.Content.ReadAsStringAsync();
+            var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(result);
+            return await ConnectionClient.GetActivityResultAsync<string>(backgroundActivityStatus.ActivityId, "DownloadDataUrl");
         }
 
         #region Implementation of INfieldConnectionClientObject
