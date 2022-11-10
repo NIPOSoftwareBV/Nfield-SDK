@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "53689410-b0ed-4354-8b67-748da1fcd287",
+		"_postman_id": "00817f27-f6bd-4eed-9ed3-7a7bec6d4731",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "631405"
+		"_exporter_id": "24223379"
 	},
 	"item": [
 		{
@@ -10085,7 +10085,7 @@
 														"header": [
 															{
 																"key": "Content-Type",
-																"value": "application/octet-stream"
+																"value": "application/x-zip-compressed"
 															},
 															{
 																"key": "Authorization",
@@ -10095,7 +10095,7 @@
 														"body": {
 															"mode": "file",
 															"file": {
-																"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/bungalow.jpg"
+																"src": "/C:/Users/fernandesa/OneDrive - Kantar/Desktop/Stuff/Administrative/Pics/Mario.jpg"
 															}
 														},
 														"url": {
@@ -10182,6 +10182,69 @@
 															]
 														},
 														"description": "Deletes the survey media file."
+													},
+													"response": []
+												},
+												{
+													"name": "Upload Media File",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 201\", function () {\r",
+																	"    pm.response.to.have.status(201);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"Created\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/x-zip-compressed",
+																"type": "text"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "file",
+															"file": {}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																":SurveyId",
+																"MediaFiles",
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
+															]
+														}
 													},
 													"response": []
 												}
@@ -10304,65 +10367,6 @@
 								{
 									"name": "Script",
 									"item": [
-										{
-											"name": "Create SurveyScript",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pm.test(\"Status code is 201\", function () {",
-															"    pm.response.to.have.status(201);",
-															"});",
-															"",
-															"pm.test(\"Response contains SurveyId\", function () {",
-															"    const survey = pm.response.json();",
-															"    pm.expect(survey.SurveyId.length).to.eql(36);",
-															"    pm.collectionVariables.set(\"SurveyId\", survey.SurveyId);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													},
-													{
-														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "{\r\n  \"Script\": \"*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
-												},
-												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
-													"host": [
-														"{{origin}}"
-													],
-													"path": [
-														"v1",
-														"Surveys",
-														":SurveyId",
-														"Script"
-													],
-													"variable": [
-														{
-															"key": "SurveyId",
-															"value": "{{SurveyId}}"
-														}
-													]
-												},
-												"description": "This method updates the ODIN script of a specific survey."
-											},
-											"response": []
-										},
 										{
 											"name": "Get SurveyScript",
 											"event": [
@@ -11724,7 +11728,7 @@
 									"response": []
 								},
 								{
-									"name": "Get Sample Data (deprecated)",
+									"name": "Get Sample Data",
 									"event": [
 										{
 											"listen": "test",
@@ -11799,65 +11803,6 @@
 												{
 													"key": "SampleDataFileName",
 													"value": "{{SampleDataFileName}}"
-												}
-											]
-										},
-										"description": "Create a request for a sample data download."
-									},
-									"response": []
-								},
-								{
-									"name": "Get Sample Data",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 202\", function () {",
-													"    pm.response.to.have.status(202);",
-													"});",
-													"",
-													"pm.test(\"Status code name has string\", function () {",
-													"    pm.response.to.have.status(\"Accepted\");",
-													"});",
-													""
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/octet-stream"
-											},
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}"
-											}
-										],
-										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleDataDownload/:SampleDataFileName",
-											"host": [
-												"{{origin}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												":SurveyId",
-												"SampleDataDownload",
-												":SampleDataFileName"
-											],
-											"variable": [
-												{
-													"key": "SurveyId",
-													"value": "{{SurveyId}}"
-												},
-												{
-													"key": "SampleDataFileName",
-													"value": null
 												}
 											]
 										},
@@ -12210,6 +12155,65 @@
 									]
 								},
 								"description": "This method retrieves details of a specific survey."
+							},
+							"response": []
+						},
+						{
+							"name": "Create SurveyScript",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Response contains SurveyId\", function () {",
+											"    const survey = pm.response.json();",
+											"    pm.expect(survey.SurveyId.length).to.eql(36);",
+											"    pm.collectionVariables.set(\"SurveyId\", survey.SurveyId);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Script\": \"*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
+								},
+								"url": {
+									"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
+									"host": [
+										"{{origin}}"
+									],
+									"path": [
+										"v1",
+										"Surveys",
+										":SurveyId",
+										"Script"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": "{{SurveyId}}"
+										}
+									]
+								},
+								"description": "This method updates the ODIN script of a specific survey."
 							},
 							"response": []
 						},
