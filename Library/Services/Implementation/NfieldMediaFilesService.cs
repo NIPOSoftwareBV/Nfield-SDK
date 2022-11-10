@@ -18,12 +18,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
@@ -110,6 +112,30 @@ namespace Nfield.Services.Implementation
                       .FlattenExceptions();
         }
 
+        public Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content)
+        {
+            if (string.IsNullOrEmpty(surveyId))
+            {
+                throw new ArgumentNullException("surveyId");
+            }
+            if (string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentNullException("fileName");
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException("content");
+            }
+
+            var postContent = new ByteArrayContent(content);
+            postContent.Headers.ContentType =
+                new MediaTypeHeaderValue("application/octet-stream");
+
+            return
+               Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent)
+                     .FlattenExceptions();
+        }
+                          
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -137,6 +163,6 @@ namespace Nfield.Services.Implementation
                 path.AppendFormat("?fileName={0}", HttpUtility.UrlEncode(fileName));
             }
             return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
-        }
+        }       
     }
 }
