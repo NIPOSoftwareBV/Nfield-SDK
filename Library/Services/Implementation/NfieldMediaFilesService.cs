@@ -92,18 +92,8 @@ namespace Nfield.Services.Implementation
 
         public Task AddOrUpdateAsync(string surveyId, string fileName, byte[] content)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentNullException("fileName");
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException("content");
-            }
+            CheckRequiredArgumentsUpload(surveyId, fileName, content);
+
             var postContent = new ByteArrayContent(content);
             postContent.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
@@ -112,28 +102,15 @@ namespace Nfield.Services.Implementation
                       .FlattenExceptions();
         }
 
-        public Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content)
+        public async Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentNullException("fileName");
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException("content");
-            }
-
+            CheckRequiredArgumentsUpload(surveyId, fileName, content);
+                        
             var postContent = new ByteArrayContent(content);
             postContent.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
-
-            return
-               Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent)
-                     .FlattenExceptions();
+            
+            await Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent).FlattenExceptions().ConfigureAwait(false);
         }
                           
         #endregion
@@ -149,6 +126,7 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
+        #region Helpers
         private INfieldHttpClient Client
         {
             get { return ConnectionClient.Client; }
@@ -163,6 +141,33 @@ namespace Nfield.Services.Implementation
                 path.AppendFormat("?fileName={0}", HttpUtility.UrlEncode(fileName));
             }
             return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
-        }       
+        }
+
+
+        private static void CheckRequiredArgumentsUpload(string surveyId, string fileName, byte[] content)
+        {
+            CheckRequiredStringArgument(surveyId, "surveyId");
+
+            CheckRequiredStringArgument(fileName, "fileName");
+
+            CheckRequiredByteArrayArgument(content, "content");
+        }
+
+        private static void CheckRequiredStringArgument(string argument, string name)
+        {
+            if (argument == null)
+                throw new ArgumentNullException(name);
+            if (argument.Trim().Length == 0)
+                throw new ArgumentException($"{name} cannot be empty");
+        }
+
+        private static void CheckRequiredByteArrayArgument(byte[] byteArray, string name)
+        {
+            if (byteArray == null)            
+                throw new ArgumentNullException(name);            
+        }
+
+        #endregion
+
     }
 }
