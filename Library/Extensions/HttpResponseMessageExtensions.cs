@@ -23,6 +23,7 @@ using Nfield.Infrastructure.NipoSoftware.Nfield.Manager.Api.Helpers;
 namespace Nfield.Extensions
 {
     /// <summary>
+    /// this is just a test
     /// Extensions to the <see cref="HttpResponseMessage"/> class.
     /// </summary>
     internal static class HttpResponseMessageExtensions
