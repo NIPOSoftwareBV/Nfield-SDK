@@ -9,6 +9,11 @@ Postman is a tool for working with APIs. It has a lot of nice features:
 * Automate: run a collection for repetitive tasks (sign in, create survey, upload script, publish survey, start fieldwork)
 * Generate code: postman can even generate code based on a request
 
+## Settings
+To use postman against your local Public API, you need to disable the "SSL certificate verification setting". Otherwise, you might get an error in the sign in.
+
+![Postman settings](./media/settings.png)
+
 ## Install and import
 
 You can download the free Postman App at https://www.getpostman.com/. 
