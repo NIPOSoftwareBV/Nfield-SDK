@@ -10057,7 +10057,7 @@
 													"response": []
 												},
 												{
-													"name": "Upload Media File",
+													"name": "Upload Media File (deprecated)",
 													"event": [
 														{
 															"listen": "test",
