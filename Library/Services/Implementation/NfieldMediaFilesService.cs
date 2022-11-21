@@ -13,19 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
+using Nfield.Extensions;
+using Nfield.Infrastructure;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Newtonsoft.Json;
-using Nfield.Extensions;
-using Nfield.Infrastructure;
-using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
@@ -110,7 +109,10 @@ namespace Nfield.Services.Implementation
             postContent.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
             
-            await Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent).FlattenExceptions().ConfigureAwait(false);
+            var response = await Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent);
+            var result = await response.Content.ReadAsStringAsync();
+            var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(result);
+            await ConnectionClient.GetActivityResultAsync<string>(backgroundActivityStatus.ActivityId, "Status");
         }
                           
         #endregion
