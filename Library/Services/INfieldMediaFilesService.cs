@@ -63,7 +63,7 @@ namespace Nfield.Services
         Task RemoveAsync(string surveyId, string fileName);
 
         /// <summary>
-        /// Adds or updates the survey media file. "The PUT endpoint is obsolete, please use the POST endpoint."
+        /// Adds or updates the survey media file. The PUT endpoint is obsolete, please use the POST endpoint.
         /// </summary>
         /// <param name="surveyId">The survey for which to add or update the file</param>
         /// <param name="fileName">The name of the file</param>
