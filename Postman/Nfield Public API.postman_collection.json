@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "53689410-b0ed-4354-8b67-748da1fcd287",
+		"_postman_id": "35e374a6-689a-48ac-ae66-572e9e0382f4",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "631405"
+		"_exporter_id": "24223379"
 	},
 	"item": [
 		{
@@ -10057,7 +10057,7 @@
 													"response": []
 												},
 												{
-													"name": "Upload Media File",
+													"name": "Upload Media File (deprecated)",
 													"event": [
 														{
 															"listen": "test",
@@ -10182,6 +10182,70 @@
 															]
 														},
 														"description": "Deletes the survey media file."
+													},
+													"response": []
+												},
+												{
+													"name": "Upload Media File",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {\r",
+																	"    pm.response.to.have.status(200);\r",
+																	"});\r",
+																	"\r",
+																	"pm.test(\"Status code name has string\", function () {\r",
+																	"    pm.response.to.have.status(\"Ok\");\r",
+																	"});"
+																],
+																"type": "text/javascript"
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/octet-stream",
+																"type": "text"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}",
+																"type": "text"
+															}
+														],
+														"body": {
+															"mode": "file",
+															"file": {}
+														},
+														"url": {
+															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"host": [
+																"{{origin}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																":SurveyId",
+																"MediaFiles",
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}",
+																	"type": "string"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
+															]
+														}
 													},
 													"response": []
 												}
