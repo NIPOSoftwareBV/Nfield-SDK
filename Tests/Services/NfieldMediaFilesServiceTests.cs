@@ -180,7 +180,7 @@ namespace Nfield.Services
         #region UploadAndSaveAsync
 
         [Fact]
-        public void TestUploadAndSaveAsync_Always_DoesNotThrow()
+        public void TestUploadAndSaveAsync_DoesNotThrow()
         {
             const string surveyId = "SurveyId";
             const string fileName = "MyFileName";

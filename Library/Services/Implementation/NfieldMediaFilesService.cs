@@ -148,11 +148,11 @@ namespace Nfield.Services.Implementation
 
         private static void CheckRequiredArgumentsUpload(string surveyId, string fileName, byte[] content)
         {
-            CheckRequiredStringArgument(surveyId, "surveyId");
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
 
-            CheckRequiredStringArgument(fileName, "fileName");
+            CheckRequiredStringArgument(fileName, nameof(fileName));
 
-            CheckRequiredByteArrayArgument(content, "content");
+            CheckRequiredByteArrayArgument(content, nameof(content));
         }
 
         private static void CheckRequiredStringArgument(string argument, string name)
