@@ -13,6 +13,10 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
+using Nfield.Extensions;
+using Nfield.Infrastructure;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +25,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Newtonsoft.Json;
-using Nfield.Extensions;
-using Nfield.Infrastructure;
 
 namespace Nfield.Services.Implementation
 {
@@ -90,18 +91,8 @@ namespace Nfield.Services.Implementation
 
         public Task AddOrUpdateAsync(string surveyId, string fileName, byte[] content)
         {
-            if (string.IsNullOrEmpty(surveyId))
-            {
-                throw new ArgumentNullException("surveyId");
-            }
-            if (string.IsNullOrEmpty(fileName))
-            {
-                throw new ArgumentNullException("fileName");
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException("content");
-            }
+            CheckRequiredArgumentsUpload(surveyId, fileName, content);
+
             var postContent = new ByteArrayContent(content);
             postContent.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
@@ -110,6 +101,20 @@ namespace Nfield.Services.Implementation
                       .FlattenExceptions();
         }
 
+        public async Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content)
+        {
+            CheckRequiredArgumentsUpload(surveyId, fileName, content);
+                        
+            var postContent = new ByteArrayContent(content);
+            postContent.Headers.ContentType =
+                new MediaTypeHeaderValue("application/octet-stream");
+            
+            var response = await Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent);
+            var result = await response.Content.ReadAsStringAsync();
+            var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(result);
+            await ConnectionClient.GetActivityResultAsync<string>(backgroundActivityStatus.ActivityId, "Status");
+        }
+                          
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -123,6 +128,7 @@ namespace Nfield.Services.Implementation
 
         #endregion
 
+        #region Helpers
         private INfieldHttpClient Client
         {
             get { return ConnectionClient.Client; }
@@ -138,5 +144,32 @@ namespace Nfield.Services.Implementation
             }
             return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
+
+
+        private static void CheckRequiredArgumentsUpload(string surveyId, string fileName, byte[] content)
+        {
+            CheckRequiredStringArgument(surveyId, nameof(surveyId));
+
+            CheckRequiredStringArgument(fileName, nameof(fileName));
+
+            CheckRequiredByteArrayArgument(content, nameof(content));
+        }
+
+        private static void CheckRequiredStringArgument(string argument, string name)
+        {
+            if (argument == null)
+                throw new ArgumentNullException(name);
+            if (argument.Trim().Length == 0)
+                throw new ArgumentException($"{name} cannot be empty");
+        }
+
+        private static void CheckRequiredByteArrayArgument(byte[] byteArray, string name)
+        {
+            if (byteArray == null)            
+                throw new ArgumentNullException(name);            
+        }
+
+        #endregion
+
     }
 }

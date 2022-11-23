@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -63,7 +64,7 @@ namespace Nfield.Services
         Task RemoveAsync(string surveyId, string fileName);
 
         /// <summary>
-        /// Adds or updates the survey media file.
+        /// Adds or updates the survey media file. The PUT endpoint is obsolete, please use the POST endpoint.
         /// </summary>
         /// <param name="surveyId">The survey for which to add or update the file</param>
         /// <param name="fileName">The name of the file</param>
@@ -72,6 +73,18 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        [Obsolete("The PUT endpoint is obsolete, please use the POST endpoint -> UploadAndSaveAsync")]
         Task AddOrUpdateAsync(string surveyId, string fileName, byte[] content);
+
+        /// <summary>
+        /// Adds or updates the survey media file.
+        /// </summary>
+        /// <param name="surveyId">The survey for which to add or update the file</param>
+        /// <param name="fileName">The name of the file</param>
+        /// <param name="content">The content of the file</param>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception> 
+        Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content);
     }
 }

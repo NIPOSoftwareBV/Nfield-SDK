@@ -19,9 +19,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -171,6 +173,40 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             target.AddOrUpdateAsync(surveyId, fileName, content).Wait();
+        }
+
+        #endregion
+
+        #region UploadAndSaveAsync
+
+        [Fact]
+        public void TestUploadAndSaveAsync_DoesNotThrow()
+        {
+            const string surveyId = "SurveyId";
+            const string fileName = "MyFileName";
+            byte[] content = new byte[] { 1, 2, 3, 4, 5 };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var response = new StringContent(JsonConvert.SerializeObject(new { ActivityId = "activityId" }));
+            mockedHttpClient
+                .Setup(client => client.PostAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName),
+                        It.IsAny<HttpContent>()))
+                .Returns(CreateTask(HttpStatusCode.OK, response));
+
+            mockedHttpClient
+                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = "activityId", Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
+            var target = new NfieldMediaFilesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.UploadAndSaveAsync(surveyId, fileName, content).Wait();
         }
 
         #endregion
