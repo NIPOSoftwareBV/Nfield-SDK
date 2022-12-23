@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "6e12f0f8-b7a4-4e5d-bdab-efb8d7328f46",
+		"_postman_id": "7c706829-3c85-4ef3-a323-13226cbd208d",
 		"name": "Nfield Public API AAD",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "6882687"
+		"_exporter_id": "19452706"
 	},
 	"item": [
 		{
@@ -200,7 +200,7 @@
 			"name": "Delivery",
 			"item": [
 				{
-					"name": "Get Plans",
+					"name": "Get Settings Plans",
 					"event": [
 						{
 							"listen": "test",
@@ -251,17 +251,85 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Plans",
+							"raw": "{{origin}}/v1/Delivery/Settings/Plans",
 							"host": [
 								"{{origin}}"
 							],
 							"path": [
 								"v1",
 								"Delivery",
+								"Settings",
 								"Plans"
 							]
 						},
 						"description": "Gets a list of repository plans."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Settings Repository Statuses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Settings/RepositoryStatuses",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Settings",
+								"RepositoryStatuses"
+							]
+						},
+						"description": "Gets a list of repository statuses."
 					},
 					"response": []
 				},
@@ -332,7 +400,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Repositories Statuses",
+					"name": "Get Surveys",
 					"event": [
 						{
 							"listen": "test",
@@ -383,7 +451,467 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/Statuses",
+							"raw": "{{origin}}/v1/Delivery/Surveys",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys"
+							]
+						},
+						"description": "Gets a list of surveys that can be added to a repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Survey Properties",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties"
+							]
+						},
+						"description": "Gets the properties for the selected survey."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties",
+								"{{PropertyId}}"
+							]
+						},
+						"description": "Gets the property for the selected survey based on the given identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties",
+								"{{PropertyId}}"
+							]
+						},
+						"description": "Deletes the selected property from the survey."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Key\": \"propertyKey\",\r\n    \"Value\": \"propertyValue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties",
+								"{{PropertyId}}"
+							]
+						},
+						"description": "Updates the selected survey property's values."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Key\": \"propertyKey\",\r\n    \"Value\": \"propertyValue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties"
+							]
+						},
+						"description": "Adds the selected properties to the survey."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Provision Repository",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"RepositoryName\",\r\n    \"PlanId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories"
+							]
+						},
+						"description": "Provisions a new data repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Change Repository Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"PlanId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Subscriptions",
 							"host": [
 								"{{origin}}"
 							],
@@ -391,10 +919,950 @@
 								"v1",
 								"Delivery",
 								"Repositories",
-								"Statuses"
+								"{{RepositoryId}}",
+								"Subscriptions"
 							]
 						},
-						"description": "Gets a list of repository statuses."
+						"description": "Changes the subscription plan of a repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}"
+							]
+						},
+						"description": "Deletes an existing data repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Credentials",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Credentials"
+							]
+						},
+						"description": "Gets the credentials (including server information) to connect to a repository database."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}"
+							]
+						},
+						"description": "Gets the repository for the provided identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Firewall Rules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules"
+							]
+						},
+						"description": "StartFragment\n\nGets the firewall rules configured for the repository database.\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Firewall Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules",
+								"{{FirewallRuleId}}"
+							]
+						},
+						"description": "Gets the firewall rule for the requested repository based on the given identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Create Repository Firewall Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 42,\r\n    \"Name\": \"FirewallRuleName\",\r\n    \"StartIpAddress\": \"FirewallRuleStartIpAddress\",\r\n    \"EndIpAddress\": \"FirewallRuleEndIpAddress\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules"
+							]
+						},
+						"description": "Adds a firewall rule to allow access to repository database for specific IP addresses."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository Firewall Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules",
+								"{{FirewallRuleId}}"
+							]
+						},
+						"description": "Deletes the specified firewall rule from the Repository database."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Surveys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys"
+							]
+						},
+						"description": "Gets a list of the surveys of the given repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository Survey",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys",
+								"{{SurveyId}}"
+							]
+						},
+						"description": "Deletes the selected survey from the repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Put Reinitiate Repository Survey",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}Reinitiate",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys",
+								"{{SurveyId}}Reinitiate"
+							]
+						},
+						"description": "Reinitiates a paused Survey in the selected Repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Repository Surveys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\"SurveyId1\", \"SurveyId2\"]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys"
+							]
+						},
+						"description": "Adds the selected surveys to the repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Metrics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Metrics/1",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Metrics",
+								"1"
+							]
+						},
+						"description": "Gets performance metrics for the repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Subscriptions Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Subscriptions",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Logs",
+								"Subscriptions"
+							]
+						},
+						"description": "Gets repository subscription logs."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Activities Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Activities",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Logs",
+								"Activities"
+							]
+						},
+						"description": "Gets repository activity logs."
 					},
 					"response": []
 				}
