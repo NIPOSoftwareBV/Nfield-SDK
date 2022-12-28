@@ -39,6 +39,12 @@ namespace Nfield.Models
         public DateTime? LastDataCollectionDate { get; internal set; }
 
         [JsonProperty]
+        public DateTime? WillBeStoppedOn { get; internal set; }
+
+        [JsonProperty]
+        public DateTime? WillBeDeletedOn { get; internal set; }
+
+        [JsonProperty]
         public long? Size { get; internal set; }
 
         [JsonProperty]
