@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "6a0fc753-89f7-48ce-aecc-6cb796d624e2",
+		"_postman_id": "90328fa9-c9f4-4140-8dcf-142a9f5e9204",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19452706"
+		"_exporter_id": "23939419"
 	},
 	"item": [
 		{
@@ -1583,6 +1583,196 @@
 							]
 						},
 						"description": "Gets repository activity logs."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Repository User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"UserName\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Reset Repository User Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}/Reset",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users",
+								"{{UserId}}",
+								"Reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository User Password",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users",
+								"{{UserId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"host": [
+								"{{origin}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users",
+								"{{UserId}}"
+							]
+						}
 					},
 					"response": []
 				}
