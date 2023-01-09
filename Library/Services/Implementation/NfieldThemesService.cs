@@ -43,20 +43,22 @@ namespace Nfield.Services.Implementation
             var fileName = Path.GetFileName(filePath);
 
             if (!File.Exists(filePath))
-                throw new FileNotFoundException(fileName);
-
-            using (var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath)))
             {
-                byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                var uri = GetUploadThemeUri(templateId, themeName);
-                _ = await Client.PutAsync(uri, byteArrayContent)
-                       .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                       .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
-                       .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "Status"))
-                       .Unwrap()
-                       .FlattenExceptions()
-                       .ConfigureAwait(false);
+                throw new FileNotFoundException(fileName);
             }
+
+            var themeContent = File.ReadAllBytes(filePath);
+
+            await DoUploadThemeAsync(templateId, themeName, themeContent);
+        }
+
+        public async Task UploadThemeAsync(string templateId, string themeName, byte[] themeContent)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(templateId, nameof(templateId));
+            Ensure.ArgumentNotNullOrEmptyString(themeName, nameof(themeName));
+            Ensure.ArgumentNotNull(themeContent, nameof(themeContent));
+
+            await DoUploadThemeAsync(templateId, themeName, themeContent).ConfigureAwait(false);
         }
 
         public async Task RemoveAsync(string themeId)
@@ -110,6 +112,19 @@ namespace Nfield.Services.Implementation
         private INfieldHttpClient Client
         {
             get { return ConnectionClient.Client; }
+        }
+
+        private async Task DoUploadThemeAsync(string templateId, string themeName, byte[] themeContent)
+        {
+            using (var byteArrayContent = new ByteArrayContent(themeContent))
+            {
+                byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                var uri = GetUploadThemeUri(templateId, themeName);
+                var response = await Client.PutAsync(uri, byteArrayContent).ConfigureAwait(false);
+                var responseString = await response.Content.ReadAsStringAsync();
+                var activityId = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseString).ActivityId;
+                _ = await ConnectionClient.GetActivityResultAsync<int>(activityId, "Status").ConfigureAwait(false);
+            }
         }
 
         #endregion

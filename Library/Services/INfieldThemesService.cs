@@ -35,12 +35,24 @@ namespace Nfield.Services
         /// <summary>
         /// This method upload a theme.
         /// </summary>
-        /// <param name="theme">Theme data to upload it</param>
+        /// <param name="templateId">The template the theme belongs to</param>
+        /// <param name="themeName">The name of the theme upload</param>
         /// <param name="filePath">Path of theme file</param>
         /// /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
         Task UploadThemeAsync(string templateId, string themeName, string filePath);
+
+        /// <summary>
+        /// This method upload a theme.
+        /// </summary>
+        /// <param name="templateId">The template the theme belongs to</param>
+        /// <param name="themeName">The name of the theme upload</param>
+        /// <param name="themeContent">The content of the theme</param>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
+        Task UploadThemeAsync(string templateId, string themeName, byte[] themeContent);
 
         /// <summary>
         /// Removes the theme.
