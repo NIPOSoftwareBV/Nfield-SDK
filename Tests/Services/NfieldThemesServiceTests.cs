@@ -32,14 +32,6 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldThemesServiceTests : NfieldServiceTestsBase
     {
-        // helper enum to make upload tests have a clear desription
-        public enum UploadType
-        {
-            None = 0,
-            UploadFromFile = 1,
-            UploadByeArray = 2
-        }
-
         private const string ThemesServiceAddress = "Themes/";
         private readonly NfieldThemesService _target;
 
@@ -151,9 +143,9 @@ namespace Nfield.Services
         }
 
         [Theory]
-        [InlineData(UploadType.UploadFromFile)]
-        [InlineData(UploadType.UploadByeArray)]
-        public async void TestUploadThemeAsync_ServerUploadTheme_DoesNotThrow(UploadType uploadType)
+        [InlineData(true)]
+        [InlineData(false)]
+        public async void TestUploadThemeAsync_ServerUploadTheme_DoesNotThrow(bool uploadFromFile)
         {
             const HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             const string ActivityId = "ActivityId";
@@ -192,7 +184,7 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // assert: no throw
-            if (uploadType == UploadType.UploadFromFile)
+            if (uploadFromFile)
             {
                 await _target.UploadThemeAsync(templateId, themeName, inputFilePath);
             }
