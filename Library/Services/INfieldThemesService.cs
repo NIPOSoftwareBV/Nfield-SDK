@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Nfield.Services
@@ -35,12 +36,24 @@ namespace Nfield.Services
         /// <summary>
         /// This method upload a theme.
         /// </summary>
-        /// <param name="theme">Theme data to upload it</param>
+        /// <param name="templateId">The template the theme belongs to</param>
+        /// <param name="themeName">The name of the theme</param>
         /// <param name="filePath">Path of theme file</param>
         /// /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>       
         Task UploadThemeAsync(string templateId, string themeName, string filePath);
+
+        /// <summary>
+        /// This method upload a theme.
+        /// </summary>
+        /// <param name="templateId">The template the theme belongs to</param>
+        /// <param name="themeName">The name of the theme</param>
+        /// <param name="themeData">The content of the theme</param>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
+        Task UploadThemeAsync(string templateId, string themeName, Stream themeData);
 
         /// <summary>
         /// Removes the theme.
