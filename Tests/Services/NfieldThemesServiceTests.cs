@@ -134,12 +134,12 @@ namespace Nfield.Services
         public void TestUploadThemeContentAsync_ArgumentsNullorVoid()
         {
             const string NotEmptyString = "-";
-            var content = Array.Empty<byte>();
+            var content = new MemoryStream();
             Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(null, NotEmptyString, content));
             Assert.ThrowsAsync<ArgumentException>(() => _target.UploadThemeAsync(string.Empty, NotEmptyString, content));
             Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(NotEmptyString, null, content));
             Assert.ThrowsAsync<ArgumentException>(() => _target.UploadThemeAsync(NotEmptyString, string.Empty, content));
-            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(NotEmptyString, NotEmptyString, (byte[])null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(NotEmptyString, NotEmptyString, (Stream)null));
         }
 
         [Theory]
@@ -190,7 +190,7 @@ namespace Nfield.Services
             }
             else
             {
-                await _target.UploadThemeAsync(templateId, themeName, Array.Empty<byte>());
+                await _target.UploadThemeAsync(templateId, themeName, new MemoryStream());
             }
             mockedHttpClient.Verify();
             mockedNfieldConnection.Verify();

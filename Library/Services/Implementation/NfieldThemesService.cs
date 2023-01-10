@@ -47,18 +47,19 @@ namespace Nfield.Services.Implementation
                 throw new FileNotFoundException(fileName);
             }
 
-            var themeContent = File.ReadAllBytes(filePath);
-
-            await DoUploadThemeAsync(templateId, themeName, themeContent);
+            using (var themeData = File.OpenRead(filePath))
+            {
+                await DoUploadThemeAsync(templateId, themeName, themeData);
+            }
         }
 
-        public async Task UploadThemeAsync(string templateId, string themeName, byte[] themeContent)
+        public async Task UploadThemeAsync(string templateId, string themeName, Stream themeData)
         {
             Ensure.ArgumentNotNullOrEmptyString(templateId, nameof(templateId));
             Ensure.ArgumentNotNullOrEmptyString(themeName, nameof(themeName));
-            Ensure.ArgumentNotNull(themeContent, nameof(themeContent));
+            Ensure.ArgumentNotNull(themeData, nameof(themeData));
 
-            await DoUploadThemeAsync(templateId, themeName, themeContent).ConfigureAwait(false);
+            await DoUploadThemeAsync(templateId, themeName, themeData).ConfigureAwait(false);
         }
 
         public async Task RemoveAsync(string themeId)
@@ -114,13 +115,13 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private async Task DoUploadThemeAsync(string templateId, string themeName, byte[] themeContent)
+        private async Task DoUploadThemeAsync(string templateId, string themeName, Stream themeData)
         {
-            using (var byteArrayContent = new ByteArrayContent(themeContent))
+            using (var streamContent = new StreamContent(themeData))
             {
-                byteArrayContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                streamContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 var uri = GetUploadThemeUri(templateId, themeName);
-                var response = await Client.PutAsync(uri, byteArrayContent).ConfigureAwait(false);
+                var response = await Client.PutAsync(uri, streamContent).ConfigureAwait(false);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var activityId = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseString).ActivityId;
                 _ = await ConnectionClient.GetActivityResultAsync<int>(activityId, "Status").ConfigureAwait(false);
