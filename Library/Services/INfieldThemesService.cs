@@ -36,7 +36,7 @@ namespace Nfield.Services
         /// This method upload a theme.
         /// </summary>
         /// <param name="templateId">The template the theme belongs to</param>
-        /// <param name="themeName">The name of the theme upload</param>
+        /// <param name="themeName">The name of the theme</param>
         /// <param name="filePath">Path of theme file</param>
         /// /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
@@ -47,7 +47,7 @@ namespace Nfield.Services
         /// This method upload a theme.
         /// </summary>
         /// <param name="templateId">The template the theme belongs to</param>
-        /// <param name="themeName">The name of the theme upload</param>
+        /// <param name="themeName">The name of the theme</param>
         /// <param name="themeContent">The content of the theme</param>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
