@@ -1,0 +1,275 @@
+{
+	"info": {
+		"_postman_id": "25c76da5-9f46-49b7-a667-b7f4628819c0",
+		"name": "Nfield Domain API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9960585"
+	},
+	"item": [
+		{
+			"name": "Resources",
+			"item": [
+				{
+					"name": "Templates",
+					"item": [
+						{
+							"name": "Get Templates",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/resources/templates",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"resources",
+										"templates"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Setup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains access_token\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"access_token\");\r",
+							"    const response = pm.response.json();\r",
+							"    pm.collectionVariables.set('domainApiAccessToken', response.access_token);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const GetUserIdAndRole = (user) => {\r",
+							"    if (SelectedUserName == user.UserName)\r",
+							"    {\r",
+							"        pm.collectionVariables.set('userId', user.Id);\r",
+							"        pm.collectionVariables.set('userRole', user.UserRole);\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"const SelectedUserName = pm.environment.get('DomainTestUserName');\r",
+							"\r",
+							"const SelectUser = () => {\r",
+							"    console.log(\"Selecting User to test.\");\r",
+							"        var urlLocalUsers = pm.environment.get(\"origin-team-env-public-api-used-for-domain-api-setup\")+\"/v1/LocalUsers\";\r",
+							"        var auth = \"Basic \" + pm.collectionVariables.get('AuthenticationToken');\r",
+							"        pm.sendRequest(\r",
+							"            {\r",
+							"            url: urlLocalUsers,\r",
+							"            method: \"GET\",\r",
+							"            header: {\r",
+							"                \"content-type\": \"application/json\",\r",
+							"                \"accept\": \"*/*\",\r",
+							"                \"Authorization\": auth\r",
+							"            }\r",
+							"\r",
+							"            }, function (err, response) {\r",
+							"                if (response.code == 401)\r",
+							"                {\r",
+							"                    console.log(\"401 Unauthorized: Invalidating AuthenticationToken\");\r",
+							"                    pm.collectionVariables.set(\"AuthenticationToken\", '' );\r",
+							"                }\r",
+							"                else\r",
+							"                {\r",
+							"                    var resp = response.json();\r",
+							"                    resp.forEach(GetUserIdAndRole);\r",
+							"                    console.log(\"Using User Name: \"+ SelectedUserName);\r",
+							"                    console.log(\"Using User Id: \"+ pm.collectionVariables.get('userId'));\r",
+							"                    console.log(\"Using User Role: \"+ pm.collectionVariables.get('userRole'));\r",
+							"                }\r",
+							"            });\r",
+							"}\r",
+							"\r",
+							"SelectUser();"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const GetPublicApiAuthenticationToken = () => {\r",
+							"\r",
+							"        console.log(\"SignIn to gat a new AuthenticationToken\");\r",
+							"        var urlSignIn = pm.environment.get(\"origin-team-env-public-api-used-for-domain-api-setup\")+\"/v1/SignIn\";\r",
+							"        var domain = pm.environment.get(\"DomainTestName\");\r",
+							"        var user = pm.environment.get(\"DomainTestUserName\");\r",
+							"        var password = pm.environment.get(\"DomainTestUserPassword\");\r",
+							"        var signInParams = '{\"Domain\": \"'+ domain+'\",\"Username\": \"'+user+'\",\"Password\": \"'+password+'\"}';\r",
+							"        console.log(\"SignIn params: \" + signInParams);\r",
+							"        pm.sendRequest(\r",
+							"            {\r",
+							"            url: urlSignIn,\r",
+							"            method: \"POST\",\r",
+							"            header: {\r",
+							"                \"content-type\": \"application/json\",\r",
+							"                \"accept\": \"*/*\",\r",
+							"            },\r",
+							"            body:  {\r",
+							"                mode: 'raw',\r",
+							"                raw: signInParams\r",
+							"            }\r",
+							"\r",
+							"            }, function (err, response) {\r",
+							"                var resp = response.json();\r",
+							"                console.log(\"New Token: \"+ resp.AuthenticationToken)\r",
+							"                pm.collectionVariables.set('AuthenticationToken', resp.AuthenticationToken);\r",
+							"            });\r",
+							"}\r",
+							"\r",
+							"GetPublicApiAuthenticationToken();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{PublicApiLlocalDevelopmentSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{PublicApiLocalDevelopmentClientId}}",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "{{DomainApiAppRegistrationClientId}}/.default",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://login.microsoftonline.com/{{TenantId}}/oauth2/v2.0/token",
+					"protocol": "https",
+					"host": [
+						"login",
+						"microsoftonline",
+						"com"
+					],
+					"path": [
+						"{{TenantId}}",
+						"oauth2",
+						"v2.0",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userRole",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "domainApiAccessToken",
+			"value": ""
+		},
+		{
+			"key": "AuthenticationToken",
+			"value": ""
+		}
+	]
+}
