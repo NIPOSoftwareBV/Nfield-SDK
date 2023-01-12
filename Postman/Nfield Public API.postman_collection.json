@@ -44,9 +44,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundActivities/:ActivityId",
+							"raw": "{{origin-public-api}}/v1/BackgroundActivities/:ActivityId",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -97,9 +97,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundTasks",
+							"raw": "{{origin-public-api}}/v1/BackgroundTasks",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -144,9 +144,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundTasks/:TaskId",
+							"raw": "{{origin-public-api}}/v1/BackgroundTasks/:TaskId",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -211,9 +211,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Settings/Plans",
+							"raw": "{{origin-public-api}}/v1/Delivery/Settings/Plans",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -268,9 +268,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Settings/RepositoryStatuses",
+							"raw": "{{origin-public-api}}/v1/Delivery/Settings/RepositoryStatuses",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -325,9 +325,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -381,9 +381,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -437,9 +437,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -495,9 +495,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -551,9 +551,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -607,9 +607,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -663,9 +663,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -718,9 +718,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -771,9 +771,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Subscriptions",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Subscriptions",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -826,9 +826,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -883,9 +883,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Credentials",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Credentials",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -941,9 +941,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -998,9 +998,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1056,9 +1056,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1112,9 +1112,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1167,9 +1167,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1226,9 +1226,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1281,9 +1281,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1337,9 +1337,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}Reinitiate",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}Reinitiate",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1393,9 +1393,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1451,9 +1451,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Metrics/1",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Metrics/1",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1510,9 +1510,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Subscriptions",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Subscriptions",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1569,9 +1569,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Activities",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Activities",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1607,9 +1607,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1643,9 +1643,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}/Reset",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}/Reset",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1681,9 +1681,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1721,9 +1721,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1760,9 +1760,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1830,9 +1830,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Offices/:OfficeId",
+									"raw": "{{origin-public-api}}/v1/Offices/:OfficeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -1895,9 +1895,9 @@
 									"raw": "{\r\n  \"OfficeName\": \"Postman office\",\r\n  \"Description\": \"Postman description\"\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices",
+									"raw": "{{origin-public-api}}/v1/Offices",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -1940,9 +1940,9 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices/:OfficeId",
+									"raw": "{{origin-public-api}}/v1/Offices/:OfficeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2011,9 +2011,9 @@
 									"raw": "{\r\n  \"OfficeName\": \"Postman office updated\",\r\n  \"Description\": \"Postman description updated\"\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices/:OfficeId",
+									"raw": "{{origin-public-api}}/v1/Offices/:OfficeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2078,9 +2078,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/Offices",
+							"raw": "{{origin-public-api}}/v1/Offices",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -2174,9 +2174,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2243,9 +2243,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2306,9 +2306,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2365,9 +2365,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2437,9 +2437,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/CatiInterviewers/",
+									"raw": "{{origin-public-api}}/v1/CatiInterviewers/",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2504,9 +2504,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1//Interviewers/:InterviewerId/Offices",
+													"raw": "{{origin-public-api}}/v1//Interviewers/:InterviewerId/Offices",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -2566,9 +2566,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1//Interviewers/:InterviewerId/Offices",
+													"raw": "{{origin-public-api}}/v1//Interviewers/:InterviewerId/Offices",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -2627,9 +2627,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Offices/:OfficeId",
+													"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId/Offices/:OfficeId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -2722,9 +2722,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CapiInterviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/CapiInterviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2808,9 +2808,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CapiInterviewers/GetByClientId/:ClientInterviewerId",
+											"raw": "{{origin-public-api}}/v1/CapiInterviewers/GetByClientId/:ClientInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2884,9 +2884,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CapiInterviewers/",
+											"raw": "{{origin-public-api}}/v1/CapiInterviewers/",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2958,9 +2958,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CapiInterviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/CapiInterviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3017,9 +3017,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CapiInterviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/CapiInterviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3097,9 +3097,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CapiInterviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/CapiInterviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3184,9 +3184,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Assignments",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId/Assignments",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3271,9 +3271,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/CapiInterviewers/",
+									"raw": "{{origin-public-api}}/v1/CapiInterviewers/",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3334,9 +3334,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/InterviewersWorklog",
+									"raw": "{{origin-public-api}}/v1/InterviewersWorklog",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3422,9 +3422,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3508,9 +3508,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/GetByClientId/:ClientInterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/GetByClientId/:ClientInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3589,9 +3589,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/",
+											"raw": "{{origin-public-api}}/v1/Interviewers/",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3663,9 +3663,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3722,9 +3722,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3802,9 +3802,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3895,9 +3895,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Interviewers/",
+									"raw": "{{origin-public-api}}/v1/Interviewers/",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3966,9 +3966,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/PasswordSettings",
+									"raw": "{{origin-public-api}}/v1/PasswordSettings",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4031,9 +4031,9 @@
 									"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"MinCharsetsInPassword\": 2,\r\n    \"MinPasswordLength\": 6,\r\n    \"PasswordHistoryLength\": 1\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/PasswordSettings",
+									"raw": "{{origin-public-api}}/v1/PasswordSettings",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4097,9 +4097,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -4169,9 +4169,9 @@
 											"raw": "{\n    \"UserName\": \"Postman User\",\n    \"FirstName\": \"Postman 1\",\n    \"LastName\": \"Postman 2\",\n    \"Email\": \"TestUser@TestSite.com\",\n    \"UserRole\": \"RegularUser\",\n\t\"password\":\"passowrd\"\n}\n"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers",
+											"raw": "{{origin-public-api}}/v1/LocalUsers",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -4236,9 +4236,9 @@
 											"raw": "{\n  \"FirstName\": \"Postman updated 1\",\n  \"LastName\": \"Postman updated 2\",\n  \"Email\": \"TestUser@TestSite.com\",\n  \"UserRole\": \"DomainAdministrator\"\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -4267,9 +4267,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -4323,9 +4323,9 @@
 											"raw": "{\n    \"Password\": \"Passw0rd12\"\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/Password/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/Password/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -4394,9 +4394,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/LocalUsers",
+									"raw": "{{origin-public-api}}/v1/LocalUsers",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4452,9 +4452,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/LocalUsersLogs",
+									"raw": "{{origin-public-api}}/v1/LocalUsersLogs",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4519,9 +4519,9 @@
 							"raw": "{\n  \"Domain\": \"{{DomainTestName}}\",\n  \"Username\": \"{{DomainTestUserName}}\",\n  \"Password\": \"{{DomainTestUserPassword}}\"\n}"
 						},
 						"url": {
-							"raw": "{{origin}}/v1/SignIn",
+							"raw": "{{origin-public-api}}/v1/SignIn",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -4574,9 +4574,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/Me/Role",
+							"raw": "{{origin-public-api}}/v1/Me/Role",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -4611,9 +4611,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/:ThemeId",
+									"raw": "{{origin-public-api}}/v1/Themes/:ThemeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4674,9 +4674,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Themes?templateId={{TemplateId}}&themeName={{ThemeTestName}}",
+									"raw": "{{origin-public-api}}/v1/Themes?templateId={{TemplateId}}&themeName={{ThemeTestName}}",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4712,9 +4712,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/:ThemeId",
+									"raw": "{{origin-public-api}}/v1/Themes/:ThemeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4769,9 +4769,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Templates",
+									"raw": "{{origin-public-api}}/v1/Templates",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4838,9 +4838,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/SurveyResources",
+									"raw": "{{origin-public-api}}/v1/SurveyResources",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -4925,9 +4925,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
+											"raw": "{{origin-public-api}}/v1/ExternalApis/:ApiName",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5006,9 +5006,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis",
+											"raw": "{{origin-public-api}}/v1/ExternalApis",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5081,9 +5081,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis",
+											"raw": "{{origin-public-api}}/v1/ExternalApis",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5133,9 +5133,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
+											"raw": "{{origin-public-api}}/v1/ExternalApis/:ApiName",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5219,9 +5219,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/ExternalApis",
+									"raw": "{{origin-public-api}}/v1/ExternalApis",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -5306,9 +5306,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Requests/:RequestId",
+											"raw": "{{origin-public-api}}/v1/Requests/:RequestId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5391,9 +5391,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Requests?name={{RequestName}}",
+											"raw": "{{origin-public-api}}/v1/Requests?name={{RequestName}}",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5476,9 +5476,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Requests",
+											"raw": "{{origin-public-api}}/v1/Requests",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5558,9 +5558,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Requests",
+											"raw": "{{origin-public-api}}/v1/Requests",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5614,9 +5614,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Requests/:RequestId",
+											"raw": "{{origin-public-api}}/v1/Requests/:RequestId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5690,9 +5690,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Requests",
+									"raw": "{{origin-public-api}}/v1/Requests",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -5740,9 +5740,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Blacklist",
+									"raw": "{{origin-public-api}}/v1/Blacklist",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -5808,9 +5808,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Blacklist",
+									"raw": "{{origin-public-api}}/v1/Blacklist",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -5877,9 +5877,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -5958,9 +5958,9 @@
 											"raw": "{\r\n    \"Description\": \"Description (Basic) Updated\",\r\n    \"Client\": \"ClientName(Basic) Updated\",\r\n    \"Name\": \"Basic\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -6022,9 +6022,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -6100,9 +6100,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -6189,9 +6189,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments/QuotaTargets",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments/QuotaTargets",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6257,9 +6257,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6324,9 +6324,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/Assignment",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Assignment",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6393,9 +6393,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6455,9 +6455,9 @@
 													"raw": "{\r\n  \"InterviewerId\": \"{{InterviewerId}}\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6516,9 +6516,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Distribute ",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Distribute ",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6579,9 +6579,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6642,9 +6642,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions/:InstructionsFileName",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewerInstructions/:InstructionsFileName",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6708,9 +6708,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6789,9 +6789,9 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -6876,9 +6876,9 @@
 																			"raw": "{\r\n  \"Target\": 100\r\n}"
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -6959,9 +6959,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -7057,9 +7057,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -7127,9 +7127,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -7209,9 +7209,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -7276,9 +7276,9 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
+																			"raw": "{{origin-public-api}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
-																				"{{origin}}v1"
+																				"{{origin-public-api}}v1"
 																			],
 																			"path": [
 																				"Surveys",
@@ -7356,9 +7356,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -7423,9 +7423,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
+																			"raw": "{{origin-public-api}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
-																				"{{origin}}v1"
+																				"{{origin-public-api}}v1"
 																			],
 																			"path": [
 																				"Surveys",
@@ -7491,9 +7491,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -7549,9 +7549,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/Count",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/Count",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -7616,9 +7616,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7691,9 +7691,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7765,9 +7765,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7835,9 +7835,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Activate",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Activate",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7906,9 +7906,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Replace",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Replace",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7973,9 +7973,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
+															"raw": "{{origin-public-api}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
-																"{{origin}}v1"
+																"{{origin-public-api}}v1"
 															],
 															"path": [
 																"Surveys",
@@ -8013,9 +8013,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8083,9 +8083,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8141,9 +8141,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image ",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image ",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8225,9 +8225,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8283,9 +8283,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8346,9 +8346,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8410,9 +8410,9 @@
 													"raw": "{\r\n  \"SamplingMethod\": \"FreeIntercept\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8464,9 +8464,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8524,9 +8524,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Activate",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/Activate",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8576,9 +8576,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Count ",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/Count ",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8649,9 +8649,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8707,9 +8707,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8804,9 +8804,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8877,9 +8877,9 @@
 													"raw": "{\r\n  \"Id\": \"{{EmailSettingsId}}\",\r\n  \"FromAddress\": \"updated@yellow.niposoftware-dev.com\",\r\n  \"FromName\": \"updatedstring 1\",\r\n  \"ReplyToAddress\": \"updatedReplyTo@yellow.niposoftware-dev.com\",\r\n  \"PostalAddress\": \"updatedstring3\",\r\n  \"EmailColumn\": null\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8956,9 +8956,9 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"name\",\r\n  \"Subject\": \"subject\",\r\n  \"Body\": \"{unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9028,9 +9028,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates/",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9100,9 +9100,9 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"other name\",\r\n  \"Subject\": \"other subject\",\r\n  \"Body\": \"other body with {unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9160,9 +9160,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9230,9 +9230,9 @@
 															"raw": "{\r\n  \"Name\": \"name\",\r\n  \"EmailColumnName\": \"mail\",\r\n  \"ScheduledFor\": \"2050-06-22T12:02:00\",\r\n  \"InvitationTemplateId\": \"{{InvitationTemplateId}}\",\r\n  \"Filters\": \r\n  [\r\n      {\r\n           \"Name\": \"mail\",\r\n           \"Op\": \"eq\",\r\n           \"Value\": \"mail@mail.com\"\r\n      }\r\n  ]\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InviteRespondents",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9311,9 +9311,9 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/InviteRespondents/SurveysInvitationStatus",
+															"raw": "{{origin-public-api}}/v1/Surveys/InviteRespondents/SurveysInvitationStatus",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9391,9 +9391,9 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/SurveyBatchesStatus",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InviteRespondents/SurveyBatchesStatus",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9458,9 +9458,9 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/:BatchName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/:BatchName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -9538,9 +9538,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationImages/:FileName",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationImages/:FileName",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9613,9 +9613,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Package?type=1",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Package?type=1",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9689,9 +9689,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9748,9 +9748,9 @@
 													"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://test.url/zzzzzzzzzzz\"\r\n  }\r\n]"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9819,9 +9819,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9878,9 +9878,9 @@
 													"raw": "{\r\n  \"PackageType\": 1,\r\n  \"ForceUpgrade\": 0\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9941,9 +9941,9 @@
 													"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish/Start",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Publish/Start",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10016,9 +10016,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10102,9 +10102,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10182,9 +10182,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10248,9 +10248,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10319,9 +10319,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10377,9 +10377,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Status",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Status",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -10454,9 +10454,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Counts",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Counts",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -10510,9 +10510,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Start",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Start",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -10570,9 +10570,9 @@
 											"raw": "{\r\n  \"TerminateRunningInterviews\": true\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Stop",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Stop",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -10657,9 +10657,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality/:InterviewId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewQuality/:InterviewId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10738,9 +10738,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewQuality",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10807,9 +10807,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviews/:InterviewId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviews/:InterviewId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10896,9 +10896,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewQuality",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -10963,9 +10963,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11039,9 +11039,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11144,9 +11144,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11243,9 +11243,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11308,9 +11308,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11398,9 +11398,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11468,9 +11468,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -11537,9 +11537,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -11597,9 +11597,9 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -11661,9 +11661,9 @@
 															"file": {}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -11725,9 +11725,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11778,9 +11778,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/Count",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/Count",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11843,9 +11843,9 @@
 													"raw": "{\r\n  \"Script\": \"*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Script",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11898,9 +11898,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Script",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11953,9 +11953,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script/:eTag",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Script/:eTag",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -12021,9 +12021,9 @@
 															"raw": "*LIST destination\r\n1:Amsterdam\r\n2:Buenos Aires\r\n3:Madrid\r\n4:Hong Kong"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -12062,9 +12062,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -12107,9 +12107,9 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -12172,9 +12172,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -12270,9 +12270,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Counts",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Counts",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12332,9 +12332,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Live",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Performance/Metrics/Live",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12396,9 +12396,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Test",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Performance/Metrics/Test",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12465,9 +12465,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12529,9 +12529,9 @@
 											"raw": "{\r\n    \"Target\": 10000,\r\n    \"VariableDefinitions\": [\r\n        {\r\n            \"Id\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"OdinVariableName\": \"age\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"OdinVariableName\": \"gender\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\"\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"FrameVariables\": [\r\n        {\r\n            \"Id\": \"367de803-5e86-4281-f612-186640befb7d\",\r\n            \"DefinitionId\": \"fe85733c-d684-4e96-f521-1a195be50500\",\r\n            \"Name\": \"Age\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"eb2bf2b9-ef2e-41b4-4205-721fe8205002\",\r\n                    \"DefinitionId\": \"e22e4a50-4b24-49e7-0e1f-ee4d964e03ef\",\r\n                    \"Name\": \"10\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"98a65741-b7e0-4da0-72ed-fd2eb2f6b705\",\r\n            \"DefinitionId\": \"64c7ec56-bef1-4131-2fde-25bae87555a6\",\r\n            \"Name\": \"Gender\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"07300f7e-f2ad-450c-ff98-8fa603dd4d51\",\r\n                    \"DefinitionId\": \"014818b9-6d71-4304-5f54-6485aa8daea6\",\r\n                    \"Name\": \"M\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12604,9 +12604,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaVersions",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12664,9 +12664,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaTargets",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12734,9 +12734,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions/:eTag",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaVersions/:eTag",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12799,9 +12799,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets/:eTag",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaTargets/:eTag",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12863,9 +12863,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12939,9 +12939,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12994,9 +12994,9 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13045,9 +13045,9 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Block",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Block",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13098,9 +13098,9 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Reset",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Reset",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13150,9 +13150,9 @@
 											"raw": "{\r\n  \"Filters\": [\r\n    {\r\n        \"Name\": \"TelephoneNumber\",\r\n        \"Op\": \"Eq\",\r\n        \"Value\": \"empty\"\r\n    }\r\n  ],\r\n  \"Columns\": [\r\n    \"TelephoneNumber\"\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Clear",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Clear",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13202,9 +13202,9 @@
 											"raw": "{\r\n  \"SampleRecordId\": 1,\r\n  \"ColumnUpdates\": [\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    },\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    }\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Update",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Update",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13281,9 +13281,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleData/:SampleDataFileName",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SampleData/:SampleDataFileName",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13340,9 +13340,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleDataDownload/:SampleDataFileName",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SampleDataDownload/:SampleDataFileName",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13427,9 +13427,9 @@
 											"raw": "{\r\n  \"SurveyId\": \"{{SurveyId}}\",\r\n  \"InterviewId\": {{InterviewId}},\r\n  \"DownloadTestInterviewData\": true,\r\n  \"DownloadSuccessfulLiveInterviewData\": true,\r\n  \"DownloadRejectedLiveInterviewData\": true,\r\n  \"DownloadNotSuccessfulLiveInterviewData\": true,\r\n  \"DownloadSuspendedLiveInterviewData\": true,\r\n  \"DownloadParaData\": true,\r\n  \"DownloadCapturedMedia\": true,\r\n  \"DownloadClosedAnswerData\": true,\r\n  \"DownloadOpenAnswerData\": true,\r\n  \"DownloadVarFile\": true,\r\n  \"DownloadQuestionnaireScript\": true,\r\n  \"DownloadFileName\": \"DownloadedFileName\",\r\n  \"StartDate\": \"2015-11-05T15:16:41Z\",\r\n  \"EndDate\": \"2015-11-05T15:16:41Z\",\r\n  \"SurveyVersion\": null\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Data",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Data",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13492,9 +13492,9 @@
 											"raw": "{\r\n  \"FileName\": \"\",\r\n  \"StartDate\": \"2022-08-01\",\r\n  \"EndDate\": \"2022-12-31\",\r\n  \"SurveyVersion\": null,\r\n  \"IncludeSuccessful\": true,\r\n  \"IncludeScreenOut\": true,\r\n  \"IncludeDroppedOut\": true,\r\n  \"IncludeRejected\": true,\r\n  \"IncludeTestData\": true,\r\n  \"IncludeClosedAnswers\": true,\r\n  \"IncludeOpenAnswers\": true,\r\n  \"IncludeParaData\": true,\r\n  \"IncludeCapturedMediaFiles\": true,\r\n  \"IncludeVarFile\": true,\r\n  \"IncludeQuestionnaireScript\": true\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/DataDownload",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DataDownload",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13556,9 +13556,9 @@
 											"raw": "{\r\n  \"FileName\": \"\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/DataDownload/:InterviewId",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DataDownload/:InterviewId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13621,9 +13621,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/RespondentDataEncrypt",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/RespondentDataEncrypt",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13694,9 +13694,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId",
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -13765,9 +13765,9 @@
 									"raw": "{\r\n  \"SurveyId\": \"\",\r\n  \"SurveyName\": \"Postman Survey\",\r\n  \"ClientName\": \"KLM\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys",
+									"raw": "{{origin-public-api}}/v1/Surveys",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -13846,9 +13846,9 @@
 									"raw": "{\r\n  \"Description\": \"This survey is updated via Postman\",\r\n  \"ClientName\": \"White\",\r\n  \"SurveyName\": \"Postman Survey updated\"\r\n }"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId",
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -13900,9 +13900,9 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId",
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -13966,9 +13966,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/SearchFieldsSetting",
+									"raw": "{{origin-public-api}}/v1/SearchFieldsSetting",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -14026,9 +14026,9 @@
 									"raw": "{\r\n  \"Fields\": [\r\n    \"Postman1\",\r\n    \"Postman2\"\r\n  ]\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/SearchFieldsSetting",
+									"raw": "{{origin-public-api}}/v1/SearchFieldsSetting",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -14127,9 +14127,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations",
+													"raw": "{{origin-public-api}}/v1/LanguageTranslations",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -14216,9 +14216,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -14279,9 +14279,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -14366,9 +14366,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LanguageTranslations",
+											"raw": "{{origin-public-api}}/v1/LanguageTranslations",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14436,9 +14436,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14510,9 +14510,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14585,9 +14585,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14645,9 +14645,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14718,9 +14718,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/EmailSettings",
+											"raw": "{{origin-public-api}}/v1/EmailSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14782,9 +14782,9 @@
 											"raw": "{\r\n  \"FromAddress\": \"updated@yellow.niposoftware-dev.com\",\r\n  \"FromName\": \"updated string 1\",\r\n  \"ReplyToAddress\": \"updatedReplyTo@yellow.niposoftware-dev.com\",\r\n  \"PostalAddress\": \"updated string 3\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/EmailSettings",
+											"raw": "{{origin-public-api}}/v1/EmailSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14857,9 +14857,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/DefaultTexts",
+											"raw": "{{origin-public-api}}/v1/DefaultTexts",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14922,9 +14922,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/DefaultTexts/:TranslationKey",
+											"raw": "{{origin-public-api}}/v1/DefaultTexts/:TranslationKey",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15003,9 +15003,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/LocalAssignments",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/LocalAssignments",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15069,9 +15069,9 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignLocal",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/AssignLocal",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15123,9 +15123,9 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignLocal",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/UnassignLocal",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15179,9 +15179,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/DirectoryAssignments",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/DirectoryAssignments",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15230,9 +15230,9 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\",\r\n  \"ObjectType\": 0\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignDirectory",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/AssignDirectory",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15281,9 +15281,9 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignDirectory",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/UnassignDirectory",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15354,9 +15354,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15419,9 +15419,9 @@
 											"raw": "{\r\n  \"Name\": \"PostmanGroupName\",\r\n  \"Description\": \"sample string 2\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15481,9 +15481,9 @@
 											"raw": "{\r\n  \"Name\": \"PostmanGroupNameUpdated\",\r\n  \"Description\": \"sample string 2\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15535,9 +15535,9 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15598,9 +15598,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/SurveyGroup",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SurveyGroup",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -15671,9 +15671,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/SurveyGroups",
+									"raw": "{{origin-public-api}}/v1/SurveyGroups",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -15737,9 +15737,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/Surveys",
+							"raw": "{{origin-public-api}}/v1/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -15801,9 +15801,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/Surveys",
+							"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -15835,7 +15835,7 @@
 					"    if (pm.collectionVariables.get('AuthenticationToken') == '' )",
 					"    {",
 					"            console.log(\"SignIn to gat a new AuthenticationToken\");",
-					"            var urlSignIn = pm.environment.get(\"origin\")+\"v1/SignIn\";",
+					"            var urlSignIn = pm.environment.get(\"origin-public-api\")+\"/v1/SignIn\";",
 					"            var domain = pm.environment.get(\"DomainTestName\");",
 					"            var user = pm.environment.get(\"DomainTestUserName\");",
 					"            var password = pm.environment.get(\"DomainTestUserPassword\");",
@@ -15881,7 +15881,7 @@
 					"    if (SelectedSurveyName != '' && (SelectedSurveyName != CurrentSurveyName || pm.collectionVariables.get('SurveyId') == ''))",
 					"    {",
 					"        console.log(\"Selecting default Survey Id to test. Survey Name: \" + SelectedSurveyName);",
-					"        var urlSignIn = pm.environment.get(\"origin\")+\"v1/Surveys\";",
+					"        var urlSignIn = pm.environment.get(\"origin-public-api\")+\"/v1/Surveys\";",
 					"        var auth = \"Basic \" + pm.collectionVariables.get('AuthenticationToken');",
 					"        pm.sendRequest(",
 					"            {",
