@@ -14,6 +14,23 @@
 					"item": [
 						{
 							"name": "Get Templates",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -75,6 +92,524 @@
 							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Offices",
+			"item": [
+				{
+					"name": "Office",
+					"item": [
+						{
+							"name": "Get Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (office) => {\r",
+											"    return office.officeId !== undefined\r",
+											"    && office.isHeadquarters !== undefined\r",
+											"    && office.officeName !== undefined\r",
+											"    && office.description !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"All offices should have an OfficeName\", function () {\r",
+											"    const office = pm.response.json();\r",
+											"    pm.expect(validateProperties(office)).to.be.true;\r",
+											"    pm.collectionVariables.set(\"FieldworkOfficeId\", office.OfficeId);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/offices/:officeId",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"offices",
+										":officeId"
+									],
+									"variable": [
+										{
+											"key": "officeId",
+											"value": "39b4ef04-8aba-4b5c-a104-6a430123b9f8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (office) => {\r",
+											"    return office.officeId !== undefined\r",
+											"    && office.isHeadquarters !== undefined\r",
+											"    && office.officeName !== undefined\r",
+											"    && office.description !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"All offices should have an OfficeName\", function () {\r",
+											"    const office = pm.response.json();\r",
+											"    pm.expect(validateProperties(office)).to.be.true;\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OfficeName\": \"Postman office\",\r\n  \"Description\": \"Postman description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/offices",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"offices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/offices/:officeId",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"offices",
+										":officeId"
+									],
+									"variable": [
+										{
+											"key": "officeId",
+											"value": "2c1a948e-4c6d-451a-aae0-eee7477baa29"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (office) => {\r",
+											"    return office.officeId !== undefined\r",
+											"    && office.isHeadquarters !== undefined\r",
+											"    && office.officeName !== undefined\r",
+											"    && office.description !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"All offices should have an OfficeId and the data has been updated\", function () {\r",
+											"    const office = pm.response.json();\r",
+											"    pm.expect(validateProperties(office)).to.be.true;\r",
+											"    pm.expect(office.officeName).to.eql(\"Postman office updated\");\r",
+											"    pm.expect(office.description).to.eql(\"Postman description updated\");\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.officeId);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"OfficeName\": \"Postman office updated\",\r\n  \"Description\": \"Postman description updated\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/offices/:officeId",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"offices",
+										":officeId"
+									],
+									"variable": [
+										{
+											"key": "officeId",
+											"value": "2ef633d4-9e6f-4e69-ab39-16b470f7b2c0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Offices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (office) => {\r",
+									"    return office.officeId !== undefined\r",
+									"    && office.isHeadquarters !== undefined\r",
+									"    && office.officeName !== undefined\r",
+									"    && office.description !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"All offices should have an OfficeId\", function () {\r",
+									"    const offices = pm.response.json();\r",
+									"    pm.expect(offices.every(validateProperties)).to.be.true;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{domainApiAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Nfield-UserName",
+								"value": "{{DomainTestUserName}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-DomainId",
+								"value": "{{DomainTestId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-Role",
+								"value": "{{userRole}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{origin-domain-api}}/v2/offices",
+							"host": [
+								"{{origin-domain-api}}"
+							],
+							"path": [
+								"v2",
+								"offices"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Access",
+			"item": [
+				{
+					"name": "Get Me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (item) => {\r",
+									"    return item.userRoles !== undefined \r",
+									"    && item.permissions !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response contains Me info\", function () {\r",
+									"    var me = pm.response.json();\r",
+									"    pm.expect(validateProperties(me)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{domainApiAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Nfield-UserName",
+								"value": "{{DomainTestUserName}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-DomainId",
+								"value": "{{DomainTestId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-Role",
+								"value": "{{userRole}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{origin-domain-api}}/v2/users/myroles",
+							"host": [
+								"{{origin-domain-api}}"
+							],
+							"path": [
+								"v2",
+								"users",
+								"myroles"
+							]
+						},
+						"description": "Returns the user role for the currently authenticated user."
+					},
+					"response": []
 				}
 			]
 		},
@@ -269,6 +804,14 @@
 		},
 		{
 			"key": "AuthenticationToken",
+			"value": ""
+		},
+		{
+			"key": "FieldworkOfficeId",
+			"value": ""
+		},
+		{
+			"key": "OfficeId",
 			"value": ""
 		}
 	]
