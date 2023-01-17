@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6b03fc90-1eac-4ce1-a4b4-c9cbae239d0a",
+		"_postman_id": "25c76da5-9f46-49b7-a667-b7f4628819c0",
 		"name": "Nfield Domain API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9960585"
 	},
 	"item": [
 		{
@@ -199,16 +200,16 @@
 											"});\r",
 											"\r",
 											"const validateProperties = (office) => {\r",
-											"    return office.officeId !== undefined\r",
-											"    && office.isHeadquarters !== undefined\r",
-											"    && office.officeName !== undefined\r",
-											"    && office.description !== undefined;\r",
+											"    return office.OfficeId !== undefined\r",
+											"    && office.IsHeadquarters !== undefined\r",
+											"    && office.OfficeName !== undefined\r",
+											"    && office.Description !== undefined;\r",
 											"}\r",
 											"\r",
 											"pm.test(\"All offices should have an OfficeName\", function () {\r",
 											"    const office = pm.response.json();\r",
 											"    pm.expect(validateProperties(office)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"OfficeId\", office.officeId);\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -365,18 +366,18 @@
 											"});\r",
 											"\r",
 											"const validateProperties = (office) => {\r",
-											"    return office.officeId !== undefined\r",
-											"    && office.isHeadquarters !== undefined\r",
-											"    && office.officeName !== undefined\r",
-											"    && office.description !== undefined;\r",
+											"    return office.OfficeId !== undefined\r",
+											"    && office.IsHeadquarters !== undefined\r",
+											"    && office.OfficeName !== undefined\r",
+											"    && office.Description !== undefined;\r",
 											"}\r",
 											"\r",
 											"pm.test(\"All offices should have an OfficeId and the data has been updated\", function () {\r",
 											"    const office = pm.response.json();\r",
 											"    pm.expect(validateProperties(office)).to.be.true;\r",
-											"    pm.expect(office.officeName).to.eql(\"Postman office updated\");\r",
-											"    pm.expect(office.description).to.eql(\"Postman description updated\");\r",
-											"    pm.collectionVariables.set(\"OfficeId\", office.officeId);\r",
+											"    pm.expect(office.OfficeName).to.eql(\"Postman office updated\");\r",
+											"    pm.expect(office.Description).to.eql(\"Postman description updated\");\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -464,10 +465,10 @@
 									"});\r",
 									"\r",
 									"const validateProperties = (office) => {\r",
-									"    return office.officeId !== undefined\r",
-									"    && office.isHeadquarters !== undefined\r",
-									"    && office.officeName !== undefined\r",
-									"    && office.description !== undefined;\r",
+									"    return office.OfficeId !== undefined\r",
+									"    && office.IsHeadquarters !== undefined\r",
+									"    && office.OfficeName !== undefined\r",
+									"    && office.Description !== undefined;\r",
 									"}\r",
 									"\r",
 									"pm.test(\"All offices should have an OfficeId\", function () {\r",
@@ -515,13 +516,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin-domain-api}}/v2/offices",
+							"raw": "{{origin-domain-api}}/v2/offices?$filter=OfficeName eq 'Headquarters'",
 							"host": [
 								"{{origin-domain-api}}"
 							],
 							"path": [
 								"v2",
 								"offices"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "OfficeName eq 'Headquarters'"
+								}
 							]
 						}
 					},
@@ -548,8 +555,8 @@
 									"});\r",
 									"\r",
 									"const validateProperties = (item) => {\r",
-									"    return item.userRoles !== undefined \r",
-									"    && item.permissions !== undefined;\r",
+									"    return item.UserRoles !== undefined \r",
+									"    && item.Permissions !== undefined;\r",
 									"}\r",
 									"\r",
 									"pm.test(\"Response contains Me info\", function () {\r",
