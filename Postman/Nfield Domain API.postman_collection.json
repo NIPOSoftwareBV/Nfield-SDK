@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "25c76da5-9f46-49b7-a667-b7f4628819c0",
+		"_postman_id": "6b03fc90-1eac-4ce1-a4b4-c9cbae239d0a",
 		"name": "Nfield Domain API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9960585"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -181,7 +180,7 @@
 									"variable": [
 										{
 											"key": "officeId",
-											"value": "39b4ef04-8aba-4b5c-a104-6a430123b9f8"
+											"value": "{{OfficeId}}"
 										}
 									]
 								}
@@ -209,7 +208,7 @@
 											"pm.test(\"All offices should have an OfficeName\", function () {\r",
 											"    const office = pm.response.json();\r",
 											"    pm.expect(validateProperties(office)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.officeId);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -343,7 +342,7 @@
 									"variable": [
 										{
 											"key": "officeId",
-											"value": "2c1a948e-4c6d-451a-aae0-eee7477baa29"
+											"value": "{{OfficeId}}"
 										}
 									]
 								}
@@ -440,7 +439,7 @@
 									"variable": [
 										{
 											"key": "officeId",
-											"value": "2ef633d4-9e6f-4e69-ab39-16b470f7b2c0"
+											"value": "{{OfficeId}}"
 										}
 									]
 								}
