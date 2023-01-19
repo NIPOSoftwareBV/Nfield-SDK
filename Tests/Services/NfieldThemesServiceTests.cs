@@ -119,19 +119,33 @@ namespace Nfield.Services
 
         #region UploadThemeAsync
         [Fact]
-        public void TestUploadThemeAsync_ArgumentsNullorVoid()
+        public void TestUploadThemeFileAsync_ArgumentsNullorVoid()
         {
             const string NotEmptyString = "-";
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UploadThemeAsync(null, NotEmptyString, NotEmptyString)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.UploadThemeAsync(string.Empty, NotEmptyString, NotEmptyString)));
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UploadThemeAsync(NotEmptyString, null,  NotEmptyString)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.UploadThemeAsync(NotEmptyString, string.Empty,  NotEmptyString)));
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.UploadThemeAsync(NotEmptyString, NotEmptyString, null)));
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.UploadThemeAsync(NotEmptyString, string.Empty, NotEmptyString)));
+            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(null, NotEmptyString, NotEmptyString));
+            Assert.ThrowsAsync<ArgumentException>(() => _target.UploadThemeAsync(string.Empty, NotEmptyString, NotEmptyString));
+            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(NotEmptyString, null,  NotEmptyString));
+            Assert.ThrowsAsync<ArgumentException>(() => _target.UploadThemeAsync(NotEmptyString, string.Empty, NotEmptyString));
+            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(NotEmptyString, NotEmptyString, (string)null));
+            Assert.ThrowsAsync<ArgumentException>(() => _target.UploadThemeAsync(NotEmptyString, string.Empty, NotEmptyString));
         }
 
         [Fact]
-        public async void TestUploadThemeAsync_ServerUploadTheme_DoesNotThrow()
+        public void TestUploadThemeContentAsync_ArgumentsNullorVoid()
+        {
+            const string NotEmptyString = "-";
+            var content = new MemoryStream();
+            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(null, NotEmptyString, content));
+            Assert.ThrowsAsync<ArgumentException>(() => _target.UploadThemeAsync(string.Empty, NotEmptyString, content));
+            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(NotEmptyString, null, content));
+            Assert.ThrowsAsync<ArgumentException>(() => _target.UploadThemeAsync(NotEmptyString, string.Empty, content));
+            Assert.ThrowsAsync<ArgumentNullException>(() => _target.UploadThemeAsync(NotEmptyString, NotEmptyString, (Stream)null));
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async void TestUploadThemeAsync_ServerUploadTheme_DoesNotThrow(bool uploadFromFile)
         {
             const HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             const string ActivityId = "ActivityId";
@@ -170,19 +184,26 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // assert: no throw
-            await _target.UploadThemeAsync(templateId, themeName, inputFilePath);
+            if (uploadFromFile)
+            {
+                await _target.UploadThemeAsync(templateId, themeName, inputFilePath);
+            }
+            else
+            {
+                await _target.UploadThemeAsync(templateId, themeName, new MemoryStream());
+            }
             mockedHttpClient.Verify();
             mockedNfieldConnection.Verify();
         }
 
         [Fact]
-        public async void TestUploadThemeAsync_FileDoesNotExist_Throws()
+        public async void TestUploadThemeFileAsync_FileDoesNotExist_Throws()
         {
             string inputFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "ThemeThatDoesNotExist.zip");
             const string templateId = "template_id";
             const string themeName = "theme_name";
 
-            await Assert.ThrowsAsync<FileNotFoundException>(async () => await _target.UploadThemeAsync(templateId, themeName, inputFilePath));
+            await Assert.ThrowsAsync<FileNotFoundException>(() => _target.UploadThemeAsync(templateId, themeName, inputFilePath));
         }
     
         #endregion
