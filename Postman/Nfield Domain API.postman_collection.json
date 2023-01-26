@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "25c76da5-9f46-49b7-a667-b7f4628819c0",
+		"_postman_id": "c4a6ae20-3587-4f71-a697-87f86be61728",
 		"name": "Nfield Domain API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9960585"
+		"_exporter_id": "3825235"
 	},
 	"item": [
 		{
@@ -614,6 +614,261 @@
 							]
 						},
 						"description": "Returns the user role for the currently authenticated user."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Background",
+			"item": [
+				{
+					"name": "Activities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (item) => {\r",
+									"    return item.UserRoles !== undefined \r",
+									"    && item.Permissions !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response contains Me info\", function () {\r",
+									"    var me = pm.response.json();\r",
+									"    pm.expect(validateProperties(me)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{domainApiAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Nfield-UserName",
+								"value": "{{DomainTestUserName}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-DomainId",
+								"value": "{{DomainTestId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-Role",
+								"value": "{{userRole}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{origin-domain-api}}/v2/background/activity/:activityId",
+							"host": [
+								"{{origin-domain-api}}"
+							],
+							"path": [
+								"v2",
+								"background",
+								"activity",
+								":activityId"
+							],
+							"variable": [
+								{
+									"key": "activityId",
+									"value": null
+								}
+							]
+						},
+						"description": "Returns the user role for the currently authenticated user."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Get Search Fields Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"const validateProperties = (item) => {",
+									"    return item.Fields !== undefined;",
+									"}",
+									"",
+									"pm.test(\"Response contains Fields\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(validateProperties(response)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{domainApiAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Nfield-UserName",
+								"value": "{{DomainTestUserName}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-DomainId",
+								"value": "{{DomainTestId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-Role",
+								"value": "{{userRole}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{origin-domain-api}}/v2/search/field-names-setting",
+							"host": [
+								"{{origin-domain-api}}"
+							],
+							"path": [
+								"v2",
+								"search",
+								"field-names-setting"
+							]
+						},
+						"description": "Gets the domain's search fields."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Search Fields Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"const validateProperties = (item) => {",
+									"    return item.Fields !== undefined;",
+									"}",
+									"",
+									"pm.test(\"Response contains Fields\", function () {",
+									"    var response = pm.response.json();",
+									"    pm.expect(validateProperties(response)).to.be.true;",
+									"    pm.expect(response.Fields[0] == \"Postman1\").to.be.true;",
+									"    pm.expect(response.Fields[1] == \"Postman2\").to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{domainApiAccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Nfield-UserName",
+								"value": "{{DomainTestUserName}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-DomainId",
+								"value": "{{DomainTestId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-UserId",
+								"value": "{{userId}}",
+								"type": "text"
+							},
+							{
+								"key": "Nfield-Role",
+								"value": "{{userRole}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Fields\": [\r\n    \"Postman1\",\r\n    \"Postman2\"\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{origin-domain-api}}/v2/search/field-names-setting",
+							"host": [
+								"{{origin-domain-api}}"
+							],
+							"path": [
+								"v2",
+								"search",
+								"field-names-setting"
+							]
+						},
+						"description": "Update the domain's search fields."
 					},
 					"response": []
 				}
