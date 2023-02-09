@@ -55,7 +55,7 @@ namespace Nfield.Services
         [Fact]
         public void TestQueryAsync_ServerReturnsQuery_ReturnsListWithSurveyGeneralSettings()
         {
-            var expectedSurveyGeneralSettings = new SurveyGeneralSettings {  Description = "X Type", Client = "client1", Name = "X name" };
+            var expectedSurveyGeneralSettings = new SurveyGeneralSettings {  Description = "X Type", Client = "client1", Name = "X name", ExcludeFromAutomaticCleanup = true };
 
             _mockedHttpClient
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/GeneralSettings")))
@@ -66,6 +66,7 @@ namespace Nfield.Services
             Assert.Equal(expectedSurveyGeneralSettings.Client, actualSurveyGeneralSettings.Client);
             Assert.Equal(expectedSurveyGeneralSettings.Description, actualSurveyGeneralSettings.Description);
             Assert.Equal(expectedSurveyGeneralSettings.Name, actualSurveyGeneralSettings.Name);
+            Assert.Equal(expectedSurveyGeneralSettings.ExcludeFromAutomaticCleanup, actualSurveyGeneralSettings.ExcludeFromAutomaticCleanup);
         }
 
         #endregion
