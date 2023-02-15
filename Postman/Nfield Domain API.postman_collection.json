@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c4a6ae20-3587-4f71-a697-87f86be61728",
+		"_postman_id": "25433936-c8ba-444b-ba47-1d4251d368dc",
 		"name": "Nfield Domain API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "3825235"
+		"_exporter_id": "9960585"
 	},
 	"item": [
 		{
@@ -117,16 +117,16 @@
 											"});\r",
 											"\r",
 											"const validateProperties = (office) => {\r",
-											"    return office.officeId !== undefined\r",
+											"    return office.id !== undefined\r",
 											"    && office.isHeadquarters !== undefined\r",
-											"    && office.officeName !== undefined\r",
+											"    && office.name !== undefined\r",
 											"    && office.description !== undefined;\r",
 											"}\r",
 											"\r",
-											"pm.test(\"All offices should have an OfficeName\", function () {\r",
+											"pm.test(\"All offices should have an Name\", function () {\r",
 											"    const office = pm.response.json();\r",
 											"    pm.expect(validateProperties(office)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"FieldworkOfficeId\", office.OfficeId);\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.id);\r",
 											"});\r",
 											""
 										],
@@ -200,16 +200,16 @@
 											"});\r",
 											"\r",
 											"const validateProperties = (office) => {\r",
-											"    return office.OfficeId !== undefined\r",
-											"    && office.IsHeadquarters !== undefined\r",
-											"    && office.OfficeName !== undefined\r",
-											"    && office.Description !== undefined;\r",
+											"    return office.id !== undefined\r",
+											"    && office.isHeadquarters !== undefined\r",
+											"    && office.name !== undefined\r",
+											"    && office.description !== undefined;\r",
 											"}\r",
 											"\r",
 											"pm.test(\"All offices should have an OfficeName\", function () {\r",
 											"    const office = pm.response.json();\r",
 											"    pm.expect(validateProperties(office)).to.be.true;\r",
-											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.id);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -252,7 +252,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"OfficeName\": \"Postman office\",\r\n  \"Description\": \"Postman description\"\r\n}",
+									"raw": "{\r\n  \"name\": \"Postman office\",\r\n  \"description\": \"Postman description\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -366,18 +366,18 @@
 											"});\r",
 											"\r",
 											"const validateProperties = (office) => {\r",
-											"    return office.OfficeId !== undefined\r",
-											"    && office.IsHeadquarters !== undefined\r",
-											"    && office.OfficeName !== undefined\r",
-											"    && office.Description !== undefined;\r",
+											"    return office.id !== undefined\r",
+											"    && office.isHeadquarters !== undefined\r",
+											"    && office.name !== undefined\r",
+											"    && office.description !== undefined;\r",
 											"}\r",
 											"\r",
-											"pm.test(\"All offices should have an OfficeId and the data has been updated\", function () {\r",
+											"pm.test(\"All offices should have an id and the data has been updated\", function () {\r",
 											"    const office = pm.response.json();\r",
 											"    pm.expect(validateProperties(office)).to.be.true;\r",
-											"    pm.expect(office.OfficeName).to.eql(\"Postman office updated\");\r",
-											"    pm.expect(office.Description).to.eql(\"Postman description updated\");\r",
-											"    pm.collectionVariables.set(\"OfficeId\", office.OfficeId);\r",
+											"    pm.expect(office.name).to.eql(\"Postman office name updated\");\r",
+											"    pm.expect(office.description).to.eql(\"Postman description updated\");\r",
+											"    pm.collectionVariables.set(\"OfficeId\", office.id);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -420,7 +420,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"OfficeName\": \"Postman office updated\",\r\n  \"Description\": \"Postman description updated\"\r\n}",
+									"raw": "{\r\n  \"name\": \"Postman office name updated\",\r\n  \"description\": \"Postman description updated\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -465,10 +465,10 @@
 									"});\r",
 									"\r",
 									"const validateProperties = (office) => {\r",
-									"    return office.OfficeId !== undefined\r",
-									"    && office.IsHeadquarters !== undefined\r",
-									"    && office.OfficeName !== undefined\r",
-									"    && office.Description !== undefined;\r",
+									"    return office.id !== undefined\r",
+									"    && office.isHeadquarters !== undefined\r",
+									"    && office.name !== undefined\r",
+									"    && office.description !== undefined;\r",
 									"}\r",
 									"\r",
 									"pm.test(\"All offices should have an OfficeId\", function () {\r",
@@ -516,19 +516,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin-domain-api}}/v2/offices?$filter=OfficeName eq 'Headquarters'",
+							"raw": "{{origin-domain-api}}/v2/offices",
 							"host": [
 								"{{origin-domain-api}}"
 							],
 							"path": [
 								"v2",
 								"offices"
-							],
-							"query": [
-								{
-									"key": "$filter",
-									"value": "OfficeName eq 'Headquarters'"
-								}
 							]
 						}
 					},
@@ -555,8 +549,8 @@
 									"});\r",
 									"\r",
 									"const validateProperties = (item) => {\r",
-									"    return item.UserRoles !== undefined \r",
-									"    && item.Permissions !== undefined;\r",
+									"    return item.userRoles !== undefined \r",
+									"    && item.permissions !== undefined;\r",
 									"}\r",
 									"\r",
 									"pm.test(\"Response contains Me info\", function () {\r",
@@ -603,14 +597,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin-domain-api}}/v2/users/myroles",
+							"raw": "{{origin-domain-api}}/v2/users/my-roles",
 							"host": [
 								"{{origin-domain-api}}"
 							],
 							"path": [
 								"v2",
 								"users",
-								"myroles"
+								"my-roles"
 							]
 						},
 						"description": "Returns the user role for the currently authenticated user."
@@ -638,11 +632,16 @@
 									"});\r",
 									"\r",
 									"const validateProperties = (item) => {\r",
-									"    return item.UserRoles !== undefined \r",
-									"    && item.Permissions !== undefined;\r",
+									"    return item.id !== undefined \r",
+									"    && item.name !== undefined\r",
+									"    && item.status !== undefined\r",
+									"    && item.creationTime !== undefined\r",
+									"    && item.startTime !== undefined\r",
+									"    && item.finishTime !== undefined\r",
+									"    && item.userId !== undefined;\r",
 									"}\r",
 									"\r",
-									"pm.test(\"Response contains Me info\", function () {\r",
+									"pm.test(\"Response contains Activity info\", function () {\r",
 									"    var me = pm.response.json();\r",
 									"    pm.expect(validateProperties(me)).to.be.true;\r",
 									"});"
@@ -699,7 +698,7 @@
 							"variable": [
 								{
 									"key": "activityId",
-									"value": null
+									"value": ""
 								}
 							]
 						},
@@ -728,7 +727,7 @@
 									"});",
 									"",
 									"const validateProperties = (item) => {",
-									"    return item.Fields !== undefined;",
+									"    return item.fields !== undefined;",
 									"}",
 									"",
 									"pm.test(\"Response contains Fields\", function () {",
@@ -805,14 +804,14 @@
 									"});",
 									"",
 									"const validateProperties = (item) => {",
-									"    return item.Fields !== undefined;",
+									"    return item.fields !== undefined;",
 									"}",
 									"",
 									"pm.test(\"Response contains Fields\", function () {",
 									"    var response = pm.response.json();",
 									"    pm.expect(validateProperties(response)).to.be.true;",
-									"    pm.expect(response.Fields[0] == \"Postman1\").to.be.true;",
-									"    pm.expect(response.Fields[1] == \"Postman2\").to.be.true;",
+									"    pm.expect(response.fields[0] == \"Postman1\").to.be.true;",
+									"    pm.expect(response.fields[1] == \"Postman2\").to.be.true;",
 									"});"
 								],
 								"type": "text/javascript"
@@ -855,7 +854,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Fields\": [\r\n    \"Postman1\",\r\n    \"Postman2\"\r\n  ]\r\n}"
+							"raw": "{\r\n  \"fields\": [\r\n    \"Postman1\",\r\n    \"Postman2\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{origin-domain-api}}/v2/search/field-names-setting",
