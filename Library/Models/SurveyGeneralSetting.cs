@@ -36,5 +36,10 @@ namespace Nfield.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Indicates whether the survey will be excluded from automatic deletion and stoppage
+        /// </summary>
+        public bool? ExcludeFromAutomaticCleanup { get; set; }
+
     }
 }
