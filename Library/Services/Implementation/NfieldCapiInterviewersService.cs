@@ -130,6 +130,16 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// <see cref="INfieldInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
+        /// </summary>
+        public async Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
+        {
+            //var uri = new Uri(InterviewersApi, $"{interviewerId}/Offices");
+
+            //return Client.PostAsJsonAsync(uri, new InterviewerFieldworkOfficeModel { OfficeId = officeId }).FlattenExceptions();
+        }
+
         #endregion
 
 

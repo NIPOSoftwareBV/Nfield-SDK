@@ -81,5 +81,13 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
         Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password);
+
+        /// <summary>
+        /// Assigns an CAPI interviewer to a fieldwork office
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <param name="officeId"></param>
+        /// <returns></returns>
+        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
     }
 }
