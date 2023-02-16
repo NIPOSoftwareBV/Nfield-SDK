@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "25433936-c8ba-444b-ba47-1d4251d368dc",
+		"_postman_id": "389700ea-9ce4-4616-9f91-1f015c2c4b15",
 		"name": "Nfield Domain API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9960585"
@@ -169,18 +169,18 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin-domain-api}}/v2/offices/:officeId",
+									"raw": "{{origin-domain-api}}/v2/offices/:id",
 									"host": [
 										"{{origin-domain-api}}"
 									],
 									"path": [
 										"v2",
 										"offices",
-										":officeId"
+										":id"
 									],
 									"variable": [
 										{
-											"key": "officeId",
+											"key": "id",
 											"value": "{{OfficeId}}"
 										}
 									]
@@ -210,6 +210,8 @@
 											"    const office = pm.response.json();\r",
 											"    pm.expect(validateProperties(office)).to.be.true;\r",
 											"    pm.collectionVariables.set(\"OfficeId\", office.id);\r",
+											"    pm.response.to.have.header(\"Location\");\r",
+											"    pm.expect(pm.response.headers.get('Location')).to.include(\"/v2/offices/\" + office.id);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -331,18 +333,18 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin-domain-api}}/v2/offices/:officeId",
+									"raw": "{{origin-domain-api}}/v2/offices/:id",
 									"host": [
 										"{{origin-domain-api}}"
 									],
 									"path": [
 										"v2",
 										"offices",
-										":officeId"
+										":id"
 									],
 									"variable": [
 										{
-											"key": "officeId",
+											"key": "id",
 											"value": "{{OfficeId}}"
 										}
 									]
@@ -428,18 +430,18 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin-domain-api}}/v2/offices/:officeId",
+									"raw": "{{origin-domain-api}}/v2/offices/:id",
 									"host": [
 										"{{origin-domain-api}}"
 									],
 									"path": [
 										"v2",
 										"offices",
-										":officeId"
+										":id"
 									],
 									"variable": [
 										{
-											"key": "officeId",
+											"key": "id",
 											"value": "{{OfficeId}}"
 										}
 									]
@@ -685,7 +687,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin-domain-api}}/v2/background/activity/:activityId",
+							"raw": "{{origin-domain-api}}/v2/background/activity/:id",
 							"host": [
 								"{{origin-domain-api}}"
 							],
@@ -693,12 +695,12 @@
 								"v2",
 								"background",
 								"activity",
-								":activityId"
+								":id"
 							],
 							"variable": [
 								{
-									"key": "activityId",
-									"value": ""
+									"key": "id",
+									"value": "{{ActivityId}}"
 								}
 							]
 						},
@@ -875,6 +877,383 @@
 						"description": "Update the domain's search fields."
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Surveys",
+			"item": [
+				{
+					"name": "Defaults",
+					"item": [
+						{
+							"name": "Get Response Codes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (responseCode) => {",
+											"    return responseCode.id !== undefined ",
+											"    && responseCode.description !== undefined ",
+											"    && responseCode.url !== undefined ",
+											"    && responseCode.isDefinite !== undefined ",
+											"    && responseCode.isSelectable !== undefined ",
+											"    && responseCode.allowAppointment !== undefined ",
+											"    && responseCode.channelCapi !== undefined ",
+											"    && responseCode.channelCati !== undefined ",
+											"    && responseCode.channelOnline !== undefined;",
+											"}",
+											"",
+											"pm.test(\"Response contains response code properties\", function () {",
+											"    const responseCode = pm.response.json();",
+											"    pm.expect(responseCode.every(validateProperties)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/surveys/defaults/response-codes",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"surveys",
+										"defaults",
+										"response-codes"
+									]
+								},
+								"description": "Gets the domain's search fields."
+							},
+							"response": []
+						},
+						{
+							"name": "Create Response Code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"Created\");",
+											"});",
+											"",
+											"const validateProperties = (responseCode) => {",
+											"    return responseCode.id !== undefined ",
+											"    && responseCode.description !== undefined ",
+											"    && responseCode.url !== undefined ",
+											"    && responseCode.isDefinite !== undefined ",
+											"    && responseCode.isSelectable !== undefined ",
+											"    && responseCode.allowAppointment !== undefined ",
+											"    && responseCode.channelCapi !== undefined ",
+											"    && responseCode.channelCati !== undefined ",
+											"    && responseCode.channelOnline !== undefined;",
+											"}",
+											"",
+											"pm.test(\"Response contains response code properties\", function () {",
+											"    var responseCode = pm.response.json();",
+											"    pm.expect(validateProperties(responseCode)).to.be.true;",
+											"    pm.collectionVariables.set(\"ResponseCodeId\", responseCode.id);",
+											"    pm.response.to.have.header(\"Location\");",
+											"    pm.expect(pm.response.headers.get('Location')).to.include(\"/v2/surveys/defaults/response-codes/\" + responseCode.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":\"421\",\r\n    \"description\":\"Postman response code description\",\r\n    \"url\": \"\",\r\n    \"isDefinite\": false,\r\n    \"isSelectable\": false,\r\n    \"allowAppointment\": false,\r\n    \"channelCapi\": true,\r\n    \"channelCati\": true,\r\n    \"channelOnline\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/surveys/defaults/response-codes",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"surveys",
+										"defaults",
+										"response-codes"
+									]
+								},
+								"description": "Gets the domain's search fields."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Response Code",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/surveys/defaults/response-codes/:id",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"surveys",
+										"defaults",
+										"response-codes",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{ResponseCodeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Office Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (responseCode) => {\r",
+											"        return responseCode.id !== undefined \r",
+											"    && responseCode.description !== undefined \r",
+											"    && responseCode.url !== undefined \r",
+											"    && responseCode.isDefinite !== undefined \r",
+											"    && responseCode.isSelectable !== undefined \r",
+											"    && responseCode.allowAppointment !== undefined \r",
+											"    && responseCode.channelCapi !== undefined \r",
+											"    && responseCode.channelCati !== undefined \r",
+											"    && responseCode.channelOnline !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"All response code should have an id and the data has been updated\", function () {\r",
+											"    const responseCode = pm.response.json();\r",
+											"    pm.expect(validateProperties(responseCode)).to.be.true;\r",
+											"    pm.expect(responseCode.description).to.eql(\"Postman response code description updated\");\r",
+											"    pm.collectionVariables.set(\"ResponseCodeId\", responseCode.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{domainApiAccessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Nfield-UserName",
+										"value": "{{DomainTestUserName}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-DomainId",
+										"value": "{{DomainTestId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-UserId",
+										"value": "{{userId}}",
+										"type": "text"
+									},
+									{
+										"key": "Nfield-Role",
+										"value": "{{userRole}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\":\"Postman response code description updated\",\r\n    \"url\": \"\",\r\n    \"isDefinite\": false,\r\n    \"isSelectable\": false,\r\n    \"allowAppointment\": false,\r\n    \"channelCapi\": true,\r\n    \"channelCati\": true,\r\n    \"channelOnline\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-domain-api}}/v2/surveys/defaults/response-codes/:id",
+									"host": [
+										"{{origin-domain-api}}"
+									],
+									"path": [
+										"v2",
+										"surveys",
+										"defaults",
+										"response-codes",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{ResponseCodeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -1072,12 +1451,17 @@
 			"value": ""
 		},
 		{
-			"key": "FieldworkOfficeId",
+			"key": "OfficeId",
 			"value": ""
 		},
 		{
-			"key": "OfficeId",
+			"key": "ResponseCodeId",
 			"value": ""
+		},
+		{
+			"key": "ActivityId",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
