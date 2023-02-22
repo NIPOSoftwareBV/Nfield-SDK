@@ -84,7 +84,7 @@ namespace Nfield.Services
         Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password);
 
         /// <summary>
-        /// Assigns an CAPI interviewer to a fieldwork office
+        /// Assigns a CAPI interviewer to a fieldwork office
         /// </summary>
         /// <param name="interviewerId"></param>
         /// <param name="officeId"></param>
