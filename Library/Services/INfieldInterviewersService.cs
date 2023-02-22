@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using Nfield.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Nfield.Services
 {

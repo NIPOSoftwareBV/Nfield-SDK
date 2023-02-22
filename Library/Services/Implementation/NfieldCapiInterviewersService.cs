@@ -20,6 +20,7 @@ using Nfield.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
@@ -127,6 +128,40 @@ namespace Nfield.Services.Implementation
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask => JsonConvert.DeserializeObject<CapiInterviewer>(stringTask.Result))
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldCapiInterviewersService.AddInterviewerToFieldworkOfficesAsync"/>
+        /// </summary>
+        public Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId)
+        {
+            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/FieldworkOffices/{officeId}");
+
+            return Client.PatchAsJsonAsync(uri, string.Empty).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldCapiInterviewersService.RemoveInterviewerFromFieldworkOfficesAsync(string, string)"/>
+        /// </summary>
+        public Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string officeId)
+        {
+            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/FieldworkOffices/{officeId}");
+
+            return Client.DeleteAsync(uri).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldCapiInterviewersService.QueryOfficesAsync"/>
+        /// </summary>
+        public Task<IEnumerable<string>> QueryOfficesAsync(string interviewerId)
+        {
+            return Client.GetAsync(new Uri(CapiInterviewersApi, $"{interviewerId}/FieldworkOffices"))
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<IEnumerable<string>>(stringTask.Result))
                          .FlattenExceptions();
         }
 

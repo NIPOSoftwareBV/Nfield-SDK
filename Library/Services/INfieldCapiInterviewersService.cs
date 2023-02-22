@@ -16,6 +16,7 @@
 using Nfield.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Nfield.Services
@@ -81,5 +82,30 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>     
         Task<CapiInterviewer> ChangePasswordAsync(CapiInterviewer interviewer, string password);
+
+        /// <summary>
+        /// Assigns a CAPI interviewer to a fieldwork office
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <param name="officeId"></param>
+        /// <returns></returns>
+        Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
+
+        /// <summary>
+        /// Unassigns a CAPI interviewer from a fieldwork office
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <param name="officeId"></param>
+        /// <returns></returns>
+        Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string officeId);
+
+        /// <summary>
+        /// Gets offices for a CAPI interviewer.
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// </summary>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
+        Task<IEnumerable<string>> QueryOfficesAsync(string interviewerId);
     }
 }
