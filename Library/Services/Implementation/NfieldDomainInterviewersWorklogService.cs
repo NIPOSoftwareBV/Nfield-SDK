@@ -25,21 +25,22 @@ using System.Threading.Tasks;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldDomainInterviewersWorklog"/>
+    /// Implementation of <see cref="INfieldDomainInterviewersWorklogService"/>
     /// </summary>
 
-    internal class NfieldDomainInterviewersWorklog : INfieldDomainInterviewersWorklog, INfieldConnectionClientObject
+    internal class NfieldDomainInterviewersWorklogService : INfieldDomainInterviewersWorklogService, INfieldConnectionClientObject
     {
+        private const string RelativeUri = "InterviewersWorklog";
         #region Implementation of INfieldDomainInterviewersWorklog
 
         /// <summary>
-        /// <see cref="INfieldDomainInterviewersWorklog.QueryLogsAsync"/>
+        /// <see cref="INfieldDomainInterviewersWorklogService.QueryLogsAsync"/>
         /// </summary>
-        public async Task<string> QueryLogsAsync(LogQueryModel query)
+        public async Task<string> QueryAsync(LogQueryModel query)
         {
             Ensure.ArgumentNotNull(query, nameof(query));
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, "InterviewersWorklog");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, RelativeUri);
 
             return await Client.PostAsJsonAsync(uri, query)
                           .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
