@@ -92,7 +92,7 @@ namespace Nfield.Services
         Task AddInterviewerToFieldworkOfficesAsync(string interviewerId, string officeId);
 
         /// <summary>
-        /// Unassigns an CAPI interviewer from a fieldwork office
+        /// Unassigns a CAPI interviewer from a fieldwork office
         /// </summary>
         /// <param name="interviewerId"></param>
         /// <param name="officeId"></param>
