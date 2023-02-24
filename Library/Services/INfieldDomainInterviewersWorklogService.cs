@@ -23,7 +23,7 @@ namespace Nfield.Services
     /// <summary>
     /// Represents a set of methods to create, retrieve, update and delete <see cref="DomainResponseCode"/>.
     /// </summary>
-    public interface INfieldDomainInterviewersWorklog
+    public interface INfieldDomainInterviewersWorklogService
     {
         /// <returns>URL to download the file</returns>
         /// <summary>
@@ -35,6 +35,6 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         /// <returns>URL to download the file</returns>
-        Task<string> QueryLogsAsync(LogQueryModel query);
+        Task<string> QueryAsync(LogQueryModel query);
     }
 }
