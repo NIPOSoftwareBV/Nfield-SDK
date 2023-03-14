@@ -28,7 +28,7 @@ namespace Nfield.Services
         /// This method returns SurveyGeneralSetting
         /// </summary>
         /// <param name="surveyId">The id of the survey to get the SurveyGeneralSetting</param>
-        Task<SurveyGeneralSettings> QueryAsync(string surveyId);
+        Task<SurveyGeneralSettingsResponse> QueryAsync(string surveyId);
 
         /// <summary>
         /// Updates the supplied <paramref name="generalSetting"/>
