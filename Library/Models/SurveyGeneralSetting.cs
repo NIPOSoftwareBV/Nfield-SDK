@@ -43,7 +43,7 @@ namespace Nfield.Models
         /// <summary>
         /// The user id of the owner of the survey 
         /// </summary>
-        public string Owner { get; set; }
+        public string OwnerId { get; set; }
     }
 
     /// <summary>
