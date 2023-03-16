@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0eaa67d6-10c8-4439-8fa0-ec7e686dc227",
+		"_postman_id": "dd758cf2-143a-4a05-8018-43d084bfa027",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9960585"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -3406,7 +3405,7 @@
 									"response": []
 								},
 								{
-									"name": "Get Owner",
+									"name": "Get Owner (Deprecated)",
 									"event": [
 										{
 											"listen": "test",
@@ -3466,12 +3465,12 @@
 												}
 											]
 										},
-										"description": "Get the survey owner"
+										"description": "Get the survey owner. \nThis endpoint is deprecated, please use the GET General settings endpoint instead."
 									},
 									"response": []
 								},
 								{
-									"name": "Set Owner",
+									"name": "Set Owner (Deprecated)",
 									"event": [
 										{
 											"listen": "test",
@@ -3544,7 +3543,7 @@
 												}
 											]
 										},
-										"description": "Update the survey owner"
+										"description": "Update the survey owner.\nThis endpoint is deprecated, please use the PATCH General settings endpoint instead."
 									},
 									"response": []
 								}
