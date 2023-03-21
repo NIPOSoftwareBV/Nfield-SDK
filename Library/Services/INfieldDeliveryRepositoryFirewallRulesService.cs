@@ -28,7 +28,7 @@ namespace Nfield.Services
 
         Task<FirewallRuleModel> GetAsync(long repositoryId, int firewallRuleId);
 
-        Task PostAsync(long repositoryId, FirewallRuleModel model));
+        Task PostAsync(long repositoryId, FirewallRuleModel model);
 
         Task DeleteAsync(long repositoryId, int firewallRuleId);
     }
