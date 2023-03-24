@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Nfield.SDK.Models.Delivery;
 
@@ -24,7 +25,7 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldDeliveryRepositoryFirewallRulesService
     {
-        Task<IEnumerable<FirewallRuleModel>> GetAsync(long repositoryId);
+        Task<IQueryable<FirewallRuleModel>> GetAsync(long repositoryId);
 
         Task<FirewallRuleModel> GetAsync(long repositoryId, int firewallRuleId);
 
