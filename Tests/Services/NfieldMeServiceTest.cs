@@ -37,21 +37,23 @@ namespace Nfield.Services
         {
             const HttpStatusCode httpStatusCode = HttpStatusCode.OK;
 
-            var permissions = new List<string>();
-            permissions.Add("Activity.Read");
-            permissions.Add("SamplingPoint.Read");
-            permissions.Add("InterviewQuality.Read");
+            var permissions = new List<string>{
+                "Activity.Read",
+                "SamplingPoint.Read",
+                "InterviewQuality.Read"
+            };
 
-            var userRoles = new List<string>();
-            userRoles.Add("Admin");
-            userRoles.Add("SuperUser");
+            var userRoles = new List<string>
+            {
+                "Admin",
+                "SuperUser"
+            };
 
             var content = new UserRoleModel
             {
                 Permissions = permissions,
                 UserRoles = userRoles
             };
-
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
