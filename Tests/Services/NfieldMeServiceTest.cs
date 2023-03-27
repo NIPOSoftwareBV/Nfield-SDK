@@ -29,7 +29,7 @@ namespace Nfield.Services
             var target = new NFieldMeService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.GetUserRole()));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.GetUserRoles()));
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace Nfield.Services
             var target = new NFieldMeService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.GetUserRole().Result;
+            var actual = target.GetUserRoles().Result;
 
             Assert.Equal(content.Permissions, actual.Permissions);
             Assert.Equal(content.UserRoles, actual.UserRoles);

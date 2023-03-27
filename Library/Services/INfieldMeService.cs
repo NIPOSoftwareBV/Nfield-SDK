@@ -8,6 +8,6 @@ namespace Nfield.SDK.Services
 {
     public interface INFieldMeService
     {
-        Task<UserRoleModel> GetUserRole();
+        Task<UserRoleModel> GetUserRoles();
     }
 }

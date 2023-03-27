@@ -20,7 +20,7 @@ namespace Nfield.SDK.Services.Implementation
             ConnectionClient = connection;
         }
 
-        public Task<UserRoleModel> GetUserRole()
+        public Task<UserRoleModel> GetUserRoles()
         {
             return ConnectionClient.Client.GetAsync(MeApi)
              .ContinueWith(
