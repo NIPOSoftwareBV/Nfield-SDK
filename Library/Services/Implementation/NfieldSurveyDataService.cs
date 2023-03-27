@@ -14,24 +14,6 @@ namespace Nfield.Services.Implementation
     internal class NfieldSurveyDataService : INfieldSurveyDataService, INfieldConnectionClientObject
     {
         /// <summary>
-        /// See <see cref="INfieldSurveyDataService.PostAsync"/>
-        /// </summary>
-        public Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest)
-        {
-            if (surveyDownloadDataRequest == null)
-            {
-                throw new ArgumentNullException(nameof(surveyDownloadDataRequest));
-            }
-
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyDownloadDataRequest.SurveyId}/data");
-
-            return Client.PostAsJsonAsync(uri, surveyDownloadDataRequest)
-                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundTask>(task.Result))
-                         .FlattenExceptions();
-        }
-
-        /// <summary>
         /// See <see cref="INfieldSurveyDataService.PrepareDownload"/>
         /// </summary>
         public async Task<string> PrepareDownload(string surveyId, SurveyDataRequest surveyDataRequest)
