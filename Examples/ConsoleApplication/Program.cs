@@ -159,6 +159,32 @@ namespace ConsoleApplication
             surveyFieldworkService.StartFieldworkAsync(newSurvey.SurveyId).Wait();
             surveyFieldworkStatus = surveyFieldworkService.GetStatusAsync(newSurvey.SurveyId).Result; //Should be started
 
+            // Example of a download data request: filtering testdata collected today
+            var surveyDataService = connection.GetService<INfieldSurveyDataService>();
+
+            var surveyDataRequest = new SurveyDataRequest
+            {
+                FileName = "MyFileName",
+                StartDate = DateTime.Today.ToUniversalTime(), // UTC time start of today
+                EndDate = DateTime.Today.AddDays(1).ToUniversalTime(), // UTC time end of today
+                SurveyVersion = "637242848690284790", // If the SurveyVersion (Etag) is specified only the surveys matching this version will be downloaded
+                IncludeSuccessful = true,
+                IncludeScreenOut = true,
+                IncludeDroppedOut = true,
+                IncludeRejected = true,
+                IncludeTestData = true,
+                IncludeClosedAnswers = true,
+                IncludeOpenAnswers = true,
+                IncludeParaData = true,
+                IncludeCapturedMediaFiles = true,
+                IncludeVarFile = true,
+                IncludeQuestionnaireScript = true
+            };
+
+            var downloadUrl = surveyDataService.PrepareDownload(newSurvey.SurveyId, surveyDataRequest).Result;
+
+            new WebClient().DownloadFile(downloadUrl, "mydownload");
+
             //
             // sample management
             //
