@@ -422,34 +422,34 @@
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{BearerToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [
-              {
-                "key": "X-Nfield-Domain",
-                "value": "{{DomainTestName}}",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
             "url": {
               "raw": "{{origin-public-api}}/v1/Delivery/Repositories/Statuses",
               "host": [
@@ -461,8 +461,8 @@
                 "Surveys"
               ]
             },
-            "description": "Gets a list of surveys that can be added to a repository."
-          },
+						"description": "Gets a list of surveys that can be added to a repository."
+					},
 					"response": []
 				},
 				{
