@@ -5,10 +5,7 @@ trigger:
   branches:
     include: ['master', '*/ci-*']
 
-pr:
-  autoCancel: true
-  branches:
-    include: ['master', '*/ci-*'] 
+pr: none
 
 jobs:
 - job:
