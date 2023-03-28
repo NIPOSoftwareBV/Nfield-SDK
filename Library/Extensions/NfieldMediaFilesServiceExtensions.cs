@@ -13,13 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Nfield.Models;
 using Nfield.Services;
-using Nfield.Services.Implementation;
+using System.Linq;
 
 namespace Nfield.Extensions
 {
@@ -44,15 +39,6 @@ namespace Nfield.Extensions
                 string surveyId, string fileName)
         {
             mediaFilesService.RemoveAsync(surveyId, fileName).Wait();
-        }
-
-        /// <summary>
-        /// A synchronous version of <see cref="INfieldMediaFilesService.AddOrUpdateAsync"/>
-        /// </summary>
-        public static void AddOrUpdate(this INfieldMediaFilesService mediaFilesService,
-                string surveyId, string fileName, byte[] content)
-        {
-            mediaFilesService.AddOrUpdateAsync(surveyId, fileName, content).Wait();
         }
     }
 }
