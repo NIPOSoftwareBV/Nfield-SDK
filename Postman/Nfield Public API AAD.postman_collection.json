@@ -251,7 +251,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin-public-api}}/v1/Delivery/Settings/Plans",
+							"raw": "{{origin-public-api}}/v1/Delivery/Plans",
 							"host": [
 								"{{origin-public-api}}"
 							],
@@ -450,17 +450,17 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{origin-public-api}}/v1/Delivery/Surveys",
-							"host": [
-								"{{origin-public-api}}"
-							],
-							"path": [
-								"v1",
-								"Delivery",
-								"Surveys"
-							]
-						},
+            "url": {
+              "raw": "{{origin-public-api}}/v1/Delivery/Repositories/Statuses",
+              "host": [
+                "{{origin-public-api}}"
+              ],
+              "path": [
+                "v1",
+                "Delivery",
+                "Surveys"
+              ]
+            },
 						"description": "Gets a list of surveys that can be added to a repository."
 					},
 					"response": []
