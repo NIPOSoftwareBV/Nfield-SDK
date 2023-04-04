@@ -13,7 +13,6 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.SDK.Models.Delivery;
@@ -25,6 +24,11 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldDeliveryRepositorySurveysService
     {
-        Task<IQueryable<RepositorySurveyModel>> GetAsync(long repositoryId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
+        Task<IQueryable<RepositorySurveyModel>> QueryAsync(long repositoryId);
     }
 }

@@ -32,7 +32,7 @@ namespace Nfield.SDK.Services.Implementation
     {
         #region Implementation of INfieldDeliveryRepositorySurveysService
 
-        public Task<IQueryable<RepositorySurveyModel>> GetAsync(long repositoryId)
+        public Task<IQueryable<RepositorySurveyModel>> QueryAsync(long repositoryId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Surveys");
 

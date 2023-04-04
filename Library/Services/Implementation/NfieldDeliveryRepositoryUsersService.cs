@@ -33,7 +33,7 @@ namespace Nfield.SDK.Services.Implementation
     {
         #region Implementation of INfieldDeliveryRepositoryUsersService
 
-        public Task<IQueryable<RepositoryUserModel>> GetAsync(long repositoryId)
+        public Task<IQueryable<RepositoryUserModel>> QueryAsync(long repositoryId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Users");
 
@@ -71,7 +71,7 @@ namespace Nfield.SDK.Services.Implementation
 
         public Task PostAsync(long repositoryId, long userId)
         {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Users/{userId}");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Users/{userId}/Reset");
 
             return ConnectionClient.Client.PostAsync(uri, null)
                          //.ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)

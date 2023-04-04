@@ -34,7 +34,7 @@ namespace Nfield.SDK.Services.Implementation
     {
         #region Implementation of INfieldDeliverySurveyPropertiesService
 
-        public Task<IQueryable<DomainSurveyPropertyModel>> GetAsync(string surveyId)
+        public Task<IQueryable<DomainSurveyPropertyModel>> QueryAsync(string surveyId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Surveys/{surveyId}/Properties");
 
@@ -72,7 +72,7 @@ namespace Nfield.SDK.Services.Implementation
 
         public Task PutSurveyPropertyAsync(string surveyId, long propertyId, UpdateDomainSurveyPropertyModel model)
         {
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Surveys/{surveyId}/Properties");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Surveys/{surveyId}/Properties/{propertyId}");
 
             return ConnectionClient.Client.PutAsJsonAsync(uri, model)
                          //.ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)

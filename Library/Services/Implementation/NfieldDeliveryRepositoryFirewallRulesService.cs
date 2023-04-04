@@ -32,7 +32,7 @@ namespace Nfield.SDK.Services.Implementation
     {
         #region Implementation of INfieldDeliveryRepositoryFirewallRulesService
 
-        Task<IQueryable<FirewallRuleModel>> INfieldDeliveryRepositoryFirewallRulesService.GetAsync(long repositoryId)
+        public Task<IQueryable<FirewallRuleModel>> QueryAsync(long repositoryId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/FirewallRules");
 

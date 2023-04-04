@@ -32,7 +32,7 @@ namespace Nfield.SDK.Services.Implementation
     {
         #region Implementation of INfieldDeliverySettingsService
 
-        public Task<IQueryable<RepositoryStatusListModel>> GetRepositoryStatusesAsync()
+        public Task<IQueryable<RepositoryStatusListModel>> QueryRepositoryStatusesAsync()
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Settings/RepositoryStatuses");
 
@@ -45,7 +45,7 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task<IQueryable<RepositoryPlan>> GetPlansAsync()
+        public Task<IQueryable<RepositoryPlan>> QueryPlansAsync()
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Settings/Plans");
 

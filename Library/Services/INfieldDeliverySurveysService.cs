@@ -15,7 +15,6 @@
 
 using System.Linq;
 using System.Threading.Tasks;
-using Nfield.Models;
 using Nfield.SDK.Models.Delivery;
 
 namespace Nfield.Services
@@ -25,6 +24,10 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldDeliverySurveysService
     {
-        Task<IQueryable<DomainSurveyModel>> GetAsync();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IQueryable<DomainSurveyModel>> QueryAsync();
     }
 }

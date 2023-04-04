@@ -32,7 +32,7 @@ namespace Nfield.SDK.Services.Implementation
     {
         #region Implementation of INfieldDeliverySurveysService
 
-        public Task<IQueryable<DomainSurveyModel>> GetAsync()
+        public Task<IQueryable<DomainSurveyModel>> QueryAsync()
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Surveys");
 

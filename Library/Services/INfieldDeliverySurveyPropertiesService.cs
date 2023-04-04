@@ -29,7 +29,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The Nfield Survey id.</param>
         /// <returns>The properties for the selected survey.</returns>         
-        Task<IQueryable<DomainSurveyPropertyModel>> GetAsync(string surveyId);
+        Task<IQueryable<DomainSurveyPropertyModel>> QueryAsync(string surveyId);
 
         /// <summary>
         /// Returns the property for the selected survey based on the given identifier.

@@ -13,7 +13,6 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.SDK.Models.Delivery;
@@ -25,22 +24,68 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldDeliveryRepositoriesService
     {
-        Task<IQueryable<RepositoryModel>> GetAsync();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IQueryable<RepositoryModel>> QueryAsync();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
         Task<RepositoryModel> GetAsync(long repositoryId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
         Task<RepositoryConnectionInfo> GetCredentialsAsync(long repositoryId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="interval"></param>
+        /// <returns></returns>
         Task<RepositoryMetricsModel> GetMetricsAsync(long repositoryId, int interval);
 
-        Task<IQueryable<RepositorySubscriptionLogModel>> GetSubscriptionsLogsAsync(long repositoryId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
+        Task<IQueryable<RepositorySubscriptionLogModel>> QuerySubscriptionsLogsAsync(long repositoryId);
 
-        Task<IQueryable<RepositoryActivityLogModel>> GetActivityLogsAsync(long repositoryId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
+        Task<IQueryable<RepositoryActivityLogModel>> QueryActivityLogsAsync(long repositoryId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         Task PostAsync(CreateRepositoryModel model);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         Task PostRepositorySubscriptionAsync(long repositoryId, CreateRepositorySubscriptionModel model);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
         Task DeleteAsync(long repositoryId);
 
     }

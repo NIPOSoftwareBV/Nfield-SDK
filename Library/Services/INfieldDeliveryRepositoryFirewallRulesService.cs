@@ -13,7 +13,6 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.SDK.Models.Delivery;
@@ -25,12 +24,35 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldDeliveryRepositoryFirewallRulesService
     {
-        Task<IQueryable<FirewallRuleModel>> GetAsync(long repositoryId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
+        Task<IQueryable<FirewallRuleModel>> QueryAsync(long repositoryId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="firewallRuleId"></param>
+        /// <returns></returns>
         Task<FirewallRuleModel> GetAsync(long repositoryId, int firewallRuleId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         Task PostAsync(long repositoryId, FirewallRuleModel model);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="firewallRuleId"></param>
+        /// <returns></returns>
         Task DeleteAsync(long repositoryId, int firewallRuleId);
     }
 }

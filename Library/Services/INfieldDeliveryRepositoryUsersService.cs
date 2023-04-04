@@ -13,7 +13,6 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nfield.SDK.Models.Delivery;
@@ -25,10 +24,27 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldDeliveryRepositoryUsersService
     {
-        Task<IQueryable<RepositoryUserModel>> GetAsync(long repositoryId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <returns></returns>
+        Task<IQueryable<RepositoryUserModel>> QueryAsync(long repositoryId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         Task<RepositoryUserModel> GetAsync(long repositoryId, long userId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="repositoryUserName"></param>
+        /// <returns></returns>
         Task PostAsync(long repositoryId, string repositoryUserName);
 
         /// <summary>
@@ -39,6 +55,12 @@ namespace Nfield.Services
         /// <returns></returns>
         Task PostAsync(long repositoryId, long userId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repositoryId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         Task DeleteAsync(long repositoryId, long userId);
     }
 }

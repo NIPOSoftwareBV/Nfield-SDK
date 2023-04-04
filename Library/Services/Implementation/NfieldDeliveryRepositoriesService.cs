@@ -32,7 +32,7 @@ namespace Nfield.SDK.Services.Implementation
     {
         #region Implementation of INfieldDeliveryRepositoriesService
 
-        public Task<IQueryable<RepositoryModel>> GetAsync()
+        public Task<IQueryable<RepositoryModel>> QueryAsync()
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, "Delivery/Repositories");
 
@@ -84,7 +84,7 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task<IQueryable<RepositorySubscriptionLogModel>> GetSubscriptionsLogsAsync(long repositoryId)
+        public Task<IQueryable<RepositorySubscriptionLogModel>> QuerySubscriptionsLogsAsync(long repositoryId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Logs/Subscriptions");
 
@@ -97,7 +97,7 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task<IQueryable<RepositoryActivityLogModel>> GetActivityLogsAsync(long repositoryId)
+        public Task<IQueryable<RepositoryActivityLogModel>> QueryActivityLogsAsync(long repositoryId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Logs/Activities");
 
