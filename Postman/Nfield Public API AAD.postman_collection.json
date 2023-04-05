@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "e9c14bd3-c4d7-4f50-8db0-bed11b3a5aa2",
+		"_postman_id": "757630da-251a-44d8-a988-6a2349677908",
 		"name": "Nfield Public API AAD",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23939419"
+		"_exporter_id": "21743550"
 	},
 	"item": [
 		{
@@ -11849,85 +11849,6 @@
 													"response": []
 												},
 												{
-													"name": "Upload Media File",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 201\", function () {",
-																	"    pm.response.to.have.status(201);",
-																	"});",
-																	"",
-																	"pm.test(\"Status code name has string\", function () {",
-																	"    pm.response.to.have.status(\"Created\");",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"protocolProfileBehavior": {
-														"disabledSystemHeaders": {
-															"content-type": true
-														}
-													},
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{BearerToken}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PUT",
-														"header": [
-															{
-																"key": "Content-Type",
-																"value": "application/octet-stream"
-															},
-															{
-																"key": "X-Nfield-Domain",
-																"value": "{{DomainTestName}}"
-															}
-														],
-														"body": {
-															"mode": "file",
-															"file": {
-																"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/bungalow.jpg"
-															}
-														},
-														"url": {
-															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
-															"host": [
-																"{{origin-public-api}}"
-															],
-															"path": [
-																"v1",
-																"Surveys",
-																":SurveyId",
-																"MediaFiles",
-																":FileName"
-															],
-															"variable": [
-																{
-																	"key": "SurveyId",
-																	"value": "{{SurveyId}}"
-																},
-																{
-																	"key": "FileName",
-																	"value": "{{FileName}}"
-																}
-															]
-														},
-														"description": "Creates or update the survey media file."
-													},
-													"response": []
-												},
-												{
 													"name": "Delete Media File",
 													"event": [
 														{
@@ -13784,99 +13705,6 @@
 										"description": "Updates Sample Record"
 									},
 									"response": []
-								},
-								{
-									"name": "Get Sample Data",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 202\", function () {",
-													"    pm.response.to.have.status(202);",
-													"});",
-													"",
-													"pm.test(\"Status code name has string\", function () {",
-													"    pm.response.to.have.status(\"Accepted\");",
-													"});",
-													"",
-													"const validateProperties = (item) => {",
-													"    return item.Id !== undefined",
-													"    && item.IdentityId !== undefined",
-													"    && item.Parameters !== undefined",
-													"    && item.StartTime !== undefined",
-													"    && item.FinishTime !== undefined",
-													"    && item.ResultUrl !== undefined",
-													"    && item.Status !== undefined",
-													"    && item.TaskType !== undefined;",
-													"}",
-													"",
-													"const validateBgTask = (item) => {",
-													"    return item.SurveyId !== undefined",
-													"    && item.BackgroundTaskId !== undefined",
-													"    && item.DownloadFileName !== undefined;",
-													"}",
-													"",
-													"pm.test(\"Validate Properties\", function () {",
-													"    var response = pm.response.json();",
-													"    pm.expect(validateProperties(response)).to.be.true;",
-													"    var parameters = JSON.parse(response.Parameters);",
-													"    pm.expect(validateBgTask(parameters)).to.be.true;",
-													"    pm.environment.set(\"TaskId\", parameters.BackgroundTaskId);",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"auth": {
-											"type": "bearer",
-											"bearer": [
-												{
-													"key": "token",
-													"value": "{{BearerToken}}",
-													"type": "string"
-												}
-											]
-										},
-										"method": "GET",
-										"header": [
-											{
-												"key": "Content-Type",
-												"value": "application/octet-stream"
-											},
-											{
-												"key": "X-Nfield-Domain",
-												"value": "{{DomainTestName}}"
-											}
-										],
-										"url": {
-											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SampleData/:SampleDataFileName",
-											"host": [
-												"{{origin-public-api}}"
-											],
-											"path": [
-												"v1",
-												"Surveys",
-												":SurveyId",
-												"SampleData",
-												":SampleDataFileName"
-											],
-											"variable": [
-												{
-													"key": "SurveyId",
-													"value": "{{SurveyId}}"
-												},
-												{
-													"key": "SampleDataFileName",
-													"value": "{{SampleDataFileName}}"
-												}
-											]
-										},
-										"description": "Create a request for a sample data download."
-									},
-									"response": []
 								}
 							],
 							"description": "Controller for CRUD operations on sample data (Has survey type usage restrictions) Starts a task to get the sample record data"
@@ -14032,92 +13860,6 @@
 									]
 								},
 								"description": "This method creates a new survey."
-							},
-							"response": []
-						},
-						{
-							"name": "Get Data",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 202\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Status code name has string\", function () {",
-											"    pm.response.to.have.status(\"Accepted\");",
-											"});",
-											"",
-											"const validateProperties = (item) => {",
-											"    return item.Id !== undefined ",
-											"    && item.IdentityId !== undefined ",
-											"    && item.Parameters !== undefined",
-											"    && item.StartTime !== undefined",
-											"    && item.FinishTime !== undefined",
-											"    && item.ResultUrl !== undefined",
-											"    && item.Status !== undefined",
-											"    && item.TaskType !== undefined;",
-											"}",
-											"",
-											"pm.test(\"Response contains the Properties\", function () {",
-											"    var response = pm.response.json();",
-											"    pm.expect(validateProperties(response)).to.be.true;",
-											"});",
-											"",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{BearerToken}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-Nfield-Domain",
-										"value": "{{DomainTestName}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"SurveyId\": \"{{SurveyId}}\",\r\n  \"InterviewId\": {{InterviewId}},\r\n  \"DownloadTestInterviewData\": true,\r\n  \"DownloadSuccessfulLiveInterviewData\": true,\r\n  \"DownloadRejectedLiveInterviewData\": true,\r\n  \"DownloadNotSuccessfulLiveInterviewData\": true,\r\n  \"DownloadSuspendedLiveInterviewData\": true,\r\n  \"DownloadParaData\": true,\r\n  \"DownloadCapturedMedia\": true,\r\n  \"DownloadClosedAnswerData\": true,\r\n  \"DownloadOpenAnswerData\": true,\r\n  \"DownloadFileName\": \"DownloadedFileName\",\r\n  \"StartDate\": \"2015-11-05T15:16:41Z\",\r\n  \"EndDate\": \"2015-11-05T15:16:41Z\"\r\n}"
-								},
-								"url": {
-									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Data",
-									"host": [
-										"{{origin-public-api}}"
-									],
-									"path": [
-										"v1",
-										"Surveys",
-										":SurveyId",
-										"Data"
-									],
-									"variable": [
-										{
-											"key": "SurveyId",
-											"value": "{{SurveyId}}"
-										}
-									]
-								},
-								"description": "Post a request for a data download. The surveyDownloadDataRequest contains all the information needed to be able to create a download with just the information that is needed for this request."
 							},
 							"response": []
 						},

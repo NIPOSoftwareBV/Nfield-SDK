@@ -13,15 +13,14 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.Infrastructure;
+using Nfield.Models;
+using Nfield.Services;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Nfield.Infrastructure;
-using Nfield.Models;
-using Nfield.Services;
 
 namespace ConsoleApplication
 {
@@ -163,38 +162,28 @@ namespace ConsoleApplication
             // Example of a download data request: filtering testdata collected today
             var surveyDataService = connection.GetService<INfieldSurveyDataService>();
 
-            var myRequest = new SurveyDownloadDataRequest
+            var surveyDataRequest = new SurveyDataRequest
             {
-                DownloadSuccessfulLiveInterviewData = false,
-                DownloadNotSuccessfulLiveInterviewData = false,
-                DownloadOpenAnswerData = true,
-                DownloadClosedAnswerData = true,
-                DownloadSuspendedLiveInterviewData = false,
-                DownloadCapturedMedia = false,
-                DownloadParaData = false,
-                DownloadVarFile = false,
-                DownloadTestInterviewData = true,
-                DownloadQuestionnaireScript = true,
-                DownloadFileName = "MyFileName",
-                StartDate = DateTime.Today.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time start of today
-                EndDate = DateTime.Today.AddDays(1).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture), // UTC time end of today
-                SurveyId = "SomeSurveyId",
-                SurveyVersion = "637242848690284790" // If the SurveyVersion (Etag) is specified only the surveys matching this version will be downloaded
+                FileName = "MyFileName",
+                StartDate = DateTime.Today.ToUniversalTime(), // UTC time start of today
+                EndDate = DateTime.Today.AddDays(1).ToUniversalTime(), // UTC time end of today
+                SurveyVersion = "637242848690284790", // If the SurveyVersion (Etag) is specified only the surveys matching this version will be downloaded
+                IncludeSuccessful = true,
+                IncludeScreenOut = true,
+                IncludeDroppedOut = true,
+                IncludeRejected = true,
+                IncludeTestData = true,
+                IncludeClosedAnswers = true,
+                IncludeOpenAnswers = true,
+                IncludeParaData = true,
+                IncludeCapturedMediaFiles = true,
+                IncludeVarFile = true,
+                IncludeQuestionnaireScript = true
             };
 
-            var task = surveyDataService.PostAsync(myRequest).Result;
+            var downloadUrl = surveyDataService.PrepareDownload(newSurvey.SurveyId, surveyDataRequest).Result;
 
-            // request the background tasks service 
-            var backgroundTasksService = connection.GetService<INfieldBackgroundTasksService>();
-
-            // Example of performing operations on background tasks.
-            var backgroundTaskQuery = backgroundTasksService.QueryAsync().Result.Where(s => s.Id == task.Id);
-            var mybackgroundTask = backgroundTaskQuery.FirstOrDefault();
-
-            if (mybackgroundTask != null)
-            {
-                var status = mybackgroundTask.Status;
-            }
+            new WebClient().DownloadFile(downloadUrl, "mydownload");
 
             //
             // sample management
