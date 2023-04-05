@@ -59,23 +59,23 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task PostAsync(long repositoryId, string repositoryUserName)
+        public Task<string> PostAsync(long repositoryId, string repositoryUserName)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Users");
 
             return ConnectionClient.Client.PostAsync(uri, new StringContent(repositoryUserName))
-                         //.ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         //.ContinueWith(task => JsonConvert.DeserializeObject<CreateRepositoryModel>(task.Result))
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<string>(task.Result))
                          .FlattenExceptions();
         }
 
-        public Task PostAsync(long repositoryId, long userId)
+        public Task<string> PostAsync(long repositoryId, long userId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Users/{userId}/Reset");
 
             return ConnectionClient.Client.PostAsync(uri, null)
-                         //.ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         //.ContinueWith(task => JsonConvert.DeserializeObject<CreateRepositoryModel>(task.Result))
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<string>(task.Result))
                          .FlattenExceptions();
         }
 

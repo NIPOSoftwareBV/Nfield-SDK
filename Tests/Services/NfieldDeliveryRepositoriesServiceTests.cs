@@ -186,20 +186,21 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             var createRepositoryModel = new CreateRepositoryModel { Name = "respositoryName" };
-            var content = new StringContent(JsonConvert.SerializeObject(createRepositoryModel));
+            var content = new StringContent(JsonConvert.SerializeObject(new { Id = 2 }));
 
             var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories");
 
             mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(endpointUri, createRepositoryModel))
-                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+                .Returns(CreateTask(HttpStatusCode.OK, content)).Verifiable();
 
             var target = new NfieldDeliveryRepositoriesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            await target.PostAsync(createRepositoryModel);
+            var newRepository = await target.PostAsync(createRepositoryModel);
 
             mockedHttpClient.Verify();
+            Assert.Equal(2, newRepository.Id);
         }
 
         [Fact]

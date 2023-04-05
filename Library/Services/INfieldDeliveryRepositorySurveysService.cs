@@ -20,15 +20,15 @@ using Nfield.SDK.Models.Delivery;
 namespace Nfield.Services
 {
     /// <summary>
-    /// 
+    /// Set of methods to manage the respository surveys
     /// </summary>
     public interface INfieldDeliveryRepositorySurveysService
     {
         /// <summary>
-        /// 
+        /// Returns the surveys of the given repository.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <returns></returns>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <returns>The repository surveys.</returns>         
         Task<IQueryable<RepositorySurveyModel>> QueryAsync(long repositoryId);
     }
 }

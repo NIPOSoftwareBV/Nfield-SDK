@@ -20,47 +20,43 @@ using Nfield.SDK.Models.Delivery;
 namespace Nfield.Services
 {
     /// <summary>
-    /// 
+    /// Set of methods to manage the respository users
     /// </summary>
     public interface INfieldDeliveryRepositoryUsersService
     {
         /// <summary>
-        /// 
+        /// Returns the list of repository users.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <returns></returns>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <returns>A list a repository users.</returns>
         Task<IQueryable<RepositoryUserModel>> QueryAsync(long repositoryId);
 
         /// <summary>
-        /// 
+        /// Gets a repository user by specified id.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="userId">The user id.</param>
+        /// <returns>A repository user.</returns>
         Task<RepositoryUserModel> GetAsync(long repositoryId, long userId);
 
         /// <summary>
-        /// 
+        /// Creates a new repository user based on the given data.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <param name="repositoryUserName"></param>
-        /// <returns></returns>
-        Task PostAsync(long repositoryId, string repositoryUserName);
+        /// <param name="repositoryId">The repository id.</param>
+        Task<string> PostAsync(long repositoryId, string repositoryUserName);
 
         /// <summary>
-        /// ResetRepositoryUserPassword
+        /// Resets the repository user password.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        Task PostAsync(long repositoryId, long userId);
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="userId">The repository user id.</param>
+        Task<string> PostAsync(long repositoryId, long userId);
 
         /// <summary>
-        /// 
+        /// Deletes the repository user.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="userId">The repository user id.</param>
         Task DeleteAsync(long repositoryId, long userId);
     }
 }

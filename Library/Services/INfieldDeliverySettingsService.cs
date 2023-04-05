@@ -20,20 +20,20 @@ using Nfield.SDK.Models.Delivery;
 namespace Nfield.Services
 {
     /// <summary>
-    /// 
+    /// Set of methods to manage the respository settings
     /// </summary>
     public interface INfieldDeliverySettingsService
     {
         /// <summary>
-        /// 
+        /// Gets a list of repository statuses.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of repository statuses.</returns>
         Task<IQueryable<RepositoryStatusListModel>> QueryRepositoryStatusesAsync();
 
         /// <summary>
-        /// 
+        /// Gets a list of repository plans.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of repository plans.</returns>
         Task<IQueryable<RepositoryPlan>> QueryPlansAsync();
     }
 }

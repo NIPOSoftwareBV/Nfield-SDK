@@ -65,8 +65,6 @@ namespace Nfield.SDK.Services.Implementation
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Surveys/{surveyId}/Properties");
 
             return ConnectionClient.Client.PostAsJsonAsync(uri, model)
-                         //.ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         //.ContinueWith(task => JsonConvert.DeserializeObject<CreateDomainSurveyPropertyModel>(task.Result))
                          .FlattenExceptions();
         }
 
@@ -75,8 +73,6 @@ namespace Nfield.SDK.Services.Implementation
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Surveys/{surveyId}/Properties/{propertyId}");
 
             return ConnectionClient.Client.PutAsJsonAsync(uri, model)
-                         //.ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         //.ContinueWith(task => JsonConvert.DeserializeObject<UpdateDomainSurveyPropertyModel>(task.Result))
                          .FlattenExceptions();
         }
 

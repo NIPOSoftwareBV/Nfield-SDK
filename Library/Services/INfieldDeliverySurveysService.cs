@@ -20,14 +20,14 @@ using Nfield.SDK.Models.Delivery;
 namespace Nfield.Services
 {
     /// <summary>
-    /// 
+    /// Set of methods to manage the repository surveys at domain level
     /// </summary>
     public interface INfieldDeliverySurveysService
     {
         /// <summary>
-        /// 
+        /// Gets a list of surveys that can be added to a repository.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of surveys.</returns>     
         Task<IQueryable<DomainSurveyModel>> QueryAsync();
     }
 }

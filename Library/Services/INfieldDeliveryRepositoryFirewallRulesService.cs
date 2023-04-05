@@ -20,39 +20,38 @@ using Nfield.SDK.Models.Delivery;
 namespace Nfield.Services
 {
     /// <summary>
-    /// 
+    /// Set of methods to manage the respository fiewall rules
     /// </summary>
     public interface INfieldDeliveryRepositoryFirewallRulesService
     {
         /// <summary>
-        /// 
+        /// Returns the firewall rules configured for the repository database.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <returns></returns>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <returns>A list of firewall rules</returns>
         Task<IQueryable<FirewallRuleModel>> QueryAsync(long repositoryId);
 
         /// <summary>
-        /// 
+        /// Returns the firewall rule for the requested repository based on the given identifier.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <param name="firewallRuleId"></param>
-        /// <returns></returns>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="firewallRuleId">The firewall rule id.</param>
+        /// <returns>The firewall rule associated with the requested id.</returns>
         Task<FirewallRuleModel> GetAsync(long repositoryId, int firewallRuleId);
 
         /// <summary>
-        /// 
+        /// Adds a firewall rule to allow access to repository database for specific IP addresses.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        Task PostAsync(long repositoryId, FirewallRuleModel model);
+        /// <param name="repositoryId">The repository id.</param>
+        /// <returns>The firewall rule id, if succeeded. The appropriate exception in case of failure.</returns>
+        Task<FirewallRuleModel> PostAsync(long repositoryId, FirewallRuleModel model);
 
         /// <summary>
-        /// 
+        /// Deletes the specified firewall rule from the Repository database.
         /// </summary>
-        /// <param name="repositoryId"></param>
-        /// <param name="firewallRuleId"></param>
-        /// <returns></returns>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="firewallRuleId">The id of the firewall rule to delete.</param>
+        /// <returns><c>NoContentResult</c>, if succeeded. The appropriate exception in case of failure.</returns>
         Task DeleteAsync(long repositoryId, int firewallRuleId);
     }
 }

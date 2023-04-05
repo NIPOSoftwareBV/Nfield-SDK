@@ -88,21 +88,22 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             var repositoryUserName = "repositoryUserName";
-            var content = new StringContent(repositoryUserName);
+            var content = new StringContent(JsonConvert.SerializeObject(repositoryUserName));
 
             var repositoryId = 1;
             var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories/{repositoryId}/Users");
 
             mockedHttpClient
                 .Setup(client => client.PostAsync(endpointUri, It.Is<StringContent>(stringContent => stringContent.ReadAsStringAsync().Result.Equals(repositoryUserName))))
-                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+                .Returns(CreateTask(HttpStatusCode.OK, content)).Verifiable();
 
             var target = new NfieldDeliveryRepositoryUsersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            await target.PostAsync(repositoryId, repositoryUserName);
+            var repositoryUser = await target.PostAsync(repositoryId, repositoryUserName);
 
             mockedHttpClient.Verify();
+            Assert.Equal(repositoryUserName, repositoryUser);
         }
 
         [Fact]
@@ -111,8 +112,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            //var repositoryUserModel = new RepositoryUserModel { Id = 2, Name = "repositoryUser" };
-            //var content = new StringContent(JsonConvert.SerializeObject(repositoryUserModel));
+            var content = new StringContent(JsonConvert.SerializeObject("newUserPassword"));
 
             var repositoryId = 1;
             var userId = 2;
@@ -120,14 +120,15 @@ namespace Nfield.Services
 
             mockedHttpClient
                 .Setup(client => client.PostAsync(endpointUri, null))
-                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+                .Returns(CreateTask(HttpStatusCode.OK, content)).Verifiable();
 
             var target = new NfieldDeliveryRepositoryUsersService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            await target.PostAsync(repositoryId, userId);
+            var repositoryPassword = await target.PostAsync(repositoryId, userId);
 
             mockedHttpClient.Verify();
+            Assert.Equal("newUserPassword", repositoryPassword);
         }
 
         [Fact]

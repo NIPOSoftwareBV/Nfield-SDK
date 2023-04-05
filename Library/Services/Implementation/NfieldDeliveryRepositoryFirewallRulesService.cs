@@ -58,12 +58,14 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public Task PostAsync(long repositoryId, FirewallRuleModel model)
+        public Task<FirewallRuleModel> PostAsync(long repositoryId, FirewallRuleModel model)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/FirewallRules");
 
             return ConnectionClient.Client.PostAsJsonAsync(uri, model)
-                         .FlattenExceptions();
+                        .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                        .ContinueWith(task => JsonConvert.DeserializeObject<FirewallRuleModel>(task.Result))
+                        .FlattenExceptions();
         }
 
         public Task DeleteAsync(long repositoryId, int firewallRuleId)

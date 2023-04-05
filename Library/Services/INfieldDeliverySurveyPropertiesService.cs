@@ -20,7 +20,7 @@ using Nfield.SDK.Models.Delivery;
 namespace Nfield.Services
 {
     /// <summary>
-    /// 
+    /// Set of methods to manage the respository survey properties
     /// </summary>
     public interface INfieldDeliverySurveyPropertiesService
     {

@@ -88,21 +88,22 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
             var firewallRuleModel = new FirewallRuleModel { Name = "firewallRule" };
-            //var content = new StringContent(JsonConvert.SerializeObject(firewallRuleModel));
+            var content = new StringContent(JsonConvert.SerializeObject(new { Id = 2 }));
 
             var repositoryId = 1;
             var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories/{repositoryId}/FirewallRules");
 
             mockedHttpClient
                 .Setup(client => client.PostAsJsonAsync(endpointUri, firewallRuleModel))
-                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+                .Returns(CreateTask(HttpStatusCode.OK, content)).Verifiable();
 
             var target = new NfieldDeliveryRepositoryFirewallRulesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            await target.PostAsync(repositoryId, firewallRuleModel);
+            var newFirewalRule = await target.PostAsync(repositoryId, firewallRuleModel);
 
             mockedHttpClient.Verify();
+            Assert.Equal(2, newFirewalRule.Id);
         }
 
         [Fact]
