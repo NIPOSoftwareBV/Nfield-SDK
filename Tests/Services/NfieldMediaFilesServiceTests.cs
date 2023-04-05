@@ -23,7 +23,6 @@ using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
-using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -149,30 +148,6 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             target.RemoveAsync(surveyId, fileName).Wait();
-        }
-
-        #endregion
-
-        #region  AddOrUpdateAsync
-
-        [Fact]
-        public void TestAddOrUpdateAsync_Always_DoesNotThrow()
-        {
-            const string surveyId = "SurveyId";
-            const string fileName = "MyFileName";
-            byte[] content = new byte[] { 1, 2, 3, 4, 5 };
-
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PutAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName),
-                        It.IsAny<HttpContent>()))
-                .Returns(CreateTask(HttpStatusCode.OK));
-
-            var target = new NfieldMediaFilesService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            target.AddOrUpdateAsync(surveyId, fileName, content).Wait();
         }
 
         #endregion

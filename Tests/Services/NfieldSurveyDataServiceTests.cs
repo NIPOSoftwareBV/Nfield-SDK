@@ -45,42 +45,6 @@ namespace Nfield.Services
 
         }
 
-        #region PostAsync
-
-        [Fact]
-        public void TestPostAsync_DataNull_Throws()
-        {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.PostAsync(null)));
-        }
-
-        [Fact]
-        public void TestPostAsync_CallsCorrectURI()
-        {
-            const string surveyId = "SurveyId";
-
-            var task = new BackgroundTask { Id = "TaskId" };
-            var content = new StringContent(JsonConvert.SerializeObject(task));
-
-            _mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(It.IsAny<Uri>(), It.IsAny<SurveyDownloadDataRequest>()))
-                .Returns(CreateTask(HttpStatusCode.OK, content));
-
-            var data = new SurveyDownloadDataRequest
-            {
-                SurveyId = surveyId
-            };
-
-            _target.PostAsync(data).Wait();
-
-            _mockedHttpClient
-                .Verify(
-                    client =>
-                        client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/data"), It.IsAny<SurveyDownloadDataRequest>()),
-                    Times.Once());
-        }
-
-        #endregion
-
         #region PrepareDownload
 
         [Fact]
@@ -135,7 +99,7 @@ namespace Nfield.Services
 
         #endregion
 
-        #region PrepareDownload
+        #region PrepareInterviewDownload
 
         [Fact]
         public void TestPrepareInterviewDownload_WhenSurveyIdIsNull_Throws()
