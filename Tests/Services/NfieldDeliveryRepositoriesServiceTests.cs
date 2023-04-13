@@ -18,15 +18,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
-using Nfield.Models;
 using Nfield.SDK.Models.Delivery;
 using Nfield.SDK.Services.Implementation;
-using Nfield.Services.Implementation;
 using Xunit;
 
 namespace Nfield.Services
