@@ -93,8 +93,14 @@ namespace Nfield.Infrastructure
             { typeof(INfieldBlacklistService), typeof(NfieldBlacklistService) },
             { typeof(INfieldRequestsService), typeof(NfieldRequestsService) },
             { typeof(INfieldSamplingPointsService), typeof(NfieldSamplingPointsService) },
-            { typeof(INFieldMeService), typeof(NFieldMeService) }
-
+            { typeof(INFieldMeService), typeof(NFieldMeService) },
+            { typeof(INfieldDeliveryRepositoriesService), typeof(NfieldDeliveryRepositoriesService) },
+            { typeof(INfieldDeliveryRepositoryFirewallRulesService), typeof(NfieldDeliveryRepositoryFirewallRulesService) },
+            { typeof(INfieldDeliveryRepositorySurveysService), typeof(NfieldDeliveryRepositorySurveysService) },
+            { typeof(INfieldDeliveryRepositoryUsersService), typeof(NfieldDeliveryRepositoryUsersService) },
+            { typeof(INfieldDeliverySettingsService), typeof(NfieldDeliverySettingsService) },
+            { typeof(INfieldDeliverySurveyPropertiesService), typeof(NfieldDeliverySurveyPropertiesService) },
+            { typeof(INfieldDeliverySurveysService), typeof(NfieldDeliverySurveysService) }
         };
 
         /// <summary>
