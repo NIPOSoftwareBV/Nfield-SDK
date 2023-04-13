@@ -15,12 +15,24 @@
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Describes the main properties of a domain survey. 
+    /// </summary>
     public class DomainSurveyModel
     {
+        /// <summary>
+        /// The Id of the survey
+        /// </summary>
         public long Id { get; set; }
 
+        /// <summary>
+        /// The Name of the survey
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The Id of the survey on the nfield system
+        /// </summary>
         public string NfieldSurveyId { get; set; }
     }
 }

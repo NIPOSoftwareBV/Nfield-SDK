@@ -17,16 +17,34 @@ using System;
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Describes the main properties of a repository survey. 
+    /// </summary>
     public class RepositorySurveyModel
     {
+        /// <summary>
+        /// The id of the survey
+        /// </summary>
         public long Id { get; set; }
 
+        /// <summary>
+        /// The Id of the survey on the nfield system
+        /// </summary>
         public string NfieldSurveyId { get; set; }
 
+        /// <summary>
+        /// The date when the survey was added to the repository
+        /// </summary>
         public DateTime AddedOn { get; set; }
 
+        /// <summary>
+        /// The status of the survey
+        /// </summary>
         public string Status { get; set; }
 
+        /// <summary>
+        /// Last time the survey was synced
+        /// </summary>
         public DateTime? LastSyncedAt { get; set; }
     }
 }

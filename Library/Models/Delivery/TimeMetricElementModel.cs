@@ -17,10 +17,19 @@ using System;
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Model used in Delivery API operations to describe Time Metrics of the Resource Metrics
+    /// </summary>
     public class TimeMetricElementModel
     {
+        /// <summary>
+        /// The timestamp of the metric
+        /// </summary>
         public DateTime TimeStamp { get; set; }
 
+        /// <summary>
+        /// The value of the metric
+        /// </summary>
         public double Value { get; set; }
     }
 }

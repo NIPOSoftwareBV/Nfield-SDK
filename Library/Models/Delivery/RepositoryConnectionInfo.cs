@@ -20,12 +20,24 @@ namespace Nfield.SDK.Models.Delivery
     /// </summary>
     public class RepositoryConnectionInfo
     {
+        /// <summary>
+        /// The user Id
+        /// </summary>
         public string UserId { get; set; }
 
+        /// <summary>
+        /// The user password
+        /// </summary>
         public string Password { get; set; }
 
+        /// <summary>
+        /// The database server of the database name of the user
+        /// </summary>
         public string DatabaseServer { get; set; }
 
+        /// <summary>
+        /// The database name of the user
+        /// </summary>
         public string DatabaseName { get; set; }
 
     }

@@ -17,12 +17,24 @@ using System.Collections.Generic;
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Model used in Delivery API operations to describe Resource Metrics
+    /// </summary>
     public class ResourceMetricModel
     {
+        /// <summary>
+        /// The value of the metric
+        /// </summary>
         public double Value { get; set; }
 
+        /// <summary>
+        /// The limit of the metric
+        /// </summary>
         public double Limit { get; set; }
 
+        /// <summary>
+        /// The value of the metric as a time serie
+        /// </summary>
         public IEnumerable<TimeMetricElementModel> TimeSeries { get; set; }
     }
 }

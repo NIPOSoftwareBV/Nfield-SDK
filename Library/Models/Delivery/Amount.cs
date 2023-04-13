@@ -15,10 +15,19 @@
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Model used in Delivery API for the pricing of the repository plan
+    /// </summary>
     public class Amount
     {
+        /// <summary>
+        /// The currency of the price amount
+        /// </summary>
         public string Currency { get; set; }
 
+        /// <summary>
+        /// The value of the price amount
+        /// </summary>
         public decimal Value { get; set; }
     }
 }

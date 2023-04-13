@@ -15,6 +15,9 @@
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Model used in Delivery API for the Repository status.
+    /// </summary>
     public class RepositoryStatusListModel
     {
         /// <summary>

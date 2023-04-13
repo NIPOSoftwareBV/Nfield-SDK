@@ -15,6 +15,9 @@
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Model used in Delivery API operations to describe the Repository Users
+    /// </summary>
     public class RepositoryUserModel
     {
         /// <summary>

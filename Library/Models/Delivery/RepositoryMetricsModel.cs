@@ -15,10 +15,19 @@
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Model used in Delivery API operations to describe the Repository Metrics
+    /// </summary>
     public class RepositoryMetricsModel
     {
+        /// <summary>
+        /// The DTU values of the respository
+        /// </summary>
         public ResourceMetricModel DTU { get; set; }
 
+        /// <summary>
+        /// The Storage sizes of the repository
+        /// </summary>
         public ResourceMetricModel Storage { get; set; }
     }
 }

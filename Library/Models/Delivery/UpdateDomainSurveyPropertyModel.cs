@@ -20,8 +20,14 @@ namespace Nfield.SDK.Models.Delivery
     /// </summary>
     public class UpdateDomainSurveyPropertyModel
     {
+        /// <summary>
+        /// The key of the survey property
+        /// </summary>
         public string Key { get; set; }
 
+        /// <summary>
+        /// The value of the the survey property's key
+        /// </summary>
         public string Value { get; set; }
     }
 }

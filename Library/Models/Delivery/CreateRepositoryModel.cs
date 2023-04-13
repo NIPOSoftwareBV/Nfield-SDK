@@ -15,10 +15,19 @@
 
 namespace Nfield.SDK.Models.Delivery
 {
+    /// <summary>
+    /// Model used in Delivery API when creating a new Repository.
+    /// </summary>
     public class CreateRepositoryModel
     {
+        /// <summary>
+        /// The name of the repository.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The Id of the repository plan
+        /// </summary>
         public long PlanId { get; set; }
     }
 }

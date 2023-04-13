@@ -18,18 +18,33 @@ using System;
 namespace Nfield.SDK.Models.Delivery
 {
     /// <summary>
-    /// The repository subscription log model.
+    /// Model used in Delivery API operations to describe the Repository Subscriptions Logs
     /// </summary>
     public class RepositorySubscriptionLogModel
     {
+        /// <summary>
+        /// The id of the repository subscription plan
+        /// </summary>
         public long PlanId { get; set; }
 
+        /// <summary>
+        /// The name of the repository subscription plan
+        /// </summary>
         public string PlanName { get; set; }
 
+        /// <summary>
+        /// The start datetime on the reposity subscription log
+        /// </summary>
         public DateTime StartedAt { get; set; }
 
+        /// <summary>
+        /// The end datetime on the reposity subscription log
+        /// </summary>
         public DateTime? EndedAt { get; set; }
 
+        /// <summary>
+        /// The username on the reposity subscription log
+        /// </summary>
         public string Username { get; set; }
     }
 }

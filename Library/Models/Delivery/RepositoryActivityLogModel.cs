@@ -22,14 +22,29 @@ namespace Nfield.SDK.Models.Delivery
     /// </summary>
     public class RepositoryActivityLogModel
     {
+        /// <summary>
+        /// The Id of the survey on the nfield system
+        /// </summary>
         public string NfieldSurveyId { get; set; }
 
+        /// <summary>
+        /// The survey name
+        /// </summary>
         public string SurveyName { get; set; }
 
+        /// <summary>
+        /// The activity being logged
+        /// </summary>
         public string Activity { get; set; }
 
+        /// <summary>
+        /// The timestamp of the activity
+        /// </summary>
         public DateTime Timestamp { get; set; }
 
+        /// <summary>
+        /// The name of the user triggering the activity
+        /// </summary>
         public string Username { get; set; }
     }
 }
