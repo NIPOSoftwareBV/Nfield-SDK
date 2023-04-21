@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "ecaa2f15-883d-40c3-8d81-a3cfe127e06b",
+		"_postman_id": "207646d0-1fac-44bf-b727-01451d84eb90",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21743550"
+		"_exporter_id": "19213461"
 	},
 	"item": [
 		{
@@ -10715,6 +10715,146 @@
 											]
 										},
 										"description": "Manages data collected for a survey (Has survey type usage restrictions)\n(Online) Gets asynchronously the decrypted data to encrypt it"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Data Retention",
+							"item": [
+								{
+									"name": "Get Data Retention Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"const validateProperties = (setting) => {",
+													"    return setting.RetentionPeriod !== undefined",
+													"    && setting.PossibleValues !== undefined",
+													"}",
+													"",
+													"pm.test(\"Response contains Properties\", function () {",
+													"    var setting = pm.response.json();",
+													"     pm.expect(validateProperties(setting)).to.be.true;",
+													"",
+													"});",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DataRetentionSettings",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												":SurveyId",
+												"DataRetentionSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
+											]
+										},
+										"description": "StartFragmentStartFragment\n\nGet the data retention settings for a survey"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Data Retention Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {",
+													"    pm.response.to.have.status(204);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"No Content\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"RetentionPeriod\": 30\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DataRetentionSettings",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												":SurveyId",
+												"DataRetentionSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
+											]
+										},
+										"description": "StartFragment\n\nUpdate the data retention settings for a survey"
 									},
 									"response": []
 								}
