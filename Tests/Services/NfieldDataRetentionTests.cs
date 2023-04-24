@@ -51,7 +51,7 @@ namespace Nfield.Services
         [Fact]
         public async Task TestGetAsync()
         {
-            var dataRetentionSettings = new DataRetentionSettings { RetentionPeriod = 30, PossibleValues = new int[] { 0,30,60,90 } };
+            var dataRetentionSettings = new DataRetentionSettings { RetentionPeriod = 30 };
             var content = new StringContent(JsonConvert.SerializeObject(dataRetentionSettings));
 
             _mockedHttpClient
