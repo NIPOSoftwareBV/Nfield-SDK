@@ -28,6 +28,6 @@ namespace Nfield.Models
         /// <summary>
         /// The possible survey data retention setting values in days
         /// </summary>
-        public int[] PossibleValues { get { return new int[] { 0, 30, 60, 90 }; } }
+        public int[] PossibleValues { get; set; }
     }
 }
