@@ -35,11 +35,6 @@ namespace Nfield.Models
         /// <summary>
         /// Fieldwork closed
         /// </summary>
-        Closed = 3,
-
-        /// <summary>
-        /// Fieldwork finished, i.e. fieldwork cannot be started anymore.
-        /// </summary>
-        Finished = 4,
+        Closed = 3
     }
 }
