@@ -71,18 +71,6 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldSurveyFieldworkService.FinishFieldworkAsync"/>
-        /// </summary>
-        public Task FinishFieldworkAsync(string surveyId)
-        {
-            CheckSurveyId(surveyId);
-
-            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Finish");
-
-            return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
-        }
-
-        /// <summary>
         /// See <see cref="INfieldSurveyFieldworkService.GetCountsAsync(string)"/>
         /// </summary>
         public Task<SurveyFieldworkCounts> GetCountsAsync(string surveyId)

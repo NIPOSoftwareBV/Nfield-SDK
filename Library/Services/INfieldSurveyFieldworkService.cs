@@ -44,12 +44,6 @@ namespace Nfield.Services
         Task StopFieldworkAsync(string surveyId, StopFieldworkModel model);
 
         /// <summary>
-        /// This method Finish the fieldwork of the survey if stopped.
-        /// </summary>
-        /// <param name="surveyId">The id of the survey to Start</param>
-        Task FinishFieldworkAsync(string surveyId);
-
-        /// <summary>
         /// Gets survey fieldwork counts
         /// <exception cref="T:System.AggregateException"></exception>
         /// </summary>
