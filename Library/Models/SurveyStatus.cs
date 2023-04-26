@@ -33,8 +33,8 @@ namespace Nfield.Models
         Started = 1,
 
         /// <summary>
-        /// Fieldwork closed
+        /// Fieldwork paused
         /// </summary>
-        Closed = 3
+        Paused = 3
     }
 }
