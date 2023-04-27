@@ -4,6 +4,7 @@
     <Authors>NIPO</Authors>
     <Company>NIPO</Company>
     <Copyright>Copyright © NIPO 2018</Copyright>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Library\Nfield.SDK.csproj" />
