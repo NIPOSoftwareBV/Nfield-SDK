@@ -574,11 +574,6 @@ namespace Nfield.Services.Implementation
             get { return "QuotaTargets"; }
         }
 
-        private static string CreateFromBlueprint
-        {
-            get { return "CreateFromBlueprint"; }
-        }
-
         private Uri SurveysApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
