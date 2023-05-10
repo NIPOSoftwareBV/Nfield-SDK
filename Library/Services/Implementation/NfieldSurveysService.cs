@@ -68,6 +68,31 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
+        /// See <see cref="INfieldSurveysService.AddFromBlueprintAsync"/>
+        /// </summary>
+        public Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        {
+            if (blueprintSurveyId == null)
+            {
+                throw new ArgumentNullException(nameof(blueprintSurveyId));
+            }
+            if (string.IsNullOrEmpty(surveyName))
+            {
+                throw new ArgumentNullException(nameof(surveyName));
+            }
+
+            return Client.PostAsJsonAsync(new Uri(SurveysApi, "CreateSurveyFromBlueprint"), new
+                            {
+                                BlueprintSurveyId = blueprintSurveyId,
+                                SurveyName = surveyName,
+                                IncludedConfiguration = (int)includedConfiguration
+                            })
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<Survey>(task.Result))
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
         /// See <see cref="INfieldSurveysService.RemoveAsync"/>
         /// </summary>
         public Task RemoveAsync(Survey survey)
@@ -547,6 +572,11 @@ namespace Nfield.Services.Implementation
         private static string SamplingPointsQuotaControllerName
         {
             get { return "QuotaTargets"; }
+        }
+
+        private static string CreateFromBlueprint
+        {
+            get { return "CreateFromBlueprint"; }
         }
 
         private Uri SurveysApi

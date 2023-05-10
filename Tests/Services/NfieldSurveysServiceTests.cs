@@ -113,6 +113,27 @@ namespace Nfield.Services
             Assert.Equal(survey.SurveyType, actual.SurveyType);
         }
 
+        [Fact]
+        public void TestAddFromBlueprintAsync_ServerAccepts_ReturnsSurvey()
+        {
+            var survey = new Survey(SurveyType.Basic) { SurveyName = "New Survey" };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var content = new StringContent(JsonConvert.SerializeObject(survey));
+
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/CreateSurveyFromBlueprint"), It.IsAny<object>()))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.AddFromBlueprintAsync("some blueprint", "My survey", CopyableSurveyConfiguration.QuotaFrame).Result;
+
+            Assert.Equal(survey.SurveyName, actual.SurveyName);
+            Assert.Equal(survey.SurveyType, actual.SurveyType);
+        }
+
         #endregion
 
         #region RemoveAsync
