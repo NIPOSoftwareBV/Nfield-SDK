@@ -40,6 +40,11 @@ namespace Nfield.Services
         Task<Survey> AddAsync(Survey survey);
 
         /// <summary>
+        /// Adds a new survey based on a blueprint survey.
+        /// </summary>
+        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All);
+
+        /// <summary>
         /// Removes the survey.
         /// </summary>
         Task RemoveAsync(Survey survey);
@@ -274,4 +279,5 @@ namespace Nfield.Services
 
         #endregion
     }
+
 }

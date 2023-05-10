@@ -60,5 +60,10 @@ namespace Nfield.Models
         /// The group this survey belongs to
         /// </summary>
         public int SurveyGroupId { get; set; } = SurveyGroup.DefaultSurveyGroupId;
+
+        /// <summary>
+        /// True if the survey is a blueprint survey, otherwise false
+        /// </summary>
+        public bool IsBlueprint { get; set; } = false;
     }
 }
