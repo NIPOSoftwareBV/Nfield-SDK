@@ -15,22 +15,38 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Models;
+using Nfield.Quota;
 using Nfield.SDK.Models;
 
 namespace Nfield.Services
 {
     /// <summary>
-    /// Represents a set of methods to read survey quota.
+    /// Represents a set of methods to read and update survey data.
     /// </summary>
-    public interface INfieldQuotaService
+    public interface INfieldSurveysQuotaFrameService
     {
+
+
         /// <summary>
-        /// Gets the quota definition for an online survey
+        /// Gets quota definition for survey.
         /// </summary>
-        /// <param name="surveyId">The survey id</param>
-        Task<IEnumerable<QuotaFrameVersion>> GetQuotaFrameVersionsAsync(string surveyId);
+        /// <param name="surveyId">The survey to get the quota frame</param>
+        /// <returns>The quota frame for the requested survey</returns>
+        Task<SurveyQuotaFrame> QuotaQueryAsync(string surveyId);
+
+        /// <summary>
+        /// Assigns the supplied <paramref name="quotaFrame"/> to the survey with the provided <paramref name="surveyId"/>.
+        /// When this method is called on a survey that has a quota frame already 
+        /// then the frame is completely replaced by the new one.
+        /// </summary>
+        /// <param name="surveyId">The survey to set the quota frame</param>
+        /// <param name="quotaFrame">The new quota frame </param>
+        /// <returns>The created/updated quota frame</returns>
+        Task<SurveyQuotaFrame> CreateOrUpdateQuotaAsync(string surveyId, SurveyQuotaFrame quotaFrame);
 
         /// <summary>
         /// Updates the survey quota targets for the specified quota frame version
@@ -38,15 +54,10 @@ namespace Nfield.Services
         /// <param name="surveyId">The survey to set the quota targets for</param>
         /// <param name="eTag">The quota frame version to set the targets for</param>
         /// <param name="targets">The new quota frame targets</param>
-        
-        [Obsolete("NfieldQuotaService.UpdateQuotaTargetsAsync is obsolete, please use NfieldSurveysQuotaFrameService.UpdateQuotaTargetsAsync instead.")]
-        Task UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets);
+        /// <returns>The updated quota frame targets</returns>
+        Task<IEnumerable<QuotaFrameLevelTarget>> UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets);
 
-        /// <summary>
-        /// Gets the specified version of the quota frame  
-        /// </summary>
-        /// <param name="surveyId">The survey id</param>
-        /// <param name="eTag">The version of the quota frame to retrieve</param>
-        Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string eTag);
+
     }
+
 }
