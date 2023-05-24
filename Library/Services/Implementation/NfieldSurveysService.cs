@@ -241,6 +241,9 @@ namespace Nfield.Services.Implementation
             return returned;
         }
 
+        /// <summary>
+        /// <see cref="INfieldSurveysService.OnlineQuotaQueryAsync"/>
+        /// </summary>
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
@@ -269,6 +272,9 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// <see cref="INfieldSurveysService.CreateOrUpdateOnlineQuotaAsync"/>
+        /// </summary>
         public Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
