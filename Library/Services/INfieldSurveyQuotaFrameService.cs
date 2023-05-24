@@ -27,16 +27,14 @@ namespace Nfield.Services
     /// <summary>
     /// Represents a set of methods to read and update survey data.
     /// </summary>
-    public interface INfieldSurveysQuotaFrameService
+    public interface INfieldSurveyQuotaFrameService
     {
-
-
         /// <summary>
         /// Gets quota definition for survey.
         /// </summary>
         /// <param name="surveyId">The survey to get the quota frame</param>
         /// <returns>The quota frame for the requested survey</returns>
-        Task<SurveyQuotaFrame> QuotaQueryAsync(string surveyId);
+        Task<SurveyQuotaFrameModel> QuotaQueryAsync(string surveyId);
 
         /// <summary>
         /// Assigns the supplied <paramref name="quotaFrame"/> to the survey with the provided <paramref name="surveyId"/>.
@@ -46,18 +44,15 @@ namespace Nfield.Services
         /// <param name="surveyId">The survey to set the quota frame</param>
         /// <param name="quotaFrame">The new quota frame </param>
         /// <returns>The created/updated quota frame</returns>
-        Task<SurveyQuotaFrame> CreateOrUpdateQuotaAsync(string surveyId, SurveyQuotaFrame quotaFrame);
+        Task<SurveyQuotaFrameModel> CreateOrUpdateQuotaAsync(string surveyId, SurveyQuotaFrameModel quotaFrame);
 
         /// <summary>
         /// Updates the survey quota targets for the specified quota frame version
         /// </summary>
         /// <param name="surveyId">The survey to set the quota targets for</param>
         /// <param name="eTag">The quota frame version to set the targets for</param>
-        /// <param name="targets">The new quota frame targets</param>
-        /// <returns>The updated quota frame targets</returns>
-        Task<IEnumerable<QuotaFrameLevelTarget>> UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets);
-
-
+        /// <param name="targets">List of levels with the new quota frame targets</param>
+        /// <returns>The updated quota frame levels target list</returns>
+        Task<SurveyQuotaFrameEtagModel> UpdateQuotaTargetsAsync(string surveyId, string eTag, SurveyQuotaFrameEtagModel levelstarget);
     }
-
 }

@@ -22,7 +22,7 @@ namespace Nfield.SDK.Models
     /// <summary>
     /// Represents survey quota frame.
     /// </summary>
-    public class SurveyQuotaFrame
+    public class SurveyQuotaFrameModel
     {
         /// <summary>
         /// Returns the unique identifier of the quota frame. Ignored on the request call
@@ -43,19 +43,19 @@ namespace Nfield.SDK.Models
         /// <summary>
         /// Quota Variables definitions
         /// </summary>
-        public IEnumerable<SurveyQuotaVariableDefinition> VariableDefinitions { get; set; }
+        public IEnumerable<SurveyQuotaVariableDefinitionModel> VariableDefinitions { get; set; }
 
         /// <summary>
         /// Frame Variables values
         /// </summary>
-        public IEnumerable<SurveyQuotaFrameVariable> FrameVariables { get; set; }
+        public IEnumerable<SurveyQuotaFrameVariableModel> FrameVariables { get; set; }
     }
 
- 
+
     /// <summary>
     /// Survey quota Variable Definition. Represents only the definition of the variable and not the assignment to the Survey
     /// </summary>
-    public class SurveyQuotaVariableDefinition
+    public class SurveyQuotaVariableDefinitionModel
     {
         /// <summary>
         /// Quota Variable definition ID
@@ -85,14 +85,14 @@ namespace Nfield.SDK.Models
         /// <summary>
         /// Selectable Levels for the variable
         /// </summary>
-        public IEnumerable<SurveyQuotaLevelDefinition> Levels { get; set; }
+        public IEnumerable<SurveyQuotaLevelDefinitionModel> Levels { get; set; }
 
     }
 
     /// <summary>
     /// Survey quota Level Definition. Represents only the definition of the Levvel and not the assignment to the Survey
     /// </summary>
-    public class SurveyQuotaLevelDefinition
+    public class SurveyQuotaLevelDefinitionModel
     {
         /// <summary>
         /// Quota Level definition ID
@@ -109,7 +109,7 @@ namespace Nfield.SDK.Models
     /// <summary>
     /// Survey quota Frame Variable. Need to be bound to a Quota Variable Definition
     /// </summary>
-    public class SurveyQuotaFrameVariable
+    public class SurveyQuotaFrameVariableModel
     {
         /// <summary>
         /// The unique identifier of the quota variable
@@ -167,13 +167,44 @@ namespace Nfield.SDK.Models
         /// <summary>
         /// Children variables that belong to this level
         /// </summary>
-        public IEnumerable<QuotaFrameVariable> Variables { get; set; }
+        public IEnumerable<SurveyQuotaFrameVariableModel> Variables { get; set; }
 
         /// <summary>
         /// Hides this level to disable the manual selection
         /// </summary>
         public bool IsHidden { get; set; }
 
+    }
+
+    /// <summary>
+    /// Survey Quota Frame Level model representing a quota level targets for an specific ETag
+    /// </summary>
+    public class SurveyQuotaFrameEtagModel
+    {
+        public IEnumerable<SurveyQuotaFrameEtagLevelTargetModel> Levels { get; set; }
+    }
+
+    public class SurveyQuotaFrameEtagLevelTargetModel
+    {
+        /// <summary>
+        /// The unique identifier of the quota level
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Required quota target for this level
+        /// </summary>
+        public int? Target { get; set; }
+
+        /// <summary>
+        /// Max quota target for this level
+        /// </summary>
+        public int? MaxTarget { get; set; }
+
+        /// <summary>
+        /// Max Overshoot allowed for this level
+        /// </summary>
+        public int? MaxOvershoot { get; set; }
     }
 
 }

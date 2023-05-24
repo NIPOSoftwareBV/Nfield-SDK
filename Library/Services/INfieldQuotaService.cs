@@ -13,11 +13,11 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.Models;
+using Nfield.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nfield.Models;
-using Nfield.SDK.Models;
 
 namespace Nfield.Services
 {
@@ -38,8 +38,8 @@ namespace Nfield.Services
         /// <param name="surveyId">The survey to set the quota targets for</param>
         /// <param name="eTag">The quota frame version to set the targets for</param>
         /// <param name="targets">The new quota frame targets</param>
-        
-        [Obsolete("NfieldQuotaService.UpdateQuotaTargetsAsync is obsolete, please use NfieldSurveysQuotaFrameService.UpdateQuotaTargetsAsync instead.")]
+
+        [Obsolete("NfieldQuotaService.UpdateQuotaTargetsAsync is obsolete, please use NfieldSurveyQuotaFrameService.UpdateQuotaTargetsAsync instead.")]
         Task UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets);
 
         /// <summary>

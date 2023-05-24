@@ -16,17 +16,16 @@
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
-using Nfield.Models;
+using Nfield.SDK.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldSurveysQuotaFrameService"/>
+    /// Implementation of <see cref="INfieldSurveyQuotaFrameService"/>
     /// </summary>
-    internal class NfieldSurveysQuotaFrameService : INfieldSurveysQuotaFrameService, INfieldConnectionClientObject
+    internal class NfieldSurveyQuotaFrameService : INfieldSurveyQuotaFrameService, INfieldConnectionClientObject
     {
 
         private const string QuotaControllerName = "SurveyQuotaFrame";
@@ -35,7 +34,7 @@ namespace Nfield.Services.Implementation
         /// See <see cref="INfieldSurveysQuotaFrameService.QuotaQueryAsync"/>
         /// </summary>
         /// <returns></returns>
-        public Task<SDK.Models.SurveyQuotaFrame> QuotaQueryAsync(string surveyId)
+        public Task<SurveyQuotaFrameModel> QuotaQueryAsync(string surveyId)
         {
             ValidateSurveyId(surveyId);
 
@@ -46,14 +45,14 @@ namespace Nfield.Services.Implementation
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<SDK.Models.SurveyQuotaFrame>(stringTask.Result))
+                             JsonConvert.DeserializeObject<SurveyQuotaFrameModel>(stringTask.Result))
                          .FlattenExceptions();
         }
 
         /// <summary>
-        /// <see cref="INfieldSurveysQuotaFrameService.CreateOrUpdateQuotaAsync"/>
+        /// <see cref="INfieldSurveyQuotaFrameService.CreateOrUpdateQuotaAsync"/>
         /// </summary>
-        public Task<SDK.Models.SurveyQuotaFrame> CreateOrUpdateQuotaAsync(string surveyId, SDK.Models.SurveyQuotaFrame quota)
+        public Task<SurveyQuotaFrameModel> CreateOrUpdateQuotaAsync(string surveyId, SurveyQuotaFrameModel quota)
         {
             ValidateSurveyId(surveyId);
 
@@ -63,25 +62,25 @@ namespace Nfield.Services.Implementation
                          .ContinueWith(
                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
-                            stringTask => JsonConvert.DeserializeObject<SDK.Models.SurveyQuotaFrame>(stringTask.Result))
+                            stringTask => JsonConvert.DeserializeObject<SurveyQuotaFrameModel>(stringTask.Result))
                          .FlattenExceptions();
         }
 
 
         /// <summary>
-        /// See <see cref="INfieldSurveysQuotaFrameService.UpdateQuotaTargetsAsync"/>
+        /// See <see cref="INfieldSurveyQuotaFrameService.UpdateQuotaTargetsAsync"/>
         /// </summary>
-        public async Task<IEnumerable<QuotaFrameLevelTarget>> UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets)
+        public Task<SurveyQuotaFrameEtagModel> UpdateQuotaTargetsAsync(string surveyId, string eTag, SurveyQuotaFrameEtagModel targets)
         {
             ValidateSurveyId(surveyId);
 
-            var uri = new Uri(SurveysApi, $"Surveys/{surveyId}/{QuotaControllerName}/{eTag}");
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}/{eTag}");
 
-            return (IEnumerable<QuotaFrameLevelTarget>)Client.PutAsJsonAsync(uri, targets)
+            return Client.PutAsJsonAsync(uri, targets)
              .ContinueWith(
                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
-                stringTask => JsonConvert.DeserializeObject<IEnumerable<QuotaFrameLevelTarget>>(stringTask.Result))
+                stringTask => JsonConvert.DeserializeObject<SurveyQuotaFrameEtagModel>(stringTask.Result))
              .FlattenExceptions();
         }
 
@@ -102,13 +101,10 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private static void ValidateSurveyId(string surveyId)
+        internal static void ValidateSurveyId(string surveyId)
         {
-            if (surveyId == null)
-                throw new ArgumentNullException(nameof(surveyId));
-
-            if (surveyId.Trim().Length == 0)
-                throw new ArgumentException("surveyId cannot be empty");
+            if (surveyId == null || surveyId.Trim().Length == 0)
+                throw new ArgumentException("surveyId cannot be null or empty");
         }
 
         private Uri SurveysApi
