@@ -92,6 +92,25 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        public Task UpdateBlueprintFromSurveyAsync(string blueprintSurveyId, string surveyId, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        {
+            if (blueprintSurveyId == null)
+            {
+                throw new ArgumentNullException(nameof(blueprintSurveyId));
+            }
+            if (surveyId == null)
+            {
+                throw new ArgumentNullException(nameof(surveyId));
+            }
+
+            return Client.PutAsJsonAsync(new Uri(SurveyBlueprintsApi, blueprintSurveyId + "/Update"), new
+                            {
+                                SurveyId = surveyId,
+                                IncludedConfiguration = (int)includedConfiguration
+                            })
+                         .FlattenExceptions();
+        }
+
         /// <summary>
         /// See <see cref="INfieldSurveysService.RemoveAsync"/>
         /// </summary>
@@ -577,6 +596,11 @@ namespace Nfield.Services.Implementation
         private Uri SurveysApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
+        }
+
+        private Uri SurveyBlueprintsApi
+        {
+            get { return new Uri(ConnectionClient.NfieldServerUri, "SurveyBlueprints/"); }
         }
 
         private static string SurveyInterviewerInstructionsControllerName
