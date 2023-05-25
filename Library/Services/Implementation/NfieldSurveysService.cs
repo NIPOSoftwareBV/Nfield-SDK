@@ -103,7 +103,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(nameof(surveyId));
             }
 
-            return Client.PostAsJsonAsync(new Uri(SurveyBlueprintsApi, blueprintSurveyId + "/Update"), new
+            return Client.PutAsJsonAsync(new Uri(SurveyBlueprintsApi, blueprintSurveyId + "/Update"), new
                             {
                                 SurveyId = surveyId,
                                 IncludedConfiguration = (int)includedConfiguration

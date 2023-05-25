@@ -47,7 +47,7 @@ namespace Nfield.Services
         /// <summary>
         /// Updates an existing blueprint survey based on a survey
         /// </summary>
-        Task UpdateBlueprintFromSurveyAsync(string blueprintSurveyId, string surveyId, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        Task UpdateBlueprintFromSurveyAsync(string blueprintSurveyId, string surveyId, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All);
 
         /// <summary>
         /// Removes the survey.

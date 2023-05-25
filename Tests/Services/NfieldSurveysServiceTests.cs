@@ -144,7 +144,7 @@ namespace Nfield.Services
             var surveyId = Guid.NewGuid().ToString();
 
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"SurveyBlueprints/{blueprintId}/Update"), It.IsAny<object>()))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyBlueprints/{blueprintId}/Update"), It.IsAny<object>()))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldSurveysService();
@@ -152,7 +152,7 @@ namespace Nfield.Services
 
             target.UpdateBlueprintFromSurveyAsync(blueprintId, surveyId, CopyableSurveyConfiguration.QuotaFrame).Wait();
 
-            mockedHttpClient.Verify(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"SurveyBlueprints/{blueprintId}/Update"), It.IsAny<object>()), Times.Once);
+            mockedHttpClient.Verify(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyBlueprints/{blueprintId}/Update"), It.IsAny<object>()), Times.Once);
         }
 
         #endregion
