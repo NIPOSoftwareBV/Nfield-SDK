@@ -15,11 +15,29 @@
 
 namespace Nfield.Models
 {
+    /// <summary>
+    /// Survey quota level Targets. Used only for Quota ETag requests and responses
+    /// </summary>
     public class QuotaFrameLevelTarget
     {
+        /// <summary>
+        /// The unique identifier of the quota level
+        /// </summary>
         public string Id { get; set; }
+
+        /// <summary>
+        /// Required quota target for this level
+        /// </summary>
         public int? Target { get; set; }
+
+        /// <summary>
+        /// Max quota target for this level
+        /// </summary>
         public int? MaxTarget { get; set; }
+
+        /// <summary>
+        /// Max Overshoot allowed for this level
+        /// </summary>
         public int? MaxOvershoot { get; set; }
     }
 }

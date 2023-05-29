@@ -107,6 +107,7 @@ namespace Nfield.Services
         /// <summary>
         /// Gets quota definition for survey.
         /// </summary>
+        [Obsolete("NfieldSurveysService.QuotaQueryAsync is obsolete, please use NfieldSurveyQuotaFrameService.QuotaQueryAsync instead.")]
         Task<QuotaLevel> QuotaQueryAsync(string surveyId);
 
         /// <summary>
@@ -124,6 +125,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId"></param>
         /// <returns></returns>
+        [Obsolete("NfieldSurveysService.OnlineQuotaQueryAsync is obsolete, please use NfieldSurveyQuotaFrameService.QuotaQueryAsync instead.")]
         Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId);
 
         /// <summary>
@@ -131,6 +133,7 @@ namespace Nfield.Services
         /// When this method is called on a survey that has a quota frame already 
         /// then the frame is completely replaced by the new one.
         /// </summary>
+        [Obsolete("NfieldSurveysService.CreateOrUpdateQuotaAsync is obsolete, please use NfieldSurveyQuotaFrameService.CreateOrUpdateQuotaAsync instead.")]
         Task<QuotaLevel> CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota);
 
         /// <summary>
@@ -138,6 +141,7 @@ namespace Nfield.Services
         /// When this method is called on a survey that has a quota frame already 
         /// then the frame is completely replaced by the new one.
         /// </summary>
+        [Obsolete("NfieldSurveysService.CreateOrUpdateQuotaAsync is obsolete, please use NfieldSurveyQuotaFrameService.CreateOrUpdateQuotaAsync instead.")]
         Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame);
 
         #endregion
