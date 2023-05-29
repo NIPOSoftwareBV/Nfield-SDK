@@ -10903,7 +10903,7 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Quota",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SurveyQuotaFrame",
 											"host": [
 												"{{origin-public-api}}"
 											],
@@ -10911,7 +10911,7 @@
 												"v1",
 												"Surveys",
 												":SurveyId",
-												"Quota"
+												"SurveyQuotaFrame"
 											],
 											"variable": [
 												{
@@ -10967,7 +10967,7 @@
 											"raw": "{\r\n    \"Target\": 1000,\r\n   \"variableDefinitions\":[\r\n      {\r\n         \"id\":\"f5012ad3-fb42-4992-54d1-e973c0aabe2a\",\r\n         \"name\":\"FirstVariable\",\r\n         \"odinVariableName\":\"first_variable\",\r\n         \"levels\":[\r\n            {\r\n               \"id\":\"a26e7cf5-9400-4084-8a46-1e9ab584f164\",\r\n               \"name\":\"LevelA\"\r\n            },\r\n            {\r\n               \"id\":\"df1997d8-8edc-4e8b-3dca-589050802f7d\",\r\n               \"name\":\"LevelB\"\r\n            }\r\n         ]\r\n      }\r\n   ],\r\n   \"frameVariables\":[\r\n      {\r\n         \"id\":\"1a01fdca-30f8-488f-c187-18451fd6427b\",\r\n         \"definitionId\":\"f5012ad3-fb42-4992-54d1-e973c0aabe2a\",\r\n         \"levels\":[\r\n            {\r\n               \"id\":\"26647d8c-2f8e-4fad-dc74-b58f233ccb10\",\r\n               \"definitionId\":\"a26e7cf5-9400-4084-8a46-1e9ab584f164\",\r\n               \"variables\":[\r\n               ]\r\n            },\r\n            {\r\n               \"Id\": \"ca9c3931-014c-41af-8ccb-28cda9582960\",\r\n               \"DefinitionId\": \"df1997d8-8edc-4e8b-3dca-589050802f7d\",\r\n               \"variables\":[\r\n\r\n               ]\r\n            }\r\n         ]\r\n      }\r\n   ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaFrame",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SurveyQuotaFrame",
 											"host": [
 												"{{origin-public-api}}"
 											],
@@ -10975,7 +10975,7 @@
 												"v1",
 												"Surveys",
 												":SurveyId",
-												"QuotaFrame"
+												"SurveyQuotaFrame"
 											],
 											"variable": [
 												{
@@ -11031,7 +11031,7 @@
 											"raw": "{\r\n    \"levels\":\r\n    [\r\n        {\r\n            \"id\": \"26647d8c-2f8e-4fad-dc74-b58f233ccb10\",\r\n            \"Target\": 10,\r\n            \"MaxTarget\": 20\r\n        },\r\n        {\r\n            \"id\": \"ca9c3931-014c-41af-8ccb-28cda9582960\",\r\n            \"Target\": 5,\r\n            \"MaxTarget\": 10,\r\n            \"MaxOvershoot\": 1\r\n        }\r\n    ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaFrame/:Etag",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SurveyQuotaFrame/:Etag",
 											"host": [
 												"{{origin-public-api}}"
 											],
@@ -11039,7 +11039,7 @@
 												"v1",
 												"Surveys",
 												":SurveyId",
-												"QuotaFrame",
+												"SurveyQuotaFrame",
 												":Etag"
 											],
 											"variable": [
