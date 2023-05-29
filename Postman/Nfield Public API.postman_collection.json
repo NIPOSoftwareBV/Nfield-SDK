@@ -1,10 +1,9 @@
 {
 	"info": {
-		"_postman_id": "207646d0-1fac-44bf-b727-01451d84eb90",
+		"_postman_id": "bd7b749e-4ba2-413d-aedf-371d2e7004ed",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19213461"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -10855,6 +10854,206 @@
 											]
 										},
 										"description": "StartFragment\n\nUpdate the data retention settings for a survey"
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "QuotaFrame",
+							"item": [
+								{
+									"name": "Get QuotaFrame",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Quota",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												":SurveyId",
+												"Quota"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
+											]
+										},
+										"description": "Retrieves either CAPI quota definition or Online quota definition depending on the survey environment. The structure of quota definitions differs from one survey to other as the quotas created in new Manager are different from that created in classic manager. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's."
+									},
+									"response": []
+								},
+								{
+									"name": "Set QuotaFrame",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Target\": 1000,\r\n   \"variableDefinitions\":[\r\n      {\r\n         \"id\":\"f5012ad3-fb42-4992-54d1-e973c0aabe2a\",\r\n         \"name\":\"FirstVariable\",\r\n         \"odinVariableName\":\"first_variable\",\r\n         \"levels\":[\r\n            {\r\n               \"id\":\"a26e7cf5-9400-4084-8a46-1e9ab584f164\",\r\n               \"name\":\"LevelA\"\r\n            },\r\n            {\r\n               \"id\":\"df1997d8-8edc-4e8b-3dca-589050802f7d\",\r\n               \"name\":\"LevelB\"\r\n            }\r\n         ]\r\n      }\r\n   ],\r\n   \"frameVariables\":[\r\n      {\r\n         \"id\":\"1a01fdca-30f8-488f-c187-18451fd6427b\",\r\n         \"definitionId\":\"f5012ad3-fb42-4992-54d1-e973c0aabe2a\",\r\n         \"levels\":[\r\n            {\r\n               \"id\":\"26647d8c-2f8e-4fad-dc74-b58f233ccb10\",\r\n               \"definitionId\":\"a26e7cf5-9400-4084-8a46-1e9ab584f164\",\r\n               \"variables\":[\r\n               ]\r\n            },\r\n            {\r\n               \"Id\": \"ca9c3931-014c-41af-8ccb-28cda9582960\",\r\n               \"DefinitionId\": \"df1997d8-8edc-4e8b-3dca-589050802f7d\",\r\n               \"variables\":[\r\n\r\n               ]\r\n            }\r\n         ]\r\n      }\r\n   ]\r\n}"
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaFrame",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												":SurveyId",
+												"QuotaFrame"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
+											]
+										},
+										"description": "This method creates or updates an Online quota frame or Capi quota frame depending on the survey environment. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are the same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's. NB: All the strings will be trimmed during the upload."
+									},
+									"response": []
+								},
+								{
+									"name": "Set QuotaFrame Etag",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{Domain}}"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"levels\":\r\n    [\r\n        {\r\n            \"id\": \"26647d8c-2f8e-4fad-dc74-b58f233ccb10\",\r\n            \"Target\": 10,\r\n            \"MaxTarget\": 20\r\n        },\r\n        {\r\n            \"id\": \"ca9c3931-014c-41af-8ccb-28cda9582960\",\r\n            \"Target\": 5,\r\n            \"MaxTarget\": 10,\r\n            \"MaxOvershoot\": 1\r\n        }\r\n    ]\r\n}"
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaFrame/:Etag",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												":SurveyId",
+												"QuotaFrame",
+												":Etag"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												},
+												{
+													"key": "Etag",
+													"value": "{{ETag}}"
+												}
+											]
+										},
+										"description": "This method creates or updates an Online quota frame or Capi quota frame depending on the survey environment. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are the same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's. NB: All the strings will be trimmed during the upload."
 									},
 									"response": []
 								}

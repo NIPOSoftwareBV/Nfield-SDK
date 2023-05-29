@@ -79,7 +79,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestQuotaQueryAsync_ServerReturnsQuery()
+        public async Task TestQuotaQueryAsync_ServerReturnsQuotaFrame()
         {
             var uri = new Uri(ServiceAddress, $"Surveys/{SurveyId}/{QuotaControllerName}");
 
@@ -168,10 +168,5 @@ namespace Nfield.Services
 
             Assert.Equal("surveyId cannot be null or empty", ex.Message);
         }
-
-
-
-
-
     }
 }
