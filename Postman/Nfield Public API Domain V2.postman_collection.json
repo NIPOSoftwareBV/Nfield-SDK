@@ -925,8 +925,8 @@
 									"});\r",
 									"\r",
 									"const validateProperties = (item) => {\r",
-									"    return item.UserRoles !== undefined \r",
-									"    && item.Permissions !== undefined;\r",
+									"    return item.userRoles !== undefined \r",
+									"    && item.permissions !== undefined;\r",
 									"}\r",
 									"\r",
 									"pm.test(\"Response contains Me info\", function () {\r",
@@ -951,12 +951,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin-public-api}}/v1/Me/Role",
+							"raw": "{{origin-public-api}}/v2/Me/Role",
 							"host": [
 								"{{origin-public-api}}"
 							],
 							"path": [
-								"v1",
+								"v2",
 								"Me",
 								"Role"
 							]
@@ -1025,7 +1025,7 @@
 											"\r",
 											"pm.test(\"Response contains ActivityId\", function () {\r",
 											"    var response = pm.response.json();\r",
-											"    pm.collectionVariables.set(\"ActivityId\", response.ActivityId);\r",
+											"    pm.collectionVariables.set(\"ActivityId\", response.id);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -1047,25 +1047,28 @@
 								"body": {
 									"mode": "file",
 									"file": {
-										"src": "/C:/repo_1/Nfield-SDK/Postman/QuestionTypesTheme.zip"
+										"src": "/C:/repo_1/nfield-source/Automated Tests/_capi/CapiClientAndService/UpdateSurveyContent_SurveyContentUpdated/Theme.zip"
 									}
 								},
 								"url": {
-									"raw": "{{origin-public-api}}/v2/Themes?templateId={{TemplateId}}&themeName={{ThemeTestName}}",
+									"raw": "{{origin-public-api}}/v2/Templates/:TemplateId/Themes/:ThemeTestName",
 									"host": [
 										"{{origin-public-api}}"
 									],
 									"path": [
 										"v2",
-										"Themes"
+										"Templates",
+										":TemplateId",
+										"Themes",
+										":ThemeTestName"
 									],
-									"query": [
+									"variable": [
 										{
-											"key": "templateId",
+											"key": "TemplateId",
 											"value": "{{TemplateId}}"
 										},
 										{
-											"key": "themeName",
+											"key": "ThemeTestName",
 											"value": "{{ThemeTestName}}"
 										}
 									]
@@ -1146,12 +1149,12 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin-public-api}}/v1/Templates",
+									"raw": "{{origin-public-api}}/v2/Templates",
 									"host": [
 										"{{origin-public-api}}"
 									],
 									"path": [
-										"v1",
+										"v2",
 										"Templates"
 									]
 								},
