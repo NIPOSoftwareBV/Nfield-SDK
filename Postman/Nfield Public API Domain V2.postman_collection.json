@@ -1,0 +1,2282 @@
+{
+	"info": {
+		"_postman_id": "bd7b749e-4ba2-413d-aedf-371d2e7004ed",
+		"name": "Nfield Public API Domain V2",
+		"description": "All Nfield Public API Domain endpoints affect only at domain level. This means that the requests can affect to all the surveys (Like Survey Defaults or themes).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Offices",
+			"item": [
+				{
+					"name": "Office",
+					"item": [
+						{
+							"name": "Get Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (office) => {",
+											"    return office.id !== undefined",
+											"    && office.isHeadquarters !== undefined",
+											"    && office.name !== undefined",
+											"    && office.description !== undefined;",
+											"}",
+											"",
+											"pm.test(\"All offices should have an Office Name\", function () {",
+											"    const office = pm.response.json();",
+											"    pm.expect(validateProperties(office)).to.be.true;",
+											"    pm.collectionVariables.set(\"FieldworkOfficeId\", office.id);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Offices/:OfficeId",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Offices",
+										":OfficeId"
+									],
+									"variable": [
+										{
+											"key": "OfficeId",
+											"value": "{{OfficeId}}"
+										}
+									]
+								},
+								"description": "retrieves details of a specific fieldwork office."
+							},
+							"response": []
+						},
+						{
+							"name": "Create Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200 or 201\", function () {",
+											"    pm.response.to.have.status(201) || pm.response.to.have.status(201);",
+											"});",
+											"",
+											"const validateProperties = (office) => {",
+											"    return office.id !== undefined",
+											"    && office.isHeadquarters !== undefined",
+											"    && office.name !== undefined",
+											"    && office.description !== undefined;",
+											"}",
+											"",
+											"pm.test(\"All offices should have an Office Name\", function () {",
+											"    const office = pm.response.json();",
+											"    pm.expect(validateProperties(office)).to.be.true;",
+											"    pm.collectionVariables.set(\"OfficeId\", office.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Name\": \"Postman office\",\r\n  \"Description\": \"Postman description\"\r\n}"
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Offices",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Offices"
+									]
+								},
+								"description": "Create a new fieldwork office."
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204) || pm.response.to.have.status(204);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Offices/:OfficeId",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Offices",
+										":OfficeId"
+									],
+									"variable": [
+										{
+											"key": "OfficeId",
+											"value": "{{OfficeId}}"
+										}
+									]
+								},
+								"description": "Delete a fieldwork office NOTE: the headquarters office cannot be deleted."
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Office",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (office) => {",
+											"    return office.id !== undefined",
+											"    && office.isHeadquarters !== undefined",
+											"    && office.name !== undefined",
+											"    && office.description !== undefined;",
+											"}",
+											"",
+											"pm.test(\"All offices should have an OfficeId and the data has been updated\", function () {",
+											"    const office = pm.response.json();",
+											"    pm.expect(validateProperties(office)).to.be.true;",
+											"    pm.expect(office.name).to.eql(\"Postman office updated\");",
+											"    pm.expect(office.description).to.eql(\"Postman description updated\");",
+											"    pm.collectionVariables.set(\"OfficeId\", office.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Postman office updated\",\r\n  \"description\": \"Postman description updated\"\r\n}"
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Offices/:OfficeId",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Offices",
+										":OfficeId"
+									],
+									"variable": [
+										{
+											"key": "OfficeId",
+											"value": "{{OfficeId}}"
+										}
+									]
+								},
+								"description": "Update a fieldwork office."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Offices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"const validateProperties = (office) => {",
+									"    return office.id !== undefined",
+									"    && office.isHeadquarters !== undefined",
+									"    && office.name !== undefined",
+									"    && office.description !== undefined;",
+									"}",
+									"",
+									"pm.test(\"All offices should have an OfficeId\", function () {",
+									"    const offices = pm.response.json();",
+									"    pm.expect(offices.every(validateProperties)).to.be.true;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/octet-stream"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{origin-public-api}}/v2/Offices?$filter=contains(Description,'Postman')",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v2",
+								"Offices"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "contains(Description,'Postman')"
+								}
+							]
+						},
+						"description": "retrieves a list of Fieldwork Offices. This list can be filtered and sorted using standard OData syntax."
+					},
+					"response": []
+				}
+			],
+			"description": "A controller for querying fieldwork offices Supervisor should only have access to the Get methods",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Access",
+			"item": [
+				{
+					"name": "Password Settings",
+					"item": [
+						{
+							"name": "Get Password Settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (item) => {",
+											"    return item.ageWarnThreshold !== undefined ",
+											"    && item.enforceTwoFactorAuthentication !== undefined ",
+											"    && item.maxPasswordAge !== undefined",
+											"    && item.minCharsetsInPassword !== undefined",
+											"    && item.minPasswordLength !== undefined",
+											"    && item.passwordHistoryLength !== undefined;",
+											"}",
+											"",
+											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {",
+											"    var response = pm.response.json();",
+											"    pm.expect(validateProperties(response)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/octet-stream"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v2/PasswordSettings",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"PasswordSettings"
+									]
+								},
+								"description": "Gets all password settings for the domain."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Password Settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (item) => {",
+											"    return item.ageWarnThreshold !== undefined ",
+											"    && item.enforceTwoFactorAuthentication !== undefined ",
+											"    && item.maxPasswordAge !== undefined",
+											"    && item.minCharsetsInPassword !== undefined",
+											"    && item.minPasswordLength !== undefined",
+											"    && item.passwordHistoryLength !== undefined;",
+											"}",
+											"",
+											"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {",
+											"    var response = pm.response.json();",
+											"    pm.expect(validateProperties(response)).to.be.true;",
+											"    pm.expect(MinPasswordLength.PasswordHistoryLength == 1).to.be.true;",
+											"   ",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"MinCharsetsInPassword\": 2,\r\n    \"MinPasswordLength\": 6,\r\n    \"PasswordHistoryLength\": 1\r\n}"
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v2/PasswordSettings",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"PasswordSettings"
+									]
+								},
+								"description": "Patch the domain's password settings."
+							},
+							"response": []
+						}
+					],
+					"description": "Controller to handle domain configuration (password settings and email settings)"
+				},
+				{
+					"name": "Local Users",
+					"item": [
+						{
+							"name": "Local User",
+							"item": [
+								{
+									"name": "Get Local User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.id !== undefined \r",
+													"    && item.name !== undefined \r",
+													"    && item.lastLogonDate !== undefined\r",
+													"    && item.firstName !== undefined\r",
+													"    && item.lastName !== undefined\r",
+													"    && item.email !== undefined\r",
+													"    && item.userRole !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains IdentityId\", function () {\r",
+													"    var user = pm.response.json();\r",
+													"    pm.expect(validateProperties(user)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"IdentityId\", user.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin-public-api}}/v2/LocalUsers/:IdentityId",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"LocalUsers",
+												":IdentityId"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
+											]
+										},
+										"description": "Returns details for a local user."
+									},
+									"response": []
+								},
+								{
+									"name": "Create Local User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.id !== undefined \r",
+													"    && item.name !== undefined \r",
+													"    && item.lastLogonDate !== undefined\r",
+													"    && item.firstName !== undefined\r",
+													"    && item.lastName !== undefined\r",
+													"    && item.email !== undefined\r",
+													"    && item.userRole !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains IdentityId\", function () {\r",
+													"    var user = pm.response.json();\r",
+													"    pm.expect(validateProperties(user)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"IdentityId\", user.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"Name\": \"PostmanUser\",\n    \"FirstName\": \"Postman 1\",\n    \"LastName\": \"Postman 2\",\n    \"Email\": \"TestUser@TestSite.com\",\n    \"UserRole\": \"DomainAdministrator\",\n\t\"password\":\"passowrd\"\n}\n"
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v2/LocalUsers",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"LocalUsers"
+											]
+										},
+										"description": "Creates a new user."
+									},
+									"response": []
+								},
+								{
+									"name": "Update Local User",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.id !== undefined \r",
+													"    && item.name !== undefined \r",
+													"    && item.loastLogonDate !== undefined\r",
+													"    && item.firstName !== undefined\r",
+													"    && item.lastName !== undefined\r",
+													"    && item.email !== undefined\r",
+													"    && item.userRole !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains IdentityId\", function () {\r",
+													"    var user = pm.response.json();\r",
+													"    pm.expect(validateProperties(user)).to.be.true;\r",
+													"    pm.expect(user.FirstName == \"Postman updated 1\").to.be.true;\r",
+													"    pm.expect(user.LastName == \"Postman updated 2\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"IdentityId\", user.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"FirstName\": \"First2\",\n    \"LastName\": \"Last2\",\n    \"UserRole\": \"RegularUser\"\n}\n"
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v2/LocalUsers/:IdentityId",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"LocalUsers",
+												":IdentityId"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
+											]
+										},
+										"description": "Edits properties of a local user."
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Local Users",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin-public-api}}/v2/LocalUsers/:IdentityId",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"LocalUsers",
+												":IdentityId"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
+											]
+										},
+										"description": "Deletes a user"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Local User Password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"Password\": \"Passw0rd12\"\n}"
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v2/LocalUsers/:IdentityId/Password",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"LocalUsers",
+												":IdentityId",
+												"Password"
+											],
+											"variable": [
+												{
+													"key": "IdentityId",
+													"value": "{{IdentityId}}"
+												}
+											]
+										},
+										"description": "Edits local user password."
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get Local Users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const validateProperties = (item) => {\r",
+											"    return item.id !== undefined \r",
+											"    && item.name !== undefined \r",
+											"    && item.lastLogonDate !== undefined\r",
+											"    && item.firstName !== undefined\r",
+											"    && item.lastName !== undefined\r",
+											"    && item.email !== undefined\r",
+											"    && item.userRole !== undefined;\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Response contains IdentityId\", function () {\r",
+											"    var users = pm.response.json();\r",
+											"    pm.expect(users.every(validateProperties)).to.be.true;\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v2/LocalUsers/",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"LocalUsers",
+										""
+									]
+								},
+								"description": "Returns a list of all local users."
+							},
+							"response": []
+						}
+					],
+					"description": "A controller for querying local users"
+				},
+				{
+					"name": "Sign In (V1)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Status code name has string\", function () {",
+									"    pm.response.to.have.status(\"OK\");",
+									"});",
+									"",
+									"pm.test(\"Response contains AuthenticationToken\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"AuthenticationToken\");",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('AuthenticationToken', response.AuthenticationToken);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Domain\": \"{{DomainTestName}}\",\n  \"Username\": \"{{DomainTestUserName}}\",\n  \"Password\": \"{{DomainTestUserPassword}}\"\n}"
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/SignIn",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"SignIn"
+							]
+						},
+						"description": "This is used to sign in to the api asynchronously using the specified credentials."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (item) => {\r",
+									"    return item.userRoles !== undefined \r",
+									"    && item.permissions !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Response contains Me info\", function () {\r",
+									"    var me = pm.response.json();\r",
+									"    pm.expect(validateProperties(me)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{origin-public-api}}/v2/Me/Role",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v2",
+								"Me",
+								"Role"
+							]
+						},
+						"description": "Returns the user role for the currently authenticated user."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resources",
+			"item": [
+				{
+					"name": "Themes",
+					"item": [
+						{
+							"name": "Download Theme",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-zip-compressed"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Themes/:ThemeId",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Themes",
+										":ThemeId"
+									],
+									"variable": [
+										{
+											"key": "ThemeId",
+											"value": "{{ThemeId}}"
+										}
+									]
+								},
+								"description": "Gets the Download Url for the theme file. Using the Theme Id to find it."
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Theme",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response contains ActivityId\", function () {\r",
+											"    var response = pm.response.json();\r",
+											"    pm.collectionVariables.set(\"ActivityId\", response.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-zip-compressed"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "file",
+									"file": {
+										"src": "/C:/repo_1/nfield-source/Automated Tests/_capi/CapiClientAndService/UpdateSurveyContent_SurveyContentUpdated/Theme.zip"
+									}
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Templates/:TemplateId/Themes/:ThemeTestName",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Templates",
+										":TemplateId",
+										"Themes",
+										":ThemeTestName"
+									],
+									"variable": [
+										{
+											"key": "TemplateId",
+											"value": "{{TemplateId}}"
+										},
+										{
+											"key": "ThemeTestName",
+											"value": "{{ThemeTestName}}"
+										}
+									]
+								},
+								"description": "Creates or updates the theme file using the Template Id and Theme name."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Theme",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-zip-compressed"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Themes/:ThemeId",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Themes",
+										":ThemeId"
+									],
+									"variable": [
+										{
+											"key": "ThemeId",
+											"value": "{{ThemeId}}"
+										}
+									]
+								},
+								"description": "Deletes the theme's files using the ThemeId."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Templates",
+					"item": [
+						{
+							"name": "Get Templates",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v2/Templates",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"Templates"
+									]
+								},
+								"description": "Gets a list of templates, including a list of themes per template."
+							},
+							"response": []
+						}
+					],
+					"description": "A controller for querying templates"
+				}
+			]
+		},
+		{
+			"name": "Surveys",
+			"item": [
+				{
+					"name": "Search Fields Setting",
+					"item": [
+						{
+							"name": "Get Search Fields Settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (item) => {",
+											"    return item.fields !== undefined;",
+											"}",
+											"",
+											"pm.test(\"Response contains Fields\", function () {",
+											"    var response = pm.response.json();",
+											"    pm.expect(validateProperties(response)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/octet-stream"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v2/SearchFieldsSetting",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"SearchFieldsSetting"
+									]
+								},
+								"description": "Gets the domain's search fields."
+							},
+							"response": []
+						},
+						{
+							"name": "Create/Update Search Fields Settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Status code name has string\", function () {",
+											"    pm.response.to.have.status(\"OK\");",
+											"});",
+											"",
+											"const validateProperties = (item) => {",
+											"    return item.fields !== undefined;",
+											"}",
+											"",
+											"pm.test(\"Response contains Fields\", function () {",
+											"    var response = pm.response.json();",
+											"    pm.expect(validateProperties(response)).to.be.true;",
+											"    pm.expect(response.fields[0] == \"Postman1\").to.be.true;",
+											"    pm.expect(response.fields[1] == \"Postman2\").to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"Fields\": [\r\n    \"Postman1\",\r\n    \"Postman2\"\r\n  ]\r\n}"
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v2/SearchFieldsSetting",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v2",
+										"SearchFieldsSetting"
+									]
+								},
+								"description": "Update the domain's search fields."
+							},
+							"response": []
+						}
+					],
+					"description": "Controller for managing the domain setting to set a set of fields in order to search respondent data inside them"
+				},
+				{
+					"name": "Defaults",
+					"item": [
+						{
+							"name": "Languages",
+							"item": [
+								{
+									"name": "Language (D)",
+									"item": [
+										{
+											"name": "Create Language (D)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 201 Created\", function () {\r",
+															"    pm.response.to.have.status(201);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"Created\");\r",
+															"});\r",
+															"\r",
+															"const validateProperties = (item) => {\r",
+															"    return item.id !== undefined \r",
+															"    && item.interviewButtonUnavailable !== undefined \r",
+															"    && item.tooFewAnswers !== undefined\r",
+															"    && item.tooManyAnswers !== undefined\r",
+															"    && item.itemAnswerRequired !== undefined\r",
+															"    && item.categoryAnswerRequired !== undefined\r",
+															"    && item.answerRequired !== undefined\r",
+															"    && item.notInRange !== undefined\r",
+															"    && item.tooManyDigitsInIntegerPart !== undefined\r",
+															"    && item.lessThanMinimum !== undefined\r",
+															"    && item.moreThanMaximum !== undefined\r",
+															"    && item.mustBeNumeric !== undefined\r",
+															"    && item.tooManyDigitsFraction !== undefined\r",
+															"    && item.doNotUseBrowserButtonToNavigate !== undefined\r",
+															"    && item.exclusiveCategory !== undefined\r",
+															"    && item.invalidCategory !== undefined\r",
+															"    && item.buttonPause !== undefined\r",
+															"    && item.buttonStart !== undefined\r",
+															"    && item.buttonClear !== undefined\r",
+															"    && item.buttonBack !== undefined\r",
+															"    && item.buttonNext !== undefined\r",
+															"    && item.name !== undefined\r",
+															"    && item.answerTooLong !== undefined\r",
+															"    && item.doNotUseButtonWithOtherAnswer !== undefined;\r",
+															"}\r",
+															"\r",
+															"pm.test(\"Response contains LanguageId\", function () {\r",
+															"    const response = pm.response.json();\r",
+															"    pm.expect(validateProperties(response)).to.be.true;\r",
+															"    pm.collectionVariables.set(\"LanguageId\", response.id);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{          \r\n        \"Name\": \"Posman Language\",\r\n        \"ButtonNext\": null,\r\n        \"ButtonBack\": null,\r\n        \"ButtonClear\": null,\r\n        \"ButtonStart\": null,\r\n        \"ButtonPause\": null,\r\n        \"InvalidCategory\": null,\r\n        \"ExclusiveCategory\": null,\r\n        \"TooManyDigitsFraction\": null,\r\n        \"AnswerTooLong\": null,\r\n        \"MustBeNumeric\": null,\r\n        \"MoreThanMaximum\": null,\r\n        \"LessThanMinimum\": null,\r\n        \"TooManyDigitsInIntegerPart\": null,\r\n        \"NotInRange\": null,\r\n        \"AnswerRequired\": null,\r\n        \"CategoryAnswerRequired\": null,\r\n        \"ItemAnswerRequired\": null,\r\n        \"TooManyAnswers\": null,\r\n        \"TooFewAnswers\": null,\r\n        \"InterviewButtonUnavailable\": null,\r\n        \"DoNotUseBrowserButtonToNavigate\": null,\r\n        \"DoNotUseButtonWithOtherAnswer\": null\r\n    }",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin-public-api}}/v2/LanguageTranslations",
+													"host": [
+														"{{origin-public-api}}"
+													],
+													"path": [
+														"v2",
+														"LanguageTranslations"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Update Language (D)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {\r",
+															"    pm.response.to.have.status(200);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"OK\");\r",
+															"});\r",
+															"\r",
+															"const validateProperties = (item) => {\r",
+															"    return item.Id !== undefined \r",
+															"    && item.InterviewButtonUnavailable !== undefined \r",
+															"    && item.TooFewAnswers !== undefined\r",
+															"    && item.TooManyAnswers !== undefined\r",
+															"    && item.ItemAnswerRequired !== undefined\r",
+															"    && item.CategoryAnswerRequired !== undefined\r",
+															"    && item.AnswerRequired !== undefined\r",
+															"    && item.NotInRange !== undefined\r",
+															"    && item.TooManyDigitsInIntegerPart !== undefined\r",
+															"    && item.LessThanMinimum !== undefined\r",
+															"    && item.MoreThanMaximum !== undefined\r",
+															"    && item.MustBeNumeric !== undefined\r",
+															"    && item.TooManyDigitsFraction !== undefined\r",
+															"    && item.DoNotUseBrowserButtonToNavigate !== undefined\r",
+															"    && item.ExclusiveCategory !== undefined\r",
+															"    && item.InvalidCategory !== undefined\r",
+															"    && item.ButtonPause !== undefined\r",
+															"    && item.ButtonStart !== undefined\r",
+															"    && item.ButtonClear !== undefined\r",
+															"    && item.ButtonBack !== undefined\r",
+															"    && item.ButtonNext !== undefined\r",
+															"    && item.Name !== undefined\r",
+															"    && item.AnswerTooLong !== undefined\r",
+															"    && item.DoNotUseButtonWithOtherAnswer !== undefined;\r",
+															"}\r",
+															"\r",
+															"pm.test(\"Response contains LanguageId\", function () {\r",
+															"    const response = pm.response.json();\r",
+															"    pm.expect(validateProperties(response)).to.be.true;\r",
+															"    pm.expect(response.Name == \"Postman Updated\").to.be.true;\r",
+															"    pm.collectionVariables.set(\"LanguageId\", response.Id);\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{     \r\n        \"Name\": \"Postman Updated\",\r\n        \"ButtonNext\": \"new text\",\r\n        \"ButtonBack\": \"new text\",\r\n        \"ButtonClear\": \"new text\",\r\n        \"ButtonStart\": \"new text\",\r\n        \"ButtonPause\": \"new text\",\r\n        \"InvalidCategory\": true,\r\n        \"ExclusiveCategory\": \"new text\",\r\n        \"TooManyDigitsFraction\": \"new text\",\r\n        \"AnswerTooLong\": \"new text\",\r\n        \"MustBeNumeric\": \"new text\",\r\n        \"MoreThanMaximum\": \"new text\",\r\n        \"LessThanMinimum\": \"new text\",\r\n        \"TooManyDigitsInIntegerPart\": \"new text\",\r\n        \"NotInRange\": \"new text\",\r\n        \"AnswerRequired\": \"new text\",\r\n        \"CategoryAnswerRequired\": \"new text\",\r\n        \"ItemAnswerRequired\": \"new text\",\r\n        \"TooManyAnswers\": \"new text\",\r\n        \"TooFewAnswers\": \"new text\",\r\n        \"InterviewButtonUnavailable\": \"new text\",\r\n        \"DoNotUseBrowserButtonToNavigate\": \"new text\",\r\n        \"DoNotUseButtonWithOtherAnswer\": \"new text\"\r\n    }",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin-public-api}}/v2/LanguageTranslations/:LanguageId",
+													"host": [
+														"{{origin-public-api}}"
+													],
+													"path": [
+														"v2",
+														"LanguageTranslations",
+														":LanguageId"
+													],
+													"variable": [
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete Language (D)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 204\", function () {\r",
+															"    pm.response.to.have.status(204);\r",
+															"});\r",
+															"\r",
+															"pm.test(\"Status code name has string\", function () {\r",
+															"    pm.response.to.have.status(\"No Content\");\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Basic {{AuthenticationToken}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{origin-public-api}}/v2/LanguageTranslations/:LanguageId",
+													"host": [
+														"{{origin-public-api}}"
+													],
+													"path": [
+														"v2",
+														"LanguageTranslations",
+														":LanguageId"
+													],
+													"variable": [
+														{
+															"key": "LanguageId",
+															"value": "{{LanguageId}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Get Languages (D)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.id !== undefined \r",
+													"    && item.interviewButtonUnavailable !== undefined \r",
+													"    && item.tooFewAnswers !== undefined\r",
+													"    && item.tooManyAnswers !== undefined\r",
+													"    && item.itemAnswerRequired !== undefined\r",
+													"    && item.categoryAnswerRequired !== undefined\r",
+													"    && item.answerRequired !== undefined\r",
+													"    && item.notInRange !== undefined\r",
+													"    && item.tooManyDigitsInIntegerPart !== undefined\r",
+													"    && item.lessThanMinimum !== undefined\r",
+													"    && item.moreThanMaximum !== undefined\r",
+													"    && item.mustBeNumeric !== undefined\r",
+													"    && item.tooManyDigitsFraction !== undefined\r",
+													"    && item.doNotUseBrowserButtonToNavigate !== undefined\r",
+													"    && item.exclusiveCategory !== undefined\r",
+													"    && item.invalidCategory !== undefined\r",
+													"    && item.buttonPause !== undefined\r",
+													"    && item.buttonStart !== undefined\r",
+													"    && item.buttonClear !== undefined\r",
+													"    && item.buttonBack !== undefined\r",
+													"    && item.buttonNext !== undefined\r",
+													"    && item.name !== undefined\r",
+													"    && item.answerTooLong !== undefined\r",
+													"    && item.doNotUseButtonWithOtherAnswer !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains LanguageId\", function () {\r",
+													"    var languages = pm.response.json();\r",
+													"    pm.expect(languages.every(validateProperties)).to.be.true;\r",
+													"    if (languages.length > 0)\r",
+													"    {\r",
+													"        pm.collectionVariables.set(\"LanguageId\", languages[0].id);\r",
+													"    }\r",
+													"\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin-public-api}}/v2/LanguageTranslations",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"LanguageTranslations"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"description": "Controller for managing the domain Languages. Using LanguageTranslations to keep the same name used for surveys"
+						},
+						{
+							"name": "Response Codes",
+							"item": [
+								{
+									"name": "Get Response Codes",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.id !== undefined \r",
+													"    && item.description !== undefined \r",
+													"    && item.url !== undefined \r",
+													"    && item.isDefinite !== undefined \r",
+													"    && item.isSelectable !== undefined \r",
+													"    && item.allowAppointment !== undefined \r",
+													"    && item.channelCapi !== undefined \r",
+													"    && item.channelCati !== undefined \r",
+													"    && item.channelOnline !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains Response Code Id\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(response.every(validateProperties)).to.be.true;\r",
+													"    if (response.length > 0)\r",
+													"    {\r",
+													"        var lastIndex = response.length - 1;\r",
+													"        pm.collectionVariables.set(\"ResponseCodeId\", response[lastIndex].id);\r",
+													"    }\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{origin-public-api}}/v2/ResponseCodes",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"ResponseCodes"
+											]
+										},
+										"description": "Gets all domain response codes for the domain."
+									},
+									"response": []
+								},
+								{
+									"name": "Create Response Code (D)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 201 Created\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Created\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.id !== undefined \r",
+													"    && item.description !== undefined \r",
+													"    && item.url !== undefined \r",
+													"    && item.isDefinite !== undefined \r",
+													"    && item.isSelectable !== undefined \r",
+													"    && item.allowAppointment !== undefined \r",
+													"    && item.channelCapi !== undefined \r",
+													"    && item.channelCati !== undefined \r",
+													"    && item.channelOnline !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains ResponseCodeId\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.collectionVariables.set(\"ResponseCodeId\", response.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Id\":\"200\",\r\n    \"Description\":\"Postman response code description\",\r\n    \"Url\":null,\r\n    \"IsDefinite\": null,\r\n    \"IsSelectable\": null,\r\n    \"AllowAppointment\": null,\r\n    \"ChannelCapi\": null,\r\n    \"ChannelCati\": null,\r\n    \"ChannelOnline\": null\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v2/ResponseCodes",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"ResponseCodes"
+											]
+										},
+										"description": "Create a new domain response code"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Response Code (D)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"const validateProperties = (item) => {\r",
+													"    return item.id !== undefined \r",
+													"    && item.description !== undefined \r",
+													"    && item.url !== undefined\r",
+													"    && item.isDefinite !== undefined \r",
+													"    && item.isSelectable !== undefined \r",
+													"    && item.allowAppointment !== undefined \r",
+													"    && item.channelCapi !== undefined \r",
+													"    && item.channelCati !== undefined \r",
+													"    && item.channelOnline !== undefined;\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Response contains ResponseCodeId\", function () {\r",
+													"    var response = pm.response.json();\r",
+													"    pm.expect(validateProperties(response)).to.be.true;\r",
+													"    pm.expect(response.description == \"Postman response updated v2\").to.be.true;\r",
+													"    pm.collectionVariables.set(\"ResponseCodeId\", response.id);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"Description\":\"Postman response updated v2\",\r\n    \"Url\": null,\r\n    \"IsDefinite\": null,\r\n    \"IsSelectable\": null,\r\n    \"AllowAppointment\": null,\r\n    \"ChannelCapi\": null,\r\n    \"ChannelCati\": null,\r\n    \"ChannelOnline\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v2/ResponseCodes/:ResponseCodeId",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"ResponseCodes",
+												":ResponseCodeId"
+											],
+											"variable": [
+												{
+													"key": "ResponseCodeId",
+													"value": "{{ResponseCodeId}}"
+												}
+											]
+										},
+										"description": "Patch the domain's response codes."
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Response Code (D)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204 Deleted\", function () {\r",
+													"    pm.response.to.have.status(204);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v2/ResponseCodes/:ResponseCodeId",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"ResponseCodes",
+												":ResponseCodeId"
+											],
+											"variable": [
+												{
+													"key": "ResponseCodeId",
+													"value": "{{ResponseCodeId}}"
+												}
+											]
+										},
+										"description": "Delete the domain's response code by id."
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Email Settings",
+							"item": [
+								{
+									"name": "Put Email Settings (D)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"const validateProperties = (item) => {",
+													"    return item.fromAddress !== undefined ",
+													"    && item.fromName !== undefined ",
+													"    && item.replyToAddress !== undefined",
+													"    && item.postalAddress !== undefined;",
+													"}",
+													"",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {",
+													"    var response = pm.response.json();",
+													"    pm.expect(validateProperties(response)).to.be.true;",
+													"    pm.expect(response.FromAddress == \"updated@yellow.niposoftware-dev.com\").to.be.true;",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"FromAddress\": \"updated@yellow.niposoftware-dev.com\",\r\n  \"FromName\": \"updated string 1\",\r\n  \"ReplyToAddress\": \"updatedReplyTo@yellow.niposoftware-dev.com\",\r\n  \"PostalAddress\": \"updated string 3\"\r\n}"
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v2/EmailSettings",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"EmailSettings"
+											]
+										},
+										"description": "Update the domain's email settings."
+									},
+									"response": []
+								},
+								{
+									"name": "Get Email Settings (D)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"OK\");",
+													"});",
+													"",
+													"const validateProperties = (item) => {",
+													"    return item.defaultFromAddress !== undefined ",
+													"    && item.defaultReplyToAddress !== undefined ",
+													"    && item.fromAddress !== undefined",
+													"    && item.fromName !== undefined",
+													"    && item.replyToAddress !== undefined;",
+													"   ",
+													"}",
+													"",
+													"pm.test(\"Response contains InterviewerId & ClientInterviewerId\", function () {",
+													"    var response = pm.response.json();",
+													"    pm.expect(validateProperties(response)).to.be.true;",
+													"});",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/octet-stream"
+											},
+											{
+												"key": "Authorization",
+												"value": "Basic {{AuthenticationToken}}"
+											}
+										],
+										"url": {
+											"raw": "{{origin-public-api}}/v2/EmailSettings",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v2",
+												"EmailSettings"
+											]
+										},
+										"description": "Gets the domain's email settings."
+									},
+									"response": []
+								}
+							],
+							"description": "Controller for managing the domain's email settings"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const checkToken = () => {",
+					"    if (pm.collectionVariables.get('AuthenticationToken') == '' )",
+					"    {",
+					"            console.log(\"SignIn to gat a new AuthenticationToken\");",
+					"            var urlSignIn = pm.environment.get(\"origin-public-api\")+\"/v1/SignIn\";",
+					"            var domain = pm.environment.get(\"DomainTestName\");",
+					"            var user = pm.environment.get(\"DomainTestUserName\");",
+					"            var password = pm.environment.get(\"DomainTestUserPassword\");",
+					"            var signInParams = '{\"Domain\": \"'+ domain+'\",\"Username\": \"'+user+'\",\"Password\": \"'+password+'\"}';",
+					"            console.log(\"SignIn params: \" + signInParams);",
+					"            pm.sendRequest(",
+					"                {",
+					"                url: urlSignIn,",
+					"                method: \"POST\",",
+					"                header: {",
+					"                    \"content-type\": \"application/json\",",
+					"                    \"accept\": \"*/*\",",
+					"                },",
+					"                body:  {",
+					"                    mode: 'raw',",
+					"                    raw: signInParams",
+					"                }",
+					"",
+					"                }, function (err, response) {",
+					"                    var resp = response.json();",
+					"                    console.log(\"New Token: \"+ resp.AuthenticationToken)",
+					"                    pm.collectionVariables.set('AuthenticationToken', resp.AuthenticationToken);",
+					"                });",
+					"    }",
+					"    else",
+					"    {",
+					"        console.log(\"Using current Token: \"+ pm.collectionVariables.get('AuthenticationToken'))",
+					"    }",
+					"}",
+					"",
+					"const getSurveyId = (survey) => {",
+					"    if (SelectedSurveyName == survey.SurveyName)",
+					"    {",
+					"        pm.collectionVariables.set('SurveyId', survey.SurveyId);",
+					"        pm.collectionVariables.set('InternalVariable', survey.SurveyName);",
+					"    }",
+					"}",
+					"",
+					"const SelectedSurveyName = pm.environment.get('SurveyTestName');",
+					"const CurrentSurveyName = pm.collectionVariables.get('InternalVariable');",
+					"",
+					"const selectSurvey = (retriesAfterGetNewToken) => {",
+					"    if (SelectedSurveyName != '' && (SelectedSurveyName != CurrentSurveyName || pm.collectionVariables.get('SurveyId') == ''))",
+					"    {",
+					"        console.log(\"Selecting default Survey Id to test. Survey Name: \" + SelectedSurveyName);",
+					"        var urlSignIn = pm.environment.get(\"origin-public-api\")+\"/v1/Surveys\";",
+					"        var auth = \"Basic \" + pm.collectionVariables.get('AuthenticationToken');",
+					"        pm.sendRequest(",
+					"            {",
+					"            url: urlSignIn,",
+					"            method: \"GET\",",
+					"            header: {",
+					"                \"content-type\": \"application/json\",",
+					"                \"accept\": \"*/*\",",
+					"                \"Authorization\": auth",
+					"            }",
+					"",
+					"            }, function (err, response) {",
+					"                if (response.code == 401)",
+					"                {",
+					"                    console.log(\"401 Unauthorized: Invalidating AuthenticationToken\");",
+					"                    pm.collectionVariables.set(\"AuthenticationToken\", '' );",
+					"                    checkToken();",
+					"                    setTimeout(function(){",
+					"                            if (retriesAfterGetNewToken>0)",
+					"                            {   ",
+					"                                selectSurvey(retriesAfterGetNewToken--)",
+					"                            }",
+					"                        }, 2000);",
+					"                }",
+					"                else",
+					"                {",
+					"                    var resp = response.json();",
+					"                    resp.forEach(getSurveyId);",
+					"                    console.log(\"Using SurveyId: \"+ pm.collectionVariables.get('SurveyId'));",
+					"                }",
+					"            });",
+					"    }",
+					"}",
+					"checkToken();",
+					"selectSurvey(1);",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Invalidate AuthenticationToken on 401 Unauthorized\", function () {",
+					"    if (pm.response.code == 401)",
+					"    {",
+					"        console.log(\"401 Unauthorized: Invalidating AuthenticationToken\");",
+					"        pm.collectionVariables.set(\"AuthenticationToken\", '' );",
+					"    }",
+					"});",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "AuthenticationToken",
+			"value": ""
+		},
+		{
+			"key": "LanguageId",
+			"value": ""
+		},
+		{
+			"key": "TaskId",
+			"value": ""
+		},
+		{
+			"key": "OfficeId",
+			"value": ""
+		},
+		{
+			"key": "SurveyId",
+			"value": ""
+		},
+		{
+			"key": "ResponseCodeId",
+			"value": ""
+		},
+		{
+			"key": "ThemeId",
+			"value": ""
+		},
+		{
+			"key": "TemplateId",
+			"value": ""
+		},
+		{
+			"key": "ThemeTestName",
+			"value": "QuestionTypesTheme"
+		},
+		{
+			"key": "ActivityId",
+			"value": ""
+		},
+		{
+			"key": "InterviewerId",
+			"value": ""
+		},
+		{
+			"key": "ClientInterviewerId",
+			"value": ""
+		},
+		{
+			"key": "CatiInterviewerId",
+			"value": ""
+		},
+		{
+			"key": "InstructionsFileName",
+			"value": "Instructions"
+		},
+		{
+			"key": "InterviewId",
+			"value": ""
+		},
+		{
+			"key": "FileName",
+			"value": "MediaFileName"
+		},
+		{
+			"key": "ETag",
+			"value": ""
+		},
+		{
+			"key": "SamplingPointId",
+			"value": ""
+		},
+		{
+			"key": "FieldworkOfficeId",
+			"value": ""
+		},
+		{
+			"key": "AddressId",
+			"value": ""
+		},
+		{
+			"key": "FragmentName",
+			"value": "SurveyScriptFragment"
+		},
+		{
+			"key": "IdentityId",
+			"value": ""
+		},
+		{
+			"key": "ApiName",
+			"value": ""
+		},
+		{
+			"key": "SurveyGroupId",
+			"value": ""
+		},
+		{
+			"key": "UserDirectoryTenantId",
+			"value": ""
+		},
+		{
+			"key": "UserDirectoryObjectId",
+			"value": ""
+		},
+		{
+			"key": "InternalVariable",
+			"value": ""
+		}
+	]
+}
