@@ -1,62 +1,17 @@
-# Build template for the SDK pipeline
-# name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-# trigger:
-#   # We need to set this to false, otherwise the system waits until the previous run is completed, and if you don't deploy or you don't cancel the build, the previous run will stay in progress forever
-#   # setting the batch to false will always trigger a build when there is a new commit (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#batching-ci-runs)
-#   batch: false
-#   branches:
-#     include:
-#       - "main"
-#       - "*/ci-*"
-#   paths:
-#     include:
-#       - Library/*
-#       - packages/*
-#       - Tests/*
-#       - Nfield.SDK.sln
-#       - Pipelines/*
-
-# pr: none
+trigger:
+- master
 
 pool:
-  vmImage: windows-2022
+  vmImage: ubuntu-latest
 
-stages:
-  - stage: Build
-    displayName: Build
-    jobs:
-      # Call the pre build template located in the YmlTemplates folder
-      - job: BuildSDK
-        displayName: "Build SDK Api"
-        steps:
-          - script: dotnet build --configuration $(BuildConfiguration)
-            displayName: 'dotnet build $(BuildConfiguration)'
-          # - task: DotNetCoreCLI@2
-          #   displayName: 'Dotnet Build SDK'
-          #   inputs:
-          #     projects: 'Nfield.SDK.sln'
-          #     arguments: '--configuration $(BuildConfiguration)'
+variables:
+  buildConfiguration: 'Release'
 
-          # Run All Unit Test Assemblies
-          # - template: YmlTemplates/runUnitTests.yml
-
-          # - task: PublishSymbols@2
-          #   displayName: 'Publish symbols path'
-          #   inputs:
-          #     SearchPattern: '**\bin\**\*.pdb'
-          #     PublishSymbols: false
-          #   continueOnError: true
-
-          # - task: CopyFiles@2
-          #   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-          #   inputs:
-          #     SourceFolder: '$(system.defaultworkingdirectory)'
-          #     Contents: '**\bin\$(BuildConfiguration)\**'
-          #     TargetFolder: '$(build.artifactstagingdirectory)'
-      
-          # # Call the post build template located in the YmlTemplates folder
-          # - template: YmlTemplates/postBuildSteps.yml
-          #   parameters:
-          #     ContentsToCopy: |
-          #       $(Build.artifactstagingdirectory)\**
+steps:
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
