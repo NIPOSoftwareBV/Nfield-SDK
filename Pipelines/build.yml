@@ -5,14 +5,6 @@ name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
 variables:
   RunCodeAnalysisBuildArg: ""
 
-resources:
-  repositories:
-    - repository: NfieldTools
-      type: github
-      name: NIPOSoftwareBV/Nfield-Tools
-      endpoint: NfieldToolsRepository
-      ref: # Defaults to master
-
 trigger:
   # We need to set this to false, otherwise the system waits until the previous run is completed, and if you don't deploy or you don't cancel the build, the previous run will stay in progress forever
   # setting the batch to false will always trigger a build when there is a new commit (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#batching-ci-runs)
@@ -35,7 +27,6 @@ pool:
   vmImage: windows-2022
 
 stages:
-
   - stage: Build
     displayName: Build & publish
     jobs:
@@ -51,7 +42,7 @@ stages:
               arguments: '--configuration $(BuildConfiguration)'
 
           # Run All Unit Test Assemblies
-          - template: ../SharedYmlTemplates/runUnitTests.yml
+          - template: ../YmlTemplates/runUnitTests.yml
 
           - task: PublishSymbols@2
             displayName: 'Publish symbols path'
@@ -68,7 +59,7 @@ stages:
               TargetFolder: '$(build.artifactstagingdirectory)'
       
           # Call the post build template located in the SharedYmlTemplates folder
-          - template: ../SharedYmlTemplates/postBuildSteps.yml
+          - template: ../YmlTemplates/postBuildSteps.yml
             parameters:
               ContentsToCopy: |
                 $(build.artifactstagingdirectory)\**
