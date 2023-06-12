@@ -1,0 +1,74 @@
+# Build template for the SDKpipeline
+
+name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
+
+variables:
+  RunCodeAnalysisBuildArg: ""
+
+resources:
+  repositories:
+    - repository: NfieldTools
+      type: github
+      name: NIPOSoftwareBV/Nfield-Tools
+      endpoint: NfieldToolsRepository
+      ref: # Defaults to master
+
+trigger:
+  # We need to set this to false, otherwise the system waits until the previous run is completed, and if you don't deploy or you don't cancel the build, the previous run will stay in progress forever
+  # setting the batch to false will always trigger a build when there is a new commit (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#batching-ci-runs)
+  batch: false
+  branches:
+    include:
+      - "main"
+      - "*/ci-*"
+  paths:
+    include:
+      - Library/*
+      - packages/*
+      - Tests/*
+      - Nfield.SDK.sln
+      - Pipelines/*
+
+pr: none
+
+pool:
+  vmImage: windows-2022
+
+stages:
+
+  - stage: Build
+    displayName: Build & publish
+    jobs:
+      # Call the pre build template located in the SharedYmlTemplates folder
+      - job: BuildSDK
+        displayName: "Build SDK Api"
+        steps:
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Build SDK'
+            inputs:
+              projects: 'Nfield.SDK.sln'
+              arguments: '--configuration $(BuildConfiguration)'
+
+          # Run All Unit Test Assemblies
+          - template: ../SharedYmlTemplates/runUnitTests.yml
+
+          - task: PublishSymbols@2
+            displayName: 'Publish symbols path'
+            inputs:
+              SearchPattern: '**\bin\**\*.pdb'
+              PublishSymbols: false
+            continueOnError: true
+
+          - task: CopyFiles@2
+            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              SourceFolder: '$(system.defaultworkingdirectory)'
+              Contents: '**\bin\$(BuildConfiguration)\**'
+              TargetFolder: '$(build.artifactstagingdirectory)'
+      
+          # Call the post build template located in the SharedYmlTemplates folder
+          - template: ../SharedYmlTemplates/postBuildSteps.yml
+            parameters:
+              ContentsToCopy: |
+                $(build.artifactstagingdirectory)\**

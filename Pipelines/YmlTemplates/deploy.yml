@@ -1,0 +1,238 @@
+parameters:
+  - name: stageDependency
+    type: string
+  - name: pipelineDependency
+    type: string
+    default: current
+  - name: nugetRepository
+    type: string
+  - name: automaticPublish
+    type: boolean
+    default: false
+
+
+stages:
+  - stage: ${{ parameters.environmentName }}Deployment
+    displayName: "Deploy to ${{ parameters.environmentName }}"
+    dependsOn: ["${{ parameters.stageDependency }}"]
+    # DomainApiDeployment stage will be skipped if the build is BatchedCI to validate a PR. So you'll need to run it manually if you want to deploy it.
+    condition: succeeded()
+    variables:
+      - group: NfieldSDKSecretsGlobal
+      - name: baseRoute
+        ${{ if eq(parameters.pipelineDependency, 'current') }}:
+          value: ""
+        ${{ if not( eq(parameters.pipelineDependency, 'current')) }}:
+          value: ${{ parameters.pipelineDependency }}
+
+      - name: healthCheckUrl
+        ${{ if eq(parameters.azureEnvironment, 'Global') }}:
+          value: "https://${{parameters.siteName}}-staging.azurewebsites.net/healthcheck"
+        ${{ if eq(parameters.azureEnvironment, 'China') }}:
+          value: "https://${{parameters.siteName}}-staging.nfieldcn.com/healthcheck"
+    jobs:
+      - deployment: DomainApiStaging
+        displayName: Deploy to Staging
+        environment: ${{ format('Nfield{0}', parameters.environmentName) }}
+        continueOnError: false
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                # Download the 'for-deploy' artifacts
+                - download: ${{ parameters.pipelineDependency }}
+                  artifact: for-deploy
+                  patterns: |
+                    **/Pipelines/**
+                    **/Packages/**
+
+                - task: AzureKeyVault@2
+                  displayName: "Set custom Public Api Tenant Ids"
+                  condition: and (succeeded(), ne('${{ parameters.tenantSignupKeyVault }}', ''))
+                  continueOnError: false
+                  inputs:
+                    azureSubscription: "${{ parameters.azureSubscription }}"
+                    KeyVaultName: "${{ parameters.tenantSignupKeyVault }}"
+                    SecretsFilter: "ActiveDirectoryTenant"
+
+                - task: PowerShell@2
+                  displayName: "Set environment variables"
+                  continueOnError: false
+                  inputs:
+                    targetType: "inline"
+                    script: |
+                      # add BuildVersion environment variables
+                      Write-Host ("##vso[task.setvariable variable=BuildVersion;]$(Build.BuildNumber)");
+                      Write-Host ("##vso[task.setvariable variable=BuildVersionLabel;]$(Build.SourceVersion)");
+
+                # Creates the {team}-domain-api-app app registration if it does't exist
+                # For more info, see Document: https://github.com/NIPOSoftwareBV/nfield-public-api/blob/main/Documentation/DomainAPI/domain-api-services-communication-map.md
+                - task: AzurePowerShell@5
+                  displayName: "Provision Domain app registration"
+                  continueOnError: false
+                  inputs:
+                    azureSubscription: "${{ parameters.azureSubscription }}"
+                    scriptType: filePath
+                    scriptPath: $(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/DomainApi/Scripts/DomainApiAppRegistration.ps1
+                    scriptArguments: "-keyVaultName $(KeyVaultName) -domainApiAppRegistrationName ${{parameters.siteName}}-app -azureEnvironment ${{parameters.azureEnvironment}}"
+                    azurePowerShellVersion: latestVersion
+                    pwsh: true
+
+                # Stores the the app registration's client id in the Nfield{team}KV Key Vault.
+                # It will be stored as a secret called PublicApiDoaminApiAppRegistrationClientId
+                - task: AzureKeyVault@2
+                  continueOnError: false
+                  inputs:
+                    azureSubscription: "${{ parameters.azureSubscription }}"
+                    KeyVaultName: $(KeyVaultName)
+                    SecretsFilter: "PublicApiDomainApiAppRegistrationClientId"
+                    RunAsPreJob: false
+
+                - task: AzureCLI@2
+                  displayName: "Run ARM deployment"
+                  continueOnError: false
+                  inputs:
+                    azureSubscription: "${{ parameters.azureSubscription }}"
+                    scriptType: ps
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az deployment group create `
+                        --name "PublicApi-$(Build.BuildId)" `
+                        --resource-group "${{ parameters.resourceGroup }}" `
+                        --mode "Incremental" `
+                        --template-file `
+                        "$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/DomainApi/ArmTemplates/DomainApi.json" `
+                        --parameters `
+                          appServicePlan="${{ parameters.appServicePlan }}" `
+                          appServicePlanSkuName="$(AppServicePlanSkuNameDomain)" `
+                          appServicePlanSkuCapacity="$(AppServicePlanSkuCapacityDomain)" `
+                          appServicePlanLocation="${{ parameters.appServicePlanLocation }}" `
+                          appInsightsLocation="${{ parameters.appInsightsLocation }}" `
+                          siteName="${{ parameters.siteName }}" `
+                          deployedBy="$(Build.RequestedFor)" `
+                          build="$(Build.BuildNumber)" `
+                          buildVersionLabel="$(BuildVersionLabel)" `
+                          interviewingRequestResponseTopicName="$(InterviewingRequestResponseTopicName)" `
+                          databaseUserDecryptionKey="$(DatabaseUserDecryptionKey)" `
+                          redisCacheConfiguration="$(RedisCacheConfiguration)" `
+                          managerCacheConnection="$(ManagerCacheConnection)" `
+                          surveyCatalog="$(SurveyCatalogManager)" `
+                          tenant="$(ActiveDirectoryTenant)" `
+                          authorityUrl="$(SSOAuthorityUrl)" `
+                          keyVaultName="$(KeyVaultName)" `
+                          maxSamplingPercentage="$(MaxSamplingPercentage)" `
+                          maxTelemetryItemsPerSecond="$(MaxTelemetryItemsPerSecond)" `
+                          reportingEventQueue="$(ReportingEventQueue)" `
+                          reportingEventQueueStaging="$(ReportingEventQueue.Staging)" `
+                          serviceBusTopicCreateSurvey="$(ServiceBusTopicCreateSurvey)" `
+                          serviceBusTopicDeleteSurvey="$(ServiceBusTopicDeleteSurvey)" `
+                          domainApiAppRegistrationClientId="$(PublicApiDomainApiAppRegistrationClientId)" `
+                          nfieldStorageAccount="$(NfieldStorageAccount)" `
+                          reportingServiceBus="$(ReportingServiceBus)" `
+                          reportingServiceBusStaging="$(ReportingServiceBus-Staging)" `
+                          azureWebJobsServiceBus="$(AzureWebJobsServiceBus)" `
+                          managerBackgroundTaskQueueNameStaging="$(ManagerBackgroundTaskQueueName.Staging)" `
+                          managerBackgroundTaskQueueName="$(ManagerBackgroundTaskQueueName)" `
+                          managerActivityQueueNameStaging="$(ManagerActivityQueueName.Staging)" `
+                          managerActivityQueueName="$(ManagerActivityQueueName)" `
+                          toInterviewingTopicName="$(ToInterviewingTopicName)"
+
+
+                - task: AzureRmWebAppDeployment@4
+                  displayName: "Deploy Web Package"
+                  continueOnError: false
+                  inputs:
+                    azureSubscription: "${{ parameters.azureSubscription }}"
+                    appType: apiApp
+                    WebAppName: "${{ parameters.siteName }}"
+                    deployToSlotOrASE: true
+                    ResourceGroupName: "${{ parameters.resourceGroup }}"
+                    SlotName: "staging"
+                    Package: "$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Packages/NfieldDomainApi.zip"
+                    enableCustomDeployment: true
+                    RemoveAdditionalFilesFlag: true
+                    enableXmlVariableSubstitution: true
+                    AdditionalArguments: "-verbose -retryAttempts:5"
+
+                - task: AzureAppServiceManage@0
+                  displayName: "Start Staging"
+                  continueOnError: false
+                  inputs:
+                    azureSubscription: ${{ parameters.azureSubscription }}
+                    Action: "Start Azure App Service"
+                    WebAppName: "${{ parameters.siteName }}"
+                    SpecifySlotOrASE: true
+                    ResourceGroupName: "${{ parameters.resourceGroup }}"
+                    Slot: staging
+      
+      - job: SwapValidation            
+        displayName: Validate swap
+        dependsOn:
+          - DomainApiStaging
+        pool: server
+        timeoutInMinutes: 5760 # job times out in 4 days
+        condition: eq(${{ parameters.automaticSwap }}, false)
+        steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 4320 # task times out in 3 days
+            inputs:
+              instructions: "Please validate the staging environment and resume"
+              onTimeout: "reject"
+
+      - deployment: DomainApiSwap
+        displayName: Swap to production
+        dependsOn:
+          - SwapValidation
+        environment: ${{ format('Nfield{0}', parameters.environmentName) }}
+        condition: in(dependencies.SwapValidation.result, 'Succeeded', 'Skipped')
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: ${{ parameters.pipelineDependency }}
+                  artifact: for-deploy
+
+                - task: PowerShell@2
+                  displayName: "Health Check & Boot Test"
+                  continueOnError: true
+                  inputs:
+                    targetType: "filePath"
+                    filePath: $(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/DomainApi/Scripts/HealthCheck.ps1
+                    arguments: "-Uri $(healthCheckUrl)"
+
+                - task: AzureAppServiceManage@0
+                  displayName: "Swap Slots"
+                  inputs:
+                    azureSubscription: ${{ parameters.azureSubscription }}
+                    WebAppName: "${{ parameters.siteName }}"
+                    ResourceGroupName: "${{ parameters.resourceGroup }}"
+                    SourceSlot: staging
+
+                - task: AzureAppServiceManage@0
+                  displayName: "Stop Staging"
+                  condition: and(succeeded(), eq(${{ parameters.stopStagingAfterSwap }}, true))
+                  inputs:
+                    azureSubscription: ${{ parameters.azureSubscription }}
+                    Action: "Stop Azure App Service"
+                    WebAppName: "${{ parameters.siteName }}"
+                    SpecifySlotOrASE: true
+                    ResourceGroupName: "${{ parameters.resourceGroup }}"
+                    Slot: staging
+                    
+  # Run All Api Integration tests contained in the testProjectName variable
+  - ${{ if eq(parameters.runTests, true) }}:
+      - template: ../../SharedYmlTemplates/stageRegressionTests.yml
+        parameters:
+          displayName: "DomainApi"
+          environmentName: "${{ parameters.environmentName }}"
+          testProjectName: "NfieldDomainApiRegressionTests"
+          pipelineDependency: "${{ parameters.pipelineDependency }}"
+
+  # - template: ./deploy-dashboard.yml
+  #   parameters:
+  #     pipelineDependency: "${{ parameters.pipelineDependency }}"
+  #     appServicePlan: "${{ parameters.appServicePlan }}"
+  #     appInsightsLocation: "${{ parameters.appInsightsLocation }}"
+  #     environmentName: "${{ parameters.environmentName }}"
+  #     siteName: "${{ parameters.siteName }}"
+  #     azureSubscription: "${{ parameters.azureSubscription }}"
