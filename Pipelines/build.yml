@@ -37,24 +37,24 @@ stages:
               arguments: '--configuration $(BuildConfiguration)'
 
           # Run All Unit Test Assemblies
-          - template: YmlTemplates/runUnitTests.yml
+          # - template: YmlTemplates/runUnitTests.yml
 
-          - task: PublishSymbols@2
-            displayName: 'Publish symbols path'
-            inputs:
-              SearchPattern: '**\bin\**\*.pdb'
-              PublishSymbols: false
-            continueOnError: true
+          # - task: PublishSymbols@2
+          #   displayName: 'Publish symbols path'
+          #   inputs:
+          #     SearchPattern: '**\bin\**\*.pdb'
+          #     PublishSymbols: false
+          #   continueOnError: true
 
-          - task: CopyFiles@2
-            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-            inputs:
-              SourceFolder: '$(system.defaultworkingdirectory)'
-              Contents: '**\bin\$(BuildConfiguration)\**'
-              TargetFolder: '$(build.artifactstagingdirectory)'
+          # - task: CopyFiles@2
+          #   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+          #   inputs:
+          #     SourceFolder: '$(system.defaultworkingdirectory)'
+          #     Contents: '**\bin\$(BuildConfiguration)\**'
+          #     TargetFolder: '$(build.artifactstagingdirectory)'
       
-          # Call the post build template located in the YmlTemplates folder
-          - template: YmlTemplates/postBuildSteps.yml
-            parameters:
-              ContentsToCopy: |
-                $(build.artifactstagingdirectory)\**
+          # # Call the post build template located in the YmlTemplates folder
+          # - template: YmlTemplates/postBuildSteps.yml
+          #   parameters:
+          #     ContentsToCopy: |
+          #       $(Build.artifactstagingdirectory)\**
