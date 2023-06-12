@@ -11,7 +11,7 @@ trigger: none
 resources:
   pipelines:
   - pipeline: 'SDKBuild'
-    source: 'SDK Build'
+    source: 'Nfield SDK Build'
     trigger:
       branches:
         include: 
@@ -51,4 +51,3 @@ stages:
     pipelineDependency: SDKBuild
     nugetRepository: 'nuget.org'
     automaticPublis: false
-
