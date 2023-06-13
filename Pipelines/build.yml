@@ -39,27 +39,43 @@ stages:
           # Run All Unit Test Assemblies
           - template: ./YmlTemplates/runUnitTests.yml
 
-          - task: PublishSymbols@2
-            displayName: 'Publish symbols path'
-            inputs:
-              SearchPattern: '**\bin\**\*.pdb'
-              PublishSymbols: false
-            continueOnError: true
+          # - task: PublishSymbols@2
+          #   displayName: 'Publish symbols path'
+          #   inputs:
+          #     SearchPattern: '**\bin\**\*.pdb'
+          #     PublishSymbols: false
+          #   continueOnError: true
 
           - task: PowerShell@1
             displayName: 'Create NuGet Version'
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
 
-          - task: DotNetCoreCLI@2
-            displayName: '(when not pull): dotnet pack'
+
+          - task: NuGetCommand@2
             inputs:
-              command: pack
-              packagesToPack: Library/Nfield.SDK.csproj
-              nobuild: true
+              command: 'pack'
+              packagesToPack: 'Library/Nfield.SDK.csproj'
               versioningScheme: byEnvVar
-              versionEnvVar: Version  #Created with GetNugetVersion.ps1
-            condition: succeeded()
+               versionEnvVar: Version  #Created with GetNugetVersion.ps1
+              includeSymbols: trueCommand@2
+
+
+
+          # - task: NuGetCommand@2
+          #   inputs:
+          #     command: 'push'
+          #     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+          #     nuGetFeedType: 'internal'
+
+          # - task: DotNetCoreCLI@2
+          #   displayName: '(when not pull): dotnet pack'
+          #   inputs:
+          #     command: pack
+          #     packagesToPack: Library/Nfield.SDK.csproj
+          #     nobuild: true
+          #     versioningScheme: byEnvVar
+          #   condition: succeeded()
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
