@@ -7,7 +7,7 @@ trigger:
   batch: false
   branches:
     include:
-      - "main"
+      - "master"
       - "*/ci-*"
   paths:
     include:
@@ -37,7 +37,7 @@ stages:
               arguments: '--configuration $(BuildConfiguration)'
 
           # Run All Unit Test Assemblies
-          - template: YmlTemplates/runUnitTests.yml
+          - template: ./YmlTemplates/runUnitTests.yml
 
           - task: PublishSymbols@2
             displayName: 'Publish symbols path'
@@ -46,11 +46,26 @@ stages:
               PublishSymbols: false
             continueOnError: true
 
+          - task: PowerShell@1
+            displayName: 'Create NuGet Version'
+            inputs:
+              scriptName: ./Scripts/GetNugetVersion.ps1
+
+          - task: DotNetCoreCLI@2
+            displayName: '(when not pull): dotnet pack'
+            inputs:
+              command: pack
+              packagesToPack: Library/Nfield.SDK.csproj
+              nobuild: true
+              versioningScheme: byEnvVar
+              versionEnvVar: Version  #Created with GetNugetVersion.ps1
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
           - task: CopyFiles@2
-            displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+            displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
             inputs:
               SourceFolder: '$(system.defaultworkingdirectory)'
-              Contents: '**\bin\$(BuildConfiguration)\**'
+              Contents: '**\Library\bin\$(BuildConfiguration)\**'
               TargetFolder: '$(build.artifactstagingdirectory)'
       
           # Call the post build template located in the YmlTemplates folder
@@ -58,3 +73,5 @@ stages:
             parameters:
               ContentsToCopy: |
                 $(Build.artifactstagingdirectory)\**
+
+          - template: ./YmlTemplates/deploy-stage.yml
