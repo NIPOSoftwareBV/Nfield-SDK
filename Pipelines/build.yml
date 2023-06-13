@@ -57,7 +57,7 @@ stages:
               command: 'pack'
               packagesToPack: 'Library/Nfield.SDK.csproj'
               versioningScheme: byEnvVar
-               versionEnvVar: Version  #Created with GetNugetVersion.ps1
+              versionEnvVar: Version  #Created with GetNugetVersion.ps1
               includeSymbols: trueCommand@2
 
 
