@@ -22,10 +22,12 @@ $patchBody = @{
     body = $description
 } | ConvertTo-Json
 
+Write-Host Url: $apiUrl
+
 try
 {
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    Invoke-RestMethod -Uri $apiUrl -Method Patch -Headers $Headers -Body $patchBody
+    #[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    #Invoke-RestMethod -Uri $apiUrl -Method Patch -Headers $Headers -Body $patchBody
 }
 catch
 {
