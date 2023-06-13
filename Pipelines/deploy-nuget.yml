@@ -27,14 +27,14 @@ stages:
 - stage: GetResources
   jobs:
   - job: WaitForValidation
-    displayName: Validate deploy
+    displayName: Validate Publishing
     pool: server
     timeoutInMinutes: 4320 # job times out in 3 days
     steps:
     - task: ManualValidation@0
       timeoutInMinutes: 1440 # task times out in 1 day
       inputs:
-        instructions: 'Please validate the deployment and resume'
+        instructions: 'Please validate the the nuget publishing'
         onTimeout: 'reject'
 
 ####################### DEPLOY ####################
@@ -42,12 +42,12 @@ stages:
   parameters:
     stageDependency: GetResources
     pipelineDependency: SDKBuild
-    nugetRepository: nfield
+    nugetRepository: Nfield
     automaticPublis: true
 
 - template: ./YmlTemplates/deploy.yml
   parameters:
     stageDependency: GetResources
     pipelineDependency: SDKBuild
-    nugetRepository: 'nuget.org'
+    nugetRepository: 'NugetOrg'
     automaticPublis: false
