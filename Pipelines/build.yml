@@ -51,31 +51,20 @@ stages:
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
 
-
           - task: NuGetCommand@2
             inputs:
               command: 'pack'
               packagesToPack: 'Library/Nfield.SDK.csproj'
               versioningScheme: byEnvVar
               versionEnvVar: Version  #Created with GetNugetVersion.ps1
-              includeSymbols: trueCommand@2
+              packDestination: $(Build.ArtifactStagingDirectory)/
 
-
-
-          # - task: NuGetCommand@2
-          #   inputs:
-          #     command: 'push'
-          #     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-          #     nuGetFeedType: 'internal'
-
-          # - task: DotNetCoreCLI@2
-          #   displayName: '(when not pull): dotnet pack'
-          #   inputs:
-          #     command: pack
-          #     packagesToPack: Library/Nfield.SDK.csproj
-          #     nobuild: true
-          #     versioningScheme: byEnvVar
-          #   condition: succeeded()
+          - task: NuGetCommand@2
+            inputs:
+              command: 'push'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+              nuGetFeedType: 'internal'
+              publishVstsFeed: 'nfield'
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
