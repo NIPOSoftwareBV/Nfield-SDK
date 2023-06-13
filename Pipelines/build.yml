@@ -59,7 +59,7 @@ stages:
               nobuild: true
               versioningScheme: byEnvVar
               versionEnvVar: Version  #Created with GetNugetVersion.ps1
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+            condition: succeeded()
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
@@ -73,5 +73,3 @@ stages:
             parameters:
               ContentsToCopy: |
                 $(Build.artifactstagingdirectory)\**
-
-          - template: ./YmlTemplates/deploy-stage.yml
