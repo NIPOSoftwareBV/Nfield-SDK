@@ -28,7 +28,7 @@ stages:
     jobs:
       # Call the pre build template located in the YmlTemplates folder
       - job: BuildSDK
-        displayName: "Build SDK Api"
+        displayName: "Build SDK"
         steps:
           - task: DotNetCoreCLI@2
             displayName: 'Dotnet Build SDK'
@@ -49,7 +49,7 @@ stages:
           - task: PowerShell@1
             displayName: 'Create NuGet Version'
             inputs:
-              scriptName: ./Scripts/GetNugetVersion.ps1
+              scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
 
           - task: DotNetCoreCLI@2
             displayName: '(when not pull): dotnet pack'
