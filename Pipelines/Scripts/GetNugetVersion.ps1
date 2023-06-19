@@ -19,7 +19,7 @@
 # The 3rd segment (Patch) will be determined by {buildId}{suffix}
 
 param(
-    [Parameter(Mandatory=$true)] $Release
+    [Parameter(Mandatory=$true)][bool] $Release
 )
 
 if( -Not (Test-Path version.txt))
