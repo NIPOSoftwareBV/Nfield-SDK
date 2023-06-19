@@ -54,7 +54,6 @@ stages:
                     publishVstsFeed: 'nfield' # Used only for internal feed
                   condition: succeeded()
 
-                #- ${{ if eq(parameters.nuGetFeedType, 'external') }}:
                 - task: gitreleasemanager/create@0
                   displayName: 'Create Git release'
                   inputs:
@@ -62,7 +61,7 @@ stages:
                     repository: 'Nfield-SDK'
                     token: '$(GitAccessToken)'
                     name: 'Test Release'
-                    targetcommitish: '${{ parameters.commitId }}'
+                    targetcommitish: '972d2c23a4866b45206443e276209554144cb6d1'
                       
                   # - task: gitreleasemanager/publish@0
                   #   inputs:
