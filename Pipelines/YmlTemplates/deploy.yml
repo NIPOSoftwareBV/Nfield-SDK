@@ -11,7 +11,7 @@ parameters:
 
 stages:
   - stage: SDKNugetPublishing
-    displayName: "SDK ${{ parameters.nuGetFeedType }} Publishing"
+    displayName: "SDK nuget ${{ parameters.nuGetFeedType }} Publishing"
     dependsOn: ["${{ parameters.stageDependency }}"]
     # SDK publishing stage will be skipped if the build is BatchedCI to validate a PR. So you'll need to run it manually if you want to deploy it.
     condition: succeeded()
@@ -62,7 +62,7 @@ stages:
                     repository: 'Nfield-SDK'
                     token: '$(GitAccessToken)'
                     name: 'Test Release'
-                    targetcommitish: '$(commitId)'
+                    targetcommitish: '${{ parameters.commitId }}'
                       
                   # - task: gitreleasemanager/publish@0
                   #   inputs:
