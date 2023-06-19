@@ -27,8 +27,8 @@ stages:
           value: "Prerelease"
     jobs:
       - deployment: SDKNugetPublish
-        displayName: Publising on ${{ parameters.nuGetFeedType) }}
-        environment: ${{ format('NfieldSDK{0}Feed', parameters.nuGetFeedType) }}
+        displayName: Publising on ${{ parameters.nuGetFeedType }}
+        environment: ${{ format('NfieldSDK{0}Feed', parameters.nuGetFeedType }}
         continueOnError: false
         strategy:
           runOnce:
