@@ -8,8 +8,8 @@ parameters:
     type: string
 
 stages:
-  - stage: ${{ parameters.nuGetFeedType }} Publishing
-    displayName: "Publish to ${{ parameters.nuGetFeedType }} Feed"
+  - stage: SDKNugetPublishing
+    displayName: "SDK Publishing"
     dependsOn: ["${{ parameters.stageDependency }}"]
     # SDK publishing stage will be skipped if the build is BatchedCI to validate a PR. So you'll need to run it manually if you want to deploy it.
     condition: succeeded()
@@ -27,7 +27,7 @@ stages:
           value: "Prerelease"
     jobs:
       - deployment: SDKNugetPublish
-        displayName: Publising on ${{ parameters.nuGetFeedType }}
+        displayName: Publising on ${{ parameters.nuGetFeedType }} Feed
         environment: ${{ format('NfieldSDK{0}Feed', parameters.nuGetFeedType) }}
         continueOnError: false
         strategy:
@@ -51,11 +51,12 @@ stages:
                     publishVstsFeed: 'nfield' # Used only for internal feed
                   condition: succeeded()
 
-                - task: PowerShell@2
-                  displayName: 'Publish Github release (if needed)'
-                  inputs:
-                    targetType: filePath
-                    filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
-                    arguments: '-AccessToken $(GitAccessToken) -ReleaseId $(ReleaseId) -Version $(Version)'
-                    errorActionPreference: continue
-                  continueOnError: true
+                - ${{ if eq(parameters.nuGetFeedType, 'external') }}:
+                  - task: PowerShell@2
+                    displayName: 'Publish Github release (if needed)'
+                    inputs:
+                      targetType: filePath
+                      filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
+                      arguments: '-AccessToken $(GitAccessToken) -ReleaseId $(ReleaseId) -Version $(Version)'
+                      errorActionPreference: continue
+                    continueOnError: true
