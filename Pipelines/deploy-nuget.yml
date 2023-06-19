@@ -40,12 +40,10 @@ stages:
   parameters:
     stageDependency: GetResources
     pipelineDependency: SDKBuild
-    nugetRepository: Nfield
-    automaticPublis: true
+    nuGetFeedType: internal
 
 - template: ./YmlTemplates/deploy.yml
   parameters:
     stageDependency: GetResources
     pipelineDependency: SDKBuild
-    nugetRepository: 'NugetOrg'
-    automaticPublis: false
+    nuGetFeedType: external

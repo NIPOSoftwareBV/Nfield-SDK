@@ -18,6 +18,10 @@
 # The segment Major and Minor should be configured in version.txt (see root of Nfield-SDK repo)
 # The 3rd segment (Patch) will be determined by {buildId}{suffix}
 
+param(
+    [Parameter(Mandatory=$true)] $Release
+)
+
 if( -Not (Test-Path version.txt))
 {
     Write-Error "version.txt does not exist"
@@ -35,9 +39,9 @@ if(([regex]::Matches($VersionFormat, "\." )).count -ne 2)
 $BuildId = $env:BUILD_BUILDID
 Write-Host "BuildId:" $BuildId
 
-if ($env:releaseId)
+if ($Release)
 {
-    Write-Host "Building for release" $env:releaseId
+    Write-Host "Building for release"
     $Suffix = ""
 }
 else

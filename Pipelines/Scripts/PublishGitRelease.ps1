@@ -1,12 +1,9 @@
 param(
     [Parameter(Mandatory=$true)] $AccessToken
+    [Parameter(Mandatory=$true)] $ReleaseId
+    [Parameter(Mandatory=$true)] $Version
 )
 
-if (-not $env:releaseId)
-{
-    Write-Host Not a release build, done
-    exit
-}
 
 $organization = "NIPOSoftware"
 $repository = "Nfield-SDK"
@@ -15,8 +12,8 @@ $Headers = @{
     Authorization = 'Basic {0}' -f [System.Convert]::ToBase64String([char[]]($AccessToken));
 }
 
-$apiUrl = "https://api.github.com/repos/{0}/{1}/releases/{2}" -f  $organization, $repository, $env:releaseId
-$description = "Package version: " + $env:Version
+$apiUrl = "https://api.github.com/repos/{0}/{1}/releases/{2}" -f  $organization, $repository, $ReleaseId
+$description = "Package version: " + $Version
 $patchBody = @{ 
     prerelease = 'false';
     body = $description

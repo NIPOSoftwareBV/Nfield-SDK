@@ -39,32 +39,19 @@ stages:
           # Run All Unit Test Assemblies
           - template: ./YmlTemplates/runUnitTests.yml
 
-          # - task: PublishSymbols@2
-          #   displayName: 'Publish symbols path'
-          #   inputs:
-          #     SearchPattern: '**\bin\**\*.pdb'
-          #     PublishSymbols: false
-          #   continueOnError: true
-
           - task: PowerShell@1
             displayName: 'Create NuGet Version'
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
 
           - task: NuGetCommand@2
+            displayName: $Build.SourceVersion
             inputs:
               command: 'pack'
               packagesToPack: 'Library/Nfield.SDK.csproj'
               versioningScheme: byEnvVar
               versionEnvVar: Version  #Created with GetNugetVersion.ps1
               packDestination: $(Build.ArtifactStagingDirectory)/
-
-          - task: NuGetCommand@2
-            inputs:
-              command: 'push'
-              packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
-              nuGetFeedType: 'internal'
-              publishVstsFeed: 'nfield'
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
@@ -78,4 +65,4 @@ stages:
             parameters:
               ContentsToCopy: |
                 $(Build.artifactstagingdirectory)\**
-                Pipelines\Scripts\PublishRelease.ps1
+                Pipelines\Scripts\PublishGitRelease.ps1

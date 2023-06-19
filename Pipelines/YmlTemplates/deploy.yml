@@ -4,16 +4,12 @@ parameters:
   - name: pipelineDependency
     type: string
     default: current
-  - name: nugetRepository
+  - name: nuGetFeedType
     type: string
-  - name: automaticPublish
-    type: boolean
-    default: false
-
 
 stages:
-  - stage: ${{ parameters.nugetRepository }} Publishing
-    displayName: "Publish to ${{ parameters.nugetRepository }}"
+  - stage: ${{ parameters.nuGetFeedType }} Publishing
+    displayName: "Publish to ${{ parameters.nuGetFeedType }} Feed"
     dependsOn: ["${{ parameters.stageDependency }}"]
     # SDK publishing stage will be skipped if the build is BatchedCI to validate a PR. So you'll need to run it manually if you want to deploy it.
     condition: succeeded()
@@ -24,10 +20,15 @@ stages:
           value: ""
         ${{ if not( eq(parameters.pipelineDependency, 'current')) }}:
           value: ${{ parameters.pipelineDependency }}
+      - name: nugetPath
+        ${{ if eq(parameters.nuGetFeedType, 'external') }}:
+          value: "Release"
+        ${{ if not( eq(parameters.nuGetFeedType, 'external')) }}:
+          value: "Prerelease"
     jobs:
       - deployment: SDKNugetPublish
-        displayName: Publising on ${{ parameters.nugetRepository) }}
-        environment: ${{ format('NfieldSDK{0}Repo', parameters.nugetRepository) }}
+        displayName: Publising on ${{ parameters.nuGetFeedType) }}
+        environment: ${{ format('NfieldSDK{0}Feed', parameters.nuGetFeedType) }}
         continueOnError: false
         strategy:
           runOnce:
@@ -39,21 +40,22 @@ stages:
                   patterns: |
                     **/for-deploy/**
                     **/Pipelines/**
-
                 # Publish NuGet package
                 - task: NuGetCommand@2
                   displayName: 'NuGet push'
                   inputs:
                     command: push
-                    nuGetFeedType: external
-                    publishFeedCredentials: 'NuGet (Publish)'
+                    packagesToPush: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/$(nugetPath)/*.nupkg'
+                    nuGetFeedType: ${{ parameters.nuGetFeedType }}
+                    publishFeedCredentials: 'NuGet (Publish)' # Used only for external feed
+                    publishVstsFeed: 'nfield' # Used only for internal feed
                   condition: succeeded()
 
                 - task: PowerShell@2
                   displayName: 'Publish Github release (if needed)'
                   inputs:
                     targetType: filePath
-                    filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishRelease.ps1'
-                    arguments: '-AccessToken $(GitAccessToken)'
+                    filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
+                    arguments: '-AccessToken $(GitAccessToken) -ReleaseId $(ReleaseId) -Version $(Version)'
                     errorActionPreference: continue
                   continueOnError: true
