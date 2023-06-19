@@ -59,7 +59,7 @@ stages:
                   inputs:
                     owner: 'NIPOSoftwareBV'
                     repository: 'Nfield-SDK'
-                    token: '$(GitAccessToken)'
+                    token: $(GitAccessToken)
                     name: 'Test Release'
                     targetcommitish: '972d2c23a4866b45206443e276209554144cb6d1'
                       
