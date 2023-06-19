@@ -45,7 +45,7 @@ stages:
             displayName: 'Get NuGet PRE-Release Version'
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
-              arguments: '-Release false'
+              arguments: '-Release $False'
 
           - task: NuGetCommand@2
             displayName: 'Pack NuGet PRE-Release'
@@ -63,7 +63,7 @@ stages:
               displayName: 'Get NuGet RELEASE Version'
               inputs:
                 scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
-                arguments: '-Release true'
+                arguments: '-Release $True'
 
           - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
             - task: NuGetCommand@2
