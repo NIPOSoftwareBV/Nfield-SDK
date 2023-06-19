@@ -45,6 +45,7 @@ stages:
                 # Publish NuGet package
                 - task: NuGetCommand@2
                   displayName: 'NuGet push'
+                  continueOnError: True
                   inputs:
                     command: push
                     packagesToPush: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/$(nugetPath)/*.nupkg'
