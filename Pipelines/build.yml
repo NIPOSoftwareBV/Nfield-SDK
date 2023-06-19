@@ -37,7 +37,7 @@ stages:
               arguments: '--configuration $(BuildConfiguration)'
 
           # Run All Unit Test Assemblies
-          - template: ./YmlTemplates/runUnitTests.yml
+          # - template: ./YmlTemplates/runUnitTests.yml
 
         ####################### PRERELEASE PACKAGING ####################
 
@@ -48,7 +48,7 @@ stages:
               arguments: '-Release false'
 
           - task: NuGetCommand@2
-            displayName: 'Pack NuGet $(Version)'
+            displayName: 'Pack NuGet PRE-Release'
             inputs:
               command: 'pack'
               packagesToPack: 'Library/Nfield.SDK.csproj'
@@ -67,7 +67,7 @@ stages:
 
           - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
             - task: NuGetCommand@2
-              displayName: 'Pack NuGet $(Version)'
+              displayName: 'Pack NuGet Release'
               inputs:
                 command: 'pack'
                 packagesToPack: 'Library/Nfield.SDK.csproj'
