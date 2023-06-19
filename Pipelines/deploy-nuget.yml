@@ -35,15 +35,17 @@ stages:
         instructions: 'Please validate the the nuget publishing'
         onTimeout: 'reject'
 
-####################### DEPLOY ####################
+####################### INTERNAL DEPLOY NFILED####################
 - template: ./YmlTemplates/deploy.yml
   parameters:
     stageDependency: GetResources
     pipelineDependency: SDKBuild
     nuGetFeedType: internal
 
-- template: ./YmlTemplates/deploy.yml
-  parameters:
-    stageDependency: GetResources
-    pipelineDependency: SDKBuild
-    nuGetFeedType: external
+####################### EXTERNAL DEPLOY NUGET.ORG ####################
+- ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+  - template: ./YmlTemplates/deploy.yml
+    parameters:
+      stageDependency: GetResources
+      pipelineDependency: SDKBuild
+      nuGetFeedType: external

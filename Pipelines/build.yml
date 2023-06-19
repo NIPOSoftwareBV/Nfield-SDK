@@ -39,6 +39,8 @@ stages:
           # Run All Unit Test Assemblies
           - template: ./YmlTemplates/runUnitTests.yml
 
+        ####################### PRERELEASE PACKAGING ####################
+
           - task: PowerShell@1
             displayName: 'Get NuGet PRE-Release Version'
             inputs:
@@ -54,20 +56,24 @@ stages:
               versionEnvVar: Version  #Created with GetNugetVersion.ps1
               packDestination: $(Build.ArtifactStagingDirectory)/Prerelease/
 
-          - task: PowerShell@1
-            displayName: 'Get NuGet RELEASE Version'
-            inputs:
-              scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
-              arguments: '-Release true'
+          ####################### RELEASE PACKAGING ####################
 
-          - task: NuGetCommand@2
-            displayName: 'Pack NuGet $(Version)'
-            inputs:
-              command: 'pack'
-              packagesToPack: 'Library/Nfield.SDK.csproj'
-              versioningScheme: byEnvVar
-              versionEnvVar: Version  #Created with GetNugetVersion.ps1
-              packDestination: $(Build.ArtifactStagingDirectory)/Release/
+          - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+            - task: PowerShell@1
+              displayName: 'Get NuGet RELEASE Version'
+              inputs:
+                scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
+                arguments: '-Release true'
+
+          - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+            - task: NuGetCommand@2
+              displayName: 'Pack NuGet $(Version)'
+              inputs:
+                command: 'pack'
+                packagesToPack: 'Library/Nfield.SDK.csproj'
+                versioningScheme: byEnvVar
+                versionEnvVar: Version  #Created with GetNugetVersion.ps1
+                packDestination: $(Build.ArtifactStagingDirectory)/Release/
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
