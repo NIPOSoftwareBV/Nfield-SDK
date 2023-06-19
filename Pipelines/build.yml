@@ -28,7 +28,7 @@ stages:
     jobs:
       # Call the pre build template located in the YmlTemplates folder
       - job: BuildSDK
-        displayName: "Build SDK"
+        displayName: "Build SDK $(SourceCommitHash)"
         steps:
           - task: DotNetCoreCLI@2
             displayName: 'Dotnet Build SDK'
@@ -64,8 +64,6 @@ stages:
               inputs:
                 scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
                 arguments: '-Release $True'
-
-          - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
             - task: NuGetCommand@2
               displayName: 'Pack NuGet Release'
               inputs:

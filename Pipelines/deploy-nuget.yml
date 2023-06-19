@@ -24,7 +24,7 @@ stages:
 - stage: GetResources
   jobs:
   - job: WaitForValidation
-    displayName: Validate Feed Publishing
+    displayName: Validate Feed Publishing  $(SourceCommitHash) - $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)
     pool: server
     timeoutInMinutes: 4320 # job times out in 3 days
     steps:

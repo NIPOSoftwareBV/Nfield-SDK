@@ -9,7 +9,7 @@ parameters:
 
 stages:
   - stage: SDKNugetPublishing
-    displayName: "SDK Publishing"
+    displayName: "SDK ${{ parameters.nuGetFeedType }} Publishing"
     dependsOn: ["${{ parameters.stageDependency }}"]
     # SDK publishing stage will be skipped if the build is BatchedCI to validate a PR. So you'll need to run it manually if you want to deploy it.
     condition: succeeded()
