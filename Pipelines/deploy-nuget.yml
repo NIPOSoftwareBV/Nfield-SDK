@@ -24,7 +24,7 @@ stages:
 - stage: GetResources
   jobs:
   - job: WaitForValidation
-    displayName: Validate Feed Publishing  $(SourceCommitHash) - $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)
+    displayName: Validate Feed Publishing
     pool: server
     timeoutInMinutes: 4320 # job times out in 3 days
     steps:
@@ -40,6 +40,7 @@ stages:
     stageDependency: GetResources
     pipelineDependency: SDKBuild
     nuGetFeedType: internal
+    commitId: $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)
 
 ####################### EXTERNAL DEPLOY NUGET.ORG ####################
 - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
@@ -48,3 +49,4 @@ stages:
       stageDependency: GetResources
       pipelineDependency: SDKBuild
       nuGetFeedType: external
+      commitId: $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)

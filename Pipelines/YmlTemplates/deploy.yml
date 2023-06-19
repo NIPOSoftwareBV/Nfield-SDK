@@ -6,6 +6,8 @@ parameters:
     default: current
   - name: nuGetFeedType
     type: string
+  - name: commitId
+    type: string
 
 stages:
   - stage: SDKNugetPublishing
@@ -51,12 +53,28 @@ stages:
                     publishVstsFeed: 'nfield' # Used only for internal feed
                   condition: succeeded()
 
-                - ${{ if eq(parameters.nuGetFeedType, 'external') }}:
-                  - task: PowerShell@2
-                    displayName: 'Publish Github release (if needed)'
-                    inputs:
-                      targetType: filePath
-                      filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
-                      arguments: '-AccessToken $(GitAccessToken) -ReleaseId $(ReleaseId) -Version $(Version)'
-                      errorActionPreference: continue
-                    continueOnError: true
+                #- ${{ if eq(parameters.nuGetFeedType, 'external') }}:
+                - task: gitreleasemanager/create@0
+                  displayName: 'Create Git release'
+                  inputs:
+                    owner: 'NIPOSoftwareBV'
+                    repository: 'Nfield-SDK'
+                    token: '$(GitAccessToken)'
+                    name: 'Test Release'
+                    targetcommitish: '$(commitId)'
+                      
+                  # - task: gitreleasemanager/publish@0
+                  #   inputs:
+                  #     owner: 'NIPOSoftwareBV'
+                  #     repository: 'Nfield-SDK'
+                  #     token: '$(GitAccessToken)'
+                  #     tagName: 'Release name PXSX'
+
+                  # - task: PowerShell@2
+                  #   displayName: 'Publish Github release (if needed)'
+                  #   inputs:
+                  #     targetType: filePath
+                  #     filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
+                  #     arguments: '-AccessToken $(GitAccessToken) -ReleaseId $(ReleaseId) -Version $(Version)'
+                  #     errorActionPreference: continue
+                  #   continueOnError: true
