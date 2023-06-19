@@ -40,18 +40,34 @@ stages:
           - template: ./YmlTemplates/runUnitTests.yml
 
           - task: PowerShell@1
-            displayName: 'Create NuGet Version'
+            displayName: 'Get NuGet PRE-Release Version'
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
+              arguments: '-Release false'
 
           - task: NuGetCommand@2
-            displayName: $Build.SourceVersion
+            displayName: 'Pack NuGet $(Version)'
             inputs:
               command: 'pack'
               packagesToPack: 'Library/Nfield.SDK.csproj'
               versioningScheme: byEnvVar
               versionEnvVar: Version  #Created with GetNugetVersion.ps1
-              packDestination: $(Build.ArtifactStagingDirectory)/
+              packDestination: $(Build.ArtifactStagingDirectory)/Prerelease/
+
+          - task: PowerShell@1
+            displayName: 'Get NuGet RELEASE Version'
+            inputs:
+              scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
+              arguments: '-Release true'
+
+          - task: NuGetCommand@2
+            displayName: 'Pack NuGet $(Version)'
+            inputs:
+              command: 'pack'
+              packagesToPack: 'Library/Nfield.SDK.csproj'
+              versioningScheme: byEnvVar
+              versionEnvVar: Version  #Created with GetNugetVersion.ps1
+              packDestination: $(Build.ArtifactStagingDirectory)/Release/
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
