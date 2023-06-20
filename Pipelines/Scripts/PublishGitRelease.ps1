@@ -1,8 +1,12 @@
 param(
-    [Parameter(Mandatory=$true)] $AccessToken
-    [Parameter(Mandatory=$true)] $CommitHash
-    [Parameter(Mandatory=$true)] $VersionName
-    [Parameter(Mandatory=$true)] $BranchName
+    [Parameter(Mandatory=$true)] 
+    [string] $AccessToken,
+    [Parameter(Mandatory=$true)] 
+    [string] $CommitHash,
+    [Parameter(Mandatory=$true)]
+    [string] $VersionName,
+    [Parameter(Mandatory=$true)]
+    [string] $BranchName
 )
 
 Write-Host Publishing release $VersionName on GitHub
