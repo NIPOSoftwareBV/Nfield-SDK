@@ -76,7 +76,7 @@ stages:
                     action: 'create'
                     target: '$(CommitHash)'
                     tagSource: 'userSpecifiedTag'
-                    tag: '$($BranchName)'
+                    tag: '$(BranchName)'
                     title: '$(ReleaseName)'
                     releaseNotesSource: 'inline'
                     releaseNotesInline: 'Nuget Version: $(VersionName)'
