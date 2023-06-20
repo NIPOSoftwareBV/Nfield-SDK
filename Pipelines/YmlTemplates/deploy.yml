@@ -56,20 +56,27 @@ stages:
                       Write-Host $GitReleaseInfo
                       $InfoFields = $GitReleaseInfo.Split(":")
                       $BranchName = $InfoFields[0]
-                      $CommitHash = $InfoFields[1]
-                      $VersionName = $InfoFields[2]
+                      $ReleaseName = $InfoFields[1]
+                      $CommitHash = $InfoFields[2]
+                      $VersionName = $InfoFields[3]
                       Write-Host BranchName: $BranchName
+                      Write-Host ReleaseName: $ReleaseName
                       Write-Host CommitHash: $CommitHash
                       Write-Host VersionName: $VersionName
                       Write-Host "##vso[task.setvariable variable=BranchName]$BranchName"
+                      Write-Host "##vso[task.setvariable variable=ReleaseName]$ReleaseName"
                       Write-Host "##vso[task.setvariable variable=CommitHash]$CommitHash"
                       Write-Host "##vso[task.setvariable variable=VersionName]$VersionName"
 
-                - task: PowerShell@2
-                  displayName: 'Publish Github release (if needed)'
+                - task: GitHubRelease@1
                   inputs:
-                    targetType: filePath
-                    filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
-                    arguments: '-AccessToken $(GitAccessToken) -CommitHash $(CommitHash) -VersionName $(VersionName) -BranchName $(BranchName)'
-                    errorActionPreference: continue
-                  continueOnError: true
+                    gitHubConnection: 'niposoftware-github'
+                    repositoryName: 'NIPOSoftwareBV/Nfield-SDK'
+                    action: 'create'
+                    target: '$(CommitHash)'
+                    tagSource: 'userSpecifiedTag'
+                    tag: '$BranchName'
+                    title: '$(ReleaseName)'
+                    isPreRelease: true
+                    changeLogCompareToRelease: 'lastFullRelease'
+                    changeLogType: 'commitBased'

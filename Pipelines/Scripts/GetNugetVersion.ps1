@@ -49,12 +49,23 @@ else
     Write-Host "Suffix:" $Suffix
 }
 
+$releaseName = $branchName.Split("/");
+if ($releaseName.count -eq 2)
+{
+    $releaseName = $releaseName[1].Replace("-", " ")
+}
+else
+{
+    $releaseName = $releaseName[0].Replace("-", " ")
+}
+
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
 Write-Host "##vso[task.setvariable variable=Version]$Version"
 Write-Host "Version Name:" $Version
 Write-Host "Build Commit Hash:" $env:BUILD_SOURCEVERSION
+Write-Host "Release Name:" $releaseName
 
 # Create the nuget Release info will be consumed in the Nfield SDK Release pipeline
 $versionFilename = "NugetReleaseInfo.txt"
 Write-Host $versionFilename
-"$($branchName):$($env:BUILD_SOURCEVERSION):$($Version)" | Out-File $versionFilename
+"$($branchName):$releaseName:$($env:BUILD_SOURCEVERSION):$($Version)" | Out-File $versionFilename
