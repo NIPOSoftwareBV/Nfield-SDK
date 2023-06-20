@@ -36,8 +36,6 @@ stages:
             inputs:
               projects: 'Nfield.SDK.sln'
               arguments: '--configuration $(BuildConfiguration)'
-
-
         
           # Run All Unit Test Assemblies
           - template: ./YmlTemplates/runUnitTests.yml
@@ -49,14 +47,14 @@ stages:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
 
         ####################### NUGET PACKAGING ####################
-         - task: NuGetCommand@2
-            displayName: 'Pack NuGet'
-            inputs:
-              command: 'pack'
-              packagesToPack: 'Library/Nfield.SDK.csproj'
-              versioningScheme: byEnvVar
-              versionEnvVar: Version  #Created with GetNugetVersion.ps1
-              packDestination: $(Build.ArtifactStagingDirectory)/
+          - task: NuGetCommand@2
+              displayName: 'Pack NuGet'
+              inputs:
+                command: 'pack'
+                packagesToPack: 'Library/Nfield.SDK.csproj'
+                versioningScheme: byEnvVar
+                versionEnvVar: Version  #Created with GetNugetVersion.ps1
+                packDestination: $(Build.ArtifactStagingDirectory)/
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
