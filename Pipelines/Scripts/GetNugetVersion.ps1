@@ -68,4 +68,4 @@ Write-Host "Release Name:" $releaseName
 # Create the nuget Release info will be consumed in the Nfield SDK Release pipeline
 $versionFilename = "NugetReleaseInfo.txt"
 Write-Host $versionFilename
-"$($branchName):$releaseName:$($env:BUILD_SOURCEVERSION):$($Version)" | Out-File $versionFilename
+"$($branchName):$($releaseName):$($env:BUILD_SOURCEVERSION):$($Version)" | Out-File $versionFilename
