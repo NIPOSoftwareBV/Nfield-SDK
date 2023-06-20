@@ -34,26 +34,27 @@ if(([regex]::Matches($VersionFormat, "\." )).count -ne 2)
 
 $BuildId = $env:BUILD_BUILDID
 Write-Host "BuildId:" $BuildId
-$Branch = $env:BUILD_SOURCEBRANCH
+$FullBranchName = $env:BUILD_SOURCEBRANCH
+$branchName = $FullBranchName.Replace("refs/heads/", "")
 
-if ($Branch -like 'refs/heads/release*')
+if ($branchName -like 'release*')
 {
     Write-Host "Building for release"
     $Suffix = ""
 }
 else
 {
-    Write-Host "Branch:" $Branch
-    $Suffix = if ($Branch -like 'refs/heads/master') {'-beta'} else {'-alpha'}	
+    Write-Host "Branch:" $branchName
+    $Suffix = if ($branchName -like 'master') {'-beta'} else {'-alpha'}	
     Write-Host "Suffix:" $Suffix
 }
 
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
 Write-Host "##vso[task.setvariable variable=Version]$Version"
 Write-Host "Version Name:" $Version
-Write-Host "Build Commit Hash:" $env:BUILD_SOURCECOMMITHASH
+Write-Host "Build Commit Hash:" $env:BUILD_SOURCEVERSION
 
 # Create the nuget Release info will be consumed in the Nfield SDK Release pipeline
 $versionFilename = "NugetReleaseInfo.txt"
 Write-Host $versionFilename
-"$($env:BUILD_SOURCEBRABUILD_SOURCEBRANCHNCHNAME)/$($env:BUILD_SOURCECOMMITHASH)/$($Version)" | Out-File $versionFilename
+"$($branchName)/$($env:BUILD_SOURCEVERSION)/$($Version)" | Out-File $versionFilename
