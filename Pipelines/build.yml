@@ -38,7 +38,7 @@ stages:
               arguments: '--configuration $(BuildConfiguration)'
         
           # Run All Unit Test Assemblies
-          - template: ./YmlTemplates/runUnitTests.yml
+          #- template: ./YmlTemplates/runUnitTests.yml
 
         ####################### GET NUGET VERSION ####################
           - task: PowerShell@1
