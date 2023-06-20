@@ -75,8 +75,10 @@ stages:
                     action: 'create'
                     target: '$(CommitHash)'
                     tagSource: 'userSpecifiedTag'
-                    tag: '$BranchName'
+                    tag: '$($BranchName)'
                     title: '$(ReleaseName)'
-                    isPreRelease: true
+                    releaseNotesSource: 'inline'
+                    releaseNotesInline: 'Nuget Version: $(VersionName)'
+                    isPreRelease: false
                     changeLogCompareToRelease: 'lastFullRelease'
                     changeLogType: 'commitBased'
