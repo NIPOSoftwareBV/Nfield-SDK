@@ -13,21 +13,24 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Linq;
-using System.Threading.Tasks;
-using Nfield.SDK.Models.Events;
+using System.Collections.Generic;
+using System;
 
-namespace Nfield.Services
+namespace Nfield.SDK.Models.Events
 {
     /// <summary>
-    /// Set of methods to manage the events subscriptions.
+    /// The model used for updating an event subscription.
     /// </summary>
-    public interface INfieldEventsSubscriptionsService
-    {    
+    public class UpdateEventSubscriptionModel
+    {
         /// <summary>
-        /// Gets a list of subscriptions for the domain.
+        /// The endpoint to use for the subcription.
         /// </summary>
-        /// <returns>A list of subscriptions or an empty list if none exists.</returns>
-        Task<IQueryable<EventsSubscriptionModel>> QueryAsync();
+        public Uri Endpoint { get; set; }
+
+        /// <summary>
+        /// The event types to subscribe.
+        /// </summary>
+        public IEnumerable<string> EventTypes { get; set; }
     }
 }

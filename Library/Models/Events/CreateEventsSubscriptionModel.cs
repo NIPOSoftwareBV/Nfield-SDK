@@ -14,31 +14,27 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using System;
 
 namespace Nfield.SDK.Models.Events
 {
     /// <summary>
-    /// Describes the properties of an event subscription. 
+    /// The model used when creating a new event subscription.
     /// </summary>
-    public class EventSubscriptionModel
+    public class CreateEventSubscriptionModel
     {
         /// <summary>
-        /// The domain identifier that is also the topic name
-        /// </summary>
-        public string DomainId { get; set; }
+		/// The subscription name.
+		/// </summary>
+		public string SubscriptionName { get; set; }
 
         /// <summary>
-        /// The subscription name
+        /// The endpoint to use for the subcription.
         /// </summary>
-        public string Name { get; set; }
+        public Uri Endpoint { get; set; }
 
         /// <summary>
-        /// The webhook endpoint
-        /// </summary>
-        public string WebHookUri { get; set; }
-
-        /// <summary>
-        ///  The event types that the subscription is about.
+        /// The event types that will subscribe to.
         /// </summary>
         public IEnumerable<string> EventTypes { get; set; }
     }
