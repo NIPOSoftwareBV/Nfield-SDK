@@ -48,6 +48,7 @@ stages:
                   condition: succeeded()
 
                 - task: PowerShell@2
+                  displayName: 'Gather Release Info'
                   inputs:
                     targetType: 'inline'
                     script: |

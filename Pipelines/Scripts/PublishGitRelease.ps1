@@ -34,7 +34,7 @@ try
 
     $Headers = @{
         Accept = 'application/vnd.github+json';
-        Authorization = 'Bearer {0}' -f $AccessToken;
+        Authorization = 'Basic {0}' -f [System.Convert]::ToBase64String([char[]]($AccessToken));
     }
 
     $apiUrl = "https://api.github.com/repos/{0}/{1}/releases" -f  $organization, $repository
