@@ -70,3 +70,4 @@ stages:
                 $(Build.artifactstagingdirectory)\**
                 Pipelines\Scripts\PublishGitRelease.ps1
                 Pipelines\Scripts\GetNugetVersion.ps1
+                version.txt
