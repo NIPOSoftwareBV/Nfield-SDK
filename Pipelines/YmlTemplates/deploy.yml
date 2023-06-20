@@ -20,11 +20,6 @@ stages:
           value: ""
         ${{ if not( eq(parameters.pipelineDependency, 'current')) }}:
           value: ${{ parameters.pipelineDependency }}
-      - name: nugetPath
-        ${{ if eq(parameters.nuGetFeedType, 'external') }}:
-          value: "Release"
-        ${{ if not( eq(parameters.nuGetFeedType, 'external')) }}:
-          value: "Prerelease"
     jobs:
       - deployment: SDKNugetPublish
         displayName: Publising on ${{ parameters.nuGetFeedType }} Feed
@@ -46,7 +41,7 @@ stages:
                   continueOnError: True
                   inputs:
                     command: push
-                    packagesToPush: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/$(nugetPath)/*.nupkg'
+                    packagesToPush: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/*.nupkg'
                     nuGetFeedType: ${{ parameters.nuGetFeedType }}
                     publishFeedCredentials: 'NuGet (Publish)' # Used only for external feed
                     publishVstsFeed: 'nfield' # Used only for internal feed
@@ -74,6 +69,6 @@ stages:
                   inputs:
                     targetType: filePath
                     filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
-                    arguments: '-AccessToken $(GitAccessToken) -CommitHash $($CommitHash) -VersionName $(VersionName) -BranchName $(BranchName)'
+                    arguments: '-AccessToken $(GitAccessToken) -CommitHash $(CommitHash) -VersionName $(VersionName) -BranchName $(BranchName)'
                     errorActionPreference: continue
                   continueOnError: true

@@ -47,7 +47,6 @@ stages:
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
 
-
         ####################### NUGET PACKAGING ####################
           - task: NuGetCommand@2
             displayName: 'Pack NuGet'

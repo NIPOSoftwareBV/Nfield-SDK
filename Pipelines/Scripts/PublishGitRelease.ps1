@@ -38,12 +38,10 @@ try
     }
 
     $apiUrl = "https://api.github.com/repos/{0}/{1}/releases" -f  $organization, $repository
-    $description = "Package version: " + $VersionName
-
     $patchBody = @{ 
         prerelease = 'true';
         name = $releaseName;
-        body = $description;
+        body = "Package version: " + $VersionName;
         tag_name = $BranchName;
         target_commitish = $CommitHash;
     } | ConvertTo-Json
