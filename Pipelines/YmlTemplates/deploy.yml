@@ -60,7 +60,7 @@ stages:
                     script: |
                       $GitReleaseInfo = Get-Content -Path $(Pipeline.Workspace)/$(baseRoute)/for-deploy/NugetReleaseInfo.txt
                       Write-Host $GitReleaseInfo
-                      $InfoFields = $GitReleaseInfo.Split("/")
+                      $InfoFields = $GitReleaseInfo.Split(":")
                       $BranchName = $InfoFields[0]
                       $CommitHash = $InfoFields[1]
                       $VersionName = $InfoFields[2]
