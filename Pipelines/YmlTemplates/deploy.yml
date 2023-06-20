@@ -69,6 +69,7 @@ stages:
                       Write-Host "##vso[task.setvariable variable=VersionName]$VersionName"
 
                 - task: GitHubRelease@1
+                  condition: and (succeeded(), ne('${{ parameters.nuGetFeedType }}', 'external'))
                   inputs:
                     gitHubConnection: 'niposoftware-github'
                     repositoryName: 'NIPOSoftwareBV/Nfield-SDK'
