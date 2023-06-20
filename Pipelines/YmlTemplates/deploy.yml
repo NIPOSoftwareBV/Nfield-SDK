@@ -6,8 +6,6 @@ parameters:
     default: current
   - name: nuGetFeedType
     type: string
-  - name: commitId
-    type: string
 
 stages:
   - stage: SDKNugetPublishing
