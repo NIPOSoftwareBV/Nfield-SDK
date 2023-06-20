@@ -28,7 +28,7 @@ stages:
     jobs:
       # Call the pre build template located in the YmlTemplates folder
       - job: BuildSDK
-        displayName: "Build SDK $(SourceCommitHash)"
+        displayName: "Build SDK"
         steps:
 
           - task: DotNetCoreCLI@2
@@ -37,42 +37,26 @@ stages:
               projects: 'Nfield.SDK.sln'
               arguments: '--configuration $(BuildConfiguration)'
 
+
+        
           # Run All Unit Test Assemblies
           - template: ./YmlTemplates/runUnitTests.yml
 
-        ####################### PRERELEASE PACKAGING ####################
-
+        ####################### GET NUGET VERSION ####################
           - task: PowerShell@1
-            displayName: 'Get NuGet PRE-Release Version'
+            displayName: 'Get NuGet Version'
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
-              arguments: '-Release $False'
 
-          - task: NuGetCommand@2
-            displayName: 'Pack NuGet PRE-Release'
+        ####################### NUGET PACKAGING ####################
+         - task: NuGetCommand@2
+            displayName: 'Pack NuGet'
             inputs:
               command: 'pack'
               packagesToPack: 'Library/Nfield.SDK.csproj'
               versioningScheme: byEnvVar
               versionEnvVar: Version  #Created with GetNugetVersion.ps1
-              packDestination: $(Build.ArtifactStagingDirectory)/Prerelease/
-
-          ####################### RELEASE PACKAGING ####################
-
-          - ${{ if startsWith(variables['Build.SourceBranchName'], 'release') }}:
-            - task: PowerShell@1
-              displayName: 'Get NuGet RELEASE Version'
-              inputs:
-                scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
-                arguments: '-Release $True'
-            - task: NuGetCommand@2
-              displayName: 'Pack NuGet Release'
-              inputs:
-                command: 'pack'
-                packagesToPack: 'Library/Nfield.SDK.csproj'
-                versioningScheme: byEnvVar
-                versionEnvVar: Version  #Created with GetNugetVersion.ps1
-                packDestination: $(Build.ArtifactStagingDirectory)/Release/
+              packDestination: $(Build.ArtifactStagingDirectory)/
 
           - task: CopyFiles@2
             displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
@@ -87,3 +71,4 @@ stages:
               ContentsToCopy: |
                 $(Build.artifactstagingdirectory)\**
                 Pipelines\Scripts\PublishGitRelease.ps1
+                Pipelines\Scripts\GetNugetVersion.ps1

@@ -64,11 +64,16 @@ stages:
                 #     targetcommitish: '972d2c23a4866b45206443e276209554144cb6d1'
                 #     isPreRelease: true
                       
+                - task: PowerShell@1
+                  displayName: 'Get NuGet Version'
+                  inputs:
+                    scriptName: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/GetNugetVersion.ps1'
+
                 - task: PowerShell@2
                   displayName: 'Publish Github release (if needed)'
                   inputs:
                     targetType: filePath
                     filePath: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/Pipelines/Scripts/PublishGitRelease.ps1'
-                    arguments: '-AccessToken $(GitAccessToken) -ReleaseId ${{ parameters.commitId }} -Version TestRelease'
+                    arguments: '-AccessToken $(GitAccessToken) -ReleaseId ${{ parameters.commitId }} -Version $(Version)' #Created with GetNugetVersion.ps1
                     errorActionPreference: continue
                   continueOnError: true

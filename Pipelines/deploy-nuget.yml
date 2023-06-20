@@ -34,7 +34,7 @@ stages:
         instructions: 'Please validate the the nuget publishing'
         onTimeout: 'reject'
 
-####################### INTERNAL DEPLOY NFILED####################
+####################### INTERNAL DEPLOY NFILED ####################
 - template: ./YmlTemplates/deploy.yml
   parameters:
     stageDependency: GetResources
@@ -43,7 +43,7 @@ stages:
     commitId: $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)
 
 ####################### EXTERNAL DEPLOY NUGET.ORG ####################
-- ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+- ${{ if startsWith(variables['Build.SourceBranchName'], 'release') }}:
   - template: ./YmlTemplates/deploy.yml
     parameters:
       stageDependency: GetResources
