@@ -30,6 +30,17 @@ stages:
       - job: BuildSDK
         displayName: "Build SDK $(SourceCommitHash)"
         steps:
+
+          - task: gitreleasemanager/create@0
+            displayName: 'Create Git release'
+            inputs:
+              owner: 'NIPOSoftwareBV'
+              repository: 'Nfield-SDK'
+              token: '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'
+              name: 'Test Release'
+              targetcommitish: '972d2c23a4866b45206443e276209554144cb6d1'
+              isPreRelease: true
+
           - task: DotNetCoreCLI@2
             displayName: 'Dotnet Build SDK'
             inputs:
@@ -58,7 +69,7 @@ stages:
 
           ####################### RELEASE PACKAGING ####################
 
-          - ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+          - ${{ if startsWith(variables['Build.SourceBranchName'], 'release') }}:
             - task: PowerShell@1
               displayName: 'Get NuGet RELEASE Version'
               inputs:
