@@ -9,6 +9,7 @@ trigger:
     include:
       - "master"
       - "*/ci-*"
+      - "release/*"
   paths:
     include:
       - Library/*
@@ -70,5 +71,4 @@ stages:
               ContentsToCopy: |
                 $(Build.artifactstagingdirectory)\**
                 Pipelines\Scripts\PublishGitRelease.ps1
-                Pipelines\Scripts\GetNugetVersion.ps1
                 NugetReleaseInfo.txt

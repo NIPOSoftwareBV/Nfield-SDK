@@ -14,6 +14,7 @@ resources:
         include: 
         - 'master'
         - '*/ci-*'
+        - 'release/*'
       stages:
       - Build # Run deploy-release pipeline when the build of SDK completes. If it only has one stage we could use "trigger: true" too.
 
@@ -40,7 +41,6 @@ stages:
     stageDependency: GetResources
     pipelineDependency: SDKBuild
     nuGetFeedType: internal
-    commitId: $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)
 
 ####################### EXTERNAL DEPLOY NUGET.ORG ####################
 - ${{ if startsWith(variables['Build.SourceBranchName'], 'refs/heads/release') }}:
@@ -49,4 +49,3 @@ stages:
       stageDependency: GetResources
       pipelineDependency: SDKBuild
       nuGetFeedType: external
-      commitId: $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)

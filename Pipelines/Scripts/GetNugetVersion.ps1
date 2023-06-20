@@ -50,7 +50,6 @@ else
 }
 
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
-$Version = $Version.Trim()
 Write-Host "##vso[task.setvariable variable=Version]$Version"
 Write-Host "Version Name:" $Version
 Write-Host "Build Commit Hash:" $env:BUILD_SOURCEVERSION
