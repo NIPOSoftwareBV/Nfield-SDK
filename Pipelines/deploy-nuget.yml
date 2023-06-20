@@ -43,7 +43,7 @@ stages:
     commitId: $(RESOURCES.PIPELINE.SDKBuild.SOURCECOMMIT)
 
 ####################### EXTERNAL DEPLOY NUGET.ORG ####################
-- ${{ if startsWith(variables['Build.SourceBranchName'], 'release') }}:
+- ${{ if startsWith(variables['Build.SourceBranchName'], 'refs/heads/release') }}:
   - template: ./YmlTemplates/deploy.yml
     parameters:
       stageDependency: GetResources

@@ -18,10 +18,6 @@
 # The segment Major and Minor should be configured in version.txt (see root of Nfield-SDK repo)
 # The 3rd segment (Patch) will be determined by {buildId}{suffix}
 
-param(
-    [Parameter(Mandatory=$true)][bool] $Release
-)
-
 if( -Not (Test-Path version.txt))
 {
     Write-Error "version.txt does not exist"
@@ -38,20 +34,26 @@ if(([regex]::Matches($VersionFormat, "\." )).count -ne 2)
 
 $BuildId = $env:BUILD_BUILDID
 Write-Host "BuildId:" $BuildId
+$Branch = $env:BUILD_SOURCEBRANCH
 
-if ($Release)
+if ($Branch -like 'refs/heads/release*')
 {
     Write-Host "Building for release"
     $Suffix = ""
 }
 else
 {
-    $Branch = $env:BUILD_SOURCEBRANCHNAME
     Write-Host "Branch:" $Branch
-    $Suffix = if ($Branch -eq "master") {"-beta"} else {"-alpha"}	
+    $Suffix = if ($Branch -like 'refs/heads/master') {'-beta'} else {'-alpha'}	
     Write-Host "Suffix:" $Suffix
 }
 
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
 Write-Host "##vso[task.setvariable variable=Version]$Version"
-Write-Host "Version:" $Version
+Write-Host "Version Name:" $Version
+Write-Host "Build Commit Hash:" $env:BUILD_SOURCECOMMITHASH
+
+# Create the nuget Release info will be consumed in the Nfield SDK Release pipeline
+$versionFilename = "NugetReleaseInfo.txt"
+Write-Host $versionFilename
+"$($env:BUILD_SOURCEBRABUILD_SOURCEBRANCHNCHNAME)/$($env:BUILD_SOURCECOMMITHASH)/$($Version)" | Out-File $versionFilename

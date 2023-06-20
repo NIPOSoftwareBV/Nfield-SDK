@@ -29,7 +29,6 @@ steps:
       inlineScript: |
         Write-Host $(Build.SourceBranch)
         $branchName = "$(Build.SourceBranch)".Replace("refs/heads/", "")
-        $branchName = $branchName.Split("/")[0]
         Write-Host $branchName
         Write-Host ("##vso[build.addbuildtag]$branchName")
       failOnStandardError: false

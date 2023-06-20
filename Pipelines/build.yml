@@ -46,6 +46,7 @@ stages:
             inputs:
               scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
 
+
         ####################### NUGET PACKAGING ####################
           - task: NuGetCommand@2
             displayName: 'Pack NuGet'
@@ -70,4 +71,4 @@ stages:
                 $(Build.artifactstagingdirectory)\**
                 Pipelines\Scripts\PublishGitRelease.ps1
                 Pipelines\Scripts\GetNugetVersion.ps1
-                version.txt
+                NugetReleaseInfo.txt
