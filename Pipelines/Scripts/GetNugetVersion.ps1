@@ -34,20 +34,38 @@ if(([regex]::Matches($VersionFormat, "\." )).count -ne 2)
 
 $BuildId = $env:BUILD_BUILDID
 Write-Host "BuildId:" $BuildId
+$FullBranchName = $env:BUILD_SOURCEBRANCH
+$branchName = $FullBranchName.Replace("refs/heads/", "")
 
-if ($env:releaseId)
+if ($branchName -like 'release*')
 {
-    Write-Host "Building for release" $env:releaseId
+    Write-Host "Building for release"
     $Suffix = ""
 }
 else
 {
-    $Branch = $env:BUILD_SOURCEBRANCHNAME
-    Write-Host "Branch:" $Branch
-    $Suffix = if ($Branch -eq "master") {"-beta"} else {"-alpha"}	
+    Write-Host "Branch:" $branchName
+    $Suffix = if ($branchName -like 'master') {'-beta'} else {'-alpha'}	
     Write-Host "Suffix:" $Suffix
+}
+
+$releaseName = $branchName.Split("/");
+if ($releaseName.count -eq 2)
+{
+    $releaseName = $releaseName[1].Replace("-", " ")
+}
+else
+{
+    $releaseName = $releaseName[0].Replace("-", " ")
 }
 
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
 Write-Host "##vso[task.setvariable variable=Version]$Version"
-Write-Host "Version:" $Version
+Write-Host "Version Name:" $Version
+Write-Host "Build Commit Hash:" $env:BUILD_SOURCEVERSION
+Write-Host "Release Name:" $releaseName
+
+# Create the nuget Release info will be consumed in the Nfield SDK Release pipeline
+$versionFilename = "NugetReleaseInfo.txt"
+Write-Host $versionFilename
+"$($branchName):$($releaseName):$($env:BUILD_SOURCEVERSION):$($Version)" | Out-File $versionFilename
