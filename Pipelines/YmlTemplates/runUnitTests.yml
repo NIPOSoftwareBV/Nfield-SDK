@@ -6,7 +6,7 @@ steps:
     inputs:
       testSelector: 'testAssemblies'
       testAssemblyVer2: |
-        **\*test*.dll
+        **\Nfield.SDK.Tests.dll
         !**\obj\**
       searchFolder: '$(System.DefaultWorkingDirectory)'
       Logger: 'trx'
@@ -14,7 +14,7 @@ steps:
       runTestsInIsolation: true
       codeCoverageEnabled: false
       rerunFailedTests: true
-      rerunMaxAttempts: '5'
+      rerunMaxAttempts: '3'
       rerunFailedThreshold: '20'
       rerunFailedTestCasesMaxLimit: '50'
 

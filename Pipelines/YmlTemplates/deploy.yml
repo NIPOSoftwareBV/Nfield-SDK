@@ -8,13 +8,12 @@ parameters:
     type: string
 
 stages:
-  - stage: SDKNugetPublishing
+  - stage: SDKNugetPublishing${{ parameters.nuGetFeedType }}
     displayName: "SDK nuget ${{ parameters.nuGetFeedType }} Publishing"
     dependsOn: ["${{ parameters.stageDependency }}"]
     # SDK publishing stage will be skipped if the build is BatchedCI to validate a PR. So you'll need to run it manually if you want to deploy it.
     condition: succeeded()
     variables:
-      - group: NfieldSDKSecretsGlobal
       - name: baseRoute
         ${{ if eq(parameters.pipelineDependency, 'current') }}:
           value: ""
@@ -22,7 +21,7 @@ stages:
           value: ${{ parameters.pipelineDependency }}
     jobs:
       - deployment: SDKNugetPublish
-        displayName: Publising on ${{ parameters.nuGetFeedType }} Feed
+        displayName: Publishing on ${{ parameters.nuGetFeedType }} Feed
         environment: ${{ format('NfieldSDK{0}Feed', parameters.nuGetFeedType) }}
         continueOnError: false
         strategy:
