@@ -67,10 +67,10 @@ stages:
                       Write-Host "##vso[task.setvariable variable=ReleaseName]$ReleaseName"
                       Write-Host "##vso[task.setvariable variable=CommitHash]$CommitHash"
                       Write-Host "##vso[task.setvariable variable=VersionName]$VersionName"
-
+                      
                 - task: GitHubRelease@1
                   displayName: 'Create GitHub Release'
-                  condition: and (succeeded(), eq('${{ parameters.nuGetFeedType }}', 'external'))
+                  condition: ${{ eq(parameters.nuGetFeedType, 'external') }}
                   inputs:
                     gitHubConnection: 'github.com_AlbertoBelver' # OAuth Service Conection https://dev.azure.com/niposoftware/Nfield/_settings/adminservices
                     repositoryName: 'NIPOSoftwareBV/Nfield-SDK'
@@ -84,3 +84,4 @@ stages:
                     isPreRelease: false
                     changeLogCompareToRelease: 'lastFullRelease'
                     changeLogType: 'commitBased'
+                    addChangeLog: false
