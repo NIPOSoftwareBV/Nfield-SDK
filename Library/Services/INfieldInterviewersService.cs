@@ -13,12 +13,11 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Collections;
 using System.Collections.Generic;
 using Nfield.Models;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Nfield.Services
 {
@@ -106,5 +105,12 @@ namespace Nfield.Services
         /// <param name="fieldworkOfficeId"></param>
         /// <returns></returns>
         Task RemoveInterviewerFromFieldworkOfficesAsync(string interviewerId, string fieldworkOfficeId);
+
+        /// <summary>
+        /// Asks for interviewers work logs and gets the URL to perform the download (UTC datetime)
+        /// </summary>
+        /// <param name="query">Query model with UTC datetime</param>
+        /// <returns>URL to download the file</returns>
+        Task<string> QueryLogsAsync(LogQueryModel query);
     }
 }

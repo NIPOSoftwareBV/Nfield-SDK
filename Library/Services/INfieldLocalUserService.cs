@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -52,5 +53,17 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="identityId">The id of the user to delete.</param>
         Task DeleteAsync(string identityId);
+
+        /// <summary>
+        /// Reset the specified local user password.
+        /// </summary>
+        Task ResetAsync(string identityId, ResetLocalUser model);
+
+        /// <summary>
+        /// Asks for users logs and gets the URL to perform the download (UTC datetime)
+        /// </summary>
+        /// <param name="query">Query model with UTC datetime</param>
+        /// <returns>URL to download the file</returns>
+        Task<string> LogsAsync(LogQueryModel query);
     }
 }

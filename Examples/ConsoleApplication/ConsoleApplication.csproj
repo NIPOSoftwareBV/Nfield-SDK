@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <Authors>NIPO</Authors>
+    <Company>NIPO</Company>
+    <Copyright>Copyright © NIPO 2018</Copyright>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Library\Nfield.SDK.csproj" />
+  </ItemGroup>
+</Project>

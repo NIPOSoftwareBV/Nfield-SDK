@@ -66,7 +66,7 @@ namespace Nfield.Services
                     new StringContent(
                         JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
 
-            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1/")))
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1")))
                  .Returns(CreateTask(HttpStatusCode.OK,
                      new StringContent(
                          JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));

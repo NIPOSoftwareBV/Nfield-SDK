@@ -16,9 +16,11 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Quota.Helpers;
 
 namespace Nfield.Services.Implementation
 {
@@ -69,15 +71,21 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldSurveyFieldworkService.FinishFieldworkAsync"/>
+        /// See <see cref="INfieldSurveyFieldworkService.GetCountsAsync(string)"/>
         /// </summary>
-        public Task FinishFieldworkAsync(string surveyId)
+        public Task<SurveyFieldworkCounts> GetCountsAsync(string surveyId)
         {
-            CheckSurveyId(surveyId);
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
-            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Finish");
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Counts");
 
-            return Client.PutAsync(uri, new StringContent(string.Empty)).FlattenExceptions();
+            return ConnectionClient.Client.GetAsync(uri)
+             .ContinueWith(
+                 responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+             .ContinueWith(
+                 stringTask =>
+                 JsonConvert.DeserializeObject<SurveyFieldworkCounts>(stringTask.Result))
+             .FlattenExceptions();
         }
 
         #endregion

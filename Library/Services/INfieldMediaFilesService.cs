@@ -68,10 +68,9 @@ namespace Nfield.Services
         /// <param name="surveyId">The survey for which to add or update the file</param>
         /// <param name="fileName">The name of the file</param>
         /// <param name="content">The content of the file</param>
-        /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
-        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task AddOrUpdateAsync(string surveyId, string fileName, byte[] content);
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception> 
+        Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content);
     }
 }

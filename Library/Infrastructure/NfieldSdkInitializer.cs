@@ -13,6 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.SDK.Services;
+using Nfield.SDK.Services.Implementation;
 using Nfield.Services;
 using Nfield.Services.Implementation;
 using Nfield.Utilities;
@@ -30,9 +32,12 @@ namespace Nfield.Infrastructure
         {
             { typeof(NfieldConnection), typeof(NfieldConnection) },
             { typeof(INfieldInterviewersService), typeof(NfieldInterviewersService) },
+            { typeof(INfieldDataRetentionService), typeof(NfieldDataRetentionService) },
+            { typeof(INfieldInterviewerAssignmentsService), typeof(NfieldInterviewerAssignmentsService) },
             { typeof(INfieldInterviewsService), typeof(NfieldInterviewsService) },
             { typeof(INfieldInterviewQualityService), typeof(NfieldInterviewQualityService) },
             { typeof(INfieldSurveysService), typeof(NfieldSurveysService) },
+            { typeof(INfieldSurveyResourcesService), typeof(NfieldSurveyResourcesService) },
             { typeof(INfieldRespondentDataEncryptService), typeof(NfieldRespondentDataEncryptService) },
             { typeof(INfieldSurveyDataService), typeof(NfieldSurveyDataService) },
             { typeof(INfieldBackgroundTasksService), typeof(NfieldBackgroundTasksService) },
@@ -40,28 +45,33 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyScriptFragmentService), typeof(NfieldSurveyScriptFragmentService) },
             { typeof(INfieldFieldworkOfficesService), typeof(NfieldFieldworkOfficesService) },
             { typeof(INfieldMediaFilesService), typeof(NfieldMediaFilesService) },
-            { typeof(INfieldLanguagesService), typeof(NfieldLanguagesService) },
-            { typeof(INfieldTranslationsService), typeof(NfieldTranslationsService) },
+            { typeof(INfieldSurveyLanguageTranslationsService), typeof(NfieldSurveyLanguageTranslationsService) },
+            { typeof(INfieldDomainLanguageTranslationsService), typeof(NfieldDomainLanguageTranslationsService) },
             { typeof(INfieldDomainEmailSettingsService), typeof(NfieldDomainEmailSettingsService) },
+            { typeof(INfieldDomainPasswordSettingsService), typeof(NfieldDomainPasswordSettingsService) },
             { typeof(INfieldDomainSearchFieldsSettingService), typeof(NfieldDomainSearchFieldsSettingService) },
+            { typeof(INfieldDomainResponseCodesService), typeof(NfieldDomainResponseCodesService) },
             { typeof(INfieldSurveyEmailSettingsService), typeof(NfieldSurveyEmailSettingsService) },
             { typeof(INfieldSurveyInvitationImagesService), typeof(NfieldSurveyInvitationImagesService) },
             { typeof(INfieldSurveyInvitationTemplatesService), typeof(NfieldSurveyInvitationTemplatesService) },
+            { typeof(INfieldSurveyQuotaFrameService), typeof(NfieldSurveyQuotaFrameService) },
             { typeof(INfieldSurveySettingsService), typeof(NfieldSurveySettingsService) },
+            { typeof(INfieldSurveyInterviewInteractionsSettingsService), typeof(NfieldSurveyInterviewInteractionsSettingsService) },
             { typeof(INfieldSurveyResponseCodesService), typeof(NfieldSurveyResponseCodesService) },
-            { typeof(INfieldSurveyRelocationsService), typeof(NfieldSurveyRelocationsService) },
             { typeof(INfieldSurveyPublicIdsService), typeof(NfieldSurveyPublicIdsService) },
             { typeof(INfieldSurveyInterviewersService), typeof(NfieldSurveyInterviewersService) },
             { typeof(INfieldSamplingPointInterviewerAssignmentsService), typeof(NfieldSamplingPointInterviewerAssignmentsService) },
             { typeof(INfieldSurveyInterviewerAssignmentsService), typeof(NfieldSurveyInterviewerAssignmentsService) },
             { typeof(INfieldSurveyInterviewerWorkpackageDistributionService), typeof(NfieldSurveyInterviewerWorkpackageDistributionService) },
             { typeof(INfieldSurveyFieldworkService), typeof(NfieldSurveyFieldworkService) },
+            { typeof(INfieldSurveyGeneralSettingsService), typeof(NfieldSurveyGeneralSettingsService) },
             { typeof(INfieldAddressesService), typeof(NfieldAddressesService) },
             { typeof(INfieldSurveyPackageService), typeof(NfieldSurveyPackageService) },
             { typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService) },
             { typeof(INfieldSurveySampleDataService), typeof(NfieldSurveySampleDataService) },
             { typeof(INfieldSurveySampleService), typeof(NfieldSurveySampleService) },
             { typeof(INfieldSurveyGroupService), typeof(NfieldSurveyGroupService) },
+            { typeof(INfieldSurveyGroupAssignmentsService), typeof(NfieldSurveyGroupAssignmentsService) },
             { typeof(INfieldHttpClient), typeof(DefaultNfieldHttpClient) },
             { typeof(IFileSystem), typeof(FileSystem) },
             { typeof(INfieldEncryptionUtility), typeof(NfieldEncryptionUtility) },
@@ -72,7 +82,27 @@ namespace Nfield.Infrastructure
             { typeof(INfieldExternalApisService), typeof(NfieldExternalApisService) },
             { typeof(INfieldExternalApisLogService), typeof(NfieldExternalApisLogService) },
             { typeof(INfieldLocalUserService), typeof(NfieldLocalUserService) },
-            { typeof(INfieldCatiInterviewersService), typeof(NfieldCatiInterviewersService) }
+            { typeof(INfieldCatiInterviewersService), typeof(NfieldCatiInterviewersService) },
+            { typeof(INfieldSurveyVersionsService), typeof(NfieldSurveyVersionsService) },
+            { typeof(INfieldQuotaService), typeof(NfieldQuotaService) },
+            { typeof(INfieldSurveySamplingMethodService), typeof(NfieldSurveySamplingMethodService) },
+            { typeof(INfieldSurveyPerformanceService), typeof(NfieldSurveyPerformanceService) },
+            { typeof(INfieldTemplatesService), typeof(NfieldTemplatesService) },
+            { typeof(INfieldThemesService), typeof(NfieldThemesService) },
+            { typeof(INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService), typeof(NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService) },
+            { typeof(INfieldCapiInterviewersService), typeof(NfieldCapiInterviewersService) },
+            { typeof(INfieldDomainInterviewersWorklogService), typeof(NfieldDomainInterviewersWorklogService) },
+            { typeof(INfieldBlacklistService), typeof(NfieldBlacklistService) },
+            { typeof(INfieldRequestsService), typeof(NfieldRequestsService) },
+            { typeof(INfieldSamplingPointsService), typeof(NfieldSamplingPointsService) },
+            { typeof(INFieldMeService), typeof(NFieldMeService) },
+            { typeof(INfieldDeliveryRepositoriesService), typeof(NfieldDeliveryRepositoriesService) },
+            { typeof(INfieldDeliveryRepositoryFirewallRulesService), typeof(NfieldDeliveryRepositoryFirewallRulesService) },
+            { typeof(INfieldDeliveryRepositorySurveysService), typeof(NfieldDeliveryRepositorySurveysService) },
+            { typeof(INfieldDeliveryRepositoryUsersService), typeof(NfieldDeliveryRepositoryUsersService) },
+            { typeof(INfieldDeliverySettingsService), typeof(NfieldDeliverySettingsService) },
+            { typeof(INfieldDeliverySurveyPropertiesService), typeof(NfieldDeliverySurveyPropertiesService) },
+            { typeof(INfieldDeliverySurveysService), typeof(NfieldDeliverySurveysService) }
         };
 
         /// <summary>

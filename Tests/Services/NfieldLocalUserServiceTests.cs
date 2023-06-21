@@ -19,7 +19,6 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -82,6 +81,20 @@ namespace Nfield.Services
             Assert.Equal("user@neverland.com", result.Email);
             Assert.Equal("RegularUser", result.UserRole);
             Assert.Equal("user1", result.UserName);
+        }
+
+        [Fact]
+        public async Task CanResetAUser()
+        {
+
+            var id = Guid.NewGuid().ToString();
+            var changePasswordLocalUser = new ResetLocalUser
+            {
+                Password = "NewSecret"
+            };
+            await _target.ResetAsync(id, changePasswordLocalUser);
+
+            _mockedHttpClient.Verify(client => client.PatchAsJsonAsync(It.Is<Uri>(uri => uri.AbsoluteUri.EndsWith("LocalUsers/Password/"+id)), changePasswordLocalUser), Times.Once());
         }
 
         [Fact]
@@ -150,6 +163,7 @@ namespace Nfield.Services
         {
             var user1Id = Guid.NewGuid().ToString();
             var user2Id = Guid.NewGuid().ToString();
+            var lastLogonDateUser1 = DateTime.UtcNow.Subtract(TimeSpan.FromDays(2));
 
             var expectedUsers = new[]
             {
@@ -158,14 +172,16 @@ namespace Nfield.Services
                     Id = user1Id,
                     UserName = "user1",
                     Email = "p.pan@neverland.com",
-                    UserRole = "RegularUser"
+                    UserRole = "RegularUser",
+                    LastLogonDate = lastLogonDateUser1
                 },
                 new LocalUser
                 {
                     Id = user2Id,
                     UserName = "user2",
                     Email = "w.darling@neverland.com",
-                    UserRole = "Scripter"
+                    UserRole = "Scripter",
+                    LastLogonDate = null
                 }
             };
 
@@ -178,8 +194,48 @@ namespace Nfield.Services
             Assert.Equal(2, actualUsers.Count());
             var user1 = actualUsers.FirstOrDefault(u => u.Id == user1Id);
             Assert.Equal("user1", user1.UserName);
+            Assert.Equal(lastLogonDateUser1, user1.LastLogonDate);
             var user2 = actualUsers.FirstOrDefault(u => u.Id == user2Id);
             Assert.Equal("user2", user2.UserName);
+            Assert.Null(user2.LastLogonDate);
+        }
+
+        [Fact]
+        public async Task DownloadLogs()
+        {
+            const string activityId = "activity-id";
+            const string logsLink1 = "logs-link-1";
+
+            var query = new LogQueryModel
+            {
+                From = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1)),
+                To = DateTime.UtcNow
+            };
+
+            _mockedHttpClient
+               .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"LocalUsersLogs"), It.Is<LogQueryModel>(
+                   q => q.From == query.From && q.To == query.To)))
+               .Returns(
+                Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = activityId }))
+                    })).Verifiable();
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activityId}")))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = logsLink1, ActivityId = activityId, Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
+            // Test it using the model
+             var result = await _target.LogsAsync(query);
+            _mockedHttpClient.Verify();
+            Assert.Equal(logsLink1, result);    
         }
     }
 }

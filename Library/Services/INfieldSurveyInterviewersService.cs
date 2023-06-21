@@ -13,10 +13,9 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using Nfield.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using Nfield.Models;
 
 namespace Nfield.Services
 {
@@ -33,7 +32,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<IQueryable<SurveyInterviewerAssignmentModel>> GetAsync(string surveyId);
+        Task<IQueryable<InterviewerAssignmentModel>> GetAsync(string surveyId);
 
         /// <summary>
         /// Add an interviewer to a survey.

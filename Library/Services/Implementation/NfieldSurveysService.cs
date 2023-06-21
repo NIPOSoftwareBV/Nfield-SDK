@@ -68,6 +68,50 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
+        /// See <see cref="INfieldSurveysService.AddFromBlueprintAsync"/>
+        /// </summary>
+        public Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        {
+            if (blueprintSurveyId == null)
+            {
+                throw new ArgumentNullException(nameof(blueprintSurveyId));
+            }
+            if (string.IsNullOrEmpty(surveyName))
+            {
+                throw new ArgumentNullException(nameof(surveyName));
+            }
+
+            return Client.PostAsJsonAsync(new Uri(SurveysApi, "CreateSurveyFromBlueprint"), new
+                            {
+                                BlueprintSurveyId = blueprintSurveyId,
+                                SurveyName = surveyName,
+                                IncludedConfiguration = (int)includedConfiguration
+                            })
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<Survey>(task.Result))
+                         .FlattenExceptions();
+        }
+
+        public Task UpdateBlueprintFromSurveyAsync(string blueprintSurveyId, string surveyId, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        {
+            if (blueprintSurveyId == null)
+            {
+                throw new ArgumentNullException(nameof(blueprintSurveyId));
+            }
+            if (surveyId == null)
+            {
+                throw new ArgumentNullException(nameof(surveyId));
+            }
+
+            return Client.PutAsJsonAsync(new Uri(SurveyBlueprintsApi, blueprintSurveyId + "/Update"), new
+                            {
+                                SurveyId = surveyId,
+                                IncludedConfiguration = (int)includedConfiguration
+                            })
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
         /// See <see cref="INfieldSurveysService.RemoveAsync"/>
         /// </summary>
         public Task RemoveAsync(Survey survey)
@@ -182,6 +226,43 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.QuotaTargetsQueryAsync"/>
+        /// </summary>
+        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId)
+        {
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}");
+
+            var returned = Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SDK.Models.QuotaFrame>(stringTask.Result))
+                         .FlattenExceptions();
+            return returned;
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveysService.QuotaTargetsQueryAsync"/>
+        /// </summary>
+        public Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId, string eTag)
+        {
+            var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaTargetsQueryAsyncControllerName}/{eTag}");
+
+            var returned = Client.GetAsync(uri)
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<SDK.Models.QuotaFrame>(stringTask.Result))
+                         .FlattenExceptions();
+            return returned;
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveysService.OnlineQuotaQueryAsync"/>
+        /// </summary>
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
@@ -210,6 +291,9 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// <see cref="INfieldSurveysService.CreateOrUpdateOnlineQuotaAsync"/>
+        /// </summary>
         public Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
@@ -454,6 +538,24 @@ namespace Nfield.Services.Implementation
             return Client.DeleteAsync(uri).FlattenExceptions();
         }
 
+        public async Task<SDK.Models.DialMode> GetDialModeAsync(string surveyId)
+        {
+            var uri = GetDialModeUri(surveyId);
+            using (var response = await Client.GetAsync(uri).ConfigureAwait(false))
+            {
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var model = JsonConvert.DeserializeObject<DialModeModel>(result);
+                return model.DialMode;
+            }
+        }
+
+        public async Task SetDialModeAsync(string surveyId, SDK.Models.DialMode dialMode)
+        {
+            var uri = GetDialModeUri(surveyId);
+            var model = new DialModeModel { DialMode = dialMode };
+            (await Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false)).Dispose();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -482,6 +584,11 @@ namespace Nfield.Services.Implementation
             get { return "Quota"; }
         }
 
+        private static string QuotaTargetsQueryAsyncControllerName
+        {
+            get { return "QuotaTargets"; }
+        }
+
         private static string CountsControllerName
         {
             get { return "Counts"; }
@@ -495,6 +602,11 @@ namespace Nfield.Services.Implementation
         private Uri SurveysApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
+        }
+
+        private Uri SurveyBlueprintsApi
+        {
+            get { return new Uri(ConnectionClient.NfieldServerUri, "SurveyBlueprints/"); }
         }
 
         private static string SurveyInterviewerInstructionsControllerName
@@ -531,6 +643,15 @@ namespace Nfield.Services.Implementation
         {
             var fileNameString = !string.IsNullOrEmpty(fileName) ? Uri.EscapeUriString(fileName) : string.Empty;
             return new Uri(ConnectionClient.NfieldServerUri, $"{SamplingPointImageControllerName}/{surveyId}/SamplingPoint/{Uri.EscapeUriString(samplingPointId)}/Image/{fileNameString}");
+        }
+
+        /// <summary>
+        /// Returns the URI to get/set survey dialmode
+        /// <paramref name="surveyId"/>
+        /// </summary>
+        private Uri GetDialModeUri(string surveyId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/dialmode");
         }
     }
 
@@ -579,6 +700,11 @@ namespace Nfield.Services.Implementation
         /// The default interviewer instruction of a survey
         /// </summary>
         public string InterviewerInstruction { get; set; }
+    }
+
+    internal class DialModeModel
+    {
+        public SDK.Models.DialMode DialMode { get; set; }
     }
 
 }

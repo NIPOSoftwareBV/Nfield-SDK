@@ -46,7 +46,7 @@ namespace Nfield.Services
         {
             var expectedInterviewers = new[]
             {
-                new SurveyInterviewerAssignmentModel
+                new InterviewerAssignmentModel
                 {
                     InterviewerId = "id1",
                     IsActive = true,
@@ -56,7 +56,7 @@ namespace Nfield.Services
                     DroppedOutCount = 2,
                     RejectedCount = 2
                 },
-                new SurveyInterviewerAssignmentModel
+                new InterviewerAssignmentModel
                 {
                     InterviewerId = "id2",
                     IsActive = false,

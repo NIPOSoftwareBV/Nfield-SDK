@@ -24,8 +24,14 @@ namespace Nfield.Services
     public interface INfieldSurveyDataService
     {
         /// <summary>
-        /// Gets the download data url.
+        /// Gets the data url of a survey download request (for nfield manager surveys)
         /// </summary>
-        Task<BackgroundTask> PostAsync(SurveyDownloadDataRequest surveyDownloadDataRequest);
+        Task<string> PrepareDownload(string surveyId, SurveyDataRequest surveyDataRequest);
+
+        /// <summary>
+        /// Gets the data url of a single interview download request (for nfield manager surveys)
+        /// </summary>
+        Task<string> PrepareInterviewDownload(string surveyId, int interviewId, SurveyDataInterviewRequest surveyDataInterviewRequest);
+
     }
 }

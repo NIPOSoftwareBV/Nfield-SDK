@@ -23,6 +23,7 @@ using System.Net.Http;
 using System.Net;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nfield.Services
 {
@@ -149,7 +150,7 @@ namespace Nfield.Services
         public void TestChangePasswordAsync_InterviewerIsNull_ThrowsArgumentNullException()
         {
             var target = new NfieldInterviewersService();
-            Assert.Throws(typeof(ArgumentNullException), () => UnwrapAggregateException(target.ChangePasswordAsync(null, string.Empty)));
+            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.ChangePasswordAsync(null, string.Empty)));
         }
 
         [Fact]
@@ -241,7 +242,6 @@ namespace Nfield.Services
 
         #endregion
 
-
         #region RemoveInterviewerFromFieldworkOfficesAsync
 
         [Fact]
@@ -275,6 +275,54 @@ namespace Nfield.Services
 
         #endregion
 
+        #region GetInterviewersWorklogDownloadLinkAsync
+
+        [Fact]
+        public async Task DownloadLogs()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var target = new NfieldInterviewersService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            const string activityId = "activity-id";
+            const string logsLink1 = "logs-link-1";
+            const string logsLink2 = "logs-link-2";
+            var query = new LogQueryModel
+            {
+                From = DateTime.UtcNow.Subtract(TimeSpan.FromDays(1)),
+                To = DateTime.UtcNow
+            };
+
+            mockedHttpClient
+               .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"InterviewersWorklog"), It.Is<LogQueryModel>(
+                   q => q.From == query.From && q.To == query.To)))
+               .Returns(
+                Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { ActivityId = activityId }))
+                    })).Verifiable();
+
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/{activityId}")))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new { DownloadDataUrl = logsLink1, ActivityId = activityId, Status = 2 /* Succeeded */ }))
+                    })).Verifiable();
+
+            // Test it using the model
+            var result = await target.QueryLogsAsync(query);
+            mockedHttpClient.Verify();
+            Assert.Equal(logsLink1, result);
+
+        }
+
+        #endregion
 
     }
 }

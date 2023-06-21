@@ -116,7 +116,8 @@ namespace Nfield.Services.Implementation
                 Description = responseCode.Description,
                 IsDefinite = responseCode.IsDefinite,
                 IsSelectable = responseCode.IsSelectable,
-                AllowAppointment = responseCode.AllowAppointment
+                AllowAppointment = responseCode.AllowAppointment,
+                RelocationUrl = responseCode.RelocationUrl
             };
 
             return
@@ -197,5 +198,12 @@ namespace Nfield.Services.Implementation
         /// Determines if the Response code is meant for an appointment or not (IsIntermediate - true or false)
         /// </summary>
         public bool? AllowAppointment { get; set; }
+
+        /// <summary>
+        /// Relocation url of the response code
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings",
+            Justification = "Entity Framework, out of the box, can't map Uri's to a sql server data type")]
+        public string RelocationUrl { get; set; }
     }
 }

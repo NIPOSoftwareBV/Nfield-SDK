@@ -13,46 +13,30 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
+
 namespace Nfield.Models
 {
     /// <summary>
-    /// State of interviewer's assignment to a survey
+    /// Model for interviewer assignment
     /// </summary>
     public class SurveyInterviewerAssignmentModel
-    {
+    {  
         /// <summary>
-        /// InterviewerId
+        /// Assignment description
         /// </summary>
-        public string InterviewerId { get; set; }
-
+        public string Description { get; set; }        
         /// <summary>
-        /// Whether the interviewer is assigned to this survey
+        /// Target to distributedescription
         /// </summary>
-        public bool IsAssigned { get; set; }
-
+        public int? TargetToDistribute { get; set; }
         /// <summary>
-        /// Whether the interviewer has downloaded the survey
+        /// Assignment type
         /// </summary>
-        public bool IsActive { get; set; }
-
+        public string AssignmentType { get; set; }
         /// <summary>
-        /// Number of successfully completed interviews for this interviewer on this survey
+        /// Sampling points filter
         /// </summary>
-        public int SuccessfulCount { get; set; }
-
-        /// <summary>
-        /// Number of unsuccessfully completed interviews for this interviewer on this survey
-        /// </summary>
-        public int UnsuccessfulCount { get; set; }
-
-        /// <summary>
-        /// Number of dropped out interviews for this interviewer on this survey
-        /// </summary>
-        public int DroppedOutCount { get; set; }
-
-        /// <summary>
-        /// Number of rejected interviews for this interviewer on this survey
-        /// </summary>
-        public int RejectedCount { get; set; }
+        public IEnumerable<FilterWithOr> SamplingPointsFilter { get; set; }
     }
 }

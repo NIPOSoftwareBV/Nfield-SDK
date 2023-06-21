@@ -1,0 +1,16 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RelativePathToCodeAnalysis Condition="'$(RelativePathToCodeAnalysis)' == ''">..</RelativePathToCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <RunCodeAnalysis>false</RunCodeAnalysis><!-- disable legacy code analysis -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>$(RelativePathToCodeAnalysis)\CodeAnalysis\Standard Rules for NIPO Software.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisAdditionalOptions>/assemblyCompareMode:StrongNameIgnoringVersion</CodeAnalysisAdditionalOptions>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <Target Name="Standard Rules"></Target>
+</Project>

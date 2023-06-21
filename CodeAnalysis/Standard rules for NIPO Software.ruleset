@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="NIPO Software Standard Rules" Description="These include all standard rules with some modifications to the severity" ToolsVersion="16.0">
+  <IncludeAll Action="Warning" />
+</RuleSet>
