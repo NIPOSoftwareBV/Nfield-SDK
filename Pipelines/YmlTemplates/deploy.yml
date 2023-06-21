@@ -71,7 +71,7 @@ stages:
                 - task: GitHubRelease@1
                   condition: and (succeeded(), ne('${{ parameters.nuGetFeedType }}', 'external'))
                   inputs:
-                    gitHubConnection: 'niposoftware-github'
+                    gitHubConnection: 'github.com_AlbertoBelver' # OAuth Service Conection https://dev.azure.com/niposoftware/Nfield/_settings/adminservices
                     repositoryName: 'NIPOSoftwareBV/Nfield-SDK'
                     action: 'create'
                     target: '$(CommitHash)'
