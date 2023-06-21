@@ -43,9 +43,9 @@ stages:
     nuGetFeedType: internal
 
 ####################### EXTERNAL DEPLOY NUGET.ORG ####################
-- ${{ if startsWith(variables['Build.SourceBranchName'], 'refs/heads/release') }}:
-  - template: ./YmlTemplates/deploy.yml
-    parameters:
-      stageDependency: GetResources
-      pipelineDependency: SDKBuild
-      nuGetFeedType: external
+- template: ./YmlTemplates/deploy.yml
+  condition: startsWith('$(SourceBranchName)', 'refs/heads/release')
+  parameters:
+    stageDependency: GetResources
+    pipelineDependency: SDKBuild
+    nuGetFeedType: external
