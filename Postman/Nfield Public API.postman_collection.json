@@ -13373,7 +13373,6 @@
 									"}\r",
 									"\r",
 									"pm.test(\"Validate properties and set Event Subscription Name\", function () {\r",
-									"    const office = pm.response.json();\r",
 									"    pm.expect(validateProperties(eventSubscription)).to.be.true;\r",
 									"    pm.collectionVariables.set(\"EventSubscriptionName\", eventSubscription.EventSubscriptionName);\r",
 									"});\r",
