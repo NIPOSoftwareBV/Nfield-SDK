@@ -35,7 +35,7 @@ stages:
         instructions: 'Please validate the the nuget publishing'
         onTimeout: 'reject'
 
-####################### INTERNAL DEPLOY NFILED ####################
+####################### INTERNAL DEPLOY NFIELD ####################
 - template: ./YmlTemplates/deploy.yml
   parameters:
     stageDependency: GetResources

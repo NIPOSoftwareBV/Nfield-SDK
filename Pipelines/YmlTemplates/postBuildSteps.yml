@@ -1,5 +1,5 @@
 # Shared post build template, run after the build template. Currently used by
-# - Domain API pipeline
+# - Nfield SDK pipeline
 
 parameters:
   - name: ContentsToCopy

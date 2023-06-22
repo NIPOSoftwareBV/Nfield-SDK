@@ -49,14 +49,18 @@ else
     Write-Host "Suffix:" $Suffix
 }
 
-$releaseName = $branchName.Split("/");
+# $releaseName is use only in the github release cases
+$releaseName = $branchName.Split("/");  
 if ($releaseName.count -eq 2)
 {
+    # $branchName Example "release/2023-P1S2"
     $releaseName = $releaseName[1].Replace("-", " ")
 }
 else
 {
-    $releaseName = $releaseName[0].Replace("-", " ")
+    # The rest of the cases are only to have a friendly name but we are not going to use it
+    $releaseName = $branchName.Replace("-", " ")
+    $releaseName = $branchName.Replace("/", " ")
 }
 
 $Version = $VersionFormat.replace("{buildId}",$BuildId).replace("{suffix}",$Suffix)
