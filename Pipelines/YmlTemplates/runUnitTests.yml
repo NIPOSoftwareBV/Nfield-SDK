@@ -1,3 +1,8 @@
+# This yml template is called from the build templates
+#
+# 1. Run Nfield.SDK.Tests unit tests
+# 2. Creates failed test playlists in Artifacts folder
+
 steps:
   #Run All Unit TESTS Assemblies
   - task: VSTest@2

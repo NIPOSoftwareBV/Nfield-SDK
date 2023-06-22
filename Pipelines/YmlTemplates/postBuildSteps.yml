@@ -1,5 +1,8 @@
-# Shared post build template, run after the build template. Currently used by
-# - Nfield SDK pipeline
+# This yml template is called from the build templates
+#
+# 1. Copy Files to Artifact Directory
+# 2. Publish Artifact: for-deploy
+# 3. Adds a tag to the current build in DevOps
 
 parameters:
   - name: ContentsToCopy

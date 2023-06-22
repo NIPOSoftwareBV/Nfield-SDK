@@ -1,3 +1,10 @@
+# This yml template is called from the deploy-nuget templates
+#
+# 1. Publish NuGet package:
+#   - Internal (Nfield) or external (nuget.org) feed
+# 2. Gather Release Info (to create a GitHub Release) from Assets files
+# 3. Create a GitHub Release, only for nuget.org releases
+
 parameters:
   - name: stageDependency
     type: string
