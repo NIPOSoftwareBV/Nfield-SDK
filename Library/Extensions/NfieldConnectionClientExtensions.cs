@@ -13,13 +13,12 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Nfield.Exceptions;
 using Nfield.Infrastructure;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace Nfield.Extensions
 {
@@ -55,7 +54,7 @@ namespace Nfield.Extensions
                 {
                     case 0: // pending
                     case 1: // started
-                        Thread.Sleep(millisecondsTimeout: 200);
+                        await Task.Delay(TimeSpan.FromMilliseconds(200));
                         break;
                     case 2: // succeeded
                         return obj[fieldNameResult].Value<T>();
