@@ -13292,7 +13292,7 @@
 								"Subscriptions"
 							]
 						},
-						"description": "Gets a list of repository plans."
+						"description": "Gets a list of Event Subscriptions."
 					},
 					"response": []
 				},
@@ -13351,7 +13351,7 @@
 								}
 							]
 						},
-						"description": "Gets a list of repository plans."
+						"description": "Gets an existing Event Subscription."
 					},
 					"response": []
 				},
@@ -13415,7 +13415,7 @@
 								"Subscriptions"
 							]
 						},
-						"description": "Provisions a new data repository."
+						"description": "Creates a new Event Subscription."
 					},
 					"response": []
 				},
@@ -13474,7 +13474,7 @@
 								}
 							]
 						},
-						"description": "Provisions a new data repository."
+						"description": "Deletes an existing Event Subscription."
 					},
 					"response": []
 				},
@@ -13527,7 +13527,7 @@
 								}
 							]
 						},
-						"description": "Update a fieldwork office."
+						"description": "Updates an existing Event Subscription. Please note that when updating EventTypes you should provide the whole list of the events that you want to subscribe to."
 					},
 					"response": []
 				}
