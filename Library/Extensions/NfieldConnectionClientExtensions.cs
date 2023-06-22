@@ -34,39 +34,36 @@ namespace Nfield.Extensions
         }
 
         /// <summary>
-        /// Recursive method that polls the activity status until it completes.
+        /// Method that polls the activity status until it completes.
         /// </summary>
         /// <param name="connectionClient">NField Connection Client (this)</param>
         /// <param name="activityId">The id of the activity to wait for.</param>
         /// <param name="fieldNameResult">The name of the result field</param>
         /// <returns>The <see cref="BackgroundActivityStatus" /> id.</returns>
-        internal static Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient connectionClient, string activityId, string fieldNameResult)
+        internal static async Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient connectionClient, string activityId, string fieldNameResult)
         {
-            return connectionClient.Client.GetAsync(connectionClient.BackgroundActivityUrl(activityId))
-                .ContinueWith(response => response.Result.Content.ReadAsStringAsync())
-                .Unwrap()
-                .ContinueWith(content =>
+            while (true)
+            {
+                var response = await connectionClient.Client.GetAsync(connectionClient.BackgroundActivityUrl(activityId));
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                var obj = JObject.Parse(content);
+                var status = obj["Status"].Value<int>();
+
+                switch (status)
                 {
-                    var obj = JObject.Parse(content.Result);
-                    var status = obj["Status"].Value<int>();
-
-                    switch (status)
-                    {
-                        case 0: // pending
-                        case 1: // started
-                            Thread.Sleep(millisecondsTimeout: 200);
-                            return connectionClient.GetActivityResultAsync<T>(activityId, fieldNameResult);
-                        case 2: // succeeded
-                            var tcs = new TaskCompletionSource<T>();
-                            tcs.SetResult(obj[fieldNameResult].Value<T>());
-                            return tcs.Task;
-                        case 3: // failed
-                        default:
-                            throw new NfieldErrorException("Action did not complete successfully");
-                    }
-                })
-                .Unwrap();
+                    case 0: // pending
+                    case 1: // started
+                        Thread.Sleep(millisecondsTimeout: 200);
+                        break;
+                    case 2: // succeeded
+                        return obj[fieldNameResult].Value<T>();
+                    case 3: // failed
+                    default:
+                        throw new NfieldErrorException("Action did not complete successfully");
+                }
+            }
         }
-
     }
 }
