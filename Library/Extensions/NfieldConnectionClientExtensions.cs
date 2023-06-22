@@ -43,9 +43,9 @@ namespace Nfield.Extensions
         {
             while (true)
             {
-                var response = await connectionClient.Client.GetAsync(connectionClient.BackgroundActivityUrl(activityId));
+                var response = await connectionClient.Client.GetAsync(connectionClient.BackgroundActivityUrl(activityId)).ConfigureAwait(false);
 
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var obj = JObject.Parse(content);
                 var status = obj["Status"].Value<int>();
@@ -54,7 +54,7 @@ namespace Nfield.Extensions
                 {
                     case 0: // pending
                     case 1: // started
-                        await Task.Delay(TimeSpan.FromMilliseconds(200));
+                        await Task.Delay(TimeSpan.FromMilliseconds(200)).ConfigureAwait(false);
                         break;
                     case 2: // succeeded
                         return obj[fieldNameResult].Value<T>();
