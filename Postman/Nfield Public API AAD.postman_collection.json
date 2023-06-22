@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "91aa654e-f26f-492a-87e4-f9c00af8da68",
+		"_postman_id": "cfc0789f-cc24-4e5d-8735-27c8a3eb452b",
 		"name": "Nfield Public API AAD",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19213461"
+		"_exporter_id": "19438554"
 	},
 	"item": [
 		{
@@ -251,7 +251,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin-public-api}}/v1/Delivery/Plans",
+							"raw": "{{origin-public-api}}/v1/Delivery/Settings/Plans",
 							"host": [
 								"{{origin-public-api}}"
 							],
@@ -318,9 +318,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Settings/RepositoryStatuses",
+							"raw": "{{origin-public-api}}/v1/Delivery/Settings/RepositoryStatuses",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -451,7 +451,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/Statuses",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys",
 							"host": [
 								"{{origin-public-api}}"
 							],
@@ -517,9 +517,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -585,9 +585,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -651,9 +651,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -717,9 +717,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -783,9 +783,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -848,9 +848,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -911,9 +911,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Subscriptions",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Subscriptions",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -976,9 +976,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1043,9 +1043,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Credentials",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Credentials",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1111,9 +1111,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1178,9 +1178,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1246,9 +1246,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1312,9 +1312,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1377,9 +1377,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1446,9 +1446,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1511,9 +1511,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1577,9 +1577,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}Reinitiate",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}Reinitiate",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1643,9 +1643,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1711,9 +1711,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Metrics/1",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Metrics/1",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1780,9 +1780,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Subscriptions",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Subscriptions",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1849,9 +1849,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Activities",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Activities",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1887,9 +1887,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1923,9 +1923,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}/Reset",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}/Reset",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -1961,9 +1961,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -2001,9 +2001,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -2040,9 +2040,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -16547,6 +16547,345 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get Subscriptions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions"
+							]
+						},
+						"description": "Gets a list of repository plans."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Gets a list of repository plans."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (eventSubscription) => {\r",
+									"    return eventSubscription.EventSubscriptionName !== undefined\r",
+									"    && eventSubscription.Endpoint !== undefined\r",
+									"    && eventSubscription.EventTypes !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Validate properties and set Event Subscription Name\", function () {\r",
+									"    const office = pm.response.json();\r",
+									"    pm.expect(validateProperties(eventSubscription)).to.be.true;\r",
+									"    pm.collectionVariables.set(\"EventSubscriptionName\", eventSubscription.EventSubscriptionName);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EventSubscriptionName\": \"{{EventSubscriptionName}}\",\r\n    \"Endpoint\": \"{{EventSubscriptionWebHookUri}}\",\r\n    \"EventTypes\":[\"TargetReached\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions"
+							]
+						},
+						"description": "Provisions a new data repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Provisions a new data repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Endpoint\": \"https://www.anothervalidwebhookuri.com\",\r\n  \"EventTypes\": [\"QuotaFull\",\"TargetReached\"]\r\n}"
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Update a fieldwork office."
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
@@ -16554,7 +16893,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "{{BearerToken}}",
+				"value": "{{AuthenticationToken}}",
 				"type": "string"
 			}
 		]
@@ -16687,6 +17026,32 @@
 		{
 			"key": "InternalVariable",
 			"value": ""
+		},
+		{
+			"key": "EventSubscriptionName",
+			"value": "myCustomSubscription",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "userRole",
+			"value": ""
+		},
+		{
+			"key": "BearerToken",
+			"value": ""
+		},
+		{
+			"key": "EventsApiAccessToken",
+			"value": ""
+		},
+		{
+			"key": "EventSubscriptionWebHookUri",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
