@@ -16893,7 +16893,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "{{AuthenticationToken}}",
+				"value": "{{BearerToken}}",
 				"type": "string"
 			}
 		]
@@ -17033,19 +17033,7 @@
 			"type": "string"
 		},
 		{
-			"key": "userId",
-			"value": ""
-		},
-		{
-			"key": "userRole",
-			"value": ""
-		},
-		{
 			"key": "BearerToken",
-			"value": ""
-		},
-		{
-			"key": "EventsApiAccessToken",
 			"value": ""
 		},
 		{
