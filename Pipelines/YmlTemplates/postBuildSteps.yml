@@ -1,0 +1,38 @@
+# This yml template is called from the build templates
+#
+# 1. Copy Files to Artifact Directory
+# 2. Publish Artifact: for-deploy
+# 3. Adds a tag to the current build in DevOps
+
+parameters:
+  - name: ContentsToCopy
+    type: string
+
+steps:
+  # Copy files that are going to be published
+  - task: CopyFiles@2
+    displayName: "Copy Files to Artifact Directory"
+    inputs:
+      SourceFolder: "$(Build.SourcesDirectory)"
+      Contents: " ${{ parameters.ContentsToCopy }}"
+      TargetFolder: "$(Build.ArtifactStagingDirectory)"
+
+  # Publish the 'for-deploy' artifact
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: for-deploy"
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "for-deploy"
+
+  # Tag the build with the name of the branch
+  - task: PowerShell@1
+    displayName: "Tag the build with the name of the branch"
+    inputs:
+      scriptType: inlineScript
+      inlineScript: |
+        Write-Host $(Build.SourceBranch)
+        $branchName = "$(Build.SourceBranch)".Replace("refs/heads/", "")
+        Write-Host $branchName
+        Write-Host ("##vso[build.addbuildtag]$branchName")
+      failOnStandardError: false
+    continueOnError: true
