@@ -1,3 +1,4 @@
+# release template for the SDK pipeline
 name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
 
 pr: none
@@ -36,11 +37,12 @@ stages:
         onTimeout: 'reject'
 
 ####################### INTERNAL DEPLOY NFIELD ####################
-- template: ./YmlTemplates/deploy.yml
-  parameters:
-    stageDependency: GetResources
-    pipelineDependency: SDKBuild
-    nuGetFeedType: internal
+- ${{ if not(startsWith(variables['Build.SourceBranch'], 'refs/heads/release')) }}:
+  - template: ./YmlTemplates/deploy.yml
+    parameters:
+      stageDependency: GetResources
+      pipelineDependency: SDKBuild
+      nuGetFeedType: internal
 
 ####################### EXTERNAL DEPLOY NUGET.ORG ####################
 - ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release') }}:
