@@ -42,5 +42,14 @@ namespace Nfield.Models
         /// Indicates if script with unfixed positions is allowed
         /// </summary>
         public bool UnfixedIsOk { get; set; }
+
+        /// <summary>
+        /// Indication to use the legacy parser. The legacy parser is more lenient regarding commands
+        /// that are not supported in Nfield.
+        ///
+        /// Please note that the legacy parser will be deprecated in the future and it
+        /// is prudent to update scripts to support the latest parser.
+        /// </summary>
+        public bool UseLegacyParser { get; set; }
     }
 }

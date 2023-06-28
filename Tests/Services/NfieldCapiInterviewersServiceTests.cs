@@ -33,6 +33,7 @@ namespace Nfield.Services
     public class NfieldCapiInterviewersServiceTests : NfieldServiceTestsBase
     {
         private const string CapiInterviewersEndpoint = "CapiInterviewers/";
+        private const string CapiInterviewersFieldworkOfficesRoutePart = "FieldworkOffices";
         private const string InterviewerId = "Interviewer X";
 
         private readonly Uri _capiInterviewersApi;
@@ -192,7 +193,75 @@ namespace Nfield.Services
             Assert.Equal(interviewer.InterviewerId, actual.InterviewerId);
         }
 
-#endregion
+        #endregion
+
+        #region AddInterviewerToFieldworkOfficesAsync
+
+        [Fact]
+        public async Task TestAddInterviewerToFieldworkOfficesAsync_CallsToApiProperly()
+        {
+            // Arrange
+            const string InterviewerId = "InterviewerId1";
+            const string OfficeId = "OfficeID1";
+            var endpointUri= new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersFieldworkOfficesRoutePart}/{OfficeId}");
+            _mockedHttpClient
+                .Setup(client => client.PatchAsJsonAsync(endpointUri, string.Empty))
+                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+
+            // Act
+            await _target.AddInterviewerToFieldworkOfficesAsync(InterviewerId, OfficeId);
+
+            // Assert
+            _mockedHttpClient.Verify();
+        }
+
+        #endregion
+
+        #region RemoveInterviewerFromFieldworkOfficesAsync
+
+        [Fact]
+        public async Task TestRemoveInterviewerFromFieldworkOfficesAsync_CallsToApiProperly()
+        {
+            // Arrange
+            const string InterviewerId = "InterviewerId1";
+            const string OfficeId = "OfficeID1";
+            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersFieldworkOfficesRoutePart}/{OfficeId}");
+            _mockedHttpClient
+                .Setup(client => client.DeleteAsync(endpointUri))
+                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+
+            // Act
+            await _target.RemoveInterviewerFromFieldworkOfficesAsync(InterviewerId, OfficeId);
+
+            // Assert
+            _mockedHttpClient.Verify();
+        }
+
+        #endregion
+
+        #region RemoveInterviewerFromFieldworkOfficesAsync
+
+        [Fact]
+        public async Task TestQueryOfficesAsync_CallsToApiProperly()
+        {
+            // Arrange
+            const string InterviewerId = "InterviewerId1";
+            const string OfficeId = "OfficeID1";
+            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersFieldworkOfficesRoutePart}");
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(endpointUri))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new[] { OfficeId} )))).Verifiable();
+
+            // Act
+            var result = await _target.QueryOfficesAsync(InterviewerId);
+
+            // Assert
+            _mockedHttpClient.Verify();
+            Assert.Single(result);
+            Assert.Equal(OfficeId, result.First());
+        }
+
+        #endregion
 
         #region private methods
         private StringContent SerializedCapiInterviewer()

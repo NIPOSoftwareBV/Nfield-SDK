@@ -52,6 +52,8 @@ namespace Nfield.Services
                     CreationDate = new DateTime(2020, 1, 1),
                     LastDataDownloadDate = new DateTime(2020,1,2),
                     LastDataCollectionDate = new DateTime(2020, 1, 3),
+                    WillBeStoppedOn = new DateTime(2022, 10, 2),
+                    WillBeDeletedOn = new DateTime(2022, 10, 3),
                     State = SurveyStatus.UnderConstruction,
                     Channel = SurveyChannel.Online
                 };
@@ -85,6 +87,8 @@ namespace Nfield.Services
                 Assert.Equal(expectedSurveyResource.CreationDate, actualSurveyResource.CreationDate);
                 Assert.Equal(expectedSurveyResource.LastDataDownloadDate, actualSurveyResource.LastDataDownloadDate);
                 Assert.Equal(expectedSurveyResource.LastDataCollectionDate, actualSurveyResource.LastDataCollectionDate);
+                Assert.Equal(expectedSurveyResource.WillBeStoppedOn, actualSurveyResource.WillBeStoppedOn);
+                Assert.Equal(expectedSurveyResource.WillBeDeletedOn, actualSurveyResource.WillBeDeletedOn);
                 Assert.Equal(expectedSurveyResource.State, actualSurveyResource.State);
                 Assert.Equal(expectedSurveyResource.Channel, actualSurveyResource.Channel);
             }

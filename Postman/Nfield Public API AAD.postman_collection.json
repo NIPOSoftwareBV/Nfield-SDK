@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "6e12f0f8-b7a4-4e5d-bdab-efb8d7328f46",
+		"_postman_id": "23953f1e-7a67-499b-9011-7b2a7bfbf77e",
 		"name": "Nfield Public API AAD",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "6882687"
+		"_exporter_id": "19438554"
 	},
 	"item": [
 		{
@@ -54,9 +54,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundActivities/:ActivityId",
+							"raw": "{{origin-public-api}}/v1/BackgroundActivities/:ActivityId",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -117,9 +117,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundTasks",
+							"raw": "{{origin-public-api}}/v1/BackgroundTasks",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -174,9 +174,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/BackgroundTasks/:TaskId",
+							"raw": "{{origin-public-api}}/v1/BackgroundTasks/:TaskId",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -200,7 +200,7 @@
 			"name": "Delivery",
 			"item": [
 				{
-					"name": "Get Plans",
+					"name": "Get Settings Plans",
 					"event": [
 						{
 							"listen": "test",
@@ -251,17 +251,85 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Plans",
+							"raw": "{{origin-public-api}}/v1/Delivery/Settings/Plans",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
 								"Delivery",
+								"Settings",
 								"Plans"
 							]
 						},
 						"description": "Gets a list of repository plans."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Settings Repository Statuses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Settings/RepositoryStatuses",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Settings",
+								"RepositoryStatuses"
+							]
+						},
+						"description": "Gets a list of repository statuses."
 					},
 					"response": []
 				},
@@ -317,9 +385,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories",
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -332,7 +400,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Repositories Statuses",
+					"name": "Get Surveys",
 					"event": [
 						{
 							"listen": "test",
@@ -383,18 +451,1608 @@
 							}
 						},
 						"url": {
-							"raw": "{{origin}}/v1/Delivery/Repositories/Statuses",
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys"
+							]
+						},
+						"description": "Gets a list of surveys that can be added to a repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Survey Properties",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties"
+							]
+						},
+						"description": "Gets the properties for the selected survey."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties",
+								"{{PropertyId}}"
+							]
+						},
+						"description": "Gets the property for the selected survey based on the given identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties",
+								"{{PropertyId}}"
+							]
+						},
+						"description": "Deletes the selected property from the survey."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Key\": \"propertyKey\",\r\n    \"Value\": \"propertyValue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties/{{PropertyId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties",
+								"{{PropertyId}}"
+							]
+						},
+						"description": "Updates the selected survey property's values."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Survey Property",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Key\": \"propertyKey\",\r\n    \"Value\": \"propertyValue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Surveys/{{SurveyId}}/Properties",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Surveys",
+								"{{SurveyId}}",
+								"Properties"
+							]
+						},
+						"description": "Adds the selected properties to the survey."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Provision Repository",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"RepositoryName\",\r\n    \"PlanId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories"
+							]
+						},
+						"description": "Provisions a new data repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Change Repository Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"PlanId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
 								"Delivery",
 								"Repositories",
-								"Statuses"
+								"{{RepositoryId}}",
+								"Subscriptions"
 							]
 						},
-						"description": "Gets a list of repository statuses."
+						"description": "Changes the subscription plan of a repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}"
+							]
+						},
+						"description": "Deletes an existing data repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Credentials",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Credentials"
+							]
+						},
+						"description": "Gets the credentials (including server information) to connect to a repository database."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}"
+							]
+						},
+						"description": "Gets the repository for the provided identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Firewall Rules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules"
+							]
+						},
+						"description": "StartFragment\n\nGets the firewall rules configured for the repository database.\n\nEndFragment"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Firewall Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules",
+								"{{FirewallRuleId}}"
+							]
+						},
+						"description": "Gets the firewall rule for the requested repository based on the given identifier."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Create Repository Firewall Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 42,\r\n    \"Name\": \"FirewallRuleName\",\r\n    \"StartIpAddress\": \"FirewallRuleStartIpAddress\",\r\n    \"EndIpAddress\": \"FirewallRuleEndIpAddress\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules"
+							]
+						},
+						"description": "Adds a firewall rule to allow access to repository database for specific IP addresses."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository Firewall Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/FirewallRules/{{FirewallRuleId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"FirewallRules",
+								"{{FirewallRuleId}}"
+							]
+						},
+						"description": "Deletes the specified firewall rule from the Repository database."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Surveys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys"
+							]
+						},
+						"description": "Gets a list of the surveys of the given repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository Survey",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys",
+								"{{SurveyId}}"
+							]
+						},
+						"description": "Deletes the selected survey from the repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Put Reinitiate Repository Survey",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys/{{SurveyId}}Reinitiate",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys",
+								"{{SurveyId}}Reinitiate"
+							]
+						},
+						"description": "Reinitiates a paused Survey in the selected Repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Repository Surveys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\"SurveyId1\", \"SurveyId2\"]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Surveys",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Surveys"
+							]
+						},
+						"description": "Adds the selected surveys to the repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Metrics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Metrics/1",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Metrics",
+								"1"
+							]
+						},
+						"description": "Gets performance metrics for the repository."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Subscriptions Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Logs",
+								"Subscriptions"
+							]
+						},
+						"description": "Gets repository subscription logs."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Activities Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Logs/Activities",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Logs",
+								"Activities"
+							]
+						},
+						"description": "Gets repository activity logs."
+					},
+					"response": []
+				},
+				{
+					"name": "Post Repository User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"UserName\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Reset Repository User Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}/Reset",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users",
+								"{{UserId}}",
+								"Reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Repository User Password",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users",
+								"{{UserId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Repository User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Delivery/Repositories/{{RepositoryId}}/Users/{{UserId}}",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Delivery",
+								"Repositories",
+								"{{RepositoryId}}",
+								"Users",
+								"{{UserId}}"
+							]
+						}
 					},
 					"response": []
 				}
@@ -462,9 +2120,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Offices/:OfficeId",
+									"raw": "{{origin-public-api}}/v1/Offices/:OfficeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -537,9 +2195,9 @@
 									"raw": "{\r\n  \"OfficeName\": \"Postman office\",\r\n  \"Description\": \"Postman description\"\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices",
+									"raw": "{{origin-public-api}}/v1/Offices",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -592,9 +2250,9 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices/:OfficeId",
+									"raw": "{{origin-public-api}}/v1/Offices/:OfficeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -673,9 +2331,9 @@
 									"raw": "{\r\n  \"OfficeName\": \"Postman office updated\",\r\n  \"Description\": \"Postman description updated\"\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Offices/:OfficeId",
+									"raw": "{{origin-public-api}}/v1/Offices/:OfficeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -750,9 +2408,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/Offices",
+							"raw": "{{origin-public-api}}/v1/Offices",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -849,9 +2507,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1//Interviewers/:InterviewerId/Offices",
+													"raw": "{{origin-public-api}}/v1//Interviewers/:InterviewerId/Offices",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -921,9 +2579,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1//Interviewers/:InterviewerId/Offices",
+													"raw": "{{origin-public-api}}/v1//Interviewers/:InterviewerId/Offices",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -992,9 +2650,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Offices/:OfficeId",
+													"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId/Offices/:OfficeId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -1097,9 +2755,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1193,9 +2851,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/GetByClientId/:ClientInterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/GetByClientId/:ClientInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1288,9 +2946,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/",
+											"raw": "{{origin-public-api}}/v1/Interviewers/",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1372,9 +3030,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1441,9 +3099,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1531,9 +3189,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1628,9 +3286,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Interviewers/:InterviewerId/Assignments",
+											"raw": "{{origin-public-api}}/v1/Interviewers/:InterviewerId/Assignments",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1732,9 +3390,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Interviewers/",
+									"raw": "{{origin-public-api}}/v1/Interviewers/",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -1805,9 +3463,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/InterviewersWorklog",
+									"raw": "{{origin-public-api}}/v1/InterviewersWorklog",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -1888,9 +3546,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -1967,9 +3625,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2040,9 +3698,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2109,9 +3767,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/CatiInterviewers/:CatiInterviewerId",
+											"raw": "{{origin-public-api}}/v1/CatiInterviewers/:CatiInterviewerId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2191,9 +3849,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/CatiInterviewers/",
+									"raw": "{{origin-public-api}}/v1/CatiInterviewers/",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2272,9 +3930,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/PasswordSettings",
+									"raw": "{{origin-public-api}}/v1/PasswordSettings",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2347,9 +4005,9 @@
 									"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"MinCharsetsInPassword\": 2,\r\n    \"MinPasswordLength\": 6,\r\n    \"PasswordHistoryLength\": 1\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/PasswordSettings",
+									"raw": "{{origin-public-api}}/v1/PasswordSettings",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2423,9 +4081,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2505,9 +4163,9 @@
 											"raw": "{\n    \"UserName\": \"Postman User\",\n    \"FirstName\": \"Postman 1\",\n    \"LastName\": \"Postman 2\",\n    \"Email\": \"TestUser@TestSite.com\",\n    \"UserRole\": \"RegularUser\",\n\t\"password\":\"passowrd\"\n}\n"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers",
+											"raw": "{{origin-public-api}}/v1/LocalUsers",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2582,9 +4240,9 @@
 											"raw": "{\n  \"FirstName\": \"Postman updated 1\",\n  \"LastName\": \"Postman updated 2\",\n  \"Email\": \"TestUser@TestSite.com\",\n  \"UserRole\": \"DomainAdministrator\"\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2623,9 +4281,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2689,9 +4347,9 @@
 											"raw": "{\n    \"Password\": \"password\"\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/LocalUsers/Password/:IdentityId",
+											"raw": "{{origin-public-api}}/v1/LocalUsers/Password/:IdentityId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -2770,9 +4428,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/LocalUsers",
+									"raw": "{{origin-public-api}}/v1/LocalUsers",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2838,9 +4496,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/LocalUsersLogs",
+									"raw": "{{origin-public-api}}/v1/LocalUsersLogs",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -2905,9 +4563,9 @@
 							"raw": "{\n  \"Domain\": \"{{DomainTestName}}\",\n  \"Username\": \"{{DomainTestUserName}}\",\n  \"Password\": \"{{DomainTestUserPassword}}\"\n}"
 						},
 						"url": {
-							"raw": "{{origin}}/v1/SignIn",
+							"raw": "{{origin-public-api}}/v1/SignIn",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -2970,9 +4628,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/Me/Role",
+							"raw": "{{origin-public-api}}/v1/Me/Role",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -3017,9 +4675,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/:ThemeId",
+									"raw": "{{origin-public-api}}/v1/Themes/:ThemeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3090,9 +4748,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Themes?templateId={{TemplateId}}&themeName={{ThemeTestName}}",
+									"raw": "{{origin-public-api}}/v1/Themes?templateId={{TemplateId}}&themeName={{ThemeTestName}}",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3138,9 +4796,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Themes/:ThemeId",
+									"raw": "{{origin-public-api}}/v1/Themes/:ThemeId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3205,9 +4863,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Templates",
+									"raw": "{{origin-public-api}}/v1/Templates",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3284,9 +4942,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/SurveyResources",
+									"raw": "{{origin-public-api}}/v1/SurveyResources",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3381,9 +5039,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
+											"raw": "{{origin-public-api}}/v1/ExternalApis/:ApiName",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3472,9 +5130,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis",
+											"raw": "{{origin-public-api}}/v1/ExternalApis",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3557,9 +5215,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis",
+											"raw": "{{origin-public-api}}/v1/ExternalApis",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3619,9 +5277,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ExternalApis/:ApiName",
+											"raw": "{{origin-public-api}}/v1/ExternalApis/:ApiName",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3715,9 +5373,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/ExternalApis",
+									"raw": "{{origin-public-api}}/v1/ExternalApis",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -3793,9 +5451,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3884,9 +5542,9 @@
 											"raw": "{\r\n    \"Description\": \"Description (Basic) Updated\",\r\n    \"Client\": \"ClientName(Basic) Updated\",\r\n    \"Name\": \"Basic\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -3958,9 +5616,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -4046,9 +5704,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/GeneralSettings/Owner",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -4145,9 +5803,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments/QuotaTargets",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments/QuotaTargets",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -4223,9 +5881,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers/:InterviewerId/Assignments",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -4300,9 +5958,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/Assignment",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Assignment",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -4379,9 +6037,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -4451,9 +6109,9 @@
 													"raw": "{\r\n  \"InterviewerId\": \"{{InterviewerId}}\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviewers",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviewers",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -4522,9 +6180,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Distribute ",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Distribute ",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -4595,9 +6253,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -4668,9 +6326,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions/:InstructionsFileName",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewerInstructions/:InstructionsFileName",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -4744,9 +6402,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewerInstructions",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewerInstructions",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -4835,9 +6493,9 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -4932,9 +6590,9 @@
 																			"raw": "{\r\n  \"Target\": 100\r\n}"
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets/:QuotaLevelId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -5025,9 +6683,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/QuotaTargets",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -5133,9 +6791,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -5213,9 +6871,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments/:InterviewerId",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -5305,9 +6963,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Assignments",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -5382,9 +7040,9 @@
 																			}
 																		],
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
+																			"raw": "{{origin-public-api}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
-																				"{{origin}}v1"
+																				"{{origin-public-api}}v1"
 																			],
 																			"path": [
 																				"Surveys",
@@ -5472,9 +7130,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
+																			"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																			"host": [
-																				"{{origin}}"
+																				"{{origin-public-api}}"
 																			],
 																			"path": [
 																				"v1",
@@ -5549,9 +7207,9 @@
 																			}
 																		},
 																		"url": {
-																			"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
+																			"raw": "{{origin-public-api}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/:AddressId",
 																			"host": [
-																				"{{origin}}v1"
+																				"{{origin-public-api}}v1"
 																			],
 																			"path": [
 																				"Surveys",
@@ -5627,9 +7285,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -5695,9 +7353,9 @@
 																	}
 																],
 																"url": {
-																	"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/Count",
+																	"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Addresses/Count",
 																	"host": [
-																		"{{origin}}"
+																		"{{origin-public-api}}"
 																	],
 																	"path": [
 																		"v1",
@@ -5772,9 +7430,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -5857,9 +7515,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -5941,9 +7599,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6021,9 +7679,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Activate",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Activate",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6102,9 +7760,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Replace",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId/Replace",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6179,9 +7837,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
+															"raw": "{{origin-public-api}}v1/Surveys/:SurveyId/SamplingPoints/:SamplingPointId",
 															"host": [
-																"{{origin}}v1"
+																"{{origin-public-api}}v1"
 															],
 															"path": [
 																"Surveys",
@@ -6229,9 +7887,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6309,9 +7967,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6377,9 +8035,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image ",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoint/:SamplingPointId/Image ",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6471,9 +8129,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6539,9 +8197,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPointsAssignments",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -6612,9 +8270,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6686,9 +8344,9 @@
 													"raw": "{\r\n  \"SamplingMethod\": \"FreeIntercept\"\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingMethod",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingMethod",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6750,9 +8408,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6820,9 +8478,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Activate",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/Activate",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6882,9 +8540,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/SamplingPoints/Count ",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/Count ",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -6965,9 +8623,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -7033,9 +8691,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/DialMode",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DialMode",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -7140,9 +8798,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -7223,9 +8881,9 @@
 													"raw": "{\r\n  \"Id\": \"{{EmailSettingsId}}\",\r\n  \"FromAddress\": \"updated@yellow.niposoftware-dev.com\",\r\n  \"FromName\": \"updatedstring 1\",\r\n  \"ReplyToAddress\": \"updatedReplyTo@yellow.niposoftware-dev.com\",\r\n  \"PostalAddress\": \"updatedstring3\",\r\n  \"EmailColumn\": null\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/EmailSettings",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/EmailSettings",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -7312,9 +8970,9 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"name\",\r\n  \"Subject\": \"subject\",\r\n  \"Body\": \"{unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7394,9 +9052,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates/",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7476,9 +9134,9 @@
 															"raw": "{\r\n  \"InvitationType\": \"1\",\r\n  \"Name\": \"other name\",\r\n  \"Subject\": \"other subject\",\r\n  \"Body\": \"other body with {unsubscribe-link}  {company-postal-address}\"\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7546,9 +9204,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationTemplates/:InvitationTemplateId",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7626,9 +9284,9 @@
 															"raw": "{\r\n  \"Name\": \"name\",\r\n  \"EmailColumnName\": \"mail\",\r\n  \"ScheduledFor\": \"2050-06-22T12:02:00\",\r\n  \"InvitationTemplateId\": \"{{InvitationTemplateId}}\",\r\n  \"Filters\": \r\n  [\r\n      {\r\n           \"Name\": \"mail\",\r\n           \"Op\": \"eq\",\r\n           \"Value\": \"mail@mail.com\"\r\n      }\r\n  ]\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InviteRespondents",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7717,9 +9375,9 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/InviteRespondents/SurveysInvitationStatus",
+															"raw": "{{origin-public-api}}/v1/Surveys/InviteRespondents/SurveysInvitationStatus",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7807,9 +9465,9 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/SurveyBatchesStatus",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InviteRespondents/SurveyBatchesStatus",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7884,9 +9542,9 @@
 															"raw": "{\r\n  \"Script\": \"*MERGE \\\"destinationlist\\\"\\r\\n*QUESTION 1 *CODES 61L1 *LIST \\\"destination\\\"\\r\\nWhat is your destination (postman)?\\r\\n*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/:BatchName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InviteRespondents/InvitationStatus/:BatchName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -7974,9 +9632,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InvitationImages/:FileName",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InvitationImages/:FileName",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8059,9 +9717,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Package?type=1",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Package?type=1",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8145,9 +9803,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8214,9 +9872,9 @@
 													"raw": "[\r\n  {\r\n    \"Id\": \"{{LinkPublicId}}\",\r\n    \"LinkType\": \"LiveId\",\r\n    \"Active\": false,\r\n    \"Url\": \"https://test.url/zzzzzzzzzzz\"\r\n  }\r\n]"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/PublicIds",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/PublicIds",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8295,9 +9953,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8364,9 +10022,9 @@
 													"raw": "{\r\n  \"PackageType\": 1,\r\n  \"ForceUpgrade\": 0\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Publish",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8437,9 +10095,9 @@
 													"raw": "{\r\n  \"PackageType\": 2,\r\n  \"ForceUpgrade\": 1\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Publish/Start",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Publish/Start",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8522,9 +10180,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8618,9 +10276,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8708,9 +10366,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8784,9 +10442,9 @@
 															}
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes/:ResponseCode",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -8865,9 +10523,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/ResponseCodes",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ResponseCodes",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -8933,9 +10591,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Status",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Status",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -9020,9 +10678,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Counts",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Counts",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -9086,9 +10744,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Start",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Start",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -9156,9 +10814,9 @@
 											"raw": "{\r\n  \"TerminateRunningInterviews\": true\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Fieldwork/Stop",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Fieldwork/Stop",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -9253,9 +10911,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality/:InterviewId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewQuality/:InterviewId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9344,9 +11002,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewQuality",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9423,9 +11081,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Interviews/:InterviewId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Interviews/:InterviewId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9522,9 +11180,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewQuality",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewQuality",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -9599,9 +11257,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -9685,9 +11343,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewInteractionsSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -9800,9 +11458,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9909,9 +11567,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -9984,9 +11642,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10084,9 +11742,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/LanguageTranslations/",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/LanguageTranslations/",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -10164,9 +11822,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10187,85 +11845,6 @@
 															]
 														},
 														"description": "Streams the needed media file."
-													},
-													"response": []
-												},
-												{
-													"name": "Upload Media File",
-													"event": [
-														{
-															"listen": "test",
-															"script": {
-																"exec": [
-																	"pm.test(\"Status code is 201\", function () {",
-																	"    pm.response.to.have.status(201);",
-																	"});",
-																	"",
-																	"pm.test(\"Status code name has string\", function () {",
-																	"    pm.response.to.have.status(\"Created\");",
-																	"});"
-																],
-																"type": "text/javascript"
-															}
-														}
-													],
-													"protocolProfileBehavior": {
-														"disabledSystemHeaders": {
-															"content-type": true
-														}
-													},
-													"request": {
-														"auth": {
-															"type": "bearer",
-															"bearer": [
-																{
-																	"key": "token",
-																	"value": "{{BearerToken}}",
-																	"type": "string"
-																}
-															]
-														},
-														"method": "PUT",
-														"header": [
-															{
-																"key": "Content-Type",
-																"value": "application/octet-stream"
-															},
-															{
-																"key": "X-Nfield-Domain",
-																"value": "{{DomainTestName}}"
-															}
-														],
-														"body": {
-															"mode": "file",
-															"file": {
-																"src": "/C:/repo_1/Nfield-SDK/Postman/Survey/bungalow.jpg"
-															}
-														},
-														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
-															"host": [
-																"{{origin}}"
-															],
-															"path": [
-																"v1",
-																"Surveys",
-																":SurveyId",
-																"MediaFiles",
-																":FileName"
-															],
-															"variable": [
-																{
-																	"key": "SurveyId",
-																	"value": "{{SurveyId}}"
-																},
-																{
-																	"key": "FileName",
-																	"value": "{{FileName}}"
-																}
-															]
-														},
-														"description": "Creates or update the survey media file."
 													},
 													"response": []
 												},
@@ -10313,9 +11892,9 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10388,9 +11967,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10451,9 +12030,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/MediaFiles/Count",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/Count",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10526,9 +12105,9 @@
 													"raw": "{\r\n  \"Script\": \"*END\",\r\n  \"FileName\": \"destination\",\r\n  \"UnfixedIsOk\": true\r\n}"
 												},
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Script",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10591,9 +12170,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Script",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10656,9 +12235,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/Script/:eTag",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Script/:eTag",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -10734,9 +12313,9 @@
 															"raw": "*LIST destination\r\n1:Amsterdam\r\n2:Buenos Aires\r\n3:Madrid\r\n4:Hong Kong"
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10785,9 +12364,9 @@
 															}
 														],
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10840,9 +12419,9 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments/:FragmentName",
 															"host": [
-																"{{origin}}"
+																"{{origin-public-api}}"
 															],
 															"path": [
 																"v1",
@@ -10915,9 +12494,9 @@
 													}
 												],
 												"url": {
-													"raw": "{{origin}}/v1/Surveys/:SurveyId/ScriptFragments",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ScriptFragments",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -11023,9 +12602,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Counts",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Counts",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11095,9 +12674,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Live",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Performance/Metrics/Live",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11169,9 +12748,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Performance/Metrics/Test",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Performance/Metrics/Test",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11248,9 +12827,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11322,9 +12901,9 @@
 											"raw": "{\r\n    \"Target\": 10000,\r\n    \"VariableDefinitions\": [\r\n        {\r\n            \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n            \"Name\": \"Age\",\r\n            \"OdinVariableName\": \"age\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n                    \"Name\": \"10\"\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n            \"Name\": \"Gender\",\r\n            \"OdinVariableName\": \"gender\",\r\n            \"IsSelectionOptional\": null,\r\n            \"IsMulti\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n                    \"Name\": \"M\"\r\n                }\r\n            ]\r\n        }\r\n    ],\r\n    \"FrameVariables\": [\r\n        {\r\n            \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n            \"DefinitionId\": \"00000000-1111-2222-3333-444444444444\",\r\n            \"Name\": \"Age\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n                    \"DefinitionId\": \"00000000-1111-2222-3333-444444444444\",\r\n                    \"Name\": \"10\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n            \"DefinitionId\": \"00000000-1111-2222-3333-444444444444\",\r\n            \"Name\": \"Gender\",\r\n            \"IsHidden\": false,\r\n            \"Levels\": [\r\n                {\r\n                    \"Id\": \"00000000-1111-2222-3333-444444444444\",\r\n                    \"DefinitionId\": \"00000000-1111-2222-3333-444444444444\",\r\n                    \"Name\": \"M\",\r\n                    \"Variables\": [],\r\n                    \"Target\": null,\r\n                    \"MaxTarget\": null,\r\n                    \"MaxOvershoot\": null,\r\n                    \"IsHidden\": false\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Quota",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Quota",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11407,9 +12986,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaVersions",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11477,9 +13056,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaTargets",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11557,9 +13136,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaVersions/:eTag",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaVersions/:eTag",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11632,9 +13211,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/QuotaTargets/:eTag",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/QuotaTargets/:eTag",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11706,9 +13285,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11792,9 +13371,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11857,9 +13436,9 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11918,9 +13497,9 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Block",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Block",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -11981,9 +13560,9 @@
 											"raw": "[\r\n  {\r\n    \"Name\": \"TelephoneNumber\",\r\n    \"Op\": \"Eq\",\r\n    \"Value\": \"empty\"\r\n  }\r\n]"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Reset",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Reset",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12043,9 +13622,9 @@
 											"raw": "{\r\n  \"Filters\": [\r\n    {\r\n        \"Name\": \"TelephoneNumber\",\r\n        \"Op\": \"Eq\",\r\n        \"Value\": \"empty\"\r\n    }\r\n  ],\r\n  \"Columns\": [\r\n    \"TelephoneNumber\"\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Clear",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Clear",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12105,9 +13684,9 @@
 											"raw": "{\r\n  \"SampleRecordId\": 1,\r\n  \"ColumnUpdates\": [\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    },\r\n    {\r\n      \"ColumnName\": \"TelephoneNumber\",\r\n      \"Value\": {}\r\n    }\r\n  ]\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/Sample/Update",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/Sample/Update",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -12126,45 +13705,110 @@
 										"description": "Updates Sample Record"
 									},
 									"response": []
-								},
+								}
+							],
+							"description": "Controller for CRUD operations on sample data (Has survey type usage restrictions) Starts a task to get the sample record data"
+						},
+						{
+							"name": "Data Retention",
+							"item": [
 								{
-									"name": "Get Sample Data",
+									"name": "Get Data Retention Settings",
 									"event": [
 										{
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pm.test(\"Status code is 202\", function () {",
-													"    pm.response.to.have.status(202);",
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
 													"});",
 													"",
 													"pm.test(\"Status code name has string\", function () {",
-													"    pm.response.to.have.status(\"Accepted\");",
+													"    pm.response.to.have.status(\"OK\");",
 													"});",
 													"",
-													"const validateProperties = (item) => {",
-													"    return item.Id !== undefined",
-													"    && item.IdentityId !== undefined",
-													"    && item.Parameters !== undefined",
-													"    && item.StartTime !== undefined",
-													"    && item.FinishTime !== undefined",
-													"    && item.ResultUrl !== undefined",
-													"    && item.Status !== undefined",
-													"    && item.TaskType !== undefined;",
+													"const validateProperties = (setting) => {",
+													"    return setting.RetentionPeriod !== undefined",
+													"    && setting.PossibleValues !== undefined",
 													"}",
 													"",
-													"const validateBgTask = (item) => {",
-													"    return item.SurveyId !== undefined",
-													"    && item.BackgroundTaskId !== undefined",
-													"    && item.DownloadFileName !== undefined;",
-													"}",
+													"pm.test(\"Response contains Properties\", function () {",
+													"    var setting = pm.response.json();",
+													"     pm.expect(validateProperties(setting)).to.be.true;",
 													"",
-													"pm.test(\"Validate Properties\", function () {",
-													"    var response = pm.response.json();",
-													"    pm.expect(validateProperties(response)).to.be.true;",
-													"    var parameters = JSON.parse(response.Parameters);",
-													"    pm.expect(validateBgTask(parameters)).to.be.true;",
-													"    pm.environment.set(\"TaskId\", parameters.BackgroundTaskId);",
+													"});",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{BearerToken}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "X-Nfield-Domain",
+												"value": "{{DomainTestName}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DataRetentionSettings",
+											"host": [
+												"{{origin-public-api}}"
+											],
+											"path": [
+												"v1",
+												"Surveys",
+												":SurveyId",
+												"DataRetentionSettings"
+											],
+											"variable": [
+												{
+													"key": "SurveyId",
+													"value": "{{SurveyId}}"
+												}
+											]
+										},
+										"description": "Get the data retention settings for a survey"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Data Retention Settings",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 204\", function () {",
+													"    pm.response.to.have.status(204);",
+													"});",
+													"",
+													"pm.test(\"Status code name has string\", function () {",
+													"    pm.response.to.have.status(\"No Content\");",
 													"});"
 												],
 												"type": "text/javascript"
@@ -12182,46 +13826,50 @@
 												}
 											]
 										},
-										"method": "GET",
+										"method": "PUT",
 										"header": [
 											{
 												"key": "Content-Type",
-												"value": "application/octet-stream"
+												"value": "application/json"
 											},
 											{
 												"key": "X-Nfield-Domain",
-												"value": "{{DomainTestName}}"
+												"value": "{{DomainTestName}}",
+												"type": "text"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"RetentionPeriod\": 30\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/SampleData/:SampleDataFileName",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/DataRetentionSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
 												"Surveys",
 												":SurveyId",
-												"SampleData",
-												":SampleDataFileName"
+												"DataRetentionSettings"
 											],
 											"variable": [
 												{
 													"key": "SurveyId",
 													"value": "{{SurveyId}}"
-												},
-												{
-													"key": "SampleDataFileName",
-													"value": "{{SampleDataFileName}}"
 												}
 											]
 										},
-										"description": "Create a request for a sample data download."
+										"description": "Update the data retention settings for a survey"
 									},
 									"response": []
 								}
-							],
-							"description": "Controller for CRUD operations on sample data (Has survey type usage restrictions) Starts a task to get the sample record data"
+							]
 						},
 						{
 							"name": "Get Survey",
@@ -12283,9 +13931,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId",
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -12364,9 +14012,9 @@
 									"raw": "{\r\n  \"SurveyId\": \"\",\r\n  \"SurveyName\": \"Postman Survey\",\r\n  \"ClientName\": \"client\",\r\n  \"SurveyType\": \"OnlineBasic\",\r\n  \"Description\": \"This survey is created via Postman\",\r\n  \"QuestionnaireMD5\": \"\",\r\n  \"InterviewerInstruction\": \"\"\r\n }"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys",
+									"raw": "{{origin-public-api}}/v1/Surveys",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -12374,92 +14022,6 @@
 									]
 								},
 								"description": "This method creates a new survey."
-							},
-							"response": []
-						},
-						{
-							"name": "Get Data",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 202\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Status code name has string\", function () {",
-											"    pm.response.to.have.status(\"Accepted\");",
-											"});",
-											"",
-											"const validateProperties = (item) => {",
-											"    return item.Id !== undefined ",
-											"    && item.IdentityId !== undefined ",
-											"    && item.Parameters !== undefined",
-											"    && item.StartTime !== undefined",
-											"    && item.FinishTime !== undefined",
-											"    && item.ResultUrl !== undefined",
-											"    && item.Status !== undefined",
-											"    && item.TaskType !== undefined;",
-											"}",
-											"",
-											"pm.test(\"Response contains the Properties\", function () {",
-											"    var response = pm.response.json();",
-											"    pm.expect(validateProperties(response)).to.be.true;",
-											"});",
-											"",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{BearerToken}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "X-Nfield-Domain",
-										"value": "{{DomainTestName}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n  \"SurveyId\": \"{{SurveyId}}\",\r\n  \"InterviewId\": {{InterviewId}},\r\n  \"DownloadTestInterviewData\": true,\r\n  \"DownloadSuccessfulLiveInterviewData\": true,\r\n  \"DownloadRejectedLiveInterviewData\": true,\r\n  \"DownloadNotSuccessfulLiveInterviewData\": true,\r\n  \"DownloadSuspendedLiveInterviewData\": true,\r\n  \"DownloadParaData\": true,\r\n  \"DownloadCapturedMedia\": true,\r\n  \"DownloadClosedAnswerData\": true,\r\n  \"DownloadOpenAnswerData\": true,\r\n  \"DownloadFileName\": \"DownloadedFileName\",\r\n  \"StartDate\": \"2015-11-05T15:16:41Z\",\r\n  \"EndDate\": \"2015-11-05T15:16:41Z\"\r\n}"
-								},
-								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId/Data",
-									"host": [
-										"{{origin}}"
-									],
-									"path": [
-										"v1",
-										"Surveys",
-										":SurveyId",
-										"Data"
-									],
-									"variable": [
-										{
-											"key": "SurveyId",
-											"value": "{{SurveyId}}"
-										}
-									]
-								},
-								"description": "Post a request for a data download. The surveyDownloadDataRequest contains all the information needed to be able to create a download with just the information that is needed for this request."
 							},
 							"response": []
 						},
@@ -12512,9 +14074,9 @@
 									}
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId/RespondentDataEncrypt",
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/RespondentDataEncrypt",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -12611,9 +14173,9 @@
 									"raw": "{\r\n  \"Description\": \"This survey is updated via Postman\",\r\n  \"ClientName\": \"client\",\r\n  \"SurveyName\": \"Postman Survey updated\"\r\n }"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId",
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -12675,9 +14237,9 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "{{origin}}/v1/Surveys/:SurveyId",
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -12751,9 +14313,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/SearchFieldsSetting",
+									"raw": "{{origin-public-api}}/v1/SearchFieldsSetting",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -12821,9 +14383,9 @@
 									"raw": "{\r\n  \"Fields\": [\r\n    \"Postman1\",\r\n    \"Postman2\"\r\n  ]\r\n}"
 								},
 								"url": {
-									"raw": "{{origin}}/v1/SearchFieldsSetting",
+									"raw": "{{origin-public-api}}/v1/SearchFieldsSetting",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -12932,9 +14494,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations",
+													"raw": "{{origin-public-api}}/v1/LanguageTranslations",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -13031,9 +14593,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -13104,9 +14666,9 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin}}/v1/LanguageTranslations/:LanguageId",
+													"raw": "{{origin-public-api}}/v1/LanguageTranslations/:LanguageId",
 													"host": [
-														"{{origin}}"
+														"{{origin-public-api}}"
 													],
 													"path": [
 														"v1",
@@ -13201,9 +14763,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/LanguageTranslations",
+											"raw": "{{origin-public-api}}/v1/LanguageTranslations",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13275,9 +14837,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13353,9 +14915,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13432,9 +14994,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13502,9 +15064,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/ResponseCodes/:ResponseCodeId",
+											"raw": "{{origin-public-api}}/v1/ResponseCodes/:ResponseCodeId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13585,9 +15147,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/EmailSettings",
+											"raw": "{{origin-public-api}}/v1/EmailSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13659,9 +15221,9 @@
 											"raw": "{\r\n  \"FromAddress\": \"updated@niposoftware-dev.com\",\r\n  \"FromName\": \"updated string 1\",\r\n  \"ReplyToAddress\": \"updatedReplyTo@niposoftware-dev.com\",\r\n  \"PostalAddress\": \"updated string 3\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/EmailSettings",
+											"raw": "{{origin-public-api}}/v1/EmailSettings",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13744,9 +15306,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/DefaultTexts",
+											"raw": "{{origin-public-api}}/v1/DefaultTexts",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13819,9 +15381,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/DefaultTexts/:TranslationKey",
+											"raw": "{{origin-public-api}}/v1/DefaultTexts/:TranslationKey",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13910,9 +15472,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/LocalAssignments",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/LocalAssignments",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -13986,9 +15548,9 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignLocal",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/AssignLocal",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14050,9 +15612,9 @@
 											"raw": "{\r\n  \"NativeIdentityId\": \"{{IdentityId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignLocal",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/UnassignLocal",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14116,9 +15678,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/DirectoryAssignments",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/DirectoryAssignments",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14177,9 +15739,9 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\",\r\n  \"ObjectType\": 0\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/AssignDirectory",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/AssignDirectory",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14238,9 +15800,9 @@
 											"raw": "{\r\n  \"TenantId\": \"{{UserDirectoryTenantId}}\",\r\n  \"ObjectId\": \"{{UserDirectoryObjectId}}\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/UnassignDirectory",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/UnassignDirectory",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14321,9 +15883,9 @@
 											}
 										],
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14396,9 +15958,9 @@
 											"raw": "{\r\n  \"Name\": \"PostmanGroupName\",\r\n  \"Description\": \"sample string 2\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14468,9 +16030,9 @@
 											"raw": "{\r\n  \"Name\": \"PostmanGroupNameUpdated\",\r\n  \"Description\": \"sample string 2\"\r\n}"
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14532,9 +16094,9 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId",
+											"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14605,9 +16167,9 @@
 											}
 										},
 										"url": {
-											"raw": "{{origin}}/v1/Surveys/:SurveyId/SurveyGroup",
+											"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SurveyGroup",
 											"host": [
-												"{{origin}}"
+												"{{origin-public-api}}"
 											],
 											"path": [
 												"v1",
@@ -14688,9 +16250,9 @@
 									}
 								],
 								"url": {
-									"raw": "{{origin}}/v1/SurveyGroups",
+									"raw": "{{origin-public-api}}/v1/SurveyGroups",
 									"host": [
-										"{{origin}}"
+										"{{origin-public-api}}"
 									],
 									"path": [
 										"v1",
@@ -14764,9 +16326,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/Surveys",
+							"raw": "{{origin-public-api}}/v1/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -14838,9 +16400,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{origin}}/v1/SurveyGroups/:SurveyGroupId/Surveys",
+							"raw": "{{origin-public-api}}/v1/SurveyGroups/:SurveyGroupId/Surveys",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -14911,9 +16473,9 @@
 							"raw": "{\r\n    \"DomainAssignments\": [\r\n        {\r\n            \"ObjectId\": \"\",\r\n            \"DomainName\": \"\",\r\n            \"ObjectType\": 1,\r\n            \"Role\": \"\"\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{origin}}/v1/DomainAssignments",
+							"raw": "{{origin-public-api}}/v1/DomainAssignments",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -14971,9 +16533,9 @@
 							"raw": "{\r\n    \"DomainAssignments\": [\r\n        {\r\n            \"ObjectId\": \"\",\r\n            \"DomainName\": \"\"\r\n        }\r\n    ]\r\n}"
 						},
 						"url": {
-							"raw": "{{origin}}/v1/DomainAssignments",
+							"raw": "{{origin-public-api}}/v1/DomainAssignments",
 							"host": [
-								"{{origin}}"
+								"{{origin-public-api}}"
 							],
 							"path": [
 								"v1",
@@ -14981,6 +16543,344 @@
 							]
 						},
 						"description": "Create a survey group. An id is automatically generated."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get Subscriptions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions"
+							]
+						},
+						"description": "Gets a list of Event Subscriptions."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Gets an existing Event Subscription."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (eventSubscription) => {\r",
+									"    return eventSubscription.EventSubscriptionName !== undefined\r",
+									"    && eventSubscription.Endpoint !== undefined\r",
+									"    && eventSubscription.EventTypes !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Validate properties and set Event Subscription Name\", function () {\r",
+									"    pm.expect(validateProperties(eventSubscription)).to.be.true;\r",
+									"    pm.collectionVariables.set(\"EventSubscriptionName\", eventSubscription.EventSubscriptionName);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EventSubscriptionName\": \"{{EventSubscriptionName}}\",\r\n    \"Endpoint\": \"{{EventSubscriptionWebHookUri}}\",\r\n    \"EventTypes\":[\"TargetReached\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions"
+							]
+						},
+						"description": "Creates a new Event Subscription."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Deletes an existing Event Subscription."
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{BearerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{DomainTestName}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Endpoint\": \"https://www.anothervalidwebhookuri.com\",\r\n  \"EventTypes\": [\"QuotaFull\",\"TargetReached\"]\r\n}"
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Updates an existing Event Subscription. Please note that when updating EventTypes you should provide the whole list of the events that you want to subscribe to."
 					},
 					"response": []
 				}
@@ -15125,6 +17025,20 @@
 		{
 			"key": "InternalVariable",
 			"value": ""
+		},
+		{
+			"key": "EventSubscriptionName",
+			"value": "myCustomSubscription",
+			"type": "string"
+		},
+		{
+			"key": "BearerToken",
+			"value": ""
+		},
+		{
+			"key": "EventSubscriptionWebHookUri",
+			"value": "",
+			"type": "string"
 		}
 	]
 }

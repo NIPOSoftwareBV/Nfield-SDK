@@ -34,7 +34,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyGeneralSettingsService.QueryAsync"/>
         /// </summary>
-        public Task<SurveyGeneralSettings> QueryAsync(string surveyId)
+        public Task<SurveyGeneralSettingsResponse> QueryAsync(string surveyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
@@ -43,7 +43,7 @@ namespace Nfield.Services.Implementation
                              responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(
                              stringTask =>
-                             JsonConvert.DeserializeObject<SurveyGeneralSettings>(stringTask.Result))
+                             JsonConvert.DeserializeObject<SurveyGeneralSettingsResponse>(stringTask.Result))
                          .FlattenExceptions();
         }
 
@@ -61,6 +61,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyGeneralSettingsService.GetOwnerAsync"/>
         /// </summary>
+        [Obsolete("The GetOwnerAsync method is obsolete. Please use the QueryAsync method.")]
         public Task<SurveyGeneralSettingsOwner> GetOwnerAsync(string surveyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
@@ -77,6 +78,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveyGeneralSettingsService.UpdateOwnerAsync"/>
         /// </summary>
+        [Obsolete("The UpdateOwnerAsync method is obsolete. Please use the UpdateAsync method.")]
         public Task<SurveyGeneralSettingsOwner> UpdateOwnerAsync(string surveyId, string userId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));

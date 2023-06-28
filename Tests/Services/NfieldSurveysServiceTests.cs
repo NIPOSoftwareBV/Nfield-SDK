@@ -113,6 +113,48 @@ namespace Nfield.Services
             Assert.Equal(survey.SurveyType, actual.SurveyType);
         }
 
+        [Fact]
+        public void TestAddFromBlueprintAsync_ServerAccepts_ReturnsSurvey()
+        {
+            var survey = new Survey(SurveyType.Basic) { SurveyName = "New Survey" };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var content = new StringContent(JsonConvert.SerializeObject(survey));
+
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/CreateSurveyFromBlueprint"), It.IsAny<object>()))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.AddFromBlueprintAsync("some blueprint", "My survey", CopyableSurveyConfiguration.QuotaFrame).Result;
+
+            Assert.Equal(survey.SurveyName, actual.SurveyName);
+            Assert.Equal(survey.SurveyType, actual.SurveyType);
+        }
+
+        [Fact]
+        public void TestUpdateBlueprintFromSurveyAsync_ServerAccepts()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var blueprintId = Guid.NewGuid().ToString();
+            var surveyId = Guid.NewGuid().ToString();
+
+            mockedHttpClient
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyBlueprints/{blueprintId}/Update"), It.IsAny<object>()))
+                .Returns(CreateTask(HttpStatusCode.OK));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            target.UpdateBlueprintFromSurveyAsync(blueprintId, surveyId, CopyableSurveyConfiguration.QuotaFrame).Wait();
+
+            mockedHttpClient.Verify(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyBlueprints/{blueprintId}/Update"), It.IsAny<object>()), Times.Once);
+        }
+
         #endregion
 
         #region RemoveAsync

@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.SDK.Services;
 using Nfield.SDK.Services.Implementation;
 using Nfield.Services;
 using Nfield.Services.Implementation;
@@ -27,10 +28,11 @@ namespace Nfield.Infrastructure
     /// </summary>
     public static class NfieldSdkInitializer
     {
-        internal static Dictionary<Type, Type> TypeMap = new Dictionary<Type, Type>()
+        internal readonly static Dictionary<Type, Type> TypeMap = new Dictionary<Type, Type>()
         {
             { typeof(NfieldConnection), typeof(NfieldConnection) },
             { typeof(INfieldInterviewersService), typeof(NfieldInterviewersService) },
+            { typeof(INfieldDataRetentionService), typeof(NfieldDataRetentionService) },
             { typeof(INfieldInterviewerAssignmentsService), typeof(NfieldInterviewerAssignmentsService) },
             { typeof(INfieldInterviewsService), typeof(NfieldInterviewsService) },
             { typeof(INfieldInterviewQualityService), typeof(NfieldInterviewQualityService) },
@@ -52,6 +54,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyEmailSettingsService), typeof(NfieldSurveyEmailSettingsService) },
             { typeof(INfieldSurveyInvitationImagesService), typeof(NfieldSurveyInvitationImagesService) },
             { typeof(INfieldSurveyInvitationTemplatesService), typeof(NfieldSurveyInvitationTemplatesService) },
+            { typeof(INfieldSurveyQuotaFrameService), typeof(NfieldSurveyQuotaFrameService) },
             { typeof(INfieldSurveySettingsService), typeof(NfieldSurveySettingsService) },
             { typeof(INfieldSurveyInterviewInteractionsSettingsService), typeof(NfieldSurveyInterviewInteractionsSettingsService) },
             { typeof(INfieldSurveyResponseCodesService), typeof(NfieldSurveyResponseCodesService) },
@@ -88,9 +91,19 @@ namespace Nfield.Infrastructure
             { typeof(INfieldThemesService), typeof(NfieldThemesService) },
             { typeof(INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService), typeof(NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService) },
             { typeof(INfieldCapiInterviewersService), typeof(NfieldCapiInterviewersService) },
+            { typeof(INfieldDomainInterviewersWorklogService), typeof(NfieldDomainInterviewersWorklogService) },
             { typeof(INfieldBlacklistService), typeof(NfieldBlacklistService) },
             { typeof(INfieldRequestsService), typeof(NfieldRequestsService) },
-            { typeof(INfieldSamplingPointsService), typeof(NfieldSamplingPointsService) }
+            { typeof(INfieldSamplingPointsService), typeof(NfieldSamplingPointsService) },
+            { typeof(INFieldMeService), typeof(NFieldMeService) },
+            { typeof(INfieldDeliveryRepositoriesService), typeof(NfieldDeliveryRepositoriesService) },
+            { typeof(INfieldDeliveryRepositoryFirewallRulesService), typeof(NfieldDeliveryRepositoryFirewallRulesService) },
+            { typeof(INfieldDeliveryRepositorySurveysService), typeof(NfieldDeliveryRepositorySurveysService) },
+            { typeof(INfieldDeliveryRepositoryUsersService), typeof(NfieldDeliveryRepositoryUsersService) },
+            { typeof(INfieldDeliverySettingsService), typeof(NfieldDeliverySettingsService) },
+            { typeof(INfieldDeliverySurveyPropertiesService), typeof(NfieldDeliverySurveyPropertiesService) },
+            { typeof(INfieldDeliverySurveysService), typeof(NfieldDeliverySurveysService) },
+            { typeof(INfieldEventSubscriptionsService), typeof(NfieldEventSubscriptionsService) }
         };
 
         /// <summary>

@@ -14,7 +14,6 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Threading.Tasks;
-using Nfield.Models;
 
 namespace Nfield.Services
 {
@@ -23,11 +22,6 @@ namespace Nfield.Services
     /// </summary>
     public interface INfieldSurveySampleDataService
     {
-        /// <summary>
-        /// Start a new download sample data task, gets the task
-        /// </summary>
-        Task<BackgroundTask> GetAsync(string surveyId, string fileName);
-
         /// <summary>
         /// Start a new download sample data activity and return the download url
         /// </summary>

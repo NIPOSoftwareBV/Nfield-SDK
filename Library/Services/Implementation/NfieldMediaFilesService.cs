@@ -89,18 +89,6 @@ namespace Nfield.Services.Implementation
                       .FlattenExceptions();
         }
 
-        public Task AddOrUpdateAsync(string surveyId, string fileName, byte[] content)
-        {
-            CheckRequiredArgumentsUpload(surveyId, fileName, content);
-
-            var postContent = new ByteArrayContent(content);
-            postContent.Headers.ContentType =
-                new MediaTypeHeaderValue("application/octet-stream");
-            return
-                Client.PutAsync(MediaFilesApi(surveyId, fileName), postContent)
-                      .FlattenExceptions();
-        }
-
         public async Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content)
         {
             CheckRequiredArgumentsUpload(surveyId, fileName, content);

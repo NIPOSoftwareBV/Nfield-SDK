@@ -19,6 +19,37 @@ namespace Nfield.Models
     /// Holds the properties of a survey general setting
     /// </summary>
     public class SurveyGeneralSettings
+    {
+        /// <summary>
+        /// The Description of the survey
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The Client of the survey
+        /// </summary>
+        public string Client { get; set; }
+
+        /// <summary>
+        /// The Name of the survey
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Indicates whether the survey will be excluded from automatic deletion and stoppage
+        /// </summary>
+        public bool? ExcludeFromAutomaticCleanup { get; set; }
+
+        /// <summary>
+        /// The user id of the owner of the survey 
+        /// </summary>
+        public string OwnerId { get; set; }
+    }
+
+    /// <summary>
+    /// Holds the properties of a survey general setting
+    /// </summary>
+    public class SurveyGeneralSettingsResponse
     {       
 
         /// <summary>
@@ -36,5 +67,14 @@ namespace Nfield.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Indicates whether the survey will be excluded from automatic deletion and stoppage
+        /// </summary>
+        public bool? ExcludeFromAutomaticCleanup { get; set; }
+
+        /// <summary>
+        /// The user object of the owner of the survey 
+        /// </summary>
+        public User Owner { get; set; }
     }
 }

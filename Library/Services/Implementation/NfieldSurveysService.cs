@@ -68,6 +68,50 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
+        /// See <see cref="INfieldSurveysService.AddFromBlueprintAsync"/>
+        /// </summary>
+        public Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        {
+            if (blueprintSurveyId == null)
+            {
+                throw new ArgumentNullException(nameof(blueprintSurveyId));
+            }
+            if (string.IsNullOrEmpty(surveyName))
+            {
+                throw new ArgumentNullException(nameof(surveyName));
+            }
+
+            return Client.PostAsJsonAsync(new Uri(SurveysApi, "CreateSurveyFromBlueprint"), new
+                            {
+                                BlueprintSurveyId = blueprintSurveyId,
+                                SurveyName = surveyName,
+                                IncludedConfiguration = (int)includedConfiguration
+                            })
+                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(task => JsonConvert.DeserializeObject<Survey>(task.Result))
+                         .FlattenExceptions();
+        }
+
+        public Task UpdateBlueprintFromSurveyAsync(string blueprintSurveyId, string surveyId, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        {
+            if (blueprintSurveyId == null)
+            {
+                throw new ArgumentNullException(nameof(blueprintSurveyId));
+            }
+            if (surveyId == null)
+            {
+                throw new ArgumentNullException(nameof(surveyId));
+            }
+
+            return Client.PutAsJsonAsync(new Uri(SurveyBlueprintsApi, blueprintSurveyId + "/Update"), new
+                            {
+                                SurveyId = surveyId,
+                                IncludedConfiguration = (int)includedConfiguration
+                            })
+                         .FlattenExceptions();
+        }
+
+        /// <summary>
         /// See <see cref="INfieldSurveysService.RemoveAsync"/>
         /// </summary>
         public Task RemoveAsync(Survey survey)
@@ -216,6 +260,9 @@ namespace Nfield.Services.Implementation
             return returned;
         }
 
+        /// <summary>
+        /// <see cref="INfieldSurveysService.OnlineQuotaQueryAsync"/>
+        /// </summary>
         public Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
@@ -244,6 +291,9 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        /// <summary>
+        /// <see cref="INfieldSurveysService.CreateOrUpdateOnlineQuotaAsync"/>
+        /// </summary>
         public Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame)
         {
             var uri = new Uri(SurveysApi, $"{surveyId}/{QuotaControllerName}");
@@ -552,6 +602,11 @@ namespace Nfield.Services.Implementation
         private Uri SurveysApi
         {
             get { return new Uri(ConnectionClient.NfieldServerUri, "Surveys/"); }
+        }
+
+        private Uri SurveyBlueprintsApi
+        {
+            get { return new Uri(ConnectionClient.NfieldServerUri, "SurveyBlueprints/"); }
         }
 
         private static string SurveyInterviewerInstructionsControllerName

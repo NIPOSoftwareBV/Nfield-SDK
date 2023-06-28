@@ -1,0 +1,51 @@
+name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
+
+pr: none
+
+trigger: none
+
+# This pipeline is triggered when the Build stage in the DomainApiBuild pipeline finishes
+resources:
+  pipelines:
+  - pipeline: 'SDKBuild'
+    source: 'Nfield SDK Build'
+    trigger:
+      branches:
+        include: 
+        - 'master'
+        - '*/ci-*'
+        - 'release/*'
+      stages:
+      - Build # Run deploy-release pipeline when the build of SDK completes. If it only has one stage we could use "trigger: true" too.
+
+pool:
+  vmImage: windows-2022
+
+stages:
+- stage: GetResources
+  jobs:
+  - job: WaitForValidation
+    displayName: Validate Feed Publishing
+    pool: server
+    timeoutInMinutes: 4320 # job times out in 3 days
+    steps:
+    - task: ManualValidation@0
+      timeoutInMinutes: 1440 # task times out in 1 day
+      inputs:
+        instructions: 'Please validate the the nuget publishing'
+        onTimeout: 'reject'
+
+####################### INTERNAL DEPLOY NFIELD ####################
+- template: ./YmlTemplates/deploy.yml
+  parameters:
+    stageDependency: GetResources
+    pipelineDependency: SDKBuild
+    nuGetFeedType: internal
+
+####################### EXTERNAL DEPLOY NUGET.ORG ####################
+- ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/release') }}:
+  - template: ./YmlTemplates/deploy.yml
+    parameters:
+      stageDependency: GetResources
+      pipelineDependency: SDKBuild
+      nuGetFeedType: external

@@ -107,5 +107,10 @@ namespace Nfield.Models
         /// Previously: DownloadQuestionnaireScript
         /// </summary>
         public bool IncludeQuestionnaireScript { get; set; }
+
+        /// <summary>
+        /// Include in the download the audit log file
+        /// </summary>
+        public bool IncludeAuditLog { get; set; }
     }
 }

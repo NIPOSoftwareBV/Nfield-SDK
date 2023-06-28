@@ -33,13 +33,8 @@ namespace Nfield.Models
         Started = 1,
 
         /// <summary>
-        /// Fieldwork closed
+        /// Fieldwork paused
         /// </summary>
-        Closed = 3,
-
-        /// <summary>
-        /// Fieldwork finished, i.e. fieldwork cannot be started anymore.
-        /// </summary>
-        Finished = 4,
+        Paused = 3
     }
 }

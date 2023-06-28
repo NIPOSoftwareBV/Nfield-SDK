@@ -40,6 +40,16 @@ namespace Nfield.Services
         Task<Survey> AddAsync(Survey survey);
 
         /// <summary>
+        /// Adds a new survey based on a blueprint survey.
+        /// </summary>
+        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All);
+
+        /// <summary>
+        /// Updates an existing blueprint survey based on a survey
+        /// </summary>
+        Task UpdateBlueprintFromSurveyAsync(string blueprintSurveyId, string surveyId, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All);
+
+        /// <summary>
         /// Removes the survey.
         /// </summary>
         Task RemoveAsync(Survey survey);
@@ -97,6 +107,7 @@ namespace Nfield.Services
         /// <summary>
         /// Gets quota definition for survey.
         /// </summary>
+        [Obsolete("NfieldSurveysService.QuotaQueryAsync is obsolete, please use NfieldSurveyQuotaFrameService.QuotaQueryAsync instead.")]
         Task<QuotaLevel> QuotaQueryAsync(string surveyId);
 
         /// <summary>
@@ -114,6 +125,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId"></param>
         /// <returns></returns>
+        [Obsolete("NfieldSurveysService.OnlineQuotaQueryAsync is obsolete, please use NfieldSurveyQuotaFrameService.QuotaQueryAsync instead.")]
         Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId);
 
         /// <summary>
@@ -121,6 +133,7 @@ namespace Nfield.Services
         /// When this method is called on a survey that has a quota frame already 
         /// then the frame is completely replaced by the new one.
         /// </summary>
+        [Obsolete("NfieldSurveysService.CreateOrUpdateQuotaAsync is obsolete, please use NfieldSurveyQuotaFrameService.CreateOrUpdateQuotaAsync instead.")]
         Task<QuotaLevel> CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota);
 
         /// <summary>
@@ -128,6 +141,7 @@ namespace Nfield.Services
         /// When this method is called on a survey that has a quota frame already 
         /// then the frame is completely replaced by the new one.
         /// </summary>
+        [Obsolete("NfieldSurveysService.CreateOrUpdateQuotaAsync is obsolete, please use NfieldSurveyQuotaFrameService.CreateOrUpdateQuotaAsync instead.")]
         Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame);
 
         #endregion
@@ -274,4 +288,5 @@ namespace Nfield.Services
 
         #endregion
     }
+
 }
