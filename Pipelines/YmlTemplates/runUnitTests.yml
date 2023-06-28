@@ -1,0 +1,79 @@
+# This yml template is called from the build templates
+#
+# 1. Run Nfield.SDK.Tests unit tests
+# 2. Creates failed test playlists in Artifacts folder
+
+steps:
+  #Run All Unit TESTS Assemblies
+  - task: VSTest@2
+    displayName: 'Run Unit tests'
+    continueOnError: true
+    inputs:
+      testSelector: 'testAssemblies'
+      testAssemblyVer2: |
+        **\Nfield.SDK.Tests.dll
+        !**\obj\**
+      searchFolder: '$(System.DefaultWorkingDirectory)'
+      Logger: 'trx'
+      runInParallel: false
+      runTestsInIsolation: true
+      codeCoverageEnabled: false
+      rerunFailedTests: true
+      rerunMaxAttempts: '3'
+      rerunFailedThreshold: '20'
+      rerunFailedTestCasesMaxLimit: '50'
+
+# Parse testResult files and copy
+  - powershell: |
+      $XMLresultfiles = Get-ChildItem -Path '$(Agent.TempDirectory)\TestResults\*.trx' -Recurse -Force
+      Write-Host "Test result files found:"
+      Write-Host $XMLresultfiles
+      $OutputFolder = "$(Build.ArtifactStagingDirectory)\for-debug\"
+      Write-Host "Creating output folder: " $OutputFolder
+      New-Item -ItemType directory -Path $OutputFolder
+      foreach ($XMLresultfile in $XMLresultfiles) {
+        Write-Host "--- Scaning file..."
+        Write-Host $XMLresultfile.FullName
+        [XML]$resultDoc = Get-Content $XMLresultfile.FullName
+        $outcomeResult = $resultDoc.TestRun.ResultSummary | Where-Object {$_.outcome -eq "Failed"}
+        if (!($outcomeResult -eq $null) -and !($resultDoc.TestRun.Results -eq $null))
+        {
+          Write-Host "Result Summary: Failed"
+          $OutputName = $XMLresultfile.Name+".failed.playlist"
+          $failedTest = $resultDoc.TestRun.Results.UnitTestResult | Where-Object {$_.outcome -eq "Failed"}
+          $playlistContent = '<Playlist Version="1.0">'
+          foreach ($testResult in $failedTest) {
+            $testId = $testResult.testId
+            $testDefinition = $resultDoc.TestRun.TestDefinitions.UnitTest | Where-Object {$_.id -eq $testId}
+            $fullTestName = $testDefinition.TestMethod.className+"."+$testDefinition.TestMethod.name
+            $fullTestName = $fullTestName.Replace('"', '&quot;')
+            Write-Host Failed Test found: $fullTestName
+            $playlistContent += "<Add Test=`"$fullTestName`" />"
+          }
+          $playlistContent += '</Playlist>'
+          $OutputFile = $OutputFolder+$OutputName
+          Write-Host Writing file: $OutputFile
+          $playlistContent | Out-file $OutputFile
+          echo '##vso[task.setvariable variable=UnitTestPass]false'
+        }
+        else
+        {
+          Write-Host "Result Summary: Succeded"
+          echo '##vso[task.setvariable variable=UnitTestPass]true'
+        }
+      }
+    displayName: 'Creates failed test playlists in Artifacts folder'
+    continueOnError: true
+
+  # Publish results to for-debug
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: for-debug'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)\for-debug'
+      ArtifactName: 'for-debug'
+    continueOnError: true
+
+  # Check if the tests have passed
+  - powershell: if('$(UnitTestPass)' -eq $false) { exit 1 }
+    displayName: "Check Tests have passed"
+    continueOnError: false

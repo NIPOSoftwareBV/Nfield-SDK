@@ -1,0 +1,93 @@
+# This yml template is called from the deploy-nuget templates
+#
+# 1. Publish NuGet package:
+#   - Internal (Nfield) or external (nuget.org) feed
+# 2. Gather Release Info (to create a GitHub Release) from Assets files
+# 3. Create a GitHub Release, only for nuget.org releases
+
+parameters:
+  - name: stageDependency
+    type: string
+  - name: pipelineDependency
+    type: string
+    default: current
+  - name: nuGetFeedType
+    type: string
+
+stages:
+  - stage: SDKNugetPublishing${{ parameters.nuGetFeedType }}
+    displayName: "SDK nuget ${{ parameters.nuGetFeedType }} Publishing"
+    dependsOn: ["${{ parameters.stageDependency }}"]
+    # SDK publishing stage will be skipped if the build is BatchedCI to validate a PR. So you'll need to run it manually if you want to deploy it.
+    condition: succeeded()
+    variables:
+      - name: baseRoute
+        ${{ if eq(parameters.pipelineDependency, 'current') }}:
+          value: ""
+        ${{ if not( eq(parameters.pipelineDependency, 'current')) }}:
+          value: ${{ parameters.pipelineDependency }}
+    jobs:
+      - deployment: SDKNugetPublish
+        displayName: Publishing on ${{ parameters.nuGetFeedType }} Feed
+        environment: ${{ format('NfieldSDK{0}Feed', parameters.nuGetFeedType) }}
+        continueOnError: false
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                # Download the 'for-deploy' artifacts
+                - download: ${{ parameters.pipelineDependency }}
+                  artifact: for-deploy
+                  patterns: |
+                    **/for-deploy/**
+                    **/Pipelines/**
+                # Publish NuGet package
+                - task: NuGetCommand@2
+                  displayName: 'NuGet push'
+                  continueOnError: True
+                  inputs:
+                    command: push
+                    packagesToPush: '$(Pipeline.Workspace)/$(baseRoute)/for-deploy/*.nupkg'
+                    nuGetFeedType: ${{ parameters.nuGetFeedType }}
+                    publishFeedCredentials: 'NuGet (Publish)' # Used only for external feed
+                    publishVstsFeed: 'nfield' # Used only for internal feed
+                  condition: succeeded()
+
+                - task: PowerShell@2
+                  displayName: 'Gather Release Info'
+                  inputs:
+                    targetType: 'inline'
+                    script: |
+                      $GitReleaseInfo = Get-Content -Path $(Pipeline.Workspace)/$(baseRoute)/for-deploy/NugetReleaseInfo.txt
+                      Write-Host $GitReleaseInfo
+                      $InfoFields = $GitReleaseInfo.Split(":")
+                      $BranchName = $InfoFields[0]
+                      $ReleaseName = $InfoFields[1]
+                      $CommitHash = $InfoFields[2]
+                      $VersionName = $InfoFields[3]
+                      Write-Host BranchName: $BranchName
+                      Write-Host ReleaseName: $ReleaseName
+                      Write-Host CommitHash: $CommitHash
+                      Write-Host VersionName: $VersionName
+                      Write-Host "##vso[task.setvariable variable=BranchName]$BranchName"
+                      Write-Host "##vso[task.setvariable variable=ReleaseName]$ReleaseName"
+                      Write-Host "##vso[task.setvariable variable=CommitHash]$CommitHash"
+                      Write-Host "##vso[task.setvariable variable=VersionName]$VersionName"
+                      
+                - task: GitHubRelease@1
+                  displayName: 'Create GitHub Release'
+                  condition: ${{ eq(parameters.nuGetFeedType, 'external') }}
+                  inputs:
+                    gitHubConnection: 'github.com_AlbertoBelver' # OAuth Service Conection https://dev.azure.com/niposoftware/Nfield/_settings/adminservices
+                    repositoryName: 'NIPOSoftwareBV/Nfield-SDK'
+                    action: 'create'
+                    target: '$(CommitHash)'
+                    tagSource: 'userSpecifiedTag'
+                    tag: '$(BranchName)'
+                    title: '$(ReleaseName)'
+                    releaseNotesSource: 'inline'
+                    releaseNotesInline: 'Nuget Version: $(VersionName)'
+                    isPreRelease: false
+                    changeLogCompareToRelease: 'lastFullRelease'
+                    changeLogType: 'commitBased'
+                    addChangeLog: false

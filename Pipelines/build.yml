@@ -1,0 +1,72 @@
+# Build template for the SDK pipeline
+name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  # We need to set this to false, otherwise the system waits until the previous run is completed, and if you don't deploy or you don't cancel the build, the previous run will stay in progress forever
+  # setting the batch to false will always trigger a build when there is a new commit (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#batching-ci-runs)
+  batch: false
+  branches:
+    include:
+      - "master"
+      - "*/ci-*"
+      - "release/*"
+  paths:
+    include:
+      - Library/*
+      - packages/*
+      - Tests/*
+      - Nfield.SDK.sln
+      - Pipelines/*
+
+pr: none
+
+pool:
+  vmImage: windows-2022
+
+stages:
+  - stage: Build
+    displayName: Build
+    jobs:
+      # Call the pre build template located in the YmlTemplates folder
+      - job: BuildSDK
+        displayName: "Build SDK"
+        steps:
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Dotnet Build SDK'
+            inputs:
+              projects: 'Nfield.SDK.sln'
+              arguments: '--configuration $(BuildConfiguration)'
+        
+          # Run All Unit Test Assemblies
+          - template: ./YmlTemplates/runUnitTests.yml
+
+        ####################### GET NUGET VERSION ####################
+          - task: PowerShell@1
+            displayName: 'Get NuGet Version'
+            inputs:
+              scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
+
+        ####################### NUGET PACKAGING ####################
+          - task: NuGetCommand@2
+            displayName: 'Pack NuGet'
+            inputs:
+              command: 'pack'
+              packagesToPack: 'Library/Nfield.SDK.csproj'
+              versioningScheme: byEnvVar
+              versionEnvVar: Version  #Created with GetNugetVersion.ps1
+              packDestination: $(Build.ArtifactStagingDirectory)/
+
+          - task: CopyFiles@2
+            displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
+            inputs:
+              SourceFolder: '$(system.defaultworkingdirectory)'
+              Contents: '**\Library\bin\$(BuildConfiguration)\**'
+              TargetFolder: '$(build.artifactstagingdirectory)'
+      
+          # Call the post build template located in the YmlTemplates folder
+          - template: YmlTemplates/postBuildSteps.yml
+            parameters:
+              ContentsToCopy: |
+                $(Build.artifactstagingdirectory)\**
+                NugetReleaseInfo.txt
