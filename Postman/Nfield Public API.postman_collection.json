@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "bd7b749e-4ba2-413d-aedf-371d2e7004ed",
+		"_postman_id": "8e569847-3a07-4c5e-9bec-ebf3213d6edf",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19438554"
 	},
 	"item": [
 		{
@@ -13238,6 +13239,298 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get Subscriptions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions"
+							]
+						},
+						"description": "Gets a list of Event Subscriptions."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Gets an existing Event Subscription."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"const validateProperties = (eventSubscription) => {\r",
+									"    return eventSubscription.EventSubscriptionName !== undefined\r",
+									"    && eventSubscription.Endpoint !== undefined\r",
+									"    && eventSubscription.EventTypes !== undefined;\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Validate properties and set Event Subscription Name\", function () {\r",
+									"    pm.expect(validateProperties(eventSubscription)).to.be.true;\r",
+									"    pm.collectionVariables.set(\"EventSubscriptionName\", eventSubscription.EventSubscriptionName);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EventSubscriptionName\": \"{{EventSubscriptionName}}\",\r\n    \"Endpoint\": \"{{EventSubscriptionWebHookUri}}\",\r\n    \"EventTypes\":[\"TargetReached\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions"
+							]
+						},
+						"description": "Creates a new Event Subscription."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Deletes an existing Event Subscription."
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Subscription",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"EventTypes\": [\"QuotaFull\",\"TargetReached\"]\r\n}"
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Events/Subscriptions/:SubscriptionName",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Events",
+								"Subscriptions",
+								":SubscriptionName"
+							],
+							"variable": [
+								{
+									"key": "SubscriptionName",
+									"value": "{{EventSubscriptionName}}"
+								}
+							]
+						},
+						"description": "Updates an existing Event Subscription. Please note that when updating EventTypes you should provide the whole list of the events that you want to subscribe to."
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -13466,6 +13759,16 @@
 		{
 			"key": "InternalVariable",
 			"value": ""
+		},
+		{
+			"key": "EventSubscriptionName",
+			"value": "myCustomSubscription",
+			"type": "string"
+		},
+		{
+			"key": "EventSubscriptionWebHookUri",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
