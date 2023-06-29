@@ -28,9 +28,7 @@ steps:
       $XMLresultfiles = Get-ChildItem -Path '$(Agent.TempDirectory)\TestResults\*.trx' -Recurse -Force
       Write-Host "Test result files found:"
       Write-Host $XMLresultfiles
-      $OutputFolder = "$(Build.ArtifactStagingDirectory)\for-debug\"
-      # Creating an empty file to don't fail when copying to for-debug
-      Out-File -FilePath "$(Build.ArtifactStagingDirectory)\for-debug\EmptyFile.txt" 
+      $OutputFolder = "$(Build.ArtifactStagingDirectory)\for-debug\"   
       Write-Host "Creating output folder: " $OutputFolder
       New-Item -ItemType directory -Path $OutputFolder
       foreach ($XMLresultfile in $XMLresultfiles) {
