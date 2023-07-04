@@ -63,12 +63,23 @@ The number in this file should be increased in a sensible way every time the SDK
 using [semantic versioning](https://semver.org/).
 
 The suffixes that will be appended to the nuget package versions will be the following: 
-- no suffix for release versions
+- no suffix for release versions for builds from release/*
 - `-beta` for builds from master
 - `-alpha` for builds on other branches
+
+## Releases
+ - How to create and publish a new `-alpha` or `-beta` version. These versions can only be published on a DevOps private/internal Nfield Feed:
+    - Create a new branch with this pattern: `*/ci-*` or merge a commit into `master`
+    - This branch will trigger a new build in DevOps pipelines
+    - After the build a `Release pipeline` will allow to Push the new nuget version in the `Nfield` internal feed. These versions __don't create__ `GitHub releases`.
+ - How to create and publish a new `release` on the Nuget.org public Feed
+    - Create a new release branch Example: `release/2023-P3S5`
+    - This branch will trigger a new build in DevOps pipelines
+    - After the build a `Release pipeline` will allow to Push the new nuget version in the `Nuget.org` feed and it will create the `GitHub release` repo.
 
 ## Feedback
 For feedback related to this SDK please visit the
 [Nfield website].
 
 [Nfield website]: https://www.nipo.com/
+
