@@ -112,5 +112,15 @@ namespace Nfield.Models
         /// Include in the download the audit log file
         /// </summary>
         public bool IncludeAuditLog { get; set; }
+
+        /// <summary>
+        /// Custom column name for filtering download data
+        /// </summary>
+        public string CustomColumnName { get; set; }
+
+        /// <summary>
+        /// Custom column value for filtering download data
+        /// </summary>
+        public string CustomColumnValue { get; set; }
     }
 }
