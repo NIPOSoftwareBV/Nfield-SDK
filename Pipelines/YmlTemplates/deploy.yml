@@ -42,6 +42,19 @@ stages:
                     **/for-deploy/**
                     **/Pipelines/**
                 # Publish NuGet package
+                - task: PowerShell@2
+                  displayName: 'Check nuget count'
+                  inputs:
+                    targetType: 'inline'
+                    script: |
+                      if (Test-Path -Path "$(Pipeline.Workspace)/$(baseRoute)/for-deploy/*.nupkg")
+                      {
+                         exit 0
+                      }
+                      else
+                      {
+                         exit -1
+                      }
                 - task: NuGetCommand@2
                   displayName: 'NuGet push'
                   continueOnError: True
