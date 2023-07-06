@@ -43,7 +43,7 @@ stages:
                     **/Pipelines/**
                 # Publish NuGet package
                 - task: PowerShell@2
-                  displayName: 'Check nuget count'
+                  displayName: 'Validate that the nuget package exists'
                   inputs:
                     targetType: 'inline'
                     script: |
