@@ -78,7 +78,7 @@ namespace Nfield.Services
                 .Setup(client => client.GetAsync(endpointUri))
                 .Returns(CreateTask(HttpStatusCode.OK, content)).Verifiable();
 
-            // Act 
+            // Act
             var actual = await _target.QueryAsync();
 
             // Assert
@@ -131,7 +131,7 @@ namespace Nfield.Services
             // Arrange
             var createSubscriptionModel = new CreateEventSubscriptionModel
             {
-                SubscriptionName = EventSubscriptionName,
+                EventSubscriptionName = EventSubscriptionName,
                 Endpoint = new Uri("https://www.validurl.com"),
                 EventTypes = new List<string> { "TargetReached" }
             };
@@ -150,7 +150,7 @@ namespace Nfield.Services
 
             // Assert
             _mockedHttpClient.Verify();
-            Assert.Equal(EventSubscriptionName, createdEventSubscription.Name);
+            Assert.Equal(EventSubscriptionName, createdEventSubscription.SubscriptionName);
         }
 
         [Fact]
