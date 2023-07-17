@@ -136,7 +136,7 @@ namespace Nfield.Services
                 EventTypes = new List<string> { "TargetReached" }
             };
 
-            var content = new StringContent(JsonConvert.SerializeObject(new EventSubscriptionModel { Name = EventSubscriptionName }));
+            var content = new StringContent(JsonConvert.SerializeObject(new CreatedEventSubscriptionModel() { SubscriptionName = EventSubscriptionName }));
 
             var endpointUri = new Uri(ServiceAddress, "Events/Subscriptions");
 
