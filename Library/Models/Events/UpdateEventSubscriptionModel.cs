@@ -24,7 +24,7 @@ namespace Nfield.SDK.Models.Events
     public class UpdateEventSubscriptionModel
     {
         /// <summary>
-        /// The endpoint to use for the subcription.
+        /// The endpoint to use for the subscription.
         /// </summary>
         public Uri Endpoint { get; set; }
 

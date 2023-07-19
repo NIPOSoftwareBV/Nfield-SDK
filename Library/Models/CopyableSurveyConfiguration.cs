@@ -26,5 +26,6 @@ namespace Nfield.Models
         All = ~None,
 
         QuotaFrame = 1,
+        QuestionnaireScript = 2,
     }
 }
