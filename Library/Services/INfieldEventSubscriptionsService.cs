@@ -23,7 +23,7 @@ namespace Nfield.Services
     /// Set of methods to manage the event subscriptions.
     /// </summary>
     public interface INfieldEventSubscriptionsService
-    {    
+    {
         /// <summary>
         /// Gets a list of event subscriptions for the domain.
         /// </summary>
@@ -42,7 +42,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="model">The event subscription that will be created.</param>
         /// <returns>The subscription name, if succeeded. The appropriate exception in case of failure.</returns>
-        Task<EventSubscriptionModel> CreateAsync(CreateEventSubscriptionModel model);
+        Task<CreatedEventSubscriptionModel> CreateAsync(CreateEventSubscriptionModel model);
 
         /// <summary>
         /// Updates an event subscription.
@@ -52,8 +52,8 @@ namespace Nfield.Services
         /// <returns><c>NoContentResult</c>, if succeeded. The appropriate exception in case of failure.</returns>
         /// <remarks>
         /// You can update the endpoint or the event types or both:
-        /// - Endpoint: This is the web hook endpoint. This should be a valid Uri. It may require to validate the new endpoint before being able to use it. 
-        /// - EventTypes: The values supplied here will replace the existing event types. You should supply a full list of the event types you want to subscribe to. 
+        /// - Endpoint: This is the web hook endpoint. This should be a valid Uri. It may require to validate the new endpoint before being able to use it.
+        /// - EventTypes: The values supplied here will replace the existing event types. You should supply a full list of the event types you want to subscribe to.
         /// </remarks>
         Task UpdateAsync(string subscriptionName, UpdateEventSubscriptionModel model);
 

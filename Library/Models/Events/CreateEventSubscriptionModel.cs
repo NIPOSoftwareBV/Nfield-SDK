@@ -26,10 +26,10 @@ namespace Nfield.SDK.Models.Events
         /// <summary>
 		/// The subscription name.
 		/// </summary>
-		public string SubscriptionName { get; set; }
+		public string EventSubscriptionName { get; set; }
 
         /// <summary>
-        /// The endpoint to use for the subcription.
+        /// The endpoint to use for the subscription.
         /// </summary>
         public Uri Endpoint { get; set; }
 

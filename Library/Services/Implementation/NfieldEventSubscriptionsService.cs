@@ -67,13 +67,13 @@ namespace Nfield.SDK.Services.Implementation
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public Task<EventSubscriptionModel> CreateAsync(CreateEventSubscriptionModel model)
+        public Task<CreatedEventSubscriptionModel> CreateAsync(CreateEventSubscriptionModel model)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, "Events/Subscriptions");
 
             return ConnectionClient.Client.PostAsJsonAsync(uri, model)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<EventSubscriptionModel>(task.Result))
+                         .ContinueWith(task => JsonConvert.DeserializeObject<CreatedEventSubscriptionModel>(task.Result))
                          .FlattenExceptions();
         }
 
