@@ -20,54 +20,17 @@ trigger:
 
 pr: none
 
+resources:
+  repositories:
+    - repository: NfieldTools
+      type: github
+      name: NIPOSoftwareBV/Nfield-Tools
+      endpoint: NfieldToolsRepository
+      ref: # Defaults to master, to build with another version specify the ref here (e.g. 'refs/tags/2019-q1s01') If you want to build from a specific commit, first create a tag pointing to that commit, then pin to that tag.
+
+
 pool:
   vmImage: windows-2022
 
-stages:
-  - stage: Build
-    displayName: Build
-    jobs:
-      # Call the pre build template located in the YmlTemplates folder
-      - job: BuildSDK
-        displayName: "Build SDK"
-        steps:
-
-          - task: DotNetCoreCLI@2
-            displayName: 'Dotnet Build SDK'
-            inputs:
-              projects: 'Nfield.SDK.sln'
-              arguments: '--configuration $(BuildConfiguration)'
-        
-          # Run All Unit Test Assemblies
-          - template: ./YmlTemplates/runUnitTests.yml
-
-        ####################### GET NUGET VERSION ####################
-          - task: PowerShell@1
-            displayName: 'Get NuGet Version'
-            inputs:
-              scriptName: ./Pipelines/Scripts/GetNugetVersion.ps1
-
-        ####################### NUGET PACKAGING ####################
-          - task: DotNetCoreCLI@2
-            displayName: 'Pack NuGet'
-            inputs:
-              command: 'pack'
-              packagesToPack: 'Library/Nfield.SDK.csproj'
-              nobuild: true
-              versioningScheme: byEnvVar
-              versionEnvVar: Version #Created with GetNugetVersion.ps1
-              packDirectory: $(Build.ArtifactStagingDirectory)/
-
-          - task: CopyFiles@2
-            displayName: 'Copy Library Files to: $(build.artifactstagingdirectory)'
-            inputs:
-              SourceFolder: '$(system.defaultworkingdirectory)'
-              Contents: '**\Library\bin\$(BuildConfiguration)\**'
-              TargetFolder: '$(build.artifactstagingdirectory)'
-      
-          # Call the post build template located in the YmlTemplates folder
-          - template: YmlTemplates/postBuildSteps.yml
-            parameters:
-              ContentsToCopy: |
-                $(Build.artifactstagingdirectory)\**
-                NugetReleaseInfo.txt
+stages:  
+ - template: AzureDevOps/SDK-and-Quota-pipelines/build-sdk.yml@NfieldTools
