@@ -53,15 +53,25 @@ namespace Nfield.Services
         [Fact]
         public void TestGetSurveyVersionsAsync_ReturnsSurveyVersions()
         {
+            var date0 = DateTime.UtcNow;
+            var date1 = date0.AddDays(1); ;
             var expectedVersions = new List<SurveyVersion>
             {
                 new SurveyVersion
                 {
-                    Etag = "637235755520645294"
+                    Etag = date0.Ticks.ToString(),
+                    PublishDateUtc = date0,
+                    NrOfSuccessfuls = 1,
+                    NrOfDroppedOuts = 2,
+                    NrOfScreenedOuts = 3
                 },
                 new SurveyVersion
                 {
-                    Etag = "637244319282906584"
+                    Etag = date1.Ticks.ToString(),
+                    PublishDateUtc = date1,
+                    NrOfSuccessfuls = 4,
+                    NrOfDroppedOuts = 5,
+                    NrOfScreenedOuts = 6
                 }
             }.ToArray();
 
@@ -78,7 +88,15 @@ namespace Nfield.Services
             var actual = target.GetSurveyVersionsAsync(SurveyId).Result.ToArray();
 
             Assert.Equal(expectedVersions[0].Etag, actual[0].Etag);
+            Assert.Equal(expectedVersions[0].PublishDateUtc, actual[0].PublishDateUtc);
+            Assert.Equal(expectedVersions[0].NrOfSuccessfuls, actual[0].NrOfSuccessfuls);
+            Assert.Equal(expectedVersions[0].NrOfDroppedOuts, actual[0].NrOfDroppedOuts);
+            Assert.Equal(expectedVersions[0].NrOfScreenedOuts, actual[0].NrOfScreenedOuts);
             Assert.Equal(expectedVersions[1].Etag, actual[1].Etag);
+            Assert.Equal(expectedVersions[1].PublishDateUtc, actual[1].PublishDateUtc);
+            Assert.Equal(expectedVersions[1].NrOfSuccessfuls, actual[1].NrOfSuccessfuls);
+            Assert.Equal(expectedVersions[1].NrOfDroppedOuts, actual[1].NrOfDroppedOuts);
+            Assert.Equal(expectedVersions[1].NrOfScreenedOuts, actual[1].NrOfScreenedOuts);
         }
 
         #endregion
