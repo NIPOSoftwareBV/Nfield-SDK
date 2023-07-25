@@ -36,14 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{
 	ProjectSection(SolutionItems) = preProject
 		Pipelines\build.yml = Pipelines\build.yml
 		Pipelines\deploy-nuget.yml = Pipelines\deploy-nuget.yml
-		Pipelines\Scripts\GetNugetVersion.ps1 = Pipelines\Scripts\GetNugetVersion.ps1
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{FE89116F-00A5-4674-92FE-0D7F9280DDA9}"
-	ProjectSection(SolutionItems) = preProject
-		Pipelines\YmlTemplates\deploy.yml = Pipelines\YmlTemplates\deploy.yml
-		Pipelines\YmlTemplates\postBuildSteps.yml = Pipelines\YmlTemplates\postBuildSteps.yml
-		Pipelines\YmlTemplates\runUnitTests.yml = Pipelines\YmlTemplates\runUnitTests.yml
 	EndProjectSection
 EndProject
 Global
