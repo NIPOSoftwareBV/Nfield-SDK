@@ -119,7 +119,7 @@ namespace Nfield.Services.Implementation
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
         {
-            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync()).ConfigureAwait(false))
+            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)))
             {
                 using (var jsonReader = new JsonTextReader(reader))
                 {
