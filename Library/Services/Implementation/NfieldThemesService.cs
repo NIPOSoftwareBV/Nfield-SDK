@@ -49,7 +49,7 @@ namespace Nfield.Services.Implementation
 
             using (var themeData = File.OpenRead(filePath))
             {
-                await DoUploadThemeAsync(templateId, themeName, themeData);
+                await DoUploadThemeAsync(templateId, themeName, themeData).ConfigureAwait(false);
             }
         }
 
@@ -122,7 +122,7 @@ namespace Nfield.Services.Implementation
                 streamContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 var uri = GetUploadThemeUri(templateId, themeName);
                 var response = await Client.PutAsync(uri, streamContent).ConfigureAwait(false);
-                var responseString = await response.Content.ReadAsStringAsync();
+                var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var activityId = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseString).ActivityId;
                 _ = await ConnectionClient.GetActivityResultAsync<int>(activityId, "Status").ConfigureAwait(false);
             }

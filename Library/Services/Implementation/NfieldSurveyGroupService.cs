@@ -38,7 +38,7 @@ namespace Nfield.Services.Implementation
 
             using (var response = await ConnectionClient.Client.GetAsync(uri))
             {
-                return await DeserializeJsonAsync<List<SurveyGroup>>(response);
+                return await DeserializeJsonAsync<List<SurveyGroup>>(response).ConfigureAwait(false);
             }
         }
 
@@ -48,7 +48,7 @@ namespace Nfield.Services.Implementation
 
             using (var response = await ConnectionClient.Client.GetAsync(uri))
             {
-                return await DeserializeJsonAsync<SurveyGroup>(response);
+                return await DeserializeJsonAsync<SurveyGroup>(response).ConfigureAwait(false);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Nfield.Services.Implementation
 
             using (var response = await ConnectionClient.Client.GetAsync(uri))
             {
-                return await DeserializeJsonAsync<List<Survey>>(response);
+                return await DeserializeJsonAsync<List<Survey>>(response).ConfigureAwait(false);
             }
         }
 
@@ -74,9 +74,8 @@ namespace Nfield.Services.Implementation
             };
 
             // note: we need to dispose the response even when we don't use it
-            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, content))
-            {
-            }
+            var response = await ConnectionClient.Client.PutAsJsonAsync(uri, content).ConfigureAwait(false);
+            response.Dispose();
         }
 
         public async Task<SurveyGroup> CreateAsync(SurveyGroupValues model)
@@ -86,7 +85,7 @@ namespace Nfield.Services.Implementation
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, "SurveyGroups");
 
-            using (var response = await ConnectionClient.Client.PostAsJsonAsync(uri, model))
+            using (var response = await ConnectionClient.Client.PostAsJsonAsync(uri, model).ConfigureAwait(false))
             {
                 var result = await DeserializeJsonAsync<SurveyGroup>(response);
 
@@ -101,9 +100,9 @@ namespace Nfield.Services.Implementation
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
 
-            using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model))
+            using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false))
             {
-                var result = await DeserializeJsonAsync<SurveyGroup>(response);
+                var result = await DeserializeJsonAsync<SurveyGroup>(response).ConfigureAwait(false);
 
                 return result;
             }
@@ -114,14 +113,13 @@ namespace Nfield.Services.Implementation
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}");
 
             // note: we need to dispose the response even when we don't use it
-            using (await ConnectionClient.Client.DeleteAsync(uri))
-            {
-            }
+            var res = await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false);
+            res.Dispose();
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
         {
-            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync()))
+            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync()).ConfigureAwait(false))
             {
                 using (var jsonReader = new JsonTextReader(reader))
                 {
