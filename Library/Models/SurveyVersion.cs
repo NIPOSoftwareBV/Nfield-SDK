@@ -34,5 +34,20 @@ namespace Nfield.Models
         /// </summary>
         ///<remarks>Time format is in UTC</remarks>
         public DateTime PublishDateUtc { get; set; }
+
+        /// <summary>
+        /// Number of successful interviews
+        /// </summary>
+        public int NrOfSuccessfuls { get; set; }
+
+        /// <summary>
+        /// Number of dropped outs
+        /// </summary>
+        public int NrOfDroppedOuts { get; set; }
+
+        /// <summary>
+        /// Number of screened outs
+        /// </summary>
+        public int NrOfScreenedOuts { get; set; }
     }
 }

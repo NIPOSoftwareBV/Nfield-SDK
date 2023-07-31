@@ -36,14 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{
 	ProjectSection(SolutionItems) = preProject
 		Pipelines\build.yml = Pipelines\build.yml
 		Pipelines\deploy-nuget.yml = Pipelines\deploy-nuget.yml
-		Pipelines\Scripts\GetNugetVersion.ps1 = Pipelines\Scripts\GetNugetVersion.ps1
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{FE89116F-00A5-4674-92FE-0D7F9280DDA9}"
-	ProjectSection(SolutionItems) = preProject
-		Pipelines\YmlTemplates\deploy.yml = Pipelines\YmlTemplates\deploy.yml
-		Pipelines\YmlTemplates\postBuildSteps.yml = Pipelines\YmlTemplates\postBuildSteps.yml
-		Pipelines\YmlTemplates\runUnitTests.yml = Pipelines\YmlTemplates\runUnitTests.yml
 	EndProjectSection
 EndProject
 Global
@@ -76,7 +68,6 @@ Global
 		{332D81C4-158F-48BB-93F3-332FB84128C9} = {08232289-BE46-4FDE-8F44-F23C943030D1}
 		{58FF8CDE-380B-420C-85AF-FD9C27120AE4} = {08232289-BE46-4FDE-8F44-F23C943030D1}
 		{3FFAD736-051B-4719-8101-B05FB2FC5044} = {9A8E3419-4264-42D6-B7FB-5D55E7CA3D5E}
-		{FE89116F-00A5-4674-92FE-0D7F9280DDA9} = {3FFAD736-051B-4719-8101-B05FB2FC5044}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {701F23E0-60A2-497A-9EF8-98AF8F426892}
