@@ -33,9 +33,9 @@ namespace Nfield.Services.Implementation
         {
             var uri = BlacklistUrl();
 
-            using (var response = await Client.GetAsync(uri))
+            using (var response = await Client.GetAsync(uri).ConfigureAwait(false))
             {
-                return await response.Content.ReadAsStringAsync();
+                return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             }
         }
 
@@ -46,9 +46,9 @@ namespace Nfield.Services.Implementation
             var uri = BlacklistUrl();
             var blacklistContent = new StringContent(blacklist);
 
-            using (var response = await Client.PostAsync(uri, blacklistContent))
+            using (var response = await Client.PostAsync(uri, blacklistContent).ConfigureAwait(false))
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<BlacklistUploadStatus>(result);
             }
         }

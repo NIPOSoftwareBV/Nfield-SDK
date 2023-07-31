@@ -97,10 +97,10 @@ namespace Nfield.Services.Implementation
             postContent.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
             
-            var response = await Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent);
-            var result = await response.Content.ReadAsStringAsync();
+            var response = await Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent).ConfigureAwait(false);
+            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(result);
-            await ConnectionClient.GetActivityResultAsync<string>(backgroundActivityStatus.ActivityId, "Status");
+            await ConnectionClient.GetActivityResultAsync<string>(backgroundActivityStatus.ActivityId, "Status").ConfigureAwait(false);
         }
                           
         #endregion
