@@ -81,7 +81,7 @@ namespace Nfield.Infrastructure
             var content = new FormUrlEncodedContent(data);
 
             // client will update the Token
-            var response = await newClient.PostAsync(new Uri(NfieldServerUri, "SignIn"), content);
+            var response = await newClient.PostAsync(new Uri(NfieldServerUri, "SignIn"), content).ConfigureAwait(false);
 
             // note: do not set the new client *before* the sign in has completed,
             // because otherwise calling sign in may cause unrelated requests on the

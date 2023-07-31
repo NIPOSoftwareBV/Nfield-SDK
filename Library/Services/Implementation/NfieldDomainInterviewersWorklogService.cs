@@ -46,7 +46,7 @@ namespace Nfield.Services.Implementation
                           .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                           .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
                           .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
-                          .FlattenExceptions().ConfigureAwait(true);
+                          .FlattenExceptions().ConfigureAwait(false);
         }
 
         #endregion
