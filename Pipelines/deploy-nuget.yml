@@ -23,13 +23,11 @@ resources:
     - repository: NfieldTools
       type: github
       name: NIPOSoftwareBV/Nfield-Tools
-      endpoint: NfieldToolsRepository
+      endpoint: Nfield # DevOps Service Connection
       ref: # Defaults to master, to build with another version specify the ref here (e.g. 'refs/tags/2019-q1s01') If you want to build from a specific commit, first create a tag pointing to that commit, then pin to that tag.
-
 
 pool:
   vmImage: windows-2022
-
 
 stages:
 - template: AzureDevOps/SDK-and-Quota-pipelines/deploy-sdk-nuget.yml@NfieldTools 
