@@ -28,7 +28,7 @@ namespace Nfield.Infrastructure
     /// </summary>
     public static class NfieldSdkInitializer
     {
-        internal static Dictionary<Type, Type> TypeMap = new Dictionary<Type, Type>()
+        internal readonly static Dictionary<Type, Type> TypeMap = new Dictionary<Type, Type>()
         {
             { typeof(NfieldConnection), typeof(NfieldConnection) },
             { typeof(INfieldInterviewersService), typeof(NfieldInterviewersService) },
@@ -67,6 +67,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyGeneralSettingsService), typeof(NfieldSurveyGeneralSettingsService) },
             { typeof(INfieldAddressesService), typeof(NfieldAddressesService) },
             { typeof(INfieldSurveyPackageService), typeof(NfieldSurveyPackageService) },
+            { typeof(INfieldSurveyCustomColumnsService), typeof(NfieldSurveyCustomColumnsService) },
             { typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService) },
             { typeof(INfieldSurveySampleDataService), typeof(NfieldSurveySampleDataService) },
             { typeof(INfieldSurveySampleService), typeof(NfieldSurveySampleService) },
@@ -102,7 +103,8 @@ namespace Nfield.Infrastructure
             { typeof(INfieldDeliveryRepositoryUsersService), typeof(NfieldDeliveryRepositoryUsersService) },
             { typeof(INfieldDeliverySettingsService), typeof(NfieldDeliverySettingsService) },
             { typeof(INfieldDeliverySurveyPropertiesService), typeof(NfieldDeliverySurveyPropertiesService) },
-            { typeof(INfieldDeliverySurveysService), typeof(NfieldDeliverySurveysService) }
+            { typeof(INfieldDeliverySurveysService), typeof(NfieldDeliverySurveysService) },
+            { typeof(INfieldEventSubscriptionsService), typeof(NfieldEventSubscriptionsService) }
         };
 
         /// <summary>

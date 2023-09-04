@@ -31,16 +31,16 @@ namespace Nfield.Services.Implementation
 
         public async Task<DataRetentionSettings> GetAsync(string surveyId)
         {
-            using (var response = await Client.GetAsync(DataRetentionEndpoint(surveyId)))
+            using (var response = await Client.GetAsync(DataRetentionEndpoint(surveyId)).ConfigureAwait(false))
             {
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<DataRetentionSettings>(content);
             }
         }
 
         public async Task PutAsync(string surveyId, int retentionPeriod)
         {
-            await Client.PutAsJsonAsync(DataRetentionEndpoint(surveyId), new { RetentionPeriod = retentionPeriod });
+            await Client.PutAsJsonAsync(DataRetentionEndpoint(surveyId), new { RetentionPeriod = retentionPeriod }).ConfigureAwait(false);
         }
 
         #endregion

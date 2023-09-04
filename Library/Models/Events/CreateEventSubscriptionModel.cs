@@ -13,20 +13,29 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using System;
 
-namespace Nfield.Models
+namespace Nfield.SDK.Models.Events
 {
-    [Flags]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4070:Non-flags enums should not be marked with \"FlagsAttribute\"",
-        Justification = "It is a flags enum")]
-    public enum CopyableSurveyConfiguration
+    /// <summary>
+    /// The model used when creating a new event subscription.
+    /// </summary>
+    public class CreateEventSubscriptionModel
     {
-        None = 0,
-        All = ~None,
+        /// <summary>
+		/// The subscription name.
+		/// </summary>
+		public string EventSubscriptionName { get; set; }
 
-        QuotaFrame = 1,
-        QuestionnaireScript = 2,
-        TranslationLanguages = 4, // this is called "buttons and messages" in the UI
+        /// <summary>
+        /// The endpoint to use for the subscription.
+        /// </summary>
+        public Uri Endpoint { get; set; }
+
+        /// <summary>
+        /// The event types that will subscribe to.
+        /// </summary>
+        public IEnumerable<string> EventTypes { get; set; }
     }
 }

@@ -35,9 +35,9 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public async Task<CatiInterviewer> AddAsync(CatiInterviewer catiInterviewer)
         {
-            using (var response = await Client.PostAsJsonAsync(CatiInterviewersApi, catiInterviewer))
+            using (var response = await Client.PostAsJsonAsync(CatiInterviewersApi, catiInterviewer).ConfigureAwait(false))
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<CatiInterviewer>(result);
             }
         }
@@ -52,7 +52,7 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException("catiInterviewer");
             }
 
-            using (await Client.DeleteAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId)))
+            using (await Client.DeleteAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId)).ConfigureAwait(false))
             {
             }
         }
@@ -62,9 +62,9 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public async Task<IQueryable<CatiInterviewer>> QueryAsync()
         {
-            using (var response = await Client.GetAsync(CatiInterviewersApi))
+            using (var response = await Client.GetAsync(CatiInterviewersApi).ConfigureAwait(false))
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<List<CatiInterviewer>>(result).AsQueryable();
             }
         }
@@ -78,9 +78,9 @@ namespace Nfield.Services.Implementation
             {
                 throw new ArgumentNullException("catiInterviewer");
             }
-            using (var response = await Client.PutAsJsonAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId), (object)new { Password = password }))
+            using (var response = await Client.PutAsJsonAsync(new Uri(CatiInterviewersApi, catiInterviewer.InterviewerId), (object)new { Password = password }).ConfigureAwait(false))
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<CatiInterviewer>(result);
             }
         }

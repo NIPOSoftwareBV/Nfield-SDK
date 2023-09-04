@@ -1,17 +1,33 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
 
-trigger:
-- master
+pr: none
+
+trigger: none
+
+# This pipeline is triggered when the Build stage in the DomainApiBuild pipeline finishes
+resources:
+  pipelines:
+  - pipeline: 'SDKBuild'
+    source: 'Nfield SDK Build'
+    trigger:
+      branches:
+        include: 
+        - 'master'
+        - '*/ci-*'
+        - 'release/*'
+      stages:
+      - Build # Run deploy-release pipeline when the build of SDK completes. If it only has one stage we could use "trigger: true" too.
+
+
+  repositories:
+    - repository: NfieldTools
+      type: github
+      name: NIPOSoftwareBV/Nfield-Tools
+      endpoint: Nfield # DevOps Service Connection
+      ref: # Defaults to master, to build with another version specify the ref here (e.g. 'refs/tags/2019-q1s01') If you want to build from a specific commit, first create a tag pointing to that commit, then pin to that tag.
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-2022
 
-variables:
-  buildConfiguration: 'Release'
-
-steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+stages:
+- template: AzureDevOps/SDK-and-Quota-pipelines/deploy-sdk-nuget.yml@NfieldTools 

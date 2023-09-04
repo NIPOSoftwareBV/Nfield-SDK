@@ -37,11 +37,11 @@ namespace Nfield.Infrastructure
 
         public override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            var token = await _provideTokenAsync();
+            var token = await _provideTokenAsync().ConfigureAwait(false);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             request.Headers.Add("X-NFIELD-DOMAIN", _domainName);
 
-            var response = await Client.SendAsync(request);
+            var response = await Client.SendAsync(request).ConfigureAwait(false);
 
             try
             {

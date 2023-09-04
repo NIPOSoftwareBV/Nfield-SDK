@@ -42,7 +42,7 @@ namespace Nfield.Services
         /// <summary>
         /// Adds a new survey based on a blueprint survey.
         /// </summary>
-        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All);
+        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName);
 
         /// <summary>
         /// Updates an existing blueprint survey based on a survey

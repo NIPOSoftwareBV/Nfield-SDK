@@ -13,41 +13,33 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Newtonsoft.Json;
-using System;
+using System.Collections.Generic;
 
-namespace Nfield.Models
+namespace Nfield.SDK.Models.Events
 {
     /// <summary>
-    /// Model for the survey version
+    /// Describes the properties of an event subscription. 
     /// </summary>
-    public class SurveyVersion
+    public class EventSubscriptionModel
     {
         /// <summary>
-        /// The Etag
+        /// The domain identifier that is also the topic name
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
-        public string Etag { get; set; }
+        public string DomainId { get; set; }
 
         /// <summary>
-        /// The date when the survey package was published
+        /// The subscription name
         /// </summary>
-        ///<remarks>Time format is in UTC</remarks>
-        public DateTime PublishDateUtc { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Number of successful interviews
+        /// The webhook endpoint
         /// </summary>
-        public int NrOfSuccessfuls { get; set; }
+        public string WebHookUri { get; set; }
 
         /// <summary>
-        /// Number of dropped outs
+        ///  The event types that the subscription is about.
         /// </summary>
-        public int NrOfDroppedOuts { get; set; }
-
-        /// <summary>
-        /// Number of screened outs
-        /// </summary>
-        public int NrOfScreenedOuts { get; set; }
+        public IEnumerable<string> EventTypes { get; set; }
     }
 }

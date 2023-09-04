@@ -13,6 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+
 namespace Nfield.Models
 {
     public class CapiInterviewer
@@ -58,5 +60,26 @@ namespace Nfield.Models
         /// The InterviewerId as it is used on the client
         /// </summary>
         public string ClientInterviewerId { get; set; }
+
+        /// <summary>
+        /// Time the password was last changed
+        /// </summary>
+        public virtual DateTime? LastPasswordChangeTime { get; set; }
+
+        /// <summary>
+        /// The date and time of the last sync
+        /// </summary>
+        public virtual DateTime? LastSyncDate { get; set; }
+
+        /// <summary>
+        /// interviewer full-sync status: true if fully synced, false if not fully synced
+        /// </summary>
+        public bool IsFullSynced { get; set; }
+
+        /// <summary>
+        /// true if last sync was successful, false if not
+        /// </summary>
+        public bool IsLastSyncSuccessful { get; set; }
+      
     }
 }

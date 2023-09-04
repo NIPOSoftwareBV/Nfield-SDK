@@ -1,0 +1,36 @@
+# Build template for the SDK pipeline
+name: $(SourceBranchName)-$(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  # We need to set this to false, otherwise the system waits until the previous run is completed, and if you don't deploy or you don't cancel the build, the previous run will stay in progress forever
+  # setting the batch to false will always trigger a build when there is a new commit (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#batching-ci-runs)
+  batch: false
+  branches:
+    include:
+      - "master"
+      - "*/ci-*"
+      - "release/*"
+  paths:
+    include:
+      - Library/*
+      - packages/*
+      - Tests/*
+      - Nfield.SDK.sln
+      - Pipelines/*
+
+pr: none
+
+resources:
+  repositories:
+    - repository: NfieldTools
+      type: github
+      name: NIPOSoftwareBV/Nfield-Tools
+      endpoint: Nfield # DevOps Service Connection
+      ref: # Defaults to master, to build with another version specify the ref here (e.g. 'refs/tags/2019-q1s01') If you want to build from a specific commit, first create a tag pointing to that commit, then pin to that tag.
+
+
+pool:
+  vmImage: windows-2022
+
+stages:  
+ - template: AzureDevOps/SDK-and-Quota-pipelines/build-sdk.yml@NfieldTools

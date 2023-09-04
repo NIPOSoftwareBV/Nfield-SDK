@@ -70,7 +70,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveysService.AddFromBlueprintAsync"/>
         /// </summary>
-        public Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, CopyableSurveyConfiguration includedConfiguration = CopyableSurveyConfiguration.All)
+        public Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName)
         {
             if (blueprintSurveyId == null)
             {
@@ -84,8 +84,7 @@ namespace Nfield.Services.Implementation
             return Client.PostAsJsonAsync(new Uri(SurveysApi, "CreateSurveyFromBlueprint"), new
                             {
                                 BlueprintSurveyId = blueprintSurveyId,
-                                SurveyName = surveyName,
-                                IncludedConfiguration = (int)includedConfiguration
+                                SurveyName = surveyName
                             })
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<Survey>(task.Result))
