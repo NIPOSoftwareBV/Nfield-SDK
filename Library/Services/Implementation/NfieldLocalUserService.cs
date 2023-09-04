@@ -44,7 +44,7 @@ namespace Nfield.Services.Implementation
 
             using (var response = await ConnectionClient.Client.GetAsync(uri))
             {
-                return await DeserializeJsonAsync<List<LocalUser>>(response);
+                return await DeserializeJsonAsync<List<LocalUser>>(response).ConfigureAwait(false);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Nfield.Services.Implementation
 
             using (var response = await ConnectionClient.Client.GetAsync(uri))
             {
-                return await DeserializeJsonAsync<LocalUser>(response);
+                return await DeserializeJsonAsync<LocalUser>(response).ConfigureAwait(false);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Nfield.Services.Implementation
 
             using (var response = await ConnectionClient.Client.PostAsJsonAsync(uri, model))
             {
-                var result = await DeserializeJsonAsync<LocalUser>(response);
+                var result = await DeserializeJsonAsync<LocalUser>(response).ConfigureAwait(false);
 
                 return result;
             }
@@ -89,9 +89,9 @@ namespace Nfield.Services.Implementation
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
 
-            using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model))
+            using (var response = await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false))
             {
-                var result = await DeserializeJsonAsync<LocalUser>(response);
+                var result = await DeserializeJsonAsync<LocalUser>(response).ConfigureAwait(false);
 
                 return result;
             }
@@ -106,7 +106,8 @@ namespace Nfield.Services.Implementation
                 throw new ArgumentNullException(nameof(model));
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/Password/{identityId}");
-            using (await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false));
+            var res = await ConnectionClient.Client.PatchAsJsonAsync(uri, model).ConfigureAwait(false);
+            res.Dispose();
         }
 
         /// <summary>
@@ -117,7 +118,8 @@ namespace Nfield.Services.Implementation
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"LocalUsers/{identityId}");
 
             // note: we need to dispose the response even when we don't use it
-            using (await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false));            
+            var res = await ConnectionClient.Client.DeleteAsync(uri).ConfigureAwait(false);
+            res.Dispose();            
         }
 
         /// <summary>
@@ -133,7 +135,7 @@ namespace Nfield.Services.Implementation
                           .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                           .ContinueWith(task => JsonConvert.DeserializeObject<BackgroundActivityStatus>(task.Result))
                           .ContinueWith(task => ConnectionClient.GetActivityResultAsync<string>(task.Result.ActivityId, "DownloadDataUrl").Result)
-                          .FlattenExceptions().ConfigureAwait(true);
+                          .FlattenExceptions().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,7 +143,7 @@ namespace Nfield.Services.Implementation
         /// </summary>
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
         {
-            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync()))
+            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)))
             {
                 using (var jsonReader = new JsonTextReader(reader))
                 {

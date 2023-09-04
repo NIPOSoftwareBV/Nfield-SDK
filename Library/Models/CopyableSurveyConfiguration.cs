@@ -27,5 +27,6 @@ namespace Nfield.Models
 
         QuotaFrame = 1,
         QuestionnaireScript = 2,
+        TranslationLanguages = 4, // this is called "buttons and messages" in the UI
     }
 }

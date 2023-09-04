@@ -34,9 +34,9 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/DirectoryAssignments");
 
-            using (var response = await ConnectionClient.Client.GetAsync(uri))
+            using (var response = await ConnectionClient.Client.GetAsync(uri).ConfigureAwait(false))
             {
-                return await DeserializeJsonAsync<List<SurveyGroupDirectoryAssignment>>(response);
+                return await DeserializeJsonAsync<List<SurveyGroupDirectoryAssignment>>(response).ConfigureAwait(false);
             }
         }
 
@@ -44,9 +44,9 @@ namespace Nfield.Services.Implementation
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/LocalAssignments");
 
-            using (var response = await ConnectionClient.Client.GetAsync(uri))
+            using (var response = await ConnectionClient.Client.GetAsync(uri).ConfigureAwait(false))
             {
-                return await DeserializeJsonAsync<List<SurveyGroupNativeAssignment>>(response);
+                return await DeserializeJsonAsync<List<SurveyGroupNativeAssignment>>(response).ConfigureAwait(false);
             }
         }
 
@@ -57,9 +57,9 @@ namespace Nfield.Services.Implementation
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/AssignDirectory");
 
-            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, model))
+            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, model).ConfigureAwait(false))
             {
-                var result = await DeserializeJsonAsync<SurveyGroupDirectoryAssignment>(response);
+                var result = await DeserializeJsonAsync<SurveyGroupDirectoryAssignment>(response).ConfigureAwait(false);
 
                 return result;
             }
@@ -74,9 +74,9 @@ namespace Nfield.Services.Implementation
                 { "NativeIdentityId", identityId }
             };
 
-            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, dictionary))
+            using (var response = await ConnectionClient.Client.PutAsJsonAsync(uri, dictionary).ConfigureAwait(false))
             {
-                var result = await DeserializeJsonAsync<SurveyGroupNativeAssignment>(response);
+                var result = await DeserializeJsonAsync<SurveyGroupNativeAssignment>(response).ConfigureAwait(false);
 
                 return result;
             }
@@ -89,7 +89,7 @@ namespace Nfield.Services.Implementation
 
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"SurveyGroups/{surveyGroupId}/UnassignDirectory");
 
-            return await ConnectionClient.Client.PutAsJsonAsync(uri, model);
+            return await ConnectionClient.Client.PutAsJsonAsync(uri, model).ConfigureAwait(false);
         }
 
         public async Task<HttpResponseMessage> UnassignLocalAsync(int surveyGroupId, string identityId)
@@ -101,12 +101,12 @@ namespace Nfield.Services.Implementation
                 { "NativeIdentityId", identityId }
             };
 
-            return await ConnectionClient.Client.PutAsJsonAsync(uri, dictionary);
+            return await ConnectionClient.Client.PutAsJsonAsync(uri, dictionary).ConfigureAwait(false);
         }
 
         private async Task<T> DeserializeJsonAsync<T>(HttpResponseMessage response)
         {
-            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync()))
+            using (var reader = new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)))
             {
                 using (var jsonReader = new JsonTextReader(reader))
                 {
