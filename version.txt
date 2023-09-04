@@ -17,4 +17,4 @@
 # {major}.{minor}.{buildId}{suffix} where suffix should be either
 # "-alpha", "-beta" or "" (empty) for respectively non-master-branches, master-branches
 # and release-versions (which is triggered once a release is published)
-2.65.{buildId}{suffix}
+2.66.{buildId}{suffix}
