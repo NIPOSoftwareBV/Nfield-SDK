@@ -43,7 +43,7 @@ namespace Nfield.Infrastructure
                 Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", _token);
             }
 
-            var response = await Client.SendAsync(request);
+            var response = await Client.SendAsync(request).ConfigureAwait(false);
 
             IEnumerable<string> headerValues;
             if (response.Headers.TryGetValues("X-AuthenticationToken", out headerValues))

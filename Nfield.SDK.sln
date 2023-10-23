@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30225.117
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{24178942-80A8-44E7-9C3F-1108D04D7B7E}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,7 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		devops.yml = devops.yml
 		LICENSE.txt = LICENSE.txt
 		CodeAnalysis\NipoSoftware.DefaultProjectRules.targets = CodeAnalysis\NipoSoftware.DefaultProjectRules.targets
 		README.md = README.md
@@ -32,6 +31,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApplication", "Examples\ConsoleApplication\ConsoleApplication.csproj", "{332D81C4-158F-48BB-93F3-332FB84128C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsFormsApplication", "Examples\WindowsFormsApplication\WindowsFormsApplication.csproj", "{58FF8CDE-380B-420C-85AF-FD9C27120AE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{3FFAD736-051B-4719-8101-B05FB2FC5044}"
+	ProjectSection(SolutionItems) = preProject
+		Pipelines\build.yml = Pipelines\build.yml
+		Pipelines\deploy-nuget.yml = Pipelines\deploy-nuget.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +67,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{332D81C4-158F-48BB-93F3-332FB84128C9} = {08232289-BE46-4FDE-8F44-F23C943030D1}
 		{58FF8CDE-380B-420C-85AF-FD9C27120AE4} = {08232289-BE46-4FDE-8F44-F23C943030D1}
+		{3FFAD736-051B-4719-8101-B05FB2FC5044} = {9A8E3419-4264-42D6-B7FB-5D55E7CA3D5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {701F23E0-60A2-497A-9EF8-98AF8F426892}

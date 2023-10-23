@@ -128,7 +128,7 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.AddFromBlueprintAsync("some blueprint", "My survey", CopyableSurveyConfiguration.QuotaFrame).Result;
+            var actual = target.AddFromBlueprintAsync("some blueprint", "My survey").Result;
 
             Assert.Equal(survey.SurveyName, actual.SurveyName);
             Assert.Equal(survey.SurveyType, actual.SurveyType);
@@ -150,7 +150,7 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            target.UpdateBlueprintFromSurveyAsync(blueprintId, surveyId, CopyableSurveyConfiguration.QuotaFrame).Wait();
+            target.UpdateBlueprintFromSurveyAsync(blueprintId, surveyId, CopyableSurveyConfiguration.All).Wait();
 
             mockedHttpClient.Verify(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"SurveyBlueprints/{blueprintId}/Update"), It.IsAny<object>()), Times.Once);
         }

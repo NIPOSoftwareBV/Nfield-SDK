@@ -14,23 +14,17 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using System;
+using System.Threading.Tasks;
 
-namespace Nfield.SDK.Models.Events
+namespace Nfield.SDK.Services
 {
-    /// <summary>
-    /// The model used for updating an event subscription.
-    /// </summary>
-    public class UpdateEventSubscriptionModel
+    public interface INfieldSurveyCustomColumnsService
     {
         /// <summary>
-        /// The endpoint to use for the subscription.
+        /// Returns the custom column names for the specified survey
         /// </summary>
-        public Uri Endpoint { get; set; }
-
-        /// <summary>
-        /// The event types to subscribe.
-        /// </summary>
-        public IEnumerable<string> EventTypes { get; set; }
+        /// <param name="surveyId">The id if the survey to get the column names for</param>
+        /// <returns>A Task returning the column names</returns>
+        Task<IEnumerable<string>> GetSurveyCustomColumnsAsync(string surveyId);
     }
 }

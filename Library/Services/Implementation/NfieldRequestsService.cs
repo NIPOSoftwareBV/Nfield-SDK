@@ -28,9 +28,9 @@ namespace Nfield.Services.Implementation
         /// <inheritdoc/>
         public async Task<IQueryable<Request>> QueryAsync()
         {
-            using (var response = await Client.GetAsync(RequestsApi))
+            using (var response = await Client.GetAsync(RequestsApi).ConfigureAwait(false))
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<List<Request>>(result).AsQueryable();
             }
         }
@@ -38,23 +38,23 @@ namespace Nfield.Services.Implementation
         /// <inheritdoc/>
         public async Task<Request> AddAsync(Request request)
         {
-            using (var response = await Client.PostAsJsonAsync(RequestsApi, request ?? throw new ArgumentNullException(nameof(request))))
+            using (var response = await Client.PostAsJsonAsync(RequestsApi, request ?? throw new ArgumentNullException(nameof(request))).ConfigureAwait(false))
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<Request>(result);
             }
         }
 
         /// <inheritdoc/>
         public async Task RemoveAsync(Request request)
-            => await Client.DeleteAsync(new Uri(RequestsApi, request?.Id.ToString() ?? throw new ArgumentNullException(nameof(request))));
+            => await Client.DeleteAsync(new Uri(RequestsApi, request?.Id.ToString() ?? throw new ArgumentNullException(nameof(request)))).ConfigureAwait(false);
 
         /// <inheritdoc/>
         public async Task<Request> UpdateAsync(Request request)
         {
-            using (var response = await Client.PutAsJsonAsync(RequestsApi, request ?? throw new ArgumentNullException(nameof(request))))
+            using (var response = await Client.PutAsJsonAsync(RequestsApi, request ?? throw new ArgumentNullException(nameof(request))).ConfigureAwait(false))
             {
-                var result = await response.Content.ReadAsStringAsync();
+                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<Request>(result);
             }
         }
