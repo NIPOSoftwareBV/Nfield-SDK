@@ -48,6 +48,7 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
+        [Obsolete("The GetCountAsync method is obsolete. Please use the number of returned addresses from the QueryAsync method.")]
         public Task<int> GetCountAsync(string surveyId, string samplingPointId)
         {
             CheckSurveyIdAndSamplingPointId(surveyId, samplingPointId);
