@@ -106,5 +106,10 @@ namespace Nfield.Models
         /// </summary>
         [JsonProperty]
         public DateTime? LastPasswordChangeTime { get; internal set; }
+
+        /// <summary>
+        /// true if last sync was successful, false if not
+        /// </summary>
+        public bool IsLastSyncSuccessful { get; set; }
     }
 }

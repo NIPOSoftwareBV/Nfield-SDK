@@ -13,21 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Nfield.Models
+namespace Nfield.SDK.Services
 {
-    [Flags]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4070:Non-flags enums should not be marked with \"FlagsAttribute\"",
-        Justification = "It is a flags enum")]
-    public enum CopyableSurveyConfiguration
+    public interface INfieldSurveyCustomColumnsService
     {
-        None = 0,
-        All = ~None,
-
-        QuotaFrame = 1,
-        QuestionnaireScript = 2,
-        TranslationLanguages = 4, // this is called "buttons and messages" in the UI
-        MediaFiles = 8,
+        /// <summary>
+        /// Returns the custom column names for the specified survey
+        /// </summary>
+        /// <param name="surveyId">The id if the survey to get the column names for</param>
+        /// <returns>A Task returning the column names</returns>
+        Task<IEnumerable<string>> GetSurveyCustomColumnsAsync(string surveyId);
     }
 }

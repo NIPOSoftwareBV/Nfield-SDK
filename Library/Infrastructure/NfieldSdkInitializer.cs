@@ -67,6 +67,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyGeneralSettingsService), typeof(NfieldSurveyGeneralSettingsService) },
             { typeof(INfieldAddressesService), typeof(NfieldAddressesService) },
             { typeof(INfieldSurveyPackageService), typeof(NfieldSurveyPackageService) },
+            { typeof(INfieldSurveyCustomColumnsService), typeof(NfieldSurveyCustomColumnsService) },
             { typeof(INfieldSurveyPublishService), typeof(NfieldSurveyPublishService) },
             { typeof(INfieldSurveySampleDataService), typeof(NfieldSurveySampleDataService) },
             { typeof(INfieldSurveySampleService), typeof(NfieldSurveySampleService) },
