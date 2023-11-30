@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
@@ -63,7 +62,7 @@ namespace Nfield.SDK.Services.Implementation
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Users");
 
-            return ConnectionClient.Client.PostAsync(uri, new StringContent(repositoryUserName))
+            return ConnectionClient.Client.PostAsJsonAsync(uri, repositoryUserName)
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<string>(task.Result))
                          .FlattenExceptions();
