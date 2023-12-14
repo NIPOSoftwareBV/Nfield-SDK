@@ -1,4 +1,7 @@
-﻿namespace Nfield.SDK.Models
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+
+namespace Nfield.SDK.Models
 {
     public class LanguageTranslations
     {
@@ -26,5 +29,6 @@
         public string Name { get; set; }
         public string AnswerTooLong { get; set; }
         public string DoNotUseButtonWithOtherAnswer { get; set; }
+        public IEnumerable<TranslationWarning> TranslationWarnings { get; set; }
     }
 }
