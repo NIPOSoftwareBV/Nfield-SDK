@@ -82,6 +82,38 @@ namespace Nfield.Services
 
         #endregion
 
+        #region GetSingleSampleRecordAsync
+
+        [Fact]
+        public void TestGetSingleSampleRecordAsync_SurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.GetSingleSampleRecordAsync(null, 0)));
+        }
+
+        [Fact]
+        public void TestGetSingleSampleRecordAsync_SurveyIdIsEmpty_Throws()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(_target.GetSingleSampleRecordAsync("  ", 0)));
+        }
+
+        [Fact]
+        public void TestGetSingleSampleRecordAsync_SurveyHasSample_ReturnsSample()
+        {
+            const string sample = "a sample";
+            var content = new StringContent(sample);
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + SurveyId + "/Sample/1")))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var actual = _target.GetSingleSampleRecordAsync(SurveyId, 1).Result;
+
+            Assert.Equal(sample, actual);
+        }
+
+        #endregion
+
         #region SendInvitationsAsync
 
         [Fact]

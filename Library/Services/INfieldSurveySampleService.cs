@@ -26,13 +26,23 @@ namespace Nfield.Services
     public interface INfieldSurveySampleService
     {
         /// <summary>
-        /// start task to download sample
+        /// get sample records for survey
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        /// <returns>task</returns>
+        /// <returns>content of csv file containing a data records + header</returns>
         Task<string> GetAsync(string surveyId);
+
+        /// <summary>
+        /// get single sample record for survey
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="interviewId">The id (interview number) of the sample record</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <returns>content of csv file containing a single data record + header</returns>
+        Task<string> GetSingleSampleRecordAsync(string surveyId, int interviewId);
 
         /// <summary>
         /// upload csv sample
