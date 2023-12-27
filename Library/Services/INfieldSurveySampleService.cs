@@ -31,7 +31,7 @@ namespace Nfield.Services
         /// <param name="surveyId">The id of the survey</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        /// <returns>content of csv file containing a data records + header</returns>
+        /// <returns>content of csv file containing all data records + header</returns>
         Task<string> GetAsync(string surveyId);
 
         /// <summary>
