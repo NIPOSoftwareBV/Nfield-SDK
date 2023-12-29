@@ -43,6 +43,16 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
+        public async Task<string> GetSingleSampleRecordAsync(string surveyId, int interviewId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Sample/{interviewId}");
+
+            var response = await Client.GetAsync(uri);
+            return await response.Content.ReadAsStringAsync();
+        }
+
         public Task<SampleUploadStatus> PostAsync(string surveyId, string sample)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
