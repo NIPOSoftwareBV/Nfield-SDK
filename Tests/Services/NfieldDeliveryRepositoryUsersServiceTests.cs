@@ -94,7 +94,7 @@ namespace Nfield.Services
             var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories/{repositoryId}/Users");
 
             mockedHttpClient
-                .Setup(client => client.PostAsync(endpointUri, It.Is<StringContent>(stringContent => stringContent.ReadAsStringAsync().Result.Equals(repositoryUserName))))
+                .Setup(client => client.PostAsJsonAsync(endpointUri,repositoryUserName))
                 .Returns(CreateTask(HttpStatusCode.OK, content)).Verifiable();
 
             var target = new NfieldDeliveryRepositoryUsersService();
