@@ -29,19 +29,21 @@ resources:
 pool:
   vmImage: windows-2022
 
+
 stages:
-- stage: deploy nuget
+- stage: Build
   jobs:
-   - job: DeployNuget
-     displayName: 'Deploy Nuget'
-     pool:
-       vmImage: windows-2022
-     steps:
-      - task: NuGetCommand@2
-         displayName: 'NuGet push'
-         inputs:
-             command: push
-             packagesToPush: '**/*.nupkg'
-             nuGetFeedType: internal
-             publishFeedCredentials: 'NuGet (Publish)' # Used only for external feed
-             publishVstsFeed: 'nfield' # Used only for internal feed         
+# Job 1
+  - job: Build_Release_NField_Source_Solution
+    displayName: Build Release NField Source Solution
+
+    steps:   
+      # Determine Version of Installed Programs
+      - task: 
+            displayName: 'NuGet push'
+            inputs:
+              command: push
+              packagesToPush: '**/*.nupkg'
+              nuGetFeedType: internal
+              publishFeedCredentials: 'NuGet (Publish)' # Used only for external feed
+              publishVstsFeed: 'nfield' # Used only for internal feed         
