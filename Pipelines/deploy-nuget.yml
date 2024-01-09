@@ -31,7 +31,7 @@ pool:
 
 
 stages:
-- stage: Build
+ - stage: Build
    jobs:
      - job: Build_Release_NField_Source_Solution
        displayName: Build Release NField Source Solution
