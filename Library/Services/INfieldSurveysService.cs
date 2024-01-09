@@ -13,12 +13,11 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.Models;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Nfield.Models;
-using Nfield.Quota;
 
 namespace Nfield.Services
 {
@@ -105,12 +104,6 @@ namespace Nfield.Services
         #region Quota for a survey
 
         /// <summary>
-        /// Gets quota definition for survey.
-        /// </summary>
-        [Obsolete("NfieldSurveysService.QuotaQueryAsync is obsolete, please use NfieldSurveyQuotaFrameService.QuotaQueryAsync instead.")]
-        Task<QuotaLevel> QuotaQueryAsync(string surveyId);
-
-        /// <summary>
         /// Gets quota frame definition for survey.
         /// </summary>
         Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId);
@@ -119,30 +112,6 @@ namespace Nfield.Services
         /// Gets quota frame definition for survey, using eTag version
         /// </summary>
         Task<SDK.Models.QuotaFrame> QuotaTargetsQueryAsync(string surveyId, string eTag);
-
-        /// <summary>
-        /// Get the quota definition for an online survey
-        /// </summary>
-        /// <param name="surveyId"></param>
-        /// <returns></returns>
-        [Obsolete("NfieldSurveysService.OnlineQuotaQueryAsync is obsolete, please use NfieldSurveyQuotaFrameService.QuotaQueryAsync instead.")]
-        Task<QuotaFrame> OnlineQuotaQueryAsync(string surveyId);
-
-        /// <summary>
-        /// Assigns the supplied <paramref name="quota"/> to the survey with the provided <paramref name="surveyId"/>.
-        /// When this method is called on a survey that has a quota frame already 
-        /// then the frame is completely replaced by the new one.
-        /// </summary>
-        [Obsolete("NfieldSurveysService.CreateOrUpdateQuotaAsync is obsolete, please use NfieldSurveyQuotaFrameService.CreateOrUpdateQuotaAsync instead.")]
-        Task<QuotaLevel> CreateOrUpdateQuotaAsync(string surveyId, QuotaLevel quota);
-
-        /// <summary>
-        /// Assigns the supplied <paramref name="quotaFrame"/> to the survey with the provided <paramref name="surveyId"/>.
-        /// When this method is called on a survey that has a quota frame already 
-        /// then the frame is completely replaced by the new one.
-        /// </summary>
-        [Obsolete("NfieldSurveysService.CreateOrUpdateQuotaAsync is obsolete, please use NfieldSurveyQuotaFrameService.CreateOrUpdateQuotaAsync instead.")]
-        Task<QuotaFrame> CreateOrUpdateOnlineQuotaAsync(string surveyId, QuotaFrame quotaFrame);
 
         #endregion
 
