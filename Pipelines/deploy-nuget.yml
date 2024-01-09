@@ -40,6 +40,7 @@ stages:
        - task: publish
          inputs:
            command: push
-           packagesToPush: '**/*.nupkg'           
+           packagesToPush: '**/*.nupkg'
+           nuGetFeedType: internal
            publishFeedCredentials: 'NuGet (Publish)' # Used only for external feed
            publishVstsFeed: 'nfield' # Used only for internal feed         
