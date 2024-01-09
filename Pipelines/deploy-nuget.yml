@@ -30,4 +30,17 @@ pool:
   vmImage: windows-2022
 
 stages:
-- template: AzureDevOps/SDK-and-Quota-pipelines/deploy-sdk-nuget.yml@NfieldTools 
+ jobs:
+   - job: DeployNuget
+     displayName: 'Deploy Nuget'
+     pool:
+       vmImage: windows-2022
+     steps:
+      -task: publish
+      inputs:
+        command: push
+        packagesToPush: '**/*.nupkg'
+        nuGetFeedType: ${{ parameters.nuGetFeedType }}
+        publishFeedCredentials: 'NuGet (Publish)' # Used only for external feed
+        publishVstsFeed: 'nfield' # Used only for internal feed
+      condition: succeeded() 
