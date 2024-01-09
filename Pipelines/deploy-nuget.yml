@@ -30,7 +30,8 @@ pool:
   vmImage: windows-2022
 
 stages:
- jobs:
+- stage: deploy nuget
+  jobs:
    - job: DeployNuget
      displayName: 'Deploy Nuget'
      pool:
