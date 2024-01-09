@@ -37,7 +37,7 @@ stages:
      pool:
        vmImage: windows-2022
      steps:
-       - task: publish
+       - task: NuGetCommand@2
          inputs:
            command: push
            packagesToPush: '**/*.nupkg'
