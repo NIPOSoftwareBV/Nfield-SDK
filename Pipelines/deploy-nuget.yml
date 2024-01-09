@@ -33,15 +33,12 @@ pool:
 stages:
 - stage: Build
   jobs:
-# Job 1
   - job: Build_Release_NField_Source_Solution
     displayName: Build Release NField Source Solution
-
     steps:   
-      # Determine Version of Installed Programs
-      - task: 
-            displayName: 'NuGet push'
-            inputs:
+    - task: NuGetCommand@2
+          displayName: 'NuGet push'
+          inputs:
               command: push
               packagesToPush: '**/*.nupkg'
               nuGetFeedType: internal
