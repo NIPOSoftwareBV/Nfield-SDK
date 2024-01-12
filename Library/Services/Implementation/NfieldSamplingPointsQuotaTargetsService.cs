@@ -53,14 +53,14 @@ namespace Nfield.SDK.Services.Implementation
              .FlattenExceptions();
         }
 
-        public Task<IQueryable<SamplingPointQuotaTarget>> PatchAsync(string surveyId, string samplingPointId, string quotaLevelId, int? target)
+        public Task<SamplingPointQuotaTarget> PatchAsync(string surveyId, string samplingPointId, string quotaLevelId, int? target)
         {
             return ConnectionClient.Client.PatchAsJsonAsync(SamplingPointsQuotaTargetsApi(surveyId, samplingPointId, quotaLevelId), new { Target = target })
              .ContinueWith(
                  responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
              .ContinueWith(
                  stringTask =>
-                 JsonConvert.DeserializeObject<List<SamplingPointQuotaTarget>>(stringTask.Result).AsQueryable())
+                 JsonConvert.DeserializeObject<SamplingPointQuotaTarget>(stringTask.Result))
              .FlattenExceptions();
         }
 

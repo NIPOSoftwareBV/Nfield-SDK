@@ -22,7 +22,7 @@ namespace Nfield.SDK.Services
     public interface INfieldSamplingPointsQuotaTargetsService
     {
         Task<SamplingPointQuotaTarget> GetAsync(string surveyId, string samplingPointId, string quotaLevelId);
-        Task<IQueryable<SamplingPointQuotaTarget>> PatchAsync(string surveyId, string samplingPointId, string quotaLevelId, int? target);
         Task<IQueryable<SamplingPointQuotaTarget>> QueryAsync(string surveyId, string samplingPointId);
+        Task<SamplingPointQuotaTarget> PatchAsync(string surveyId, string samplingPointId, string quotaLevelId, int? target);
     }
 }
