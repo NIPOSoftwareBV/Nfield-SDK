@@ -29,7 +29,7 @@ namespace Nfield.SDK.Services.Implementation
     {
 
         /// <summary>
-        /// See <see cref="INfieldSurveysService.UpdateAsync"/>
+        /// See <see cref="INfieldSamplingPointsQuotaTargetsService.GetAsync"/>
         /// </summary>
         public Task<SamplingPointQuotaTarget> GetAsync(string surveyId, string samplingPointId, string quotaLevelId)
         {
@@ -42,6 +42,9 @@ namespace Nfield.SDK.Services.Implementation
              .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldSamplingPointsQuotaTargetsService.GetAsync"/>
+        /// </summary>
         public Task<IQueryable<SamplingPointQuotaTarget>> QueryAsync(string surveyId, string samplingPointId)
         {
             return ConnectionClient.Client.GetAsync(SamplingPointsQuotaTargetsApi(surveyId, samplingPointId))
@@ -53,6 +56,9 @@ namespace Nfield.SDK.Services.Implementation
              .FlattenExceptions();
         }
 
+        /// <summary>
+        /// See <see cref="INfieldSamplingPointsQuotaTargetsService.PatchAsync(string, string, string, int?)"/>
+        /// </summary>
         public Task<SamplingPointQuotaTarget> PatchAsync(string surveyId, string samplingPointId, string quotaLevelId, int? target)
         {
             return ConnectionClient.Client.PatchAsJsonAsync(SamplingPointsQuotaTargetsApi(surveyId, samplingPointId, quotaLevelId), new { Target = target })
