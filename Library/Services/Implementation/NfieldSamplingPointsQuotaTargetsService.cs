@@ -57,7 +57,7 @@ namespace Nfield.SDK.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldSamplingPointsQuotaTargetsService.PatchAsync(string, string, string, int?)"/>
+        /// See <see cref="INfieldSamplingPointsQuotaTargetsService.PatchAsync"/>
         /// </summary>
         public Task<SamplingPointQuotaTarget> PatchAsync(string surveyId, string samplingPointId, string quotaLevelId, int? target)
         {
