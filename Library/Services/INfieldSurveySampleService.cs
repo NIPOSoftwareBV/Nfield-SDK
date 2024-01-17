@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nfield.Models;
+using Nfield.SDK.Models;
 
 namespace Nfield.Services
 {
@@ -108,5 +109,13 @@ namespace Nfield.Services
         /// <param name="columnsToUpdate">The name and values of the columns to be updated</param>
         /// <returns>True if success, false otherwise</returns>
         Task<bool> UpdateAsync(string surveyId, int sampleRecordId, IEnumerable<SampleColumnUpdate> columnsToUpdate);
+
+        /// <summary>
+        /// Creates custom columns for the specified record in the survey
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="sampleColumns">The columns to create with the respective values</param>
+        /// <returns></returns>
+        Task<IEnumerable<SampleColumnCreate>> CreateSampleRecord(string surveyId, IEnumerable<SampleColumnCreate> sampleColumns);
     }
 }
