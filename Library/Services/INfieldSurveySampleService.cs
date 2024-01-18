@@ -111,11 +111,11 @@ namespace Nfield.Services
         Task<bool> UpdateAsync(string surveyId, int sampleRecordId, IEnumerable<SampleColumnUpdate> columnsToUpdate);
 
         /// <summary>
-        /// Creates custom columns for the specified record in the survey
+        /// Creates a single sample record with the specified columns
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="sampleColumns">The columns to create with the respective values</param>
-        /// <returns></returns>
-        Task<IEnumerable<SampleColumnCreate>> CreateSampleRecord(string surveyId, IEnumerable<SampleColumnCreate> sampleColumns);
+        /// <returns>Returns the list of created columns and their values</returns>
+        Task<IEnumerable<SampleColumnCreate>> CreateAsync(string surveyId, IEnumerable<SampleColumnCreate> sampleColumns);
     }
 }

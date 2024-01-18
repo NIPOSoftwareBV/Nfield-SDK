@@ -614,7 +614,7 @@ namespace Nfield.Services
                 It.Is<IEnumerable<SampleColumnCreate>>(x => x == sampleColumns)))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(sampleColumns))));
 
-            var actual = _target.CreateSampleRecord(SurveyId, sampleColumns).Result;
+            var actual = _target.CreateAsync(SurveyId, sampleColumns).Result;
 
             foreach (var item in sampleColumns)
             {

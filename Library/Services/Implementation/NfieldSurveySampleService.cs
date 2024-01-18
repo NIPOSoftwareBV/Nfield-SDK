@@ -189,7 +189,7 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public async Task<IEnumerable<SampleColumnCreate>> CreateSampleRecord(string surveyId, IEnumerable<SampleColumnCreate> sampleColumns)
+        public async Task<IEnumerable<SampleColumnCreate>> CreateAsync(string surveyId, IEnumerable<SampleColumnCreate> sampleColumns)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(sampleColumns, nameof(sampleColumns));
