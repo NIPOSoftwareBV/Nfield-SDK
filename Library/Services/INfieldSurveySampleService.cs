@@ -115,7 +115,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="sampleColumns">The columns to create with the respective values</param>
-        /// <returns>Returns the list of created columns and their values</returns>
+        /// <returns>Returns the full columns set and their values for the created sample record</returns>
         Task<IEnumerable<SampleColumnCreate>> CreateAsync(string surveyId, IEnumerable<SampleColumnCreate> sampleColumns);
     }
 }
