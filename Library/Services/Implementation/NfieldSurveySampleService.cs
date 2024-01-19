@@ -22,6 +22,7 @@ using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.SDK.Models;
 using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
@@ -188,6 +189,20 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
+        public async Task<IEnumerable<SampleColumnCreate>> CreateAsync(string surveyId, IEnumerable<SampleColumnCreate> sampleColumns)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(sampleColumns, nameof(sampleColumns));
+
+            var uri = new Uri(SurveySampleUrl(surveyId), "Create");
+
+            return await Client.PostAsJsonAsync(uri, sampleColumns)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<IEnumerable<SampleColumnCreate>>(stringResult.Result))
+                .FlattenExceptions();
+
+        }
+
         #region Implementation of INfieldConnectionClientObject
 
         public INfieldConnectionClient ConnectionClient { get; internal set; }
@@ -205,5 +220,6 @@ namespace Nfield.Services.Implementation
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Sample/");
         }
+
     }
 }

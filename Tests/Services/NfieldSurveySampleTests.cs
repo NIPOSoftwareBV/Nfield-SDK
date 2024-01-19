@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.SDK.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -585,6 +586,41 @@ namespace Nfield.Services
             var result = _target.UpdateAsync(SurveyId, sampleRecordId, columns).Result;
 
             Assert.True(result);
+        }
+        #endregion
+
+
+        #region CreateSampleRecord
+        [Fact]
+        public void TestCreateSample_Returns_Expected_Columns()
+        {
+
+            var sampleColumns = new List<SampleColumnCreate>()
+            {
+                new SampleColumnCreate()
+                {
+                    ColumnName = "TestingI",
+                    Value = "ValueI"
+                },
+                 new SampleColumnCreate()
+                {
+                    ColumnName = "TestingII",
+                    Value = "ValueII"
+                }
+            };
+
+            _mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Create"),
+                It.Is<IEnumerable<SampleColumnCreate>>(x => x == sampleColumns)))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(sampleColumns))));
+
+            var actual = _target.CreateAsync(SurveyId, sampleColumns).Result;
+
+            foreach (var item in sampleColumns)
+            {
+                Assert.True(actual.Any(el => el.ColumnName == item.ColumnName));
+                Assert.True(actual.Any(el => el.Value != null && el.Value.ToString() == item.Value.ToString()));
+            }
         }
         #endregion
 
