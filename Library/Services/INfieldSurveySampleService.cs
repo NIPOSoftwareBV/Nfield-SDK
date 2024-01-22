@@ -68,6 +68,16 @@ namespace Nfield.Services
         Task<int> DeleteAsync(string surveyId, string respondentKey);
 
         /// <summary>
+        /// delete a sample record
+        /// </summary>
+        /// <param name="surveyId">The id of the survey</param>
+        /// <param name="filters">Filters to be used in the delete operation</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <returns>number of deleted sample records</returns>
+        Task<int> DeleteWithFiltersAsync(string surveyId, List<SampleFilter> filters);
+
+        /// <summary>
         /// Block the specified respondent in the survey
         /// </summary>
         /// <param name="surveyId">The id of the survey</param>

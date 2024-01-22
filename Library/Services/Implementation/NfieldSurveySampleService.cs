@@ -86,6 +86,23 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
+        public Task<int> DeleteWithFiltersAsync(string surveyId, List<SampleFilter> filters)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(filters, nameof(filters));
+
+
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}/Sample");
+            //var uri = SurveySampleUrl(surveyId);
+
+            return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringResult => JsonConvert.DeserializeObject<BackgroundActivityStatus>(stringResult.Result).ActivityId)
+                .ContinueWith(activityResult => ConnectionClient.GetActivityResultAsync<int>(activityResult.Result, "DeletedTotal"))
+                .Unwrap()
+                .FlattenExceptions();
+        }
+
         public Task<int> BlockAsync(string surveyId, string respondentKey)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
@@ -116,7 +133,9 @@ namespace Nfield.Services.Implementation
                 ColumnUpdates = columnsToUpdate
             };
 
-            var uri = new Uri(SurveySampleUrl(surveyId), "Update");
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}/Sample/Create");
+
+            //var uri = new Uri(SurveySampleUrl(surveyId), "Update");
 
             return Client.PutAsJsonAsync(uri, m)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -194,7 +213,9 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(sampleColumns, nameof(sampleColumns));
 
-            var uri = new Uri(SurveySampleUrl(surveyId), "Create");
+
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}/Sample/Create");
+            //var uri = new Uri(SurveySampleUrl(surveyId), "Create");
 
             return await Client.PostAsJsonAsync(uri, sampleColumns)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -220,6 +241,5 @@ namespace Nfield.Services.Implementation
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Sample/");
         }
-
     }
 }
