@@ -264,7 +264,7 @@ namespace Nfield.Services
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
 
-            var result = _target.DeleteWithFiltersAsync(SurveyId, filters).Result;
+            var result = _target.DeleteByFilterAsync(SurveyId, filters).Result;
 
             Assert.Equal(1, result);
         }
