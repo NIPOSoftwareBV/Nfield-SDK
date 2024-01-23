@@ -75,7 +75,7 @@ namespace Nfield.Services
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <returns>number of deleted sample records</returns>
-        Task<int> DeleteWithFiltersAsync(string surveyId, List<SampleFilter> filters);
+        Task<int> DeleteByFilterAsync(string surveyId, List<SampleFilter> filters);
 
         /// <summary>
         /// Block the specified respondent in the survey

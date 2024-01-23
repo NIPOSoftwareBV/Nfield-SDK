@@ -86,12 +86,13 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<int> DeleteWithFiltersAsync(string surveyId, List<SampleFilter> filters)
+        public Task<int> DeleteByFilterAsync(string surveyId, List<SampleFilter> filters)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(filters, nameof(filters));
 
-            var uri = SurveySampleUrl(surveyId);
+            //var uri = SurveySampleUrl(surveyId);
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}");
 
             return Client.DeleteAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -126,7 +127,8 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(filters, nameof(filters));
 
-            var uri = new Uri(SurveySampleUrl(surveyId), "Block");
+            //var uri = new Uri(SurveySampleUrl(surveyId), "Block");
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}/Block");
 
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -179,7 +181,9 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(filters, nameof(filters));
 
-            var uri = new Uri(SurveySampleUrl(surveyId), "Reset");
+            //var uri = new Uri(SurveySampleUrl(surveyId), "Reset");
+
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}/Reset");
 
             return Client.PutAsJsonAsync<IEnumerable<SampleFilter>>(uri, filters)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
@@ -228,7 +232,8 @@ namespace Nfield.Services.Implementation
         private Task<int> ClearAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
         {
 
-            var uri = new Uri(SurveySampleUrl(surveyId) + "Clear");
+            //var uri = new Uri(SurveySampleUrl(surveyId) + "Clear");
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}/Clear");
 
             var request = new ClearSurveySampleModel
             {
