@@ -121,7 +121,7 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<int> BlockWithFiltersAsync(string surveyId, List<SampleFilter> filters)
+        public Task<int> BlockByFilterAsync(string surveyId, List<SampleFilter> filters)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(filters, nameof(filters));
@@ -174,7 +174,7 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        public Task<int> ResetWithFiltersAsync(string surveyId, IEnumerable<SampleFilter> filters)
+        public Task<int> ResetByFilterAsync(string surveyId, IEnumerable<SampleFilter> filters)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(filters, nameof(filters));
@@ -216,7 +216,7 @@ namespace Nfield.Services.Implementation
             return ClearAsync(surveyId, filters, columnsToClear);
         }
 
-        public Task<int> ClearByFiltersAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
+        public Task<int> ClearByFilterAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(filters, nameof(filters));

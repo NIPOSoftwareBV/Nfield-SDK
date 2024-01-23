@@ -342,35 +342,35 @@ namespace Nfield.Services
         public void TestBlockWithFiltersAsync_SurveyIdIsNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.BlockWithFiltersAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+                UnwrapAggregateException(_target.BlockByFilterAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
         }
 
         [Fact]
         public void TestBlockWithFiltersAsync_SurveyIdIsEmpty_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(_target.BlockWithFiltersAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+                UnwrapAggregateException(_target.BlockByFilterAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
         }
 
         [Fact]
         public void TestBlockWithFiltersAsync_SurveyIdIsWhitespace_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(_target.BlockWithFiltersAsync("  ", new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+                UnwrapAggregateException(_target.BlockByFilterAsync("  ", new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
         }
 
         [Fact]
         public void TestBlockWithFiltersAsync_FiltersAreNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.BlockWithFiltersAsync(SurveyId, null)));
+                UnwrapAggregateException(_target.BlockByFilterAsync(SurveyId, null)));
         }
 
         [Fact]
         public void TestBlockWithFiltersAsync_FiltersAreEmpty_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.BlockWithFiltersAsync(SurveyId, new List<SampleFilter>())));
+                UnwrapAggregateException(_target.BlockByFilterAsync(SurveyId, new List<SampleFilter>())));
         }
 
         [Fact]
@@ -399,7 +399,7 @@ namespace Nfield.Services
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 1 }))));
 
-            var result = _target.BlockWithFiltersAsync(SurveyId, filters).Result;
+            var result = _target.BlockByFilterAsync(SurveyId, filters).Result;
 
             Assert.Equal(1, result);
         }
@@ -497,35 +497,35 @@ namespace Nfield.Services
         public void TestResetWithFiltersAsync_SurveyIdIsNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ResetWithFiltersAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+                UnwrapAggregateException(_target.ResetByFilterAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
         }
 
         [Fact]
         public void TestResetWithFiltersAsync_SurveyIdIsEmpty_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(_target.ResetWithFiltersAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+                UnwrapAggregateException(_target.ResetByFilterAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
         }
 
         [Fact]
         public void TestResetWithFiltersAsync_SurveyIdIsWhitespace_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(_target.ResetWithFiltersAsync("  ", new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+                UnwrapAggregateException(_target.ResetByFilterAsync("  ", new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
         }
 
         [Fact]
         public void TestResetWithFiltersAsync_FiltersAreNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ResetWithFiltersAsync(SurveyId, null)));
+                UnwrapAggregateException(_target.ResetByFilterAsync(SurveyId, null)));
         }
 
         [Fact]
         public void TestResetWithFiltersAsync_FiltersAreEmpty_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ResetWithFiltersAsync(SurveyId, new List<SampleFilter>())));
+                UnwrapAggregateException(_target.ResetByFilterAsync(SurveyId, new List<SampleFilter>())));
         }
 
 
@@ -555,7 +555,7 @@ namespace Nfield.Services
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ResetTotal = 1 }))));
 
-            var result = _target.ResetWithFiltersAsync(SurveyId, filters).Result;
+            var result = _target.ResetByFilterAsync(SurveyId, filters).Result;
 
             Assert.Equal(1, result);
         }
@@ -704,49 +704,49 @@ namespace Nfield.Services
         public void TestClearByFiltersAsync_SurveyIdIsNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ClearByFiltersAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
+                UnwrapAggregateException(_target.ClearByFilterAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
         }
 
         [Fact]
         public void TestClearByFiltersAsync_SurveyIdIsEmpty_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(_target.ClearByFiltersAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
+                UnwrapAggregateException(_target.ClearByFilterAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
         }
 
         [Fact]
         public void TestClearByFiltersAsync_SurveyIdIsWhitespace_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                UnwrapAggregateException(_target.ClearByFiltersAsync(" ", new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
+                UnwrapAggregateException(_target.ClearByFilterAsync(" ", new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
         }
 
         [Fact]
         public void TestClearByFiltersAsync_FiltersAreNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ClearByFiltersAsync(SurveyId, null, new List<string>() { string.Empty })));
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, null, new List<string>() { string.Empty })));
         }
 
         [Fact]
         public void TestClearByFiltersAsync_FiltersAreEmpty_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ClearByFiltersAsync(SurveyId, new List<SampleFilter>(), new List<string>() { string.Empty })));
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, new List<SampleFilter>(), new List<string>() { string.Empty })));
         }
 
         [Fact]
         public void TestClearByFiltersAsync_ColumnsAreNull_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ClearByFiltersAsync(SurveyId, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, null)));
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, null)));
         }
 
         [Fact]
         public void TestClearByFiltersAsync_ColumnsAreEmpty_Throws()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                UnwrapAggregateException(_target.ClearByFiltersAsync(SurveyId, new List<SampleFilter>(), new List<string>())));
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, new List<SampleFilter>(), new List<string>())));
         }
 
 
@@ -776,7 +776,7 @@ namespace Nfield.Services
                     new StringContent(
                         JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
 
-            var result = _target.ClearByFiltersAsync(SurveyId, filters, _columnsToClear).Result;
+            var result = _target.ClearByFilterAsync(SurveyId, filters, _columnsToClear).Result;
 
             Assert.Equal(1, result);
         }

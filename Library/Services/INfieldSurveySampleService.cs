@@ -91,7 +91,7 @@ namespace Nfield.Services
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="filters">Filters to be used in the block operation</param>
         /// <returns>The number of respondents successfully blocked</returns>
-        Task<int> BlockWithFiltersAsync(string surveyId, List<SampleFilter> filters);
+        Task<int> BlockByFilterAsync(string surveyId, List<SampleFilter> filters);
         /// <summary>
         /// Reset the specified respondent in the survey
         /// </summary>
@@ -106,7 +106,7 @@ namespace Nfield.Services
         /// <param name="surveyId">The id of the survey</param>
         /// <param name="filters">Filters to be used in the reset operation</param>
         /// <returns>The number of respondents successfully reset</returns>
-        Task<int> ResetWithFiltersAsync(string surveyId, IEnumerable<SampleFilter> filters);
+        Task<int> ResetByFilterAsync(string surveyId, IEnumerable<SampleFilter> filters);
 
         /// <summary>
         /// Clears the specified columns for the specified respondent in the survey.
@@ -133,7 +133,7 @@ namespace Nfield.Services
         /// <param name="filters">Filters to be used in the clear operation</param>
         /// <param name="columnsToClear">The name of the columns to be cleared</param>
         /// <returns>The number of respondents successfully cleared</returns>
-        Task<int> ClearByFiltersAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear);
+        Task<int> ClearByFilterAsync(string surveyId, List<SampleFilter> filters, IEnumerable<string> columnsToClear);
 
         /// <summary>
         /// Updates the specified custom columns for the specified record in the survey.
