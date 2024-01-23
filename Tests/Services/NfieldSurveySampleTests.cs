@@ -238,6 +238,38 @@ namespace Nfield.Services
             Assert.Equal(1, result);
         }
 
+        [Fact]
+        public void TestDeleteWithFiltersAsync_ParamsAreOk_Successful()
+        {
+            const string respondentKey = "a sample record id";
+
+            var filters = new List<SampleFilter>()
+            {
+                new SampleFilter()
+                {
+                    Name = "RespondentKey",
+                    Op = "eq",
+                    Value = respondentKey
+                }
+            };
+
+            _mockedHttpClient.Setup(client => client.DeleteAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/"),
+                    It.Is<IEnumerable<SampleFilter>>(fil =>
+                        FilterEquals(fil.Single(), filters.Select(x => x.Name).FirstOrDefault(), filters.Select(x => x.Op).FirstOrDefault(), respondentKey))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1")))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, DeletedTotal = 1 }))));
+
+            var result = _target.DeleteWithFiltersAsync(SurveyId, filters).Result;
+
+            Assert.Equal(1, result);
+        }
+
+
         #endregion
 
         #region BlockAsync
@@ -305,6 +337,73 @@ namespace Nfield.Services
 
             Assert.Equal(1, result);
         }
+
+        [Fact]
+        public void TestBlockWithFiltersAsync_SurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.BlockByFilterAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+        }
+
+        [Fact]
+        public void TestBlockWithFiltersAsync_SurveyIdIsEmpty_Throws()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(_target.BlockByFilterAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+        }
+
+        [Fact]
+        public void TestBlockWithFiltersAsync_SurveyIdIsWhitespace_Throws()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(_target.BlockByFilterAsync("  ", new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+        }
+
+        [Fact]
+        public void TestBlockWithFiltersAsync_FiltersAreNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.BlockByFilterAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestBlockWithFiltersAsync_FiltersAreEmpty_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.BlockByFilterAsync(SurveyId, new List<SampleFilter>())));
+        }
+
+        [Fact]
+        public void TestBlockWithFiltersAsync_ParamsAreOk_Successful()
+        {
+            const string respondentKey = "testRespondent123";
+
+            var filters = new List<SampleFilter>()
+              {
+                  new SampleFilter()
+                  {
+                      Name = "RespondentKey",
+                      Op = "eq",
+                      Value = respondentKey
+                  }
+              };
+
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Block"),
+                                It.Is<IEnumerable<SampleFilter>>((fil =>
+              FilterEquals(fil.Single(), filters.Select(x => x.Name).FirstOrDefault(), filters.Select(x => x.Op).FirstOrDefault(), respondentKey)))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, "BackgroundActivities/activity1")))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, BlockedTotal = 1 }))));
+
+            var result = _target.BlockByFilterAsync(SurveyId, filters).Result;
+
+            Assert.Equal(1, result);
+        }
+
 
         [Fact]
         public void TestBlockAsync_NotExistingRespondent_Successful()
@@ -390,6 +489,73 @@ namespace Nfield.Services
                         JsonConvert.SerializeObject(new { Status = 2, ResetTotal = 1 }))));
 
             var result = _target.ResetAsync(SurveyId, respondentKey).Result;
+
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void TestResetWithFiltersAsync_SurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ResetByFilterAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+        }
+
+        [Fact]
+        public void TestResetWithFiltersAsync_SurveyIdIsEmpty_Throws()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(_target.ResetByFilterAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+        }
+
+        [Fact]
+        public void TestResetWithFiltersAsync_SurveyIdIsWhitespace_Throws()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(_target.ResetByFilterAsync("  ", new List<SampleFilter>() { new SampleFilter() { Name = "" } })));
+        }
+
+        [Fact]
+        public void TestResetWithFiltersAsync_FiltersAreNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ResetByFilterAsync(SurveyId, null)));
+        }
+
+        [Fact]
+        public void TestResetWithFiltersAsync_FiltersAreEmpty_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ResetByFilterAsync(SurveyId, new List<SampleFilter>())));
+        }
+
+
+        [Fact]
+        public void TestResetWithFiltersAsync_ParamsAreOk_Successful()
+        {
+            const string respondentKey = "testRespondent123";
+
+            var filters = new List<SampleFilter>()
+              {
+                  new SampleFilter()
+                  {
+                      Name = "RespondentKey",
+                      Op = "eq",
+                      Value = respondentKey
+                  }
+              };
+
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Reset"),
+                    It.Is<IEnumerable<SampleFilter>>(fil =>
+              FilterEquals(fil.Single(), filters.Select(x => x.Name).FirstOrDefault(), filters.Select(x => x.Op).FirstOrDefault(), respondentKey))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1")))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, ResetTotal = 1 }))));
+
+            var result = _target.ResetByFilterAsync(SurveyId, filters).Result;
 
             Assert.Equal(1, result);
         }
@@ -530,6 +696,87 @@ namespace Nfield.Services
                         JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
 
             var result = _target.ClearByInterviewAsync(SurveyId, InterviewId, _columnsToClear).Result;
+
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void TestClearByFiltersAsync_SurveyIdIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ClearByFilterAsync(null, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
+        }
+
+        [Fact]
+        public void TestClearByFiltersAsync_SurveyIdIsEmpty_Throws()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(_target.ClearByFilterAsync(string.Empty, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
+        }
+
+        [Fact]
+        public void TestClearByFiltersAsync_SurveyIdIsWhitespace_Throws()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                UnwrapAggregateException(_target.ClearByFilterAsync(" ", new List<SampleFilter>() { new SampleFilter() { Name = "" } }, new List<string>() { string.Empty })));
+        }
+
+        [Fact]
+        public void TestClearByFiltersAsync_FiltersAreNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, null, new List<string>() { string.Empty })));
+        }
+
+        [Fact]
+        public void TestClearByFiltersAsync_FiltersAreEmpty_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, new List<SampleFilter>(), new List<string>() { string.Empty })));
+        }
+
+        [Fact]
+        public void TestClearByFiltersAsync_ColumnsAreNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, new List<SampleFilter>() { new SampleFilter() { Name = "" } }, null)));
+        }
+
+        [Fact]
+        public void TestClearByFiltersAsync_ColumnsAreEmpty_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                UnwrapAggregateException(_target.ClearByFilterAsync(SurveyId, new List<SampleFilter>(), new List<string>())));
+        }
+
+
+        [Fact]
+        public void TestClearWithFiltersAsync_ParamsAreOk_Successful()
+        {
+            var filters = new List<SampleFilter>()
+              {
+                  new SampleFilter()
+                  {
+                      Name = "InterviewId",
+                      Op = "eq",
+                      Value = InterviewId.ToString()
+                  }
+              };
+
+            _mockedHttpClient.Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/Clear"),
+                    It.Is<ClearSurveySampleModel>(c =>
+                        FilterEquals(c.Filters.Single(), filters.Select(x => x.Name).FirstOrDefault(), filters.Select(x => x.Op).FirstOrDefault(), InterviewId.ToString())
+                        && c.Columns.Any(n => n == "ColumnName1") && c.Columns.Any(n => n == "ColumnName2"))))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new BackgroundActivityStatus { ActivityId = "activity1" }))));
+
+            _mockedHttpClient.Setup(client => client.GetAsync(new Uri(ServiceAddress, $"BackgroundActivities/activity1")))
+                .Returns(CreateTask(HttpStatusCode.OK,
+                    new StringContent(
+                        JsonConvert.SerializeObject(new { Status = 2, ClearTotal = 1 }))));
+
+            var result = _target.ClearByFilterAsync(SurveyId, filters, _columnsToClear).Result;
 
             Assert.Equal(1, result);
         }
