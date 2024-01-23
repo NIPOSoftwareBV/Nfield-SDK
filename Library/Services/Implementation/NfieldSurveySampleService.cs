@@ -254,7 +254,8 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(sampleColumns, nameof(sampleColumns));
 
-            var uri = new Uri(SurveySampleUrl(surveyId), "Create");
+            //var uri = new Uri(SurveySampleUrl(surveyId), "Create");
+            var uri = new Uri($"https://localhost:44308/v1/Surveys/{surveyId}/Create");
 
             return await Client.PostAsJsonAsync(uri, sampleColumns)
                 .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
