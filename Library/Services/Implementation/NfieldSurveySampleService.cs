@@ -33,15 +33,15 @@ namespace Nfield.Services.Implementation
         private const string InterviewId = "InterviewId";
 
 
-        public Task<string> GetAsync(string surveyId)
+        public async Task<string> GetAsync(string surveyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var uri = SurveySampleUrl(surveyId);
 
-            return Client.GetAsync(uri)
-                .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                .FlattenExceptions();
+            var response = await Client.GetAsync(uri);
+            var result = await response.Content.ReadAsStringAsync();
+            return result;
         }
 
         public async Task<string> GetSingleSampleRecordAsync(string surveyId, int interviewId)
