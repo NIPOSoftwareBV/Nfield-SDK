@@ -54,7 +54,7 @@ namespace Nfield.Services.Implementation
             return await response.Content.ReadAsStringAsync();
         }
 
-        public Task<SampleUploadStatus> PostAsync(string surveyId, string sample)
+        public async Task<SampleUploadStatus> PostAsync(string surveyId, string sample)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(sample, nameof(sample));
@@ -62,10 +62,11 @@ namespace Nfield.Services.Implementation
             var uri = SurveySampleUrl(surveyId);
             var sampleContent = new StringContent(sample);
 
-            return Client.PostAsync(uri, sampleContent)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUploadStatus>(stringResult.Result))
-                .FlattenExceptions();
+            var response = await Client.PostAsJsonAsync(uri, sampleContent);
+            var responseAsString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<SampleUploadStatus>(responseAsString);
+            return result;
+
         }
 
         public async Task<int> DeleteAsync(string surveyId, string respondentKey)
@@ -131,7 +132,7 @@ namespace Nfield.Services.Implementation
             return await ConnectionClient.GetActivityResultAsync<int>(activityStatus.ActivityId, "BlockedTotal");
         }
 
-        public Task<bool> UpdateAsync(string surveyId, int sampleRecordId, IEnumerable<SampleColumnUpdate> columnsToUpdate)
+        public async Task<bool> UpdateAsync(string surveyId, int sampleRecordId, IEnumerable<SampleColumnUpdate> columnsToUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(columnsToUpdate, nameof(columnsToUpdate));
@@ -143,10 +144,11 @@ namespace Nfield.Services.Implementation
 
             var uri = new Uri(SurveySampleUrl(surveyId), "Update");
 
-            return Client.PutAsJsonAsync(uri, m)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<SampleUpdateStatus>(stringResult.Result).ResultStatus)
-                .FlattenExceptions();
+            var response = await Client.PutAsJsonAsync(uri, m);
+            var responseAsString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<SampleUpdateStatus>(responseAsString);
+            return result.ResultStatus;
+
         }
 
         public async Task<int> ResetAsync(string surveyId, string respondentKey)
@@ -240,10 +242,10 @@ namespace Nfield.Services.Implementation
 
             var uri = new Uri(SurveySampleUrl(surveyId), "Create");
 
-            return await Client.PostAsJsonAsync(uri, sampleColumns)
-                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(stringResult => JsonConvert.DeserializeObject<IEnumerable<SampleColumnCreate>>(stringResult.Result))
-                .FlattenExceptions();
+            var response = await Client.PostAsJsonAsync(uri, sampleColumns);
+            var responseAsString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<IEnumerable<SampleColumnCreate>>(responseAsString);
+            return result;
 
         }
 

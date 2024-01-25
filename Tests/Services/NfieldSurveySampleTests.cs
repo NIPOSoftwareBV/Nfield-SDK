@@ -166,7 +166,7 @@ namespace Nfield.Services
             };
 
             _mockedHttpClient
-                .Setup(client => client.PostAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/"), It.Is<StringContent>(stringContent => stringContent.ReadAsStringAsync().Result.Equals(sample))))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Sample/"), It.Is<StringContent>(stringContent => stringContent.ReadAsStringAsync().Result.Equals(sample))))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(uploadStatus))));
 
             var actual = _target.PostAsync(SurveyId, sample).Result;
