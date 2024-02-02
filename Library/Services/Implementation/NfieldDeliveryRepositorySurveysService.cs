@@ -16,10 +16,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.SDK.Models.Delivery;
 using Nfield.Services;
 
@@ -45,6 +47,28 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();
         }
 
+        public Task PostAsync(long repositoryId, string[] nfieldSurveyIds)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Surveys");
+
+            return ConnectionClient.Client.PostAsJsonAsync(uri, nfieldSurveyIds)
+                         .FlattenExceptions();          
+        }
+
+        public Task PutReinitiateAsync(long repositoryId, string surveyId)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Surveys/{surveyId}/reinitiate");
+            return ConnectionClient.Client.PutAsync(uri, null)
+                        .FlattenExceptions();
+        }
+
+        public Task DeleteAsync(long repositoryId, string surveyId)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Surveys/{surveyId}");
+
+            return ConnectionClient.Client.DeleteAsync(uri).FlattenExceptions();
+        }
+
 
         #endregion
 
@@ -55,7 +79,7 @@ namespace Nfield.SDK.Services.Implementation
         public void InitializeNfieldConnection(INfieldConnectionClient connection)
         {
             ConnectionClient = connection;
-        }
+        }        
 
         #endregion
 
