@@ -55,7 +55,7 @@ namespace Nfield.SDK.Services.Implementation
                          .FlattenExceptions();          
         }
 
-        public Task PutReinitiateAsync(long repositoryId, string surveyId)
+        public Task ReinitiateAsync(long repositoryId, string surveyId)
         {
             var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Surveys/{surveyId}/reinitiate");
             return ConnectionClient.Client.PutAsync(uri, null)

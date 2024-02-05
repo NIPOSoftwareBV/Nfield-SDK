@@ -97,7 +97,7 @@ namespace Nfield.Services
             var target = new NfieldDeliveryRepositorySurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            await target.PutReinitiateAsync(repositoryId, surveyId);
+            await target.ReinitiateAsync(repositoryId, surveyId);
 
             mockedHttpClient.Verify();
         }

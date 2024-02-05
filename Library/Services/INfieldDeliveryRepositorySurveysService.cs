@@ -43,7 +43,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="repositoryId">The repository id.</param>
         /// <param name="surveyId">The id of the survey to be reinitiated</param>
-        Task PutReinitiateAsync(long repositoryId, string surveyId);
+        Task ReinitiateAsync(long repositoryId, string surveyId);
 
         /// <summary>
         /// Deletes the selected survey from the repository.
