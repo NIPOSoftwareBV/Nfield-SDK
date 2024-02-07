@@ -30,5 +30,26 @@ namespace Nfield.Services
         /// <param name="repositoryId">The repository id.</param>
         /// <returns>The repository surveys.</returns>         
         Task<IQueryable<RepositorySurveyModel>> QueryAsync(long repositoryId);
+
+        /// <summary>
+        /// Adds the selected surveys to the repository.
+        /// </summary>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="nfieldSurveyIds">The surveys to add</param>
+        Task PostAsync(long repositoryId, string[] nfieldSurveyIds);
+
+        /// <summary>
+        /// Reinitiates a paused Survey in the selected Repository.
+        /// </summary>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="surveyId">The id of the survey to be reinitiated</param>
+        Task ReinitiateAsync(long repositoryId, string surveyId);
+
+        /// <summary>
+        /// Deletes the selected survey from the repository.
+        /// </summary>
+        /// <param name="repositoryId">The repository id.</param>
+        /// <param name="surveyId">The id of the survey to be removed</param>
+        Task DeleteAsync(long repositoryId, string surveyId);       
     }
 }

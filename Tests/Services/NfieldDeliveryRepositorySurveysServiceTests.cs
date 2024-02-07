@@ -56,5 +56,73 @@ namespace Nfield.Services
             mockedHttpClient.Verify();
             Assert.Equal(repositorySurveyModels.First().Id, actual.First().Id);
         }
+
+        [Fact]
+        public async Task Test_PostAsync()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var repositoryId = 1;
+            var nfieldSurveyIds = new string[] { Guid.NewGuid().ToString() };
+
+            var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories/{repositoryId}/Surveys");
+
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(endpointUri, nfieldSurveyIds))
+                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+
+            var target = new NfieldDeliveryRepositorySurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            await target.PostAsync(repositoryId, nfieldSurveyIds);
+
+            mockedHttpClient.Verify();
+        }
+
+        [Fact]
+        public async Task Test_ReinitiateAsync()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var repositoryId = 1;
+            var surveyId = Guid.NewGuid().ToString();
+            var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories/{repositoryId}/Surveys/{surveyId}/reinitiate");
+
+            mockedHttpClient
+                .Setup(client => client.PutAsync(endpointUri, null))
+                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+
+            var target = new NfieldDeliveryRepositorySurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            await target.ReinitiateAsync(repositoryId, surveyId);
+
+            mockedHttpClient.Verify();
+        }
+
+        [Fact]
+        public async Task Test_DeleteAsync()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var repositoryId = 1;
+            var surveyId = Guid.NewGuid().ToString();
+
+            var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories/{repositoryId}/Surveys/{surveyId}");
+
+            mockedHttpClient
+                .Setup(client => client.DeleteAsync(endpointUri))
+                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+
+            var target = new NfieldDeliveryRepositorySurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            await target.DeleteAsync(repositoryId, surveyId);
+
+            mockedHttpClient.Verify();
+        }
     }
 }
