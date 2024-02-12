@@ -62,7 +62,7 @@ namespace Nfield.Services.Implementation
             var uri = SurveySampleUrl(surveyId);
             var sampleContent = new StringContent(sample);
 
-            var response = await Client.PostAsJsonAsync(uri, sampleContent);
+            var response = await Client.PostAsync(uri, sampleContent);
             var responseAsString = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<SampleUploadStatus>(responseAsString);
             return result;
