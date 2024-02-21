@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "0eeaf480-4eb6-44be-bd81-6d8cb5e82a24",
+		"_postman_id": "7703e1a8-b2c7-42de-97be-ee1504276156",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24379977"
+		"_exporter_id": "24223379"
 	},
 	"item": [
 		{
@@ -2958,80 +2958,6 @@
 											]
 										},
 										"description": "Get api configuration by name"
-									},
-									"response": []
-								},
-								{
-									"name": "Create External Api",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"exec": [
-													"pm.test(\"Status code is 200\", function () {\r",
-													"    pm.response.to.have.status(200);\r",
-													"});\r",
-													"\r",
-													"pm.test(\"Status code name has string\", function () {\r",
-													"    pm.response.to.have.status(\"OK\");\r",
-													"});\r",
-													"\r",
-													"const validateProperties = (item) => {\r",
-													"    return item.Name !== undefined \r",
-													"    && item.Description !== undefined \r",
-													"    && item.Uri !== undefined\r",
-													"    && item.HelpUri !== undefined\r",
-													"    && item.Headers !== undefined\r",
-													"    && item.Headers.every(validateSubProperties);\r",
-													"}\r",
-													"\r",
-													"const validateSubProperties = (item) => {\r",
-													"    return item.HeaderId !== undefined \r",
-													"    && item.Name !== undefined \r",
-													"    && item.Value !== undefined\r",
-													"    && item.IsObfuscated !== undefined;\r",
-													"}\r",
-													"\r",
-													"pm.test(\"Response ApiName\", function () {\r",
-													"    var response = pm.response.json();\r",
-													"    pm.expect(validateProperties(response)).to.be.true;\r",
-													"    pm.expect(response.Name == \"PostmanApi\").to.be.true;\r",
-													"    pm.collectionVariables.set(\"ApiName\", response.Name);\r",
-													"});"
-												],
-												"type": "text/javascript"
-											}
-										}
-									],
-									"request": {
-										"method": "POST",
-										"header": [
-											{
-												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
-											}
-										],
-										"body": {
-											"mode": "raw",
-											"raw": "{\r\n  \"Name\": \"PostmanApi\",\r\n  \"Description\": \"Postman string 2\",\r\n  \"Uri\": \"https://api.niposoftware-dev.com/v1\",\r\n  \"HelpUri\": \"https://api.niposoftware-dev.com/help\",\r\n  \"Headers\": [\r\n    {\r\n      \"HeaderId\": 1,\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\",\r\n      \"IsObfuscated\": true\r\n    },\r\n    {\r\n      \"HeaderId\": 2,\r\n      \"Name\": \"Postman string 2\",\r\n      \"Value\": \"Postman string 3\",\r\n      \"IsObfuscated\": false\r\n    }\r\n  ]\r\n}\r\n\r\n",
-											"options": {
-												"raw": {
-													"language": "json"
-												}
-											}
-										},
-										"url": {
-											"raw": "{{origin-public-api}}/v1/ExternalApis",
-											"host": [
-												"{{origin-public-api}}"
-											],
-											"path": [
-												"v1",
-												"ExternalApis"
-											]
-										},
-										"description": "Create a new external api configuration"
 									},
 									"response": []
 								},
