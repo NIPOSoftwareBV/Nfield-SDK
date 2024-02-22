@@ -93,52 +93,6 @@ namespace Nfield.Services
 
         #endregion
 
-        #region AddAsync
-
-        [Fact]
-        public void TestAddAsync_ExternalApiIsNull_ThrowsArgumentNullException()
-        {
-            var target = new NfieldExternalApisService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.RemoveAsync(null)));
-        }
-
-        [Fact]
-        public void TestAddAsync_ServerAccepts_ReturnsExternalApi()
-        {
-            var header = new ExternalApiHeader
-            {
-                Name = "Header",
-                Value = "Api header"
-            };
-            var externalApi = new ExternalApi
-            {
-                Name = "New ExternalApi",
-                Description = "New Description",
-                Headers = new List<ExternalApiHeader>
-                {
-                    header
-                }
-            };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            var content = new StringContent(JsonConvert.SerializeObject(externalApi));
-            mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "externalapis/"), externalApi))
-                .Returns(CreateTask(HttpStatusCode.OK, content));
-
-            var target = new NfieldExternalApisService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actual = target.AddAsync(externalApi).Result;
-
-            Assert.Equal(externalApi.Name, actual.Name);
-            Assert.Equal(externalApi.Description, actual.Description);
-            Assert.Equal(externalApi.Headers.First().Name, header.Name);
-            Assert.Equal(externalApi.Headers.First().Value, header.Value);
-        }
-
-        #endregion
-
         #region RemoveAsync
 
         [Fact]

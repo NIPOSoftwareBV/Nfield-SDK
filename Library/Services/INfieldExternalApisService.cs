@@ -28,11 +28,6 @@ namespace Nfield.Services
         Task<IQueryable<ExternalApi>> QueryAsync();
 
         /// <summary>
-        /// Adds a new external api.
-        /// </summary>
-        Task<ExternalApi> AddAsync(ExternalApi externalApi);
-
-        /// <summary>
         /// Removes the external api.
         /// </summary>
         Task RemoveAsync(ExternalApi externalApi);

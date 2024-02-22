@@ -42,22 +42,6 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldExternalApisService.AddAsync"/>
-        /// </summary>
-        public Task<ExternalApi> AddAsync(ExternalApi externalApi)
-        {
-            if (externalApi == null)
-            {
-                throw new ArgumentNullException("externalApi");
-            }
-
-            return Client.PostAsJsonAsync(ExternalApisApi, externalApi)
-                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<ExternalApi>(task.Result))
-                         .FlattenExceptions();
-        }
-
-        /// <summary>
         /// See <see cref="INfieldExternalApisService.RemoveAsync"/>
         /// </summary>
         public Task RemoveAsync(ExternalApi externalApi)
