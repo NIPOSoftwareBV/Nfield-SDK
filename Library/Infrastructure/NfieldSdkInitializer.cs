@@ -105,7 +105,8 @@ namespace Nfield.Infrastructure
             { typeof(INfieldDeliverySettingsService), typeof(NfieldDeliverySettingsService) },
             { typeof(INfieldDeliverySurveyPropertiesService), typeof(NfieldDeliverySurveyPropertiesService) },
             { typeof(INfieldDeliverySurveysService), typeof(NfieldDeliverySurveysService) },
-            { typeof(INfieldEventSubscriptionsService), typeof(NfieldEventSubscriptionsService) }
+            { typeof(INfieldEventSubscriptionsService), typeof(NfieldEventSubscriptionsService) },
+            { typeof(INfieldSurveySimulationHintsService), typeof(NfieldSurveySimulationHintsService) }
         };
 
         /// <summary>
