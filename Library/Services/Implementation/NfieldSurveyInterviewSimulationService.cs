@@ -21,11 +21,11 @@ using System.Threading.Tasks;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldSurveySimulationHintsService"/>
+    /// Implementation of <see cref="INfieldSurveyInterviewSimulationService"/>
     /// </summary>
-    internal class NfieldSurveySimulationHintsService : INfieldSurveySimulationHintsService, INfieldConnectionClientObject
+    internal class NfieldSurveyInterviewSimulationService : INfieldSurveyInterviewSimulationService, INfieldConnectionClientObject
     {
-        public async Task<Uri> GetAsync(string surveyId)
+        public async Task<Uri> GetHintsAsync(string surveyId)
         {
             using (var response = await Client.GetAsync(SurveySimulationHintsEndPoint(surveyId)).ConfigureAwait(false))
             {
@@ -54,7 +54,7 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveySimulationHintsEndPoint(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/retrieve-simulation-hints-url");
+            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulations/DownloadHints");
         }
 
         #endregion

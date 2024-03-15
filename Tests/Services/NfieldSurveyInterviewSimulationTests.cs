@@ -25,25 +25,25 @@ using Xunit;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Tests for <see cref="NfieldSurveySimulationHintsService"/>
+    /// Tests for <see cref="NfieldSurveyInterviewSimulationService"/>
     /// </summary>
-    public class NfieldSurveySimulationHintsTests : NfieldServiceTestsBase
+    public class NfieldSurveyInterviewSimulationTests : NfieldServiceTestsBase
     {
-        private readonly NfieldSurveySimulationHintsService _target;
+        private readonly NfieldSurveyInterviewSimulationService _target;
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
         private readonly string _surveyId;
         private readonly Uri _endpoint;
 
-        public NfieldSurveySimulationHintsTests()
+        public NfieldSurveyInterviewSimulationTests()
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            _target = new NfieldSurveySimulationHintsService();
+            _target = new NfieldSurveyInterviewSimulationService();
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             _surveyId = Guid.NewGuid().ToString();
-            _endpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/retrieve-simulation-hints-url");
+            _endpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/DownloadHints");
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, content))
                 .Verifiable();
 
-            var actual = await _target.GetAsync(_surveyId);
+            var actual = await _target.GetHintsAsync(_surveyId);
             Assert.Equal(actual, new Uri(uri));
         }
     }

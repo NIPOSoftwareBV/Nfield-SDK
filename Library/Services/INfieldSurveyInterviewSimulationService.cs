@@ -19,15 +19,15 @@ using System.Threading.Tasks;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Service for managing survey simulation hints
+    /// Service for managing survey interview simulations
     /// </summary>
-    public interface INfieldSurveySimulationHintsService
+    public interface INfieldSurveyInterviewSimulationService
     {
         /// <summary>
         /// Get the URI of the simulation hints file of a survey simulation
         /// </summary>
         /// <param name="surveyId">Id of the simulation survey</param>
         /// <returns>URI of the hints file</returns>
-        Task<Uri> GetAsync(string surveyId);
+        Task<Uri> GetHintsAsync(string surveyId);
     }
 }
