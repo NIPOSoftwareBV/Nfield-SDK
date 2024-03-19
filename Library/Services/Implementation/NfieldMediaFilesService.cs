@@ -89,20 +89,22 @@ namespace Nfield.Services.Implementation
                       .FlattenExceptions();
         }
 
-        public async Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content)
+        public async Task<string> UploadAndSaveAsync(string surveyId, string fileName, byte[] content)
         {
             CheckRequiredArgumentsUpload(surveyId, fileName, content);
-                        
+
             var postContent = new ByteArrayContent(content);
             postContent.Headers.ContentType =
                 new MediaTypeHeaderValue("application/octet-stream");
-            
+
             var response = await Client.PostAsync(MediaFilesApi(surveyId, fileName), postContent).ConfigureAwait(false);
             var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(result);
             await ConnectionClient.GetActivityResultAsync<string>(backgroundActivityStatus.ActivityId, "Status").ConfigureAwait(false);
+
+            return backgroundActivityStatus.ActivityId;
         }
-                          
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -153,8 +155,8 @@ namespace Nfield.Services.Implementation
 
         private static void CheckRequiredByteArrayArgument(byte[] byteArray, string name)
         {
-            if (byteArray == null)            
-                throw new ArgumentNullException(name);            
+            if (byteArray == null)
+                throw new ArgumentNullException(name);
         }
 
         #endregion
