@@ -71,6 +71,6 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception> 
-        Task UploadAndSaveAsync(string surveyId, string fileName, byte[] content);
+        Task<string> UploadAndSaveAsync(string surveyId, string fileName, byte[] content);
     }
 }
