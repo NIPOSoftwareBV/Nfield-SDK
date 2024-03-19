@@ -50,12 +50,13 @@ namespace Nfield.Services
                     ClientName = $"Client{i}",
                     Size = i,
                     CreationDate = new DateTime(2020, 1, 1),
-                    LastDataDownloadDate = new DateTime(2020,1,2),
+                    LastDataDownloadDate = new DateTime(2020, 1, 2),
                     LastDataCollectionDate = new DateTime(2020, 1, 3),
                     WillBeStoppedOn = new DateTime(2022, 10, 2),
                     WillBeDeletedOn = new DateTime(2022, 10, 3),
                     State = SurveyStatus.UnderConstruction,
-                    Channel = SurveyChannel.Online
+                    Channel = SurveyChannel.Online,
+                    IsExcludedFromAutomaticCleanup = i % 2 == 0
                 };
 
                 expectedSurveyResources.Add(surveyResource);
@@ -90,7 +91,8 @@ namespace Nfield.Services
                 Assert.Equal(expectedSurveyResource.WillBeStoppedOn, actualSurveyResource.WillBeStoppedOn);
                 Assert.Equal(expectedSurveyResource.WillBeDeletedOn, actualSurveyResource.WillBeDeletedOn);
                 Assert.Equal(expectedSurveyResource.State, actualSurveyResource.State);
-                Assert.Equal(expectedSurveyResource.Channel, actualSurveyResource.Channel);
+                Assert.Equal(expectedSurveyResource.Channel, actualSurveyResource.Channel);                
+                Assert.Equal(expectedSurveyResource.IsExcludedFromAutomaticCleanup, actualSurveyResource.IsExcludedFromAutomaticCleanup);
             }
         }
 
