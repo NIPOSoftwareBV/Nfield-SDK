@@ -18,7 +18,7 @@ namespace Nfield.Models
     /// <summary>
     /// Parameters to start interview simulation.
     /// To specify uploaded files this model uses the file name and the file content as a text string.
-    /// To upload data form a file path use <see cref="InterviewSimulationFiles"/>
+    /// To upload data directly from files use <see cref="InterviewSimulationFiles"/>
     /// </summary>
     public class InterviewSimulation
     {

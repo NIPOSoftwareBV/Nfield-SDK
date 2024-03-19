@@ -76,6 +76,9 @@ namespace Nfield.Services.Implementation
         /// </summary>
         public async Task StartSimulationAsync(string surveyId, InterviewSimulationFiles simulationRequest)
         {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(simulationRequest, nameof(simulationRequest));
+
             var interviewSimulation = new InterviewSimulation
             {
                 InterviewsCount = simulationRequest.InterviewsCount,
