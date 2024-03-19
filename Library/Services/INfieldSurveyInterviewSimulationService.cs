@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -29,5 +30,20 @@ namespace Nfield.Services
         /// <param name="surveyId">Id of the simulation survey</param>
         /// <returns>URI of the hints file</returns>
         Task<Uri> GetHintsAsync(string surveyId);
+
+        /// <summary>
+        /// Starts interview simulation.
+        /// </summary>
+        /// <param name="surveyId">The survey id</param>
+        /// <param name="simulationRequest">Parameters to start the simulations</param>
+        Task StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest);
+
+        /// <summary>
+        /// Starts interview simulation.
+        /// This one allows to upload  hints and sample data directly from files.  
+        /// </summary>
+        /// <param name="surveyId">The survey id</param>
+        /// <param name="simulationRequest">Parameters to start the simulations</param>
+        Task StartSimulationAsync(string surveyId, InterviewSimulationFiles simulationRequest);
     }
 }
