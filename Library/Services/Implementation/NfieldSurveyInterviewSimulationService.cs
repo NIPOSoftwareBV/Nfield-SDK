@@ -94,7 +94,7 @@ namespace Nfield.Services.Implementation
                     throw new FileNotFoundException(fileName);
 
                 interviewSimulation.HintsFileName = fileName;
-                interviewSimulation.Hints = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
+                interviewSimulation.HintsFile = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
             }
 
             if (!string.IsNullOrEmpty(simulationRequest.SampleDataFilePath))
@@ -105,7 +105,7 @@ namespace Nfield.Services.Implementation
                     throw new FileNotFoundException(fileName);
 
                 interviewSimulation.SampleDataFileName = fileName;
-                interviewSimulation.SampleData = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
+                interviewSimulation.SampleDataFile = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
             }
 
             await StartSimulationAsync(surveyId, interviewSimulation);
@@ -148,14 +148,14 @@ namespace Nfield.Services.Implementation
                 { new StringContent($"{simulationRequest.UseOriginalSample}"), nameof(simulationRequest.UseOriginalSample) }
             };
 
-            if (!string.IsNullOrEmpty(simulationRequest.HintsFileName) && !string.IsNullOrEmpty(simulationRequest.Hints))
+            if (!string.IsNullOrEmpty(simulationRequest.HintsFileName) && !string.IsNullOrEmpty(simulationRequest.HintsFile))
             {
-                content.Add(new StringContent(simulationRequest.Hints), nameof(simulationRequest.Hints), simulationRequest.HintsFileName);
+                content.Add(new StringContent(simulationRequest.HintsFile), nameof(simulationRequest.HintsFile), simulationRequest.HintsFileName);
             }
 
-            if (!string.IsNullOrEmpty(simulationRequest.SampleDataFileName) && !string.IsNullOrEmpty(simulationRequest.SampleData))
+            if (!string.IsNullOrEmpty(simulationRequest.SampleDataFileName) && !string.IsNullOrEmpty(simulationRequest.SampleDataFile))
             {
-                content.Add(new StringContent(simulationRequest.SampleData), nameof(simulationRequest.SampleData), simulationRequest.SampleDataFileName);
+                content.Add(new StringContent(simulationRequest.SampleDataFile), nameof(simulationRequest.SampleDataFile), simulationRequest.SampleDataFileName);
             }
 
             content.Headers.ContentType.MediaType = "multipart/form-data";

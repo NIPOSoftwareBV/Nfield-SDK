@@ -45,7 +45,7 @@ namespace Nfield.Models
         /// <summary>
         /// Hints data
         /// </summary>
-        public string Hints { get; set; }
+        public string HintsFile { get; set; }
 
         /// <summary>
         /// Sample data file name
@@ -55,6 +55,6 @@ namespace Nfield.Models
         /// <summary>
         /// Sample data
         /// </summary>
-        public string SampleData { get; set; }
+        public string SampleDataFile { get; set; }
     }
 }
