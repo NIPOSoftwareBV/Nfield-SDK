@@ -58,23 +58,26 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldSurveyInterviewSimulationService.StartSimulationAsync(string, InterviewSimulation)"/>
         /// </summary>
-        public async Task StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest)
+        public Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(simulationRequest, nameof(simulationRequest));
 
             var content = MultipartDataContent(simulationRequest);
 
-            var response = await Client.PostAsync(StartInterviewSimulationsEndPoint(surveyId), content).ConfigureAwait(false);
-            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(result);
-            _ = await ConnectionClient.GetActivityResultAsync<string>(backgroundActivityStatus.ActivityId, "Status").ConfigureAwait(false);
+            return Client.PostAsync(StartInterviewSimulationsEndPoint(surveyId), content)
+                .ContinueWith(
+                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(
+                    stringTask =>
+                        JsonConvert.DeserializeObject<InterviewSimulationResult>(stringTask.Result))
+                .FlattenExceptions();
         }
 
         /// <summary>
         /// <see cref="INfieldSurveyInterviewSimulationService.StartSimulationAsync(string, InterviewSimulationFiles)"/>
         /// </summary>
-        public async Task StartSimulationAsync(string surveyId, InterviewSimulationFiles simulationRequest)
+        public Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulationFiles simulationRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(simulationRequest, nameof(simulationRequest));
@@ -108,7 +111,7 @@ namespace Nfield.Services.Implementation
                 interviewSimulation.SampleDataFile = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
             }
 
-            await StartSimulationAsync(surveyId, interviewSimulation);
+            return StartSimulationAsync(surveyId, interviewSimulation);
         }
 
         #region Implementation of INfieldConnectionClientObject

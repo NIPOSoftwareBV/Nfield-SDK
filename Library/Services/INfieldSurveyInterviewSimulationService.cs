@@ -36,7 +36,7 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The survey id</param>
         /// <param name="simulationRequest">Parameters to start the simulations</param>
-        Task StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest);
+        Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest);
 
         /// <summary>
         /// Starts interview simulation.
@@ -44,6 +44,6 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The survey id</param>
         /// <param name="simulationRequest">Parameters to start the simulations</param>
-        Task StartSimulationAsync(string surveyId, InterviewSimulationFiles simulationRequest);
+        Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulationFiles simulationRequest);
     }
 }
