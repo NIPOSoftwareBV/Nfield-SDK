@@ -13,9 +13,15 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.Utilities;
 using System;
-
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
@@ -25,6 +31,21 @@ namespace Nfield.Services.Implementation
     /// </summary>
     internal class NfieldSurveyInterviewSimulationService : INfieldSurveyInterviewSimulationService, INfieldConnectionClientObject
     {
+        readonly IFileSystem _fileSystem;
+
+        public NfieldSurveyInterviewSimulationService()
+        {
+            _fileSystem = new FileSystem();
+        }
+
+        public NfieldSurveyInterviewSimulationService(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem;
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveyInterviewSimulationService.GetHintsAsync(string)"/>
+        /// </summary>
         public async Task<Uri> GetHintsAsync(string surveyId)
         {
             using (var response = await Client.GetAsync(SurveySimulationHintsEndPoint(surveyId)).ConfigureAwait(false))
@@ -32,6 +53,64 @@ namespace Nfield.Services.Implementation
                 var uri = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return new Uri(uri);
             }
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveyInterviewSimulationService.StartSimulationAsync(string, InterviewSimulation)"/>
+        /// </summary>
+        public async Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(simulationRequest, nameof(simulationRequest));
+
+            var content = MultipartDataContent(simulationRequest);
+
+            using (var response = await Client.PostAsync(StartInterviewSimulationsEndPoint(surveyId), content).ConfigureAwait(false))
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseContent);
+                return await ConnectionClient.GetActivityResultAsync<InterviewSimulationResult>(backgroundActivityStatus.ActivityId).ConfigureAwait(false);
+            }
+        }
+        
+        /// <summary>
+        /// <see cref="INfieldSurveyInterviewSimulationService.StartSimulationAsync(string, InterviewSimulationFiles)"/>
+        /// </summary>
+        public Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulationFiles simulationRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(simulationRequest, nameof(simulationRequest));
+
+            var interviewSimulation = new InterviewSimulation
+            {
+                InterviewsCount = simulationRequest.InterviewsCount,
+                EnableReporting = simulationRequest.EnableReporting,
+                UseOriginalSample = simulationRequest.UseOriginalSample
+            };
+
+            if (!string.IsNullOrEmpty(simulationRequest.HintsFilePath))
+            {
+                var fileName = _fileSystem.Path.GetFileName(simulationRequest.HintsFilePath);
+
+                if (!_fileSystem.File.Exists(simulationRequest.HintsFilePath))
+                    throw new FileNotFoundException(fileName);
+
+                interviewSimulation.HintsFileName = fileName;
+                interviewSimulation.HintsFile = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
+            }
+
+            if (!string.IsNullOrEmpty(simulationRequest.SampleDataFilePath))
+            {
+                var fileName = _fileSystem.Path.GetFileName(simulationRequest.SampleDataFilePath);
+
+                if (!_fileSystem.File.Exists(simulationRequest.SampleDataFilePath))
+                    throw new FileNotFoundException(fileName);
+
+                interviewSimulation.SampleDataFileName = fileName;
+                interviewSimulation.SampleDataFile = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
+            }
+
+            return StartSimulationAsync(surveyId, interviewSimulation);
         }
 
         #region Implementation of INfieldConnectionClientObject
@@ -55,6 +134,35 @@ namespace Nfield.Services.Implementation
         private Uri SurveySimulationHintsEndPoint(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulations/DownloadHints");
+        }
+
+        private Uri StartInterviewSimulationsEndPoint(string surveyId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulations/StartInterviewSimulations");
+        }
+
+        private static MultipartFormDataContent MultipartDataContent(InterviewSimulation simulationRequest)
+        {
+            var content = new MultipartFormDataContent
+            {
+                { new StringContent($"{simulationRequest.InterviewsCount}"), nameof(simulationRequest.InterviewsCount) },
+                { new StringContent($"{simulationRequest.EnableReporting}"), nameof(simulationRequest.EnableReporting) },
+                { new StringContent($"{simulationRequest.UseOriginalSample}"), nameof(simulationRequest.UseOriginalSample) }
+            };
+
+            if (!string.IsNullOrEmpty(simulationRequest.HintsFileName) && !string.IsNullOrEmpty(simulationRequest.HintsFile))
+            {
+                content.Add(new StringContent(simulationRequest.HintsFile), nameof(simulationRequest.HintsFile), simulationRequest.HintsFileName);
+            }
+
+            if (!string.IsNullOrEmpty(simulationRequest.SampleDataFileName) && !string.IsNullOrEmpty(simulationRequest.SampleDataFile))
+            {
+                content.Add(new StringContent(simulationRequest.SampleDataFile), nameof(simulationRequest.SampleDataFile), simulationRequest.SampleDataFileName);
+            }
+
+            content.Headers.ContentType.MediaType = "multipart/form-data";
+
+            return content;
         }
 
         #endregion
