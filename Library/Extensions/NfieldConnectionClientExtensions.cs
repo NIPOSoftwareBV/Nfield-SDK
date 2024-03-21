@@ -39,7 +39,7 @@ namespace Nfield.Extensions
         /// <param name="activityId">The id of the activity to wait for.</param>
         /// <param name="fieldNameResult">The name of the result field</param>
         /// <returns>The <see cref="BackgroundActivityStatus" /> id.</returns>
-        internal static async Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient connectionClient, string activityId, string fieldNameResult)
+        internal static async Task<T> GetActivityResultAsync<T>(this INfieldConnectionClient connectionClient, string activityId, string fieldNameResult = null)
         {
             while (true)
             {
@@ -56,8 +56,8 @@ namespace Nfield.Extensions
                     case 1: // started
                         await Task.Delay(TimeSpan.FromMilliseconds(200)).ConfigureAwait(false);
                         break;
-                    case 2: // succeeded
-                        return obj[fieldNameResult].Value<T>();
+                    case 2: // succeeded                       
+                        return fieldNameResult == null ? obj.ToObject<T>() : obj[fieldNameResult].Value<T>();                        
                     case 3: // failed
                     default:
                         throw new NfieldErrorException("Action did not complete successfully");

@@ -58,22 +58,21 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldSurveyInterviewSimulationService.StartSimulationAsync(string, InterviewSimulation)"/>
         /// </summary>
-        public Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest)
+        public async Task<InterviewSimulationResult> StartSimulationAsync(string surveyId, InterviewSimulation simulationRequest)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(simulationRequest, nameof(simulationRequest));
 
             var content = MultipartDataContent(simulationRequest);
 
-            return Client.PostAsync(StartInterviewSimulationsEndPoint(surveyId), content)
-                .ContinueWith(
-                    responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                .ContinueWith(
-                    stringTask =>
-                        JsonConvert.DeserializeObject<InterviewSimulationResult>(stringTask.Result))
-                .FlattenExceptions();
+            using (var response = await Client.PostAsync(StartInterviewSimulationsEndPoint(surveyId), content).ConfigureAwait(false))
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseContent);
+                return await ConnectionClient.GetActivityResultAsync<InterviewSimulationResult>(backgroundActivityStatus.ActivityId).ConfigureAwait(false);
+            }
         }
-
+        
         /// <summary>
         /// <see cref="INfieldSurveyInterviewSimulationService.StartSimulationAsync(string, InterviewSimulationFiles)"/>
         /// </summary>
