@@ -107,7 +107,7 @@ namespace Nfield.Services.Implementation
                     throw new FileNotFoundException(fileName);
 
                 interviewSimulation.SampleDataFileName = fileName;
-                interviewSimulation.SampleDataFile = _fileSystem.File.ReadAllText(simulationRequest.HintsFilePath);
+                interviewSimulation.SampleDataFile = _fileSystem.File.ReadAllText(simulationRequest.SampleDataFilePath);
             }
 
             return StartSimulationAsync(surveyId, interviewSimulation);
