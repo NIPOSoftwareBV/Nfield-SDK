@@ -200,10 +200,37 @@ namespace Nfield.Services
             Assert.Equal(OriginalSurveyId, result.OriginalSurveyId);
             Assert.Equal(SimulationSurveyId, result.SimulationSurveyId);
             Assert.Equal(2, result.ErrorMessages.Count());
+            Assert.Contains(ErrorMessages[0], result.ErrorMessages);
+            Assert.Contains(ErrorMessages[1], result.ErrorMessages);
+        }
+
+        #endregion
+
+        #region StartSimulation - get hints and sample data from file
+
+        [Fact]
+        public void TestStartSimulation_Files_SurveyIdIsNull_Throws()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await _target.StartSimulationAsync(null, new InterviewSimulationFiles()));
         }
 
         [Fact]
-        public async Task TestStartSimulation_HitsFileDoesNotExist_Throws()
+        public void TestStartSimulation_Files_SurveyIdIsEmptyString_Throws()
+        {
+            Assert.ThrowsAsync<ArgumentException>(
+                async () => await _target.StartSimulationAsync(string.Empty, new InterviewSimulationFiles()));
+        }
+
+        [Fact]
+        public void TestStartSimulation_Files_InterviewSimulationIsNull_Throws()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await _target.StartSimulationAsync("surveyId", (InterviewSimulationFiles)null));
+        }
+
+        [Fact]
+        public async Task TestStartSimulation_Files_HitsFileDoesNotExist_Throws()
         {
             const string HitFileName = nameof(HitFileName);
             _mockedFileSystem.Setup(fs => fs.Path.GetFileName(It.IsAny<string>())).Returns(HitFileName);
@@ -216,7 +243,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestStartSimulation_SampleDataFileDoesNotExist_Throws()
+        public async Task TestStartSimulation_Files_SampleDataFileDoesNotExist_Throws()
         {
             const string HintsFilePath = nameof(HintsFilePath);
             const string SampleDataFileName = nameof(SampleDataFileName);
@@ -236,7 +263,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestStartSimulation_HitsAndSampleDataFromFile_PostsExpectedData()
+        public async Task TestStartSimulation_Files_HitsAndSampleDataFromFile_PostsExpectedData()
         {
             const string HintsFilePath = nameof(HintsFilePath);
             const string HintsFileName = nameof(HintsFileName);
@@ -295,7 +322,7 @@ namespace Nfield.Services
 
         #endregion
 
-        private bool IsPropertyAvailable(MultipartFormDataContent content, ContentProperty contentProperty)
+        private static bool IsPropertyAvailable(MultipartFormDataContent content, ContentProperty contentProperty)
         {
             foreach (var contentItem in content)
             {
@@ -313,7 +340,7 @@ namespace Nfield.Services
             return false;
         }
 
-        private bool IsFilePropertyAvailable(MultipartFormDataContent content, ContentProperty contentProperty)
+        private static bool IsFilePropertyAvailable(MultipartFormDataContent content, ContentProperty contentProperty)
         {
             foreach (var contentItem in content)
             {
