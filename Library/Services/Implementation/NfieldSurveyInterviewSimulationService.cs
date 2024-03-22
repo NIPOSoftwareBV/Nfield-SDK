@@ -46,12 +46,12 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// <see cref="INfieldSurveyInterviewSimulationService.GetHintsAsync(string)"/>
         /// </summary>
-        public async Task<Uri> GetHintsAsync(string surveyId)
+        public async Task<string> GetHintsAsync(string surveyId)
         {
             using (var response = await Client.GetAsync(SurveySimulationHintsEndPoint(surveyId)).ConfigureAwait(false))
             {
-                var uri = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                return new Uri(uri);
+                var hints = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return hints;
             }
         }
 

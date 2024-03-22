@@ -28,8 +28,8 @@ namespace Nfield.Services
         /// Get the URI of the simulation hints file of a survey simulation
         /// </summary>
         /// <param name="surveyId">Id of the simulation survey</param>
-        /// <returns>URI of the hints file</returns>
-        Task<Uri> GetHintsAsync(string surveyId);
+        /// <returns>Content of the hints file</returns>
+        Task<string> GetHintsAsync(string surveyId);
 
         /// <summary>
         /// Starts interview simulation.
