@@ -21,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Nfield.Quota" Version="5.2.251660-alpha" />
+    <PackageReference Include="Nfield.Quota" Version="5.3.255982" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="9.21.0.86780">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
