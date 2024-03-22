@@ -21,6 +21,7 @@ using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Services.Implementation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -38,13 +39,16 @@ namespace Nfield.Services
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
         private readonly string _surveyId;
         private readonly Uri _endpoint;
+        private readonly Mock<IFileSystem> _mockedFileSystem;
 
         public NfieldSurveyInterviewSimulationTests()
         {
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             _mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
 
-            _target = new NfieldSurveyInterviewSimulationService();
+            _mockedFileSystem = new Mock<IFileSystem>();
+
+            _target = new NfieldSurveyInterviewSimulationService(_mockedFileSystem.Object);
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             _surveyId = Guid.NewGuid().ToString();
@@ -72,21 +76,21 @@ namespace Nfield.Services
         public void TestStartSimulation_SurveyIdIsNull_Throws()
         {
             Assert.ThrowsAsync<ArgumentNullException>(
-                () => _target.StartSimulationAsync(null, new InterviewSimulation()));
+                async () => await _target.StartSimulationAsync(null, new InterviewSimulation()));
         }
 
         [Fact]
         public void TestStartSimulation_SurveyIdIsEmptyString_Throws()
         {
             Assert.ThrowsAsync<ArgumentException>(
-                () => _target.StartSimulationAsync(string.Empty, new InterviewSimulation()));
+                async () => await _target.StartSimulationAsync(string.Empty, new InterviewSimulation()));
         }
 
         [Fact]
         public void TestStartSimulation_InterviewSimulationIsNull_Throws()
         {
             Assert.ThrowsAsync<ArgumentNullException>(
-                () => _target.StartSimulationAsync("surveyId", (InterviewSimulation)null));
+                async () => await _target.StartSimulationAsync("surveyId", (InterviewSimulation)null));
         }
 
         [Fact]
@@ -196,6 +200,97 @@ namespace Nfield.Services
             Assert.Equal(OriginalSurveyId, result.OriginalSurveyId);
             Assert.Equal(SimulationSurveyId, result.SimulationSurveyId);
             Assert.Equal(2, result.ErrorMessages.Count());
+        }
+
+        [Fact]
+        public async Task TestStartSimulation_HitsFileDoesNotExist_Throws()
+        {
+            const string HitFileName = nameof(HitFileName);
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(It.IsAny<string>())).Returns(HitFileName);
+            _mockedFileSystem.Setup(fs => fs.File.Exists(It.IsAny<string>())).Returns(false);
+
+            var exception = await Assert.ThrowsAsync<FileNotFoundException>(
+                async () => await _target.StartSimulationAsync(_surveyId, new InterviewSimulationFiles { HintsFilePath = "hitsPath", SampleDataFilePath = "samplePath"}));
+
+            Assert.Equal(HitFileName, exception.Message);
+        }
+
+        [Fact]
+        public async Task TestStartSimulation_SampleDataFileDoesNotExist_Throws()
+        {
+            const string HintsFilePath = nameof(HintsFilePath);
+            const string SampleDataFileName = nameof(SampleDataFileName);
+            const string SampleDataFilePath = nameof(SampleDataFilePath);
+
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(HintsFilePath)).Returns(string.Empty);
+            _mockedFileSystem.Setup(fs => fs.File.Exists(HintsFilePath)).Returns(true);
+            _mockedFileSystem.Setup(fs => fs.File.ReadAllText(It.IsAny<string>())).Returns(string.Empty);
+
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(SampleDataFilePath)).Returns(SampleDataFileName);
+            _mockedFileSystem.Setup(fs => fs.File.Exists(SampleDataFilePath)).Returns(false);
+
+            var exception = await Assert.ThrowsAsync<FileNotFoundException>(
+                async () => await _target.StartSimulationAsync(_surveyId, new InterviewSimulationFiles { HintsFilePath = HintsFilePath, SampleDataFilePath = SampleDataFilePath }));
+
+            Assert.Equal(SampleDataFileName, exception.Message);
+        }
+
+        [Fact]
+        public async Task TestStartSimulation_HitsAndSampleDataFromFile_PostsExpectedData()
+        {
+            const string HintsFilePath = nameof(HintsFilePath);
+            const string HintsFileName = nameof(HintsFileName);
+            const string HintsData = "hints data";
+            const string SampleDataFileName = nameof(SampleDataFileName);
+            const string SampleDataFilePath = nameof(SampleDataFilePath);
+            const string SampleData = "sample data";
+
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(HintsFilePath)).Returns(HintsFileName);
+            _mockedFileSystem.Setup(fs => fs.File.Exists(HintsFilePath)).Returns(true);
+            _mockedFileSystem.Setup(fs => fs.File.ReadAllText(HintsFilePath)).Returns(HintsData);
+
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(SampleDataFilePath)).Returns(SampleDataFileName);
+            _mockedFileSystem.Setup(fs => fs.File.Exists(SampleDataFilePath)).Returns(true);
+            _mockedFileSystem.Setup(fs => fs.File.ReadAllText(SampleDataFilePath)).Returns(SampleData);
+
+            var activityStatus = new BackgroundActivityStatus { ActivityId = "activityId" };
+            var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
+
+            _mockedHttpClient.Setup(client =>
+                client.PostAsync(new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations"), It.IsAny<MultipartFormDataContent>()))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new
+                        {
+                            ActivityId = "activityId",
+                            Status = 2
+                        }))
+                    })).Verifiable();
+
+            var result = await _target.StartSimulationAsync(_surveyId, new InterviewSimulationFiles
+            {
+                InterviewsCount = 1,
+                UseOriginalSample = true,
+                EnableReporting = true,
+                HintsFilePath = HintsFilePath,
+                SampleDataFilePath = SampleDataFilePath
+            });
+
+            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c =>
+                c.IsMimeMultipartContent() &&
+                c.Count() == 5 &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "InterviewsCount", NameValue = "1" }) &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "UseOriginalSample", NameValue = "true" }) &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "EnableReporting", NameValue = "true" }) &&
+                IsFilePropertyAvailable(c, new ContentProperty { Name = "HintsFile", NameValue = "hintsFile", FileName = HintsFileName, FileContent = HintsData }) &&
+                IsFilePropertyAvailable(c, new ContentProperty { Name = "SampleDataFile", NameValue = "sampleDataFile", FileName = SampleDataFileName, FileContent = SampleData })
+                )));
         }
 
         #endregion
