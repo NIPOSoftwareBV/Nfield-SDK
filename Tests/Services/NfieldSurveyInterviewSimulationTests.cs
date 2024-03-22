@@ -209,28 +209,28 @@ namespace Nfield.Services
         #region StartSimulation - get hints and sample data from file
 
         [Fact]
-        public void TestStartSimulation_Files_SurveyIdIsNull_Throws()
+        public void TestStartSimulation_File_SurveyIdIsNull_Throws()
         {
             Assert.ThrowsAsync<ArgumentNullException>(
                 async () => await _target.StartSimulationAsync(null, new InterviewSimulationFiles()));
         }
 
         [Fact]
-        public void TestStartSimulation_Files_SurveyIdIsEmptyString_Throws()
+        public void TestStartSimulation_File_SurveyIdIsEmptyString_Throws()
         {
             Assert.ThrowsAsync<ArgumentException>(
                 async () => await _target.StartSimulationAsync(string.Empty, new InterviewSimulationFiles()));
         }
 
         [Fact]
-        public void TestStartSimulation_Files_InterviewSimulationIsNull_Throws()
+        public void TestStartSimulation_File_InterviewSimulationIsNull_Throws()
         {
             Assert.ThrowsAsync<ArgumentNullException>(
                 async () => await _target.StartSimulationAsync("surveyId", (InterviewSimulationFiles)null));
         }
 
         [Fact]
-        public async Task TestStartSimulation_Files_HitsFileDoesNotExist_Throws()
+        public async Task TestStartSimulation_File_HitsFileDoesNotExist_Throws()
         {
             const string HitFileName = nameof(HitFileName);
             _mockedFileSystem.Setup(fs => fs.Path.GetFileName(It.IsAny<string>())).Returns(HitFileName);
@@ -243,7 +243,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestStartSimulation_Files_SampleDataFileDoesNotExist_Throws()
+        public async Task TestStartSimulation_File_SampleDataFileDoesNotExist_Throws()
         {
             const string HintsFilePath = nameof(HintsFilePath);
             const string SampleDataFileName = nameof(SampleDataFileName);
@@ -263,7 +263,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestStartSimulation_Files_HitsAndSampleDataFromFile_PostsExpectedData()
+        public async Task TestStartSimulation_File_HitsAndSampleDataFromFile_PostsExpectedData()
         {
             const string HintsFilePath = nameof(HintsFilePath);
             const string HintsFileName = nameof(HintsFileName);
