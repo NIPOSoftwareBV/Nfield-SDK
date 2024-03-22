@@ -230,16 +230,16 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestStartSimulation_File_HitsFileDoesNotExist_Throws()
+        public async Task TestStartSimulation_File_HintsFileDoesNotExist_Throws()
         {
-            const string HitFileName = nameof(HitFileName);
-            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(It.IsAny<string>())).Returns(HitFileName);
+            const string HintsFileName = nameof(HintsFileName);
+            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(It.IsAny<string>())).Returns(HintsFileName);
             _mockedFileSystem.Setup(fs => fs.File.Exists(It.IsAny<string>())).Returns(false);
 
             var exception = await Assert.ThrowsAsync<FileNotFoundException>(
-                async () => await _target.StartSimulationAsync(_surveyId, new InterviewSimulationFiles { HintsFilePath = "hitsPath", SampleDataFilePath = "samplePath"}));
+                async () => await _target.StartSimulationAsync(_surveyId, new InterviewSimulationFiles { HintsFilePath = "hintsPath", SampleDataFilePath = "samplePath"}));
 
-            Assert.Equal(HitFileName, exception.Message);
+            Assert.Equal(HintsFileName, exception.Message);
         }
 
         [Fact]
@@ -330,10 +330,7 @@ namespace Nfield.Services
                 if (contentHeader.FirstOrDefault(c => c.Name == "name" && c.Value == contentProperty.Name) != null)
                 {
                     var contentString = contentItem.ReadAsStringAsync().Result;
-                    if (string.Compare(contentString, contentProperty.NameValue, StringComparison.OrdinalIgnoreCase) != 0)
-                        return false;
-
-                    return true;
+                    return string.Compare(contentString, contentProperty.NameValue, StringComparison.OrdinalIgnoreCase) == 0;
                 }
             }
 
@@ -349,10 +346,7 @@ namespace Nfield.Services
                     contentHeader.FirstOrDefault(c => c.Name == "filename" && c.Value == contentProperty.FileName) != null)
                 {
                     var contentString = contentItem.ReadAsStringAsync().Result;
-                    if (string.Compare(contentString, contentProperty.FileContent, StringComparison.OrdinalIgnoreCase) != 0)
-                        return false;
-
-                    return true;
+                    return string.Compare(contentString, contentProperty.FileContent, StringComparison.OrdinalIgnoreCase) == 0;
                 }
             }
 
