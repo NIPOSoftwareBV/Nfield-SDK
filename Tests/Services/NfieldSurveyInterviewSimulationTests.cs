@@ -90,7 +90,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestStartSimulation_PostMultipartFormDataContent()
+        public async Task TestStartSimulation_PostsExpectedContent()
         {
             var activityStatus = new BackgroundActivityStatus { ActivityId = "activityId" };
             var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
@@ -112,9 +112,55 @@ namespace Nfield.Services
                         }))
                     })).Verifiable();
 
-            var result = await _target.StartSimulationAsync(_surveyId, new InterviewSimulation());
+            var result = await _target.StartSimulationAsync(_surveyId, new InterviewSimulation { InterviewsCount = 5, EnableReporting = true, UseOriginalSample = false });
 
-            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c => c.Headers.ContentType.MediaType == "multipart/form-data")));
+            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c =>
+                c.IsMimeMultipartContent() &&
+                c.Count() == 3 &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "InterviewsCount", NameValue = "5" }) &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "EnableReporting", NameValue = "true" }) &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "UseOriginalSample", NameValue = "false" })
+                )));
+        }
+
+        [Fact]
+        public async Task TestStartSimulation_PostsExpectedContentWithHintsAndSampleData()
+        {
+            var activityStatus = new BackgroundActivityStatus { ActivityId = "activityId" };
+            var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
+
+            _mockedHttpClient.Setup(client =>
+                client.PostAsync(new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations"), It.IsAny<MultipartFormDataContent>()))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
+                .Returns(Task.Factory.StartNew(
+                    () =>
+                    new HttpResponseMessage(HttpStatusCode.OK)
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(new
+                        {
+                            ActivityId = "activityId",
+                            Status = 2
+                        }))
+                    })).Verifiable();
+
+            var result = await _target.StartSimulationAsync(_surveyId, new InterviewSimulation {
+                InterviewsCount = 1,
+                UseOriginalSample = true,
+                HintsFileName = "hintsFileName", HintsFile = "hintsFileContent",
+                SampleDataFileName = "sampleDataFileName", SampleDataFile = "sampleDataFileContent"
+            });
+
+            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c =>
+                c.IsMimeMultipartContent() &&
+                c.Count() == 5 &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "InterviewsCount", NameValue = "1" }) &&
+                IsPropertyAvailable(c, new ContentProperty { Name = "UseOriginalSample", NameValue = "true" }) &&
+                IsFilePropertyAvailable(c, new ContentProperty { Name = "HintsFile", NameValue = "hintsFile", FileName = "hintsFileName", FileContent = "hintsFileContent" }) &&
+                IsFilePropertyAvailable(c, new ContentProperty { Name = "SampleDataFile", NameValue = "sampleDataFile", FileName = "sampleDataFileName", FileContent = "sampleDataFileContent" })
+                )));
         }
 
         [Fact]
@@ -153,5 +199,50 @@ namespace Nfield.Services
         }
 
         #endregion
+
+        private bool IsPropertyAvailable(MultipartFormDataContent content, ContentProperty contentProperty)
+        {
+            foreach (var contentItem in content)
+            {
+                var contentHeader = contentItem.Headers.ContentDisposition.Parameters;
+                if (contentHeader.FirstOrDefault(c => c.Name == "name" && c.Value == contentProperty.Name) != null)
+                {
+                    var contentString = contentItem.ReadAsStringAsync().Result;
+                    if (string.Compare(contentString, contentProperty.NameValue, StringComparison.OrdinalIgnoreCase) != 0)
+                        return false;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsFilePropertyAvailable(MultipartFormDataContent content, ContentProperty contentProperty)
+        {
+            foreach (var contentItem in content)
+            {
+                var contentHeader = contentItem.Headers.ContentDisposition.Parameters;
+                if (contentHeader.FirstOrDefault(c => c.Name == "name" && c.Value == contentProperty.Name) != null &&
+                    contentHeader.FirstOrDefault(c => c.Name == "filename" && c.Value == contentProperty.FileName) != null)
+                {
+                    var contentString = contentItem.ReadAsStringAsync().Result;
+                    if (string.Compare(contentString, contentProperty.FileContent, StringComparison.OrdinalIgnoreCase) != 0)
+                        return false;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        class ContentProperty
+        {
+            public string Name { get; set; }
+            public string NameValue { get; set; }
+            public string FileName {  get; set; }
+            public string FileContent { get; set; }
+        }
     }
 }
