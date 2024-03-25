@@ -8847,6 +8847,68 @@
 													"response": []
 												},
 												{
+													"name": "Upload Media Files",
+													"event": [
+														{
+															"listen": "test",
+															"script": {
+																"exec": [
+																	"pm.test(\"Status code is 200\", function () {",
+																	"    pm.response.to.have.status(200);",
+																	"});",
+																	""
+																],
+																"type": "text/javascript",
+																"packages": {}
+															}
+														}
+													],
+													"request": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Authorization",
+																"value": "Basic {{AuthenticationToken}}"
+															}
+														],
+														"body": {
+															"mode": "file",
+															"file": {
+																"src": "/C:/Users/Luciano/Downloads/testing.zip"
+															}
+														},
+														"url": {
+															"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/MediaFiles/:FileName",
+															"host": [
+																"{{origin-public-api}}"
+															],
+															"path": [
+																"v1",
+																"Surveys",
+																":SurveyId",
+																"MediaFiles",
+																":FileName"
+															],
+															"variable": [
+																{
+																	"key": "SurveyId",
+																	"value": "{{SurveyId}}"
+																},
+																{
+																	"key": "FileName",
+																	"value": "{{FileName}}"
+																}
+															]
+														},
+														"description": "Streams the needed media file."
+													},
+													"response": []
+												},
+												{
 													"name": "Delete Media File",
 													"event": [
 														{
