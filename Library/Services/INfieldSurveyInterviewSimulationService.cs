@@ -25,7 +25,7 @@ namespace Nfield.Services
     public interface INfieldSurveyInterviewSimulationService
     {
         /// <summary>
-        /// Get the URI of the simulation hints file of a survey simulation
+        /// Get hints for survey simulation
         /// </summary>
         /// <param name="surveyId">Id of the simulation survey</param>
         /// <returns>Content of the hints file</returns>
