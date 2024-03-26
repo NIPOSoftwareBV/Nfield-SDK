@@ -38,7 +38,8 @@ namespace Nfield.Services
         private readonly NfieldSurveyInterviewSimulationService _target;
         readonly Mock<INfieldHttpClient> _mockedHttpClient;
         private readonly string _surveyId;
-        private readonly Uri _endpoint;
+        private readonly Uri _getHintsEndpoint;
+        private readonly Uri _startSimulationEndpoint;
         private readonly Mock<IFileSystem> _mockedFileSystem;
 
         public NfieldSurveyInterviewSimulationTests()
@@ -52,22 +53,23 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             _surveyId = Guid.NewGuid().ToString();
-            _endpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/DownloadHints");
+            _getHintsEndpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/DownloadHints");
+            _startSimulationEndpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations");
         }
 
         [Fact]
         public async Task TestGetHintsAsync()
         {
-            const string uri = "https://nfieldpurple.blob.core.windows.net/survey-simulation-hints/2f34c076-da0a-4b75-98a9-306088025668";
-            var content = new StringContent(uri);
+            const string Hints = "hints data";
+            var content = new StringContent(Hints);
 
             _mockedHttpClient
-                .Setup(client => client.GetAsync(_endpoint))
+                .Setup(client => client.GetAsync(_getHintsEndpoint))
                 .Returns(CreateTask(HttpStatusCode.OK, content))
                 .Verifiable();
 
             var actual = await _target.GetHintsAsync(_surveyId);
-            Assert.Equal(actual, new Uri(uri));
+            Assert.Equal(Hints, actual);
         }
 
         #region StartSimulation
@@ -100,7 +102,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
 
             _mockedHttpClient.Setup(client =>
-                client.PostAsync(new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations"), It.IsAny<MultipartFormDataContent>()))
+                client.PostAsync(_startSimulationEndpoint, It.IsAny<MultipartFormDataContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             _mockedHttpClient
@@ -134,7 +136,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
 
             _mockedHttpClient.Setup(client =>
-                client.PostAsync(new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations"), It.IsAny<MultipartFormDataContent>()))
+                client.PostAsync(_startSimulationEndpoint, It.IsAny<MultipartFormDataContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             _mockedHttpClient
@@ -179,7 +181,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
 
             _mockedHttpClient.Setup(client =>
-                client.PostAsync(new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations"), It.IsAny<MultipartFormDataContent>()))
+                client.PostAsync(_startSimulationEndpoint, It.IsAny<MultipartFormDataContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             _mockedHttpClient
@@ -284,7 +286,7 @@ namespace Nfield.Services
             var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
 
             _mockedHttpClient.Setup(client =>
-                client.PostAsync(new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations"), It.IsAny<MultipartFormDataContent>()))
+                client.PostAsync(_startSimulationEndpoint, It.IsAny<MultipartFormDataContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             _mockedHttpClient
