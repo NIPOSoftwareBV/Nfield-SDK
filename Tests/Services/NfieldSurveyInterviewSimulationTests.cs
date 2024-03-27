@@ -25,6 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -65,7 +66,7 @@ namespace Nfield.Services
 
             _mockedHttpClient
                 .Setup(client => client.GetAsync(_getHintsEndpoint))
-                .Returns(CreateTask(HttpStatusCode.OK, content))
+                .Returns(CreateTask(HttpStatusCode.OK, new ObjectContent<string>(Hints, new JsonMediaTypeFormatter())))
                 .Verifiable();
 
             var actual = await _target.GetHintsAsync(_surveyId);

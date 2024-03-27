@@ -50,7 +50,7 @@ namespace Nfield.Services.Implementation
         {
             using (var response = await Client.GetAsync(SurveySimulationHintsEndPoint(surveyId)).ConfigureAwait(false))
             {
-                var hints = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var hints = await response.Content.ReadAsAsync<string>().ConfigureAwait(false);
                 return hints;
             }
         }
