@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d7b888b3-9541-4a2f-8fb3-b23ccf19a695",
+		"_postman_id": "ea103e89-3850-434e-aa68-0773741593cb",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24379977"
+		"_exporter_id": "631405"
 	},
 	"item": [
 		{
@@ -13383,6 +13383,146 @@
 						}
 					],
 					"description": "A controller for managing Survey Groups Survey groups offer a way to logically organize your surveys into groups. E.g. a survey group to manage 'all surveys for customer X'. The group defined with id '1' is the so-called 'default survey group', it always exists and cannot be deleted. It can be renamed though"
+				},
+				{
+					"name": "Simulation",
+					"item": [
+						{
+							"name": "Get Hints URL",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewSimulations/DownloadHints",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v1",
+										"Surveys",
+										":SurveyId",
+										"InterviewSimulations",
+										"DownloadHints"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": ""
+										}
+									]
+								},
+								"description": "Returns the URI of the simulation hints file of a survey simulation"
+							},
+							"response": []
+						},
+						{
+							"name": "Start simulation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/form-data",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "InterviewsCount",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "EnableReporting",
+											"value": "false",
+											"type": "text"
+										},
+										{
+											"key": "UseOriginalSample",
+											"value": "false",
+											"type": "text"
+										},
+										{
+											"key": "HintsFile",
+											"type": "file",
+											"src": "/C:/Users/pilar.rodriguez/Downloads/hints.json"
+										},
+										{
+											"key": "SampleDataFile",
+											"type": "file",
+											"src": "/C:/Users/pilar.rodriguez/Downloads/SampleData.csv"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/InterviewSimulations/StartInterviewSimulations",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v1",
+										"Surveys",
+										":SurveyId",
+										"InterviewSimulations",
+										"StartInterviewSimulations"
+									],
+									"variable": [
+										{
+											"key": "SurveyId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "Get Surveys",
