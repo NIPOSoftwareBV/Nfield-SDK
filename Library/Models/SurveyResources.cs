@@ -53,5 +53,8 @@ namespace Nfield.Models
         [JsonProperty]
         public SurveyStatus State { get; internal set; }
 
+        [JsonProperty]
+        public bool IsExcludedFromAutomaticCleanup { get; internal set; }
+
     }
 }
