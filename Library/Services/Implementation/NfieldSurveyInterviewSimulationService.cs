@@ -63,13 +63,14 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNull(simulationRequest, nameof(simulationRequest));
 
-            var content = MultipartDataContent(simulationRequest);
-
-            using (var response = await Client.PostAsync(StartInterviewSimulationsEndPoint(surveyId), content).ConfigureAwait(false))
+            using (var content = MultipartDataContent(simulationRequest))
             {
-                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseContent);
-                return await ConnectionClient.GetActivityResultAsync<InterviewSimulationResult>(backgroundActivityStatus.ActivityId).ConfigureAwait(false);
+                using (var response = await Client.PostAsync(StartInterviewSimulationsEndPoint(surveyId), content).ConfigureAwait(false))
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseContent);
+                    return await ConnectionClient.GetActivityResultAsync<InterviewSimulationResult>(backgroundActivityStatus.ActivityId).ConfigureAwait(false);
+                }
             }
         }
         
