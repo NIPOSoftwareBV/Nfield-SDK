@@ -107,7 +107,7 @@ namespace Nfield.Services.Implementation
                     throw new FileNotFoundException(fileName);
 
                 interviewSimulation.SampleDataFileName = fileName;
-                interviewSimulation.SampleDataFile = _fileSystem.File.ReadAllText(simulationRequest.SampleDataFilePath);
+                interviewSimulation.SampleDataFile = _fileSystem.File.ReadAllBytes(simulationRequest.SampleDataFilePath);
             }
 
             return StartSimulationAsync(surveyId, interviewSimulation);
@@ -155,13 +155,13 @@ namespace Nfield.Services.Implementation
                 content.Add(new StringContent(simulationRequest.HintsFile), nameof(simulationRequest.HintsFile), simulationRequest.HintsFileName);
             }
 
-            if (!string.IsNullOrEmpty(simulationRequest.SampleDataFileName) && !string.IsNullOrEmpty(simulationRequest.SampleDataFile))
+            if (!string.IsNullOrEmpty(simulationRequest.SampleDataFileName) && simulationRequest.SampleDataFile?.Length > 0)
             {
-                content.Add(new StringContent(simulationRequest.SampleDataFile), nameof(simulationRequest.SampleDataFile), simulationRequest.SampleDataFileName);
+                var bytesContent = new ByteArrayContent(simulationRequest.SampleDataFile);
+                bytesContent.Headers.Add("Content-Type", "application/octet-stream");
+                bytesContent.Headers.Add("Content-Disposition", $"form-data; name={nameof(simulationRequest.SampleDataFile)}; filename={simulationRequest.SampleDataFileName}");
+                content.Add(bytesContent, nameof(simulationRequest.SampleDataFile), simulationRequest.SampleDataFileName);
             }
-
-            content.Headers.ContentType.MediaType = "multipart/form-data";
-
             return content;
         }
 

@@ -55,6 +55,6 @@ namespace Nfield.Models
         /// <summary>
         /// Sample data
         /// </summary>
-        public string SampleDataFile { get; set; }
+        public byte[] SampleDataFile { get; set; }
     }
 }
