@@ -37,5 +37,13 @@ namespace Nfield.Infrastructure
         {
             return File.ReadAllText(path);
         }
+
+        /// <summary>
+        /// <see cref="FileBase.ReadAllBytes"/>
+        /// </summary>
+        public override byte[] ReadAllBytes(string path)
+        {
+            return File.ReadAllBytes(path);
+        }
     }
 }

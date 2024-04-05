@@ -25,6 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -156,7 +157,7 @@ namespace Nfield.Services
                 InterviewsCount = 1,
                 UseOriginalSample = true,
                 HintsFileName = "hintsFileName", HintsFile = "hintsFileContent",
-                SampleDataFileName = "sampleDataFileName", SampleDataFile = "sampleDataFileContent"
+                SampleDataFileName = "sampleDataFileName", SampleDataFile = Encoding.Default.GetBytes("sampleDataFileContent")
             });
 
             _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c =>
@@ -280,7 +281,7 @@ namespace Nfield.Services
 
             _mockedFileSystem.Setup(fs => fs.Path.GetFileName(SampleDataFilePath)).Returns(SampleDataFileName);
             _mockedFileSystem.Setup(fs => fs.File.Exists(SampleDataFilePath)).Returns(true);
-            _mockedFileSystem.Setup(fs => fs.File.ReadAllText(SampleDataFilePath)).Returns(SampleData);
+            _mockedFileSystem.Setup(fs => fs.File.ReadAllBytes(SampleDataFilePath)).Returns(Encoding.Default.GetBytes(SampleData));
 
             var activityStatus = new BackgroundActivityStatus { ActivityId = "activityId" };
             var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
@@ -347,6 +348,16 @@ namespace Nfield.Services
                 if (contentHeader.FirstOrDefault(c => c.Name == "name" && c.Value == contentProperty.Name) != null &&
                     contentHeader.FirstOrDefault(c => c.Name == "filename" && c.Value == contentProperty.FileName) != null)
                 {
+                    if (contentProperty.Name == "HintsFile" && contentItem.Headers.ContentType.MediaType != "text/plain")
+                    {
+                        return false;
+                    }
+
+                    if (contentProperty.Name == "SampleDataFile" && contentItem.Headers.ContentType.MediaType != "application/octet-stream")
+                    {
+                        return false;
+                    }
+
                     var contentString = contentItem.ReadAsStringAsync().Result;
                     return string.Compare(contentString, contentProperty.FileContent, StringComparison.OrdinalIgnoreCase) == 0;
                 }
