@@ -271,7 +271,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task TestStartSimulation_File_HitsAndSampleDataFromFile_PostsExpectedData()
+        public async Task TestStartSimulation_File_HintsAndSampleDataFromFile_PostsExpectedData()
         {
             const string HintsFilePath = nameof(HintsFilePath);
             const string HintsFileName = nameof(HintsFileName);

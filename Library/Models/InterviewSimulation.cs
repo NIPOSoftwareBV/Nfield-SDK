@@ -17,7 +17,8 @@ namespace Nfield.Models
 {
     /// <summary>
     /// Parameters to start interview simulation.
-    /// To specify uploaded files this model uses the file name and the file content as a text string.
+    /// To specify uploaded files this model uses the file name and the file content.
+    /// The hints are uploaded as text. For the sample data we expect binary as an input since it could be csv or Excel data. 
     /// To upload data directly from files use <see cref="InterviewSimulationFiles"/>
     /// </summary>
     public class InterviewSimulation
