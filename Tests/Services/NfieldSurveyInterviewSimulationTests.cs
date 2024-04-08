@@ -104,6 +104,14 @@ namespace Nfield.Services
 
             _mockedHttpClient.Setup(client =>
                 client.PostAsync(_startSimulationEndpoint, It.IsAny<MultipartFormDataContent>()))
+                .Callback((Uri uri, HttpContent httpContent) =>
+                {
+                    var multipart = ((MultipartFormDataContent)httpContent);
+                    Assert.Equal(3, multipart.Count());
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "InterviewsCount", NameValue = "5" }));
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "EnableReporting", NameValue = "true" }));
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "UseOriginalSample", NameValue = "false" }));
+                })
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             _mockedHttpClient
@@ -121,13 +129,7 @@ namespace Nfield.Services
 
             var result = await _target.StartSimulationAsync(_surveyId, new InterviewSimulation { InterviewsCount = 5, EnableReporting = true, UseOriginalSample = false });
 
-            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c =>
-                c.IsMimeMultipartContent() &&
-                c.Count() == 3 &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "InterviewsCount", NameValue = "5" }) &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "EnableReporting", NameValue = "true" }) &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "UseOriginalSample", NameValue = "false" })
-                )));
+            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<MultipartFormDataContent>()), Times.Once()); 
         }
 
         [Fact]
@@ -138,6 +140,16 @@ namespace Nfield.Services
 
             _mockedHttpClient.Setup(client =>
                 client.PostAsync(_startSimulationEndpoint, It.IsAny<MultipartFormDataContent>()))
+                .Callback((Uri uri, HttpContent httpContent) =>
+                {
+                    var multipart = ((MultipartFormDataContent)httpContent);
+                    Assert.Equal(5, multipart.Count());
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "InterviewsCount", NameValue = "1" }));
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "UseOriginalSample", NameValue = "true" }));
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "EnableReporting", NameValue = "false" }));
+                    Assert.True(IsFilePropertyAvailable(multipart, new ContentProperty { Name = "HintsFile", NameValue = "hintsFile", FileName = "hintsFileName", FileContent = "hintsFileContent" }));
+                    Assert.True(IsFilePropertyAvailable(multipart, new ContentProperty { Name = "SampleDataFile", NameValue = "sampleDataFile", FileName = "sampleDataFileName", FileContent = "sampleDataFileContent" }));
+                })
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             _mockedHttpClient
@@ -160,14 +172,7 @@ namespace Nfield.Services
                 SampleDataFileName = "sampleDataFileName", SampleDataFile = Encoding.Default.GetBytes("sampleDataFileContent")
             });
 
-            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c =>
-                c.IsMimeMultipartContent() &&
-                c.Count() == 5 &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "InterviewsCount", NameValue = "1" }) &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "UseOriginalSample", NameValue = "true" }) &&
-                IsFilePropertyAvailable(c, new ContentProperty { Name = "HintsFile", NameValue = "hintsFile", FileName = "hintsFileName", FileContent = "hintsFileContent" }) &&
-                IsFilePropertyAvailable(c, new ContentProperty { Name = "SampleDataFile", NameValue = "sampleDataFile", FileName = "sampleDataFileName", FileContent = "sampleDataFileContent" })
-                )));
+            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<MultipartFormDataContent>()), Times.Once());
         }
 
         [Fact]
@@ -288,6 +293,16 @@ namespace Nfield.Services
 
             _mockedHttpClient.Setup(client =>
                 client.PostAsync(_startSimulationEndpoint, It.IsAny<MultipartFormDataContent>()))
+                .Callback((Uri uri, HttpContent httpContent) =>
+                {
+                    var multipart = ((MultipartFormDataContent)httpContent);
+                    Assert.Equal(5, multipart.Count());
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "InterviewsCount", NameValue = "1" }));
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "UseOriginalSample", NameValue = "true" }));
+                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "EnableReporting", NameValue = "true" }));
+                    Assert.True(IsFilePropertyAvailable(multipart, new ContentProperty { Name = "HintsFile", NameValue = "hintsFile", FileName = HintsFileName, FileContent = HintsData }));
+                    Assert.True(IsFilePropertyAvailable(multipart, new ContentProperty { Name = "SampleDataFile", NameValue = "sampleDataFile", FileName = SampleDataFileName, FileContent = SampleData }));
+                })
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             _mockedHttpClient
@@ -312,15 +327,7 @@ namespace Nfield.Services
                 SampleDataFilePath = SampleDataFilePath
             });
 
-            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.Is<MultipartFormDataContent>(c =>
-                c.IsMimeMultipartContent() &&
-                c.Count() == 5 &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "InterviewsCount", NameValue = "1" }) &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "UseOriginalSample", NameValue = "true" }) &&
-                IsPropertyAvailable(c, new ContentProperty { Name = "EnableReporting", NameValue = "true" }) &&
-                IsFilePropertyAvailable(c, new ContentProperty { Name = "HintsFile", NameValue = "hintsFile", FileName = HintsFileName, FileContent = HintsData }) &&
-                IsFilePropertyAvailable(c, new ContentProperty { Name = "SampleDataFile", NameValue = "sampleDataFile", FileName = SampleDataFileName, FileContent = SampleData })
-                )));
+            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<MultipartFormDataContent>()), Times.Once());
         }
 
         #endregion
