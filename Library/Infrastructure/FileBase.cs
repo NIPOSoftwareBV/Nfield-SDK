@@ -40,5 +40,12 @@ namespace Nfield.Infrastructure
         /// <param name="path">The file to open for reading.</param>
         /// <returns>A string containing all lines of the file.</returns>
         public abstract string ReadAllText(string path);
+
+        /// <summary>
+        /// Opens a binary file, reads the contents of the file into a byte array, and then closes the file.
+        /// </summary>
+        /// <param name="path">The file to open for reading.</param>
+        /// <returns>A byte array containing the contents of the file.</returns>
+        public abstract byte[] ReadAllBytes(string path);
     }
 }

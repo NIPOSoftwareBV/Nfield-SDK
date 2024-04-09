@@ -13,37 +13,37 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.IO;
-
-namespace Nfield.Infrastructure
+namespace Nfield.Models
 {
     /// <summary>
-    /// Provides properties and methods for file 
+    /// Parameters to start interview simulation.
+    /// This model allows to upload hints and sample data using the file path.
     /// </summary>
-    public class FileWrapper : FileBase
+    public class InterviewSimulationFiles
     {
         /// <summary>
-        /// <see cref="FileBase.Exists"/>
+        /// Number of interviews to be simulated
         /// </summary>
-        public override bool Exists(string path)
-        {
-            return File.Exists(path);
-        }
-        /// <summary>
-        /// <see cref="FileBase.ReadAllText"/>
-        /// </summary>
-        public override string ReadAllText(string path)
-        {
-            return File.ReadAllText(path);
-        }
+        public int InterviewsCount { get; set; }
 
         /// <summary>
-        /// <see cref="FileBase.ReadAllBytes"/>
+        /// Enable reporting for the simulation
         /// </summary>
-        public override byte[] ReadAllBytes(string path)
-        {
-            return File.ReadAllBytes(path);
-        }
+        public bool EnableReporting { get; set; }
+
+        /// <summary>
+        /// Use sample data from the original survey
+        /// </summary>
+        public bool UseOriginalSample { get; set; }
+
+        /// <summary>
+        /// Path to the hints file
+        /// </summary>
+        public string HintsFilePath { get; set; }
+
+        /// <summary>
+        /// Path to the sample data file
+        /// </summary>
+        public string SampleDataFilePath { get; set;}
     }
 }

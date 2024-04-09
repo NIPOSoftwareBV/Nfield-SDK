@@ -13,37 +13,33 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.IO;
+using System.Collections.Generic;
 
-namespace Nfield.Infrastructure
+namespace Nfield.Models
 {
     /// <summary>
-    /// Provides properties and methods for file 
+    /// Interview simulation result
     /// </summary>
-    public class FileWrapper : FileBase
+    public class InterviewSimulationResult
     {
         /// <summary>
-        /// <see cref="FileBase.Exists"/>
+        /// Survey id of the original survey
         /// </summary>
-        public override bool Exists(string path)
-        {
-            return File.Exists(path);
-        }
-        /// <summary>
-        /// <see cref="FileBase.ReadAllText"/>
-        /// </summary>
-        public override string ReadAllText(string path)
-        {
-            return File.ReadAllText(path);
-        }
+        public string OriginalSurveyId { get; set; }
 
         /// <summary>
-        /// <see cref="FileBase.ReadAllBytes"/>
+        /// Number of requested simulated interviews
         /// </summary>
-        public override byte[] ReadAllBytes(string path)
-        {
-            return File.ReadAllBytes(path);
-        }
+        public int RequestedInterviewsCount { get; set; }
+
+        /// <summary>
+        /// Survey id of the simulation survey
+        /// </summary>
+        public string SimulationSurveyId { get; set; }
+
+        /// <summary>
+        /// Error messages (if any)
+        /// </summary>
+        public IEnumerable<string> ErrorMessages { get; set; } = new List<string>();
     }
 }
