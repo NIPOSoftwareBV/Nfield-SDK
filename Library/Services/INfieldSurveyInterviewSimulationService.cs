@@ -14,7 +14,8 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.Models;
-using System;
+using Nfield.SDK.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Nfield.Services
@@ -30,6 +31,19 @@ namespace Nfield.Services
         /// <param name="surveyId">Id of the simulation survey</param>
         /// <returns>Content of the hints file</returns>
         Task<string> GetHintsAsync(string surveyId);
+
+        /// <summary>
+        /// Retrieve all simulations.
+        /// </summary>
+        /// <returns></returns>
+        Task<IQueryable<SurveyInterviewSimulation>> GetInterviewSimulationsAsync();
+
+        /// <summary>
+        /// Retrieve the simulation of a survey.
+        /// </summary>
+        /// <param name="surveyId"></param>
+        /// <returns></returns>
+        Task<SurveyInterviewSimulation> GetSurveyInterviewSimulationAsync(string surveyId);
 
         /// <summary>
         /// Starts interview simulation.
