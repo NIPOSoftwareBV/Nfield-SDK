@@ -55,8 +55,8 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             _surveyId = Guid.NewGuid().ToString();
-            _getHintsEndpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/DownloadHints");
-            _startSimulationEndpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations");
+            _getHintsEndpoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/InterviewSimulations/DownloadHints");
+            _startSimulationEndpoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations");
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Nfield.Services
         [Fact]
         public void TestGetInterviewSimulationsAsync_ServerReturnsQuery_ReturnsListWithSimulations()
         {
-            var interviewSimulationsEndPoint = new Uri(ServiceAddress, "surveys/InterviewSimulations");
+            var interviewSimulationsEndPoint = new Uri(ServiceAddress, "Surveys/InterviewSimulations");
 
             var expectedSimulationSurveys = new[]
             {
@@ -106,7 +106,7 @@ namespace Nfield.Services
             var surveyId = Guid.NewGuid().ToString();
             var expectedSimulationSurvey = new SurveyInterviewSimulation(SurveyType.Basic) { SurveyId = surveyId };
 
-            var surveyInterviewSimulationEndPoint = new Uri(ServiceAddress, $"surveys/{surveyId}/InterviewSimulation");
+            var surveyInterviewSimulationEndPoint = new Uri(ServiceAddress, $"Surveys/{surveyId}/InterviewSimulation");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);

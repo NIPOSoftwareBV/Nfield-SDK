@@ -163,22 +163,22 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveySimulationHintsEndPoint(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulations/DownloadHints");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewSimulations/DownloadHints");
         }
 
         private Uri InterviewSimulationsEndPoint()
         {
-            return new Uri(ConnectionClient.NfieldServerUri, "surveys/InterviewSimulations");
+            return new Uri(ConnectionClient.NfieldServerUri, "Surveys/InterviewSimulations");
         }
 
         private Uri SurveyInterviewSimulationEndPoint(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulation");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewSimulation");
         }
 
         private Uri StartInterviewSimulationsEndPoint(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulations/StartInterviewSimulations");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewSimulations/StartInterviewSimulations");
         }
 
         private static MultipartFormDataContent MultipartDataContent(InterviewSimulation simulationRequest)

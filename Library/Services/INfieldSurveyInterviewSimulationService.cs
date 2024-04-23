@@ -35,14 +35,14 @@ namespace Nfield.Services
         /// <summary>
         /// Retrieve all simulations.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all simulations</returns>
         Task<IQueryable<SurveyInterviewSimulation>> GetInterviewSimulationsAsync();
 
         /// <summary>
         /// Retrieve the simulation of a survey.
         /// </summary>
-        /// <param name="surveyId"></param>
-        /// <returns></returns>
+        /// <param name="surveyId">The survey id</param>
+        /// <returns>The simulation object</returns>
         Task<SurveyInterviewSimulation> GetSurveyInterviewSimulationAsync(string surveyId);
 
         /// <summary>
