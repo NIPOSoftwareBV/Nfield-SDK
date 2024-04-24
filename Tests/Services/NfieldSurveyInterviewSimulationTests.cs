@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.SDK.Models;
 using Nfield.Services.Implementation;
 using System;
 using System.Collections.Generic;
@@ -54,8 +55,8 @@ namespace Nfield.Services
             _target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             _surveyId = Guid.NewGuid().ToString();
-            _getHintsEndpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/DownloadHints");
-            _startSimulationEndpoint = new Uri(ServiceAddress, $"surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations");
+            _getHintsEndpoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/InterviewSimulations/DownloadHints");
+            _startSimulationEndpoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/InterviewSimulations/StartInterviewSimulations");
         }
 
         [Fact]
@@ -71,6 +72,68 @@ namespace Nfield.Services
 
             var actual = await _target.GetHintsAsync(_surveyId);
             Assert.Equal(Hints, actual);
+        }
+
+        [Fact]
+        public void TestGetInterviewSimulationsAsync_ServerReturnsQuery_ReturnsListWithSimulations()
+        {
+            var interviewSimulationsEndPoint = new Uri(ServiceAddress, "Surveys/InterviewSimulations");
+
+            var expectedSimulationSurveys = new[]
+            {
+                new SurveyInterviewSimulation(SurveyType.Basic) { SurveyId = Guid.NewGuid().ToString() },
+                new SurveyInterviewSimulation(SurveyType.Advanced) { SurveyId = Guid.NewGuid().ToString() }
+            };
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(interviewSimulationsEndPoint))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSimulationSurveys))));
+
+            var target = new NfieldSurveyInterviewSimulationService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualSimulationSurveys = target.GetInterviewSimulationsAsync().Result;
+
+            Assert.Equal(expectedSimulationSurveys[0].SurveyId, actualSimulationSurveys.ToArray()[0].SurveyId);
+            Assert.Equal(expectedSimulationSurveys[1].SurveyId, actualSimulationSurveys.ToArray()[1].SurveyId);
+            Assert.Equal(2, actualSimulationSurveys.Count());
+        }
+
+        [Fact]
+        public void TestGetSurveyInterviewSimulationAsync_ServerReturnsQuery_ReturnsListWithSimulations()
+        {
+            var surveyId = Guid.NewGuid().ToString();
+            var expectedSimulationSurvey = new SurveyInterviewSimulation(SurveyType.Basic) { SurveyId = surveyId };
+
+            var surveyInterviewSimulationEndPoint = new Uri(ServiceAddress, $"Surveys/{surveyId}/InterviewSimulation");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(surveyInterviewSimulationEndPoint))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSimulationSurvey))));
+
+            var target = new NfieldSurveyInterviewSimulationService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualSimulationSurvey = target.GetSurveyInterviewSimulationAsync(surveyId).Result;
+
+            Assert.Equal(expectedSimulationSurvey.SurveyId, actualSimulationSurvey.SurveyId);
+        }
+
+        [Fact]
+        public void TestGetSurveyInterviewSimulationAsync_SurveyIdIsNull_Throws()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await _target.GetSurveyInterviewSimulationAsync(null));
+        }
+
+        [Fact]
+        public void TestGetSurveyInterviewSimulationAsync_SurveyIdIsEmptyString_Throws()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await _target.GetSurveyInterviewSimulationAsync(string.Empty));
         }
 
         #region StartSimulation
