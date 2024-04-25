@@ -87,5 +87,11 @@ namespace Nfield.Services
         ///<returns> As this is a long running operation, it returns an <c>Accepted</c> response. The appropriate exception will be thrown in case of failure.</returns>
         Task DeleteAsync(long repositoryId);
 
+        /// <summary>
+        /// Triggers a repository sync.
+        /// </summary>
+        /// <param name="repositoryId">The repository Id.</param>
+        /// <returns><c>AcceptedResult</c>, if succeeded. The appropriate exception in case of failure. BadRequest in case of error.</returns>
+        Task PostSyncRepositoryAsync(long repositoryId);
     }
 }

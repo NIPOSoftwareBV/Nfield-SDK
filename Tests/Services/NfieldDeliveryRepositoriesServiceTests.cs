@@ -245,5 +245,26 @@ namespace Nfield.Services
 
             mockedHttpClient.Verify();
         }
+
+        [Fact]
+        public async Task Test_PostSyncRepositoryAsync()
+        {
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var repositoryId = 1;
+            var endpointUri = new Uri(ServiceAddress, $"Delivery/Repositories/{repositoryId}/Sync");
+
+            mockedHttpClient
+                .Setup(client => client.PostAsync(endpointUri, null))
+                .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
+
+            var target = new NfieldDeliveryRepositoriesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            await target.PostSyncRepositoryAsync(repositoryId);
+
+            mockedHttpClient.Verify();
+        }
     }
 }
