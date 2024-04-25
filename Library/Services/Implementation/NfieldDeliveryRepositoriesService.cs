@@ -135,6 +135,13 @@ namespace Nfield.SDK.Services.Implementation
             return ConnectionClient.Client.DeleteAsync(uri).FlattenExceptions();
         }
 
+        public Task PostSyncRepositoryAsync(long repositoryId)
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Delivery/Repositories/{repositoryId}/Sync");
+
+            return ConnectionClient.Client.PostAsync(uri,null).FlattenExceptions();
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
