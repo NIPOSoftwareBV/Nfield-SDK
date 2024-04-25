@@ -18,9 +18,12 @@ using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
+using Nfield.SDK.Models;
 using Nfield.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -55,6 +58,30 @@ namespace Nfield.Services.Implementation
                 var hints = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return hints;
             }
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveyInterviewSimulationService.GetInterviewSimulationsAsync()"/>
+        /// </summary>
+        public Task<IQueryable<SurveyInterviewSimulation>> GetInterviewSimulationsAsync()
+        {
+            return Client.GetAsync(InterviewSimulationsEndPoint())
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<List<SurveyInterviewSimulation>>(stringTask.Result).AsQueryable())
+                .FlattenExceptions();
+        }
+
+        /// <summary>
+        /// <see cref="INfieldSurveyInterviewSimulationService.GetSurveyInterviewSimulationAsync(string)"/>
+        /// </summary>
+        public Task<SurveyInterviewSimulation> GetSurveyInterviewSimulationAsync(string surveyId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+
+            return Client.GetAsync(SurveyInterviewSimulationEndPoint(surveyId))
+                .ContinueWith(responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                .ContinueWith(stringTask => JsonConvert.DeserializeObject<SurveyInterviewSimulation>(stringTask.Result))
+                .FlattenExceptions();
         }
 
         /// <summary>
@@ -136,12 +163,22 @@ namespace Nfield.Services.Implementation
 
         private Uri SurveySimulationHintsEndPoint(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulations/DownloadHints");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewSimulations/DownloadHints");
+        }
+
+        private Uri InterviewSimulationsEndPoint()
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, "Surveys/InterviewSimulations");
+        }
+
+        private Uri SurveyInterviewSimulationEndPoint(string surveyId)
+        {
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewSimulation");
         }
 
         private Uri StartInterviewSimulationsEndPoint(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"surveys/{surveyId}/InterviewSimulations/StartInterviewSimulations");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/InterviewSimulations/StartInterviewSimulations");
         }
 
         private static MultipartFormDataContent MultipartDataContent(InterviewSimulation simulationRequest)
