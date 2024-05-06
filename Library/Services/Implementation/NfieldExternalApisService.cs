@@ -56,23 +56,6 @@ namespace Nfield.Services.Implementation
                       .FlattenExceptions();
         }
 
-        /// <summary>
-        /// See <see cref="INfieldExternalApisService.UpdateAsync"/>
-        /// </summary>
-        public Task<ExternalApi> UpdateAsync(ExternalApi externalApi)
-        {
-            if (externalApi == null)
-            {
-                throw new ArgumentNullException("externalApi");
-            }
-
-            return Client.PutAsJsonAsync(ExternalApisApi, externalApi)
-                         .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(task => JsonConvert.DeserializeObject<ExternalApi>(task.Result))
-                         .FlattenExceptions();
-        }
-
-
         #region Implementation of INfieldConnectionClientObject
 
         public INfieldConnectionClient ConnectionClient { get; internal set; }
