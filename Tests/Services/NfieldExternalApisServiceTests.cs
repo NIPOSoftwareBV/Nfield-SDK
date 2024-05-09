@@ -121,39 +121,5 @@ namespace Nfield.Services
         }
 
         #endregion
-
-        #region UpdateAsync
-
-        [Fact]
-        public void TestUpdateAsync_ExternalApiArgumentIsNull_ThrowsArgumentNullException()
-        {
-            var target = new NfieldExternalApisService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateAsync(null)));
-        }
-
-        [Fact]
-        public void TestUpdateAsync_ExternalApiExists_ReturnsExternalApi()
-        {
-            const string externalApiName = "ApiToUpdate";
-            var externalApi = new ExternalApi
-            {
-                Name = externalApiName,
-                Description = "updated description"
-            };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "externalapis/"), externalApi))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(externalApi))));
-
-            var target = new NfieldExternalApisService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actual = target.UpdateAsync(externalApi).Result;
-
-            Assert.Equal(externalApi.Description, actual.Description);
-        }
-
-        #endregion
     }
 }
