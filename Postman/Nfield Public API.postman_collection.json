@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "198aca4e-70e5-4cc9-bd7b-869467aed183",
+		"_postman_id": "d46121de-543a-491b-85e5-1049128447cb",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "631405"
+		"_exporter_id": "9960585"
 	},
 	"item": [
 		{
@@ -197,8 +197,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}",
-								"type": "text"
+								"value": "Basic {{AuthenticationToken}}"
 							}
 						],
 						"body": {
@@ -253,8 +252,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}",
-								"type": "text"
+								"value": "Basic {{AuthenticationToken}}"
 							}
 						],
 						"body": {
@@ -309,8 +307,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}",
-								"type": "text"
+								"value": "Basic {{AuthenticationToken}}"
 							}
 						],
 						"body": {
@@ -715,8 +712,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -777,8 +773,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -838,8 +833,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -933,8 +927,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1019,8 +1012,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1104,8 +1096,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1178,8 +1169,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1237,8 +1227,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1317,8 +1306,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1404,8 +1392,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1498,8 +1485,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"body": {
@@ -1561,8 +1547,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"body": {
@@ -1634,8 +1619,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1703,8 +1687,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1766,8 +1749,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1825,8 +1807,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -1897,8 +1878,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"body": {
@@ -2454,8 +2434,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"body": {
@@ -2927,8 +2906,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -2986,8 +2964,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -3072,8 +3049,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"body": {
@@ -3149,8 +3125,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -3215,18 +3190,15 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "default"
+												"value": "application/json"
 											},
 											{
 												"key": "",
 												"value": "",
-												"type": "default",
 												"disabled": true
 											}
 										],
@@ -3294,8 +3266,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -3358,13 +3329,11 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -3452,8 +3421,7 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															}
 														],
 														"body": {
@@ -3520,8 +3488,7 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															}
 														],
 														"body": {
@@ -3587,8 +3554,7 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															}
 														],
 														"body": {
@@ -3665,8 +3631,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"url": {
@@ -3718,13 +3683,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "default"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -3779,8 +3742,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -3842,8 +3804,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -3903,13 +3864,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/pdf",
-														"type": "default"
+														"value": "application/pdf"
 													}
 												],
 												"body": {
@@ -3971,8 +3930,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -4061,8 +4019,7 @@
 																		"header": [
 																			{
 																				"key": "Authorization",
-																				"value": "Basic {{AuthenticationToken}}",
-																				"type": "text"
+																				"value": "Basic {{AuthenticationToken}}"
 																			}
 																		],
 																		"url": {
@@ -4139,13 +4096,11 @@
 																		"header": [
 																			{
 																				"key": "Authorization",
-																				"value": "Basic {{AuthenticationToken}}",
-																				"type": "text"
+																				"value": "Basic {{AuthenticationToken}}"
 																			},
 																			{
 																				"key": "Content-Type",
-																				"value": "application/json",
-																				"type": "default"
+																				"value": "application/json"
 																			}
 																		],
 																		"body": {
@@ -4231,8 +4186,7 @@
 																"header": [
 																	{
 																		"key": "Authorization",
-																		"value": "Basic {{AuthenticationToken}}",
-																		"type": "text"
+																		"value": "Basic {{AuthenticationToken}}"
 																	}
 																],
 																"url": {
@@ -4315,13 +4269,11 @@
 																		"header": [
 																			{
 																				"key": "Authorization",
-																				"value": "Basic {{AuthenticationToken}}",
-																				"type": "text"
+																				"value": "Basic {{AuthenticationToken}}"
 																			},
 																			{
 																				"key": "Content-Type",
-																				"value": "application/json",
-																				"type": "text"
+																				"value": "application/json"
 																			}
 																		],
 																		"body": {
@@ -4385,13 +4337,11 @@
 																		"header": [
 																			{
 																				"key": "Authorization",
-																				"value": "Basic {{AuthenticationToken}}",
-																				"type": "text"
+																				"value": "Basic {{AuthenticationToken}}"
 																			},
 																			{
 																				"key": "Content-Type",
-																				"value": "application/json",
-																				"type": "text"
+																				"value": "application/json"
 																			}
 																		],
 																		"body": {
@@ -4481,8 +4431,7 @@
 																"header": [
 																	{
 																		"key": "Authorization",
-																		"value": "Basic {{AuthenticationToken}}",
-																		"type": "text"
+																		"value": "Basic {{AuthenticationToken}}"
 																	}
 																],
 																"url": {
@@ -4548,8 +4497,7 @@
 																		"header": [
 																			{
 																				"key": "Authorization",
-																				"value": "Basic {{AuthenticationToken}}",
-																				"type": "text"
+																				"value": "Basic {{AuthenticationToken}}"
 																			}
 																		],
 																		"url": {
@@ -4614,13 +4562,11 @@
 																		"header": [
 																			{
 																				"key": "Authorization",
-																				"value": "Basic {{AuthenticationToken}}",
-																				"type": "text"
+																				"value": "Basic {{AuthenticationToken}}"
 																			},
 																			{
 																				"key": "Content-Type",
-																				"value": "application/json",
-																				"type": "text"
+																				"value": "application/json"
 																			}
 																		],
 																		"body": {
@@ -4681,13 +4627,11 @@
 																		"header": [
 																			{
 																				"key": "Authorization",
-																				"value": "Basic {{AuthenticationToken}}",
-																				"type": "text"
+																				"value": "Basic {{AuthenticationToken}}"
 																			},
 																			{
 																				"key": "Content-Type",
-																				"value": "application/json",
-																				"type": "text"
+																				"value": "application/json"
 																			}
 																		],
 																		"body": {
@@ -4763,8 +4707,7 @@
 																"header": [
 																	{
 																		"key": "Authorization",
-																		"value": "Basic {{AuthenticationToken}}",
-																		"type": "text"
+																		"value": "Basic {{AuthenticationToken}}"
 																	}
 																],
 																"url": {
@@ -4821,8 +4764,7 @@
 																"header": [
 																	{
 																		"key": "Authorization",
-																		"value": "Basic {{AuthenticationToken}}",
-																		"type": "text"
+																		"value": "Basic {{AuthenticationToken}}"
 																	}
 																],
 																"url": {
@@ -4888,8 +4830,7 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															}
 														],
 														"url": {
@@ -4949,13 +4890,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -5023,13 +4962,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -5093,13 +5030,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -5155,7 +5090,8 @@
 																	"});\r",
 																	""
 																],
-																"type": "text/javascript"
+																"type": "text/javascript",
+																"packages": {}
 															}
 														}
 													],
@@ -5164,18 +5100,16 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
 															"mode": "raw",
-															"raw": "{\r\n    \"SamplingPointId\": \"1b76c054-7d53-4c61-b12d-ad7de7969ef1\",\r\n    \"Target\": 0\r\n}",
+															"raw": "{\r\n    \"SpareSamplingPointId\": \"\",\r\n    \"Target\": 0\r\n}",
 															"options": {
 																"raw": {
 																	"language": "json"
@@ -5231,13 +5165,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -5483,13 +5415,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -5541,13 +5471,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -5618,8 +5546,7 @@
 													},
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"url": {
@@ -5678,8 +5605,7 @@
 													},
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -5736,8 +5662,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"url": {
@@ -5778,7 +5703,8 @@
 															"});\r",
 															""
 														],
-														"type": "text/javascript"
+														"type": "text/javascript",
+														"packages": {}
 													}
 												}
 											],
@@ -5787,13 +5713,12 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\r\n  \"SamplingPointIds\": [ \"zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz\" ]\r\n}",
+													"raw": "{\r\n  \"SamplingPointIds\": [] // for example [1,2,3]\r\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -5801,7 +5726,7 @@
 													}
 												},
 												"url": {
-													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/SamplingPoints/Activate",
+													"raw": "{{origin-public-api}}/v1/Surveys/:SurveyId/ActivateSamplingpoints",
 													"host": [
 														"{{origin-public-api}}"
 													],
@@ -5809,8 +5734,7 @@
 														"v1",
 														"Surveys",
 														":SurveyId",
-														"SamplingPoints",
-														"Activate"
+														"ActivateSamplingpoints"
 													],
 													"variable": [
 														{
@@ -5848,8 +5772,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"url": {
@@ -5921,8 +5844,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"url": {
@@ -5965,13 +5887,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -6579,8 +6499,7 @@
 															},
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "default"
+																"value": "Basic {{AuthenticationToken}}"
 															}
 														],
 														"body": {
@@ -6804,8 +6723,7 @@
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/octet-stream",
-														"type": "default"
+														"value": "application/octet-stream"
 													}
 												],
 												"body": {
@@ -7288,8 +7206,7 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															}
 														],
 														"url": {
@@ -7360,13 +7277,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -7440,13 +7355,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -7506,13 +7419,11 @@
 														"header": [
 															{
 																"key": "Authorization",
-																"value": "Basic {{AuthenticationToken}}",
-																"type": "text"
+																"value": "Basic {{AuthenticationToken}}"
 															},
 															{
 																"key": "Content-Type",
-																"value": "application/json",
-																"type": "text"
+																"value": "application/json"
 															}
 														],
 														"body": {
@@ -7591,8 +7502,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"url": {
@@ -7920,8 +7830,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -8001,8 +7910,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -8070,8 +7978,7 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													}
 												],
 												"body": {
@@ -8159,8 +8066,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -8235,8 +8141,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -8297,13 +8202,11 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -8402,13 +8305,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -8501,13 +8402,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -8566,13 +8465,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -8670,8 +8567,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -9472,8 +9368,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -9667,8 +9562,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -9727,8 +9621,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -9806,8 +9699,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -9866,8 +9758,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -9936,8 +9827,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -10001,8 +9891,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -10637,8 +10526,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -10701,8 +10589,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -10761,8 +10648,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -10840,8 +10726,7 @@
 										"header": [
 											{
 												"key": "Accept",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											},
 											{
 												"key": "Authorization",
@@ -10977,8 +10862,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -11037,8 +10921,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -11101,8 +10984,7 @@
 											},
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -11168,8 +11050,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -11229,8 +11110,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -11730,13 +11610,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -11819,13 +11697,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -11882,13 +11758,11 @@
 												"header": [
 													{
 														"key": "Authorization",
-														"value": "Basic {{AuthenticationToken}}",
-														"type": "text"
+														"value": "Basic {{AuthenticationToken}}"
 													},
 													{
 														"key": "Content-Type",
-														"value": "application/json",
-														"type": "text"
+														"value": "application/json"
 													}
 												],
 												"body": {
@@ -11983,8 +11857,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -12053,8 +11926,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"url": {
@@ -12113,13 +11985,11 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -12188,13 +12058,11 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -12248,13 +12116,11 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -12465,8 +12331,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -12530,8 +12395,7 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											}
 										],
 										"body": {
@@ -13201,13 +13065,11 @@
 										"header": [
 											{
 												"key": "Authorization",
-												"value": "Basic {{AuthenticationToken}}",
-												"type": "text"
+												"value": "Basic {{AuthenticationToken}}"
 											},
 											{
 												"key": "Content-Type",
-												"value": "application/json",
-												"type": "text"
+												"value": "application/json"
 											}
 										],
 										"body": {
@@ -13333,13 +13195,11 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									},
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"url": {
@@ -13386,13 +13246,11 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "multipart/form-data",
-										"type": "text"
+										"value": "multipart/form-data"
 									},
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"body": {
@@ -13468,13 +13326,11 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									},
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"url": {
@@ -13512,13 +13368,11 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"value": "application/json"
 									},
 									{
 										"key": "Authorization",
-										"value": "Basic {{AuthenticationToken}}",
-										"type": "text"
+										"value": "Basic {{AuthenticationToken}}"
 									}
 								],
 								"url": {
@@ -13709,8 +13563,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}",
-								"type": "text"
+								"value": "Basic {{AuthenticationToken}}"
 							}
 						],
 						"body": {
@@ -13761,8 +13614,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Basic {{AuthenticationToken}}",
-								"type": "text"
+								"value": "Basic {{AuthenticationToken}}"
 							}
 						],
 						"body": {
@@ -13883,8 +13735,7 @@
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
