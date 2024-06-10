@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "bd7b749e-4ba2-413d-aedf-371d2e7004ed",
+		"_postman_id": "a1507898-8a43-4385-95fe-b5fe729e7cd3",
 		"name": "Nfield Public API Domain V2",
 		"description": "All Nfield Public API Domain endpoints affect only at domain level. This means that the requests can affect to all the surveys (Like Survey Defaults or themes).",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2060844"
 	},
 	"item": [
 		{
@@ -462,7 +463,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"MinCharsetsInPassword\": 2,\r\n    \"MinPasswordLength\": 6,\r\n    \"PasswordHistoryLength\": 1\r\n}"
+									"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"PasswordHistoryLength\": 1\r\n}"
 								},
 								"url": {
 									"raw": "{{origin-public-api}}/v2/PasswordSettings",
