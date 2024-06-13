@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "d46121de-543a-491b-85e5-1049128447cb",
+		"_postman_id": "48a73c68-7bc2-4d92-b62b-7364585cc85b",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9960585"
+		"_exporter_id": "69410"
 	},
 	"item": [
 		{
@@ -3076,6 +3076,112 @@
 							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Blueprints",
+			"item": [
+				{
+					"name": "Create Survey From Blueprint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"SurveyName\": \"sample survey\",\r\n  \"BlueprintSurveyId\": \"blueprint survey id\"\r\n}"
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/Surveys/CreateSurveyFromBlueprint",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"Surveys",
+								"CreateSurveyFromBlueprint"
+							]
+						},
+						"description": "This method creates a new survey."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Blueprint",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Nfield-Domain",
+								"value": "{{Domain}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic {{AuthenticationToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"SurveyId\": \"sample survey id\",\r\n  \"IncludedConfiguration\": -1\r\n}"
+						},
+						"url": {
+							"raw": "{{origin-public-api}}/v1/SurveyBlueprints/:BlueprintSurveyId/Update",
+							"host": [
+								"{{origin-public-api}}"
+							],
+							"path": [
+								"v1",
+								"SurveyBlueprints",
+								":BlueprintSurveyId",
+								"Update"
+							],
+							"variable": [
+								{
+									"key": "BlueprintSurveyId",
+									"value": "sample blueprint survey id"
+								}
+							]
+						},
+						"description": "This method creates or updates an Online quota frame or Capi quota frame depending on the survey environment. The provided example structure of an Online Quota is a simple 'One level' deep quota frame. It contains one VariableDefinition 'FirstVariable' that has two levels 'LevelA' and 'LevelB'. The FrameVariables are the same as Variable Definitions but justifies the Levels and their targets and shows possible interlinked variables for each level if any. NB: Make sure all the Id's are valid GUID's. NB: All the strings will be trimmed during the upload."
+					},
+					"response": []
 				}
 			]
 		},
