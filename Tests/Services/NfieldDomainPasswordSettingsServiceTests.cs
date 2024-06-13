@@ -13,9 +13,9 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using Nfield.Models;
 using Nfield.Services.Implementation;
+using System;
 using Xunit;
 
 namespace Nfield.Services
@@ -25,9 +25,6 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldDomainPasswordSettingsServiceTests : NfieldServiceTestsBase
     {
-        private const int DefaultMinCharsetsInPassword = 4;
-        private const int DefaultMinPasswordLength = 12;
-
         #region GetAsync
 
         [Fact]
@@ -37,6 +34,8 @@ namespace Nfield.Services
             {
                 AgeWarnThreshold = 0,
                 MaxPasswordAge = 30,
+                MinCharsetsInPassword = 4,
+                MinPasswordLength = 12,
                 PasswordHistoryLength = 0,
                 EnforceTwoFactorAuthentication = false
             };
@@ -46,7 +45,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockClient);
 
             var actual = target.GetAsync().Result;
-            AssertOnPasswordSettings(expected, actual);
+            AssertOnGetPasswordSettings(expected, actual);
         }
 
         #endregion
@@ -77,7 +76,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockClient);
 
             var actual = target.UpdateAsync(expected).Result;
-            AssertOnPasswordSettings(expected, actual);
+            AssertOnUpdatePasswordSettings(expected, actual);
         }
 
         #endregion
@@ -87,13 +86,19 @@ namespace Nfield.Services
             return new Uri(ServiceAddress, "PasswordSettings/");
         }
         
-        private static void AssertOnPasswordSettings(DomainPasswordSettings expected, DomainPasswordSettings actual)
+        private static void AssertOnGetPasswordSettings(DomainPasswordSettings expected, DomainPasswordSettings actual)
+        {
+            Assert.Equal(expected.MinCharsetsInPassword, actual.MinCharsetsInPassword);
+            Assert.Equal(expected.MinPasswordLength, actual.MinPasswordLength);
+
+            AssertOnUpdatePasswordSettings(expected, actual);
+        }
+
+        private static void AssertOnUpdatePasswordSettings(DomainPasswordSettings expected, DomainPasswordSettings actual)
         {
             Assert.Equal(expected.AgeWarnThreshold, actual.AgeWarnThreshold);
             Assert.Equal(expected.EnforceTwoFactorAuthentication, actual.EnforceTwoFactorAuthentication);
             Assert.Equal(expected.MaxPasswordAge, actual.MaxPasswordAge);
-            Assert.Equal(DefaultMinCharsetsInPassword, actual.MinCharsetsInPassword);
-            Assert.Equal(DefaultMinPasswordLength, actual.MinPasswordLength);
             Assert.Equal(expected.PasswordHistoryLength, actual.PasswordHistoryLength);
         }
     }
