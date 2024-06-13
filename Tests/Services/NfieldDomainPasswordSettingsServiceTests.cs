@@ -25,6 +25,9 @@ namespace Nfield.Services
     /// </summary>
     public class NfieldDomainPasswordSettingsServiceTests : NfieldServiceTestsBase
     {
+        private const int DefaultMinCharsetsInPassword = 4;
+        private const int DefaultMinPasswordLength = 12;
+
         #region GetAsync
 
         [Fact]
@@ -34,8 +37,6 @@ namespace Nfield.Services
             {
                 AgeWarnThreshold = 0,
                 MaxPasswordAge = 30,
-                MinCharsetsInPassword = 2,
-                MinPasswordLength = 8,
                 PasswordHistoryLength = 0,
                 EnforceTwoFactorAuthentication = false
             };
@@ -67,8 +68,6 @@ namespace Nfield.Services
             {
                 AgeWarnThreshold = 2,
                 MaxPasswordAge = 365,
-                MinCharsetsInPassword = 4,
-                MinPasswordLength = 8,
                 PasswordHistoryLength = 10,
                 EnforceTwoFactorAuthentication = true
             };
@@ -93,8 +92,8 @@ namespace Nfield.Services
             Assert.Equal(expected.AgeWarnThreshold, actual.AgeWarnThreshold);
             Assert.Equal(expected.EnforceTwoFactorAuthentication, actual.EnforceTwoFactorAuthentication);
             Assert.Equal(expected.MaxPasswordAge, actual.MaxPasswordAge);
-            Assert.Equal(expected.MinCharsetsInPassword, actual.MinCharsetsInPassword);
-            Assert.Equal(expected.MinPasswordLength, actual.MinPasswordLength);
+            Assert.Equal(DefaultMinCharsetsInPassword, actual.MinCharsetsInPassword);
+            Assert.Equal(DefaultMinPasswordLength, actual.MinPasswordLength);
             Assert.Equal(expected.PasswordHistoryLength, actual.PasswordHistoryLength);
         }
     }
