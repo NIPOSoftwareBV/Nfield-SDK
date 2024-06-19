@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "48a73c68-7bc2-4d92-b62b-7364585cc85b",
+		"_postman_id": "6e56ac1e-23cf-486e-b482-c883f8122e20",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "69410"
+		"_exporter_id": "2060844"
 	},
 	"item": [
 		{
@@ -2024,7 +2024,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"MinCharsetsInPassword\": 2,\r\n    \"MinPasswordLength\": 6,\r\n    \"PasswordHistoryLength\": 1\r\n}"
+									"raw": "{\r\n    \"AgeWarnThreshold\": 0,\r\n    \"EnforceTwoFactorAuthentication\": false,\r\n    \"MaxPasswordAge\": 0,\r\n    \"PasswordHistoryLength\": 1\r\n}"
 								},
 								"url": {
 									"raw": "{{origin-public-api}}/v1/PasswordSettings",

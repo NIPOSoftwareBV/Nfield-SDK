@@ -24,13 +24,15 @@
 
         /// <summary>
         /// Name of the password setting that determines minimum char sets in password for a domain
-        /// The valid values for the minimum char sets in password from 0 to 4
+        /// The default value for the minimum char sets in password is 4
+        /// This property cannot be updated
         /// </summary>
         public int? MinCharsetsInPassword { get; set; }
 
         /// <summary>
         /// Name of the password setting that determines minimum password length for a domain
-        /// The valid values for the minimum password length: 0, 6, 8, 12
+        /// The default value for the minimum password length is 12
+        /// This property cannot be updated
         /// </summary>
         public int? MinPasswordLength { get; set; }
 
