@@ -24,10 +24,10 @@ namespace Nfield.SDK.Services
         /// <summary>
         /// Gets survey queryable object.
         /// </summary>
-        Task<IQueryable<Survey>> GetParentSurveyWaves(string parentSurveyId);
+        Task<IQueryable<Survey>> GetParentSurveyWavesAsync(string parentSurveyId);
 
         /// <summary>
-        /// Adds a new parent survey.
+        /// Adds a new wave.
         /// </summary>
         Task<Survey> AddWaveAsync(string parentSurveyId, Survey survey);
     }

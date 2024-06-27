@@ -55,7 +55,7 @@ namespace Nfield.Services
             var target = new NfieldWavesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualWaves = target.GetParentSurveyWaves(parentSurveyId).Result;
+            var actualWaves = target.GetParentSurveyWavesAsync(parentSurveyId).Result;
 
             Assert.Equal(expectedWavesSurveys[0].SurveyId, actualWaves.ToArray()[0].SurveyId);
             Assert.Equal(expectedWavesSurveys[1].SurveyId, actualWaves.ToArray()[1].SurveyId);

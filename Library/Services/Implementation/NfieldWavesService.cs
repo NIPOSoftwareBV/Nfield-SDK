@@ -16,7 +16,7 @@ namespace Nfield.Services.Implementation
 
         #region Implementation of INfieldWavesService
 
-        public async Task<IQueryable<Survey>> GetParentSurveyWaves(string parentSurveyId)
+        public async Task<IQueryable<Survey>> GetParentSurveyWavesAsync(string parentSurveyId)
         {
             var uri = WavesUrl(parentSurveyId);
 
