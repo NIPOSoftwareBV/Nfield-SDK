@@ -20,12 +20,10 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
-using System.Net.Http;
-using System.Net;
-using System.Threading.Tasks;
-using Xunit;
-using Nfield.SDK.Models;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using Xunit;
 
 namespace Nfield.Services
 {
