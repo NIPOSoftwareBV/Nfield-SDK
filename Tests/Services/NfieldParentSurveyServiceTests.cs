@@ -1,0 +1,86 @@
+﻿//    This file is part of Nfield.SDK.
+//
+//    Nfield.SDK is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Lesser General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Nfield.SDK is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Lesser General Public License for more details.
+//
+//    You should have received a copy of the GNU Lesser General Public License
+//    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
+
+
+using Moq;
+using Newtonsoft.Json;
+using Nfield.Infrastructure;
+using Nfield.Models;
+using Nfield.Services.Implementation;
+using System;
+using System.Net.Http;
+using System.Net;
+using System.Threading.Tasks;
+using Xunit;
+using Nfield.SDK.Models;
+using System.Linq;
+
+namespace Nfield.Services
+{
+    /// <summary>
+    /// Tests for <see cref="NfieldParentSurveyService"/>
+    /// </summary>
+    public class NfieldParentSurveyServiceTests : NfieldServiceTestsBase
+    {
+        [Fact]
+        public void TestGetParentSurveysAsync_ServerReturnsQuery_ReturnsListWithParentSurveys()
+        {
+
+            var expectedParentSurveys = new[]
+            {
+                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), HasWaves = true },
+                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), HasWaves = true },
+            };
+
+            var getParentSurveysEndPoint = new Uri(ServiceAddress, $"ParentSurveys");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.GetAsync(getParentSurveysEndPoint))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedParentSurveys))));
+
+            var target = new NfieldParentSurveyService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualSimulationSurveys = target.GetParentSurveysAsync().Result;
+
+            Assert.Equal(expectedParentSurveys[0].SurveyId, actualSimulationSurveys.ToArray()[0].SurveyId);
+            Assert.Equal(expectedParentSurveys[1].SurveyId, actualSimulationSurveys.ToArray()[1].SurveyId);
+            Assert.Equal(2, actualSimulationSurveys.Count());
+        }
+
+        [Fact]
+        public void TestCreateParentSurveyAsync_ReturnsSurvey()
+        {
+            var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), HasWaves = true };
+
+            var createParentSurveyEndPoint = new Uri(ServiceAddress, $"ParentSurveys");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(createParentSurveyEndPoint, survey))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(survey))));
+
+            var target = new NfieldParentSurveyService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualSurvey = target.AddParentSurveyAsync(survey).Result;
+
+            Assert.Equal(survey.SurveyId, actualSurvey.SurveyId);
+        }
+    }
+}
