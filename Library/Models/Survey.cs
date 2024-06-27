@@ -65,10 +65,5 @@ namespace Nfield.Models
         /// True if the survey is a blueprint survey, otherwise false
         /// </summary>
         public bool IsBlueprint { get; set; } = false;
-
-        /// <summary>
-        /// True if the survey is a parent survey, otherwise false
-        /// </summary>
-        public bool HasWaves { get; set; } = false;
     }
 }

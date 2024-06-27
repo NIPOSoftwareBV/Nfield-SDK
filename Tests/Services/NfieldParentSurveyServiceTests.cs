@@ -40,8 +40,8 @@ namespace Nfield.Services
 
             var expectedParentSurveys = new[]
             {
-                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), HasWaves = true },
-                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), HasWaves = true },
+                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() },
+                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() },
             };
 
             var getParentSurveysEndPoint = new Uri(ServiceAddress, $"ParentSurveys");
@@ -65,7 +65,7 @@ namespace Nfield.Services
         [Fact]
         public void TestCreateParentSurveyAsync_ReturnsSurvey()
         {
-            var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), HasWaves = true };
+            var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
             var createParentSurveyEndPoint = new Uri(ServiceAddress, $"ParentSurveys");
 
