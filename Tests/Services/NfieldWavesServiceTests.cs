@@ -20,65 +20,64 @@ using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Services.Implementation;
 using System;
-using System.Net.Http;
-using System.Net;
-using System.Threading.Tasks;
-using Xunit;
-using Nfield.SDK.Models;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using Xunit;
 
 namespace Nfield.Services
 {
     /// <summary>
-    /// Tests for <see cref="NfieldParentSurveyService"/>
+    /// Tests for <see cref="NfieldWavesService"/>
     /// </summary>
-    public class NfieldParentSurveyServiceTests : NfieldServiceTestsBase
+    public class NfieldWavesServiceTests : NfieldServiceTestsBase
     {
         [Fact]
-        public void TestGetParentSurveysAsync_ServerReturnsQuery_ReturnsListWithParentSurveys()
+        public void TestWavesAsync_ServerReturnsQuery_ReturnsListWithWaves()
         {
-
-            var expectedParentSurveys = new[]
+            const string parentSurveyId = "parentSurveyId";
+            var expectedWavesSurveys = new[]
             {
                 new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() },
-                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() },
+                new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), },
             };
 
-            var getParentSurveysEndPoint = new Uri(ServiceAddress, $"ParentSurveys");
+            var getWavesEndPoint = new Uri(ServiceAddress, $"Surveys/{parentSurveyId}/Waves/");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(getParentSurveysEndPoint))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedParentSurveys))));
+                .Setup(client => client.GetAsync(getWavesEndPoint))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedWavesSurveys))));
 
-            var target = new NfieldParentSurveyService();
+            var target = new NfieldWavesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSimulationSurveys = target.GetParentSurveysAsync().Result;
+            var actualWaves = target.GetParentSurveyWavesAsync(parentSurveyId).Result;
 
-            Assert.Equal(expectedParentSurveys[0].SurveyId, actualSimulationSurveys.ToArray()[0].SurveyId);
-            Assert.Equal(expectedParentSurveys[1].SurveyId, actualSimulationSurveys.ToArray()[1].SurveyId);
-            Assert.Equal(2, actualSimulationSurveys.Count());
+            Assert.Equal(expectedWavesSurveys[0].SurveyId, actualWaves.ToArray()[0].SurveyId);
+            Assert.Equal(expectedWavesSurveys[1].SurveyId, actualWaves.ToArray()[1].SurveyId);
+            Assert.Equal(2, actualWaves.Count());
         }
 
         [Fact]
-        public void TestCreateParentSurveyAsync_ReturnsSurvey()
+        public void TestAddWaveAsync_AddsWave_ReturnsWaveSurvey()
         {
+            const string parentSurveyId = "parentSurveyId";
             var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
-            var createParentSurveyEndPoint = new Uri(ServiceAddress, $"ParentSurveys");
+            var getWavesEndPoint = new Uri(ServiceAddress, $"Surveys/{parentSurveyId}/Waves/");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(createParentSurveyEndPoint, survey))
+                .Setup(client => client.PostAsJsonAsync(getWavesEndPoint, survey))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(survey))));
 
-            var target = new NfieldParentSurveyService();
+            var target = new NfieldWavesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSurvey = target.AddParentSurveyAsync(survey).Result;
+            var actualSurvey = target.AddWaveAsync(parentSurveyId, survey).Result;
 
             Assert.Equal(survey.SurveyId, actualSurvey.SurveyId);
         }
