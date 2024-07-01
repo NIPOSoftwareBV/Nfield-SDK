@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
-using Nfield.SDK.Services;
 
 namespace Nfield.Services.Implementation
 {

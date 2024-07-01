@@ -17,7 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Nfield.Models;
 
-namespace Nfield.SDK.Services
+namespace Nfield.Services
 {
     public interface INfieldWavesService
     {
