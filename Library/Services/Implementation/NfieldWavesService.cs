@@ -40,7 +40,7 @@ namespace Nfield.Services.Implementation
 
         private Uri WavesUrl(string parentSurveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{parentSurveyId}/Waves/");
+            return new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/{parentSurveyId}/Waves/");
         }
 
         #endregion

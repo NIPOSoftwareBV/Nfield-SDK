@@ -42,7 +42,7 @@ namespace Nfield.Services
                 new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString(), },
             };
 
-            var getWavesEndPoint = new Uri(ServiceAddress, $"Surveys/{parentSurveyId}/Waves/");
+            var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/{parentSurveyId}/Waves/");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -66,7 +66,7 @@ namespace Nfield.Services
             const string parentSurveyId = "parentSurveyId";
             var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
-            var getWavesEndPoint = new Uri(ServiceAddress, $"Surveys/{parentSurveyId}/Waves/");
+            var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/{parentSurveyId}/Waves/");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
