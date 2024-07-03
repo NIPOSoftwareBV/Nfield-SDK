@@ -13,6 +13,10 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Moq;
+using Newtonsoft.Json;
+using Nfield.Infrastructure;
+using Nfield.Services.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +24,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Moq;
-using Newtonsoft.Json;
-using Nfield.Infrastructure;
-using Nfield.Services.Implementation;
 using Xunit;
 
 namespace Nfield.Services
@@ -92,7 +92,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName)))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/" + fileName)))
                 .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
 
             var target = new NfieldMediaFilesService();
@@ -115,7 +115,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=MyFileName%26")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/MyFileName%26")))
                 .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
 
             var target = new NfieldMediaFilesService();
@@ -165,7 +165,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var response = new StringContent(JsonConvert.SerializeObject(new { ActivityId = "activityId" }));
             mockedHttpClient
-                .Setup(client => client.PostAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/?fileName=" + fileName),
+                .Setup(client => client.PostAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/" + fileName),
                         It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK, response));
 
