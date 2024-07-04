@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "6e56ac1e-23cf-486e-b482-c883f8122e20",
+		"_postman_id": "bec380f6-8fd6-4527-b4ff-8fbf27b9386c",
 		"name": "Nfield Public API",
 		"description": "Some endpoints have one or more letters in brackets next to them to clarify the target of the request.\n\nThe letters are related to the:\n\n*   Channel:\n    *   P - Capi\n    *   T - Cati\n    *   W - Cawi (Online)\n*   Context:\n    *   S - Survey (one)\n    *   D - Default (all surveys)\n\nThe requests will also be grouped in the Channel and Context folders of the letters.\n\nExamples:\n\n*   Get Interviewers (SP) - Will be inside a Survey and a Capi folders and obtain the interviewers of a Capi Survey.\n*   Get Interviewers (P) - Will be inside a Capi folder and obtain the Capi Interviewers\n*   Get Interviewers (T) - Will be inside a Cati folder and obtain the Cati Interviewers\n*   Get Languages (S) - Will be inside a Survey folder and obtain the languages of one Survey\n*   Get Languages (D) - Will be inside a Default folder and obtain the default languages (that affect all the surveys)\n    \n\nNot all the requests have letters, only those that are formatted differently for the different purposes, and/or have been deemed unclear.\n\nExample:\n\n*   Get General Settings - Is part of the Survey folder, but it's unique, there are no similar calls and it doesn't contain a suffix",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "2060844"
+		"_exporter_id": "24223379"
 	},
 	"item": [
 		{
@@ -13495,6 +13495,161 @@
 									"variable": [
 										{
 											"key": "SurveyId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Trackers",
+					"item": [
+						{
+							"name": "Get Trackers",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/octet-stream",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v1/ParentSurveys",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v1",
+										"ParentSurveys"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Tracker",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"SurveyName\": \"Postman Tracker\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v1/ParentSurveys",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v1",
+										"ParentSurveys"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Waves",
+					"item": [
+						{
+							"name": "Get Waves",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{origin-public-api}}/v1/ParentSurveys/:ParentSurveyId/Waves",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v1",
+										"ParentSurveys",
+										":ParentSurveyId",
+										"Waves"
+									],
+									"variable": [
+										{
+											"key": "ParentSurveyId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Wave",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"SurveyName\": \"Postman Wave\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{origin-public-api}}/v1/ParentSurveys/:ParentSurveyId/Waves",
+									"host": [
+										"{{origin-public-api}}"
+									],
+									"path": [
+										"v1",
+										"ParentSurveys",
+										":ParentSurveyId",
+										"Waves"
+									],
+									"variable": [
+										{
+											"key": "ParentSurveyId",
 											"value": ""
 										}
 									]
