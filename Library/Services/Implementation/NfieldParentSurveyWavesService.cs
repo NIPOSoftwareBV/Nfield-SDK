@@ -8,12 +8,12 @@ using Nfield.Models;
 
 namespace Nfield.Services.Implementation
 {
-    internal class NfieldWavesService : INfieldWavesService, INfieldConnectionClientObject
+    internal class NfieldParentSurveyWavesService : INfieldParentSurveyWavesService, INfieldConnectionClientObject
     {
         public INfieldConnectionClient ConnectionClient { get; internal set; }
         public void InitializeNfieldConnection(INfieldConnectionClient connection) => ConnectionClient = connection;
 
-        #region Implementation of INfieldWavesService
+        #region Implementation of INfieldParentSurveyWavesService
 
         public async Task<IQueryable<Survey>> GetParentSurveyWavesAsync(string parentSurveyId)
         {

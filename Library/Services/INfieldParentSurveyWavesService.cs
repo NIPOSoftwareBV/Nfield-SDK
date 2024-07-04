@@ -19,7 +19,7 @@ using Nfield.Models;
 
 namespace Nfield.Services
 {
-    public interface INfieldWavesService
+    public interface INfieldParentSurveyWavesService
     {
         /// <summary>
         /// Gets survey queryable object.

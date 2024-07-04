@@ -108,7 +108,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldEventSubscriptionsService), typeof(NfieldEventSubscriptionsService) },
             { typeof(INfieldSurveyInterviewSimulationService), typeof(NfieldSurveyInterviewSimulationService) },
             { typeof(INfieldParentSurveyService), typeof(NfieldParentSurveyService) },
-            { typeof(INfieldWavesService), typeof(NfieldWavesService) },
+            { typeof(INfieldParentSurveyWavesService), typeof(NfieldParentSurveyWavesService) },
         };
 
         /// <summary>

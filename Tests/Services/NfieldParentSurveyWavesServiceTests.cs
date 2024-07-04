@@ -28,9 +28,9 @@ using Xunit;
 namespace Nfield.Services
 {
     /// <summary>
-    /// Tests for <see cref="NfieldWavesService"/>
+    /// Tests for <see cref="NfieldParentSurveyWavesService"/>
     /// </summary>
-    public class NfieldWavesServiceTests : NfieldServiceTestsBase
+    public class NfieldParentSurveyWavesServiceTests : NfieldServiceTestsBase
     {
         [Fact]
         public void TestWavesAsync_ServerReturnsQuery_ReturnsListWithWaves()
@@ -50,7 +50,7 @@ namespace Nfield.Services
                 .Setup(client => client.GetAsync(getWavesEndPoint))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedWavesSurveys))));
 
-            var target = new NfieldWavesService();
+            var target = new NfieldParentSurveyWavesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualWaves = target.GetParentSurveyWavesAsync(parentSurveyId).Result;
@@ -74,7 +74,7 @@ namespace Nfield.Services
                 .Setup(client => client.PostAsJsonAsync(getWavesEndPoint, survey))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(survey))));
 
-            var target = new NfieldWavesService();
+            var target = new NfieldParentSurveyWavesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var actualSurvey = target.AddWaveAsync(parentSurveyId, survey).Result;
