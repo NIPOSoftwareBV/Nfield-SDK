@@ -92,7 +92,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/" + fileName)))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/MediaFiles/{fileName}")))
                 .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
 
             var target = new NfieldMediaFilesService();
@@ -115,7 +115,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/MyFileName%26")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/MediaFiles/MyFileName%26")))
                 .Returns(CreateTask(HttpStatusCode.OK, new ByteArrayContent(expected)));
 
             var target = new NfieldMediaFilesService();
@@ -165,7 +165,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var response = new StringContent(JsonConvert.SerializeObject(new { ActivityId = "activityId" }));
             mockedHttpClient
-                .Setup(client => client.PostAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/MediaFiles/" + fileName),
+                .Setup(client => client.PostAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/MediaFiles/{fileName}"),
                         It.IsAny<HttpContent>()))
                 .Returns(CreateTask(HttpStatusCode.OK, response));
 
