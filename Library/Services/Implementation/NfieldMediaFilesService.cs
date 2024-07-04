@@ -130,7 +130,7 @@ namespace Nfield.Services.Implementation
             path.AppendFormat("Surveys/{0}/MediaFiles/", surveyId);
             if (!string.IsNullOrEmpty(fileName))
             {
-                path.AppendFormat("?fileName={0}", HttpUtility.UrlEncode(fileName));
+                path.AppendFormat("{0}", HttpUtility.UrlEncode(fileName));
             }
             return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
