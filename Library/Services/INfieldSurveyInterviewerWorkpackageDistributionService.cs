@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Nfield.Models;
 
@@ -33,6 +34,6 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task DistributeAsync(string surveyId, SurveyInterviewerDistributeModel model);
+        Task<HttpResponseMessage> DistributeAsync(string surveyId, SurveyInterviewerDistributeModel model);
     }
 }

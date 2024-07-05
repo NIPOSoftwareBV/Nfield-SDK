@@ -14,6 +14,7 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
@@ -25,7 +26,7 @@ namespace Nfield.Services.Implementation
     {
         #region Implementation of INfieldSurveyInterviewerWorkpackageDistributionService
 
-        public Task DistributeAsync(string surveyId, SurveyInterviewerDistributeModel model)
+        public Task<HttpResponseMessage> DistributeAsync(string surveyId, SurveyInterviewerDistributeModel model)
         {
             if (string.IsNullOrEmpty(surveyId))
             {
