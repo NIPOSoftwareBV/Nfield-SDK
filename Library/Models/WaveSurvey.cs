@@ -21,7 +21,7 @@ namespace Nfield.Models
     public class WaveSurvey : Survey
     {
         /// <summary>
-        /// Survey Constructor
+        /// Wave survey constructor.
         /// </summary>
         /// <param name="surveyType">Type of the survey</param>
         public WaveSurvey(SurveyType surveyType) : base(surveyType) { }
