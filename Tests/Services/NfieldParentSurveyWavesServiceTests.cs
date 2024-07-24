@@ -64,7 +64,7 @@ namespace Nfield.Services
         public void TestAddWaveAsync_AddsWave_ReturnsWaveSurvey()
         {
             const string parentSurveyId = "parentSurveyId";
-            var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
+            var survey = new WaveSurvey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
             var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/{parentSurveyId}/Waves/");
 

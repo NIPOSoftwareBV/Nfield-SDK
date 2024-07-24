@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -17,6 +18,8 @@ namespace Nfield.Services.Implementation
 
         public async Task<IQueryable<Survey>> GetParentSurveyWavesAsync(string parentSurveyId)
         {
+            Ensure.ArgumentNotNullOrEmptyString(parentSurveyId, nameof(parentSurveyId));
+
             var uri = WavesUrl(parentSurveyId);
 
             var response = await ConnectionClient.Client.GetAsync(uri).ConfigureAwait(false);
@@ -25,10 +28,10 @@ namespace Nfield.Services.Implementation
             return JsonConvert.DeserializeObject<List<Survey>>(stringResponse).AsQueryable();
         }
 
-        public async Task<Survey> AddWaveAsync(string parentSurveyId, Survey survey)
+        public async Task<Survey> AddWaveAsync(string parentSurveyId, WaveSurvey survey)
         {
-            if (survey == null)
-                throw new ArgumentNullException(nameof(survey));
+            Ensure.ArgumentNotNullOrEmptyString(parentSurveyId, nameof(parentSurveyId));
+            Ensure.ArgumentNotNull(survey, nameof(survey));
 
             var uri = WavesUrl(parentSurveyId);
             var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
