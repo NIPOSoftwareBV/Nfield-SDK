@@ -24,7 +24,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Nfield.Services.Implementation
 {
@@ -130,7 +129,7 @@ namespace Nfield.Services.Implementation
             path.AppendFormat("Surveys/{0}/MediaFiles/", surveyId);
             if (!string.IsNullOrEmpty(fileName))
             {
-                path.AppendFormat("{0}", HttpUtility.UrlEncode(fileName));
+                path.AppendFormat("{0}", Uri.EscapeDataString(fileName));
             }
             return new Uri(ConnectionClient.NfieldServerUri, path.ToString());
         }
