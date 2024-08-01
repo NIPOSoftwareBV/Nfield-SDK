@@ -20,7 +20,7 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNullOrEmptyString(parentSurveyId, nameof(parentSurveyId));
 
-            var uri = WavesUrl(parentSurveyId);
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/{parentSurveyId}/Waves/");
 
             var response = await ConnectionClient.Client.GetAsync(uri).ConfigureAwait(false);
             var stringResponse = await response.Content.ReadAsStringAsync();
@@ -28,12 +28,12 @@ namespace Nfield.Services.Implementation
             return JsonConvert.DeserializeObject<List<Survey>>(stringResponse).AsQueryable();
         }
 
-        public async Task<Survey> AddWaveAsync(string parentSurveyId, WaveSurvey survey)
+        public async Task<Survey> AddWaveAsync(SurveyWave survey)
         {
-            Ensure.ArgumentNotNullOrEmptyString(parentSurveyId, nameof(parentSurveyId));
             Ensure.ArgumentNotNull(survey, nameof(survey));
 
-            var uri = WavesUrl(parentSurveyId);
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/Waves/New/");
+
             var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
 
             var stringResponse = await response.Content.ReadAsStringAsync();
@@ -41,9 +41,17 @@ namespace Nfield.Services.Implementation
             return JsonConvert.DeserializeObject<Survey>(stringResponse);
         }
 
-        private Uri WavesUrl(string parentSurveyId)
+        public async Task<Survey> AddWaveAsync(SurveyWaveCopy survey)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/{parentSurveyId}/Waves/");
+            Ensure.ArgumentNotNull(survey, nameof(survey));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/Waves/NewFromOther/");
+
+            var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<Survey>(stringResponse);
         }
 
         #endregion
