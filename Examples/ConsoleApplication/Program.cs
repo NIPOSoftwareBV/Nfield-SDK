@@ -29,7 +29,7 @@ namespace ConsoleApplication
     /// </summary>
     class Program
     {
-        static async void Main()
+        static void Main()
         {
 #if DEBUG
             ServicePointManager.ServerCertificateValidationCallback +=
@@ -52,7 +52,7 @@ namespace ConsoleApplication
             NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(samplingPointsService);
 
             // Example of performing operations on sampling points.
-            await samplingPointsManager.QueryForSamplingPoint("some surveyId", "some sampling pointId");
+            samplingPointsManager.QueryForSamplingPoint("some surveyId", "some sampling pointId");
 
             //
             // Survey Management
