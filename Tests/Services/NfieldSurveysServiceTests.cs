@@ -277,28 +277,6 @@ namespace Nfield.Services
 
         #region QuotaQueryAsync
 
-        [Fact]
-        public void TestQuotaQueryAsync_ServerReturnsQuery_ReturnsListWithQuotaLevel()
-        {
-            var expectedQuotaLevel = new QuotaLevel
-            {
-                Id = LevelId,
-                Name = Name
-            };
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Quota")))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedQuotaLevel))));
-
-            var target = new NfieldSurveysService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actualQuotaLevel = target.QuotaQueryAsync(SurveyId).Result;
-            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
-            Assert.Equal(expectedQuotaLevel.Id, actualQuotaLevel.Id);
-            Assert.Equal(expectedQuotaLevel.Name, actualQuotaLevel.Name);
-        }
 
         [Fact]
         public void TestQuotaTargetsQueryAsync_ServerReturnsQuery_ReturnsListWithQuotaFrame()
@@ -425,50 +403,10 @@ namespace Nfield.Services
 
         #region OnlineQuotaQueryAsync
 
-        [Fact]
-        public void TestOnlineQuotaQueryAsync_ServerReturnsQuery_ReturnsAppropriateQuota()
-        {
-            var quotaFrame = new QuotaFrame
-            {
-                Target = TargetCount
-            };
-
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Quota")))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(quotaFrame))));
-            var target = new NfieldSurveysService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actualQuotaFrame = target.OnlineQuotaQueryAsync(SurveyId).Result;
-            mockedHttpClient.Verify(hc => hc.GetAsync(It.IsAny<Uri>()), Times.Once());
-
-            Assert.Equal(quotaFrame.Target, actualQuotaFrame.Target);
-        }
-
         #endregion
 
         #region CreateOrUpdateQuotaAsync
 
-        [Fact]
-        public void TestCreateOrUpdateQuotaAsync_Normal_CallsCorrectRoute()
-        {
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(It.IsAny<Uri>(), It.IsAny<QuotaLevel>()))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
-
-            var target = new NfieldSurveysService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            target.CreateOrUpdateQuotaAsync(SurveyId, new QuotaLevel()).Wait();
-
-            mockedHttpClient.Verify(
-                hc => hc.PutAsJsonAsync(new Uri(ServiceAddress, $"Surveys/{SurveyId}/Quota"), It.IsAny<QuotaLevel>()),
-                Times.Once());
-        }
 
         [Fact]
         public void TestCreateOrUpdateQuotaAsync_Normal_CorrectQuotaFrame()
@@ -496,30 +434,6 @@ namespace Nfield.Services
             target.CreateOrUpdateQuotaAsync(SurveyId, quota).Wait();
 
             mockedHttpClient.Verify(hc => hc.PutAsJsonAsync(It.IsAny<Uri>(), quota), Times.Once());
-        }
-
-        [Fact]
-        public void TestCreateOrUpdateOnlineQuotaAsync_ReturnsCorrectQuotaFrame()
-        {
-            var uri = new Uri(ServiceAddress, $"Surveys/{SurveyId}/Quota");
-
-            var quotaFrame = new QuotaFrame
-            {
-                Target = TargetCount
-            };
-
-            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
-            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
-            mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(uri, quotaFrame))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(quotaFrame))));
-
-            var target = new NfieldSurveysService();
-            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
-
-            var actualQuotaFrame = target.CreateOrUpdateOnlineQuotaAsync(SurveyId, quotaFrame).Result;
-
-            Assert.Equal(TargetCount, actualQuotaFrame.Target);
         }
 
         #endregion

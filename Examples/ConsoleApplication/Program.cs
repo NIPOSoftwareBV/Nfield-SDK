@@ -20,7 +20,6 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApplication
 {
@@ -30,7 +29,7 @@ namespace ConsoleApplication
     /// </summary>
     class Program
     {
-        static void Main()
+        static async void Main()
         {
 #if DEBUG
             ServicePointManager.ServerCertificateValidationCallback +=
@@ -48,52 +47,17 @@ namespace ConsoleApplication
             // Request the Interviewers service to manage interviewers.
             INfieldInterviewersService interviewersService = connection.GetService<INfieldInterviewersService>();
 
-            // Create a new manager to perform the operations on the service.
-            NfieldInterviewersManagement interviewersManager = new NfieldInterviewersManagement(interviewersService);
-
-            // This sample shows various ways of performing synchronous and asynchronous operations on Interviewers.
-            var t1 = interviewersManager.AddInterviewerAsync();
-            var interviewer2 = interviewersManager.AddInterviewer();
-
-            // Update the interviewer name asynchronously
-            interviewer2.FirstName = "Harry";
-            var t2 = interviewersManager.UpdateInterviewerAsync(interviewer2);
-
-            // Wait for all pending tasks to finish
-            Task.WaitAll(t1, t2);
-
-            // Extract the results from the asynchronous tasks
-            interviewer2 = t2.Result;
-            var interviewer1 = t1.Result;
-
-            // Update interviewer name synchronous
-            interviewer1.EmailAddress = interviewer1.EmailAddress + "changed";
-            interviewer1.FirstName = "Bob";
-            interviewer1 = interviewersManager.UpdateInterviewer(interviewer1);
-
-            // Change password for interviewer, asynchronously and synchronously
-            var t3 = interviewersManager.ChangePasswordAsync(interviewer2, "ab12345");
-            interviewersManager.ChangePassword(interviewer1, "12345ab");
-
-            t3.Wait();
-
-            interviewersManager.QueryForInterviewers();
-            interviewersManager.QueryForInterviewersAsync();
-
-            interviewersManager.RemoveInterviewerAsync(interviewer1).Wait();
-            interviewersManager.RemoveInterviewer(interviewer2);
-
             // Request the Survey service and the sampling point managment
-            INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
-            NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(surveysService);
+            INfieldSamplingPointsService samplingPointsService = connection.GetService<INfieldSamplingPointsService>();
+            NfieldSamplingPointManagement samplingPointsManager = new NfieldSamplingPointManagement(samplingPointsService);
 
             // Example of performing operations on sampling points.
-            samplingPointsManager.QueryForSamplingPoints("some surveyId");
+            await samplingPointsManager.QueryForSamplingPoint("some surveyId", "some sampling pointId");
 
             //
             // Survey Management
             //
-
+            INfieldSurveysService surveysService = connection.GetService<INfieldSurveysService>();
             // Create survey
             var createdSurvey = surveysService.AddAsync(new Survey(SurveyType.Advanced)
             {

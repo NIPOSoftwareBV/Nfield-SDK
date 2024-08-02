@@ -40,7 +40,6 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyResourcesService), typeof(NfieldSurveyResourcesService) },
             { typeof(INfieldRespondentDataEncryptService), typeof(NfieldRespondentDataEncryptService) },
             { typeof(INfieldSurveyDataService), typeof(NfieldSurveyDataService) },
-            { typeof(INfieldBackgroundTasksService), typeof(NfieldBackgroundTasksService) },
             { typeof(INfieldSurveyScriptService), typeof(NfieldSurveyScriptService) },
             { typeof(INfieldSurveyScriptFragmentService), typeof(NfieldSurveyScriptFragmentService) },
             { typeof(INfieldFieldworkOfficesService), typeof(NfieldFieldworkOfficesService) },
@@ -111,23 +110,6 @@ namespace Nfield.Infrastructure
             { typeof(INfieldParentSurveyWavesService), typeof(NfieldParentSurveyWavesService) },
         };
 
-        /// <summary>
-        /// Method that registers all known types by calling the delegates provided.
-        /// This method must be called before using the SDK.
-        /// </summary>
-        /// <param name="registerTransient">Method that registers a Transient type.</param>
-        /// <param name="registerSingleton">Method that registers a Singleton.</param>
-        /// <param name="registerInstance">Method that registers an instance.</param>
-        [Obsolete("Dependency injection for Nfield Services is no longer supported. Please use NfieldConnection.GetService instead.")]
-        public static void Initialize(Action<Type, Type> registerTransient,
-                                      Action<Type, Type> registerSingleton,
-                                      Action<Type, object> registerInstance)
-        {
-            foreach (var type in TypeMap.Keys)
-            {
-                registerTransient(type, TypeMap[type]);
-            }
-        }
 
     }
 }
