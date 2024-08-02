@@ -13629,31 +13629,43 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"SurveyName\": \"Postman Wave\"\r\n}",
+									"raw": "{\r\n  \"SurveyName\": \"Postman Wave\",\r\n  \"ParentSurveyId\": \"Id\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
 								},
-								"url": {
-									"raw": "{{origin-public-api}}/v1/ParentSurveys/:ParentSurveyId/Waves",
-									"host": [
-										"{{origin-public-api}}"
-									],
-									"path": [
-										"v1",
-										"ParentSurveys",
-										":ParentSurveyId",
-										"Waves"
-									],
-									"variable": [
-										{
-											"key": "ParentSurveyId",
-											"value": ""
+								"url": "{{origin-public-api}}/v1/ParentSurveys/Waves/New"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Wave From Other",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Basic {{AuthenticationToken}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"SurveyName\": \"Postman Wave\",\r\n  \"SourceWaveId\": \"Id\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
-									]
-								}
+									}
+								},
+								"url": "{{origin-public-api}}/v1/ParentSurveys/Waves/NewFromOther"
 							},
 							"response": []
 						}
