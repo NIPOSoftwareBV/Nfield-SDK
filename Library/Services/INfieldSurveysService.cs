@@ -128,58 +128,6 @@ namespace Nfield.Services
         #region Sampling Points for a survey
 
         /// <summary>
-        /// Gets sampling point queryable object.
-        /// </summary>
-        /// <param name="surveyId"></param>
-        /// <returns></returns>
-        [Obsolete("Use INfieldSamplingPointsService QueryAsync")]
-        Task<IQueryable<SamplingPoint>> SamplingPointsQueryAsync(string surveyId);
-
-        /// <summary>
-        /// Gets the number of sampling points for a given survey.
-        /// </summary>
-        /// <param name="surveyId"></param>
-        /// <returns></returns>
-        [Obsolete("Use INfieldSamplingPointsService QueryAsync")]
-        Task<int> SamplingPointsCountAsync(string surveyId);
-
-        /// <summary>
-        /// Gets a specific sampling point.
-        /// </summary>
-        /// <param name="surveyId"></param>
-        /// <param name="samplingPointId"></param>
-        /// <returns></returns>
-        [Obsolete("Use INfieldSamplingPointsService GetAsync")]
-        Task<SamplingPoint> SamplingPointQueryAsync(string surveyId, string samplingPointId);
-
-        /// <summary>
-        /// Updates a sampling point
-        /// </summary>
-        /// <param name="surveyId"></param>
-        /// <param name="samplingPoint"></param>
-        /// <returns></returns>
-        [Obsolete("Use INfieldSamplingPointsService UpdateAsync")]
-        Task<SamplingPoint> SamplingPointUpdateAsync(string surveyId, SamplingPoint samplingPoint);
-
-        /// <summary>
-        /// Adds a sampling point
-        /// </summary>
-        /// <param name="surveyId"></param>
-        /// <param name="samplingPoint"></param>
-        /// <returns></returns>
-        [Obsolete("Use INfieldSamplingPointsService CreateAsync")]
-        Task<SamplingPoint> SamplingPointAddAsync(string surveyId, SamplingPoint samplingPoint);
-
-        /// <summary>
-        /// Deletes a sampling point.
-        /// </summary>
-        /// <param name="surveyId"></param>
-        /// <param name="samplingPoint"></param>
-        /// <returns></returns>
-        [Obsolete("Use INfieldSamplingPointsService RemoveAsync")]
-        Task SamplingPointDeleteAsync(string surveyId, SamplingPoint samplingPoint);
-
-        /// <summary>
         /// Gets sampling point's quota targets queryable object
         /// </summary>
         /// <param name="surveyId">id of the survey</param>

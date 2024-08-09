@@ -58,37 +58,6 @@ namespace Nfield.Services.Implementation
                 .FlattenExceptions();
         }
 
-        /// <summary>
-        /// See <see cref="INfieldSurveyGeneralSettingsService.GetOwnerAsync"/>
-        /// </summary>
-        [Obsolete("The GetOwnerAsync method is obsolete. Please use the QueryAsync method.")]
-        public Task<SurveyGeneralSettingsOwner> GetOwnerAsync(string surveyId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-
-            return Client.GetAsync(SurveyGeneralSettingsOwnerApi(surveyId))
-                         .ContinueWith(
-                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
-                         .ContinueWith(
-                             stringTask =>
-                             JsonConvert.DeserializeObject<SurveyGeneralSettingsOwner>(stringTask.Result))
-                         .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// See <see cref="INfieldSurveyGeneralSettingsService.UpdateOwnerAsync"/>
-        /// </summary>
-        [Obsolete("The UpdateOwnerAsync method is obsolete. Please use the UpdateAsync method.")]
-        public Task<SurveyGeneralSettingsOwner> UpdateOwnerAsync(string surveyId, string userId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-
-            return Client.PutAsJsonAsync(SurveyGeneralSettingsOwnerApi(surveyId), new { Owner = userId } )
-                         .ContinueWith(task => JsonConvert.DeserializeObject<SurveyGeneralSettingsOwner>(
-                            task.Result.Content.ReadAsStringAsync().Result))
-                         .FlattenExceptions();
-        }
-
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -111,12 +80,6 @@ namespace Nfield.Services.Implementation
         private Uri SurveyGeneralSettingsApi(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/GeneralSettings");
-        }
-
-        
-        private Uri SurveyGeneralSettingsOwnerApi(string surveyId)
-        {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/GeneralSettings/Owner");
         }
 
         private INfieldHttpClient Client => ConnectionClient.Client;

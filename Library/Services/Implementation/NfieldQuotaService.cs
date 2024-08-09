@@ -39,16 +39,6 @@ namespace Nfield.SDK.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldQuotaService.UpdateQuotaTargetsAsync"/>
-        /// </summary>
-        public async Task UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets)
-        {
-            ValidateSurveyId(surveyId);
-
-            await Client.PutAsJsonAsync(QuotaFrameTargetsUri(surveyId, eTag), targets).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// See <see cref="INfieldQuotaService.GetQuotaFrameAsync"/>
         /// </summary>
         public async Task<QuotaFrame> GetQuotaFrameAsync(string surveyId, string eTag)
@@ -71,11 +61,6 @@ namespace Nfield.SDK.Services.Implementation
         private Uri QuotaFrameVersionsUri(string surveyId)
         {
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/QuotaVersions");
-        }
-
-        private Uri QuotaFrameTargetsUri(string surveyId, string eTag)
-        {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Quota/{eTag}");
         }
 
         private Uri QuotaFrameUri(string surveyId, string eTag)

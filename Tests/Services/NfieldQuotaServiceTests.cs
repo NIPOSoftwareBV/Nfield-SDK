@@ -87,23 +87,6 @@ namespace Nfield.Services
 
         #endregion
 
-        #region UpdateQuotaTargetsAsync
-
-        [Fact]
-        public void Test_UpdateQuotaTargetsAsync_SurveyIdIsNull_Throws()
-        {
-            var target = new NfieldQuotaService();
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(target.UpdateQuotaTargetsAsync(null, quotaETag, quotaFrameTargets)));
-        }
-
-        [Fact]
-        public void Test_UpdateQuotaTargetsAsync_SurveyIdIsEmpty_Throws()
-        {
-            var target = new NfieldQuotaService();
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(target.UpdateQuotaTargetsAsync(string.Empty, quotaETag, quotaFrameTargets)));
-        }
-
-        #endregion
 
         #region GetQuotaFrameAsync
 

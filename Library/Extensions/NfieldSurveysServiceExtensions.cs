@@ -37,51 +37,6 @@ namespace Nfield.Extensions
         }
 
         /// <summary>
-        /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointsQueryAsync"/>
-        /// </summary>
-        public static IQueryable<SamplingPoint> SamplingPointsQuery(this INfieldSurveysService surveysService, string surveyId)
-        {
-            return surveysService.SamplingPointsQueryAsync(surveyId).Result;
-        }
-
-        /// <summary>
-        /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointQueryAsync"/>
-        /// </summary>
-        /// <param name="surveysService"></param>
-        /// <param name="surveyId"></param>
-        /// <param name="samplingPointId"></param>
-        /// <returns></returns>
-        public static SamplingPoint SamplingPointQuery(this INfieldSurveysService surveysService, string surveyId,
-            string samplingPointId)
-        {
-            return surveysService.SamplingPointQueryAsync(surveyId, samplingPointId).Result;
-        }
-
-        /// <summary>
-        /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointDeleteAsync"/>
-        /// </summary>
-        public static void SamplingPointDelete(this INfieldSurveysService surveysService, string surveyId, SamplingPoint samplingPoint)
-        {
-            surveysService.SamplingPointDeleteAsync(surveyId, samplingPoint).Wait();
-        }
-
-        /// <summary>
-        /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointAddAsync"/>
-        /// </summary>
-        public static void SamplingPointAdd(this INfieldSurveysService surveysService, string surveyId, SamplingPoint samplingPoint)
-        {
-            surveysService.SamplingPointAddAsync(surveyId, samplingPoint).Wait();
-        }
-
-        /// <summary>
-        /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointUpdateAsync"/>
-        /// </summary>
-        public static void SamplingPointUpdate(this INfieldSurveysService surveysService, string surveyId, SamplingPoint samplingPoint)
-        {
-            surveysService.SamplingPointUpdateAsync(surveyId, samplingPoint).Wait();
-        }
-
-        /// <summary>
         /// A synchronous version of <see cref="INfieldSurveysService.SamplingPointImageAddAsync(string, string, string)"/>
         /// </summary>
         public static void SamplingPointImageAdd(this INfieldSurveysService surveysService, string surveyId, string samplingPointId, string filePath)

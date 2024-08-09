@@ -39,9 +39,6 @@ namespace Nfield.Services
         /// <param name="eTag">The quota frame version to set the targets for</param>
         /// <param name="targets">The new quota frame targets</param>
 
-        [Obsolete("NfieldQuotaService.UpdateQuotaTargetsAsync is obsolete, please use NfieldSurveyQuotaFrameService.UpdateQuotaTargetsAsync instead.")]
-        Task UpdateQuotaTargetsAsync(string surveyId, string eTag, IEnumerable<QuotaFrameLevelTarget> targets);
-
         /// <summary>
         /// Gets the specified version of the quota frame  
         /// </summary>

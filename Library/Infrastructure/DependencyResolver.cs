@@ -23,8 +23,7 @@ namespace Nfield.Infrastructure
     /// Exposes the implementation of the IoC container through the <see cref="Current"/> property.
     /// To register your own implementation use one of the 'Register' overloads to register your favorite IoC container.
     /// </summary>
-    [Obsolete("Dependency injection for Nfield Services is no longer supported. Please use NfieldConnection.GetService instead.")]
-    public class DependencyResolver
+    internal class DependencyResolver
     {
         private static readonly DependencyResolver Instance = new DependencyResolver();
 

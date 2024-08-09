@@ -38,7 +38,7 @@ namespace Nfield.Services
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(catiInterviewer));
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "catiinterviewers/"), catiInterviewer))
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "CatiInterviewers/"), catiInterviewer))
                 .Returns(CreateTask(HttpStatusCode.OK, content));
 
             var target = new NfieldCatiInterviewersService();
@@ -68,7 +68,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "catiinterviewers/" + InterviewerId)))
+                .Setup(client => client.DeleteAsync(new Uri(ServiceAddress, "CatiInterviewers/" + InterviewerId)))
                 .Returns(CreateTask(HttpStatusCode.OK));
 
             var target = new NfieldCatiInterviewersService();
@@ -93,7 +93,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "catiinterviewers/")))
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, "CatiInterviewers/")))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedCatiInterviewers))));
 
             var target = new NfieldCatiInterviewersService();
@@ -125,7 +125,7 @@ namespace Nfield.Services
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "catiinterviewers/" + InterviewerId), It.IsAny<object>()))
+                .Setup(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "CatiInterviewers/" + InterviewerId), It.IsAny<object>()))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(catiInterviewer))));
 
             var target = new NfieldCatiInterviewersService();

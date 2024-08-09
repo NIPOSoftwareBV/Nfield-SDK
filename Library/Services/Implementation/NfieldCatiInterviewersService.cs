@@ -105,7 +105,7 @@ namespace Nfield.Services.Implementation
 
         private Uri CatiInterviewersApi
         {
-            get { return new Uri(ConnectionClient.NfieldServerUri, "catiinterviewers/"); }
+            get { return new Uri(ConnectionClient.NfieldServerUri, "CatiInterviewers/"); }
         }
     }
 }

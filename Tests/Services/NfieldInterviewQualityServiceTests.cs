@@ -99,7 +99,6 @@ namespace Nfield.Services
                     InterviewerId = "00000001",
                     OfficeId = "OfficeId1",
                     SamplingPointId = "SamplingPointId1",
-                    StartDate = DateTime.UtcNow
                 },
                 new InterviewDetailsModel
                 {
@@ -108,7 +107,6 @@ namespace Nfield.Services
                     InterviewerId = "00000002",
                     OfficeId = "OfficeId2",
                     SamplingPointId = "SamplingPointId2",
-                    StartDate = DateTime.UtcNow
                 }
             };
 
@@ -133,7 +131,6 @@ namespace Nfield.Services
                 InterviewerId = "00000001",
                 OfficeId = "OfficeId1",
                 SamplingPointId = "SamplingPointId1",
-                StartDate = DateTime.UtcNow
             };
 
             _mockedHttpClient
