@@ -29,7 +29,7 @@ namespace Nfield.Services
         /// <summary>
         /// Creates a new wave.
         /// </summary>
-        Task<Survey> AddWaveAsync(SurveyWave survey);
+        Task<Survey> AddWaveAsync(string parentSurveyId, Survey survey);
 
         /// <summary>
         /// Creates a new wave from an existing wave.

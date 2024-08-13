@@ -13636,7 +13636,7 @@
 										}
 									}
 								},
-								"url": "{{origin-public-api}}/v1/ParentSurveys/Waves/New"
+								"url": "{{origin-public-api}}/v1/ParentSurveys/:ParentSurveyId/Waves"
 							},
 							"response": []
 						},
@@ -13665,7 +13665,7 @@
 										}
 									}
 								},
-								"url": "{{origin-public-api}}/v1/ParentSurveys/Waves/NewFromOther"
+								"url": "{{origin-public-api}}/v1/ParentSurveys/Waves"
 							},
 							"response": []
 						}
