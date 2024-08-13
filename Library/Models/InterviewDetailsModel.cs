@@ -32,12 +32,6 @@ namespace Nfield.Models
         public InterviewQuality InterviewQuality { get; set; }
 
         /// <summary>
-        /// Date and Time the interview was started
-        /// </summary>
-        [Obsolete("not supported on new nfield surveys")]
-        public DateTime StartDate { get; set; }
-
-        /// <summary>
         /// Id of the interviewer
         /// </summary>
         public string InterviewerId { get; set; }

@@ -36,13 +36,6 @@ namespace Nfield.Services
         Task<IQueryable<Address>> QueryAsync(string surveyId, string samplingPointId);
 
         /// <summary>
-        /// Returns the number of addresses for a survey's sampling point
-        /// </summary>
-        /// <param name="surveyId">The survey for which to return addresses</param>
-        /// <param name="samplingPointId">The sampling point for which to return addresses</param>
-        Task<int> GetCountAsync(string surveyId, string samplingPointId);
-
-        /// <summary>
         /// Adds a new address.
         /// </summary>
         /// <param name="surveyId">The survey for which to add the address</param>
