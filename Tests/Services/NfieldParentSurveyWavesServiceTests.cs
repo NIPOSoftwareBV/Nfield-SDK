@@ -63,9 +63,10 @@ namespace Nfield.Services
         [Fact]
         public void TestAddWaveAsync_NewWave_ReturnsWaveSurvey()
         {
-            var survey = new SurveyWave(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
+            const string parentSurveyId = "parentSurveyId";
+            var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
-            var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/Waves/New/");
+            var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/{parentSurveyId}/Waves/");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
@@ -76,7 +77,7 @@ namespace Nfield.Services
             var target = new NfieldParentSurveyWavesService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSurvey = target.AddWaveAsync(survey).Result;
+            var actualSurvey = target.AddWaveAsync(parentSurveyId, survey).Result;
 
             Assert.Equal(survey.SurveyId, actualSurvey.SurveyId);
         }
@@ -86,7 +87,7 @@ namespace Nfield.Services
         {
             var survey = new SurveyWaveCopy(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
-            var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/Waves/NewFromOther/");
+            var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/Waves/");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);

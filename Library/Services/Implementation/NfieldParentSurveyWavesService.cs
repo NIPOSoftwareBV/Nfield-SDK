@@ -28,11 +28,12 @@ namespace Nfield.Services.Implementation
             return JsonConvert.DeserializeObject<List<Survey>>(stringResponse).AsQueryable();
         }
 
-        public async Task<Survey> AddWaveAsync(SurveyWave survey)
+        public async Task<Survey> AddWaveAsync(string parentSurveyId, Survey survey)
         {
+            Ensure.ArgumentNotNullOrEmptyString(parentSurveyId, nameof(parentSurveyId));
             Ensure.ArgumentNotNull(survey, nameof(survey));
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/Waves/New/");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/{parentSurveyId}/Waves/");
 
             var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
 
@@ -45,7 +46,7 @@ namespace Nfield.Services.Implementation
         {
             Ensure.ArgumentNotNull(survey, nameof(survey));
 
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/Waves/NewFromOther/");
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/Waves/");
 
             var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
 
