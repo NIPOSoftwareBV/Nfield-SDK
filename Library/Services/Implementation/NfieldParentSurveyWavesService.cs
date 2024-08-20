@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
 using Nfield.Models;
+using Nfield.Utilities;
 
 namespace Nfield.Services.Implementation
 {
@@ -17,7 +18,9 @@ namespace Nfield.Services.Implementation
 
         public async Task<IQueryable<Survey>> GetParentSurveyWavesAsync(string parentSurveyId)
         {
-            var uri = WavesUrl(parentSurveyId);
+            Ensure.ArgumentNotNullOrEmptyString(parentSurveyId, nameof(parentSurveyId));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/{parentSurveyId}/Waves/");
 
             var response = await ConnectionClient.Client.GetAsync(uri).ConfigureAwait(false);
             var stringResponse = await response.Content.ReadAsStringAsync();
@@ -27,10 +30,11 @@ namespace Nfield.Services.Implementation
 
         public async Task<Survey> AddWaveAsync(string parentSurveyId, Survey survey)
         {
-            if (survey == null)
-                throw new ArgumentNullException(nameof(survey));
+            Ensure.ArgumentNotNullOrEmptyString(parentSurveyId, nameof(parentSurveyId));
+            Ensure.ArgumentNotNull(survey, nameof(survey));
 
-            var uri = WavesUrl(parentSurveyId);
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/{parentSurveyId}/Waves/");
+
             var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
 
             var stringResponse = await response.Content.ReadAsStringAsync();
@@ -38,9 +42,17 @@ namespace Nfield.Services.Implementation
             return JsonConvert.DeserializeObject<Survey>(stringResponse);
         }
 
-        private Uri WavesUrl(string parentSurveyId)
+        public async Task<Survey> AddWaveAsync(SurveyWaveCopy survey)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/{parentSurveyId}/Waves/");
+            Ensure.ArgumentNotNull(survey, nameof(survey));
+
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/Waves/");
+
+            var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<Survey>(stringResponse);
         }
 
         #endregion

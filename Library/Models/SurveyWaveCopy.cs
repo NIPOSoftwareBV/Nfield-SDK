@@ -13,28 +13,23 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Linq;
-using System.Threading.Tasks;
-using Nfield.Models;
-
-namespace Nfield.Services
+namespace Nfield.Models
 {
-    public interface INfieldParentSurveyWavesService
+    /// <summary>
+    /// Survey wave copy properties. Inherits from Survey to extend it with the SourceWaveId.
+    /// This model is used to create a new wave survey by copying artifacts from an existing wave.
+    /// </summary>
+    public class SurveyWaveCopy : Survey
     {
         /// <summary>
-        /// Gets survey queryable object.
+        /// Constructor.
         /// </summary>
-        Task<IQueryable<Survey>> GetParentSurveyWavesAsync(string parentSurveyId);
+        /// <param name="surveyType">Type of the survey</param>
+        public SurveyWaveCopy(SurveyType surveyType) : base(surveyType) { }
 
         /// <summary>
-        /// Creates a new wave.
+        /// The id of the wave to copy artifacts from.
         /// </summary>
-        Task<Survey> AddWaveAsync(string parentSurveyId, Survey survey);
-
-        /// <summary>
-        /// Creates a new wave from an existing wave.
-        /// </summary>
-        Task<Survey> AddWaveAsync(SurveyWaveCopy survey);
-
+        public string SourceWaveId { get; set; }
     }
 }
