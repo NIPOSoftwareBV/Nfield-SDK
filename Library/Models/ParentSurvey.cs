@@ -16,21 +16,31 @@
 namespace Nfield.Models
 {
     /// <summary>
-    /// Survey wave copy properties. Inherits from Survey to extend it with the SourceWaveId.
-    /// This model is used to create a new wave survey by copying artifacts from an existing wave.
+    /// Holds the properties of a survey
     /// </summary>
-    public class ParentSurveyWaveCopy
+    public class ParentSurvey
     {
-        /// <summary>
-        /// The unique id of the survey (Guid) to be copy
-        /// The Survey Id must be a wave (Has a parent Survey)
-        /// </summary>
-        /// <example>e2d5266b-90ec-45b1-b634-21377ca58ad6</example>
-        public string SurveyId { get; set; }
-
         /// <summary>
         /// The name of the new survey
         /// </summary>
         public string SurveyName { get; set; }
+
+        /// <summary>
+        /// The survey group this survey belongs to
+        /// </summary>
+        public int SurveyGroupId { get; set; } = SurveyGroup.DefaultSurveyGroupId;
+
+        /// <summary>
+        /// Gets or sets the name of the client, e.g. Coca Cola.
+        /// </summary>
+        /// <value>
+        /// The name of the client.
+        /// </value>
+        public string ClientName { get; set; }
+
+        /// <summary>
+        /// The description of the survey
+        /// </summary>
+        public string Description { get; set; }
     }
 }
