@@ -35,7 +35,7 @@ namespace Nfield.Services
         [Fact]
         public void TestWavesAsync_ServerReturnsQuery_ReturnsListWithWaves()
         {
-            const string parentSurveyId = "parentSurveyId";
+            string parentSurveyId = Guid.NewGuid().ToString();
             var expectedWavesSurveys = new[]
             {
                 new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() },
@@ -63,7 +63,7 @@ namespace Nfield.Services
         [Fact]
         public void TestAddWaveAsync_NewWave_ReturnsWaveSurvey()
         {
-            const string parentSurveyId = "parentSurveyId";
+            var parentSurveyId = Guid.NewGuid().ToString();
             var createSurvey = new ParentSurveyWave();
             var expectedSurvey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
@@ -83,6 +83,28 @@ namespace Nfield.Services
             Assert.Equal(expectedSurvey.SurveyId, actualSurvey.SurveyId);
         }
 
+        [Fact]
+        public void TestAddWaveAsync_NewWaveFromOther_ReturnsWaveSurvey()
+        {
+            var parentSurveyId = Guid.NewGuid().ToString();
+            var waveId = Guid.NewGuid().ToString();
+            var createSurveyCopy = new ParentSurveyWaveCopy();
+            var expectedSurvey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
+            var getWavesEndPoint = new Uri(ServiceAddress, $"ParentSurveys/{parentSurveyId}/Waves/{waveId}");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(getWavesEndPoint, createSurveyCopy))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurvey))));
+
+            var target = new NfieldParentSurveyWavesService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actualSurvey = target.CopyWaveAsync(parentSurveyId, waveId, createSurveyCopy).Result;
+
+            Assert.Equal(expectedSurvey.SurveyId, actualSurvey.SurveyId);
+        }
     }
 }

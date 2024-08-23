@@ -30,10 +30,5 @@ namespace Nfield.Services
         /// Adds a new parent survey.
         /// </summary>
         Task<Survey> AddParentSurveyAsync(ParentSurvey survey);
-
-        /// <summary>
-        /// Creates a new wave from an existing wave.
-        /// </summary>
-        Task<Survey> CopyWaveAsync(ParentSurveyWaveCopy survey);
     }
 }

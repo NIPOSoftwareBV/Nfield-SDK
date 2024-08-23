@@ -31,5 +31,11 @@ namespace Nfield.Services
         /// </summary>
         Task<Survey> AddWaveAsync(string parentSurveyId, ParentSurveyWave survey);
 
+        /// <summary>
+        /// Creates a new wave from an existing wave.
+        /// The unique id of the survey (Guid) to be copy
+        /// The Survey Id must be a wave (Has a parent Survey)
+        /// </summary>
+        Task<Survey> CopyWaveAsync(string parentSurveyId, string waveId, ParentSurveyWaveCopy survey);
     }
 }

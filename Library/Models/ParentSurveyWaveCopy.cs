@@ -21,12 +21,6 @@ namespace Nfield.Models
     /// </summary>
     public class ParentSurveyWaveCopy
     {
-        /// <summary>
-        /// The unique id of the survey (Guid) to be copy
-        /// The Survey Id must be a wave (Has a parent Survey)
-        /// </summary>
-        /// <example>e2d5266b-90ec-45b1-b634-21377ca58ad6</example>
-        public string SurveyId { get; set; }
 
         /// <summary>
         /// The name of the new survey

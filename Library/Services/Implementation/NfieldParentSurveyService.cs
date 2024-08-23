@@ -38,18 +38,6 @@ namespace Nfield.Services.Implementation
             return JsonConvert.DeserializeObject<Survey>(stringResponse);
         }
 
-        public async Task<Survey> CopyWaveAsync(ParentSurveyWaveCopy survey)
-        {
-            Ensure.ArgumentNotNull(survey, nameof(survey));
-
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ParentSurveys/Waves/");
-
-            var response = await ConnectionClient.Client.PostAsJsonAsync(uri, survey).ConfigureAwait(false);
-
-            var stringResponse = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<Survey>(stringResponse);
-        }
 
         #endregion
     }
