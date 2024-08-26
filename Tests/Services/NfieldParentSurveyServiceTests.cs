@@ -65,22 +65,25 @@ namespace Nfield.Services
         [Fact]
         public void TestCreateParentSurveyAsync_ReturnsSurvey()
         {
-            var survey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
+            var createSurvey = new ParentSurvey();
+            var expectedSurvey = new Survey(SurveyType.OnlineBasic) { SurveyId = Guid.NewGuid().ToString() };
 
             var createParentSurveyEndPoint = new Uri(ServiceAddress, $"ParentSurveys");
 
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             mockedHttpClient
-                .Setup(client => client.PostAsJsonAsync(createParentSurveyEndPoint, survey))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(survey))));
+                .Setup(client => client.PostAsJsonAsync(createParentSurveyEndPoint, createSurvey))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurvey))));
 
             var target = new NfieldParentSurveyService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSurvey = target.AddParentSurveyAsync(survey).Result;
+            var actualSurvey = target.AddParentSurveyAsync(createSurvey).Result;
 
-            Assert.Equal(survey.SurveyId, actualSurvey.SurveyId);
+            Assert.Equal(expectedSurvey.SurveyId, actualSurvey.SurveyId);
         }
+
+
     }
 }

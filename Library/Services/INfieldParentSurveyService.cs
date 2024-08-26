@@ -29,6 +29,6 @@ namespace Nfield.Services
         /// <summary>
         /// Adds a new parent survey.
         /// </summary>
-        Task<Survey> AddParentSurveyAsync(Survey survey);
+        Task<Survey> AddParentSurveyAsync(ParentSurvey survey);
     }
 }

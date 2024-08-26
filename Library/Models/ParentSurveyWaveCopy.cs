@@ -19,17 +19,12 @@ namespace Nfield.Models
     /// Survey wave copy properties. Inherits from Survey to extend it with the SourceWaveId.
     /// This model is used to create a new wave survey by copying artifacts from an existing wave.
     /// </summary>
-    public class SurveyWaveCopy : Survey
+    public class ParentSurveyWaveCopy
     {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="surveyType">Type of the survey</param>
-        public SurveyWaveCopy(SurveyType surveyType) : base(surveyType) { }
 
         /// <summary>
-        /// The id of the wave to copy artifacts from.
+        /// The name of the new survey
         /// </summary>
-        public string SourceWaveId { get; set; }
+        public string SurveyName { get; set; }
     }
 }
