@@ -91,10 +91,25 @@ namespace Nfield.Models
         public bool IncludeParaData { get; set; }
 
         /// <summary>
-        /// Include in the download the captured media files during the interviews
-        /// Previously: DownloadCapturedMedia
+        /// Include in the download all captured Media files during the interviews (AudioQuestion, VideoQuestion, PhotoQuestion, AudioSilentRecording)
         /// </summary>
         public bool IncludeCapturedMediaFiles { get; set; }
+        /// <summary>
+        /// Include in the download Audio Silent Recording captured Files during the interviews. This parameter will be ignored if IncludeCapturedMediaFiles is true
+        /// </summary>
+        public bool IncludeCapturedAudioSilentRecordingFiles { get; set; }
+        /// <summary>
+        /// Include in the download Audio captured Files during the interviews. This parameter will be ignored if IncludeCapturedMediaFiles is true
+        /// </summary>
+        public bool IncludeCapturedAudioQuestionFiles { get; set; }
+        /// <summary>
+        /// Include in the download Video captured Files during the interviews. This parameter will be ignored if IncludeCapturedMediaFiles is true
+        /// </summary>
+        public bool IncludeCapturedVideoQuestionFiles { get; set; }
+        /// <summary>
+        ///Include in the download Photo captured Files during the interviews. This parameter will be ignored if IncludeCapturedMediaFiles is true
+        /// </summary>
+        public bool IncludeCapturedPhotoQuestionFiles { get; set; }
 
         /// <summary>
         /// Include in the download the variables file of the interviews
