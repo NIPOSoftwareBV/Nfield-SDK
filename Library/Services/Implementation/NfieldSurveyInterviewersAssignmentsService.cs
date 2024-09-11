@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
@@ -28,101 +29,54 @@ namespace Nfield.Services.Implementation
     /// <summary>
     /// Implementation of <see cref="INfieldSurveyInterviewerAssignmentsService"/>
     /// </summary>
-    internal class NfieldSurveyInterviewersAssignmentsService : INfieldSurveyInterviewerAssignmentsService, INfieldConnectionClientObject
+    internal class NfieldSurveyInterviewerAssignmentService : INfieldSurveyInterviewerAssignmentService, INfieldConnectionClientObject
     {
-        #region Implementation of INfieldSurveyInterviewerAssignmentsService
+        #region Implementation of INfieldSurveyInterviewerAssignmentService
 
         /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.AssignAsync(string, string)"/> 
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentService.AssignAsync(string, string)"/> 
         /// </summary>     
         public Task AssignAsync(string surveyId, string interviewerId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
 
-            var uri = SurveyInterviewerAssignmentsUrl(surveyId);
-            var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = true };
-
-            return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
+            var uri = SurveyInterviewerAssignUrl(surveyId, interviewerId);
+          
+            return Client.PutAsJsonAsync(uri, new JObject()).FlattenExceptions();
         }
 
         /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.UnassignAsync(string, string)"/> 
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentService.UnassignAsync(string, string)"/> 
         /// </summary> 
         public Task UnassignAsync(string surveyId, string interviewerId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
 
-            var uri = SurveyInterviewerAssignmentsUrl(surveyId);
-            var model = new SurveyInterviewerAssignmentChangeModel { InterviewerId = interviewerId, Assign = false };
+            var uri = SurveyInterviewerUnassignUrl(surveyId, interviewerId);           
 
-            return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
+            return Client.PutAsJsonAsync(uri, new JObject()).FlattenExceptions();
         }
 
-        /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.PutAsync(string, string, SurveyInterviewerAssignmentModel)"/> 
-        /// </summary>  
-        public Task PutAsync(string surveyId, string interviewerId, SurveyInterviewerAssignmentModel model)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
-            Ensure.ArgumentNotNull(model, nameof(model));
-
-            return
-                ConnectionClient.Client.PutAsJsonAsync(SurveyInterviewerAssignmentsUrl(surveyId, interviewerId), model)
-                .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentsService.GetTargetsAsync(string, string)"/> 
-        /// </summary>  
-        public Task<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>> GetTargetsAsync(string surveyId, string interviewerId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
-
-            var uri = SurveyInterviewerAssignmentsQuotaTargetsUrl(surveyId, interviewerId);
-
-            var response = ConnectionClient.Client.GetAsync(uri)
-             .ContinueWith(task => JsonConvert.DeserializeObject<IEnumerable<SurveyInterviewerAssignmentQuotaTargetModel>>(
-                task.Result.Content.ReadAsStringAsync().Result))
-             .FlattenExceptions();
-
-            return response;
-
-
-        }
-
-
-
-        #endregion
-
-        /// <summary>
-        /// Constructs and returns the url for survey interviewer assignments
-        /// based on supplied <paramref name="surveyId"/>
-        /// </summary>
-        private Uri SurveyInterviewerAssignmentsUrl(string surveyId)
-        {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignment/");
-        }
+        #endregion        
 
         /// <summary>
          /// Constructs and returns the url for survey interviewer assignments
          /// based on supplied parameters
          /// </summary>
-        private Uri SurveyInterviewerAssignmentsUrl(string surveyId, string interviewerId)
+        private Uri SurveyInterviewerAssignUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/Assign");
         }
 
         /// <summary>
-        /// Constructs and returns the url for survey interviewer assignments quota targets
+        /// Constructs and returns the url for survey interviewer assignments
         /// based on supplied parameters
         /// </summary>
-        private Uri SurveyInterviewerAssignmentsQuotaTargetsUrl(string surveyId, string interviewerId)
+        private Uri SurveyInterviewerUnassignUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/Assignments/QuotaTargets");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/Unassign");
         }
 
         private INfieldHttpClient Client
