@@ -198,20 +198,7 @@ namespace Nfield.Services.Implementation
                              stringTask =>
                              JsonConvert.DeserializeObject<IEnumerable<string>>(stringTask.Result))
                          .FlattenExceptions();
-        }
-
-        /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
-        /// </summary>
-        public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
-            Ensure.ArgumentEnumerableNotNullOrEmpty(workPackageTargets, nameof(workPackageTargets));
-            var uri = new Uri(CapiInterviewersApi, $"{interviewerId}/Offices/{officeId}");
-            return Client.PutAsJsonAsync(SurveyInterviewer(surveyId, interviewerId), workPackageTargets)
-                .FlattenExceptions();
-        }
+        }       
 
         #endregion
 

@@ -21,6 +21,9 @@ using Nfield.Infrastructure;
 using Nfield.SDK.Models;
 using Nfield.Utilities;
 using Nfield.Services;
+using Newtonsoft.Json;
+using Nfield.SDK.Models.Delivery;
+using System.Linq;
 
 namespace Nfield.SDK.Services.Implementation
 {
@@ -40,24 +43,37 @@ namespace Nfield.SDK.Services.Implementation
             ConnectionClient = connection;
         }
 
-    /// <summary>
-    /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
-    /// </summary>
+        /// <summary>
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
+        /// </summary>
         public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(workPackageTargets, nameof(workPackageTargets));
-         
+
             return Client.PutAsJsonAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId, interviewerId), workPackageTargets)
                 .FlattenExceptions();
         }
 
+        public Task<IQueryable<WorkPackageTarget>> GetAsync(string surveyId, string interviewerId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
+
+            return Client.GetAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId, interviewerId)).ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<List<WorkPackageTarget>>(stringTask.Result).AsQueryable())
+                         .FlattenExceptions();
+        }
 
         private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/QuotaLevelTargets/");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Inyterviewers/{interviewerId}/QuotaLevelTargets");
         }
+
 
         #endregion
     }
