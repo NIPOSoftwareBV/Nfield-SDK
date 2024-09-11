@@ -40,9 +40,9 @@ namespace Nfield.SDK.Services.Implementation
             ConnectionClient = connection;
         }
 
-    /// <summary>
-    /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
-    /// </summary>
+        /// <summary>
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
+        /// </summary>
         public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
@@ -56,7 +56,7 @@ namespace Nfield.SDK.Services.Implementation
 
         private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignments/{interviewerId}/QuotaLevelTargets/");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/QuotaLevelTargets/");
         }
 
         #endregion
