@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services.Implementation
 {
-    class NfieldSurveyInterviewerDistributeWorkpackageTargetsService : INfieldSurveyInterviewerQuotaLevelTargetsService, INfieldConnectionClientObject
+    class NfieldSurveyInterviewerDistributeWorkpackageTargetsService : INfieldSurveyInterviewerDistributeWorkpackageTargetsService, INfieldConnectionClientObject
     {
         private INfieldHttpClient Client
         {
