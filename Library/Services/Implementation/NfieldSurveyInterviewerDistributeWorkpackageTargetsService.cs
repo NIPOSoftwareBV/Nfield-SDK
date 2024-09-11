@@ -13,18 +13,20 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.SDK.Models;
-using Nfield.Utilities;
 using Nfield.Services;
+using Nfield.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services.Implementation
 {
-    class NfieldSurveyInterviewerQuotaLevelTargetsService : INfieldSurveyInterviewerQuotaLevelTargetsService, INfieldConnectionClientObject
+    class NfieldSurveyInterviewerDistributeWorkpackageTargetsService : INfieldSurveyInterviewerDistributeWorkpackageTargetsService, INfieldConnectionClientObject
     {
         private INfieldHttpClient Client
         {
@@ -41,23 +43,23 @@ namespace Nfield.SDK.Services.Implementation
         }
 
         /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
+        /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
         /// </summary>
         public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
             Ensure.ArgumentEnumerableNotNullOrEmpty(workPackageTargets, nameof(workPackageTargets));
-         
+
             return Client.PutAsJsonAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId, interviewerId), workPackageTargets)
                 .FlattenExceptions();
-        }
-
+        }        
 
         private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/QuotaLevelTargets/");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Inyterviewers/{interviewerId}/DistributeWorkpackageTarget");
         }
+
 
         #endregion
     }

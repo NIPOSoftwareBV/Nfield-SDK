@@ -56,7 +56,7 @@ namespace Nfield.SDK.Services.Implementation
 
         private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/QuotaLevelTargets/");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignments/{interviewerId}/QuotaLevelTargets/");
         }
 
         #endregion
