@@ -253,7 +253,7 @@ namespace Nfield.Services
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new[] { OfficeId} )))).Verifiable();
 
             // Act
-            var result = await _target.QueryOfficesAsync(InterviewerId);
+            var result = await _target.QueryFieldworkOfficesAsync(InterviewerId);
 
             // Assert
             _mockedHttpClient.Verify();

@@ -24,7 +24,7 @@ using Nfield.Services;
 
 namespace Nfield.SDK.Services.Implementation
 {
-    class NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService : INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService, INfieldConnectionClientObject
+    class NfieldSurveyInterviewerQuotaLevelTargetsService : INfieldSurveyInterviewerQuotaLevelTargetsService, INfieldConnectionClientObject
     {
         private INfieldHttpClient Client
         {
@@ -41,7 +41,7 @@ namespace Nfield.SDK.Services.Implementation
         }
 
         /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
+        /// Implements <see cref="INfieldSurveyInterviewerQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
         /// </summary>
         public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
         {
@@ -56,7 +56,7 @@ namespace Nfield.SDK.Services.Implementation
 
         private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignments/{interviewerId}/QuotaLevelTargets/");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/QuotaLevelTargets/");
         }
 
         #endregion
