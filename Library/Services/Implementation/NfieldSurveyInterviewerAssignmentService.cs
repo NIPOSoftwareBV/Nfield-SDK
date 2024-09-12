@@ -16,6 +16,7 @@
 using Newtonsoft.Json.Linq;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.Utilities;
 using System;
 using System.Threading.Tasks;
@@ -32,14 +33,15 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// Implements <see cref="INfieldSurveyInterviewerAssignmentService.AssignAsync(string, string)"/> 
         /// </summary>     
-        public Task AssignAsync(string surveyId, string interviewerId)
+        public Task AssignAsync(string surveyId, string interviewerId, SurveyInterviewerAssignmentModel surveyInterviewerAssignmentModel)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
+            Ensure.ArgumentNotNull(surveyInterviewerAssignmentModel, nameof(surveyInterviewerAssignmentModel));
 
             var uri = SurveyInterviewerAssignUrl(surveyId, interviewerId);
           
-            return Client.PutAsJsonAsync(uri, new JObject()).FlattenExceptions();
+            return Client.PutAsJsonAsync(uri, surveyInterviewerAssignmentModel).FlattenExceptions();
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Nfield.Services
         {
             var target = new NfieldSurveyInterviewerAssignmentService();
             Assert.Throws<ArgumentNullException>(
-                () => UnwrapAggregateException(target.AssignAsync(null, "interviewerId")));
+                () => UnwrapAggregateException(target.AssignAsync(null, "interviewerId", new SurveyInterviewerAssignmentModel())));
         }
 
         [Fact]
@@ -49,7 +49,15 @@ namespace Nfield.Services
         {
             var target = new NfieldSurveyInterviewerAssignmentService();
             Assert.Throws<ArgumentNullException>(
-                () => UnwrapAggregateException(target.AssignAsync("surveyId", null)));
+                () => UnwrapAggregateException(target.AssignAsync("surveyId", null, new SurveyInterviewerAssignmentModel())));
+        }
+
+        [Fact]
+        public void TestAssignAsync_SurveyInterviewerAssignmentModelIsNull_Throws()
+        {
+            var target = new NfieldSurveyInterviewerAssignmentService();
+            Assert.Throws<ArgumentNullException>(
+                () => UnwrapAggregateException(target.AssignAsync("surveyId", "interviewerid", null)));
         }
 
         [Fact]
@@ -67,7 +75,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             // Act
-            target.AssignAsync(surveyId, interviewerId).Wait();
+            target.AssignAsync(surveyId, interviewerId, new SurveyInterviewerAssignmentModel()).Wait();
 
             // Assert
             mockedHttpClient.Verify();

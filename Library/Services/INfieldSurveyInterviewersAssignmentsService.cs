@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.Models;
 using System.Threading.Tasks;
 
 namespace Nfield.Services
@@ -27,11 +28,12 @@ namespace Nfield.Services
         /// </summary>
         /// <param name="surveyId">The id of the survey for which to assign the interviewer.</param>
         /// <param name="interviewerId">The id of the interviewer to assign.</param>
+        /// <param name="surveyInterviewerAssignmentModel">The model containing the assignment details.</param>
         /// <exception cref="T:System.AggregateException"></exception>
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task AssignAsync(string surveyId, string interviewerId);
+        Task AssignAsync(string surveyId, string interviewerId, SurveyInterviewerAssignmentModel surveyInterviewerAssignmentModel);
 
         /// <summary>
         /// Unassign an interviewer from a survey.
