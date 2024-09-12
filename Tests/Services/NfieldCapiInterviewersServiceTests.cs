@@ -272,13 +272,13 @@ namespace Nfield.Services
             // Arrange
             const string InterviewerId = "InterviewerId1";
             const string OfficeId = "OfficeID1";
-            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersFieldworkOfficesRoutePart}/{OfficeId}");
+            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersOfficesRoutePart}/{OfficeId}");
             _mockedHttpClient
                 .Setup(client => client.PatchAsJsonAsync(endpointUri, string.Empty))
                 .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
 
             // Act
-            await _target.AddInterviewerToFieldworkOfficesAsync(InterviewerId, OfficeId);
+            await _target.AddInterviewerToOfficeAsync(InterviewerId, OfficeId);
 
             // Assert
             _mockedHttpClient.Verify();
@@ -294,13 +294,13 @@ namespace Nfield.Services
             // Arrange
             const string InterviewerId = "InterviewerId1";
             const string OfficeId = "OfficeID1";
-            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersFieldworkOfficesRoutePart}/{OfficeId}");
+            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersOfficesRoutePart}/{OfficeId}");
             _mockedHttpClient
                 .Setup(client => client.DeleteAsync(endpointUri))
                 .Returns(CreateTask(HttpStatusCode.OK)).Verifiable();
 
             // Act
-            await _target.RemoveInterviewerFromFieldworkOfficesAsync(InterviewerId, OfficeId);
+            await _target.RemoveInterviewerFromOfficeAsync(InterviewerId, OfficeId);
 
             // Assert
             _mockedHttpClient.Verify();
@@ -316,13 +316,13 @@ namespace Nfield.Services
             // Arrange
             const string InterviewerId = "InterviewerId1";
             const string OfficeId = "OfficeID1";
-            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersFieldworkOfficesRoutePart}");
+            var endpointUri = new Uri(_capiInterviewersApi, $"{InterviewerId}/{CapiInterviewersOfficesRoutePart}");
             _mockedHttpClient
                 .Setup(client => client.GetAsync(endpointUri))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(new[] { OfficeId })))).Verifiable();
 
             // Act
-            var result = await _target.QueryFieldworkOfficesAsync(InterviewerId);
+            var result = await _target.QueryOfficesAsync(InterviewerId);
 
             // Assert
             _mockedHttpClient.Verify();

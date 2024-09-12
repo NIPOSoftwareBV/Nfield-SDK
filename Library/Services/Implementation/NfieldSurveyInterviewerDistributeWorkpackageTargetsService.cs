@@ -16,6 +16,7 @@
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.SDK.Models;
 using Nfield.Services;
 using Nfield.Utilities;
@@ -42,18 +43,15 @@ namespace Nfield.SDK.Services.Implementation
             ConnectionClient = connection;
         }
 
-        /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
-        /// </summary>
-        public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
+        public Task PostAsync(string surveyId, string interviewerId, SurveyInterviewerDistributeModel surveyInterviewerDistributeModel)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
-            Ensure.ArgumentEnumerableNotNullOrEmpty(workPackageTargets, nameof(workPackageTargets));
+            Ensure.ArgumentNotNull(surveyInterviewerDistributeModel, nameof(surveyInterviewerDistributeModel));
 
-            return Client.PutAsJsonAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId, interviewerId), workPackageTargets)
+            return Client.PostAsJsonAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId, interviewerId), surveyInterviewerDistributeModel)
                 .FlattenExceptions();
-        }        
+        }
 
         private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {

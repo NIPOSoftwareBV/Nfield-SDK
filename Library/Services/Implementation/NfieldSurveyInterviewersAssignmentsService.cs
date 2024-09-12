@@ -13,16 +13,12 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
-using Nfield.Models;
-using Nfield.SDK.Models;
 using Nfield.Utilities;
+using System;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {

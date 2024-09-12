@@ -22,7 +22,7 @@ namespace Nfield.Services
     public interface INfieldSurveyInterviewerQuotaLevelTargetsService
     {
         /// <summary>
-        /// Update the quota level targets of the assigned interviewer
+        /// Update the quota level targets of the interviewer
         /// </summary>
         /// <param name="surveyId">The id of the survey.</param>
         /// <param name="interiewerId">The id of the interviewer.</param>
@@ -31,6 +31,17 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets);
+        Task PutAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets);
+
+        /// <summary>
+        /// get the quota level targets of the interviewer
+        /// </summary>
+        /// <param name="surveyId">The id of the survey.</param>
+        /// <param name="interiewerId">The id of the interviewer.</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task<IEnumerable<WorkPackageTargetCounts>> GetAsync(string surveyId, string interviewerId);
     }
 }
