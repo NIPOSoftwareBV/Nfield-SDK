@@ -105,6 +105,31 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
+        Task<IEnumerable<string>> QueryFieldworkOfficesAsync(string interviewerId);
+
+        /// <summary>
+        /// Assigns a CAPI interviewer to an office
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <param name="officeId"></param>
+        /// <returns></returns>
+        Task AddInterviewerToOfficeAsync(string interviewerId, string officeId);
+
+        /// <summary>
+        /// Unassigns a CAPI interviewer from an office
+        /// </summary>
+        /// <param name="interviewerId"></param>
+        /// <param name="officeId"></param>
+        /// <returns></returns>
+        Task RemoveInterviewerFromOfficeAsync(string interviewerId, string officeId);
+
+        /// <summary>
+        /// Gets offices for a CAPI interviewer.
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// </summary>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>   
         Task<IEnumerable<string>> QueryOfficesAsync(string interviewerId);
     }
 }
