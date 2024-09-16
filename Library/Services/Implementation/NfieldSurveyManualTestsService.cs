@@ -14,13 +14,17 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Newtonsoft.Json;
+using Nfield.Extensions;
 using Nfield.Infrastructure;
+using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.SDK.Models;
 using Nfield.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.IO;
 
 namespace Nfield.SDK.Services.Implementation
 {
@@ -61,6 +65,69 @@ namespace Nfield.SDK.Services.Implementation
             var result = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<SurveyManualTest>(result);
+        }
+
+        public async Task<ManualTestSurveyResult> StartCreateManualTestSurveyAsync(string surveyId, StartCreateManualTestSurvey request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            using (var content = MultipartDataContent(request))
+            {
+                var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/ManualTests");
+
+                using (var response = await Client.PostAsync(uri, content).ConfigureAwait(false))
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var backgroundActivityStatus = JsonConvert.DeserializeObject<BackgroundActivityStatus>(responseContent);
+                    return await ConnectionClient.GetActivityResultAsync<ManualTestSurveyResult>(backgroundActivityStatus.ActivityId).ConfigureAwait(false);
+                }
+            }
+        }
+
+        public Task<ManualTestSurveyResult> StartCreateManualTestSurveyAsync(string surveyId, StartCreateManualTestSurveyFile request)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+            Ensure.ArgumentNotNull(request, nameof(request));
+
+            var mappedRequest = new StartCreateManualTestSurvey
+            {
+                EnableReporting = request.EnableReporting,
+                UseOriginalSample = request.UseOriginalSample
+            };
+
+            if (!string.IsNullOrEmpty(request.SampleDataFilePath))
+            {
+                var fileName = _fileSystem.Path.GetFileName(request.SampleDataFilePath);
+
+                if (!_fileSystem.File.Exists(request.SampleDataFilePath))
+                {
+                    throw new FileNotFoundException(fileName);
+                }
+
+                mappedRequest.SampleDataFileName = fileName;
+                mappedRequest.SampleDataFile = _fileSystem.File.ReadAllBytes(request.SampleDataFilePath);
+            }
+
+            return StartCreateManualTestSurveyAsync(surveyId, mappedRequest);
+        }
+
+        private static MultipartFormDataContent MultipartDataContent(StartCreateManualTestSurvey request)
+        {
+            var content = new MultipartFormDataContent
+            {
+                { new StringContent($"{request.EnableReporting}"), nameof(request.EnableReporting) },
+                { new StringContent($"{request.UseOriginalSample}"), nameof(request.UseOriginalSample) }
+            };
+
+            if (!string.IsNullOrEmpty(request.SampleDataFileName) && request.SampleDataFile?.Length > 0)
+            {
+                var bytesContent = new ByteArrayContent(request.SampleDataFile);
+                bytesContent.Headers.Add("Content-Type", "application/octet-stream");
+                bytesContent.Headers.Add("Content-Disposition", $"form-data; name={nameof(request.SampleDataFile)}; filename={request.SampleDataFileName}");
+                content.Add(bytesContent, nameof(request.SampleDataFile), request.SampleDataFileName);
+            }
+            return content;
         }
 
         #region Implementation of INfieldConnectionClientObject

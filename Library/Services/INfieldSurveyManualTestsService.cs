@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.Models;
 using Nfield.SDK.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,8 +25,25 @@ namespace Nfield.SDK.Services
     /// </summary>
     public interface INfieldSurveyManualTestsService
     {
+        /// <summary>
+        /// Get manual tests of a specific survey (normally just one)
+        /// </summary>
         Task<IQueryable<SurveyManualTest>> GetSurveyManualTestsAsync(string surveyId);
 
+        /// <summary>
+        /// Get manual test of a specific survey
+        /// </summary>
         Task<SurveyManualTest> GetSurveyManualTestAsync(string surveyId, string manualTestId);
+
+        /// <summary>
+        /// Start creating a manual test survey based on a specific survey
+        /// </summary>
+        Task<ManualTestSurveyResult> StartCreateManualTestSurveyAsync(string surveyId, StartCreateManualTestSurvey request);
+
+        /// <summary>
+        /// Start creating a manual test survey based on a specific survey
+        /// This one allows to upload sample data directly from a file
+        /// </summary>
+        Task<ManualTestSurveyResult> StartCreateManualTestSurveyAsync(string surveyId, StartCreateManualTestSurveyFile request);
     }
 }
