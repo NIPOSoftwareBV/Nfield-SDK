@@ -24,16 +24,16 @@ using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services.Implementation
 {
-    internal class NfieldSurveysManualTestService : INfieldSurveysManualTestService, INfieldConnectionClientObject
+    internal class NfieldSurveyManualTestsService : INfieldSurveyManualTestsService, INfieldConnectionClientObject
     {
         readonly IFileSystem _fileSystem;
 
-        public NfieldSurveysManualTestService()
+        public NfieldSurveyManualTestsService()
         {
             _fileSystem = new FileSystem();
         }
 
-        public NfieldSurveysManualTestService(IFileSystem fileSystem)
+        public NfieldSurveyManualTestsService(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
         }

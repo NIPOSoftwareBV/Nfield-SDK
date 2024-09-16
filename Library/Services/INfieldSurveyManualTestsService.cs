@@ -22,7 +22,7 @@ namespace Nfield.SDK.Services
     /// <summary>
     /// Service for managing manual test surveys
     /// </summary>
-    public interface INfieldSurveysManualTestService
+    public interface INfieldSurveyManualTestsService
     {
         Task<IQueryable<SurveyManualTest>> GetSurveyManualTestsAsync(string surveyId);
 
