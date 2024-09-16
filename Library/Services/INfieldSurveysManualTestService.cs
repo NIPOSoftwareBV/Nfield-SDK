@@ -26,6 +26,6 @@ namespace Nfield.SDK.Services
     {
         Task<IQueryable<SurveyManualTest>> GetSurveyManualTestsAsync(string surveyId);
 
-        Task<IQueryable<SurveyManualTest>> GetSurveyManualTestAsync(string surveyId, string manualTestId);
+        Task<SurveyManualTest> GetSurveyManualTestAsync(string surveyId, string manualTestId);
     }
 }

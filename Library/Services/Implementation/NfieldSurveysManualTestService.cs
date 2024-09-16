@@ -50,7 +50,7 @@ namespace Nfield.SDK.Services.Implementation
             return JsonConvert.DeserializeObject<List<SurveyManualTest>>(result).AsQueryable();
         }
 
-        public async Task<IQueryable<SurveyManualTest>> GetSurveyManualTestAsync(string surveyId, string manualTestId)
+        public async Task<SurveyManualTest> GetSurveyManualTestAsync(string surveyId, string manualTestId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(manualTestId, nameof(manualTestId));
@@ -60,7 +60,7 @@ namespace Nfield.SDK.Services.Implementation
             var response = await Client.GetAsync(uri);
             var result = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<List<SurveyManualTest>>(result).AsQueryable();
+            return JsonConvert.DeserializeObject<SurveyManualTest>(result);
         }
 
         #region Implementation of INfieldConnectionClientObject
