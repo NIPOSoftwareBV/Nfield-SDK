@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
-using Nfield.SDK.Models;
+using Nfield.Models;
 using Nfield.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.IO;
 
-namespace Nfield.SDK.Services.Implementation
+namespace Nfield.Services.Implementation
 {
     internal class NfieldSurveyManualTestsService : INfieldSurveyManualTestsService, INfieldConnectionClientObject
     {

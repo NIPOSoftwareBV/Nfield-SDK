@@ -15,7 +15,7 @@
 
 using System.Collections.Generic;
 
-namespace Nfield.SDK.Models
+namespace Nfield.Models
 {
     public class ManualTestSurveyResult
     {

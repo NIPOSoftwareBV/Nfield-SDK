@@ -15,13 +15,13 @@
 
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
-using Nfield.SDK.Models;
+using Nfield.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services.Implementation
+namespace Nfield.Services.Implementation
 {
     internal class NfieldManualTestsService : INfieldManualTestsService, INfieldConnectionClientObject
     {

@@ -13,9 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using Nfield.Models;
-
-namespace Nfield.SDK.Models
+namespace Nfield.Models
 {
     /// <summary>
     /// Model for manual test surveys

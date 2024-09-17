@@ -14,11 +14,10 @@
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
 using Nfield.Models;
-using Nfield.SDK.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Nfield.SDK.Services
+namespace Nfield.Services
 {
     /// <summary>
     /// Service for managing manual test surveys
