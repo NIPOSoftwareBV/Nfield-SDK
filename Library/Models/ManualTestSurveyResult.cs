@@ -27,7 +27,7 @@ namespace Nfield.SDK.Models
         /// <summary>
         /// Survey id of the manual test survey
         /// </summary>
-        public string SimulationSurveyId { get; set; }
+        public string ManualTestSurveyId { get; set; }
 
         /// <summary>
         /// Error messages (if any)

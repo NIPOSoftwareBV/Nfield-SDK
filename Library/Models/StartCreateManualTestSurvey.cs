@@ -19,7 +19,7 @@ namespace Nfield.SDK.Models
     /// Parameters to start creating a manual test survey.
     /// To specify uploaded files this model uses the file name and the file content.
     /// For the sample data we expect binary as an input since it could be csv or Excel data. 
-    /// To upload data directly from files use <see cref="InterviewSimulationFiles"/>
+    /// To upload data directly from files use <see cref="StartCreateManualTestSurveyFile"/>
     /// </summary>
     public class StartCreateManualTestSurvey
     {
