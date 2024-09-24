@@ -42,6 +42,16 @@ namespace Nfield.Services.Implementation
             _fileSystem = fileSystem;
         }
 
+        public async Task<IQueryable<SurveyManualTest>> GetManualTestsAsync()
+        {
+            var uri = new Uri(ConnectionClient.NfieldServerUri, $"ManualTests");
+
+            var response = await Client.GetAsync(uri);
+            var result = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<List<SurveyManualTest>>(result).AsQueryable();
+        }
+
         public async Task<IQueryable<SurveyManualTest>> GetSurveyManualTestsAsync(string surveyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
