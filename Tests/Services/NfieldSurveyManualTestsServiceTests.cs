@@ -50,7 +50,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetManualTestsAsync_ServerReturnsQuery_ReturnsListWithTestSurveys()
+        public async Task TestGetManualTestsAsync_ServerReturnsQuery_ReturnsListWithTestSurveys()
         {
             var endPoint = new Uri(ServiceAddress, "ManualTests");
 
@@ -64,7 +64,7 @@ namespace Nfield.Services
                 .Setup(client => client.GetAsync(endPoint))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveys))));
 
-            var actualSurveys = _target.GetManualTestsAsync().Result;
+            var actualSurveys = await _target.GetManualTestsAsync();
 
             Assert.Equal(2, actualSurveys.Count());
             Assert.Equal(expectedSurveys[0].SurveyId, actualSurveys.ToArray()[0].SurveyId);
@@ -76,6 +76,27 @@ namespace Nfield.Services
         {
             Assert.ThrowsAsync<ArgumentNullException>(
                 async () => await _target.GetSurveyManualTestsAsync(null));
+        }
+
+        [Fact]
+        public async Task TestGetSurveyManualTestsAsync_ServerReturnsQuery_ReturnsListWithTestSurveys()
+        {
+            var manualTestSurveyId = Guid.NewGuid().ToString();
+            var endPoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/ManualTests");
+
+            var expectedTestSurveys = new[]
+            {
+                new SurveyManualTest(SurveyType.Basic) { SurveyId = Guid.NewGuid().ToString() }
+            };
+
+            _mockedHttpClient
+                .Setup(client => client.GetAsync(endPoint))
+                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedTestSurveys))));
+
+            var actualSurveys = await _target.GetSurveyManualTestsAsync(_surveyId);
+
+            Assert.Equal(1, actualSurveys.Count());
+            Assert.Equal(expectedTestSurveys[0].SurveyId, actualSurveys.ToArray()[0].SurveyId);
         }
 
         [Fact]
@@ -93,7 +114,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetSurveyManualTestAsync_ServerReturnsQuery_ReturnsTestSurvey()
+        public async Task TestGetSurveyManualTestAsync_ServerReturnsQuery_ReturnsTestSurvey()
         {
             var manualTestSurveyId = Guid.NewGuid().ToString();
             var endPoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/ManualTests/{manualTestSurveyId}");
@@ -103,7 +124,7 @@ namespace Nfield.Services
                 .Setup(client => client.GetAsync(endPoint))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedTestSurvey))));
 
-            var actualTestSurvey = _target.GetSurveyManualTestAsync(_surveyId, manualTestSurveyId).Result;
+            var actualTestSurvey = await _target.GetSurveyManualTestAsync(_surveyId, manualTestSurveyId);
 
             Assert.Equal(expectedTestSurvey.SurveyId, actualTestSurvey.SurveyId);
         }
