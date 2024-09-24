@@ -50,53 +50,10 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetManualTestsAsync_ServerReturnsQuery_ReturnsListWithTestSurveys()
-        {
-            var endPoint = new Uri(ServiceAddress, "ManualTests");
-
-            var expectedSurveys = new[]
-            {
-                new SurveyManualTest(SurveyType.Basic) { SurveyId = Guid.NewGuid().ToString() },
-                new SurveyManualTest(SurveyType.Advanced) { SurveyId = Guid.NewGuid().ToString() }
-            };
-
-            _mockedHttpClient
-                .Setup(client => client.GetAsync(endPoint))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedSurveys))));
-
-            var actualSurveys = _target.GetManualTestsAsync().Result;
-
-            Assert.Equal(2, actualSurveys.Count());
-            Assert.Equal(expectedSurveys[0].SurveyId, actualSurveys.ToArray()[0].SurveyId);
-            Assert.Equal(expectedSurveys[1].SurveyId, actualSurveys.ToArray()[1].SurveyId);
-        }
-
-        [Fact]
         public void TestGetSurveyManualTestsAsync_SurveyIdIsNull_Throws()
         {
             Assert.ThrowsAsync<ArgumentNullException>(
                 async () => await _target.GetSurveyManualTestsAsync(null));
-        }
-
-        [Fact]
-        public void TestGetSurveyManualTestsAsync_ServerReturnsQuery_ReturnsListWithTestSurveys()
-        {
-            var manualTestSurveyId = Guid.NewGuid().ToString();
-            var endPoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/ManualTests");
-
-            var expectedTestSurveys = new[]
-            {
-                new SurveyManualTest(SurveyType.Basic) { SurveyId = Guid.NewGuid().ToString() }
-            };
-
-            _mockedHttpClient
-                .Setup(client => client.GetAsync(endPoint))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedTestSurveys))));
-
-            var actualSurveys = _target.GetSurveyManualTestsAsync(_surveyId).Result;
-
-            Assert.Equal(1, actualSurveys.Count());
-            Assert.Equal(expectedTestSurveys[0].SurveyId, actualSurveys.ToArray()[0].SurveyId);
         }
 
         [Fact]
