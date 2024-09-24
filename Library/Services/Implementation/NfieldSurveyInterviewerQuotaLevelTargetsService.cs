@@ -13,18 +13,19 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.SDK.Models;
-using Nfield.Utilities;
 using Nfield.Services;
+using Nfield.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Nfield.SDK.Services.Implementation
 {
-    class NfieldSurveyInterviewerAssignmentQuotaLevelTargetsService : INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService, INfieldConnectionClientObject
+    class NfieldSurveyInterviewerQuotaLevelTargetsService : INfieldSurveyInterviewerQuotaLevelTargetsService, INfieldConnectionClientObject
     {
         private INfieldHttpClient Client
         {
@@ -41,9 +42,9 @@ namespace Nfield.SDK.Services.Implementation
         }
 
         /// <summary>
-        /// Implements <see cref="INfieldSurveyInterviewerAssignmentQuotaLevelTargetsService.UpdateAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
+        /// Implements <see cref="INfieldSurveyInterviewerQuotaLevelTargetsService.PutAsync(string , string, IEnumerable<WorkPackageTarget>)"/>
         /// </summary>
-        public Task UpdateAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
+        public Task PutAsync(string surveyId, string interviewerId, IEnumerable<WorkPackageTarget> workPackageTargets)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(interviewerId, nameof(interviewerId));
@@ -52,12 +53,27 @@ namespace Nfield.SDK.Services.Implementation
             return Client.PutAsJsonAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId, interviewerId), workPackageTargets)
                 .FlattenExceptions();
         }
+        /// <summary>
+        /// Implements <see cref="INfieldSurveyInterviewerQuotaLevelTargetsService.GetAsync(string , string)"/>
+        /// </summary>
+        public Task<IEnumerable<WorkPackageTargetCounts>> GetAsync(string surveyId, string interviewerId)
+        {
+            return ConnectionClient.Client.GetAsync(SurveyInterviewerAssignmentQuotaLevelTargetsUrl(surveyId,interviewerId))
+                         .ContinueWith(
+                             responseMessageTask => responseMessageTask.Result.Content.ReadAsStringAsync().Result)
+                         .ContinueWith(
+                             stringTask =>
+                             JsonConvert.DeserializeObject<IEnumerable<WorkPackageTargetCounts>>(stringTask.Result))
+                         .FlattenExceptions();
+        }
 
 
         private Uri SurveyInterviewerAssignmentQuotaLevelTargetsUrl(string surveyId, string interviewerId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Assignments/{interviewerId}/QuotaLevelTargets/");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/Interviewers/{interviewerId}/QuotaLevelTargets/");
         }
+
+        
 
         #endregion
     }
