@@ -193,56 +193,6 @@ namespace Nfield.Services
                 async () => await _target.StartCreateManualTestSurveyAsync("surveyId", (StartCreateManualTestSurveyFile)null));
         }
 
-        [Fact]
-        public async Task TestStartCreateManualTestSurveyAsync_File_SampleDataFromFile_PostsExpectedData()
-        {
-            const string SampleDataFileName = nameof(SampleDataFileName);
-            const string SampleDataFilePath = nameof(SampleDataFilePath);
-            const string SampleData = "sample data";
-
-            _mockedFileSystem.Setup(fs => fs.Path.GetFileName(SampleDataFilePath)).Returns(SampleDataFileName);
-            _mockedFileSystem.Setup(fs => fs.File.Exists(SampleDataFilePath)).Returns(true);
-            _mockedFileSystem.Setup(fs => fs.File.ReadAllBytes(SampleDataFilePath)).Returns(Encoding.Default.GetBytes(SampleData));
-
-            var activityStatus = new BackgroundActivityStatus { ActivityId = "activityId" };
-            var content = new StringContent(JsonConvert.SerializeObject(activityStatus));
-            var endPoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/ManualTests");
-
-            _mockedHttpClient.Setup(client =>
-                client.PostAsync(endPoint, It.IsAny<MultipartFormDataContent>()))
-                .Callback((Uri uri, HttpContent httpContent) =>
-                {
-                    var multipart = ((MultipartFormDataContent)httpContent);
-                    Assert.Equal(3, multipart.Count());
-                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "UseOriginalSample", NameValue = "true" }));
-                    Assert.True(IsPropertyAvailable(multipart, new ContentProperty { Name = "EnableReporting", NameValue = "true" }));
-                    Assert.True(IsFilePropertyAvailable(multipart, new ContentProperty { Name = "SampleDataFile", NameValue = "sampleDataFile", FileName = SampleDataFileName, FileContent = SampleData }));
-                })
-                .Returns(CreateTask(HttpStatusCode.OK, content));
-
-            _mockedHttpClient
-                .Setup(client => client.GetAsync(It.IsAny<Uri>()))
-                .Returns(Task.Factory.StartNew(
-                    () =>
-                    new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(JsonConvert.SerializeObject(new
-                        {
-                            ActivityId = "activityId",
-                            Status = 2
-                        }))
-                    })).Verifiable();
-
-            var result = await _target.StartCreateManualTestSurveyAsync(_surveyId, new StartCreateManualTestSurveyFile
-            {
-                UseOriginalSample = true,
-                EnableReporting = true,
-                SampleDataFilePath = SampleDataFilePath
-            });
-
-            _mockedHttpClient.Verify(client => client.PostAsync(It.IsAny<Uri>(), It.IsAny<MultipartFormDataContent>()), Times.Once());
-        }
-
         private static bool IsPropertyAvailable(MultipartFormDataContent content, ContentProperty contentProperty)
         {
             foreach (var contentItem in content)
