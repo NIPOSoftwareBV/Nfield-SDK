@@ -111,8 +111,7 @@ namespace Nfield.Infrastructure
             { typeof(INfieldManualTestsService), typeof(NfieldManualTestsService) },
             { typeof(INfieldSurveyManualTestsService), typeof(NfieldSurveyManualTestsService) },
             { typeof(INfieldSurveyInterviewerAssignmentService), typeof(NfieldSurveyInterviewerAssignmentService) },
-            { typeof(INfieldSurveyInterviewerQuotaLevelTargetsService), 
-			{ typeof(NfieldSurveyInterviewerQuotaLevelTargetsService) }
+            { typeof(INfieldSurveyInterviewerQuotaLevelTargetsService), typeof(NfieldSurveyInterviewerQuotaLevelTargetsService) }
         };
 
 
