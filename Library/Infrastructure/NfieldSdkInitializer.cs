@@ -108,7 +108,6 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyInterviewSimulationService), typeof(NfieldSurveyInterviewSimulationService) },
             { typeof(INfieldParentSurveyService), typeof(NfieldParentSurveyService) },
             { typeof(INfieldParentSurveyWavesService), typeof(NfieldParentSurveyWavesService) },
-            { typeof(INfieldManualTestsService), typeof(NfieldManualTestsService) },
             { typeof(INfieldSurveyManualTestsService), typeof(NfieldSurveyManualTestsService) },
             { typeof(INfieldSurveyInterviewerAssignmentService), typeof(NfieldSurveyInterviewerAssignmentService) },
             { typeof(INfieldSurveyInterviewerQuotaLevelTargetsService), typeof(NfieldSurveyInterviewerQuotaLevelTargetsService) }

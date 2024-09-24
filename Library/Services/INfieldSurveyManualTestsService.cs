@@ -25,6 +25,11 @@ namespace Nfield.Services
     public interface INfieldSurveyManualTestsService
     {
         /// <summary>
+        /// Get All manual tests of a domain
+        /// </summary>
+        Task<IQueryable<SurveyManualTest>> GetManualTestsAsync();
+
+        /// <summary>
         /// Get manual tests of a specific survey (normally just one)
         /// </summary>
         Task<IQueryable<SurveyManualTest>> GetSurveyManualTestsAsync(string surveyId);
