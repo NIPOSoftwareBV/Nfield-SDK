@@ -119,29 +119,55 @@ namespace Nfield.Services
 
         #region StopFieldworkAsync
 
-        [Fact]
-        public void TestStopFieldworkAsync_WhenSurveyIdIsNull_Throws()
-        {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(null, new StopFieldworkModel())));
-        }
+            #region Obsolete
+            [Fact]
+            public void TestStopFieldworkAsyncObsolete_WhenSurveyIdIsNull_Throws()
+            {
+                Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(null, new StopFieldworkModel())));
+            }
 
-        [Fact]
-        public void TestStopFieldworkAsync_WhenSurveyIdIsEmptyString_Throws()
-        {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(string.Empty, new StopFieldworkModel())));
-        }
+            [Fact]
+            public void TestStopFieldworkAsyncObsolete_WhenSurveyIdIsEmptyString_Throws()
+            {
+                Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(string.Empty, new StopFieldworkModel())));
+            }
 
-        [Fact]
-        public void TestStopFieldworkAsync_WhenSurveyIdIsWhiteSpace_Throws()
+            [Fact]
+            public void TestStopFieldworkAsyncObsolete_WhenSurveyIdIsWhiteSpace_Throws()
+            {
+                Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(" ", new StopFieldworkModel())));
+            }
+
+            [Fact]
+            public void TestStopFieldworkAsyncObsolete_Always_CallsCorrectURI()
+            {
+                const string surveyId = "SurveyId";
+                var model = new StopFieldworkModel();
+
+                _mockedHttpClient.Setup(c => c.PutAsJsonAsync(It.IsAny<Uri>(), model))
+                    .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));
+
+                _target.StopFieldworkAsync(surveyId, model);
+
+                _mockedHttpClient
+                    .Verify(client => client.PutAsJsonAsync(new Uri(ServiceAddress, "Surveys/" + surveyId + "/Fieldwork/Stop"), model), Times.Once());
+            }
+            #endregion
+
+        [Theory]
+        [InlineData(null, typeof(ArgumentNullException))]
+        [InlineData("", typeof(ArgumentException))]
+        [InlineData(" ", typeof(ArgumentException))]
+        public void TestStopFieldworkAsync_InvalidSurveyId_Throws(string surveyId, Type expectedException)
         {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(" ", new StopFieldworkModel())));
+            Assert.Throws(expectedException, () => UnwrapAggregateException(_target.StopFieldworkAsync(surveyId, new StopFieldwork())));
         }
 
         [Fact]
         public void TestStopFieldworkAsync_Always_CallsCorrectURI()
         {
             const string surveyId = "SurveyId";
-            var model = new StopFieldworkModel();
+            var model = new StopFieldwork();
 
             _mockedHttpClient.Setup(c => c.PutAsJsonAsync(It.IsAny<Uri>(), model))
                 .Returns(CreateTask(HttpStatusCode.OK, new StringContent(string.Empty)));

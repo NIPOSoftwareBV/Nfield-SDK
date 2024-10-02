@@ -59,9 +59,22 @@ namespace Nfield.Services.Implementation
         }
 
         /// <summary>
-        /// See <see cref="INfieldSurveyFieldworkService.StopFieldworkAsync"/>
+        /// See <see cref="INfieldSurveyFieldworkService.StopFieldworkAsync(string, StopFieldworkModel)"/>
         /// </summary>
+        [Obsolete("Please use INfieldSurveyFieldworkService.StopFieldworkAsync(string surveyId, StopFieldwork model)")]
         public Task StopFieldworkAsync(string surveyId, StopFieldworkModel model)
+        {
+            CheckSurveyId(surveyId);
+
+            var uri = new Uri(SurveysApi, $"{surveyId}/{SurveyFieldworkControllerName}/Stop");
+
+            return Client.PutAsJsonAsync(uri, model).FlattenExceptions();
+        }
+
+        /// <summary>
+        /// See <see cref="INfieldSurveyFieldworkService.StopFieldworkAsync(string, StopFieldwork)"/>
+        /// </summary>
+        public Task StopFieldworkAsync(string surveyId, StopFieldwork model)
         {
             CheckSurveyId(surveyId);
 

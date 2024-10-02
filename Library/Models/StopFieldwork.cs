@@ -13,21 +13,18 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.SDK.Models;
+
 namespace Nfield.Models
 {
     /// <summary>
-    /// Model for stopping fieldwork
+    /// Stop fieldwork model
     /// </summary>
-    public class StopFieldworkModel
+    public class StopFieldwork
     {
         /// <summary>
-        /// Indication to terminate running interviews
+        /// Specifies what interviews are allowed to continue when the fieldwork is stopped.
         /// </summary>
-        public bool TerminateRunningInterviews { get; set; }
-
-        /// <summary>
-        /// Indication to make 'FieldworkAllowed' false
-        /// </summary>
-        public bool ResetFieldworkAllowed { get; set; }
+        public InterviewingRestrictionType InterviewingRestrictionType { get; set; }
     }
 }
