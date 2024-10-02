@@ -18,7 +18,7 @@ using Nfield.SDK.Models;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Stopping fieldwork model
+    /// Stop fieldwork model
     /// </summary>
     public class StopFieldwork
     {
