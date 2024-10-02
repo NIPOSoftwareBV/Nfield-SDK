@@ -154,22 +154,13 @@ namespace Nfield.Services
             }
             #endregion
 
-        [Fact]
-        public void TestStopFieldworkAsync_WhenSurveyIdIsNull_Throws()
+        [Theory]
+        [InlineData(null, typeof(ArgumentNullException))]
+        [InlineData("", typeof(ArgumentException))]
+        [InlineData(" ", typeof(ArgumentException))]
+        public void TestStopFieldworkAsync_InvalidSurveyId_Throws(string surveyId, Type expectedException)
         {
-            Assert.Throws<ArgumentNullException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(null, new StopFieldwork())));
-        }
-
-        [Fact]
-        public void TestStopFieldworkAsync_WhenSurveyIdIsEmptyString_Throws()
-        {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(string.Empty, new StopFieldwork())));
-        }
-
-        [Fact]
-        public void TestStopFieldworkAsync_WhenSurveyIdIsWhiteSpace_Throws()
-        {
-            Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.StopFieldworkAsync(" ", new StopFieldwork())));
+            Assert.Throws(expectedException, () => UnwrapAggregateException(_target.StopFieldworkAsync(surveyId, new StopFieldwork())));
         }
 
         [Fact]
