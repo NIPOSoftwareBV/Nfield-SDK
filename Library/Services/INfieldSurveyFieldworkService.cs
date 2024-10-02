@@ -37,11 +37,19 @@ namespace Nfield.Services
         Task StartFieldworkAsync(string surveyId);
 
         /// <summary>
-        /// This method Starts the fieldwork of the survey.
+        /// This method stops the survey fieldwork.
         /// </summary>
         /// <param name="surveyId">The id of the survey to Start</param>
         /// <param name="model">The settings for the Startping of the fieldwork</param>
+        [Obsolete("Please use INfieldSurveyFieldworkService.StopFieldworkAsync(string surveyId, StopFieldwork model)")]
         Task StopFieldworkAsync(string surveyId, StopFieldworkModel model);
+
+        /// <summary>
+        /// This method stops the survey fieldwork
+        /// </summary>
+        /// <param name="surveyId">The id of the survey to Start</param>
+        /// <param name="model">The settings for the Startping of the fieldwork</param>
+        Task StopFieldworkAsync(string surveyId, StopFieldwork model);
 
         /// <summary>
         /// Gets survey fieldwork counts
