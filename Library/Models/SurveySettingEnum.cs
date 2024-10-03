@@ -13,12 +13,12 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace Nfield.Models
+namespace Nfield.Models.Enum
 {
     /// <summary>
     /// Holds a survey setting
     /// </summary>
-    public class SurveySettingEnum
+    public class SurveySetting
     {
         /// <summary>
         /// The name

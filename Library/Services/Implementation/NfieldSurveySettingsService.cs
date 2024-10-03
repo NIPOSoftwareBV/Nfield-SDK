@@ -66,7 +66,7 @@ namespace Nfield.Services.Implementation
                          .FlattenExceptions();
         }
 
-        public async Task<SurveySetting> AddOrUpdateAsync(string surveyId, SurveySettingEnum setting)
+        public async Task<SurveySetting> AddOrUpdateAsync(string surveyId, Models.Enum.SurveySetting setting)
         {
             return await AddOrUpdateAsync(surveyId, new SurveySetting { Name = setting.Name.ToString(), Value = setting.Value });
         }

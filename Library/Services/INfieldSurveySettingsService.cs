@@ -56,7 +56,7 @@ namespace Nfield.Services
         /// The aggregate exception can contain:
         /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
-        Task<SurveySetting> AddOrUpdateAsync(string surveyId, SurveySettingEnum setting);
+        Task<SurveySetting> AddOrUpdateAsync(string surveyId, Models.Enum.SurveySetting setting);
 
         #endregion
     }
