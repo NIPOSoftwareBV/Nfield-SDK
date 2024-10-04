@@ -21,11 +21,6 @@ namespace Nfield.SDK.Models
     public enum InterviewingRestrictionType
     {
         /// <summary>
-        /// Not set
-        /// </summary>
-        Unknown = 0,
-
-        /// <summary>
         /// Block all interviews
         /// </summary>
         BlockEverything = 1,
@@ -39,10 +34,5 @@ namespace Nfield.SDK.Models
         /// Allow only active and resume interviews
         /// </summary>
         AllowActivesAndResumes = 3,
-
-        /// <summary>
-        /// Allow all interviews
-        /// </summary>
-        AllowEverything = 4,
     }
 }
