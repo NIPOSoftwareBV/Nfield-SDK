@@ -47,6 +47,17 @@ namespace Nfield.Services
         /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
         Task<SurveySetting> AddOrUpdateAsync(string surveyId, SurveySetting setting);
 
+        /// <summary>
+        /// Adds a new setting.
+        /// </summary>
+        /// <param name="surveyId">the survey to add this setting to</param>
+        /// <param name="setting">the setting to add</param>
+        /// <exception cref="T:System.AggregateException"></exception>
+        /// The aggregate exception can contain:
+        /// <exception cref="Nfield.Exceptions.NfieldErrorException"></exception>
+        /// <exception cref="Nfield.Exceptions.NfieldHttpResponseException"></exception>
+        Task<SurveySetting> AddOrUpdateAsync(string surveyId, Models.Enum.SurveySetting setting);
+
         #endregion
     }
 }
