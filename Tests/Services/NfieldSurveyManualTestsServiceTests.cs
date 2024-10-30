@@ -100,36 +100,6 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestGetSurveyManualTestAsync_SurveyIdIsNull_Throws()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await _target.GetSurveyManualTestAsync(null, "manualTestSurveyId"));
-        }
-
-        [Fact]
-        public void TestGetSurveyManualTestAsync_ManualTestSurveyIdIsNull_Throws()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await _target.GetSurveyManualTestAsync("surveyId", null));
-        }
-
-        [Fact]
-        public async Task TestGetSurveyManualTestAsync_ServerReturnsQuery_ReturnsTestSurvey()
-        {
-            var manualTestSurveyId = Guid.NewGuid().ToString();
-            var endPoint = new Uri(ServiceAddress, $"Surveys/{_surveyId}/ManualTests/{manualTestSurveyId}");
-            var expectedTestSurvey = new SurveyManualTest(SurveyType.Basic) { SurveyId = manualTestSurveyId };
-
-            _mockedHttpClient
-                .Setup(client => client.GetAsync(endPoint))
-                .Returns(CreateTask(HttpStatusCode.OK, new StringContent(JsonConvert.SerializeObject(expectedTestSurvey))));
-
-            var actualTestSurvey = await _target.GetSurveyManualTestAsync(_surveyId, manualTestSurveyId);
-
-            Assert.Equal(expectedTestSurvey.SurveyId, actualTestSurvey.SurveyId);
-        }
-
-        [Fact]
         public void TestStartCreateManualTestSurveyAsync_SurveyIdIsNull_Throws()
         {
             Assert.ThrowsAsync<ArgumentNullException>(

@@ -35,11 +35,6 @@ namespace Nfield.Services
         Task<IQueryable<SurveyManualTest>> GetSurveyManualTestsAsync(string surveyId);
 
         /// <summary>
-        /// Get manual test of a specific survey
-        /// </summary>
-        Task<SurveyManualTest> GetSurveyManualTestAsync(string surveyId, string manualTestId);
-
-        /// <summary>
         /// Start creating a manual test survey based on a specific survey
         /// </summary>
         Task<ManualTestSurveyResult> StartCreateManualTestSurveyAsync(string surveyId, StartCreateManualTestSurvey request);
