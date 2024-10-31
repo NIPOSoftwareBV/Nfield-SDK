@@ -64,19 +64,6 @@ namespace Nfield.Services.Implementation
             return JsonConvert.DeserializeObject<List<SurveyManualTest>>(result).AsQueryable();
         }
 
-        public async Task<SurveyManualTest> GetSurveyManualTestAsync(string surveyId, string manualTestId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
-            Ensure.ArgumentNotNullOrEmptyString(manualTestId, nameof(manualTestId));
-
-            var uri = new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/ManualTests/{manualTestId}");
-
-            var response = await Client.GetAsync(uri);
-            var result = await response.Content.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<SurveyManualTest>(result);
-        }
-
         public async Task<ManualTestSurveyResult> StartCreateManualTestSurveyAsync(string surveyId, StartCreateManualTestSurvey request)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
