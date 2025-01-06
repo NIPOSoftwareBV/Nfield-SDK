@@ -39,5 +39,10 @@ namespace Nfield.Models
         /// Interview has been rejected
         /// </summary>
         Rejected = 3,
+
+        /// <summary>
+        /// Interview marked to reject
+        /// </summary>
+        MarkedToReject = 4
     }
 }

@@ -66,7 +66,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestQueryAsync_SurveyIdIsEmpty_InterveiwIdIsEmpty_Throws()
+        public void TestQueryAsync_SurveyIdIsEmpty_InterviewIdIsEmpty_Throws()
         {
 
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.QueryAsync("", "")));
@@ -80,7 +80,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void TestQueryAsync_InterveiwIdIsEmpty_Throws()
+        public void TestQueryAsync_InterviewIdIsEmpty_Throws()
         {
 
             Assert.Throws<ArgumentException>(() => UnwrapAggregateException(_target.QueryAsync(SurveyId, "")));
