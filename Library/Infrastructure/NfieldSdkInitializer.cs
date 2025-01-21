@@ -80,8 +80,6 @@ namespace Nfield.Infrastructure
             { typeof(INfieldSurveyInviteRespondentsService), typeof(NfieldSurveyInviteRespondentsService) },
             { typeof(INfieldSurveyVarFileService), typeof(NfieldSurveyVarFileService) },
             { typeof(INfieldSurveysSearchService), typeof(NfieldSurveysSearchService) },
-            { typeof(INfieldExternalApisService), typeof(NfieldExternalApisService) },
-            { typeof(INfieldExternalApisLogService), typeof(NfieldExternalApisLogService) },
             { typeof(INfieldLocalUserService), typeof(NfieldLocalUserService) },
             { typeof(INfieldCatiInterviewersService), typeof(NfieldCatiInterviewersService) },
             { typeof(INfieldSurveyVersionsService), typeof(NfieldSurveyVersionsService) },
