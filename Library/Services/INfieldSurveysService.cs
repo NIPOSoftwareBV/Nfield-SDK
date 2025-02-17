@@ -41,7 +41,7 @@ namespace Nfield.Services
         /// <summary>
         /// Adds a new survey based on a blueprint survey.
         /// </summary>
-        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName);
+        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, bool enableRespondentsGateway = false);
 
         /// <summary>
         /// Updates an existing blueprint survey based on a survey

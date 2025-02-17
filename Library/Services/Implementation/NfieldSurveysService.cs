@@ -70,7 +70,7 @@ namespace Nfield.Services.Implementation
         /// <summary>
         /// See <see cref="INfieldSurveysService.AddFromBlueprintAsync"/>
         /// </summary>
-        public Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName)
+        public Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, bool enableRespondentsGateway = false)
         {
             if (blueprintSurveyId == null)
             {
@@ -82,10 +82,11 @@ namespace Nfield.Services.Implementation
             }
 
             return Client.PostAsJsonAsync(new Uri(SurveysApi, "CreateSurveyFromBlueprint"), new
-                            {
-                                BlueprintSurveyId = blueprintSurveyId,
-                                SurveyName = surveyName
-                            })
+            {
+                BlueprintSurveyId = blueprintSurveyId,
+                SurveyName = surveyName,
+                EnableRespondentsGateway = enableRespondentsGateway
+            })
                          .ContinueWith(task => task.Result.Content.ReadAsStringAsync().Result)
                          .ContinueWith(task => JsonConvert.DeserializeObject<Survey>(task.Result))
                          .FlattenExceptions();
@@ -103,10 +104,10 @@ namespace Nfield.Services.Implementation
             }
 
             return Client.PutAsJsonAsync(new Uri(SurveyBlueprintsApi, blueprintSurveyId + "/Update"), new
-                            {
-                                SurveyId = surveyId,
-                                IncludedConfiguration = (int)includedConfiguration
-                            })
+            {
+                SurveyId = surveyId,
+                IncludedConfiguration = (int)includedConfiguration
+            })
                          .FlattenExceptions();
         }
 
