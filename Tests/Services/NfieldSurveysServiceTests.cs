@@ -116,7 +116,8 @@ namespace Nfield.Services
         [Fact]
         public void TestAddFromBlueprintAsync_ServerAccepts_ReturnsSurvey()
         {
-            var survey = new Survey(SurveyType.Basic) { SurveyName = "New Survey" };
+            var surveyName = "New Survey from Blueprint";
+            var survey = new Survey(SurveyType.Basic) { SurveyName = surveyName };
             var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
             var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
             var content = new StringContent(JsonConvert.SerializeObject(survey));
@@ -128,10 +129,39 @@ namespace Nfield.Services
             var target = new NfieldSurveysService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actual = target.AddFromBlueprintAsync("some blueprint", "My survey").Result;
+            var actual = target.AddFromBlueprintAsync(Guid.NewGuid().ToString(), surveyName).Result;
 
             Assert.Equal(survey.SurveyName, actual.SurveyName);
             Assert.Equal(survey.SurveyType, actual.SurveyType);
+        }
+
+        [Fact]
+        public void TestAddFromBlueprintAsync_RespondentGatewayIsEnabled_ReturnsNrgSurvey()
+        {
+            var surveyName = "New NRG Survey from Blueprint";
+            var survey = new Survey(SurveyType.Basic)
+            {
+                SurveyName = surveyName,
+                EnableRespondentsGateway = true
+            };
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+            var content = new StringContent(JsonConvert.SerializeObject(survey));
+
+            mockedHttpClient
+                .Setup(client => client.PostAsJsonAsync(new Uri(ServiceAddress, "Surveys/CreateSurveyFromBlueprint"), It.IsAny<object>()))
+                .Returns(CreateTask(HttpStatusCode.OK, content));
+
+            var target = new NfieldSurveysService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            var actual = target.AddFromBlueprintAsync(Guid.NewGuid().ToString(), surveyName, true).Result;
+
+            Assert.Equal(survey.SurveyName, actual.SurveyName);
+            Assert.Equal(survey.SurveyType, actual.SurveyType);
+            Assert.Equal(survey.EnableRespondentsGateway, actual.EnableRespondentsGateway);
+
         }
 
         [Fact]
