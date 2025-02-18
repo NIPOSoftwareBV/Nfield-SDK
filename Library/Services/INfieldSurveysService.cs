@@ -39,9 +39,14 @@ namespace Nfield.Services
         Task<Survey> AddAsync(Survey survey);
 
         /// <summary>
-        /// Adds a new survey based on a blueprint survey.
+        /// Creates a new survey based on a blueprint survey.
         /// </summary>
-        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName);
+        /// <param name="blueprintSurveyId">The survey id of the blueprint.</param>
+        /// <param name="surveyName">The name of the survey that will be created.</param>
+        /// <param name="enableRespondentsGateway">When <c>True</c>, an Nfield Respondents Gateway (NRG) survey will be created.
+        /// This is used when we want to integrate with Profiles (PPG). Default is false.</param>
+        /// <returns>A <c>Survey</c>.</returns>
+        Task<Survey> AddFromBlueprintAsync(string blueprintSurveyId, string surveyName, bool enableRespondentsGateway = false);
 
         /// <summary>
         /// Updates an existing blueprint survey based on a survey
