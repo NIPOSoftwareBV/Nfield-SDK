@@ -13,6 +13,8 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+
 namespace Nfield.Models
 {
     /// <summary>
@@ -70,5 +72,15 @@ namespace Nfield.Models
         /// True if the survey can be managed by the Respondents Gateway
         /// </summary>
         public bool EnableRespondentsGateway { get; set; } = false;
+
+        /// <summary>
+        /// The date when the survey was last started
+        /// </summary>
+        public DateTime? LastStartDate { get; set; }
+
+        /// <summary>
+        /// The indication if the survey has started waves 
+        /// </summary>     
+        public bool HasStartedWave { get; set; }
     }
 }
