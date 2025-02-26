@@ -77,10 +77,5 @@ namespace Nfield.Models
         /// The date when the survey was last started
         /// </summary>
         public DateTime? LastStartDate { get; set; }
-
-        /// <summary>
-        /// The indication if the survey has started waves 
-        /// </summary>     
-        public bool HasStartedWave { get; set; }
     }
 }
