@@ -59,7 +59,11 @@ namespace Nfield.Services
                 FieldworkOfficeId = "office-id",
                 SamplingPointId = "sp-id",
                 Stratum = "stratum",
-                GroupId = "group-id"
+                GroupId = "group-id",
+                CustomDataItems = new[] {
+                    new SamplingPointCustomDataModel { Name = "key1", Value = "value11" },
+                    new SamplingPointCustomDataModel { Name = "key2", Value = "value12" }
+                }
             };
             _samplingPoint2 = new SamplingPoint()
             {
@@ -70,7 +74,11 @@ namespace Nfield.Services
                 FieldworkOfficeId = "office-id-2",
                 SamplingPointId = "sp-id-2",
                 Stratum = "stratum2",
-                GroupId = "group-id-2"
+                GroupId = "group-id-2",
+                CustomDataItems = new[] {
+                    new SamplingPointCustomDataModel { Name = "key1", Value = "value21" },
+                    new SamplingPointCustomDataModel { Name = "key2", Value = "value22" }
+                }
             };
         }
 
@@ -102,6 +110,10 @@ namespace Nfield.Services
             Assert.Equal(_samplingPoint.Instruction, actual.Instruction);
             Assert.Equal(_samplingPoint.Stratum, actual.Stratum);
             Assert.Equal(_samplingPoint.Description, actual.Description);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Name, actual.CustomDataItems.First().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Value, actual.CustomDataItems.First().Value);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Name, actual.CustomDataItems.Last().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Value, actual.CustomDataItems.Last().Value);
         }
 
         #endregion
@@ -153,6 +165,10 @@ namespace Nfield.Services
             Assert.Equal(_samplingPoint.Instruction, actual.Instruction);
             Assert.Equal(_samplingPoint.Stratum, actual.Stratum);
             Assert.Equal(_samplingPoint.Description, actual.Description);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Name, actual.CustomDataItems.First().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Value, actual.CustomDataItems.First().Value);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Name, actual.CustomDataItems.Last().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Value, actual.CustomDataItems.Last().Value);
         }
 
         #endregion
@@ -179,6 +195,10 @@ namespace Nfield.Services
             Assert.Equal(_samplingPoint.Instruction, actual.Instruction);
             Assert.Equal(_samplingPoint.Stratum, actual.Stratum);
             Assert.Equal(_samplingPoint.Description, actual.Description);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Name, actual.CustomDataItems.First().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Value, actual.CustomDataItems.First().Value);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Name, actual.CustomDataItems.Last().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Value, actual.CustomDataItems.Last().Value);
         }
 
         #endregion
@@ -212,6 +232,10 @@ namespace Nfield.Services
             Assert.Equal(_samplingPoint.Instruction, actual.First().Instruction);
             Assert.Equal(_samplingPoint.Stratum, actual.First().Stratum);
             Assert.Equal(_samplingPoint.Description, actual.First().Description);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Name, actual.First().CustomDataItems.First().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.First().Value, actual.First().CustomDataItems.First().Value);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Name, actual.First().CustomDataItems.Last().Name);
+            Assert.Equal(_samplingPoint.CustomDataItems.Last().Value, actual.First().CustomDataItems.Last().Value);
         }
 
         #endregion
