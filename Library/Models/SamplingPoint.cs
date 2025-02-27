@@ -13,7 +13,9 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Nfield.SDK.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Nfield.Models
 {
@@ -61,6 +63,11 @@ namespace Nfield.Models
         /// Indicates the Kind of the sampling point. The only accepted values are "Regular" and "Spare"
         /// </summary>
         public SamplingPointKind Kind { get; set; }
+
+        /// <summary>
+        /// The SamplingPoint custom columns, used by default as sample data by the addresses that belong to the sampling point.
+        /// </summary>
+        public IEnumerable<SamplingPointCustomDataModel> CustomDataItems { get; set; }
 
     }
 }
