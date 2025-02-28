@@ -13,15 +13,16 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
 using Nfield.Utilities;
+using System;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Nfield.Services.Implementation
 {
@@ -36,6 +37,13 @@ namespace Nfield.Services.Implementation
 
             var uri = SurveyInvitationImagesTemplatesUrl(surveyId, filename);
             var imageContent = new StreamContent(content);
+            imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            imageContent.Headers.ContentDisposition =
+                new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = filename
+                };
+
             return Client.PostAsync(uri, imageContent)
                 .ContinueWith(task => JsonConvert.DeserializeObject<AddInvitationImageResult>(
                     task.Result.Content.ReadAsStringAsync().Result))
