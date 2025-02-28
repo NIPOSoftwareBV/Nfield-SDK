@@ -55,11 +55,11 @@ namespace Nfield.Services
             var target = new NfieldParentSurveyService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            var actualSimulationSurveys = target.GetParentSurveysAsync().Result;
+            var actualParentSurveys = target.GetParentSurveysAsync().Result;
 
-            Assert.Equal(expectedParentSurveys[0].SurveyId, actualSimulationSurveys.ToArray()[0].SurveyId);
-            Assert.Equal(expectedParentSurveys[1].SurveyId, actualSimulationSurveys.ToArray()[1].SurveyId);
-            Assert.Equal(2, actualSimulationSurveys.Count());
+            Assert.Equal(expectedParentSurveys[0].SurveyId, actualParentSurveys.ToArray()[0].SurveyId);
+            Assert.Equal(expectedParentSurveys[1].SurveyId, actualParentSurveys.ToArray()[1].SurveyId);
+            Assert.Equal(2, actualParentSurveys.Count());
         }
 
         [Fact]
