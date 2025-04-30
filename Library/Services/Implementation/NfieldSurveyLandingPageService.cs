@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 namespace Nfield.Services.Implementation
 {
     /// <summary>
-    /// Implementation of <see cref="INfieldLandingPageService"/>
+    /// Implementation of <see cref="INfieldSurveyLandingPageService"/>
     /// </summary>
     internal class NfieldSurveyLandingPageService : INfieldSurveyLandingPageService, INfieldConnectionClientObject
     {
@@ -115,7 +115,7 @@ namespace Nfield.Services.Implementation
 
                 var response = await Client.PostAsync(LandingPageApi(), formData).ConfigureAwait(false);
                 var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var uploadStatus = JsonConvert.DeserializeObject<LandingPageUploadStatusResponseModel>(responseString);
+                var uploadStatus = JsonConvert.DeserializeObject<SurveyLandingPageUploadStatusResponseModel>(responseString);
 
                 await ConnectionClient.GetActivityResultAsync<string>(uploadStatus.ActivityId, "Status").ConfigureAwait(false);
 
