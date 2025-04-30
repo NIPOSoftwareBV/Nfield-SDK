@@ -29,7 +29,7 @@ namespace Nfield.Services
         /// <param name="surveyId">The ID of the survey.</param>
         /// <param name="filePath">The path to the zip file.</param>
         /// <returns>The activity ID of the upload operation.</returns>
-        /// <exception cref="T:System.AggregateException">The aggregate exception can contain NfieldErrorException or NfieldHttpResponseException.</exception>
+        /// <exception cref="T:System.AggregateException"></exception>
         Task<string> UploadLandingPageAsync(string surveyId, string filePath);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Nfield.Services
         /// <param name="fileName">The name of the zip file.</param>
         /// <param name="content">The content of the zip file as a stream.</param>
         /// <returns>The activity ID of the upload operation.</returns>
-        /// <exception cref="T:System.AggregateException">The aggregate exception can contain NfieldErrorException or NfieldHttpResponseException.</exception>
+        /// <exception cref="T:System.AggregateException"></exception>
         Task<string> UploadLandingPageAsync(string surveyId, string fileName, Stream content);
     }
 }

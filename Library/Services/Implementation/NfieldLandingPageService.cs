@@ -40,9 +40,9 @@ namespace Nfield.Services.Implementation
         /// <param name="surveyId">The ID of the survey.</param>
         /// <param name="filePath">The path to the zip file.</param>
         /// <returns>The activity ID of the upload operation.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when surveyId or filePath is null or empty.</exception>
-        /// <exception cref="FileNotFoundException">Thrown when the file at filePath does not exist.</exception>
-        /// <exception cref="T:System.AggregateException">The aggregate exception can contain NfieldErrorException or NfieldHttpResponseException.</exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="FileNotFoundException">In case that the file does not exists</exception>
+        /// <exception cref="T:System.AggregateException"></exception>
         public async Task<string> UploadLandingPageAsync(string surveyId, string filePath)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
@@ -68,8 +68,8 @@ namespace Nfield.Services.Implementation
         /// <param name="fileName">The name of the zip file.</param>
         /// <param name="content">The content of the zip file as a stream.</param>
         /// <returns>The activity ID of the upload operation.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when surveyId, fileName, or content is null or empty.</exception>
-        /// <exception cref="T:System.AggregateException">The aggregate exception can contain NfieldErrorException or NfieldHttpResponseException.</exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="T:System.AggregateException"></exception>
         public async Task<string> UploadLandingPageAsync(string surveyId, string fileName, Stream content)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
