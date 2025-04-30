@@ -21,7 +21,7 @@ namespace Nfield.Services
     /// <summary>
     /// Represents a set of methods to upload landing page zip files.
     /// </summary>
-    public interface INfieldLandingPageService
+    public interface INfieldSurveyLandingPageService
     {
         /// <summary>
         /// Uploads a landing page zip file for a specific survey from a file path.

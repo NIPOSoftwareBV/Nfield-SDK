@@ -18,9 +18,9 @@ using System;
 namespace Nfield.Models
 {
     /// <summary>
-    /// Represents the response model returned after importing a landing page file.
+    /// Represents the response model returned after uploading a landing page file.
     /// </summary>
-    public class LandingPageUploadStatusResponseModel
+    public class SurveyLandingPageUploadStatusResponseModel
     {
         /// <summary>
         /// The ID of the activity associated with the landing page upload.

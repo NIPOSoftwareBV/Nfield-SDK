@@ -30,7 +30,7 @@ namespace Nfield.Services.Implementation
     /// <summary>
     /// Implementation of <see cref="INfieldLandingPageService"/>
     /// </summary>
-    internal class NfieldLandingPageService : INfieldLandingPageService, INfieldConnectionClientObject
+    internal class NfieldSurveyLandingPageService : INfieldSurveyLandingPageService, INfieldConnectionClientObject
     {
         #region Implementation of INfieldLandingPageService
 
@@ -41,7 +41,7 @@ namespace Nfield.Services.Implementation
         /// <param name="filePath">The path to the zip file.</param>
         /// <returns>The activity ID of the upload operation.</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="FileNotFoundException">In case that the file does not exists</exception>
+        /// <exception cref="FileNotFoundException">In case that the file does not exist</exception>
         /// <exception cref="T:System.AggregateException"></exception>
         public async Task<string> UploadLandingPageAsync(string surveyId, string filePath)
         {
