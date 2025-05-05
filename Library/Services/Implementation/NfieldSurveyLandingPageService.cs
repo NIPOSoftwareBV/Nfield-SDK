@@ -99,9 +99,9 @@ namespace Nfield.Services.Implementation
             get { return ConnectionClient.Client; }
         }
 
-        private Uri LandingPageApi()
+        private Uri LandingPageApi(string surveyId)
         {
-            return new Uri(ConnectionClient.NfieldServerUri, "v1/landingPage");
+            return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/landingPage/");
         }
 
         private async Task<string> DoUploadLandingPageAsync(string surveyId, string fileName, Stream content)
@@ -113,7 +113,7 @@ namespace Nfield.Services.Implementation
                 formData.Add(fileContent, "file", EnsureZipExtension(fileName));
                 formData.Add(new StringContent(surveyId), "surveyId");
 
-                var response = await Client.PostAsync(LandingPageApi(), formData).ConfigureAwait(false);
+                var response = await Client.PostAsync(LandingPageApi(surveyId), formData).ConfigureAwait(false);
                 var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var uploadStatus = JsonConvert.DeserializeObject<SurveyLandingPageUploadStatusResponseModel>(responseString);
 
