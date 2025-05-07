@@ -17,7 +17,6 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
-using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Utilities;
 using System;
 using System.IO;
@@ -43,7 +42,7 @@ namespace Nfield.Services.Implementation
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="FileNotFoundException">In case that the file does not exist</exception>
         /// <exception cref="T:System.AggregateException"></exception>
-        public async Task<string> UploadLandingPageAsync(string surveyId, string filePath)
+        public async Task<SurveyLandingPageUploadStatusResponseModel> UploadLandingPageAsync(string surveyId, string filePath)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(filePath, nameof(filePath));
@@ -70,7 +69,7 @@ namespace Nfield.Services.Implementation
         /// <returns>The activity ID of the upload operation.</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="T:System.AggregateException"></exception>
-        public async Task<string> UploadLandingPageAsync(string surveyId, string fileName, Stream content)
+        public async Task<SurveyLandingPageUploadStatusResponseModel> UploadLandingPageAsync(string surveyId, string fileName, Stream content)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
@@ -104,7 +103,7 @@ namespace Nfield.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/landingPage/");
         }
 
-        private async Task<string> DoUploadLandingPageAsync(string surveyId, string fileName, Stream content)
+        private async Task<SurveyLandingPageUploadStatusResponseModel> DoUploadLandingPageAsync(string surveyId, string fileName, Stream content)
         {
             using (var formData = new MultipartFormDataContent())
             {
@@ -119,7 +118,7 @@ namespace Nfield.Services.Implementation
 
                 await ConnectionClient.GetActivityResultAsync<string>(uploadStatus.ActivityId, "Status").ConfigureAwait(false);
 
-                return uploadStatus.ActivityId;
+                return uploadStatus;
             }
         }
 
