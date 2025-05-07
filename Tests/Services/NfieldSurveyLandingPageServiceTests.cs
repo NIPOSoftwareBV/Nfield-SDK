@@ -66,7 +66,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public void UploadLandingPageAsync_DoesNotThrow()
+        public async Task UploadLandingPageAsync_DoesNotThrow()
         {
             const string surveyId = "SurveyId";
             const string fileName = "MyLandingPage.zip";
@@ -99,7 +99,7 @@ namespace Nfield.Services
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
             var stream = new MemoryStream(content);
-            target.UploadLandingPageAsync(surveyId, fileName, stream).Wait();
+            await target.UploadLandingPageAsync(surveyId, fileName, stream);
         }
 
         #endregion
