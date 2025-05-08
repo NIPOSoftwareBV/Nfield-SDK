@@ -42,5 +42,13 @@ namespace Nfield.Services
         /// <returns>The activity ID of the upload operation.</returns>
         /// <exception cref="T:System.AggregateException"></exception>
         Task<SurveyLandingPageUploadStatusResponseModel> UploadLandingPageAsync(string surveyId, string fileName, Stream content);
+
+        /// <summary>
+        /// Exports the landing page of a specific survey.
+        /// </summary>
+        /// <param name="surveyId">The ID of the survey.</param>
+        /// <returns>The status and download URL of the exported landing page.</returns>
+        /// <exception cref="T:System.AggregateException"></exception>
+        Task<SurveyLandingPageExportStatusResponseModel> ExportLandingPageAsync(string surveyId);
     }
 }

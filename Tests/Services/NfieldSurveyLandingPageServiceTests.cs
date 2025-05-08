@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Moq;
 using Newtonsoft.Json;
 using Nfield.Infrastructure;
+using Nfield.Models;
 using Nfield.Services.Implementation;
 using Xunit;
 
@@ -103,5 +104,74 @@ namespace Nfield.Services
         }
 
         #endregion
+
+        #region ExportLandingPageAsync
+
+        [Fact]
+        public async Task ExportLandingPageAsync_Success_ReturnsDownloadUrl()
+        {
+            // Arrange
+            const string surveyId = "validSurveyId";
+            var expectedDownloadUrl = new Uri("http://example.com/landingPage.zip");
+
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var response = new StringContent(JsonConvert.SerializeObject(new
+            {
+                Status = "Succeeded",
+                DownloadUrl = expectedDownloadUrl.ToString()
+            }));
+
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{surveyId}/landingPage/")))
+                .Returns(Task.Factory.StartNew(() =>
+                    new HttpResponseMessage(HttpStatusCode.OK) { Content = response }))
+                .Verifiable();
+
+            var target = new NfieldSurveyLandingPageService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            // Act
+            var result = await target.ExportLandingPageAsync(surveyId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(expectedDownloadUrl, result.DownloadUrl);
+        }
+
+        [Fact]
+        public async Task ExportLandingPageAsync_InvalidSurveyId_ReturnsErrorStatus()
+        {
+            // Arrange
+            const string invalidSurveyId = "invalidSurveyId";
+            var mockedNfieldConnection = new Mock<INfieldConnectionClient>();
+            var mockedHttpClient = CreateHttpClientMock(mockedNfieldConnection);
+
+            var response = new StringContent(JsonConvert.SerializeObject(new
+            {
+                Status = "Failed",
+                ErrorMessage = "Survey not found"
+            }));
+
+            mockedHttpClient
+                .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{invalidSurveyId}/landingPage/")))
+                .Returns(Task.Factory.StartNew(() =>
+                    new HttpResponseMessage(HttpStatusCode.NotFound) { Content = response }))
+                .Verifiable();
+
+            var target = new NfieldSurveyLandingPageService();
+            target.InitializeNfieldConnection(mockedNfieldConnection.Object);
+
+            // Act
+            var result = await target.ExportLandingPageAsync(invalidSurveyId);
+
+            // Assert
+            Assert.Equal("Failed", result.Status);
+        }
+
+
+        #endregion
+
     }
 }
