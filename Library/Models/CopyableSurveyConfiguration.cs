@@ -29,5 +29,8 @@ namespace Nfield.Models
         QuestionnaireScript = 2,
         TranslationLanguages = 4, // this is called "buttons and messages" in the UI
         MediaFiles = 8,
+        ResponseCodes = 16,
+        InterviewButtons = 32, // this is called "interview interactions" in the UI
+        LandingPage = 64,
     }
 }
