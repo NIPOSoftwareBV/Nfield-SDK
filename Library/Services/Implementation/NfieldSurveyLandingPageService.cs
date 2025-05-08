@@ -78,6 +78,22 @@ namespace Nfield.Services.Implementation
             return await DoUploadLandingPageAsync(surveyId, fileName, content).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Exports the landing page for a specific survey.
+        /// </summary>
+        /// <param name="surveyId">The ID of the survey.</param>
+        /// <returns>The export status and download URL.</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<SurveyLandingPageExportStatusResponseModel> ExportLandingPageAsync(string surveyId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+
+            var response = await Client.GetAsync(LandingPageApi(surveyId)).ConfigureAwait(false);
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return JsonConvert.DeserializeObject<SurveyLandingPageExportStatusResponseModel>(responseString);
+        }
+
         #endregion
 
         #region Implementation of INfieldConnectionClientObject
@@ -114,11 +130,11 @@ namespace Nfield.Services.Implementation
 
                 var response = await Client.PostAsync(LandingPageApi(surveyId), formData).ConfigureAwait(false);
                 var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var uploadStatus = JsonConvert.DeserializeObject<SurveyLandingPageUploadStatusResponseModel>(responseString);
+                var result = JsonConvert.DeserializeObject<SurveyLandingPageUploadStatusResponseModel>(responseString);
 
-                await ConnectionClient.GetActivityResultAsync<string>(uploadStatus.ActivityId, "Status").ConfigureAwait(false);
+                await ConnectionClient.GetActivityResultAsync<string>(result.ActivityId, "Status").ConfigureAwait(false);
 
-                return uploadStatus;
+                return result;
             }
         }
 
