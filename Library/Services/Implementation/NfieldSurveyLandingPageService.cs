@@ -121,12 +121,6 @@ namespace Nfield.Services.Implementation
 
         private async Task<SurveyLandingPageUploadStatusResponseModel> DoUploadLandingPageAsync(string surveyId, string fileName, Stream content)
         {
-
-            if (content.CanSeek)
-            {
-                content.Seek(0, SeekOrigin.Begin);
-            }
-
             using (var formData = new MultipartFormDataContent())
             {
                 var fileContent = new StreamContent(content);
