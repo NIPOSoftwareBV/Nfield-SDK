@@ -141,7 +141,7 @@ namespace Nfield.Services
         }
 
         [Fact]
-        public async Task ExportLandingPageAsync_InvalidSurveyId_ReturnsErrorStatus()
+        public async Task ExportLandingPageAsync_InvalidSurveyId_ThrowsHttpRequestException()
         {
             // Arrange
             const string invalidSurveyId = "invalidSurveyId";
@@ -156,19 +156,18 @@ namespace Nfield.Services
 
             mockedHttpClient
                 .Setup(client => client.GetAsync(new Uri(ServiceAddress, $"Surveys/{invalidSurveyId}/landingPage/")))
-                .Returns(Task.Factory.StartNew(() =>
-                    new HttpResponseMessage(HttpStatusCode.NotFound) { Content = response }))
-                .Verifiable();
+                .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.NotFound) { Content = response });
 
             var target = new NfieldSurveyLandingPageService();
             target.InitializeNfieldConnection(mockedNfieldConnection.Object);
 
-            // Act
-            var result = await target.ExportLandingPageAsync(invalidSurveyId);
+            // Act & Assert
+            var exception = await Assert.ThrowsAsync<HttpRequestException>(() =>
+                target.ExportLandingPageAsync(invalidSurveyId));
 
-            // Assert
-            Assert.Equal("Failed", result.Status);
+            Assert.Contains("Failed to export landing page", exception.Message);
         }
+
 
 
         #endregion
