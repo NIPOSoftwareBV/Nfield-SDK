@@ -15,6 +15,7 @@
 
 using System.IO;
 using System.Threading.Tasks;
+using Nfield.Models;
 
 namespace Nfield.Services
 {
@@ -30,7 +31,7 @@ namespace Nfield.Services
         /// <param name="filePath">The path to the zip file.</param>
         /// <returns>The activity ID of the upload operation.</returns>
         /// <exception cref="T:System.AggregateException"></exception>
-        Task<string> UploadLandingPageAsync(string surveyId, string filePath);
+        Task<SurveyLandingPageUploadStatusResponseModel> UploadLandingPageAsync(string surveyId, string filePath);
 
         /// <summary>
         /// Uploads a landing page zip file for a specific survey.
@@ -40,6 +41,14 @@ namespace Nfield.Services
         /// <param name="content">The content of the zip file as a stream.</param>
         /// <returns>The activity ID of the upload operation.</returns>
         /// <exception cref="T:System.AggregateException"></exception>
-        Task<string> UploadLandingPageAsync(string surveyId, string fileName, Stream content);
+        Task<SurveyLandingPageUploadStatusResponseModel> UploadLandingPageAsync(string surveyId, string fileName, Stream content);
+
+        /// <summary>
+        /// Exports the landing page of a specific survey.
+        /// </summary>
+        /// <param name="surveyId">The ID of the survey.</param>
+        /// <returns>The status and download URL of the exported landing page.</returns>
+        /// <exception cref="T:System.AggregateException"></exception>
+        Task<SurveyLandingPageExportStatusResponseModel> ExportLandingPageAsync(string surveyId);
     }
 }

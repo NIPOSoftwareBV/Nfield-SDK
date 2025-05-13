@@ -17,7 +17,6 @@ using Newtonsoft.Json;
 using Nfield.Extensions;
 using Nfield.Infrastructure;
 using Nfield.Models;
-using Nfield.Models.NipoSoftware.Nfield.Manager.Api.Models;
 using Nfield.Utilities;
 using System;
 using System.IO;
@@ -43,7 +42,7 @@ namespace Nfield.Services.Implementation
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="FileNotFoundException">In case that the file does not exist</exception>
         /// <exception cref="T:System.AggregateException"></exception>
-        public async Task<string> UploadLandingPageAsync(string surveyId, string filePath)
+        public async Task<SurveyLandingPageUploadStatusResponseModel> UploadLandingPageAsync(string surveyId, string filePath)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(filePath, nameof(filePath));
@@ -70,13 +69,34 @@ namespace Nfield.Services.Implementation
         /// <returns>The activity ID of the upload operation.</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="T:System.AggregateException"></exception>
-        public async Task<string> UploadLandingPageAsync(string surveyId, string fileName, Stream content)
+        public async Task<SurveyLandingPageUploadStatusResponseModel> UploadLandingPageAsync(string surveyId, string fileName, Stream content)
         {
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
             Ensure.ArgumentNotNullOrEmptyString(fileName, nameof(fileName));
             Ensure.ArgumentNotNull(content, nameof(content));
 
             return await DoUploadLandingPageAsync(surveyId, fileName, content).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Exports the landing page for a specific survey.
+        /// </summary>
+        /// <param name="surveyId">The ID of the survey.</param>
+        /// <returns>The export status and download URL.</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<SurveyLandingPageExportStatusResponseModel> ExportLandingPageAsync(string surveyId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
+
+            var response = await Client.GetAsync(LandingPageApi(surveyId)).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Failed to export landing page. Status code: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+            }
+            var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return JsonConvert.DeserializeObject<SurveyLandingPageExportStatusResponseModel>(responseString);
         }
 
         #endregion
@@ -104,7 +124,7 @@ namespace Nfield.Services.Implementation
             return new Uri(ConnectionClient.NfieldServerUri, $"Surveys/{surveyId}/landingPage/");
         }
 
-        private async Task<string> DoUploadLandingPageAsync(string surveyId, string fileName, Stream content)
+        private async Task<SurveyLandingPageUploadStatusResponseModel> DoUploadLandingPageAsync(string surveyId, string fileName, Stream content)
         {
             using (var formData = new MultipartFormDataContent())
             {
@@ -115,11 +135,11 @@ namespace Nfield.Services.Implementation
 
                 var response = await Client.PostAsync(LandingPageApi(surveyId), formData).ConfigureAwait(false);
                 var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var uploadStatus = JsonConvert.DeserializeObject<SurveyLandingPageUploadStatusResponseModel>(responseString);
+                var result = JsonConvert.DeserializeObject<SurveyLandingPageUploadStatusResponseModel>(responseString);
 
-                await ConnectionClient.GetActivityResultAsync<string>(uploadStatus.ActivityId, "Status").ConfigureAwait(false);
+                await ConnectionClient.GetActivityResultAsync<string>(result.ActivityId, "Status").ConfigureAwait(false);
 
-                return uploadStatus.ActivityId;
+                return result;
             }
         }
 

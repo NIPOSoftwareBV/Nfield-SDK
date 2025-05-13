@@ -17,20 +17,19 @@ using System;
 
 namespace Nfield.Models
 {
-    [Flags]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4070:Non-flags enums should not be marked with \"FlagsAttribute\"",
-        Justification = "It is a flags enum")]
-    public enum CopyableSurveyConfiguration
+    /// <summary>
+    /// Represents the response model returned after exporting a landing page for a survey.
+    /// </summary>
+    public class SurveyLandingPageExportStatusResponseModel
     {
-        None = 0,
-        All = ~None,
+        /// <summary>
+        /// The status of the export operation (e.g., "Succeeded", "Failed").
+        /// </summary>
+        public string Status { get; set; }
 
-        QuotaFrame = 1,
-        QuestionnaireScript = 2,
-        TranslationLanguages = 4, // this is called "buttons and messages" in the UI
-        MediaFiles = 8,
-        ResponseCodes = 16,
-        InterviewButtons = 32, // this is called "interview interactions" in the UI
-        LandingPage = 64,
+        /// <summary>
+        /// The URL where the exported landing page zip file can be downloaded.
+        /// </summary>
+        public Uri DownloadUrl { get; set; }
     }
 }
