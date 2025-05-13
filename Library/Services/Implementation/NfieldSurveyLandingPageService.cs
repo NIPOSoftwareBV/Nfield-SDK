@@ -89,6 +89,11 @@ namespace Nfield.Services.Implementation
             Ensure.ArgumentNotNullOrEmptyString(surveyId, nameof(surveyId));
 
             var response = await Client.GetAsync(LandingPageApi(surveyId)).ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Failed to export landing page. Status code: {response.StatusCode}, Reason: {response.ReasonPhrase}");
+            }
             var responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return JsonConvert.DeserializeObject<SurveyLandingPageExportStatusResponseModel>(responseString);
