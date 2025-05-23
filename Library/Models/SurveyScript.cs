@@ -13,6 +13,7 @@
 //    You should have received a copy of the GNU Lesser General Public License
 //    along with Nfield.SDK.  If not, see <http://www.gnu.org/licenses/>.
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -50,6 +51,8 @@ namespace Nfield.Models
         /// Please note that the legacy parser will be deprecated in the future and it
         /// is prudent to update scripts to support the latest parser.
         /// </summary>
+        [Obsolete("Using the legacy parser as the main parser is no longer possible")]
+        [JsonIgnore]
         public bool UseLegacyParser { get; set; }
     }
 }
