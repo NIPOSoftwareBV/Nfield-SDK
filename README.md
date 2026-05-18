@@ -1,3 +1,4 @@
+![status: deprecated](https://img.shields.io/badge/status-deprecated-red)
 [![Build Status](https://dev.azure.com/niposoftware/Nfield/_apis/build/status/Nfield.SDK%20package?branchName=master)](https://dev.azure.com/niposoftware/Nfield/_build/latest?definitionId=307&branchName=master)
 [![NuGet version](https://badge.fury.io/nu/Nfield.SDK.svg)](https://badge.fury.io/nu/Nfield.SDK)
 
