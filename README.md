@@ -1,6 +1,13 @@
 [![Build Status](https://dev.azure.com/niposoftware/Nfield/_apis/build/status/Nfield.SDK%20package?branchName=master)](https://dev.azure.com/niposoftware/Nfield/_build/latest?definitionId=307&branchName=master)
 [![NuGet version](https://badge.fury.io/nu/Nfield.SDK.svg)](https://badge.fury.io/nu/Nfield.SDK)
 
+# ⚠️ DEPRECATED
+
+This repository is no longer maintained.
+
+👉 Use: https://www.nuget.org/packages/Nfield.Public.SDK
+
+
 # NIPO Software Nfield SDK for Windows
 This SDK allows you to build applications that take advantage of the Nfield services.
     
